@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Unit Test List</title>
+    <style>
+        table {
+            border-collapse:collapse;
+        }
+        table, td, th {
+            border:1px solid black;
+        }
+        td {
+            padding:8px;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Test Name</th>
+            <th>Test Cases</th>
+        </tr>
+        <tbody>
+            <tr>
+                <td colspan="2" style="background-color:lightgrey;">Units Simple Actions (movements, attacks)</td>
+            </tr>
+            <tr>
+                <td><b>UnitAttackTest</b></td>
+                <td>
+                    <b>Preconditions:</b><br>
+                    - World contains some grassland tiles surrounded by ocean.<br>
+                    - Two civilizations in a war state.<br>
+                    <b>Cases:</b><br>
+                    1. Find targets for a melee attack (warriors attacks foreign workers and warriors)<br>
+                    2. Find targets for a ranged attack (archers attacks foreign workers and warriors)<br>
+                </td>
+            </tr>
+            <tr>
+                <td><b>UnitMoveFriendsTest</b></td>
+                <td>
+                    <b>Preconditions:</b><br>
+                    - World contains some grassland tiles surrounded by ocean.<br>
+                    - Two civilizations in a friends state.<br>
+                    <b>Cases:</b><br>
+                    1. Warriors capture foreign workers and start a war<br>
+                    2. Warriors try to capture foreign workers but we don't start a war and the capturing fails<br>
+                    3. Warriors move to a foreign tile and start a war<br>
+                    4. Warriors try to move to a foreign tile but we don't start a war and the move fails<br>
+                    5. Workers try to move to a foreign tile but they can't start a war so the move fails<br>
+                </td>
+            </tr>
+            <tr>
+                <td><b>UnitMoveTest</b></td>
+                <td>
+                    <b>Preconditions:</b><br>
+                    - World contains some grassland tiles, mountains surrounded by ocean.<br>
+                    - There is only one civilization.<br>
+                    <b>Cases:</b><br>
+                    1. One tile is surrounded by water. Settlers try to move and can't<br>
+                    2. One tile is surrounded by other grassland tiles. Settlers is moving in all 6 directions<br>
+                    3. There is a complex route on grassland tiles performing by Settlers.<br>
+                    4. Settlers try to move on a tile is occupied by other Settlers. They swaps.<br>
+                    5. Settlers try to move on a tile is occupied by other Settlers. They can't as there isn't enough movement score<br>
+                    6. Settlers are moving on a complex route and it's last tile is occupied by other Settlers. They can't as the swapping must be the first movement<br>
+                    7. Two different type of units (Settlers, Civil and Warriors, Military) can be stacked on the same tile<br>
+                    8. Workers can enter into empty city<br>
+                    9. Workers can't enter into a city occupied by other civil unit (Great Artist)<br>
+                    10. All possible to move in tiles for Workers must not include mountains and foreign workers<br>
+                    11. Another map, all possible to move in tiles for Workers must not include mountains<br>
+                    12. Another map, all possible to move in tiles for Workers must not include mountains<br>
+                    13. Another map, all possible to move in tiles for Workers must not include mountains<br>
+                    14. Another map, all possible to move in tiles for Workers must not include mountains<br>
+                </td>
+            </tr>
+            <tr>
+                <td><b>UnitMoveWarTest</b></td>
+                <td>
+                    <b>Preconditions:</b><br>
+                    - Two civilizations in a war state.<br>
+                    <b>Cases:</b><br>
+                    1. Warriors capture foreign workers who on warrior's territory<br>
+                    2. Workers can't capture foreign workers<br>
+                    3. Warriors capture foreign workers who on their own territory<br>
+                    4. Workers can't capture foreign workers anywhere<br>
+                    5. One Warriors' strike isn't enough to conquer a foreign city<br>
+                    6. Two Warriors' units attack a city and conquer it. Located there Workers are captured, Warriors are destroyed<br>
+                    7. Warriors strike foreign warriors, they defense back and after second attack are destroyed<br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="background-color:lightgrey;">Civilization Gets Scores from Tiles</td>
+            </tr>
+            <tr>
+                <td><b>CivilizationTest</b></td>
+                <td>
+                    <b>Cases:</b><br>
+                    1. Place civilization on the single grassland tile<br>
+                    2. Place two civilizations on two islands<br>
+                    3. Init civilization and check there are two units present - Warriors and Settlers<br>
+                    4. Init civilization with the only grassland tile and check there is only Settlers are created<br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="background-color:lightgrey;">Making Improvements on Tiles</td>
+            </tr>
+            <tr>
+                <td><b>WorkersTest</b></td>
+                <td>
+                    <b>Preconditions:</b><br>
+                    <b>Cases:</b><br>
+                    1. Test two invalid cases: needed technology is absent and a try to remove a hill before forest's removal. <a href="UnitTest.html?name=WorkersTest.cantRemoveForestedHill.js" target="_blank">Play it</a><br>
+                    ​2. On a grassland tile there is a hill and forest on it. Workers removes forest, then the hill.<br>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

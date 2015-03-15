@@ -1,0 +1,63 @@
+package com.tsoft.civilization.tile.util;
+
+import com.tsoft.civilization.combat.HasCombatStrength;
+import com.tsoft.civilization.improvement.City;
+import com.tsoft.civilization.tile.base.AbstractTile;
+import com.tsoft.civilization.tile.base.Coast;
+import com.tsoft.civilization.tile.base.Desert;
+import com.tsoft.civilization.tile.base.Grassland;
+import com.tsoft.civilization.tile.base.Ice;
+import com.tsoft.civilization.tile.base.Lake;
+import com.tsoft.civilization.tile.base.Mountain;
+import com.tsoft.civilization.tile.base.Ocean;
+import com.tsoft.civilization.tile.base.Plain;
+import com.tsoft.civilization.tile.base.Snow;
+import com.tsoft.civilization.tile.base.Tundra;
+import com.tsoft.civilization.unit.Archers;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public final class MissileTilePastCostTable {
+    public static int UNPASSABLE = Integer.MAX_VALUE;
+
+    private MissileTilePastCostTable() { }
+
+    private static Map<String, Integer> table = new HashMap<String, Integer>();
+
+    static {
+        table.put(Archers.CLASS_UUID + Coast.CLASS_UUID, 1);
+        table.put(Archers.CLASS_UUID + Desert.CLASS_UUID, 1);
+        table.put(Archers.CLASS_UUID + Grassland.CLASS_UUID, 1);
+        table.put(Archers.CLASS_UUID + Ice.CLASS_UUID, 1);
+        table.put(Archers.CLASS_UUID + Lake.CLASS_UUID, 1);
+        table.put(Archers.CLASS_UUID + Mountain.CLASS_UUID, UNPASSABLE);
+        table.put(Archers.CLASS_UUID + Ocean.CLASS_UUID, 1);
+        table.put(Archers.CLASS_UUID + Plain.CLASS_UUID, 1);
+        table.put(Archers.CLASS_UUID + Snow.CLASS_UUID, 1);
+        table.put(Archers.CLASS_UUID + Tundra.CLASS_UUID, 1);
+
+        table.put(City.CLASS_UUID + Coast.CLASS_UUID, 1);
+        table.put(City.CLASS_UUID + Desert.CLASS_UUID, 1);
+        table.put(City.CLASS_UUID + Grassland.CLASS_UUID, 1);
+        table.put(City.CLASS_UUID + Ice.CLASS_UUID, 1);
+        table.put(City.CLASS_UUID + Lake.CLASS_UUID, 1);
+        table.put(City.CLASS_UUID + Mountain.CLASS_UUID, UNPASSABLE);
+        table.put(City.CLASS_UUID + Ocean.CLASS_UUID, 1);
+        table.put(City.CLASS_UUID + Plain.CLASS_UUID, 1);
+        table.put(City.CLASS_UUID + Snow.CLASS_UUID, 1);
+        table.put(City.CLASS_UUID + Tundra.CLASS_UUID, 1);
+    }
+
+    public static int get(HasCombatStrength attacker, AbstractTile tile) {
+        assert (attacker != null && tile != null) : "Attacker and/or tile can't be null";
+        String key = attacker.getClassUuid() + tile.getClassUuid();
+
+        Integer passCost = table.get(key);
+        if (passCost == null) {
+            return UNPASSABLE;
+        }
+
+        return passCost;
+    }
+}

@@ -1,0 +1,198 @@
+#summary Civilization Game
+
+= Tiles =
+
+|| *Type* || *Name*        || *Food Supply* || *Gold Supply* || *Improvements*                     || *Transitions*     || *Luxuries* || *Resources* ||
+|| Earth  || Mountain      ||             0 ||             0 ||                                    ||                   ||            ||             ||
+||        || Desert        ||             0 ||             1 || Movement + Supply + Building       || Watering -> Plain ||            || Earth       ||
+||        || Marsh         ||             1 ||             1 || Movement + Building                || Draining -> Plain ||            || Earth       ||
+||        || Forest        ||             3 ||             1 || Movement + Sawmill + Building      || Chopping -> Plain ||            || Earth       ||
+||        || Jungle        ||             3 ||             2 || Movement + Sawmill + Building      || Chopping -> Plain ||            || Earth       ||
+||        || Plain         ||             2 ||             1 || Movement + Supply + Building       ||                   || Food       || Earth       ||
+||        || Hill          ||             1 ||             1 || Movement + Mine + Building         ||                   ||            || Earth       ||
+||        || Plato         ||             1 ||             1 || Movement + Trading post + Building ||                   ||            || Earth       ||
+|| Sea    || Shallow Water ||             0 ||             0 ||                                    ||                   || Sea Food   || Sea         ||
+||        || Ice           ||             0 ||             0 ||                                    ||                   ||            ||             ||
+||        || Deep Water    ||             0 ||             0 ||                                    ||                   ||            ||             ||
+
+Rivers - not a tiles, but a Earth's tile property (which side of tile it uses).
+
+== Improvements ==
+|| *Type*     || *Name*       ||
+|| Movement   || Road         ||
+|| Movement   || Rail Road    ||
+|| Supply     || Farm         ||
+|| Supply     || Trading post ||
+|| Production || Quarry       ||
+|| Production || Mine         ||
+|| Production || Sawmill      ||
+|| Building   || City         ||
+|| Building   || Forpost      ||
+
+== Luxuries ==
+|| *Type*     || *Name*  ||
+|| Food       || Wine    ||
+|| Food       || Silk    ||
+|| Food       || Bananas ||
+|| Food       || Sugar   ||
+|| Sea Food   || Fish    ||
+|| Sea Food   || Whales  ||
+
+== Resources ==
+|| *Type*        || *Name*    ||
+|| Earth         || Iron      ||
+|| Earth         || Aluminium ||
+|| Earth         || Uranium   ||
+|| Earth and Sea || Oil       ||
+
+= Units =
+|| *Type*   || *Operation Zone* || *Name*       ||
+|| Military || Earth            || Archer       ||
+|| Military || Earth            || Tank         ||
+|| Military || Sea              || Submarine    ||
+|| Civil    || Earth            || Workers      ||
+|| Civil    || Earth            || Settlers     ||
+|| Civil    || Earth            || Great Person ||
+|| Civil    || Sea              || Work boat    ||
+
+== Great Persons ==
+  # Great Artist
+  # Great General (can create a Citadel)
+  # Great Scientist
+  # Great Engineer
+  # Great Merchant
+  
+=== Technology Tree ===
+|| Era             || Techology           || Makes Available || Prerequisites || Leads To ||
+|| Ancient Era     || Agriculture         || Construct a Farm
+||                 || Pottery             || Granary, Shrine
+||                 || Animal Husbandry    || Reveals Hoses on the map, Construct a Pasture
+||                 || Archery             || Archer
+||                 || Mining              || Construct a Mine, Chop Down a Forest
+||                 || Sailing             || Work Boat, Trireme, Create Fishing Boats
+||                 || Calendar            || Stonehenge, Stone Works, Construct a Plantation
+||                 || Writing             || Library, The Great Library, Allows Embassies to be established at other civilization’s capitals
+||                 || Trapping            || Circus, Construct a Camp
+||                 || The Wheel           || Chariot Archer, Water Mill, Construct a Road
+||                 || Masonry             || Walls, The Pyramids, Construct a Quarry, Clear a Marsh
+||                 || Bronze Working      || Spearman, Barracks, Remove Jungle
+|| Classical Era   || Optics              || Lighthouse, The Great Lighthouse, Allows land units to embark and cross water tiles. All units which enter friendly territory gain this ability.
+||                 || Horseback Riding    || Horseman, Stable, Circus Maximus
+||                 || Mathematics         || Catapult, Courthouse, The Hanging Gardens
+||                 || Construction        || Composite Bowman, Colosseum, Terracotta Army, Construct a Lumber Mill
+||                 || Philosophy          || Temple, National College, The Oracle
+||                 || Drama and Poetry    || National Epic, Ampitheater
+||                 || Currency            || Mint, Market, Petra
+||                 || Engineering         || The Great Wall, Aqueduct, Construct a Fort, Allows bridges over rivers
+||                 || Iron Working        || Swordsman, Heroic Epic, The Colossus, Reveals Iron on the map
+|| Medieval Era    || Theology            || Garden, The Hagia Sophia, Great Mosque of Djenne
+||                 || Civil Service       || Pikeman, Chichen Itza, Food from the Farm increased by 1 on tiles with access to Fresh Water, Allows Open Borders treaties
+||                 || Guilds              || National Treasury, Machu Picchu, Construct a Trading Post, Enables conversion of Production to Wealth
+||                 || Metal Casting       || Forge, Workshop
+||                 || Compass             || Galleass, Harbor, Fishing Boats Gold yield improved by 1
+||                 || Education           || University, Oxford University, Angkor Wat, Enables conversion of Production to Research, Allows Research Agreements
+||                 || Chivalry            || Knight, Castle, Alhambra, Allows Defensive Pact treaties
+||                 || Machinery           || Crossbowman, Ironworks, Faster movement on Road
+||                 || Physics             || Trebuchet, Notre Dame
+||                 || Steel               || Longswordsman, Armory
+|| Renaissance Era || Astronomy           || Caravel, Observatory, Faster embarked movement, Allows embarked units to cross oceans
+||                 || Acoustics           || Opera House, Sistine Chapel
+||                 || Banking             || Bank, The Forbidden Palace, Constabulary
+||                 || Printing Press      || Theatre, Leaning Tower of Pisa
+||                 || Gunpowder           || Musketman, Himeji Castle
+||                 || Navigation          || Frigate, Privateer, Seaport
+||                 || Architecture        || Hermitage, The Porcelain Tower, Taj Mahal
+||                 || Economics           || Windmill, Camp Gold yield improved by 1, Customs House Gold yield improved by 1, Polder Gold yield improved by 2, Polder Production yield improved by 1
+||                 || Metallurgy          || Lancer, Arsenal, The Kremlin
+||                 || Chemistry           || Cannon, Manufactory Production yield improved by 1, Mine Production yield improved by 1, Quarry Production yield improved by 1
+|| Industrial Era  || Archaeology         || Museum, The Louvre
+||                 || Scientific Theory   || Public School, Academy Science yield improved by 2, Lumber Mill Production yield improved by 1
+||                 || Industrialization   || Gatling Gun, Factory, Big Ben, Reveals Coal on the map
+||                 || Rifling             || Rifleman
+||                 || Military Science    || Cavalry, Military Academy, Brandenburg Gate
+||                 || Fertilizer          || Pasture Food yield improved by 1, Plantation Food yield improved by 1, Food from the Farm increased by 1 on tiles with NO access to Fresh Water
+||                 || Biology             || Hospital, Reveals Oil on the map, Construct a well
+||                 || Electricity         || Hydro Plant, Stock Exchange, Police Station, Reveals Aluminum on the map
+||                 || Steam Power         || Ironclad, Faster embarked movement
+||                 || Dynamite            || Artillery
+|| Modern Era      || Refrigeration       || Submarine, Stadium, Create Offshore Platform
+||                 || Radio               || Broadcast Tower, Eiffel Tower, National Intelligence Agency
+||                 || Replaceable Parts   || Great War Infantry, Military Base, Statue of Liberty
+||                 || Flight              || Triplane, Great War Bomber
+||                 || Railroad            || Neuschwanstein, Construct a Railroad
+||                 || Plastics            || Infantry, Research Lab, Cristo Redentor
+||                 || Electronics         || Carrier, Battleship
+||                 || Ballistics          || Anti-Aircraft Gun, Machine Gun
+||                 || Combustion          || Destroyer, Landship
+|| Atomic Era      || Penicillin          || Marine, Medical Lab
+||                 || Atomic Theory       || Reveals Uranium on the map, The Manhattan Project, Academy Science yield improved by 2
+||                 || Radar               || Bomber, Fighter, Paratrooper
+||                 || Combined Arms       || Tank, Anti-Tank Gun, Pentagon
+||                 || Ecology             || Solar Plant, Sydney Opera House, Recycling Center
+||                 || Nuclear Fission     || Atomic Bomb, Nuclear Plant
+||                 || Rocketry            || Mobile SAM, Rocket Artillery, Apollo Program
+||                 || Computers           || Helicopter Gunship, Great Firewall
+|| Information Era || Telecommunications  || Nuclear Submarine, Bomb Shelter, CN Tower
+||                 || Mobile Tactics      || Mechanized Infantry
+||                 || Advanced Ballistics || SS Booster, Nuclear Missile, Guided Missile
+||                 || Satellites          || SS Cockpit, Hubble Space Telescope, Reveals the entire map
+||                 || Robotics            || Missile Cruiser, Spaceship Factory
+||                 || Lasers              || Jet Fighter, Modern Armor
+||                 || Globalization       || United Nations
+||                 || Particle Physics    || SS Engine
+||                 || Nuclear Fusion      || Giant Death Robot
+||                 || Nanotechnology      || SS Stasis Chamber
+||                 || Stealth             || Stealth Bomber
+||                 || Future Tech         || A repeating technology that will increase your score each time it is researched
+
+http://www.civfanatics.com/civ5/buildings
+
+Unit's Attributes:
+# Promotion
+# Hit Points (start from 10)
+# Heal Points (1-outside borders, 2-inside borders, 3-inside a city)
+
+Unit's Actions:
+# Embarkment
+# Ranged Attack
+# Swapping of adjacent units
+
+Player Activities:
+  # Research
+  # Diplomacy
+  # Expansion
+  # Economic
+  # Military Conquest
+  # Religion
+  # Espionage
+
+City:
+  # Population
+  # Unit producing
+  # Building producing
+  # Research generation
+  # Wealth generation
+  # Culture generation
+Attributes:
+  # Strength
+  # State (Normal, Annexed, Razed, Pupped)
+
+City-State
+  # Type (maritime, cultured, militaristic, religious and mercantile)
+
+AI:
+  # tactical AI controls individual units
+  # operational AI oversees the entire war front
+  # strategic AI manages the entire empire
+  # grand strategic AI sets long-term goals and determines how to win the game
+
+AI Flavors:
+There are 26 flavors, grouped into categories
+# Growth
+# Expansion
+# Wide strategy
+# Military preferences
+# Recon
+# Naval recon
+# Naval growth
+# Development preferences

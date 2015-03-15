@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/Styles.css" />
+    <script type="text/javascript" src="js/Utils.js"></script>
+    <script type="text/javascript" src="js/Config.js"></script>
+    <script type="text/javascript" src="js/Client.js"></script>
+
+    <script type="text/javascript" src="js/server/SyncRequests.js"></script>
+    <script type="text/javascript" src="js/server/ServerResponse.js"></script>
+    <script type="text/javascript" src="js/server/Server.js"></script>
+
+    <script type="text/javascript" src="js/view/start/MenuPanel.js"></script>
+
+    <script>
+        function start() {
+            menuPanel.init('menu_div');
+            client.getWorlds();
+        }
+    </script>
+</head>
+<body onload="start();">
+<table id="root_table">
+    <tr>
+        <td id="command_window">
+            <table width="100%" height="100%">
+                <tr id="menu_row"><td><div id="menu_div" /></td></tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

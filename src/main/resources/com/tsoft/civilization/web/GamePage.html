@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/Styles.css" />
+    <script type="text/javascript" src="js/Utils.js"></script>
+    <script type="text/javascript" src="js/Config.js"></script>
+    <script type="text/javascript" src="js/Client.js"></script>
+
+    <script type="text/javascript" src="js/server/SyncRequests.js"></script>
+    <script type="text/javascript" src="js/server/ServerResponse.js"></script>
+    <script type="text/javascript" src="js/server/Server.js"></script>
+
+    <script type="text/javascript" src="js/view/map/MapWindow.js"></script>
+    <script type="text/javascript" src="js/view/map/DrawMap.js"></script>
+    <script type="text/javascript" src="js/view/map/DrawTile.js"></script>
+    <script type="text/javascript" src="js/view/map/ScrollMap.js"></script>
+    <script type="text/javascript" src="js/view/map/DrawCivilization.js"></script>
+
+    <!-- Cities -->
+    <script type="text/javascript" src="js/city/CityTile.js"></script>
+    <script type="text/javascript" src="js/city/CitiesMap.js"></script>
+    <script type="text/javascript" src="js/view/map/city/DrawCity.js"></script>
+
+    <!-- Units -->
+    <script type="text/javascript" src="js/unit/Unit.js"></script>
+    <script type="text/javascript" src="js/unit/UnitsMap.js"></script>
+    <script type="text/javascript" src="js/view/map/DrawUnit.js"></script>
+    <script type="text/javascript" src="js/view/map/unit/DrawGreatMerchantUnit.js"></script>
+    <script type="text/javascript" src="js/view/map/unit/DrawArchersUnit.js"></script>
+    <script type="text/javascript" src="js/view/map/unit/DrawGreatScientistUnit.js"></script>
+    <script type="text/javascript" src="js/view/map/unit/DrawGreatArtistUnit.js"></script>
+    <script type="text/javascript" src="js/view/map/unit/DrawWorkersUnit.js"></script>
+    <script type="text/javascript" src="js/view/map/unit/DrawGreatGeneralUnit.js"></script>
+    <script type="text/javascript" src="js/view/map/unit/DrawSettlersUnit.js"></script>
+    <script type="text/javascript" src="js/view/map/unit/DrawWarriorsUnit.js"></script>
+    <script type="text/javascript" src="js/view/map/unit/DrawGreatEngineerUnit.js"></script>
+
+    <!-- Tile -->
+    <script type="text/javascript" src="js/tile/Tile.js"></script>
+    <script type="text/javascript" src="js/tile/TilesMap.js"></script>
+    <script type="text/javascript" src="js/view/map/tile/DrawOceanTile.js"></script>
+    <script type="text/javascript" src="js/view/map/tile/DrawDesertTile.js"></script>
+    <script type="text/javascript" src="js/view/map/tile/DrawSnowTile.js"></script>
+    <script type="text/javascript" src="js/view/map/tile/DrawMountainTile.js"></script>
+    <script type="text/javascript" src="js/view/map/tile/DrawTundraTile.js"></script>
+    <script type="text/javascript" src="js/view/map/tile/DrawIceTile.js"></script>
+    <script type="text/javascript" src="js/view/map/tile/DrawPlainTile.js"></script>
+    <script type="text/javascript" src="js/view/map/tile/DrawCoastTile.js"></script>
+    <script type="text/javascript" src="js/view/map/tile/DrawLakeTile.js"></script>
+    <script type="text/javascript" src="js/view/map/tile/DrawGrasslandTile.js"></script>
+
+    <!-- Tile's Features -->
+    <script type="text/javascript" src="js/tile/Feature.js"></script>
+    <script type="text/javascript" src="js/view/map/features/DrawForestFeature.js"></script>
+    <script type="text/javascript" src="js/view/map/features/DrawFalloutFeature.js"></script>
+    <script type="text/javascript" src="js/view/map/features/DrawMarshFeature.js"></script>
+    <script type="text/javascript" src="js/view/map/features/DrawAtollFeature.js"></script>
+    <script type="text/javascript" src="js/view/map/features/DrawOasisFeature.js"></script>
+    <script type="text/javascript" src="js/view/map/features/DrawJungleFeature.js"></script>
+    <script type="text/javascript" src="js/view/map/features/DrawFloodPlainFeature.js"></script>
+    <script type="text/javascript" src="js/view/map/features/DrawHillFeature.js"></script>
+
+    <script type="text/javascript" src="js/view/command/StatusPanel.js"></script>
+    <script type="text/javascript" src="js/view/command/ControlPanel.js"></script>
+    <script type="text/javascript" src="js/view/command/EventPanel.js"></script>
+
+    <script>
+        function start() {
+            controlPanel.init('control_div');
+            statusPanel.init('status_div');
+<!--            eventPanel.init('event_table'); -->
+            drawMap.setCanvas('map');
+            resize();
+
+            client.loadWorld();
+            client.getNotifications();
+
+            window.addEventListener('resize', redraw, false);
+        };
+
+        function resize() {
+            var mapWindow = document.getElementById('map');
+            drawMap.canvas.width = mapWindow.clientWidth;
+            drawMap.canvas.height = mapWindow.clientHeight;
+        }
+
+        function redraw() {
+            resize();
+            drawMap.redraw();
+        }
+    </script>
+</head>
+<body onload="start();">
+<table id="root_table">
+    <tr>
+        <td id="command_window">
+            <table width="100%" height="100%">
+                <tr id="status_row"><td><div id="status_div" /></td></tr>
+                <tr id="control_row"><td><div id="control_div" /></td></tr>
+            </table>
+        </td>
+        <td id="map_window"><canvas id="map"></canvas></td>
+<!--        <td id="event_window">
+            <table width="100%" height="100%">
+                <tr><td>
+                    <div id="event_div">
+                        <table id="event_table">
+                        </table>
+                    </div>
+                </td></tr>
+            </table>
+        </td>
+-->
+    </tr>
+</table>
+</body>
+</html>

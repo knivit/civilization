@@ -1,0 +1,38 @@
+package com.tsoft.civilization.web.ajax.action.civilization;
+
+import com.tsoft.civilization.L10n.L10nServer;
+import com.tsoft.civilization.action.ActionAbstractResult;
+import com.tsoft.civilization.action.civilization.DeclareWarAction;
+import com.tsoft.civilization.web.util.ContentType;
+import com.tsoft.civilization.web.util.Request;
+import com.tsoft.civilization.web.util.Response;
+import com.tsoft.civilization.web.util.ResponseCode;
+import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
+import com.tsoft.civilization.web.view.JSONBlock;
+import com.tsoft.civilization.world.Civilization;
+
+public class DeclareWarActionRequest extends AbstractAjaxRequest {
+    @Override
+    public Response getJSON(Request request) {
+        Civilization myCivilization = getMyCivilization();
+        if (myCivilization == null) {
+            return Response.newErrorInstance(L10nServer.CIVILIZATION_NOT_FOUND);
+        }
+
+        String otherCivilizationId = request.get("otherCivilization");
+        Civilization otherCivilization = myCivilization.getWorld().getCivilizationById(otherCivilizationId);
+        if (otherCivilization == null) {
+            return Response.newErrorInstance(L10nServer.CIVILIZATION_NOT_FOUND);
+        }
+
+        ActionAbstractResult result = DeclareWarAction.declareWar(myCivilization, otherCivilization);
+        if (result.isFail()) {
+            JSONBlock response = new JSONBlock();
+            response.addParam("message", result.getLocalized());
+            return new Response(ResponseCode.ACCEPTED, response.getText(), ContentType.APPLICATION_JSON);
+        }
+
+        // nothing to return
+        return new Response(ResponseCode.OK, "", ContentType.APPLICATION_JSON);
+    }
+}

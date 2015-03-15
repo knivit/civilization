@@ -1,0 +1,121 @@
+package com.tsoft.civilization.web.ajax.action.status;
+
+import com.tsoft.civilization.L10n.L10nAction;
+import com.tsoft.civilization.L10n.L10nCity;
+import com.tsoft.civilization.L10n.L10nServer;
+import com.tsoft.civilization.L10n.building.L10nBuilding;
+import com.tsoft.civilization.building.AbstractBuilding;
+import com.tsoft.civilization.util.Format;
+import com.tsoft.civilization.web.util.ContentType;
+import com.tsoft.civilization.web.util.Request;
+import com.tsoft.civilization.web.util.Response;
+import com.tsoft.civilization.web.util.ResponseCode;
+import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
+import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.world.economic.BuildingScore;
+
+public class GetBuildingStatus extends AbstractAjaxRequest {
+    @Override
+    public Response getJSON(Request request) {
+        Civilization myCivilization = getMyCivilization();
+        if (myCivilization == null) {
+            return Response.newErrorInstance(L10nServer.CIVILIZATION_NOT_FOUND);
+        }
+
+        // See buildings only for my civilization
+        String buildingId = request.get("building");
+        AbstractBuilding building = myCivilization.getBuildingById(buildingId);
+        if (building == null) {
+            return Response.newErrorInstance(L10nBuilding.BUILDING_NOT_FOUND);
+        }
+
+        StringBuilder value = Format.text(
+            "$navigationPanel\n" +
+            "$buildingTitle\n" +
+            "$buildingInfo\n" +
+            "$actions\n",
+
+            "$navigationPanel", getNavigationPanel(),
+            "$buildingTitle", getBuildingTitle(building),
+            "$buildingInfo", getBuildingInfo(building),
+            "$actions", getActions(building));
+        return new Response(ResponseCode.OK, value.toString(), ContentType.TEXT_HTML);
+    }
+
+    private StringBuilder getBuildingTitle(AbstractBuilding building) {
+        return Format.text(
+            "<table id='title_table'>" +
+                "<tr><td>$buildingName</td></tr>" +
+                "<tr><td><button onclick=\"server.sendAsyncAjax('ajax/GetCivilizationStatus', { civilization:'$civilization' })\">$civilizationName</button></td></tr>" +
+                "<tr><td><button onclick=\"client.getCityStatus({ col:'$cityCol', row:'$cityRow', city:'$city' })\">$cityName</button></td></tr>" +
+                "<tr><td><img src='$buildingImage'/></td></tr>" +
+            "</table>",
+
+            "$buildingName", building.getView().getLocalizedName(),
+            "$civilization", building.getCivilization().getId(),
+            "$civilizationName", building.getCivilization().getView().getLocalizedCivilizationName(),
+            "$cityCol", building.getCity().getLocation().getX(),
+            "$cityRow", building.getCity().getLocation().getY(),
+            "$city", building.getCity().getId(),
+            "$cityName", building.getCity().getView().getLocalizedCityName(),
+            "$buildingImage", building.getView().getStatusImageSrc()
+        );
+    }
+
+    private StringBuilder getBuildingInfo(AbstractBuilding building) {
+        Civilization myCivilization = getMyCivilization();
+        if (!myCivilization.equals(building.getCivilization())) {
+            return null;
+        }
+
+        BuildingScore buildingScore = building.getSupply(building.getCity());
+        return Format.text(
+            "<table id='info_table'>" +
+                "<tr><td>$productionLabel</td><td>$production</td>" +
+                "<tr><td>$goldLabel</td><td>$gold</td>" +
+                "<tr><td>$foodLabel</td><td>$food</td>" +
+                "<tr><td>$happinessLabel</td><td>$happiness</td>" +
+                "<tr><td>$strengthLabel</td><td>$strength</td>" +
+            "</table>",
+
+            "$productionLabel", L10nCity.PRODUCTION, "$production", buildingScore.getProduction(),
+            "$goldLabel", L10nCity.GOLD, "$gold", buildingScore.getGold(),
+            "$foodLabel", L10nCity.FOOD, "$food", buildingScore.getFood(),
+            "$happinessLabel", L10nCity.HAPPINESS, "$happiness", buildingScore.getHappiness(),
+            "$strengthLabel", L10nCity.DEFENSE_STRENGTH, "$strength", building.getStrength()
+        );
+    }
+
+    private StringBuilder getActions(AbstractBuilding building) {
+        Civilization myCivilization = getMyCivilization();
+        if (!myCivilization.equals(building.getCivilization())) {
+            return null;
+        }
+
+        // nothing to do with a captured city
+        if (building.isDestroyed()) {
+            return Format.text(
+                "<table id='actions_table'>" +
+                    "<tr><td>$captured</td></tr>" +
+                "</table>",
+
+                "$captured", L10nCity.CITY_WAS_CAPTURED
+            );
+        }
+
+        StringBuilder buf = building.getView().getHtmlActions(building);
+        if (buf == null) {
+            return null;
+        }
+
+        return Format.text(
+            "<table id='actions_table'>" +
+                "<tr><th colspan='2'>$actions</th></tr>" +
+                "$buildingActions" +
+            "</table",
+
+            "$actions", L10nAction.AVAILABLE_ACTIONS,
+            "$buildingActions", buf
+        );
+    }
+}
