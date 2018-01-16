@@ -18,7 +18,7 @@ public class ClientSession {
     private long sendBytes;
     private String language;
 
-    // Game date
+    // Game data
     private String worldId;
     private String civilizationId;
 

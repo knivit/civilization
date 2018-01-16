@@ -1,6 +1,8 @@
 package com.tsoft.civilization.action.unit.settlers;
 
 import com.tsoft.civilization.MockWorld;
+import com.tsoft.civilization.action.unit.DestroyUnitAction;
+import com.tsoft.civilization.action.unit.DestroyUnitResults;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
@@ -12,7 +14,7 @@ import com.tsoft.civilization.world.Civilization;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 public class BuildCityActionTest {
     @BeforeClass
@@ -32,7 +34,6 @@ public class BuildCityActionTest {
         MockWorld mockWorld = new MockWorld(mockTilesMap);
         Civilization civilization = new Civilization(mockWorld, 0);
 
-        // check 1
         // Build a city
         Settlers settlers1 = AbstractUnit.newInstance(Settlers.INSTANCE, civilization, new Point(1, 1));
         assertEquals(SettlersActionResults.CITY_BUILT, BuildCityAction.buildCity(settlers1));
@@ -47,7 +48,6 @@ public class BuildCityActionTest {
         // settlers must be destroyed
         assertEquals(0, civilization.getUnits().size());
 
-        // check 2
         // A city can't be build on a tile where another city is built
         Settlers settlers2 = AbstractUnit.newInstance(Settlers.INSTANCE, civilization, new Point(1, 1));
         assertEquals(SettlersActionResults.CANT_BUILD_CITY_THERE_IS_ANOTHER_CITY_NEARBY, BuildCityAction.buildCity(settlers2));

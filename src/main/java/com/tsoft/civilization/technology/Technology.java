@@ -55,7 +55,7 @@ public enum Technology {
     MILITARY_SCIENCE(Year.INDUSTRIAL_ERA, new Technology[] { }, new Technology[] { }),
     FERTILIZER(Year.INDUSTRIAL_ERA, new Technology[] { }, new Technology[] { }),
     BIOLOGY(Year.INDUSTRIAL_ERA, new Technology[] { }, new Technology[] { }),
-    ELICTRICITY(Year.INDUSTRIAL_ERA, new Technology[] { }, new Technology[] { }),
+    ELECTRICITY(Year.INDUSTRIAL_ERA, new Technology[] { }, new Technology[] { }),
     STEAM_POWER(Year.INDUSTRIAL_ERA, new Technology[] { }, new Technology[] { }),
     DYNAMITE(Year.INDUSTRIAL_ERA, new Technology[] { }, new Technology[] { }),
 

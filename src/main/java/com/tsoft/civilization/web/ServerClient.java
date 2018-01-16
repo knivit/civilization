@@ -43,7 +43,7 @@ public class ServerClient {
         }
     }
 
-    public void processRequest() throws Throwable {
+    public void processRequest() {
         switch (request.getRequestType()) {
             case GET: {
                 if ("GetNotifications".equals(request.getRequestUrl())) {

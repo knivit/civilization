@@ -28,6 +28,7 @@ public class GameServer {
         System.out.println("Server started on port " + port);
         while (true) {
             Socket socket = ss.accept();
+
             long tick = System.currentTimeMillis();
             ClientServiceThread clientThread = new ClientServiceThread(socket, tick);
             Thread thread = new Thread(clientThread);

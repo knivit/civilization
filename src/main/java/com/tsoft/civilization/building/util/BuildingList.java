@@ -38,11 +38,6 @@ public class BuildingList extends ArrayList<AbstractBuilding> implements Buildin
 
     @Override
     public void sortByName() {
-        Collections.sort(this, new Comparator<AbstractBuilding>() {
-            @Override
-            public int compare(AbstractBuilding building1, AbstractBuilding building2) {
-                return building1.getView().getLocalizedName().compareTo(building2.getView().getLocalizedName());
-            }
-        });
+        Collections.sort(this, Comparator.comparing(building -> building.getView().getLocalizedName()));
     }
 }

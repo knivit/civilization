@@ -19,7 +19,6 @@ import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.view.tile.base.AbstractTileView;
 
 import java.lang.reflect.Constructor;
-import java.util.List;
 
 public abstract class AbstractTile<V extends AbstractTileView> {
     private Point location;

@@ -5,19 +5,19 @@ import com.tsoft.civilization.web.view.JSONBlock;
 
 import java.util.Date;
 
-public class Event<E> {
+public class Event {
     public static final int INFORMATION = 0;
     public static final int UPDATE_WORLD = 1;
     public static final int UPDATE_CONTROL_PANEL = 2;
     public static final int UPDATE_STATUS_PANEL = 4;
 
-    private E obj;
+    private Object obj;
 
     private Date serverEventTime;
     private L10nMap description;
     private int flags;
 
-    public Event(E obj, L10nMap description, int flags) {
+    public Event(Object obj, L10nMap description, int flags) {
         this.obj = obj;
         this.description = description;
         this.flags = flags;

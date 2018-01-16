@@ -10,4 +10,5 @@ public class DestroyUnitResults {
 
     public static final ActionFailureResult UNIT_NOT_FOUND = new ActionFailureResult(L10nUnit.UNIT_NOT_FOUND);
     public static final ActionFailureResult NO_PASS_SCORE = new ActionFailureResult(L10nUnit.NO_PASS_SCORE);
+    public static final ActionFailureResult LAST_SETTLERS_CANT_BE_DESTOYED = new ActionFailureResult(L10nUnit.LAST_SETTLERS_CANT_BE_DESTROYED);
 }

@@ -3,7 +3,7 @@ package com.tsoft.civilization.improvement.city;
 import com.tsoft.civilization.improvement.CanBeBuilt;
 
 public class Construction {
-    // a building or unit
+    // a building or an unit
     private CanBeBuilt object;
 
     private int productionCost;

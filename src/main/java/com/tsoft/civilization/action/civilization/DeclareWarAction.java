@@ -24,7 +24,7 @@ public class DeclareWarAction {
     }
 
     private static ActionAbstractResult canDeclareWar(Civilization myCivilization, Civilization otherCivilization) {
-        if (otherCivilization == null) {
+        if (otherCivilization == null || otherCivilization.equals(myCivilization)) {
             return DeclareWarActionResults.WRONG_CIVILIZATION;
         }
 

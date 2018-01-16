@@ -13,10 +13,10 @@ public class GetRequestProcessor {
 
         // On first request create new client's session
         String cookieHeader = null;
-        if (fileName.length() == 0) {
+        if (fileName.isEmpty()) {
             fileName = "MenuPage.html";
 
-            // Create an user's session if cookie was empty or it is stale
+            // Create an user's session if a cookie is empty or stale
             String sessionId = client.getRequest().getSessionId();
             String clientIP = client.getRequest().getClientIP();
             String userAgent = client.getRequest().getUserAgent();

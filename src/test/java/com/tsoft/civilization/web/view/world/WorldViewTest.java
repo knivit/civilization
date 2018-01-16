@@ -25,7 +25,7 @@ public class WorldViewTest {
     }
 
     @Test
-    public void worldView() throws Exception {
+    public void worldView() {
         MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES, 3,
                 " |0 1 2 ", " |0 1 2 ", " |0 1 2 ",
                 "-+------", "-+------", "-+------",

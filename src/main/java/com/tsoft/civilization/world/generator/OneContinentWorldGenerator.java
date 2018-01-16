@@ -16,9 +16,9 @@ import com.tsoft.civilization.util.Rect;
 import java.util.ArrayList;
 
 /*
- * One big continent, small ocean (80% earth, 30% ocean)
+ * One big continent, small ocean (80% earth, 20% ocean)
 */
-public class OneContinentWorldGenerator extends AbstractWorldGenerator {
+public class OneContinentWorldGenerator implements WorldGenerator {
     private TilesMap tilesMap;
     private Climate climate;
 

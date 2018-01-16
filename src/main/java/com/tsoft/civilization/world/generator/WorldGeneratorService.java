@@ -7,26 +7,16 @@ import com.tsoft.civilization.util.Rect;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public abstract class AbstractWorldGenerator {
-    public abstract void generate(TilesMap tilesMap, Climate climate);
-
-    private static Class[] generators = new Class[] {
-        EarthWorldGenerator.class,
-        OneContinentWorldGenerator.class
+public class WorldGeneratorService {
+    private static WorldGenerator[] generators = new WorldGenerator[] {
+        new EarthWorldGenerator(),
+        new OneContinentWorldGenerator()
     };
 
-    public static AbstractWorldGenerator getGenerator(int index)  {
+    public static WorldGenerator getGenerator(int index)  {
         assert (index >= 0 && index < generators.length) : "Invalid generator's index = " + index + ", must be [0.." + (generators.length - 1) + "]";
 
-        AbstractWorldGenerator generator = null;
-        try {
-            generator = (AbstractWorldGenerator)generators[index].newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return generator;
+        return generators[index];
     }
 
     // Find out start locations (on the Map) for the Civilizations
@@ -57,10 +47,10 @@ public abstract class AbstractWorldGenerator {
             @Override
             public int compareTo(Object o) {
                 RectTiles rectTiles = (RectTiles)o;
-                return this.getSize() == rectTiles.getSize() ? 0 :
-                        this.getSize() < rectTiles.getSize() ? 1 : -1;
+                return Integer.compare(rectTiles.getSize(), this.getSize());
             }
         }
+
         ArrayList<RectTiles> rectTiles = new ArrayList<>();
         for (Rect rect : rectangles) {
             ArrayList<Point> tiles = getTilesForSettlement(rect, tilesMap);
@@ -166,6 +156,7 @@ public abstract class AbstractWorldGenerator {
                 }
             }
         }
+
         return points;
     }
 }

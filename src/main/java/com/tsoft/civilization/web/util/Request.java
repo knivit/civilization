@@ -25,6 +25,7 @@ public class Request {
     public Request(String clientIP, int clientPort) {
         this.clientIP = clientIP;
         this.clientPort = clientPort;
+        this.requestType = RequestType.GET;
     }
 
     public Map<String, String> getParams() {

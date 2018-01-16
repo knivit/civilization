@@ -11,8 +11,9 @@ import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.state.Worlds;
 import com.tsoft.civilization.world.Civilization;
 import com.tsoft.civilization.world.World;
-import com.tsoft.civilization.world.generator.AbstractWorldGenerator;
+import com.tsoft.civilization.world.generator.WorldGeneratorService;
 import com.tsoft.civilization.world.generator.Climate;
+import com.tsoft.civilization.world.generator.WorldGenerator;
 
 public class CreateWorld extends AbstractAjaxRequest {
     @Override
@@ -32,10 +33,10 @@ public class CreateWorld extends AbstractAjaxRequest {
         Worlds.add(world);
 
         // generate landscape
-        AbstractWorldGenerator generator = AbstractWorldGenerator.getGenerator(worldType);
+        WorldGenerator generator = WorldGeneratorService.getGenerator(worldType);
         generator.generate(world.getTilesMap(), Climate.getClimateByNo(climate));
 
-        // create a Civilizations
+        // create civilizations
         Civilization civilization = new Civilization(world, world.getCivilizations().size());
         civilization.addFirstUnits();
 

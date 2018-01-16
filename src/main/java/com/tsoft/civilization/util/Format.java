@@ -41,6 +41,7 @@ public class Format {
                 buf.replace(n, n + name.length(), (String)value);
             }
         }
+
         return buf;
     }
 }

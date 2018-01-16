@@ -50,55 +50,54 @@ public class CityCitizenService {
     }
 
     private Point findLocationForCitizen() {
-        Set<Point> locations = new HashSet<Point>();
-        locations.addAll(city.getLocations());
+        Set<Point> locations = new HashSet<>(city.getLocations());
         locations.removeAll(getCitizenLocations());
 
-        Point maxLocation = null;
+        Point bestLocation = null;
         for (Point location : locations) {
-            if (maxLocation == null) {
-                maxLocation = location;
+            if (bestLocation == null) {
+                bestLocation = location;
                 continue;
             }
 
             AbstractTile tile = city.getTilesMap().getTile(location);
             TileScore tileScore = tile.getSupply();
-            AbstractTile maxTile = city.getTilesMap().getTile(maxLocation);
+            AbstractTile maxTile = city.getTilesMap().getTile(bestLocation);
             TileScore maxTileScore = maxTile.getSupply();
 
-            // in case a tile gives the same amount of a needed supply,
+            // in case a tile gives the same amount of needed supply,
             // check also other supplements and select the best supply
             switch (city.getSupplyStrategy()) {
                 case MAX_FOOD: {
                     if (tileScore.getFood() > maxTileScore.getFood()) {
-                        maxLocation = location;
+                        bestLocation = location;
                     }
                     if (tileScore.getFood() == maxTileScore.getFood() &&
                         (tileScore.getProduction() > maxTileScore.getProduction() ||
                          (tileScore.getGold() > maxTileScore.getGold()))) {
-                        maxLocation = location;
+                        bestLocation = location;
                     }
                     break;
                 }
                 case MAX_PRODUCTION: {
                     if (tileScore.getProduction() > maxTileScore.getProduction()) {
-                        maxLocation = location;
+                        bestLocation = location;
                     }
                     if (tileScore.getProduction() == maxTileScore.getProduction() &&
                         (tileScore.getFood() > maxTileScore.getFood() ||
                          (tileScore.getGold() > maxTileScore.getGold()))) {
-                        maxLocation = location;
+                        bestLocation = location;
                     }
                     break;
                 }
                 case MAX_GOLD: {
                     if (tileScore.getGold() > maxTileScore.getGold()) {
-                        maxLocation = location;
+                        bestLocation = location;
                     }
                     if (tileScore.getGold() == maxTileScore.getGold() &&
                         (tileScore.getFood() > maxTileScore.getFood() ||
                          (tileScore.getProduction() > maxTileScore.getProduction()))) {
-                        maxLocation = location;
+                        bestLocation = location;
                     }
                     break;
                 }
@@ -108,10 +107,15 @@ public class CityCitizenService {
             }
         }
 
+        // all the tiles are used
+        if (bestLocation == null) {
+            return null;
+        }
+
         // if the selected tile provides empty (or negative) supply, don't place a citizen here
-        AbstractTile maxTile = city.getTilesMap().getTile(maxLocation);
+        AbstractTile maxTile = city.getTilesMap().getTile(bestLocation);
         TileScore maxTileScore = maxTile.getSupply();
-        return (maxTileScore.isPositive() ? maxLocation: null);
+        return (maxTileScore.isPositive() ? bestLocation : null);
     }
 
     public CitySupplyStrategy getSupplyStrategy() {

@@ -7,12 +7,12 @@ import com.tsoft.civilization.unit.Settlers;
 import com.tsoft.civilization.unit.util.UnitCollection;
 import com.tsoft.civilization.unit.Warriors;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.world.generator.AbstractWorldGenerator;
+import com.tsoft.civilization.world.generator.WorldGeneratorService;
 import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class CivilizationTest {
@@ -26,7 +26,7 @@ public class CivilizationTest {
                 "2|. . . ",
                 "3| . . .");
 
-        ArrayList<Point> locations = AbstractWorldGenerator.getCivilizationsStartLocations(1, mockTilesMap);
+        ArrayList<Point> locations = WorldGeneratorService.getCivilizationsStartLocations(1, mockTilesMap);
         assertEquals(1, locations.size());
         assertEquals(new Point(1, 1), locations.get(0));
     }
@@ -41,7 +41,7 @@ public class CivilizationTest {
                 "2|. . g ",
                 "3| . . .");
 
-        ArrayList<Point> locations = AbstractWorldGenerator.getCivilizationsStartLocations(2, mockTilesMap);
+        ArrayList<Point> locations = WorldGeneratorService.getCivilizationsStartLocations(2, mockTilesMap);
 
         assertEquals(2, locations.size());
         assertTrue(locations.get(0).equals(new Point(0, 0)) || locations.get(0).equals(new Point(1, 0)));

@@ -21,7 +21,7 @@ public class CityList extends ArrayList<City> implements CityCollection {
 
     @Override
     public Collection<Point> getLocations() {
-        Collection<Point> locations = new ArrayList<Point>(size());
+        Collection<Point> locations = new ArrayList<>(size());
         for (City city : this) {
             locations.add(city.getLocation());
         }

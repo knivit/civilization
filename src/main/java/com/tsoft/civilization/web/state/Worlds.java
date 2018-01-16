@@ -19,8 +19,7 @@ public class Worlds {
     }
 
     public static synchronized List<World> getWorlds() {
-        List list = new ArrayList();
-        list.addAll(worlds.values());
+        List<World> list = new ArrayList<>(worlds.values());
         return list;
     }
 }

@@ -8,19 +8,19 @@ import java.util.Collection;
 import java.util.List;
 
 public interface CityCollection extends List<City> {
-    public Collection<Point> getLocations();
+    Collection<Point> getLocations();
 
-    public City getCityById(String cityId);
+    City getCityById(String cityId);
 
-    public AbstractBuilding getBuildingById(String buildingId);
+    AbstractBuilding getBuildingById(String buildingId);
 
-    public City getCityAtLocation(Point location);
+    City getCityAtLocation(Point location);
 
-    public CityCollection getCitiesAtLocations(Collection<Point> locations);
+    CityCollection getCitiesAtLocations(Collection<Point> locations);
 
-    public CityCollection getCitiesWithActionsAvailable();
+    CityCollection getCitiesWithActionsAvailable();
 
-    public boolean isHavingTile(Point location);
+    boolean isHavingTile(Point location);
 
-    public void sortByName();
+    void sortByName();
 }

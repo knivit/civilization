@@ -155,6 +155,10 @@ public class L10nUnit {
             .set("en", "Not enough the passing score")
             .set("ru", "\u041d\u0435\u0434\u043e\u0441\u0442\u0430\u0442\u043e\u0447\u043d\u043e \u0445\u043e\u0434\u043e\u0432 \u043f\u0435\u0440\u0435\u043c\u0435\u0449\u0435\u043d\u0438\u044f");
 
+    public static L10nMap LAST_SETTLERS_CANT_BE_DESTROYED = new L10nMap()
+            .set("en", "The only settlers unit can not be destroyed")
+            .set("ru", "The only settlers unit can not be destroyed");
+
     public static L10nMap UNIT_WAS_BOUGHT = new L10nMap()
             .set("en", "An Unit was bought")
             .set("ru", "\u042e\u043d\u0438\u0442 \u043a\u0443\u043f\u043b\u0435\u043d");
