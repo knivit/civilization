@@ -17,7 +17,7 @@ import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.util.TilePassCostTable;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.Settlers;
-import com.tsoft.civilization.unit.util.UnitCatalog;
+import com.tsoft.civilization.unit.util.UnitFactory;
 import com.tsoft.civilization.unit.util.UnitCollection;
 import com.tsoft.civilization.unit.util.UnitList;
 import com.tsoft.civilization.unit.util.UnmodifiableUnitList;
@@ -90,14 +90,14 @@ public class Civilization {
     }
 
     public void addFirstUnits() {
-        Settlers settlers = AbstractUnit.newInstance(Settlers.INSTANCE, this, settlersLocation);
+        Settlers settlers = UnitFactory.newInstance(Settlers.INSTANCE, this, settlersLocation);
 
         // try to place Warriors near the Settlers
         ArrayList<Point> locations = world.getLocationsAround(settlersLocation, 2);
         for (Point location : locations) {
             AbstractTile tile = world.getTilesMap().getTile(location);
             if (tile.getPassCost(settlers) != TilePassCostTable.UNPASSABLE) {
-                AbstractUnit.newInstance(Warriors.INSTANCE, this, location);
+                UnitFactory.newInstance(Warriors.INSTANCE, this, location);
                 break;
             }
         }
@@ -260,12 +260,12 @@ public class Civilization {
     }
 
     public void buyUnit(String unitClassUuid, City city) {
-        AbstractUnit catalogUnit = UnitCatalog.values().findByClassUuid(unitClassUuid);
+        AbstractUnit catalogUnit = UnitFactory.getUnitFromCatalogByClassUuid(unitClassUuid);
         int gold = catalogUnit.getGoldCost();
         CivilizationSupply expenses = new CivilizationSupply(0, 0, gold, 0);
         getCivilizationScore().add(expenses, L10nCivilization.BUY_UNIT_EVENT);
 
-        AbstractUnit.newInstance(catalogUnit, this, city.getLocation());
+        UnitFactory.newInstance(catalogUnit, this, city.getLocation());
     }
 
     public boolean canBuyBuilding(AbstractBuilding building) {

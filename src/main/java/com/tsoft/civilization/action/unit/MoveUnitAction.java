@@ -213,7 +213,7 @@ public class MoveUnitAction {
 
         // get units located in the city
         UnitCollection units = thisCivilization.getUnitsAtLocation(location);
-        AbstractUnit nextUnit = units.findUnitByUnitType(unit.getUnitType());
+        AbstractUnit nextUnit = units.findUnitByUnitKind(unit.getUnitKind());
 
         // no units of such type, so we can enter into city
         if (nextUnit == null) {
@@ -225,12 +225,12 @@ public class MoveUnitAction {
 
     private static UnitMoveResult checkUnitsSwap(AbstractUnit unit, Point nextLocation, boolean canSwapLocations) {
         UnitCollection units = unit.getCivilization().getUnitsAtLocation(nextLocation);
-        AbstractUnit nextUnit = units.findUnitByUnitType(unit.getUnitType());
+        AbstractUnit nextUnit = units.findUnitByUnitKind(unit.getUnitKind());
         if (nextUnit == null) {
             return UnitMoveResult.CHECK_FAILED;
         }
 
-        // swapping must be the only dir in the route
+        // swapping must be the only dir on the route
         if (!canSwapLocations) {
             return UnitMoveResult.FAIL_SWAPPING_MUST_BE_THE_ONLY_MOVE;
         }
@@ -393,13 +393,13 @@ public class MoveUnitAction {
         Set<Point> locations = getCandidatesToMove(unit);
 
         // Exclude tiles occupied by
-        // - other the same type units from this civilization
+        // - other the same kind units from this civilization
         // - all foreign units
         // - all foreign cities
         UnitCollection units = unit.getWorld().getUnitsAtLocations(locations);
         for (AbstractUnit ua : units) {
             if (unit.getCivilization().equals(ua.getCivilization())) {
-                if (unit.getUnitType().isMilitary() == ua.getUnitType().isMilitary()) {
+                if (unit.getUnitKind().isMilitary() == ua.getUnitKind().isMilitary()) {
                     locations.remove(ua.getLocation());
                 }
             } else {

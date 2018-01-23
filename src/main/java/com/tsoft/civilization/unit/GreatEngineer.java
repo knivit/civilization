@@ -1,7 +1,6 @@
 package com.tsoft.civilization.unit;
 
 import com.tsoft.civilization.combat.CombatStrength;
-import com.tsoft.civilization.unit.util.UnitType;
 import com.tsoft.civilization.util.Year;
 import com.tsoft.civilization.web.view.unit.GreatEngineerView;
 import com.tsoft.civilization.world.Civilization;
@@ -9,7 +8,9 @@ import com.tsoft.civilization.world.Civilization;
 import java.util.UUID;
 
 /**
- * Movement: 2; Strength: 0; Ranged Strength: 0
+ * Movement: 2;
+ * Strength: 0;
+ * Ranged Strength: 0
  *
  * Notes: Can sacrifice himself to construct a Manufactory improvement, to hurry production of a unit,
  * building or wonder, or trigger a Golden Age.
@@ -23,7 +24,12 @@ public class GreatEngineer extends AbstractUnit<GreatEngineerView> {
 
     @Override
     public UnitType getUnitType() {
-        return UnitType.CIVIL;
+        return UnitType.GREAT_ENGINEER;
+    }
+
+    @Override
+    public UnitKind getUnitKind() {
+        return UnitKind.CIVIL;
     }
 
     @Override

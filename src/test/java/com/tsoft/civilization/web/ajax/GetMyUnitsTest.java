@@ -1,9 +1,9 @@
 package com.tsoft.civilization.web.ajax;
 
 import com.tsoft.civilization.MockWorld;
-import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.Archers;
 import com.tsoft.civilization.unit.Workers;
+import com.tsoft.civilization.unit.util.UnitFactory;
 import com.tsoft.civilization.util.DefaultLogger;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.MockRequest;
@@ -33,8 +33,8 @@ public class GetMyUnitsTest {
     public void getJSON() {
         MockWorld mockWorld = MockWorld.newSimpleWorld();
         Civilization c1 = new Civilization(mockWorld, 0);
-        Archers archers = AbstractUnit.newInstance(Archers.INSTANCE, c1, new Point(2, 0));
-        Workers workers = AbstractUnit.newInstance(Workers.INSTANCE, c1, new Point(2, 0));
+        Archers archers = UnitFactory.newInstance(Archers.INSTANCE, c1, new Point(2, 0));
+        Workers workers = UnitFactory.newInstance(Workers.INSTANCE, c1, new Point(2, 0));
 
         ClientSession session = Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
         Worlds.add(mockWorld);

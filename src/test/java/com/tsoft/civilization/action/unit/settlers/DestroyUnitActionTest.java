@@ -5,8 +5,8 @@ import com.tsoft.civilization.action.unit.DestroyUnitAction;
 import com.tsoft.civilization.action.unit.DestroyUnitResults;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
-import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.Settlers;
+import com.tsoft.civilization.unit.util.UnitFactory;
 import com.tsoft.civilization.util.DefaultLogger;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.Civilization;
@@ -34,11 +34,11 @@ public class DestroyUnitActionTest {
         Civilization civilization = new Civilization(mockWorld, 0);
 
         // The only settlers can't be destroyed
-        Settlers settlers1 = AbstractUnit.newInstance(Settlers.INSTANCE, civilization, new Point(1, 1));
+        Settlers settlers1 = UnitFactory.newInstance(Settlers.INSTANCE, civilization, new Point(1, 1));
         assertEquals(DestroyUnitResults.LAST_SETTLERS_CANT_BE_DESTOYED, DestroyUnitAction.destroyUnit(settlers1));
 
         // Add another settlers
-        Settlers settlers2 = AbstractUnit.newInstance(Settlers.INSTANCE, civilization, new Point(2, 0));
+        Settlers settlers2 = UnitFactory.newInstance(Settlers.INSTANCE, civilization, new Point(2, 0));
 
         // Destroy the first ones
         DestroyUnitAction.destroyUnit(settlers1);

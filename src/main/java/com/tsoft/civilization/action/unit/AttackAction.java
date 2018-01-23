@@ -37,7 +37,7 @@ public class AttackAction {
             return AttackActionResults.NO_TARGETS_TO_ATTACK;
         }
 
-        if (attacker.getUnitType().isRanged()) {
+        if (attacker.getUnitKind().isRanged()) {
             return rangedAttack(attacker, target);
         }
 
@@ -50,7 +50,7 @@ public class AttackAction {
             return AttackActionResults.ATTACKER_NOT_FOUND;
         }
 
-        if (!attacker.getUnitType().isMilitary()) {
+        if (!attacker.getUnitKind().isMilitary()) {
             return AttackActionResults.NOT_MILITARY_UNIT;
         }
 
@@ -143,7 +143,7 @@ public class AttackAction {
         targetStrength -= strikeStrength;
 
         // a ranged attack can't destroy a city
-        if (attacker.getUnitType().isRanged() && target.getUnitType().isCity()) {
+        if (attacker.getUnitKind().isRanged() && target.getUnitKind().isCity()) {
             if (targetStrength <= 0) {
                 targetStrength = 1;
             }
@@ -152,7 +152,7 @@ public class AttackAction {
         if (targetStrength <= 0) {
             Point location = target.getLocation();
 
-            if (attacker.getUnitType().isRanged()) {
+            if (attacker.getUnitKind().isRanged()) {
                 // if the attacker is a ranged unit
                 // the destroy the target only
                 target.destroyBy(attacker, false);
@@ -207,7 +207,7 @@ public class AttackAction {
 
     // Find out all targets to attack
     public static HasCombatStrengthList getTargetsToAttack(HasCombatStrength attacker) {
-        if (attacker.getUnitType().isRanged()) {
+        if (attacker.getUnitKind().isRanged()) {
             return getTargetsToRangedAttack(attacker);
         }
 

@@ -1,39 +1,40 @@
 package com.tsoft.civilization.unit.util;
 
 import com.tsoft.civilization.unit.AbstractUnit;
+import com.tsoft.civilization.unit.UnitKind;
 import com.tsoft.civilization.util.Point;
 
 import java.util.Collection;
 import java.util.List;
 
 public interface UnitCollection extends List<AbstractUnit> {
-    public AbstractUnit findByClassUuid(String uuid);
+    AbstractUnit findByClassUuid(String uuid);
 
-    public int getUnitClassCount(Class<? extends AbstractUnit> unitClass);
+    int getUnitClassCount(Class<? extends AbstractUnit> unitClass);
 
-    public AbstractUnit findMilitaryUnit();
+    AbstractUnit findMilitaryUnit();
 
-    public AbstractUnit findCivilUnit();
+    AbstractUnit findCivilUnit();
 
-    public AbstractUnit findUnitByUnitType(UnitType unitType);
+    AbstractUnit findUnitByUnitKind(UnitKind unitKind);
 
-    public int getMilitaryCount();
+    int getMilitaryCount();
 
-    public int getCivilCount();
+    int getCivilCount();
 
-    public int getGreatGeneralCount();
+    int getGreatGeneralCount();
 
-    public List<Point> getLocations();
+    List<Point> getLocations();
 
-    public AbstractUnit getUnitById(String unitId);
+    AbstractUnit getUnitById(String unitId);
 
-    public UnitCollection getUnitsAtLocations(Collection<Point> locations);
+    UnitCollection getUnitsAtLocations(Collection<Point> locations);
 
-    public UnitCollection getUnitsWithActionsAvailable();
+    UnitCollection getUnitsWithActionsAvailable();
 
-    public void resetPassScore();
+    void resetPassScore();
 
-    public int getGoldKeepingExpenses();
+    int getGoldKeepingExpenses();
 
-    public void sortByName();
+    void sortByName();
 }

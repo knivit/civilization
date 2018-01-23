@@ -6,10 +6,8 @@ import com.tsoft.civilization.combat.HasCombatStrengthList;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
-import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.Archers;
-import com.tsoft.civilization.unit.Warriors;
-import com.tsoft.civilization.unit.Workers;
+import com.tsoft.civilization.unit.*;
+import com.tsoft.civilization.unit.util.UnitFactory;
 import com.tsoft.civilization.util.DefaultLogger;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.Civilization;
@@ -42,10 +40,10 @@ public class AttackActionTest {
         Civilization c2 = new Civilization(mockWorld, 1);
         mockWorld.setCivilizationsRelations(c1, c2, CivilizationsRelations.WAR);
 
-        Warriors warriors = AbstractUnit.newInstance(Warriors.INSTANCE, c1, new Point(1, 0));
-        Workers foreignWorkers = AbstractUnit.newInstance(Workers.INSTANCE, c2, new Point(1, 1));
-        Warriors foreignWarriors1 = AbstractUnit.newInstance(Warriors.INSTANCE, c2, new Point(2, 1));
-        Warriors foreignWarriors2 = AbstractUnit.newInstance(Warriors.INSTANCE, c2, new Point(2, 2));
+        Warriors warriors = UnitFactory.newInstance(Warriors.INSTANCE, c1, new Point(1, 0));
+        Workers foreignWorkers = UnitFactory.newInstance(Workers.INSTANCE, c2, new Point(1, 1));
+        Warriors foreignWarriors1 = UnitFactory.newInstance(Warriors.INSTANCE, c2, new Point(2, 1));
+        Warriors foreignWarriors2 = UnitFactory.newInstance(Warriors.INSTANCE, c2, new Point(2, 2));
 
         // first, there is foreign workers to attack
         HasCombatStrengthList targets = AttackAction.getTargetsToAttack(warriors);
@@ -92,15 +90,15 @@ public class AttackActionTest {
         mockWorld.setCivilizationsRelations(c1, c2, CivilizationsRelations.WAR);
 
         // our forces
-        Archers archers = AbstractUnit.newInstance(Archers.INSTANCE, c1, new Point(2, 1));
+        Archers archers = UnitFactory.newInstance(Archers.INSTANCE, c1, new Point(2, 1));
 
         // foreign forces
-        Workers foreignWorkers = AbstractUnit.newInstance(Workers.INSTANCE, c2, new Point(3, 1));
-        Warriors foreignWarriors1 = AbstractUnit.newInstance(Warriors.INSTANCE, c2, new Point(2, 2));
-        Warriors foreignWarriors2 = AbstractUnit.newInstance(Warriors.INSTANCE, c2, new Point(4, 2));
-        Archers foreignArchers1 = AbstractUnit.newInstance(Archers.INSTANCE, c2, new Point(1, 3));
+        Workers foreignWorkers = UnitFactory.newInstance(Workers.INSTANCE, c2, new Point(3, 1));
+        Warriors foreignWarriors1 = UnitFactory.newInstance(Warriors.INSTANCE, c2, new Point(2, 2));
+        Warriors foreignWarriors2 = UnitFactory.newInstance(Warriors.INSTANCE, c2, new Point(4, 2));
+        Archers foreignArchers1 = UnitFactory.newInstance(Archers.INSTANCE, c2, new Point(1, 3));
         City foreignCity = new City(c2, new Point(2, 3));
-        Archers foreignArchers2 = AbstractUnit.newInstance(Archers.INSTANCE, c2, new Point(3, 3));
+        Archers foreignArchers2 = UnitFactory.newInstance(Archers.INSTANCE, c2, new Point(3, 3));
 
         // look for targets
         HasCombatStrengthList targets = AttackAction.getTargetsToAttack(archers);
@@ -170,16 +168,16 @@ public class AttackActionTest {
 
         // our forces
         City city = new City(c1, new Point(2, 0));
-        Warriors warriors1 = AbstractUnit.newInstance(Warriors.INSTANCE, c1, new Point(4, 2));
-        Warriors warriors2 = AbstractUnit.newInstance(Warriors.INSTANCE, c1, new Point(5, 2));
-        Warriors warriors3 = AbstractUnit.newInstance(Warriors.INSTANCE, c1, new Point(3, 3));
-        Warriors warriors4 = AbstractUnit.newInstance(Warriors.INSTANCE, c1, new Point(5, 4));
+        Warriors warriors1 = UnitFactory.newInstance(Warriors.INSTANCE, c1, new Point(4, 2));
+        Warriors warriors2 = UnitFactory.newInstance(Warriors.INSTANCE, c1, new Point(5, 2));
+        Warriors warriors3 = UnitFactory.newInstance(Warriors.INSTANCE, c1, new Point(3, 3));
+        Warriors warriors4 = UnitFactory.newInstance(Warriors.INSTANCE, c1, new Point(5, 4));
 
         // foreign forces
         City foreignCity = new City(c2, new Point(4, 3));
         foreignCity.getCombatStrength().setStrength(30);
-        Warriors foreignWarriors = AbstractUnit.newInstance(Warriors.INSTANCE, c2, new Point(4, 3));
-        Workers foreignWorkers = AbstractUnit.newInstance(Workers.INSTANCE, c2, new Point(4, 3));
+        Warriors foreignWarriors = UnitFactory.newInstance(Warriors.INSTANCE, c2, new Point(4, 3));
+        Workers foreignWorkers = UnitFactory.newInstance(Workers.INSTANCE, c2, new Point(4, 3));
 
         // strike 1
         ActionAbstractResult result = AttackAction.attack(warriors1, foreignCity.getLocation());

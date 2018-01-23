@@ -8,8 +8,8 @@ import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.base.Grassland;
 import com.tsoft.civilization.tile.feature.Hill;
-import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.Workers;
+import com.tsoft.civilization.unit.util.UnitFactory;
 import com.tsoft.civilization.util.DefaultLogger;
 import com.tsoft.civilization.world.Civilization;
 import org.junit.BeforeClass;
@@ -37,7 +37,7 @@ public class RemoveForestActionTest {
         MockWorld mockWorld = new MockWorld(mockTilesMap);
         Civilization civilization = new Civilization(mockWorld, 0);
         AbstractTile tile = mockTilesMap.getTile(1, 1);
-        Workers workers = AbstractUnit.newInstance(Workers.INSTANCE, civilization, tile.getLocation());
+        Workers workers = UnitFactory.newInstance(Workers.INSTANCE, civilization, tile.getLocation());
 
         // case 1
         // no needed technology
@@ -64,7 +64,7 @@ public class RemoveForestActionTest {
         civilization.addTechnology(Technology.MINING);
 
         AbstractTile tile = mockTilesMap.getTile(1, 1);
-        Workers workers = AbstractUnit.newInstance(Workers.INSTANCE, civilization, tile.getLocation());
+        Workers workers = UnitFactory.newInstance(Workers.INSTANCE, civilization, tile.getLocation());
 
         for (int i = 0; i < 4; i ++) {
             assertEquals(WorkersActionResults.REMOVING_FOREST, RemoveForestAction.removeForest(workers));

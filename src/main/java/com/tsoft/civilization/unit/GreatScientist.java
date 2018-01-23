@@ -1,7 +1,6 @@
 package com.tsoft.civilization.unit;
 
 import com.tsoft.civilization.combat.CombatStrength;
-import com.tsoft.civilization.unit.util.UnitType;
 import com.tsoft.civilization.util.Year;
 import com.tsoft.civilization.web.view.unit.GreatScientistView;
 import com.tsoft.civilization.world.Civilization;
@@ -24,7 +23,12 @@ public class GreatScientist extends AbstractUnit<GreatScientistView> {
 
     @Override
     public UnitType getUnitType() {
-        return UnitType.CIVIL;
+        return UnitType.GREAT_SCIENTIST;
+    }
+
+    @Override
+    public UnitKind getUnitKind() {
+        return UnitKind.CIVIL;
     }
 
     @Override

@@ -2,8 +2,8 @@ package com.tsoft.civilization.web.ajax;
 
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.improvement.City;
-import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.Warriors;
+import com.tsoft.civilization.unit.util.UnitFactory;
 import com.tsoft.civilization.util.DefaultLogger;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.MockRequest;
@@ -37,7 +37,7 @@ public class GetCityStatusTest {
         City city1 = new City(c1, new Point(2, 0));
         Civilization c2 = new Civilization(mockWorld, 1);
         mockWorld.setCivilizationsRelations(c1, c2, CivilizationsRelations.WAR);
-        Warriors foreignWarriors = AbstractUnit.newInstance(Warriors.INSTANCE, c2, new Point(2, 1));
+        Warriors foreignWarriors = UnitFactory.newInstance(Warriors.INSTANCE, c2, new Point(2, 1));
 
         ClientSession session = Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
         Worlds.add(mockWorld);

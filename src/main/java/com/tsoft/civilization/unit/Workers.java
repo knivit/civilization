@@ -1,14 +1,17 @@
 package com.tsoft.civilization.unit;
 
 import com.tsoft.civilization.combat.CombatStrength;
-import com.tsoft.civilization.unit.util.UnitType;
 import com.tsoft.civilization.web.view.unit.WorkersView;
 import com.tsoft.civilization.world.Civilization;
 
 import java.util.UUID;
 
 /**
- * Movement: 2; Strength: 0; Ranged Strength: 0; Cost: 70 hammers; Requires Resource: none
+ * Movement: 2;
+ * Strength: 0;
+ * Ranged Strength: 0;
+ * Cost: 70 hammers;
+ * Requires Resource: none
  * Technology: (none)
  *
  * Abilities: May create or repair land-based tile improvements. May clear Forest in 3 turns,
@@ -28,7 +31,12 @@ public class Workers extends AbstractUnit<WorkersView> {
 
     @Override
     public UnitType getUnitType() {
-        return UnitType.CIVIL;
+        return UnitType.WORKERS;
+    }
+
+    @Override
+    public UnitKind getUnitKind() {
+        return UnitKind.CIVIL;
     }
 
     @Override

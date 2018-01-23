@@ -5,6 +5,7 @@ import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.unit.AbstractUnit;
+import com.tsoft.civilization.unit.util.UnitFactory;
 import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;
@@ -18,7 +19,7 @@ public class BuildUnitAction {
             return result;
         }
 
-        AbstractUnit unit = AbstractUnit.getUnitFromCatalogByClassUuid(unitClassUuid);
+        AbstractUnit unit = UnitFactory.getUnitFromCatalogByClassUuid(unitClassUuid);
         city.startConstruction(unit);
 
         return CityActionResults.UNIT_CONSTRUCTION_IS_STARTED;
@@ -29,7 +30,7 @@ public class BuildUnitAction {
             return CityActionResults.CITY_NOT_FOUND;
         }
 
-        AbstractUnit unit = AbstractUnit.getUnitFromCatalogByClassUuid(unitClassUuid);
+        AbstractUnit unit = UnitFactory.getUnitFromCatalogByClassUuid(unitClassUuid);
         if (unit == null || unit.getProductionCost() < 0) {
             return CityActionResults.INVALID_UNIT;
         }

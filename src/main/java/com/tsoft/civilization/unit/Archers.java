@@ -2,22 +2,26 @@ package com.tsoft.civilization.unit;
 
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.technology.Technology;
-import com.tsoft.civilization.unit.util.UnitType;
 import com.tsoft.civilization.util.Year;
 import com.tsoft.civilization.web.view.unit.ArchersView;
 import com.tsoft.civilization.world.Civilization;
 
-import java.util.UUID;
-
 /**
- * Movement: 2; Strength: 4; Ranged Strength: 6; Range: 2; Cost: 70; Requires Resource: none
- * Technology: Archery; Obsolete with: Machinery; Upgrades to: Crossbowman
+ * Movement: 2;
+ * Strength: 4;
+ * Ranged Strength: 6;
+ * Range: 2;
+ * Cost: 70;
+ * Requires Resource: none
+ * Technology: Archery;
+ * Obsolete with: Machinery;
+ * Upgrades to: Crossbowman
  *
  * Abilities: May not melee attack, -25% vs. Cities
  * Note: The bombardment range for archers is 2 hexes.
  */
 public class Archers extends AbstractUnit<ArchersView> {
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
+    public static final String CLASS_UUID = "8c09e944-ffb7-11e7-9e0a-8b95b9043f2e";
     public static final Archers INSTANCE = new Archers();
 
     private static final CombatStrength COMBAT_STRENGTH = new CombatStrength(5, 5, 30, 15, 2, false);
@@ -25,7 +29,12 @@ public class Archers extends AbstractUnit<ArchersView> {
 
     @Override
     public UnitType getUnitType() {
-        return UnitType.MILITARY_RANGED;
+        return UnitType.ARCHERS;
+    }
+
+    @Override
+    public UnitKind getUnitKind() {
+        return UnitKind.MILITARY_RANGED;
     }
 
     @Override

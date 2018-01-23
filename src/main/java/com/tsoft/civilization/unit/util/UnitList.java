@@ -2,6 +2,7 @@ package com.tsoft.civilization.unit.util;
 
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.GreatGeneral;
+import com.tsoft.civilization.unit.UnitKind;
 import com.tsoft.civilization.util.Point;
 
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class UnitList extends ArrayList<AbstractUnit> implements UnitCollection 
     @Override
     public AbstractUnit findMilitaryUnit() {
         for (AbstractUnit unit : this) {
-            if (unit.getUnitType().isMilitary()) {
+            if (unit.getUnitKind().isMilitary()) {
                 return unit;
             }
         }
@@ -53,7 +54,7 @@ public class UnitList extends ArrayList<AbstractUnit> implements UnitCollection 
     @Override
     public AbstractUnit findCivilUnit() {
         for (AbstractUnit unit : this) {
-            if (!unit.getUnitType().isMilitary()) {
+            if (!unit.getUnitKind().isMilitary()) {
                 return unit;
             }
         }
@@ -61,9 +62,9 @@ public class UnitList extends ArrayList<AbstractUnit> implements UnitCollection 
     }
 
     @Override
-    public AbstractUnit findUnitByUnitType(UnitType unitType) {
+    public AbstractUnit findUnitByUnitKind(UnitKind unitKind) {
         for (AbstractUnit unit : this) {
-            if (unitType.equals(unit.getUnitType())) {
+            if (unitKind.equals(unit.getUnitKind())) {
                 return unit;
             }
         }
@@ -74,7 +75,7 @@ public class UnitList extends ArrayList<AbstractUnit> implements UnitCollection 
     public int getMilitaryCount() {
         int n = 0;
         for (AbstractUnit unit : this) {
-            if (unit.getUnitType().isMilitary()) {
+            if (unit.getUnitKind().isMilitary()) {
                 n ++;
             }
         }
@@ -93,7 +94,7 @@ public class UnitList extends ArrayList<AbstractUnit> implements UnitCollection 
 
     @Override
     public List<Point> getLocations() {
-        List<Point> locations = new ArrayList<Point>(size());
+        List<Point> locations = new ArrayList<>(size());
         for (AbstractUnit unit : this) {
             locations.add(unit.getLocation());
         }
@@ -154,11 +155,6 @@ public class UnitList extends ArrayList<AbstractUnit> implements UnitCollection 
 
     @Override
     public void sortByName() {
-        Collections.sort(this, new Comparator<AbstractUnit>() {
-            @Override
-            public int compare(AbstractUnit unit1, AbstractUnit unit2) {
-                return unit1.getView().getLocalizedName().compareTo(unit2.getView().getLocalizedName());
-            }
-        });
+        Collections.sort(this, Comparator.comparing(unit -> unit.getView().getLocalizedName()));
     }
 }

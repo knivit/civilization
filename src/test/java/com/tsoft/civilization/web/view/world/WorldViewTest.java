@@ -4,10 +4,10 @@ import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
-import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.Settlers;
 import com.tsoft.civilization.unit.Warriors;
 import com.tsoft.civilization.unit.Workers;
+import com.tsoft.civilization.unit.util.UnitFactory;
 import com.tsoft.civilization.util.DefaultLogger;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.GameServerTest;
@@ -36,9 +36,9 @@ public class WorldViewTest {
 
         // a city with two units in it
         City city1 = new City(c1, new Point(0, 0));
-        Warriors warriors = AbstractUnit.newInstance(Warriors.INSTANCE, c1, new Point(0, 0));
-        Workers workers = AbstractUnit.newInstance(Workers.INSTANCE, c1, new Point(0, 0));
-        Settlers settlers = AbstractUnit.newInstance(Settlers.INSTANCE, c1, new Point(1, 0));
+        Warriors warriors = UnitFactory.newInstance(Warriors.INSTANCE, c1, new Point(0, 0));
+        Workers workers = UnitFactory.newInstance(Workers.INSTANCE, c1, new Point(0, 0));
+        Settlers settlers = UnitFactory.newInstance(Settlers.INSTANCE, c1, new Point(1, 0));
 
         JSONBlock worldBlock = mockWorld.getView().getJSON();
         assertEquals("{\"width\":\"3\",\"height\":\"2\",\"tiles\":[{\"name\":\"g\",\"features\":[{\"name\":\"h\"},{\"name\":\"f\"}]},{\"name\":\"g\",\"features\":[{\"name\":\"h\"}]},{\"name\":\"g\",\"features\":[]},{\"name\":\"g\",\"features\":[{\"name\":\"h\"},{\"name\":\"f\"}]},{\"name\":\"g\",\"features\":[{\"name\":\"h\"}]},{\"name\":\"g\",\"features\":[]}],\"civilizations\":[{\"name\":\"Russia\"}],\"units\":[{\"col\":\"0\",\"row\":\"0\",\"name\":\"Warriors\",\"civ\":\"Russia\"},{\"col\":\"0\",\"row\":\"0\",\"name\":\"Workers\",\"civ\":\"Russia\"},{\"col\":\"1\",\"row\":\"0\",\"name\":\"Settlers\",\"civ\":\"Russia\"}],\"cities\":[{\"col\":\"0\",\"row\":\"0\",\"name\":\"Moscow\",\"civilization\":\"Russia\",\"isCapital\":\"true\",\"locations\":[{\"col\":\"0\",\"row\":\"1\"},{\"col\":\"0\",\"row\":\"0\"},{\"col\":\"1\",\"row\":\"0\"},{\"col\":\"2\",\"row\":\"0\"},{\"col\":\"2\",\"row\":\"1\"}]}]}", worldBlock.getText());

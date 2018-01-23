@@ -1,6 +1,6 @@
-package com.tsoft.civilization.unit.util;
+package com.tsoft.civilization.unit;
 
-public enum UnitType {
+public enum UnitKind {
     MILITARY_MELEE(true),
     MILITARY_RANGED(true),
     MILITARY_RANGED_CITY(true),
@@ -14,7 +14,7 @@ public enum UnitType {
 
     private boolean isMilitary;
 
-    UnitType(boolean isMilitary) {
+    UnitKind(boolean isMilitary) {
         this.isMilitary = isMilitary;
     }
 

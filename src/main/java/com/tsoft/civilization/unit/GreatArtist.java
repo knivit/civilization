@@ -1,7 +1,6 @@
 package com.tsoft.civilization.unit;
 
 import com.tsoft.civilization.combat.CombatStrength;
-import com.tsoft.civilization.unit.util.UnitType;
 import com.tsoft.civilization.util.Year;
 import com.tsoft.civilization.web.view.unit.GreatArtistView;
 import com.tsoft.civilization.world.Civilization;
@@ -9,7 +8,9 @@ import com.tsoft.civilization.world.Civilization;
 import java.util.UUID;
 
 /**
- * Movement: 2; Strength: 0; Ranged Strength: 0
+ * Movement: 2;
+ * Strength: 0;
+ * Ranged Strength: 0
  *
  * Notes: Can sacrifice itself to construct a Landmark improvement, trigger a Golden Age, or "culture bomb"
  * a tile within 1 space of your territory, putting that tile and all adjacent tiles into your territory.
@@ -24,7 +25,12 @@ public class GreatArtist extends AbstractUnit<GreatArtistView> {
 
     @Override
     public UnitType getUnitType() {
-        return UnitType.CIVIL;
+        return UnitType.GREAT_ARTIST;
+    }
+
+    @Override
+    public UnitKind getUnitKind() {
+        return UnitKind.CIVIL;
     }
 
     @Override
