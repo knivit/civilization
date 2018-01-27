@@ -24,7 +24,7 @@ import com.tsoft.civilization.world.economic.CitySupply;
 import com.tsoft.civilization.world.economic.ImprovementScore;
 import com.tsoft.civilization.world.economic.ImprovementSupply;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.UnitKind;
+import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.view.improvement.CityView;
 import com.tsoft.civilization.world.Civilization;
@@ -34,7 +34,12 @@ import java.util.*;
 public class City extends AbstractImprovement<CityView> implements HasCombatStrength {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    private static final CombatStrength COMBAT_STRENGTH = new CombatStrength(0, 5, 50, 10, 2, false);
+    private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
+            .setTargetBackFireStrength(5)
+            .setStrength(50)
+            .setRangedAttackStrength(10)
+            .setRangedAttackRadius(2);
+
     private final CityView VIEW;
 
     private Set<Point> locations = new HashSet<>();
@@ -113,8 +118,8 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
     }
 
     @Override
-    public UnitKind getUnitKind() {
-        return UnitKind.MILITARY_RANGED_CITY;
+    public UnitCategory getUnitCategory() {
+        return UnitCategory.MILITARY_RANGED_CITY;
     }
 
     public Set<Point> getLocations() {
@@ -292,7 +297,7 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
         // destroy all military units located in the city and capture civilians
         UnitCollection units = civilization.getWorld().getUnitsAtLocation(location);
         for (AbstractUnit unit : units) {
-            if (unit.getUnitKind().isMilitary()) {
+            if (unit.getUnitCategory().isMilitary()) {
                 unit.destroyBy(destroyer, false);
             } else {
                 unit.captureBy(destroyer);
@@ -313,7 +318,7 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
     /** Return true, if the unit can be placed (i.e. after a buy or on entering) in the city */
     public boolean canTakeUnit(AbstractUnit unit) {
         UnitCollection units = getWorld().getUnitsAtLocation(getLocation());
-        AbstractUnit sameTypeUnit = units.findUnitByUnitKind(unit.getUnitKind());
+        AbstractUnit sameTypeUnit = units.findUnitByUnitKind(unit.getUnitCategory());
         return sameTypeUnit == null;
     }
 

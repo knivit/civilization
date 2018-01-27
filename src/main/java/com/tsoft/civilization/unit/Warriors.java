@@ -19,7 +19,12 @@ public class Warriors extends AbstractUnit<WarriorsView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
     public static final Warriors INSTANCE = new Warriors();
 
-    private static final CombatStrength COMBAT_STRENGTH = new CombatStrength(10, 5, 20, 0, 0, true);
+    private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
+            .setMeleeAttackStrength(10)
+            .setTargetBackFireStrength(5)
+            .setStrength(20)
+            .setCanConquerCity(true);
+
     private static final WarriorsView VIEW = new WarriorsView();
 
     @Override
@@ -28,8 +33,8 @@ public class Warriors extends AbstractUnit<WarriorsView> {
     }
 
     @Override
-    public UnitKind getUnitKind() {
-        return UnitKind.MILITARY_MELEE;
+    public UnitCategory getUnitCategory() {
+        return UnitCategory.MILITARY_MELEE;
     }
 
     @Override

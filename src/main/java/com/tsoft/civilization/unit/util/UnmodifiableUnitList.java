@@ -1,7 +1,7 @@
 package com.tsoft.civilization.unit.util;
 
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.UnitKind;
+import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.util.UnmodifiableList;
 
@@ -36,8 +36,8 @@ public class UnmodifiableUnitList extends UnmodifiableList<AbstractUnit> impleme
     }
 
     @Override
-    public AbstractUnit findUnitByUnitKind(UnitKind unitKind) {
-        return units.findUnitByUnitKind(unitKind);
+    public AbstractUnit findUnitByUnitKind(UnitCategory unitCategory) {
+        return units.findUnitByUnitKind(unitCategory);
     }
 
     @Override

@@ -50,7 +50,7 @@ public class AttackActionTest {
         assertEquals(1, targets.size());
         assertEquals(foreignWorkers, targets.get(0));
 
-        // move foreign warriors and now they are the target
+        // move close the foreign warriors and now they are the target too
         foreignWarriors1.setLocation(new Point(2, 0));
         targets = AttackAction.getTargetsToAttack(warriors);
         assertEquals(2, targets.size());
@@ -60,21 +60,24 @@ public class AttackActionTest {
         assertEquals(1, locations.size());
         assertEquals(foreignWorkers, CaptureUnitAction.getTargetToCaptureAtLocation(warriors, locations.get(0)));
 
-        // capture the foreign workers
+        // capture the foreign workers and move on it's tile
         assertEquals(CaptureUnitActionResults.FOREIGN_UNIT_CAPTURED, CaptureUnitAction.capture(warriors, foreignWorkers.getLocation()));
+        assertEquals(new Point(1, 1), warriors.getLocation());
         assertEquals(foreignWorkers.getLocation(), warriors.getLocation());
         assertEquals(warriors.getCivilization(), foreignWorkers.getCivilization());
 
         // there must be two foreign warriors to attack
         targets = AttackAction.getTargetsToAttack(warriors);
         assertEquals(2, targets.size());
+        assertTrue(targets.contains(foreignWarriors1));
+        assertTrue(targets.contains(foreignWarriors2));
 
         // attack one of them
         assertEquals(AttackActionResults.ATTACKED, AttackAction.attack(warriors, foreignWarriors2.getLocation()));
     }
 
     // Scenario:
-    // Archer can fire through an ocean tile but can't through a mountain
+    // An archer can fire through an ocean tile but can't through a mountain
     @Test
     public void targetsForRangedAttackAndCapture() {
         MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES, 2,
@@ -148,7 +151,7 @@ public class AttackActionTest {
     // Scenario:
     // There is a foreign city with foreign workers and foreign warriors in it.
     // The foreign city has defense strength = 30.
-    // Four our warriors (melee units) attacks the foreign city.
+    // Four our warriors (melee units) attack the foreign city.
     // After the city is conquered, foreign workers are captured and foreign warriors are destroyed.
     @Test
     public void warriorsConquerForeignCity() {

@@ -18,7 +18,9 @@ public class GreatScientist extends AbstractUnit<GreatScientistView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
     public static final GreatScientist INSTANCE = new GreatScientist();
 
-    private static final CombatStrength COMBAT_STRENGTH = new CombatStrength(0, 0, 20, 0, 0, false);
+    private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
+            .setStrength(0);
+
     private static final GreatScientistView VIEW = new GreatScientistView();
 
     @Override
@@ -27,8 +29,8 @@ public class GreatScientist extends AbstractUnit<GreatScientistView> {
     }
 
     @Override
-    public UnitKind getUnitKind() {
-        return UnitKind.CIVIL;
+    public UnitCategory getUnitCategory() {
+        return UnitCategory.CIVIL;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.tsoft.civilization.unit.util;
 
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.UnitKind;
+import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.util.Point;
 
 import java.util.Collection;
@@ -16,7 +16,7 @@ public interface UnitCollection extends List<AbstractUnit> {
 
     AbstractUnit findCivilUnit();
 
-    AbstractUnit findUnitByUnitKind(UnitKind unitKind);
+    AbstractUnit findUnitByUnitKind(UnitCategory unitCategory);
 
     int getMilitaryCount();
 

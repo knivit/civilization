@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web;
 
-import org.junit.Test;
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -11,19 +11,17 @@ import java.net.URL;
 
 import static org.junit.Assert.assertTrue;
 
-public class GameServerTest {
+public class TestGameServer {
     private ScriptEngine engine;
     private String testJSObjectName;
 
-    @Test
-    public void dummy() {
-        assertTrue(true);
-    }
-
-    public void parseJSON(String JSONResponse) {
+    public TestJavaScriptResult parseJSON(String json) throws ScriptException {
         ScriptEngineManager factory = new ScriptEngineManager();
         engine = factory.getEngineByName("JavaScript");
-        engine.put("GameServerTest", this);
+        engine.put("TestGameServer", this);
+
+        Object result = engine.eval("JSON.parse('" + json + "')");
+        return new TestJavaScriptResult((ScriptObjectMirror)result);
     }
 
     public void testJS(String testJSFileName, String testJSObjectName) throws ScriptException {
@@ -31,10 +29,10 @@ public class GameServerTest {
 
         ScriptEngineManager factory = new ScriptEngineManager();
         engine = factory.getEngineByName("JavaScript");
-        engine.put("GameServerTest", this);
-        engine.eval("function load(fileName) { GameServerTest.load(fileName); }");
-        engine.eval("function log(message) { GameServerTest.log(message); }");
-        engine.eval("function jsUnitLog(message, methodName) { GameServerTest.jsUnitLog(message, methodName); }");
+        engine.put("TestGameServer", this);
+        engine.eval("function load(fileName) { TestGameServer.load(fileName); }");
+        engine.eval("function log(message) { TestGameServer.log(message); }");
+        engine.eval("function jsUnitLog(message, methodName) { TestGameServer.jsUnitLog(message, methodName); }");
 
         load(testJSFileName);
 
@@ -45,16 +43,15 @@ public class GameServerTest {
         fileName = "js/" + fileName;
         try {
             // try to load a file from 'test' package
-            URL url = GameServerTest.class.getResource(fileName);
+            URL url = TestGameServer.class.getResource(fileName);
             if (url == null) {
                 // then from 'main' package
                 url = GameServer.class.getResource(fileName);
             }
-            assertTrue("File '" + GameServerTest.class.getPackage().getName() + "." + fileName + "' not found", url != null);
+            assertTrue("File '" + TestGameServer.class.getPackage().getName() + "." + fileName + "' not found", url != null);
 
             engine.eval(new FileReader(url.getFile()));
-        }
-        catch(FileNotFoundException e) {
+        } catch(FileNotFoundException e) {
             throw new RuntimeException("Error loading javascript file: " + fileName, e);
         }
     }

@@ -20,7 +20,9 @@ public class GreatArtist extends AbstractUnit<GreatArtistView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
     public static final GreatArtist INSTANCE = new GreatArtist();
 
-    private static final CombatStrength COMBAT_STRENGTH = new CombatStrength(0, 0, 20, 0, 0, false);
+    private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
+            .setStrength(20);
+
     private static final GreatArtistView VIEW = new GreatArtistView();
 
     @Override
@@ -29,8 +31,8 @@ public class GreatArtist extends AbstractUnit<GreatArtistView> {
     }
 
     @Override
-    public UnitKind getUnitKind() {
-        return UnitKind.CIVIL;
+    public UnitCategory getUnitCategory() {
+        return UnitCategory.CIVIL;
     }
 
     @Override

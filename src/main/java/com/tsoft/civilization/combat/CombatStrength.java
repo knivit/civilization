@@ -33,16 +33,7 @@ public class CombatStrength {
     // Owner of this
     private HasCombatStrength attacker;
 
-    public CombatStrength(int meleeAttackStrength, int targetBackFireStrength, int strength, int rangedAttackStrength,
-                          int rangedAttackRadius, boolean canConquerCity) {
-        this.meleeAttackStrength = meleeAttackStrength;
-        this.targetBackFireStrength = targetBackFireStrength;
-        this.strength = strength;
-        this.rangedAttackStrength = rangedAttackStrength;
-        this.rangedAttackRadius = rangedAttackRadius;
-
-        this.canConquerCity = canConquerCity;
-    }
+    public CombatStrength() { }
 
     public CombatStrength(HasCombatStrength attacker, CombatStrength combatStrength) {
         this.attacker = attacker;
@@ -60,24 +51,45 @@ public class CombatStrength {
         return meleeAttackStrength;
     }
 
+    public CombatStrength setMeleeAttackStrength(int meleeAttackStrength) {
+        this.meleeAttackStrength = meleeAttackStrength;
+        return this;
+    }
+
     public int getStrength() {
         return strength;
     }
 
-    public void setStrength(int strength) {
+    public CombatStrength setStrength(int strength) {
         this.strength = strength;
+        return this;
     }
 
     public int getRangedAttackStrength() {
         return rangedAttackStrength;
     }
 
+    public CombatStrength setRangedAttackStrength(int rangedAttackStrength) {
+        this.rangedAttackStrength = rangedAttackStrength;
+        return this;
+    }
+
     public int getRangedAttackRadius() {
         return rangedAttackRadius;
     }
 
+    public CombatStrength setRangedAttackRadius(int rangedAttackRadius) {
+        this.rangedAttackRadius = rangedAttackRadius;
+        return this;
+    }
+
     public boolean canConquerCity() {
         return canConquerCity;
+    }
+
+    public CombatStrength setCanConquerCity(boolean canConquerCity) {
+        this.canConquerCity = canConquerCity;
+        return this;
     }
 
     public int getAttackExperience() {
@@ -105,12 +117,12 @@ public class CombatStrength {
     }
 
     /** Calc the strike strength */
-    public int getStrikeStrength(int strikeStrength, HasCombatStrength target) {
-        int strikeSkillsPercent = getAttackerStrikeSkillsPercent(attacker, target);
+    public int calcStrikeStrength(int strikeStrength, HasCombatStrength target) {
+        int strikeSkillsPercent = calcAttackerStrikeSkillsPercent(attacker, target);
         int strikeGeneralsPercent = getGreatGeneralCount(attacker) * 33;
         int strikeTerrainPercent = 0;
         int strikeAgainstThatTypePercent = 0;
-        int strikeHappinessPercent = getAttackerStrikeHappinessPercent();
+        int strikeHappinessPercent = calcAttackerStrikeHappinessPercent();
 
         return strikeStrength + attackExperience +
                 (int)Math.round(((double)strikeStrength * (double)strikeSkillsPercent ) / 100.0) +
@@ -120,7 +132,7 @@ public class CombatStrength {
                 (int)Math.round(((double)strikeStrength * (double)strikeHappinessPercent ) / 100.0);
     }
 
-    private int getAttackerStrikeSkillsPercent(HasCombatStrength attacker, HasCombatStrength target) {
+    private int calcAttackerStrikeSkillsPercent(HasCombatStrength attacker, HasCombatStrength target) {
         int value = 0;
         for (AbstractSkill skill : attacker.getSkills()) {
             value += skill.getAttackStrikePercent(attacker, target);
@@ -128,7 +140,7 @@ public class CombatStrength {
         return value;
     }
 
-    private int getAttackerStrikeHappinessPercent() {
+    private int calcAttackerStrikeHappinessPercent() {
         int value = 0;
         CivilizationScore score = attacker.getCivilization().getCivilizationScore();
         if (score.getHappiness() < -30) {
@@ -147,8 +159,8 @@ public class CombatStrength {
     }
 
     /** Calc the target's back strike strength (strike strength on defense) */
-    public int getTargetBackFireStrength(HasCombatStrength target) {
-        int strikeOnDefenseSkillPercent = getTargetStrikeOnDefenseSkillsPercent(target);
+    public int calcTargetBackFireStrength(HasCombatStrength target) {
+        int strikeOnDefenseSkillPercent = calcTargetStrikeOnDefenseSkillsPercent(target);
         int strikeOnDefenseGeneralsPercent = getGreatGeneralCount(attacker) * 10;
         int strikeOnDefenseTerrainPercent = 0;
         int strikeOnDefenseAgainstThatTypePercent = 0;
@@ -160,7 +172,12 @@ public class CombatStrength {
                 (int)Math.round(((double) targetBackFireStrength * (double)strikeOnDefenseAgainstThatTypePercent ) / 100.0);
     }
 
-    private int getTargetStrikeOnDefenseSkillsPercent(HasCombatStrength target) {
+    public CombatStrength setTargetBackFireStrength(int targetBackFireStrength) {
+        this.targetBackFireStrength = targetBackFireStrength;
+        return this;
+    }
+
+    private int calcTargetStrikeOnDefenseSkillsPercent(HasCombatStrength target) {
         int value = 0;
         for (AbstractSkill skill : target.getSkills()) {
             value += skill.getTargetStrikeOnDefensePercent(attacker, target);

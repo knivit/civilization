@@ -19,7 +19,9 @@ public class GreatMerchant extends AbstractUnit<GreatMerchantView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
     public static final GreatMerchant INSTANCE = new GreatMerchant();
 
-    private static final CombatStrength COMBAT_STRENGTH = new CombatStrength(0, 0, 20, 0, 0, false);
+    private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
+            .setStrength(0);
+
     private static final GreatMerchantView VIEW = new GreatMerchantView();
 
     @Override
@@ -28,8 +30,8 @@ public class GreatMerchant extends AbstractUnit<GreatMerchantView> {
     }
 
     @Override
-    public UnitKind getUnitKind() {
-        return UnitKind.CIVIL;
+    public UnitCategory getUnitCategory() {
+        return UnitCategory.CIVIL;
     }
 
     @Override

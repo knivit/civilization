@@ -213,7 +213,7 @@ public class MoveUnitAction {
 
         // get units located in the city
         UnitCollection units = thisCivilization.getUnitsAtLocation(location);
-        AbstractUnit nextUnit = units.findUnitByUnitKind(unit.getUnitKind());
+        AbstractUnit nextUnit = units.findUnitByUnitKind(unit.getUnitCategory());
 
         // no units of such type, so we can enter into city
         if (nextUnit == null) {
@@ -225,7 +225,7 @@ public class MoveUnitAction {
 
     private static UnitMoveResult checkUnitsSwap(AbstractUnit unit, Point nextLocation, boolean canSwapLocations) {
         UnitCollection units = unit.getCivilization().getUnitsAtLocation(nextLocation);
-        AbstractUnit nextUnit = units.findUnitByUnitKind(unit.getUnitKind());
+        AbstractUnit nextUnit = units.findUnitByUnitKind(unit.getUnitCategory());
         if (nextUnit == null) {
             return UnitMoveResult.CHECK_FAILED;
         }
@@ -399,7 +399,7 @@ public class MoveUnitAction {
         UnitCollection units = unit.getWorld().getUnitsAtLocations(locations);
         for (AbstractUnit ua : units) {
             if (unit.getCivilization().equals(ua.getCivilization())) {
-                if (unit.getUnitKind().isMilitary() == ua.getUnitKind().isMilitary()) {
+                if (unit.getUnitCategory().isMilitary() == ua.getUnitCategory().isMilitary()) {
                     locations.remove(ua.getLocation());
                 }
             } else {

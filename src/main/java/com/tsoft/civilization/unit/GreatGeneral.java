@@ -19,7 +19,9 @@ public class GreatGeneral extends AbstractUnit<GreatGeneralView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
     public static final GreatGeneral INSTANCE = new GreatGeneral();
 
-    private static final CombatStrength COMBAT_STRENGTH = new CombatStrength(0, 0, 20, 0, 0, false);
+    private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
+            .setStrength(0);
+
     private static final GreatGeneralView VIEW = new GreatGeneralView();
 
     @Override
@@ -28,8 +30,8 @@ public class GreatGeneral extends AbstractUnit<GreatGeneralView> {
     }
 
     @Override
-    public UnitKind getUnitKind() {
-        return UnitKind.CIVIL;
+    public UnitCategory getUnitCategory() {
+        return UnitCategory.CIVIL;
     }
 
     @Override

@@ -8,7 +8,6 @@ import com.tsoft.civilization.improvement.CanBeBuilt;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.unit.util.UnitCollection;
-import com.tsoft.civilization.util.DefaultLogger;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.view.unit.AbstractUnitView;
 import com.tsoft.civilization.world.Civilization;
@@ -33,7 +32,7 @@ public abstract class AbstractUnit<V extends AbstractUnitView> implements HasCom
     private ArrayList<AbstractSkill> skills = new ArrayList<>();
 
     public abstract UnitType getUnitType();
-    public abstract UnitKind getUnitKind();
+    public abstract UnitCategory getUnitCategory();
     public abstract void initPassScore();
     public abstract int getGoldCost();
     public abstract V getView();
@@ -133,7 +132,7 @@ public abstract class AbstractUnit<V extends AbstractUnitView> implements HasCom
     }
 
     public boolean canBeCaptured() {
-        return !getUnitKind().isMilitary();
+        return !getUnitCategory().isMilitary();
     }
 
     public void captureBy(HasCombatStrength capturer) {

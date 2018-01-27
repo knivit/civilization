@@ -10,7 +10,9 @@ import com.tsoft.civilization.web.view.improvement.RoadView;
 import com.tsoft.civilization.world.Civilization;
 
 public class Road extends AbstractImprovement {
-    private static final CombatStrength COMBAT_STRENGTH = new CombatStrength(0, 0, 10, 0, 0, false);
+    private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
+            .setStrength(10);
+
     private static final AbstractImprovementView VIEW = new RoadView();
 
     public Road(Civilization civilization, Point location) {

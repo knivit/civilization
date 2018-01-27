@@ -37,7 +37,7 @@ public class AttackAction {
             return AttackActionResults.NO_TARGETS_TO_ATTACK;
         }
 
-        if (attacker.getUnitKind().isRanged()) {
+        if (attacker.getUnitCategory().isRanged()) {
             return rangedAttack(attacker, target);
         }
 
@@ -50,7 +50,7 @@ public class AttackAction {
             return AttackActionResults.ATTACKER_NOT_FOUND;
         }
 
-        if (!attacker.getUnitKind().isMilitary()) {
+        if (!attacker.getUnitCategory().isMilitary()) {
             return AttackActionResults.NOT_MILITARY_UNIT;
         }
 
@@ -65,7 +65,7 @@ public class AttackAction {
     private static HasCombatStrength getTargetToAttackAtLocation(HasCombatStrength attacker, Point location) {
         Civilization civilization = attacker.getCivilization();
 
-        // first, is there a city then attack it
+        // first, if there is a city then attack it
         City city = civilization.getWorld().getCityAtLocation(location);
         if (city != null) {
             return city;
@@ -96,7 +96,7 @@ public class AttackAction {
         int rangedAttackStrength = attacker.getCombatStrength().getRangedAttackStrength();
 
         // add all bonuses
-        int missileStrength = attacker.getCombatStrength().getStrikeStrength(rangedAttackStrength, target);
+        int missileStrength = attacker.getCombatStrength().calcStrikeStrength(rangedAttackStrength, target);
 
         for (Point loc : path) {
             AbstractTile tile = attacker.getCivilization().getTilesMap().getTile(loc);
@@ -123,7 +123,7 @@ public class AttackAction {
 
         // calc the strength of the attack
         int meleeAttackStrength = attacker.getCombatStrength().getMeleeAttackStrength();
-        int attackStrength = attacker.getCombatStrength().getStrikeStrength(meleeAttackStrength, target);
+        int attackStrength = attacker.getCombatStrength().calcStrikeStrength(meleeAttackStrength, target);
 
         return attackTarget(attacker, target, attackStrength);
     }
@@ -132,7 +132,7 @@ public class AttackAction {
         World world = attacker.getCivilization().getWorld();
         int unitStrength = attacker.getCombatStrength().getStrength();
         int targetStrength = target.getCombatStrength().getStrength();
-        int targetBackFireStrength = attacker.getCombatStrength().getTargetBackFireStrength(target);
+        int targetBackFireStrength = attacker.getCombatStrength().calcTargetBackFireStrength(target);
 
         // decrease target's strength
         // take into account target's defense experience
@@ -143,7 +143,7 @@ public class AttackAction {
         targetStrength -= strikeStrength;
 
         // a ranged attack can't destroy a city
-        if (attacker.getUnitKind().isRanged() && target.getUnitKind().isCity()) {
+        if (attacker.getUnitCategory().isRanged() && target.getUnitCategory().isCity()) {
             if (targetStrength <= 0) {
                 targetStrength = 1;
             }
@@ -152,7 +152,7 @@ public class AttackAction {
         if (targetStrength <= 0) {
             Point location = target.getLocation();
 
-            if (attacker.getUnitKind().isRanged()) {
+            if (attacker.getUnitCategory().isRanged()) {
                 // if the attacker is a ranged unit
                 // the destroy the target only
                 target.destroyBy(attacker, false);
@@ -207,7 +207,7 @@ public class AttackAction {
 
     // Find out all targets to attack
     public static HasCombatStrengthList getTargetsToAttack(HasCombatStrength attacker) {
-        if (attacker.getUnitKind().isRanged()) {
+        if (attacker.getUnitCategory().isRanged()) {
             return getTargetsToRangedAttack(attacker);
         }
 

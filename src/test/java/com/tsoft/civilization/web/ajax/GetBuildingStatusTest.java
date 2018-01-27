@@ -45,7 +45,6 @@ public class GetBuildingStatusTest {
         assertEquals(ResponseCode.OK, response.getErrorCode());
     }
 
-
     @Test
     public void getJSONForForeignCityBuilding() {
         MockWorld mockWorld = MockWorld.newSimpleWorld();

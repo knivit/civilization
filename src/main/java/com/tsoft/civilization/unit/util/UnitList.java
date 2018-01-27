@@ -2,7 +2,7 @@ package com.tsoft.civilization.unit.util;
 
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.GreatGeneral;
-import com.tsoft.civilization.unit.UnitKind;
+import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.util.Point;
 
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ public class UnitList extends ArrayList<AbstractUnit> implements UnitCollection 
     @Override
     public AbstractUnit findMilitaryUnit() {
         for (AbstractUnit unit : this) {
-            if (unit.getUnitKind().isMilitary()) {
+            if (unit.getUnitCategory().isMilitary()) {
                 return unit;
             }
         }
@@ -54,7 +54,7 @@ public class UnitList extends ArrayList<AbstractUnit> implements UnitCollection 
     @Override
     public AbstractUnit findCivilUnit() {
         for (AbstractUnit unit : this) {
-            if (!unit.getUnitKind().isMilitary()) {
+            if (!unit.getUnitCategory().isMilitary()) {
                 return unit;
             }
         }
@@ -62,9 +62,9 @@ public class UnitList extends ArrayList<AbstractUnit> implements UnitCollection 
     }
 
     @Override
-    public AbstractUnit findUnitByUnitKind(UnitKind unitKind) {
+    public AbstractUnit findUnitByUnitKind(UnitCategory unitCategory) {
         for (AbstractUnit unit : this) {
-            if (unitKind.equals(unit.getUnitKind())) {
+            if (unitCategory.equals(unit.getUnitCategory())) {
                 return unit;
             }
         }
@@ -75,7 +75,7 @@ public class UnitList extends ArrayList<AbstractUnit> implements UnitCollection 
     public int getMilitaryCount() {
         int n = 0;
         for (AbstractUnit unit : this) {
-            if (unit.getUnitKind().isMilitary()) {
+            if (unit.getUnitCategory().isMilitary()) {
                 n ++;
             }
         }

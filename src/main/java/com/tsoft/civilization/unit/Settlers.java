@@ -24,7 +24,9 @@ public class Settlers extends AbstractUnit<SettlersView> {
     public static final String CLASS_UUID = "782ad244-ffb7-11e7-b852-13a241fdfbd0";
     public static final Settlers INSTANCE = new Settlers();
 
-    private static final CombatStrength COMBAT_STRENGTH = new CombatStrength(0, 0, 20, 0, 0, false);
+    private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
+            .setStrength(0);
+
     private static final SettlersView VIEW = new SettlersView();
 
     @Override
@@ -33,8 +35,8 @@ public class Settlers extends AbstractUnit<SettlersView> {
     }
 
     @Override
-    public UnitKind getUnitKind() {
-        return UnitKind.CIVIL;
+    public UnitCategory getUnitCategory() {
+        return UnitCategory.CIVIL;
     }
 
     @Override

@@ -24,7 +24,14 @@ public class Archers extends AbstractUnit<ArchersView> {
     public static final String CLASS_UUID = "8c09e944-ffb7-11e7-9e0a-8b95b9043f2e";
     public static final Archers INSTANCE = new Archers();
 
-    private static final CombatStrength COMBAT_STRENGTH = new CombatStrength(5, 5, 30, 15, 2, false);
+    private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
+            .setMeleeAttackStrength(5)
+            .setTargetBackFireStrength(5)
+            .setStrength(30)
+            .setRangedAttackStrength(15)
+            .setRangedAttackRadius(2)
+            .setCanConquerCity(false);
+
     private static final ArchersView VIEW = new ArchersView();
 
     @Override
@@ -33,8 +40,8 @@ public class Archers extends AbstractUnit<ArchersView> {
     }
 
     @Override
-    public UnitKind getUnitKind() {
-        return UnitKind.MILITARY_RANGED;
+    public UnitCategory getUnitCategory() {
+        return UnitCategory.MILITARY_RANGED;
     }
 
     @Override
