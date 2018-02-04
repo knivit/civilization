@@ -1,13 +1,11 @@
 package com.tsoft.civilization.improvement;
 
-import com.tsoft.civilization.L10n.L10nImprovement;
 import com.tsoft.civilization.combat.CombatStrength;
-import com.tsoft.civilization.world.economic.ImprovementScore;
-import com.tsoft.civilization.world.economic.ImprovementSupply;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.view.improvement.AbstractImprovementView;
 import com.tsoft.civilization.web.view.improvement.RoadView;
 import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.world.economic.Supply;
 
 public class Road extends AbstractImprovement {
     private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
@@ -20,10 +18,9 @@ public class Road extends AbstractImprovement {
     }
 
     @Override
-    public ImprovementScore getSupply() {
-        ImprovementScore score = new ImprovementScore(null);
-        score.add(new ImprovementSupply(0, 0, -2, 0), L10nImprovement.IMPROVEMENT_EXPENSES_SUPPLY);
-        return score;
+    public Supply getSupply() {
+        Supply supply = new Supply().setGold(-2);
+        return supply;
     }
 
     @Override

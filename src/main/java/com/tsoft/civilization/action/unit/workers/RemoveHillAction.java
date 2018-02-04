@@ -42,7 +42,7 @@ public class RemoveHillAction {
         }
 
         // there must be no forest on the hill
-        if (tile.getFeatures().size() != 1) {
+        if (tile.getTerrainFeatures().size() != 1) {
             return WorkersActionResults.FAIL_FOREST_MUST_BE_REMOVED_FIRST;
         }
 

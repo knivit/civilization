@@ -6,7 +6,7 @@ import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.view.improvement.AbstractImprovementView;
 import com.tsoft.civilization.world.Civilization;
 import com.tsoft.civilization.world.World;
-import com.tsoft.civilization.world.economic.ImprovementScore;
+import com.tsoft.civilization.world.economic.Supply;
 
 import java.util.UUID;
 
@@ -16,7 +16,7 @@ public abstract class AbstractImprovement<V extends AbstractImprovementView> {
     protected Civilization civilization;
     protected Point location;
 
-    public abstract ImprovementScore getSupply();
+    public abstract Supply getSupply();
     public abstract CombatStrength getBaseCombatStrength();
     public abstract V getView();
 

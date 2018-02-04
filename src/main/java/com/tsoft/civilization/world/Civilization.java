@@ -28,8 +28,7 @@ import com.tsoft.civilization.util.Year;
 import com.tsoft.civilization.web.view.world.CivilizationView;
 import com.tsoft.civilization.world.agreement.AgreementList;
 import com.tsoft.civilization.world.agreement.OpenBordersAgreement;
-import com.tsoft.civilization.world.economic.CivilizationScore;
-import com.tsoft.civilization.world.economic.CivilizationSupply;
+import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.world.util.Event;
 import com.tsoft.civilization.world.util.EventsByYearMap;
 
@@ -38,6 +37,7 @@ import java.util.*;
 public class Civilization {
     private final CivilizationView CIVILIZATION_VIEW;
 
+    private L10nMap name;
     private String id;
     private Year startYear;
     private boolean isMoved;
@@ -56,7 +56,7 @@ public class Civilization {
     private UnitCollection destroyedUnits = new UnitList();
 
     private HashSet<Technology> technologies = new TechnologySet();
-    private CivilizationScore civilizationScore;
+    private Supply supply;
 
     // Agreements which this civilization have with others
     private HashMap<Civilization, AgreementList> agreements = new HashMap<>();
@@ -74,7 +74,7 @@ public class Civilization {
             DefaultLogger.warning("Invalid civilization index=" + index);
             index = 0;
         }
-        L10nMap name = L10nCivilization.CIVILIZATIONS.get(index);
+        name = L10nCivilization.CIVILIZATIONS.get(index);
         CIVILIZATION_VIEW = new CivilizationView(name);
 
         id = UUID.randomUUID().toString();
@@ -86,7 +86,7 @@ public class Civilization {
 
         world.addCivilization(this);
 
-        civilizationScore = new CivilizationScore(this);
+        supply = new Supply();
     }
 
     public void addFirstUnits() {
@@ -252,24 +252,32 @@ public class Civilization {
     }
 
     public boolean canBuyUnit(AbstractUnit unit) {
-        int gold = getCivilizationScore().getGold();
+        int gold = supply.getGold();
         if (gold < unit.getGoldCost()) {
             return false;
         }
         return true;
     }
 
+    public void addEvent(Object object, L10nMap description) {
+        Event event = new Event(object, description, Event.INFORMATION);
+        events.add(event);
+        addEvent(event);
+    }
+
     public void buyUnit(String unitClassUuid, City city) {
         AbstractUnit catalogUnit = UnitFactory.getUnitFromCatalogByClassUuid(unitClassUuid);
         int gold = catalogUnit.getGoldCost();
-        CivilizationSupply expenses = new CivilizationSupply(0, 0, gold, 0);
-        getCivilizationScore().add(expenses, L10nCivilization.BUY_UNIT_EVENT);
+        Supply expenses = new Supply().setGold(gold);
+
+        supply.add(expenses);
+        addEvent(supply, L10nCivilization.BUY_UNIT_EVENT);
 
         UnitFactory.newInstance(catalogUnit, this, city.getLocation());
     }
 
     public boolean canBuyBuilding(AbstractBuilding building) {
-        int gold = getCivilizationScore().getGold();
+        int gold = supply.getGold();
         if (gold < building.getGoldCost()) {
             return false;
         }
@@ -279,8 +287,10 @@ public class Civilization {
     public void buyBuilding(String buildingClassUuid, City city) {
         AbstractBuilding catalogBuilding = BuildingCatalog.values().findByClassUuid(buildingClassUuid);
         int gold = catalogBuilding.getGoldCost();
-        CivilizationSupply expenses = new CivilizationSupply(0, 0, gold, 0);
-        getCivilizationScore().add(expenses, L10nCivilization.BUY_BUILDING_EVENT);
+
+        Supply expenses = new Supply().setGold(gold);
+        supply.add(expenses);
+        addEvent(supply, L10nCivilization.BUY_BUILDING_EVENT);
 
         AbstractBuilding.newInstance(buildingClassUuid, city);
     }
@@ -346,24 +356,40 @@ public class Civilization {
         return new Point(0, 0);
     }
 
-    public CivilizationScore getCivilizationScore() {
-        if (needCivilizationScoreRecalculation) {
-            calcCivilizationScore();
+    public Supply getSupply() {
+        Supply supply = new Supply();
+
+        // income
+        for (City city : cities) {
+            supply.add(city.getSupply());
         }
-        return civilizationScore;
+
+        // expenses on cities
+        if (!cities.isEmpty()) {
+            // units keeping
+            int unitKeepingGold = units.getGoldKeepingExpenses();
+            if (unitKeepingGold != 0) {
+                supply.add(new Supply().setGold(-unitKeepingGold));
+            }
+        }
+
+        // science
+
+        return supply;
     }
 
-    public void step() {
+    public void step(Year year) {
         if (isDestroyed) return;
 
         destroyedUnits.clear();
         destroyedCities.clear();
 
         for (City city : cities) {
-            city.step();
+            city.step(year);
         }
 
-        calcCivilizationScore();
+        Supply supply = getSupply();
+        this.supply.add(supply);
 
         // reset unit's pass score
         units.resetPassScore();
@@ -371,32 +397,11 @@ public class Civilization {
         isMoved = false;
     }
 
-    private void calcCivilizationScore() {
-        int gold = civilizationScore.getGold();
-        CivilizationSupply accumulationSupply = new CivilizationSupply(0, 0, gold, 0);
-
-        civilizationScore = new CivilizationScore(this);
-        civilizationScore.add(accumulationSupply, L10nCivilization.ACCUMULATION_SUPPLY);
-
-        // income from all cities
-        for (City city : cities) {
-            civilizationScore.add(city.getCityScore());
-        }
-
-        // expenses (if there is a city)
-        if (!cities.isEmpty()) {
-            // units keeping
-            int unitKeepingGold = units.getGoldKeepingExpenses();
-            if (unitKeepingGold != 0) {
-                CivilizationSupply civilizationSupply = new CivilizationSupply(0, 0, -unitKeepingGold, 0);
-                civilizationScore.add(civilizationSupply, L10nCivilization.UNIT_KEEPING_EXPENSES);
-            }
-        }
-
-        // science
-
-        // reset the flag
-        needCivilizationScoreRecalculation = false;
+    @Override
+    public String toString() {
+        return "Civilization{" +
+                "name='" + name + '\'' +
+                '}';
     }
 
     @Override

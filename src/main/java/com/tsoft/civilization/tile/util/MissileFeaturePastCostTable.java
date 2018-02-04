@@ -2,7 +2,7 @@ package com.tsoft.civilization.tile.util;
 
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.improvement.City;
-import com.tsoft.civilization.tile.feature.AbstractFeature;
+import com.tsoft.civilization.tile.feature.TerrainFeature;
 import com.tsoft.civilization.tile.feature.Atoll;
 import com.tsoft.civilization.tile.feature.Fallout;
 import com.tsoft.civilization.tile.feature.FloodPlain;
@@ -41,7 +41,7 @@ public class MissileFeaturePastCostTable {
         table.put(City.CLASS_UUID + Oasis.CLASS_UUID, 2);
     }
 
-    public static int get(HasCombatStrength attacker, AbstractFeature feature) {
+    public static int get(HasCombatStrength attacker, TerrainFeature feature) {
         assert (attacker != null && feature != null) : "Attacker and/or feature can't be null";
         String key = attacker.getClassUuid() + feature.getClassUuid();
 

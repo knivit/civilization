@@ -4,7 +4,7 @@ import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.tile.util.FeaturePassCostTable;
 import com.tsoft.civilization.tile.util.MissileFeaturePastCostTable;
 import com.tsoft.civilization.tile.util.TileCatalog;
-import com.tsoft.civilization.world.economic.TileSupply;
+import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.base.TileType;
 import com.tsoft.civilization.unit.AbstractUnit;
@@ -12,9 +12,8 @@ import com.tsoft.civilization.util.DefaultLogger;
 import com.tsoft.civilization.web.view.tile.feature.AbstractFeatureView;
 
 import java.lang.reflect.Constructor;
-import java.util.List;
 
-public abstract class AbstractFeature<V extends AbstractFeatureView> {
+public abstract class TerrainFeature<V extends AbstractFeatureView> {
     public static final int FEATURE_NOT_INITIALIZED = -1;
     public static final int FEATURE_REMOVED = 0;
 
@@ -23,22 +22,22 @@ public abstract class AbstractFeature<V extends AbstractFeatureView> {
     private int strength = FEATURE_NOT_INITIALIZED;
 
     public abstract TileType getTileType();
-    public abstract TileSupply getSupply();
+    public abstract Supply getSupply();
     public abstract boolean canBuildCity();
     public abstract int getDefensiveBonusPercent();
     public abstract int getMaxStrength();
     public abstract String getClassUuid();
     public abstract V getView();
 
-    public static AbstractFeature newInstance(String classUuid, AbstractTile tile) {
-        AbstractFeature feature = getFeatureFromCatalogByClassUuid(classUuid);
+    public static TerrainFeature newInstance(String classUuid, AbstractTile tile) {
+        TerrainFeature feature = getFeatureFromCatalogByClassUuid(classUuid);
         if (feature == null) {
             return null;
         }
 
         try {
             Constructor constructor = feature.getClass().getConstructor();
-            feature = (AbstractFeature)constructor.newInstance();
+            feature = (TerrainFeature)constructor.newInstance();
             feature.init(tile);
 
             return feature;
@@ -48,15 +47,15 @@ public abstract class AbstractFeature<V extends AbstractFeatureView> {
         return null;
     }
 
-    protected AbstractFeature() { }
+    protected TerrainFeature() { }
 
     private void init(AbstractTile tile) {
         this.tile = tile;
         tile.addFeature(this);
     }
 
-    public static AbstractFeature getFeatureFromCatalogByClassUuid(String classUuid) {
-        for (AbstractFeature feature : TileCatalog.features()) {
+    public static TerrainFeature getFeatureFromCatalogByClassUuid(String classUuid) {
+        for (TerrainFeature feature : TileCatalog.features()) {
             if (feature.getClassUuid().equals(classUuid)) {
                 return feature;
             }
@@ -97,9 +96,8 @@ public abstract class AbstractFeature<V extends AbstractFeatureView> {
 
     @Override
     public String toString() {
-        return getClass().getName() + " {" +
-                "tile=" + tile.toString() +
-                ", strength=" + strength +
-                '}';
+        return getClass().getSimpleName() + " { " +
+                "strength=" + strength +
+                " }";
     }
 }

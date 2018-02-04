@@ -69,9 +69,9 @@ public class GetMyCities extends AbstractAjaxRequest {
                 "</tr>",
 
                 "$citizens", city.getCitizenCount(),
-                "$production", city.getCityScore().getProduction(),
-                "$gold", city.getCityScore().getGold(),
-                "$food", city.getCityScore().getFood(),
+                "$production", city.getSupply().getProduction(),
+                "$gold", city.getSupply().getGold(),
+                "$food", city.getSupply().getFood(),
                 "$cityCol", city.getLocation().getX(),
                 "$cityRow", city.getLocation().getY(),
                 "$city", city.getId(),

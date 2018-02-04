@@ -1,6 +1,6 @@
 package com.tsoft.civilization.tile.feature;
 
-import com.tsoft.civilization.world.economic.TileSupply;
+import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.tile.base.TileType;
 import com.tsoft.civilization.web.view.tile.feature.OasisView;
 
@@ -9,7 +9,7 @@ import java.util.UUID;
 /**
  * Oasis can't be improved (except with roads)
  */
-public class Oasis extends AbstractFeature<OasisView> {
+public class Oasis extends TerrainFeature<OasisView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private static final OasisView VIEW = new OasisView();
@@ -20,8 +20,8 @@ public class Oasis extends AbstractFeature<OasisView> {
     }
 
     @Override
-    public TileSupply getSupply() {
-        return new TileSupply(3, 0, 1);
+    public Supply getSupply() {
+        return new Supply().setFood(3).setGold(1);
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.tsoft.civilization.improvement;
 
 import com.tsoft.civilization.L10n.L10nChainedArrayList;
 import com.tsoft.civilization.L10n.L10nCity;
-import com.tsoft.civilization.L10n.L10nImprovement;
 import com.tsoft.civilization.L10n.L10nMap;
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.util.BuildingCollection;
@@ -11,18 +10,14 @@ import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.combat.skill.AbstractSkill;
 import com.tsoft.civilization.improvement.city.CityBuildingService;
-import com.tsoft.civilization.improvement.city.CityCitizenService;
+import com.tsoft.civilization.improvement.city.CityPopulationService;
 import com.tsoft.civilization.unit.util.UnitCollection;
 import com.tsoft.civilization.unit.util.UnitFactory;
+import com.tsoft.civilization.util.Year;
+import com.tsoft.civilization.world.economic.*;
 import com.tsoft.civilization.world.util.Event;
-import com.tsoft.civilization.world.economic.BuildingScore;
-import com.tsoft.civilization.world.economic.CitizenScore;
-import com.tsoft.civilization.world.economic.CityScore;
 import com.tsoft.civilization.improvement.city.CitySupplyStrategy;
 import com.tsoft.civilization.improvement.city.Construction;
-import com.tsoft.civilization.world.economic.CitySupply;
-import com.tsoft.civilization.world.economic.ImprovementScore;
-import com.tsoft.civilization.world.economic.ImprovementSupply;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.util.Point;
@@ -45,11 +40,10 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
     private Set<Point> locations = new HashSet<>();
     private Set<Point> unmodifiableLocations = Collections.unmodifiableSet(locations);
 
-    private CityCitizenService citizenService;
+    private CityPopulationService citizenService;
     private CityBuildingService buildingService;
 
-    private CityScore cityScore;
-    private boolean needCityScoreRecalculation;
+    private Supply citySupply;
 
     private CombatStrength combatStrength;
     private int passScore;
@@ -70,15 +64,16 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
         civilization.addCity(this);
 
         // economics
-        cityScore = new CityScore(civilization);
+        citySupply = new Supply();
 
         // city's tiles
         locations.add(location);
         locations.addAll(getTilesMap().getLocationsAround(location, 1));
 
         // first citizen
-        citizenService = new CityCitizenService(this);
-        addCitizen(L10nCity.FOUNDED_SETTLERS);
+        citizenService = new CityPopulationService(this);
+        addCitizen();
+        civilization.addEvent(citizenService, L10nCity.FOUNDED_SETTLERS);
 
         // city's initial buildings
         buildingService = new CityBuildingService(this);
@@ -89,13 +84,6 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
 
     public void setCivilization(Civilization civilization) {
         this.civilization = civilization;
-    }
-
-    @Override
-    public ImprovementScore getSupply() {
-        ImprovementScore score = new ImprovementScore(getCivilization());
-        score.add(new ImprovementSupply(0, 0, 0, -1), L10nImprovement.IMPROVEMENT_EXPENSES_SUPPLY);
-        return score;
     }
 
     @Override
@@ -127,7 +115,6 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
     }
 
     public void addLocations(Collection<Point> locations) {
-        needCityScoreRecalculation = true;
         this.locations.addAll(locations);
     }
 
@@ -140,16 +127,11 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
     }
 
     public void setSupplyStrategy(CitySupplyStrategy supplyStrategy) {
-        needCityScoreRecalculation = true;
         citizenService.setSupplyStrategy(supplyStrategy);
     }
 
-    public void addCitizen(L10nMap description) {
+    public void addCitizen() {
         citizenService.addCitizen();
-
-        CitySupply citySupply = new CitySupply(0, 0, 0, 1);
-        cityScore.add(citySupply, description);
-        needCityScoreRecalculation = true;
     }
 
     public int getCitizenCount() {
@@ -172,17 +154,14 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
         int strength = getCombatStrength().getStrength();
         strength += building.getStrength();
         getCombatStrength().setStrength(strength);
-
-        needCityScoreRecalculation = true;
     }
 
     public void destroyBuilding(AbstractBuilding building) {
         buildingService.remove(building);
-        needCityScoreRecalculation = true;
     }
 
-    public Collection<Point> getCitizenLocations() {
-        return citizenService.getCitizenLocations();
+    public List<Point> getCitizenLocations() {
+        return citizenService.getPopulationLocations();
     }
 
     public AbstractBuilding findBuildingByClassUuid(String classUuid) {
@@ -207,8 +186,6 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
 
     // Construction of a building or unit is finished
     public void constructionDone(Construction construction) {
-        needCityScoreRecalculation = true;
-
         CanBeBuilt obj = construction.getObject();
         if (obj instanceof AbstractBuilding) {
             AbstractBuilding building = AbstractBuilding.newInstance(obj.getClassUuid(), this);
@@ -226,39 +203,31 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
         throw new IllegalArgumentException("Unknown object is constructed: " + objectInfo);
     }
 
-    public CityScore getCityScore() {
-        if (needCityScoreRecalculation) {
-            calcCityScore();
-        }
-        return cityScore;
+    @Override
+    public Supply getSupply() {
+        Supply supply = new Supply().setHappiness(-1).setPopulation(getCitizenCount());
+
+        supply.add(citizenService.getSupply());
+        supply.add(buildingService.getSupply());
+
+        return supply;
     }
 
-    public void step() {
-        // income from laborers
-        citizenService.step();
+    public Supply getTilesSupply() {
+        return citizenService.getTilesSupply();
+    }
+
+    public void step(Year year) {
+        // income from citizens
+        citizenService.step(year);
 
         // buildings & construction
-        buildingService.step(cityScore);
+        buildingService.step(citySupply);
 
-        calcCityScore();
+        citySupply.add(getSupply());
 
         // can do actions (attack, buy, build etc)
         passScore = 1;
-    }
-
-    private void calcCityScore() {
-        CitySupply accumulationSupply = new CitySupply(0, 0, 0, getCitizenCount());
-
-        cityScore = new CityScore(civilization);
-        cityScore.add(accumulationSupply, L10nCity.ACCUMULATION_SUPPLY);
-
-        CitizenScore citizenScore = citizenService.getCitizenScore();
-        cityScore.add(citizenScore);
-
-        BuildingScore buildingScore = buildingService.getBuildingScore();
-        cityScore.add(buildingScore);
-
-        needCityScoreRecalculation = false;
     }
 
     @Override
@@ -278,7 +247,7 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
 
     @Override
     public List<AbstractSkill> getSkills() {
-        return Collections.EMPTY_LIST;
+        return Collections.emptyList();
     }
 
     /** A city may be destroyed only during a melee attack */

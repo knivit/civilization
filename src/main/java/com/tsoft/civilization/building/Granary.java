@@ -1,16 +1,14 @@
 package com.tsoft.civilization.building;
 
-import com.tsoft.civilization.L10n.building.L10nBuilding;
 import com.tsoft.civilization.building.util.BuildingType;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.world.Civilization;
-import com.tsoft.civilization.world.economic.BuildingScore;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.luxury.Bananas;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.view.building.GranaryView;
-import com.tsoft.civilization.world.economic.BuildingSupply;
+import com.tsoft.civilization.world.economic.Supply;
 
 import java.util.UUID;
 
@@ -28,10 +26,7 @@ public class Granary extends AbstractBuilding<GranaryView> {
      * Each source of Wheat Bananas and Deer worked by this City produce +1 Food.
      */
     @Override
-    public BuildingScore getSupply(City city) {
-        BuildingScore score = new BuildingScore(null);
-        score.add(new BuildingSupply(0, 0, -1, 0, 0, 0), L10nBuilding.BUILDING_EXPENSES_SUPPLY);
-
+    public Supply getSupply(City city) {
         int food = 0;
         for (Point location : getCity().getCitizenLocations()) {
             AbstractTile tile = getTile(location);
@@ -39,9 +34,9 @@ public class Granary extends AbstractBuilding<GranaryView> {
                 food ++;
             }
         }
-        score.add(new BuildingSupply(food, 2, 0, 0, 0, 0), L10nBuilding.BUILDING_SUPPLY);
 
-        return score;
+        Supply supply = new Supply().setFood(food).setProduction(2).setGold(-1);
+        return supply;
     }
 
     @Override

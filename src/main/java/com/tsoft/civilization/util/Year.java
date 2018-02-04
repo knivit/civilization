@@ -3,6 +3,8 @@ package com.tsoft.civilization.util;
 import com.tsoft.civilization.L10n.L10nMap;
 import com.tsoft.civilization.L10n.L10nWorld;
 
+import java.util.Objects;
+
 public class Year {
     public static int ANCIENT_ERA = 1000;
     public static int CLASSICAL_ERA = 1200;
@@ -81,5 +83,18 @@ public class Year {
         if (value <= ATOMIC_ERA) return L10nWorld.ATOMIC_ERA;
 
         return L10nWorld.INFORMATION_ERA;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Year year = (Year) o;
+        return value == year.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return value;
     }
 }

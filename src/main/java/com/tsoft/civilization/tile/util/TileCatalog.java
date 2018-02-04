@@ -11,7 +11,7 @@ import com.tsoft.civilization.tile.base.Ocean;
 import com.tsoft.civilization.tile.base.Plain;
 import com.tsoft.civilization.tile.base.Snow;
 import com.tsoft.civilization.tile.base.Tundra;
-import com.tsoft.civilization.tile.feature.AbstractFeature;
+import com.tsoft.civilization.tile.feature.TerrainFeature;
 import com.tsoft.civilization.tile.feature.Atoll;
 import com.tsoft.civilization.tile.feature.Fallout;
 import com.tsoft.civilization.tile.feature.FloodPlain;
@@ -41,7 +41,7 @@ public class TileCatalog {
         tilesCatalog.add(new Tundra());
     }
 
-    private static final List<AbstractFeature> featuresCatalog = new ArrayList<>();
+    private static final List<TerrainFeature> featuresCatalog = new ArrayList<>();
 
     // Read-only objects, this map is to use as a catalog only
     static {
@@ -61,7 +61,7 @@ public class TileCatalog {
         return tilesCatalog;
     }
 
-    public static List<AbstractFeature> features() {
+    public static List<TerrainFeature> features() {
         return featuresCatalog;
     }
 }

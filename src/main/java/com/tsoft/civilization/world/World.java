@@ -31,7 +31,7 @@ public class World {
     private CivilizationCollection civilizations = new CivilizationList();
     private CivilizationCollection unmodifiableCivilizations = new UnmodifiableCivilizationList(civilizations);
 
-    private HashMap<TwoCivilizationsKey, CivilizationsRelations> relations = new HashMap<>();
+    private HashMap<Pair, CivilizationsRelations> relations = new HashMap<>();
     private List<Year> years = new ArrayList<>();
 
     public World(MapType mapType, int width, int height) {
@@ -72,7 +72,7 @@ public class World {
         // set NEUTRAL state for this civilization with others
         for (Civilization otherCivilization : civilizations) {
             if (!civilization.equals(otherCivilization)) {
-                TwoCivilizationsKey key = new TwoCivilizationsKey(civilization, otherCivilization);
+                Pair<Civilization> key = new Pair<>(civilization, otherCivilization);
                 relations.put(key, CivilizationsRelations.NEUTRAL);
             }
         }
@@ -89,13 +89,13 @@ public class World {
             return null;
         }
 
-        TwoCivilizationsKey key = new TwoCivilizationsKey(c1, c2);
+        Pair<Civilization> key = new Pair<>(c1, c2);
         CivilizationsRelations rel = relations.get(key);
         return rel;
     }
 
     public void setCivilizationsRelations(Civilization c1, Civilization c2, CivilizationsRelations rel) {
-        TwoCivilizationsKey key = new TwoCivilizationsKey(c1, c2);
+        Pair<Civilization> key = new Pair<>(c1, c2);
         relations.get(key).setState(rel);
 
         // send an Event about that to all civilizations
@@ -246,7 +246,7 @@ public class World {
         years.add(year);
 
         for (Civilization civilization : civilizations) {
-            civilization.step();
+            civilization.step(year);
         }
     }
 

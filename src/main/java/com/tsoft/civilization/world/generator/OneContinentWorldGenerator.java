@@ -1,6 +1,6 @@
 package com.tsoft.civilization.world.generator;
 
-import com.tsoft.civilization.tile.feature.AbstractFeature;
+import com.tsoft.civilization.tile.feature.TerrainFeature;
 import com.tsoft.civilization.tile.feature.Forest;
 import com.tsoft.civilization.tile.feature.Hill;
 import com.tsoft.civilization.tile.feature.Jungle;
@@ -172,7 +172,7 @@ public class OneContinentWorldGenerator implements WorldGenerator {
 
         // Next may be features
         for (int i = 1; i < classes.length; i ++) {
-            AbstractFeature feature = AbstractFeature.newInstance(classes[i], tile);
+            TerrainFeature feature = TerrainFeature.newInstance(classes[i], tile);
         }
     }
 

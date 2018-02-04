@@ -1,6 +1,6 @@
 package com.tsoft.civilization.tile.base;
 
-import com.tsoft.civilization.world.economic.TileSupply;
+import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.web.view.tile.base.PlainView;
 
 import java.util.UUID;
@@ -16,8 +16,8 @@ public class Plain extends AbstractTile<PlainView> {
     }
 
     @Override
-    public TileSupply getBaseSupply() {
-        return new TileSupply(1, 1, 0);
+    public Supply getBaseSupply() {
+        return new Supply().setFood(1).setProduction(1);
     }
 
     @Override

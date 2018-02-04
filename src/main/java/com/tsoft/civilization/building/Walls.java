@@ -1,14 +1,12 @@
 package com.tsoft.civilization.building;
 
-import com.tsoft.civilization.L10n.building.L10nBuilding;
 import com.tsoft.civilization.building.util.BuildingType;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.util.Year;
 import com.tsoft.civilization.world.Civilization;
-import com.tsoft.civilization.world.economic.BuildingScore;
-import com.tsoft.civilization.world.economic.BuildingSupply;
 import com.tsoft.civilization.web.view.building.WallsView;
+import com.tsoft.civilization.world.economic.Supply;
 
 import java.util.UUID;
 
@@ -27,10 +25,9 @@ public class Walls extends AbstractBuilding<WallsView> {
      * Walls are quite useful for cities located along a civilization's frontier.
      */
     @Override
-    public BuildingScore getSupply(City city) {
-        BuildingScore score = new BuildingScore(null);
-        score.add(new BuildingSupply(0, 0, -1, 0, 0, 0), L10nBuilding.BUILDING_EXPENSES_SUPPLY);
-        return score;
+    public Supply getSupply(City city) {
+        Supply supply = new Supply().setGold(-1);
+        return supply;
     }
 
     @Override

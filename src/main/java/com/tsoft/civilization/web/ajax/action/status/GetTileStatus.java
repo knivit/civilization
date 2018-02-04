@@ -10,10 +10,9 @@ import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.util.Request;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.world.World;
-import com.tsoft.civilization.world.economic.TileScore;
-import com.tsoft.civilization.world.economic.TileSupply;
+import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.tile.base.AbstractTile;
-import com.tsoft.civilization.tile.feature.AbstractFeature;
+import com.tsoft.civilization.tile.feature.TerrainFeature;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.util.UnitCollection;
 import com.tsoft.civilization.util.Point;
@@ -190,8 +189,8 @@ public class GetTileStatus extends AbstractAjaxRequest {
     // | Total | 0 | 0 | 0 |
     // +-------+---+---+---+
     private StringBuilder getTileInfo(AbstractTile tile) {
-        AbstractFeature feature1 = (tile.getFeatures().size() > 0 ? tile.getFeatures().get(0) : null);
-        AbstractFeature feature2 = (tile.getFeatures().size() > 1 ? tile.getFeatures().get(1) : null);
+        TerrainFeature feature1 = (tile.getTerrainFeatures().size() > 0 ? tile.getTerrainFeatures().get(0) : null);
+        TerrainFeature feature2 = (tile.getTerrainFeatures().size() > 1 ? tile.getTerrainFeatures().get(1) : null);
 
         return Format.text(
             "<table id='info_table'>" +
@@ -223,12 +222,12 @@ public class GetTileStatus extends AbstractAjaxRequest {
         );
     }
 
-    private StringBuilder getFeatureInfo(AbstractFeature feature) {
+    private StringBuilder getFeatureInfo(TerrainFeature feature) {
         if (feature == null) {
             return null;
         }
 
-        TileSupply featureSupply = feature.getSupply();
+        Supply featureSupply = feature.getSupply();
         return Format.text(
             "<tr>" +
                 "<td><button onclick=\"server.sendAsyncAjax('ajax/GetFeatureInfo', { feature:'$feature' })\">$featureName</button></td>" +
@@ -250,7 +249,7 @@ public class GetTileStatus extends AbstractAjaxRequest {
             return null;
         }
 
-        TileScore tileScore = tile.getSupply();
+        Supply supply = tile.getSupply();
         return Format.text(
             "<tr>" +
                 "<td>$totalLabel</td>" +
@@ -260,9 +259,9 @@ public class GetTileStatus extends AbstractAjaxRequest {
             "</tr>",
 
             "$totalLabel", L10nTile.TOTAL,
-            "$production", tileScore.getProduction(),
-            "$gold", tileScore.getGold(),
-            "$food", tileScore.getFood()
+            "$production", supply.getProduction(),
+            "$gold", supply.getGold(),
+            "$food", supply.getFood()
         );
     }
 }

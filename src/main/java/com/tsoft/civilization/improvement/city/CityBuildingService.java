@@ -1,6 +1,5 @@
 package com.tsoft.civilization.improvement.city;
 
-import com.tsoft.civilization.L10n.building.L10nBuilding;
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.util.BuildingCollection;
 import com.tsoft.civilization.building.util.BuildingList;
@@ -9,9 +8,7 @@ import com.tsoft.civilization.building.Settlement;
 import com.tsoft.civilization.building.util.UnmodifiableBuildingList;
 import com.tsoft.civilization.improvement.CanBeBuilt;
 import com.tsoft.civilization.improvement.City;
-import com.tsoft.civilization.world.economic.BuildingScore;
-import com.tsoft.civilization.world.economic.BuildingSupply;
-import com.tsoft.civilization.world.economic.CityScore;
+import com.tsoft.civilization.world.economic.Supply;
 
 public class CityBuildingService {
     private City city;
@@ -69,16 +66,16 @@ public class CityBuildingService {
         construction = new Construction(object);
     }
 
-    public BuildingScore getBuildingScore() {
-        BuildingScore score = new BuildingScore(city.getCivilization());
+    public Supply getSupply() {
+        Supply supply = new Supply();
         for (AbstractBuilding building : buildings) {
-            score.add(building.getSupply(city));
+            supply.add(building.getSupply(city));
         }
-        return score;
+        return supply;
     }
 
     // Buildings and units construction
-    public void step(CityScore cityScore) {
+    public void step(Supply citySupply) {
         destroyedBuildings.clear();
 
         if (construction == null) {
@@ -86,10 +83,10 @@ public class CityBuildingService {
         }
 
         int productionCost = construction.getProductionCost();
-        int cityProduction = cityScore.getProduction();
+        int cityProduction = citySupply.getProduction();
         if (productionCost <= cityProduction) {
-            BuildingSupply constructionExpenses = new BuildingSupply(0, -productionCost, 0, 0, 0, 0);
-            cityScore.add(constructionExpenses, L10nBuilding.BUILDING_CONSTRUCTION_EXPENSES);
+            Supply constructionExpenses = new Supply().setProduction(-productionCost);
+            citySupply.add(constructionExpenses);
 
             // construction ended, the building is built
             city.constructionDone(construction);
@@ -97,8 +94,8 @@ public class CityBuildingService {
         } else {
             construction.setProductionCost(productionCost - cityProduction);
 
-            BuildingSupply constructionExpenses = new BuildingSupply(0, -cityProduction, 0, 0, 0, 0);
-            cityScore.add(constructionExpenses, L10nBuilding.BUILDING_CONSTRUCTION_EXPENSES);
+            Supply constructionExpenses = new Supply().setProduction(-cityProduction);
+            citySupply.add(constructionExpenses);
         }
     }
 }

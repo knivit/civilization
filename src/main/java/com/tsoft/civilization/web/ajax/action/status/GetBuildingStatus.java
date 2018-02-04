@@ -12,7 +12,7 @@ import com.tsoft.civilization.web.util.Response;
 import com.tsoft.civilization.web.util.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.world.Civilization;
-import com.tsoft.civilization.world.economic.BuildingScore;
+import com.tsoft.civilization.world.economic.Supply;
 
 public class GetBuildingStatus extends AbstractAjaxRequest {
     @Override
@@ -68,7 +68,7 @@ public class GetBuildingStatus extends AbstractAjaxRequest {
             return null;
         }
 
-        BuildingScore buildingScore = building.getSupply(building.getCity());
+        Supply supply = building.getSupply(building.getCity());
         return Format.text(
             "<table id='info_table'>" +
                 "<tr><td>$productionLabel</td><td>$production</td>" +
@@ -78,10 +78,10 @@ public class GetBuildingStatus extends AbstractAjaxRequest {
                 "<tr><td>$strengthLabel</td><td>$strength</td>" +
             "</table>",
 
-            "$productionLabel", L10nCity.PRODUCTION, "$production", buildingScore.getProduction(),
-            "$goldLabel", L10nCity.GOLD, "$gold", buildingScore.getGold(),
-            "$foodLabel", L10nCity.FOOD, "$food", buildingScore.getFood(),
-            "$happinessLabel", L10nCity.HAPPINESS, "$happiness", buildingScore.getHappiness(),
+            "$productionLabel", L10nCity.PRODUCTION, "$production", supply.getProduction(),
+            "$goldLabel", L10nCity.GOLD, "$gold", supply.getGold(),
+            "$foodLabel", L10nCity.FOOD, "$food", supply.getFood(),
+            "$happinessLabel", L10nCity.HAPPINESS, "$happiness", supply.getHappiness(),
             "$strengthLabel", L10nCity.DEFENSE_STRENGTH, "$strength", building.getStrength()
         );
     }

@@ -1,14 +1,11 @@
 package com.tsoft.civilization.building;
 
-import com.tsoft.civilization.L10n.building.L10nBuilding;
 import com.tsoft.civilization.building.util.BuildingType;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.world.Civilization;
-import com.tsoft.civilization.world.economic.BuildingScore;
-import com.tsoft.civilization.world.economic.BuildingSupply;
 import com.tsoft.civilization.web.view.building.MarketView;
-import com.tsoft.civilization.world.economic.TileScore;
+import com.tsoft.civilization.world.economic.Supply;
 
 import java.util.UUID;
 
@@ -26,17 +23,16 @@ public class Market extends AbstractBuilding<MarketView> {
      * The Market significantly increases a city's output of gold.
      */
     @Override
-    public BuildingScore getSupply(City city) {
-        BuildingScore score = new BuildingScore(null);
-
-        TileScore tileScore = city.getCityScore().getTileScore();
+    public Supply getSupply(City city) {
+        Supply tileScore = city.getTilesSupply();
         int gold = tileScore.getGold();
         if (gold > 0) {
             gold = (int) Math.round(gold * 0.25);
             if (gold == 0) gold = 1;
         }
-        score.add(new BuildingSupply(0, 0, 2 + gold, 0, 0, 0), L10nBuilding.BUILDING_SUPPLY);
-        return score;
+
+        Supply supply = new Supply().setGold(2 + gold);
+        return supply;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.tsoft.civilization.tile.feature;
 
-import com.tsoft.civilization.world.economic.TileSupply;
+import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.tile.base.TileType;
 import com.tsoft.civilization.web.view.tile.feature.HillView;
 
@@ -9,7 +9,7 @@ import java.util.UUID;
 /**
  * Hills yield 0 Food and 2 Hammers, regardless of the underlying terrain type.
  */
-public class Hill extends AbstractFeature<HillView> {
+public class Hill extends TerrainFeature<HillView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private static final HillView VIEW = new HillView();
@@ -20,13 +20,13 @@ public class Hill extends AbstractFeature<HillView> {
     }
 
     @Override
-    public TileSupply getSupply() {
-        return new TileSupply(0, 2, 0);
+    public Supply getSupply() {
+        return new Supply().setProduction(2);
     }
 
     @Override
     public boolean isBlockingTileSupply() {
-        return true;
+        return false;
     }
 
     @Override

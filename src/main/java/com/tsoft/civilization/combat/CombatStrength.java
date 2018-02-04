@@ -2,7 +2,7 @@ package com.tsoft.civilization.combat;
 
 import com.tsoft.civilization.combat.skill.AbstractSkill;
 import com.tsoft.civilization.unit.util.UnitCollection;
-import com.tsoft.civilization.world.economic.CivilizationScore;
+import com.tsoft.civilization.world.economic.Supply;
 
 public class CombatStrength {
     // Melee units' attack strength
@@ -142,17 +142,17 @@ public class CombatStrength {
 
     private int calcAttackerStrikeHappinessPercent() {
         int value = 0;
-        CivilizationScore score = attacker.getCivilization().getCivilizationScore();
-        if (score.getHappiness() < -30) {
+        Supply supply = attacker.getCivilization().getSupply();
+        if (supply.getHappiness() < -30) {
             value -= 33;
         } else
-        if (score.getHappiness() < -15) {
+        if (supply.getHappiness() < -15) {
             value -= 15;
         } else
-        if (score.getHappiness() > 15) {
+        if (supply.getHappiness() > 15) {
             value += 15;
         } else
-        if (score.getHappiness() > 30) {
+        if (supply.getHappiness() > 30) {
             value += 33;
         }
         return value;

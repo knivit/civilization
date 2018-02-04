@@ -7,7 +7,6 @@ import com.tsoft.civilization.util.NumberUtil;
 import com.tsoft.civilization.util.Point;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class TilesMap {

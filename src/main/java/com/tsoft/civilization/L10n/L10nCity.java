@@ -119,6 +119,24 @@ public class L10nCity {
             .set("en", "A new unit has been constructed")
             .set("ru", "\u0411\u044b\u043b \u043f\u043e\u0441\u0442\u0440\u043e\u0435\u043d \u043d\u043e\u0432\u044b\u0439 \u044e\u043d\u0438\u0442");
 
+    /** Population */
+
+    public static L10nMap STARVATION_STARTED = new L10nMap()
+            .set("en", "All food is consumed, the starvation has started")
+            .set("ru", "\u041f\u0438\u0449\u0430 \u0437\u0430\u043a\u043e\u043d\u0447\u0438\u043b\u0430\u0441\u044c, \u043d\u0430\u0447\u0430\u043b\u0441\u044f \u0433\u043e\u043b\u043e\u0434");
+
+    public static L10nMap STARVATION_ENDED = new L10nMap()
+            .set("en", "The starvation has ended")
+            .set("ru", "\u0413\u043e\u043b\u043e\u0434 \u0437\u0430\u043a\u043e\u043d\u0447\u0438\u043b\u0441\u044f");
+
+    public static L10nMap CITIZEN_WAS_BORN = new L10nMap()
+            .set("en", "A citizen was born")
+            .set("ru", "\u0420\u043e\u0434\u0438\u043b\u0441\u044f \u0436\u0438\u0442\u0435\u043b\u044c");
+
+    public static L10nMap CITIZEN_HAS_DIED = new L10nMap()
+            .set("en", "A citizen has died")
+            .set("ru", "\u0423\u043c\u0435\u0440 \u0436\u0438\u0442\u0435\u043b\u044c");
+
     /** Statistic */
 
     public static L10nMap POPULATION = new L10nMap()

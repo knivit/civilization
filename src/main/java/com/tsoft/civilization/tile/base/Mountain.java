@@ -1,6 +1,6 @@
 package com.tsoft.civilization.tile.base;
 
-import com.tsoft.civilization.world.economic.TileSupply;
+import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.web.view.tile.base.MountainView;
 
 import java.util.UUID;
@@ -16,8 +16,8 @@ public class Mountain extends AbstractTile<MountainView> {
     }
 
     @Override
-    public TileSupply getBaseSupply() {
-        return new TileSupply(0, 0, 0);
+    public Supply getBaseSupply() {
+        return new Supply();
     }
 
     @Override

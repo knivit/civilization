@@ -1,12 +1,12 @@
 package com.tsoft.civilization.tile.feature;
 
-import com.tsoft.civilization.world.economic.TileSupply;
+import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.tile.base.TileType;
 import com.tsoft.civilization.web.view.tile.feature.AtollView;
 
 import java.util.UUID;
 
-public class Atoll extends AbstractFeature<AtollView> {
+public class Atoll extends TerrainFeature<AtollView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private static final AtollView VIEW = new AtollView();
@@ -17,8 +17,8 @@ public class Atoll extends AbstractFeature<AtollView> {
     }
 
     @Override
-    public TileSupply getSupply() {
-        return new TileSupply(1, 1, 0);
+    public Supply getSupply() {
+        return new Supply().setFood(1).setProduction(1);
     }
 
     @Override

@@ -1,12 +1,12 @@
 package com.tsoft.civilization.tile.feature;
 
-import com.tsoft.civilization.world.economic.TileSupply;
+import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.tile.base.TileType;
 import com.tsoft.civilization.web.view.tile.feature.FloodPlainView;
 
 import java.util.UUID;
 
-public class FloodPlain extends AbstractFeature<FloodPlainView> {
+public class FloodPlain extends TerrainFeature<FloodPlainView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private static final FloodPlainView VIEW = new FloodPlainView();
@@ -17,8 +17,8 @@ public class FloodPlain extends AbstractFeature<FloodPlainView> {
     }
 
     @Override
-    public TileSupply getSupply() {
-        return new TileSupply(2, 0, 0);
+    public Supply getSupply() {
+        return new Supply().setFood(2);
     }
 
     @Override

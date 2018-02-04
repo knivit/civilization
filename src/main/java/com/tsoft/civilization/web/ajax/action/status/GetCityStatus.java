@@ -91,11 +91,11 @@ public class GetCityStatus extends AbstractAjaxRequest {
 
             "$features", L10nCity.BUSINESS_FEATURES,
 
-            "$populationLabel", L10nCity.POPULATION, "$population", city.getCityScore().getPopulation(),
-            "$productionLabel", L10nCity.PRODUCTION, "$production", city.getCityScore().getProduction(),
-            "$goldLabel", L10nCity.GOLD, "$gold", city.getCityScore().getGold(),
-            "$foodLabel", L10nCity.FOOD, "$food", city.getCityScore().getFood(),
-            "$happinessLabel", L10nCity.HAPPINESS, "$happiness", city.getCityScore().getHappiness()
+            "$populationLabel", L10nCity.POPULATION, "$population", city.getSupply().getPopulation(),
+            "$productionLabel", L10nCity.PRODUCTION, "$production", city.getSupply().getProduction(),
+            "$goldLabel", L10nCity.GOLD, "$gold", city.getSupply().getGold(),
+            "$foodLabel", L10nCity.FOOD, "$food", city.getSupply().getFood(),
+            "$happinessLabel", L10nCity.HAPPINESS, "$happiness", city.getSupply().getHappiness()
         );
     }
 

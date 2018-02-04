@@ -11,8 +11,8 @@ import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.view.building.AbstractBuildingView;
 import com.tsoft.civilization.world.Civilization;
 import com.tsoft.civilization.world.World;
+import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.world.util.Event;
-import com.tsoft.civilization.world.economic.BuildingScore;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
@@ -25,7 +25,7 @@ public abstract class AbstractBuilding<V extends AbstractBuildingView> implement
     private boolean isDestroyed;
 
     public abstract BuildingType getBuildingType();
-    public abstract BuildingScore getSupply(City city);
+    public abstract Supply getSupply(City city);
     public abstract int getGoldCost();
     public abstract int getStrength();
     public abstract V getView();

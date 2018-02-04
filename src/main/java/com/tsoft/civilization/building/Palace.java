@@ -1,12 +1,10 @@
 package com.tsoft.civilization.building;
 
-import com.tsoft.civilization.L10n.building.L10nBuilding;
 import com.tsoft.civilization.building.util.BuildingType;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.world.Civilization;
-import com.tsoft.civilization.world.economic.BuildingScore;
-import com.tsoft.civilization.world.economic.BuildingSupply;
 import com.tsoft.civilization.web.view.building.PalaceView;
+import com.tsoft.civilization.world.economic.Supply;
 
 import java.util.UUID;
 
@@ -25,10 +23,9 @@ public class Palace extends AbstractBuilding<PalaceView> {
      * Connecting other Cities to the Capital by Road will produce additional Gold.
      */
     @Override
-    public BuildingScore getSupply(City city) {
-        BuildingScore score = new BuildingScore(null);
-        score.add(new BuildingSupply(0, 3, 3, 3, 1, 0), L10nBuilding.BUILDING_SUPPLY);
-        return score;
+    public Supply getSupply(City city) {
+        Supply supply = new Supply().setProduction(3).setGold(3).setScience(3).setCulture(1);
+        return supply;
     }
 
     @Override

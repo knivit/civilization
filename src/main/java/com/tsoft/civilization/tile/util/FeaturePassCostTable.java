@@ -1,6 +1,6 @@
 package com.tsoft.civilization.tile.util;
 
-import com.tsoft.civilization.tile.feature.AbstractFeature;
+import com.tsoft.civilization.tile.feature.TerrainFeature;
 import com.tsoft.civilization.tile.feature.Atoll;
 import com.tsoft.civilization.tile.feature.Fallout;
 import com.tsoft.civilization.tile.feature.FloodPlain;
@@ -63,7 +63,7 @@ public final class FeaturePassCostTable {
         table.put(Workers.CLASS_UUID + Oasis.CLASS_UUID, 1);
     }
 
-    public static int get(AbstractUnit unit, AbstractFeature feature) {
+    public static int get(AbstractUnit unit, TerrainFeature feature) {
         assert (unit != null && feature != null) : "Unit and/or feature can't be null";
         String key = unit.getClassUuid() + feature.getClassUuid();
 

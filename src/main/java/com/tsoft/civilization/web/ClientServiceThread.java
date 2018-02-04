@@ -24,7 +24,7 @@ public class ClientServiceThread implements Runnable {
 
         try {
             try {
-                DefaultLogger.fine("Started to serve a request from " + client.getRequest().toString());
+                DefaultLogger.info("Started to serve a request from " + client.getRequest().toString());
                 client.processRequest();
             } catch (Throwable ex) {
                 DefaultLogger.severe("Error during request processing", ex);

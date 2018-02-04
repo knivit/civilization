@@ -1,6 +1,5 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
-import com.tsoft.civilization.L10n.L10nCity;
 import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.L10n.L10nTile;
 import com.tsoft.civilization.L10n.L10nWorld;
@@ -9,7 +8,7 @@ import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.util.Request;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
-import com.tsoft.civilization.world.economic.TileSupply;
+import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.util.UnitCollection;
@@ -64,7 +63,7 @@ public class GetTileInfo extends AbstractAjaxRequest {
     }
 
     private StringBuilder getTileDetailInfo(AbstractTile tile) {
-        TileSupply tileSupply = tile.getBaseSupply();
+        Supply tileSupply = tile.getBaseSupply();
         return Format.text(
             "<table id='info_table'>" +
                 "<tr><th colspan='2'>$features</th></tr>" +

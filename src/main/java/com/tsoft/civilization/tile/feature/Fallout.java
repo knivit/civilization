@@ -1,6 +1,6 @@
 package com.tsoft.civilization.tile.feature;
 
-import com.tsoft.civilization.world.economic.TileSupply;
+import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.tile.base.TileType;
 import com.tsoft.civilization.web.view.tile.feature.FalloutView;
 
@@ -9,7 +9,7 @@ import java.util.UUID;
 /**
  * Fallout must be cleared by a Worker before any improvements can be built.
  */
-public class Fallout extends AbstractFeature<FalloutView> {
+public class Fallout extends TerrainFeature<FalloutView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private static final FalloutView VIEW = new FalloutView();
@@ -20,8 +20,8 @@ public class Fallout extends AbstractFeature<FalloutView> {
     }
 
     @Override
-    public TileSupply getSupply() {
-        return new TileSupply(-3, -3, -3);
+    public Supply getSupply() {
+        return new Supply().setFood(-3).setProduction(-3).setGold(-3);
     }
 
     @Override
