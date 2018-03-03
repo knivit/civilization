@@ -1,17 +1,19 @@
 package com.tsoft.civilization.web;
 
 import com.tsoft.civilization.L10n.L10nServer;
-import com.tsoft.civilization.util.DefaultLogger;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.NumberUtil;
-import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.util.ContentType;
 import com.tsoft.civilization.world.Civilization;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.world.util.Event;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class NotificationRequestProcessor {
+    private static final Logger log = LoggerFactory.getLogger(NotificationRequestProcessor.class);
+
     private NotificationRequestProcessor() { }
 
     public static void processRequest(ServerClient client) {
@@ -48,9 +50,12 @@ public class NotificationRequestProcessor {
         boolean needWorldUpdate = false;
         boolean needControlPanelUpdate = false;
         boolean needStatusPanelUpdate = false;
+
         World world = myCivilization.getWorld();
+
         int lastEventId = NumberUtil.parseInt(client.getRequest().getHeader("Last-Event-ID"), -1);
-        DefaultLogger.fine("Notifications for " + client.getRequest().toString() + " are started from " + lastEventId);
+        log.debug("Notifications for {} are started from {}",  client.getRequest(), lastEventId);
+
         while (true) {
             // Waiting for events
             if (lastEventId >= (myCivilization.getEvents().size() - 1)) {

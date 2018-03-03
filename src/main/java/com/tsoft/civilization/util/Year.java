@@ -86,6 +86,13 @@ public class Year {
     }
 
     @Override
+    public String toString() {
+        return "Year{" +
+                "value=" + value +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

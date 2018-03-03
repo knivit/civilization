@@ -2,11 +2,13 @@ package com.tsoft.civilization;
 
 import com.tsoft.civilization.web.GameServer;
 
-public class Main {
-    private static final int PORT = 9090;
+import static com.tsoft.civilization.SystemProperties.SERVER_PORT;
 
+public class Main {
     public static void main(String[] args) throws Throwable {
-        GameServer server = new GameServer(PORT);
+        new SystemProperties().init();
+
+        GameServer server = new GameServer(System.getProperty(SERVER_PORT, "9090"));
         server.start();
     }
 

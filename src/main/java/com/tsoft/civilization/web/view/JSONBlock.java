@@ -1,8 +1,11 @@
 package com.tsoft.civilization.web.view;
 
-import com.tsoft.civilization.util.DefaultLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JSONBlock {
+    private static final Logger log = LoggerFactory.getLogger(JSONBlock.class);
+
     private int paramCount;
     private int elementCount;
     private boolean isArray;
@@ -23,7 +26,7 @@ public class JSONBlock {
 
     public void addParam(String name, Object value) {
         if (isArray) {
-            DefaultLogger.severe("Param " + name + " can't be inside an array");
+            log.error("Param name = {} can't be inside an array", name);
             throw new IllegalStateException("A param can't be inside an array");
         }
 

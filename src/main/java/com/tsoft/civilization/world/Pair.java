@@ -4,13 +4,13 @@ public class Pair<T> {
     private T obj1;
     private T obj2;
 
-    public Pair(T obj1, T c2) {
-        if (obj1 == null || c2 == null || obj2.equals(c2)) {
+    public Pair(T obj1, T obj2) {
+        if (obj1 == null || obj2 == null || obj1.equals(obj2)) {
             throw new IllegalArgumentException("The objects must be different and not null");
         }
 
         this.obj1 = obj1;
-        this.obj2 = c2;
+        this.obj2 = obj2;
     }
 
     @Override

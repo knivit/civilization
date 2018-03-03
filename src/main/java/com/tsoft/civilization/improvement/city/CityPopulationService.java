@@ -150,8 +150,10 @@ public class CityPopulationService {
     // Get supply from tiles without improvements where the citizen is working
     private Supply getTileSupply(Citizen citizen) {
         Supply supply = new Supply();
+
+        // Unemployed citizens (those not working a tile or assigned as a specialist) produce 1 hammer
         if (citizen.isUnemplyed()) {
-            return supply;
+            return supply.setProduction(1);
         }
 
         Point location = citizen.getLocation();

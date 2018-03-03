@@ -1,7 +1,8 @@
 package com.tsoft.civilization.web.util;
 
-import com.tsoft.civilization.util.DefaultLogger;
 import com.tsoft.civilization.util.NumberUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,6 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Request {
+    private static final Logger log = LoggerFactory.getLogger(Request.class);
+
     private static final int MAX_POST_DATA = 8192;
 
     private String clientIP;
@@ -85,7 +88,7 @@ public class Request {
                     headers.put(name, value);
                 }
             } catch (IOException ex) {
-                DefaultLogger.severe("Can't read headers", ex);
+                log.error("Can't read headers", ex);
             }
         }
 
@@ -162,11 +165,11 @@ public class Request {
         try {
             int n = inputStream.read(buf);
             if (n != contentLength) {
-                DefaultLogger.warning("Not all data received (" + n + " bytes instead of " + contentLength + "): " + toString());
+                log.warn("Not all data received ({} bytes instead of {})", n, contentLength);
                 return;
             }
         } catch (IOException ex) {
-            DefaultLogger.severe("Can't read POST data", ex);
+            log.error("Can't read POST data", ex);
             return;
         }
 
@@ -193,7 +196,7 @@ public class Request {
                 getParams().put(paramName, paramValue);
             }
         } catch (RuntimeException ex) {
-            DefaultLogger.severe("Invalid request: " + toString() + "\nPOST data:\n" + new String(buf), ex);
+            log.error("Invalid request: {}\nPOST data:\n", toString(), new String(buf), ex);
         }
     }
 

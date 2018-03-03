@@ -25,7 +25,7 @@ public class CityBuildingService {
 
         if (city.getCivilization().getCities().size() == 1) {
             AbstractBuilding palace = AbstractBuilding.newInstance(Palace.CLASS_UUID, city);
-            add(palace);
+            add(palace); // A capital
         } else {
             AbstractBuilding settlement = AbstractBuilding.newInstance(Settlement.CLASS_UUID, city);
             add(settlement);

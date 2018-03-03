@@ -11,13 +11,16 @@ import com.tsoft.civilization.tile.feature.*;
 import com.tsoft.civilization.tile.luxury.AbstractLuxury;
 import com.tsoft.civilization.tile.resource.AbstractResource;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.util.DefaultLogger;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.view.tile.base.AbstractTileView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Constructor;
 
 public abstract class AbstractTile<V extends AbstractTileView> {
+    private static final Logger log = LoggerFactory.getLogger(AbstractTile.class);
+
     private Point location;
     private AbstractLuxury luxury;
     private AbstractResource resource;
@@ -46,7 +49,7 @@ public abstract class AbstractTile<V extends AbstractTileView> {
 
             return tile;
         } catch (Exception ex) {
-            DefaultLogger.severe("Can't create an object", ex);
+            log.error("Can't create an object", ex);
         }
         return null;
     }

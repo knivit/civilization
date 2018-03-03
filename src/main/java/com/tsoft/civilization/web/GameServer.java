@@ -1,6 +1,7 @@
 package com.tsoft.civilization.web;
 
-import com.tsoft.civilization.util.DefaultLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -12,17 +13,17 @@ import java.net.SocketException;
 import java.util.Enumeration;
 
 public class GameServer {
+    private static final Logger log = LoggerFactory.getLogger(GameServer.class);
+
     private int port;
 
-    public GameServer(int port) throws Throwable {
-        this.port = port;
+    public GameServer(String port) throws Throwable {
+        this.port = Integer.parseInt(port);
 
         listNetworkInterfaces();
     }
 
     public void start() throws Throwable {
-        DefaultLogger.createLogger("server");
-
         // Start listening sockets
         ServerSocket ss = new ServerSocket(port);
         System.out.println("Server started on port " + port);
@@ -33,7 +34,7 @@ public class GameServer {
             ClientServiceThread clientThread = new ClientServiceThread(socket, tick);
             Thread thread = new Thread(clientThread);
 
-            DefaultLogger.info("[" + tick + " " + thread.getName() + "] is started to serve a request from " + clientThread.getLogInfo());
+            log.info("Started to serve a request from {}", clientThread.getLogInfo());
             thread.start();
         }
     }

@@ -3,11 +3,14 @@ package com.tsoft.civilization.unit.util;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.unit.*;
 import com.tsoft.civilization.unit.UnitType;
-import com.tsoft.civilization.util.DefaultLogger;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.Civilization;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class UnitFactory {
+    private static final Logger log = LoggerFactory.getLogger(UnitFactory.class);
+
     private static UnitCollection unitCatalog = new UnitList();
 
     static {
@@ -24,7 +27,7 @@ public class UnitFactory {
         // If the given location is invalid, change it to (0, 0)
         if ((location.getX() < 0 || location.getX() >= tilesMap.getWidth()) ||
                 (location.getY() < 0 || location.getY() >= tilesMap.getHeight())) {
-            DefaultLogger.severe("Invalid location " + location.toString() + ", must be [0.." + (tilesMap.getWidth() - 1) + ",0.." + (tilesMap.getHeight() - 1) + "]", new IllegalArgumentException());
+            log.error("Invalid location {}, must be [0..{}, 0..{}]",  location, (tilesMap.getWidth() - 1), (tilesMap.getHeight() - 1), new IllegalArgumentException());
 
             location = new Point(0, 0);
         }

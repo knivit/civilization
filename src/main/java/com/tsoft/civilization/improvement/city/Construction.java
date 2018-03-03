@@ -25,4 +25,12 @@ public class Construction {
     public void setProductionCost(int productionCost) {
         this.productionCost = productionCost;
     }
+
+    @Override
+    public String toString() {
+        return "Construction{" +
+                "object=" + object +
+                ", productionCost=" + productionCost +
+                '}';
+    }
 }

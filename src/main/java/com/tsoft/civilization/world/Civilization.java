@@ -22,7 +22,6 @@ import com.tsoft.civilization.unit.util.UnitCollection;
 import com.tsoft.civilization.unit.util.UnitList;
 import com.tsoft.civilization.unit.util.UnmodifiableUnitList;
 import com.tsoft.civilization.unit.Warriors;
-import com.tsoft.civilization.util.DefaultLogger;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.util.Year;
 import com.tsoft.civilization.web.view.world.CivilizationView;
@@ -31,10 +30,14 @@ import com.tsoft.civilization.world.agreement.OpenBordersAgreement;
 import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.world.util.Event;
 import com.tsoft.civilization.world.util.EventsByYearMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
 public class Civilization {
+    private static final Logger log = LoggerFactory.getLogger(Civilization.class);
+
     private final CivilizationView CIVILIZATION_VIEW;
 
     private L10nMap name;
@@ -71,7 +74,7 @@ public class Civilization {
     public Civilization(World world, int index) {
         this.world = world;
         if ((index < 0) || (index >= L10nCivilization.CIVILIZATIONS.size())) {
-            DefaultLogger.warning("Invalid civilization index=" + index);
+            log.warn("Invalid civilization index={}", index);
             index = 0;
         }
         name = L10nCivilization.CIVILIZATIONS.get(index);
@@ -303,7 +306,7 @@ public class Civilization {
         technologies.add(technology);
     }
 
-    public AgreementList getAgreementsFromCivilization(Civilization otherCivilization) {
+    private AgreementList getAgreementsWithCivilization(Civilization otherCivilization) {
         AgreementList agrs = agreements.get(otherCivilization);
         if (agrs == null) {
             return AgreementList.EMPTY_AGREEMENTS;
@@ -311,13 +314,13 @@ public class Civilization {
         return agrs;
     }
 
-    // See if other civilization can cross this borders
+    // See if other civilization can cross this civilization's borders
     public boolean canCrossBorders(Civilization otherCivilization) {
         if (isWar(otherCivilization)) {
             return true;
         }
 
-        AgreementList agrs = getAgreementsFromCivilization(otherCivilization);
+        AgreementList agrs = getAgreementsWithCivilization(otherCivilization);
         OpenBordersAgreement openBordersAgreement = agrs.get(OpenBordersAgreement.class);
         if (openBordersAgreement != null) {
             return true;

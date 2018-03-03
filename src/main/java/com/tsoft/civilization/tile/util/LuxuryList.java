@@ -11,14 +11,17 @@ import com.tsoft.civilization.tile.luxury.Silk;
 import com.tsoft.civilization.tile.luxury.Sugar;
 import com.tsoft.civilization.tile.luxury.Whales;
 import com.tsoft.civilization.tile.luxury.Wine;
-import com.tsoft.civilization.util.DefaultLogger;
 import com.tsoft.civilization.world.generator.Climate;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.util.Point;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
 public class LuxuryList {
+    private static final Logger log = LoggerFactory.getLogger(LuxuryList.class);
+
     private class LuxuryInfo {
         private Class<? extends AbstractLuxury> luxuryClass;
 
@@ -96,7 +99,7 @@ public class LuxuryList {
     private void addLuxury(Class<? extends AbstractTile> tileClass, LuxuryType luxuryType) {
         ArrayList<Point> tilePoints = tilesMap.getTileClassLocations(tileClass);
         if (tilePoints.size() == 0) {
-            DefaultLogger.warning("There is no Tiles class = " + tileClass.getName() + ", so Luxury with Type = " + luxuryType.name() + " is skipped");
+            log.warn("There is no tile's class = {}, so Luxury with type = {} is skipped",  tileClass.getName(), luxuryType.name());
             return;
         }
 
@@ -116,7 +119,8 @@ public class LuxuryList {
                     count ++;
                 }
             }
-            DefaultLogger.info("Added " + count + " luxuries of " + luxuryInfo.getLuxuryClass().getName() + " type");
+
+            log.info("Added {} luxuries of type {}",  count, luxuryInfo.getLuxuryClass().getName());
         }
     }
 }

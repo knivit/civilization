@@ -113,6 +113,7 @@ public class World {
     }
 
     public boolean isWar(Civilization c1, Civilization c2) {
+        if (c1 == null || c2 == null || c1.equals(c2)) return false;
         return getCivilizationsRelations(c1, c2).isWar();
     }
 

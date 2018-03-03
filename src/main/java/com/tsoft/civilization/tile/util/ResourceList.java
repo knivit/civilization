@@ -9,14 +9,17 @@ import com.tsoft.civilization.tile.resource.Iron;
 import com.tsoft.civilization.tile.resource.Oil;
 import com.tsoft.civilization.tile.resource.ResourceType;
 import com.tsoft.civilization.tile.resource.Uranium;
-import com.tsoft.civilization.util.DefaultLogger;
 import com.tsoft.civilization.world.generator.Climate;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.util.Point;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
 public class ResourceList {
+    private static final Logger log = LoggerFactory.getLogger(ResourceList.class);
+
     private class ResourceInfo {
         private Class<? extends AbstractResource> resourceClass;
 
@@ -92,7 +95,7 @@ public class ResourceList {
     private void addResource(Class<? extends AbstractTile> tileClass, ResourceType resourceType) {
         ArrayList<Point> tilePoints = tilesMap.getTileClassLocations(tileClass);
         if (tilePoints.size() == 0) {
-            DefaultLogger.warning("There is no Tiles class = " + tileClass.getName() + ", so Resource with Type = " + resourceType.name() + " is skipped");
+            log.warn("There is no Tiles class = {}, so Resource with type = {} is skipped",  tileClass.getName(), resourceType.name());
             return;
         }
 
@@ -112,7 +115,7 @@ public class ResourceList {
                     count ++;
                 }
             }
-            DefaultLogger.info("Added " + count + " resources of " + resourceInfo.getResourceClass().getName() + " type");
+            log.info("Added {} resources of {} type", count, resourceInfo.getResourceClass().getName());
         }
     }
 }

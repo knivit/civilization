@@ -23,10 +23,14 @@ import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.view.improvement.CityView;
 import com.tsoft.civilization.world.Civilization;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
 public class City extends AbstractImprovement<CityView> implements HasCombatStrength {
+    private static final Logger log = LoggerFactory.getLogger(City.class);
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
@@ -224,7 +228,9 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
         // buildings & construction
         buildingService.step(citySupply);
 
-        citySupply.add(getSupply());
+        Supply supply = getSupply();
+        citySupply.add(supply);
+        log.debug("City: Year {}, supply = {}, total supply = {}", year, supply, citySupply);
 
         // can do actions (attack, buy, build etc)
         passScore = 1;

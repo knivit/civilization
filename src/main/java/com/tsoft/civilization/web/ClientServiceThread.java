@@ -1,17 +1,22 @@
 package com.tsoft.civilization.web;
 
-import com.tsoft.civilization.util.DefaultLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.Socket;
+import java.time.Duration;
+import java.time.Instant;
 
 public class ClientServiceThread implements Runnable {
+    private static final Logger log = LoggerFactory.getLogger(ClientServiceThread.class);
+
     private Socket socket;
     private ServerClient client;
-    private long tick;
+    private Instant tick;
 
     public ClientServiceThread(Socket socket, long tick) throws Throwable {
         this.socket = socket;
-        this.tick = tick;
+        this.tick = Instant.now();
 
         client = new ServerClient();
         client.readRequest(socket);
@@ -19,26 +24,21 @@ public class ClientServiceThread implements Runnable {
 
     @Override
     public void run() {
-        // Logger must be created here (not in the constructor) as it must be in a different thread with GameServer
-        DefaultLogger.createLogger("client-" + client.getRequest().getClientIP(), tick);
-
         try {
             try {
-                DefaultLogger.info("Started to serve a request from " + client.getRequest().toString());
+                log.info("Started to serve a request from {}", client.getRequest().toString());
                 client.processRequest();
             } catch (Throwable ex) {
-                DefaultLogger.severe("Error during request processing", ex);
+                log.error("Error during request processing", ex);
             } finally {
                 try {
                     socket.close();
                 } catch (Throwable ex) {
-                    DefaultLogger.severe("Can't close a socket", ex);
+                    log.error("Can't close a socket", ex);
                 }
             }
         } finally {
-            long time = System.currentTimeMillis() - tick;
-            DefaultLogger.fine("Work is done, took " + time + " (ms)\n");
-            DefaultLogger.close();
+            log.debug("Work is done, took {} (ms)\n", Duration.between(tick, Instant.now()));
         }
     }
 

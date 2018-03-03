@@ -1,12 +1,13 @@
 package com.tsoft.civilization.web;
 
 import com.tsoft.civilization.L10n.L10nMap;
-import com.tsoft.civilization.util.DefaultLogger;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.util.Request;
 import com.tsoft.civilization.web.util.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.InetSocketAddress;
@@ -15,6 +16,8 @@ import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
 
 public class ServerClient {
+    private static final Logger log = LoggerFactory.getLogger(ServerClient.class);
+
     private BufferedReader inputStream;
     private OutputStream outputStream;
 
@@ -60,7 +63,7 @@ public class ServerClient {
             }
 
             default: {
-                DefaultLogger.info("Unknown request type " + request.getRequestType());
+                log.info("Unknown request type {}", request.getRequestType());
                 break;
             }
         }
@@ -85,7 +88,7 @@ public class ServerClient {
             // java.net.SocketException: Broken pipe - client disconnected
             return false;
         } catch (IOException ex) {
-            DefaultLogger.severe("An error occurred during sending a response. Request: " + request.getParamsAsString(), ex);
+            log.error("An error occurred during sending a response. Request: " + request.getParamsAsString(), ex);
         }
         return false;
     }

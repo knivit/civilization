@@ -6,7 +6,6 @@ import com.tsoft.civilization.building.util.BuildingType;
 import com.tsoft.civilization.improvement.CanBeBuilt;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.tile.base.AbstractTile;
-import com.tsoft.civilization.util.DefaultLogger;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.view.building.AbstractBuildingView;
 import com.tsoft.civilization.world.Civilization;
@@ -17,8 +16,11 @@ import com.tsoft.civilization.world.util.Event;
 import java.lang.reflect.Constructor;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 public abstract class AbstractBuilding<V extends AbstractBuildingView> implements CanBeBuilt {
+    private static final Logger log = Logger.getLogger(AbstractBuilding.class.getName());
+
     private String id;
     private City city;
 
@@ -47,7 +49,7 @@ public abstract class AbstractBuilding<V extends AbstractBuildingView> implement
 
             return building;
         } catch (Exception ex) {
-            DefaultLogger.severe("Can't create an object", ex);
+            log.throwing(AbstractBuilding.class.getName(), "newInstance", ex);
         }
         return null;
     }
@@ -96,6 +98,15 @@ public abstract class AbstractBuilding<V extends AbstractBuildingView> implement
         isDestroyed = destroyed;
     }
 
+    public void remove() {
+        isDestroyed = true;
+
+        Event event = new Event(this, L10nBuilding.BUILDING_DESTROYED, Event.INFORMATION);
+        getCivilization().addEvent(event);
+
+        city.destroyBuilding(this);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -111,14 +122,5 @@ public abstract class AbstractBuilding<V extends AbstractBuildingView> implement
     @Override
     public int hashCode() {
         return id.hashCode();
-    }
-
-    public void remove() {
-        isDestroyed = true;
-
-        Event event = new Event(this, L10nBuilding.BUILDING_DESTROYED, Event.INFORMATION);
-        getCivilization().addEvent(event);
-
-        city.destroyBuilding(this);
     }
 }

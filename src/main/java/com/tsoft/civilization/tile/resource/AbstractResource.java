@@ -1,11 +1,11 @@
 package com.tsoft.civilization.tile.resource;
 
-import com.tsoft.civilization.util.DefaultLogger;
-
-import java.util.Arrays;
-import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class AbstractResource {
+    private static final Logger log = LoggerFactory.getLogger(AbstractResource.class);
+
     public abstract ResourceType getResourceType();
 
     public abstract char getAsciiChar();
@@ -23,7 +23,7 @@ public abstract class AbstractResource {
             ex = ex1;
         }
 
-        DefaultLogger.severe("Can't instantiate a Resource by its class =" + resourceClass.getName());
+        log.error("Can't instantiate a Resource by its class = {}", resourceClass.getName());
         throw new IllegalArgumentException(ex);
     }
 }
