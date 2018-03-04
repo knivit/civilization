@@ -214,29 +214,32 @@ public class World {
         return civilizations.getCityById(cityId);
     }
 
-    // Return true if all civilizations moved
-    public boolean nextMove() {
-        // has all civilizations moved ?
-        boolean found = false;
+    public List<Civilization> getNotMovedHumanCivilizations() {
+        List<Civilization> result = new ArrayList<>();
         for (Civilization civilization : civilizations) {
-            if (!civilization.isMoved()) {
-                if (civilization.isArtificialIntelligence()) {
-                    civilization.aiMove();
-                } else {
-                    found = true;
-                }
+            if (!civilization.isMoved() && !civilization.isArtificialIntelligence()) {
+                result.add(civilization);
+            }
+        }
+        return result;
+    }
+
+    public void nextMove() {
+        // do not step into the next year
+        // if some non-artificial civilizations didn't move
+        if (!getNotMovedHumanCivilizations().isEmpty()) {
+            return;
+        }
+
+        // after all human-managed civilization did move,
+        // move AI-managed civilizations
+        for (Civilization civilization : civilizations) {
+            if (civilization.isArtificialIntelligence()) {
+                civilization.nextMove();
             }
         }
 
-        if (found) {
-            return false;
-        }
-
         step();
-
-        // send an event that all Civilizations has moved
-        sendEvent(new Event(this, L10nWorld.MOVE_DONE_EVENT, Event.UPDATE_CONTROL_PANEL));
-        return true;
     }
 
     public void step() {
@@ -249,6 +252,8 @@ public class World {
         for (Civilization civilization : civilizations) {
             civilization.step(year);
         }
+
+        sendEvent(new Event(this, L10nWorld.NEW_YEAR_EVENT, Event.UPDATE_CONTROL_PANEL));
     }
 
     public List<Year> getYears() {

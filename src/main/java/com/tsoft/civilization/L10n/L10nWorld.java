@@ -126,6 +126,10 @@ public class L10nWorld {
             .set("ru", "\u0411\u044b\u043b\u0430 \u043e\u0441\u043d\u043e\u0432\u0430\u043d\u0430 \u043d\u043e\u0432\u0430\u044f \u0446\u0438\u0432\u0438\u043b\u0438\u0437\u0430\u0446\u0438\u044f");
 
     public static L10nMap MOVE_DONE_EVENT = new L10nMap()
-            .set("en", "All civilizations has moved to the new Year !")
+            .set("en", "Civilization has made its move")
+            .set("ru", "\u0426\u0438\u0432\u0438\u043b\u0438\u0437\u0430\u0446\u0438\u044f \u0441\u0434\u0435\u043b\u0430\u043b\u0430 \u0445\u043e\u0434");
+
+    public static L10nMap NEW_YEAR_EVENT = new L10nMap()
+            .set("en", "All civilizations has moved into new Year !")
             .set("ru", "\u0412\u0441\u0435 \u0446\u0438\u0432\u0438\u043b\u0438\u0437\u0430\u0446\u0438\u0438 \u0432\u043e\u0448\u043b\u0438 \u0432 \u041d\u043e\u0432\u044b\u0439 \u0413\u043e\u0434 !");
 }

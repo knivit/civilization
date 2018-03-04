@@ -258,7 +258,7 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
 
     /** A city may be destroyed only during a melee attack */
     @Override
-    public void destroyBy(HasCombatStrength destroyer, boolean destroyOtherUnitsAtLocation) {
+    public void destroyedBy(HasCombatStrength destroyer, boolean destroyOtherUnitsAtLocation) {
         getCombatStrength().setDestroyed(true);
         setPassScore(0);
 
@@ -273,9 +273,9 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
         UnitCollection units = civilization.getWorld().getUnitsAtLocation(location);
         for (AbstractUnit unit : units) {
             if (unit.getUnitCategory().isMilitary()) {
-                unit.destroyBy(destroyer, false);
+                unit.destroyedBy(destroyer, false);
             } else {
-                unit.captureBy(destroyer);
+                unit.capturedBy(destroyer);
             }
         }
     }

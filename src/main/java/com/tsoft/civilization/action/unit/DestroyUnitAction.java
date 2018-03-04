@@ -17,7 +17,7 @@ public class DestroyUnitAction {
             return result;
         }
 
-        unit.destroyBy(null, false);
+        unit.destroyedBy(null, false);
 
         return DestroyUnitResults.UNIT_DESTROYED;
     }

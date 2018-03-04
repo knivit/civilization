@@ -23,7 +23,7 @@ public interface HasCombatStrength {
 
     CombatStrength getCombatStrength();
 
-    void destroyBy(HasCombatStrength target, boolean destroyOtherUnitsAtLocation);
+    void destroyedBy(HasCombatStrength target, boolean destroyOtherUnitsAtLocation);
 
     void setPassScore(int passScore);
 

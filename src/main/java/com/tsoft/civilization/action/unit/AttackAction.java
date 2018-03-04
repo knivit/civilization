@@ -155,11 +155,11 @@ public class AttackAction {
             if (attacker.getUnitCategory().isRanged()) {
                 // if the attacker is a ranged unit
                 // the destroy the target only
-                target.destroyBy(attacker, false);
+                target.destroyedBy(attacker, false);
             } else {
                 // if attacker is a melee unit
                 // then destroy all units on that location
-                target.destroyBy(attacker, true);
+                target.destroyedBy(attacker, true);
 
                 // second, move the attacker there
                 ((AbstractUnit)attacker).moveTo(location);
@@ -180,7 +180,7 @@ public class AttackAction {
         }
 
         if (unitStrength <= 0) {
-            attacker.destroyBy(target, false);
+            attacker.destroyedBy(target, false);
         } else {
             attacker.getCombatStrength().setStrength(unitStrength);
             attacker.getCombatStrength().addAttackExperience(2);

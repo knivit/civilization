@@ -40,7 +40,7 @@ public class CaptureUnitAction {
         attacker.moveTo(foreignUnit.getLocation());
 
         // capture foreign unit
-        foreignUnit.captureBy(attacker);
+        foreignUnit.capturedBy(attacker);
 
         return CaptureUnitActionResults.FOREIGN_UNIT_CAPTURED;
     }

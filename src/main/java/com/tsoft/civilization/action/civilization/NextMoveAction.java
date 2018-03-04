@@ -4,25 +4,31 @@ import com.tsoft.civilization.L10n.L10nCivilization;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.world.World;
 
+import java.util.List;
 import java.util.UUID;
 
 public class NextMoveAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    public static ActionAbstractResult nextMove(Civilization civilization) {
-        ActionAbstractResult result = canNextMove();
-        if (result.isFail()) {
-            return result;
+    public static ActionAbstractResult nextMove(World world) {
+        ActionAbstractResult canGoNext = canNextMove(world);
+        if (canGoNext.isFail()) {
+            return canGoNext;
         }
 
-        if (!civilization.nextMove()) {
-            return NextMoveActionResults.AWAITING_OTHERS_TO_MOVE;
-        }
+        world.nextMove();
+
         return NextMoveActionResults.CAN_GO_NEXT;
     }
 
-    private static ActionAbstractResult canNextMove() {
+    private static ActionAbstractResult canNextMove(World world) {
+        List<Civilization> notMoved = world.getNotMovedHumanCivilizations();
+        if (!notMoved.isEmpty()) {
+            return NextMoveActionResults.AWAITING_OTHERS_TO_MOVE;
+        }
+
         return NextMoveActionResults.CAN_GO_NEXT;
     }
 
@@ -39,7 +45,7 @@ public class NextMoveAction {
     }
 
     public static StringBuilder getHtml(Civilization civilization) {
-        if (canNextMove().isFail()) {
+        if (canNextMove(civilization.getWorld()).isFail()) {
             return null;
         }
 

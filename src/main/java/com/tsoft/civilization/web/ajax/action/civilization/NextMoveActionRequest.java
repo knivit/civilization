@@ -16,14 +16,16 @@ public class NextMoveActionRequest extends AbstractAjaxRequest {
     @Override
     public Response getJSON(Request request) {
         Civilization myCivilization = getMyCivilization();
-        if (myCivilization == null) {
+        if (myCivilization == null || myCivilization.isDestroyed()) {
             return Response.newErrorInstance(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
-        ActionAbstractResult result = NextMoveAction.nextMove(myCivilization);
+        myCivilization.nextMove();
+
+        ActionAbstractResult result = NextMoveAction.nextMove(myCivilization.getWorld());
 
         // if there is a wait for others, then send an message to client
-        if (result.isFail() || (result == NextMoveActionResults.AWAITING_OTHERS_TO_MOVE)) {
+        if (result.isFail()) {
             JSONBlock response = new JSONBlock();
             response.addParam("message", result.getLocalized());
             return new Response(ResponseCode.ACCEPTED, response.getText(), ContentType.APPLICATION_JSON);

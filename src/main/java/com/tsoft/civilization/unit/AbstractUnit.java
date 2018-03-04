@@ -135,7 +135,7 @@ public abstract class AbstractUnit<V extends AbstractUnitView> implements HasCom
         return !getUnitCategory().isMilitary();
     }
 
-    public void captureBy(HasCombatStrength capturer) {
+    public void capturedBy(HasCombatStrength capturer) {
         civilization.removeUnit(this);
 
         // re-create foreign's unit ID so it can't be used anymore
@@ -152,7 +152,7 @@ public abstract class AbstractUnit<V extends AbstractUnitView> implements HasCom
     }
 
     @Override
-    public void destroyBy(HasCombatStrength destroyer, boolean destroyOtherUnitsAtLocation) {
+    public void destroyedBy(HasCombatStrength destroyer, boolean destroyOtherUnitsAtLocation) {
         combatStrength.setDestroyed(true);
 
         // destroyer may be null (for settlers who had settled)
@@ -166,12 +166,25 @@ public abstract class AbstractUnit<V extends AbstractUnitView> implements HasCom
             for (AbstractUnit unit : units) {
                 // to prevent a recursion
                 if (!unit.equals(this)) {
-                    unit.destroyBy(destroyer, false);
+                    unit.destroyedBy(destroyer, false);
                 }
             }
         }
 
         // destroy the unit itself
         civilization.removeUnit(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AbstractUnit<?> that = (AbstractUnit<?>) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

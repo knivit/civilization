@@ -3,6 +3,7 @@ package com.tsoft.civilization.world;
 import com.tsoft.civilization.L10n.L10nCity;
 import com.tsoft.civilization.L10n.L10nCivilization;
 import com.tsoft.civilization.L10n.L10nMap;
+import com.tsoft.civilization.L10n.L10nWorld;
 import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.util.BuildingCatalog;
@@ -61,12 +62,11 @@ public class Civilization {
     private HashSet<Technology> technologies = new TechnologySet();
     private Supply supply;
 
-    // Agreements which this civilization have with others
+    // Agreements which this civilization has with others
     private HashMap<Civilization, AgreementList> agreements = new HashMap<>();
 
     // true when any event that needs score to be calculated was generated
     private EventsByYearMap events;
-    private boolean needCivilizationScoreRecalculation = true;
 
     private Point settlersLocation;
     private boolean isDestroyed;
@@ -130,6 +130,10 @@ public class Civilization {
         return world.getTilesMap();
     }
 
+    public boolean isDestroyed() {
+        return isDestroyed;
+    }
+
     public boolean isMoved() {
         return isMoved;
     }
@@ -142,22 +146,29 @@ public class Civilization {
         isArtificialIntelligence = artificialIntelligence;
     }
 
-    public void aiMove() {
-        // TODO
+    private void aiMove() {
     }
 
-    public boolean nextMove() {
+    public void nextMove() {
+        if (isMoved || isDestroyed) {
+            return;
+        }
+
+        if (isArtificialIntelligence) {
+            aiMove();
+        }
+
         isMoved = true;
-        return world.nextMove();
+        addEvent(new Event(this, L10nWorld.MOVE_DONE_EVENT, Event.UPDATE_CONTROL_PANEL));
     }
 
     public EventsByYearMap getEvents() {
         return events;
     }
 
-    /** Something is happened in our civilization (a citizen was born, a building was built, a unit has won etc) */
+    /** Something is happened in our civilization (a citizen was born,
+     * a building was built, a unit has won etc) */
     public void addEvent(Event event) {
-        needCivilizationScoreRecalculation = true;
         events.add(event);
     }
 
@@ -178,7 +189,6 @@ public class Civilization {
         city.setCivilization(this);
 
         world.sendEvent(new Event(city, L10nCity.NEW_CITY_EVENT, Event.UPDATE_WORLD));
-        needCivilizationScoreRecalculation = true;
     }
 
     public void removeCity(City city) {
@@ -187,7 +197,6 @@ public class Civilization {
 
         // civilizations is destroyed when all the cities is destroyed
         isDestroyed = cities.isEmpty();
-        needCivilizationScoreRecalculation = true;
     }
 
     public City getCityAtLocation(Point location) {
@@ -242,7 +251,6 @@ public class Civilization {
     public void addUnit(AbstractUnit unit) {
         units.add(unit);
         unit.setCivilization(this);
-        needCivilizationScoreRecalculation = true;
     }
 
     public void removeUnit(AbstractUnit unit) {
@@ -251,7 +259,6 @@ public class Civilization {
         unit.setCivilization(null);
 
         world.sendEvent(new Event(this, L10nUnit.UNIT_WAS_DESTROYED_EVENT, Event.UPDATE_WORLD));
-        needCivilizationScoreRecalculation = true;
     }
 
     public boolean canBuyUnit(AbstractUnit unit) {

@@ -1,7 +1,9 @@
 package com.tsoft.civilization.world.generator;
 
 public enum Climate {
-    COLD(0), NORMAL(1), HOT(2);
+    COLD(0),
+    NORMAL(1),
+    HOT(2);
 
     private int no;
 

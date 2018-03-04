@@ -11,21 +11,21 @@ import java.util.Collection;
 import java.util.List;
 
 public interface CivilizationCollection extends List<Civilization> {
-    public Civilization getCivilizationById(String civilizationId);
+    Civilization getCivilizationById(String civilizationId);
 
-    public Civilization getCivilizationOnTile(Point location);
+    Civilization getCivilizationOnTile(Point location);
 
-    public CityCollection getCitiesAtLocations(Collection<Point> locations, Civilization excludeCivilization);
+    CityCollection getCitiesAtLocations(Collection<Point> locations, Civilization excludeCivilization);
 
-    public City getCityAtLocation(Point location);
+    City getCityAtLocation(Point location);
 
-    public UnitCollection getUnitsAtLocation(Point location, Civilization excludeCivilization);
+    UnitCollection getUnitsAtLocation(Point location, Civilization excludeCivilization);
 
-    public UnitCollection getUnitsAtLocations(Collection<Point> locations, Civilization excludeCivilization);
+    UnitCollection getUnitsAtLocations(Collection<Point> locations, Civilization excludeCivilization);
 
-    public AbstractUnit getUnitById(String unitId);
+    AbstractUnit getUnitById(String unitId);
 
-    public City getCityById(String cityId);
+    City getCityById(String cityId);
 
-    public void sortByName();
+    void sortByName();
 }

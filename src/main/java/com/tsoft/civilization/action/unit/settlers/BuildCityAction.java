@@ -22,7 +22,7 @@ public class BuildCityAction {
         }
 
         City city = new City(settlers.getCivilization(), settlers.getLocation());
-        settlers.destroyBy(null, false);
+        settlers.destroyedBy(null, false);
 
         return SettlersActionResults.CITY_BUILT;
     }
