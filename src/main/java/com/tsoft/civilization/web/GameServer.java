@@ -30,8 +30,6 @@ public class GameServer {
 
             ClientServiceThread clientThread = new ClientServiceThread(socket);
             Thread thread = new Thread(clientThread);
-
-            log.info("{} started to serve a request", thread.getName());
             thread.start();
         }
     }
@@ -52,7 +50,7 @@ public class GameServer {
                     continue;
                 }
 
-                System.out.println("Found address (" + ni.getName() + "): " + inet_addr.getHostAddress());
+                log.info("Found address '{}': {}", ni.getName(), inet_addr.getHostAddress());
             }
         }
     }
