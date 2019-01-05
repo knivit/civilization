@@ -16,7 +16,6 @@ import java.nio.charset.StandardCharsets;
 
 @Slf4j
 public class ServerClient {
-    private BufferedReader inputStream;
     private OutputStream outputStream;
 
     private Request request;
@@ -30,7 +29,7 @@ public class ServerClient {
             clientIP = clientIP.substring(1);
         }
 
-        inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        BufferedReader inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         outputStream = socket.getOutputStream();
 
         // Create a Request

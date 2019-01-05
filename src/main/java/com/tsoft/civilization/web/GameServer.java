@@ -28,8 +28,7 @@ public class GameServer {
         while (true) {
             Socket socket = ss.accept();
 
-            long tick = System.currentTimeMillis();
-            ClientServiceThread clientThread = new ClientServiceThread(socket, tick);
+            ClientServiceThread clientThread = new ClientServiceThread(socket);
             Thread thread = new Thread(clientThread);
 
             log.info("{} started to serve a request", thread.getName());

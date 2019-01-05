@@ -16,6 +16,7 @@ public class Response {
         mimeTypes.put(".jpg", ContentType.JPEG);
         mimeTypes.put(".png", ContentType.PNG);
         mimeTypes.put(".css", ContentType.CSS);
+        mimeTypes.put(".ico", ContentType.ICON);
     }
 
     private String errorCode;

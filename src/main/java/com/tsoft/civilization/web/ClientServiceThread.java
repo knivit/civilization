@@ -12,9 +12,10 @@ public class ClientServiceThread implements Runnable {
     private ServerClient client;
     private Instant tick;
 
-    public ClientServiceThread(Socket socket, long tick) throws Throwable {
+    public ClientServiceThread(Socket socket) throws Throwable {
         this.socket = socket;
-        this.tick = Instant.now();
+
+        tick = Instant.now();
 
         client = new ServerClient();
         client.readRequest(socket);
@@ -24,10 +25,10 @@ public class ClientServiceThread implements Runnable {
     public void run() {
         try {
             try {
-                log.info("Started to serve a request from {}", client.getRequest().toString());
+                log.info("Started to serve {}", client.getRequest());
                 client.processRequest();
             } catch (Throwable ex) {
-                log.error("Error during request processing", ex);
+                log.error("Error during {} processing", client.getRequest(), ex);
             } finally {
                 try {
                     socket.close();
@@ -40,7 +41,4 @@ public class ClientServiceThread implements Runnable {
         }
     }
 
-    public String getLogInfo() {
-        return client.getRequest().toString();
-    }
 }
