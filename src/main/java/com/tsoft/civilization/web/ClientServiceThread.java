@@ -1,15 +1,13 @@
 package com.tsoft.civilization.web;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.net.Socket;
 import java.time.Duration;
 import java.time.Instant;
 
+@Slf4j
 public class ClientServiceThread implements Runnable {
-    private static final Logger log = LoggerFactory.getLogger(ClientServiceThread.class);
-
     private Socket socket;
     private ServerClient client;
     private Instant tick;

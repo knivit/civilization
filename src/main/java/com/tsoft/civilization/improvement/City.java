@@ -23,13 +23,12 @@ import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.view.improvement.CityView;
 import com.tsoft.civilization.world.Civilization;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 
+@Slf4j
 public class City extends AbstractImprovement<CityView> implements HasCombatStrength {
-    private static final Logger log = LoggerFactory.getLogger(City.class);
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
@@ -77,7 +76,9 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
         // first citizen
         citizenService = new CityPopulationService(this);
         addCitizen();
-        civilization.addEvent(citizenService, L10nCity.FOUNDED_SETTLERS);
+        Event event = new Event(Event.INFORMATION, citizenService, L10nCity.FOUNDED_SETTLERS, VIEW.getLocalizedCityName());
+        civilization.addEvent(event);
+        log.debug("{}", event);
 
         // city's initial buildings
         buildingService = new CityBuildingService(this);
@@ -152,7 +153,10 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
 
     public void addBuilding(AbstractBuilding building) {
         buildingService.add(building);
-        civilization.addEvent(new Event(this, L10nCity.NEW_BUILDING_BUILT_EVENT, Event.INFORMATION));
+
+        Event event = new Event(Event.INFORMATION, this, L10nCity.NEW_BUILDING_BUILT_EVENT, building.getView().getLocalizedName());
+        civilization.addEvent(event);
+        log.debug("{}", event);
 
         // check is this building adds defense strength
         int strength = getCombatStrength().getStrength();
@@ -188,7 +192,7 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
         buildingService.startConstruction(obj);
     }
 
-    // Construction of a building or unit is finished
+    // Construction of a building or an unit is finished
     public void constructionDone(Construction construction) {
         CanBeBuilt obj = construction.getObject();
         if (obj instanceof AbstractBuilding) {
@@ -198,8 +202,9 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
         }
 
         if (obj instanceof AbstractUnit) {
-            UnitFactory.newInstance((AbstractUnit)obj, getCivilization(), getLocation());
-            getWorld().sendEvent(new Event(obj, L10nCity.NEW_UNIT_BUILT_EVENT, Event.UPDATE_WORLD));
+            AbstractUnit unit = (AbstractUnit)obj;
+            unit.init(getCivilization(), getLocation());
+            getWorld().sendEvent(new Event(Event.UPDATE_WORLD, obj, L10nCity.NEW_UNIT_BUILT_EVENT, unit.getView().getLocalizedName()));
             return;
         }
 
@@ -211,7 +216,7 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
     public Supply getSupply() {
         Supply supply = new Supply().setHappiness(-1).setPopulation(getCitizenCount());
 
-        supply.add(citizenService.getSupply());
+        supply.add(citizenService.calcSupply());
         supply.add(buildingService.getSupply());
 
         return supply;
@@ -262,8 +267,13 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
         getCombatStrength().setDestroyed(true);
         setPassScore(0);
 
-        getWorld().sendEvent(new Event(this, L10nCity.CITY_WAS_CAPTURED, Event.UPDATE_WORLD));
-        destroyer.getCivilization().addEvent(new Event(destroyer, L10nCity.UNIT_HAS_CAPTURED_CITY, Event.UPDATE_WORLD));
+        Event worldEvent = new Event(Event.UPDATE_WORLD, this, L10nCity.CITY_WAS_CAPTURED, VIEW.getLocalizedCityName());
+        getWorld().sendEvent(worldEvent);
+        log.debug("{}", worldEvent);
+
+        Event event = new Event(Event.UPDATE_WORLD, destroyer, L10nCity.UNIT_HAS_CAPTURED_CITY);
+        destroyer.getCivilization().addEvent(event);
+        log.debug("{}", event);
 
         // capture the city
         getCivilization().removeCity(this);
@@ -281,12 +291,12 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
     }
 
     public int getUnitProductionCost(String unitClassUuid) {
-        AbstractUnit unit = UnitFactory.getUnitFromCatalogByClassUuid(unitClassUuid);
+        AbstractUnit unit = UnitFactory.createUnit(unitClassUuid);
         return unit.getProductionCost();
     }
 
     public int getUnitBuyCost(String unitClassUuid) {
-        AbstractUnit unit = UnitFactory.getUnitFromCatalogByClassUuid(unitClassUuid);
+        AbstractUnit unit = UnitFactory.createUnit(unitClassUuid);
         return unit.getGoldCost();
     }
 

@@ -19,7 +19,7 @@ public class BuildUnitAction {
             return result;
         }
 
-        AbstractUnit unit = UnitFactory.getUnitFromCatalogByClassUuid(unitClassUuid);
+        AbstractUnit unit = UnitFactory.createUnit(unitClassUuid);
         city.startConstruction(unit);
 
         return CityActionResults.UNIT_CONSTRUCTION_IS_STARTED;
@@ -30,8 +30,8 @@ public class BuildUnitAction {
             return CityActionResults.CITY_NOT_FOUND;
         }
 
-        AbstractUnit unit = UnitFactory.getUnitFromCatalogByClassUuid(unitClassUuid);
-        if (unit == null || unit.getProductionCost() < 0) {
+        AbstractUnit unit = UnitFactory.createUnit(unitClassUuid);
+        if (unit.getProductionCost() < 0) {
             return CityActionResults.INVALID_UNIT;
         }
 

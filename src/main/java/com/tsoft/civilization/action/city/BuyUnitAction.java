@@ -7,14 +7,18 @@ import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.util.UnitFactory;
 import com.tsoft.civilization.util.Format;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.UUID;
 
+@Slf4j
 public class BuyUnitAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     public static ActionAbstractResult buyUnit(City city, String unitClassUuid) {
         ActionAbstractResult result = canBuyUnit(city, unitClassUuid);
+        log.debug("{}", result);
+
         if (result.isFail()) {
             return result;
         }
@@ -29,8 +33,8 @@ public class BuyUnitAction {
             return CityActionResults.CITY_NOT_FOUND;
         }
 
-        AbstractUnit unit = UnitFactory.getUnitFromCatalogByClassUuid(unitClassUuid);
-        if (unit == null || unit.getGoldCost() < 0) {
+        AbstractUnit unit = UnitFactory.createUnit(unitClassUuid);
+        if (unit.getGoldCost() < 0) {
             return CityActionResults.INVALID_UNIT;
         }
 
@@ -46,7 +50,7 @@ public class BuyUnitAction {
             return CityActionResults.CITY_CANT_TAKE_UNIT;
         }
 
-        return CityActionResults.CAN_START_CONSTRUCTION;
+        return CityActionResults.CAN_BUY_UNIT;
     }
 
     private static String getClientJSCode(City city, String unitClassUuid) {

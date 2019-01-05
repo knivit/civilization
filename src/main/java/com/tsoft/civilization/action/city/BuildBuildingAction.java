@@ -7,14 +7,18 @@ import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.util.BuildingCatalog;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.util.Format;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.UUID;
 
+@Slf4j
 public class BuildBuildingAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     public static ActionAbstractResult buildBuilding(City city, String buildingClassUuid) {
         ActionAbstractResult result = canBuildBuilding(city, buildingClassUuid);
+        log.debug("{}", result);
+
         if (result.isFail()) {
             return result;
         }

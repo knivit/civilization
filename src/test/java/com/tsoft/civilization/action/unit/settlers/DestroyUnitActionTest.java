@@ -27,11 +27,11 @@ public class DestroyUnitActionTest {
         Civilization civilization = new Civilization(mockWorld, 0);
 
         // The only settlers can't be destroyed
-        Settlers settlers1 = UnitFactory.newInstance(Settlers.INSTANCE, civilization, new Point(1, 1));
+        Settlers settlers1 = UnitFactory.newInstance(Settlers.CLASS_UUID, civilization, new Point(1, 1));
         assertEquals(DestroyUnitResults.LAST_SETTLERS_CANT_BE_DESTOYED, DestroyUnitAction.destroyUnit(settlers1));
 
         // Add another settlers
-        Settlers settlers2 = UnitFactory.newInstance(Settlers.INSTANCE, civilization, new Point(2, 0));
+        Settlers settlers2 = UnitFactory.newInstance(Settlers.CLASS_UUID, civilization, new Point(2, 0));
 
         // Destroy the first ones
         DestroyUnitAction.destroyUnit(settlers1);

@@ -53,6 +53,10 @@ public class L10nCity {
             .set("en", "Can't buy this building")
             .set("ru", "\u041d\u0435\u0432\u043e\u0437\u043c\u043e\u0436\u043d\u043e \u043a\u0443\u043f\u0438\u0442\u044c \u044d\u0442\u043e \u0437\u0434\u0430\u043d\u0438\u0435");
 
+    public static L10nMap CAN_BUY_THIS_UNIT = new L10nMap()
+            .set("en", "Can buy this unit")
+            .set("ru", "\u041c\u043e\u0436\u043d\u043e \u043a\u0443\u043f\u0438\u0442\u044c \u044d\u0442\u043e\u0442 \u044e\u043d\u0438\u0442");
+
     public static L10nMap CANT_BUY_THIS_UNIT = new L10nMap()
             .set("en", "Can't buy this unit")
             .set("ru", "\u041d\u0435\u0432\u043e\u0437\u043c\u043e\u0436\u043d\u043e \u043a\u0443\u043f\u0438\u0442\u044c \u044d\u0442\u043e\u0442 \u044e\u043d\u0438\u0442");
@@ -100,24 +104,24 @@ public class L10nCity {
     /** Events */
 
     public static L10nMap NEW_CITY_EVENT = new L10nMap()
-            .set("en", "A new city is founded")
-            .set("ru", "\u041e\u0441\u043d\u043e\u0432\u0430\u043d \u043d\u043e\u0432\u044b\u0439 \u0433\u043e\u0440\u043e\u0434");
+            .set("en", "A new city %s was founded")
+            .set("ru", "\u041e\u0441\u043d\u043e\u0432\u0430\u043d \u043d\u043e\u0432\u044b\u0439 %s \u0433\u043e\u0440\u043e\u0434");
 
     public static L10nMap CITY_WAS_CAPTURED = new L10nMap()
-            .set("en", "City was captured")
-            .set("ru", "\u0413\u043e\u0440\u043e\u0434 \u0431\u044b\u043b \u0437\u0430\u0445\u0432\u0430\u0447\u0435\u043d");
+            .set("en", "City %s was captured")
+            .set("ru", "\u0413\u043e\u0440\u043e\u0434 %s \u0431\u044b\u043b \u0437\u0430\u0445\u0432\u0430\u0447\u0435\u043d");
 
     public static L10nMap UNIT_HAS_CAPTURED_CITY = new L10nMap()
             .set("en", "A unit has captured the city")
             .set("ru", "\u042e\u043d\u0438\u0442 \u0437\u0430\u0445\u0432\u0430\u0442\u0438\u043b \u0433\u043e\u0440\u043e\u0434");
 
     public static L10nMap NEW_BUILDING_BUILT_EVENT = new L10nMap()
-            .set("en", "A new building has been constructed")
-            .set("ru", "\u0411\u044b\u043b\u043e \u043f\u043e\u0441\u0442\u0440\u043e\u0435\u043d\u043e \u043d\u043e\u0432\u043e\u0435 \u0437\u0434\u0430\u043d\u0438\u0435");
+            .set("en", "A new building %s has been constructed")
+            .set("ru", "\u0411\u044b\u043b\u043e \u043f\u043e\u0441\u0442\u0440\u043e\u0435\u043d\u043e %s \u043d\u043e\u0432\u043e\u0435 \u0437\u0434\u0430\u043d\u0438\u0435");
 
     public static L10nMap NEW_UNIT_BUILT_EVENT = new L10nMap()
-            .set("en", "A new unit has been constructed")
-            .set("ru", "\u0411\u044b\u043b \u043f\u043e\u0441\u0442\u0440\u043e\u0435\u043d \u043d\u043e\u0432\u044b\u0439 \u044e\u043d\u0438\u0442");
+            .set("en", "A new unit $s has been constructed")
+            .set("ru", "\u0411\u044b\u043b \u043f\u043e\u0441\u0442\u0440\u043e\u0435\u043d %s \u043d\u043e\u0432\u044b\u0439 \u044e\u043d\u0438\u0442");
 
     /** Population */
 
@@ -130,12 +134,12 @@ public class L10nCity {
             .set("ru", "\u0413\u043e\u043b\u043e\u0434 \u0437\u0430\u043a\u043e\u043d\u0447\u0438\u043b\u0441\u044f");
 
     public static L10nMap CITIZEN_WAS_BORN = new L10nMap()
-            .set("en", "A citizen was born")
-            .set("ru", "\u0420\u043e\u0434\u0438\u043b\u0441\u044f \u0436\u0438\u0442\u0435\u043b\u044c");
+            .set("en", "A citizen was born in city %s")
+            .set("ru", "\u0420\u043e\u0434\u0438\u043b\u0441\u044f \u0436\u0438\u0442\u0435\u043b\u044c in city %s");
 
     public static L10nMap CITIZEN_HAS_DIED = new L10nMap()
-            .set("en", "A citizen has died")
-            .set("ru", "\u0423\u043c\u0435\u0440 \u0436\u0438\u0442\u0435\u043b\u044c");
+            .set("en", "A citizen has died in city %s")
+            .set("ru", "\u0423\u043c\u0435\u0440 \u0436\u0438\u0442\u0435\u043b\u044c in city %s");
 
     /** Statistic */
 
@@ -170,8 +174,8 @@ public class L10nCity {
             .set("ru", "\u041f\u0438\u0449\u0430, \u043f\u043e\u0442\u0440\u0435\u0431\u043b\u0435\u043d\u043d\u0430\u044f \u0436\u0438\u0442\u0435\u043b\u044f\u043c\u0438");
 
     public static L10nMap FOUNDED_SETTLERS = new L10nMap()
-            .set("en", "Settlers founded a city")
-            .set("ru", "\u041f\u043e\u0441\u0435\u043b\u0435\u043d\u0446\u044b, \u043a\u043e\u0442\u043e\u0440\u044b\u0435 \u043e\u0441\u043d\u043e\u0432\u0430\u043b\u0438 \u0433\u043e\u0440\u043e\u0434");
+            .set("en", "Settlers founded a city %s")
+            .set("ru", "\u041f\u043e\u0441\u0435\u043b\u0435\u043d\u0446\u044b, \u043a\u043e\u0442\u043e\u0440\u044b\u0435 \u043e\u0441\u043d\u043e\u0432\u0430\u043b\u0438 \u0433\u043e\u0440\u043e\u0434 %s");
 
     public static L10nMap ACCUMULATION_SUPPLY = new L10nMap()
             .set("en", "Accumulation Supply")

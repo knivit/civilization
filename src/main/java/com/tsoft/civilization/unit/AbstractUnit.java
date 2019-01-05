@@ -13,9 +13,11 @@ import com.tsoft.civilization.web.view.unit.AbstractUnitView;
 import com.tsoft.civilization.world.Civilization;
 import com.tsoft.civilization.world.util.Event;
 import com.tsoft.civilization.world.World;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 
+@Slf4j
 public abstract class AbstractUnit<V extends AbstractUnitView> implements HasCombatStrength, CanBeBuilt {
     private String id;
     private Civilization civilization;
@@ -31,7 +33,6 @@ public abstract class AbstractUnit<V extends AbstractUnitView> implements HasCom
 
     private ArrayList<AbstractSkill> skills = new ArrayList<>();
 
-    public abstract UnitType getUnitType();
     public abstract UnitCategory getUnitCategory();
     public abstract void initPassScore();
     public abstract int getGoldCost();
@@ -157,7 +158,9 @@ public abstract class AbstractUnit<V extends AbstractUnitView> implements HasCom
 
         // destroyer may be null (for settlers who had settled)
         if (destroyer != null) {
-            destroyer.getCivilization().addEvent(new Event(destroyer, L10nUnit.UNIT_HAS_WON_ATTACK_EVENT, Event.UPDATE_WORLD));
+            Event event = new Event(Event.UPDATE_WORLD, destroyer, L10nUnit.UNIT_HAS_WON_ATTACK_EVENT);
+            destroyer.getCivilization().addEvent(event);
+            log.debug("{}", event);
         }
 
         // destroy all units located in that location

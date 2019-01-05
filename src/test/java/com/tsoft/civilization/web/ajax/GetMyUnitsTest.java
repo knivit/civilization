@@ -31,8 +31,8 @@ public class GetMyUnitsTest {
     public void getJSON() {
         MockWorld mockWorld = MockWorld.newSimpleWorld();
         Civilization c1 = new Civilization(mockWorld, 0);
-        Archers archers = UnitFactory.newInstance(Archers.INSTANCE, c1, new Point(2, 0));
-        Workers workers = UnitFactory.newInstance(Workers.INSTANCE, c1, new Point(2, 0));
+        Archers archers = UnitFactory.newInstance(Archers.CLASS_UUID, c1, new Point(2, 0));
+        Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID, c1, new Point(2, 0));
 
         ClientSession session = Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
         Worlds.add(mockWorld);

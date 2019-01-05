@@ -32,8 +32,8 @@ public class GetCivilizationStatusTest {
     public void getJSONForMyCivilization() {
         MockWorld mockWorld = MockWorld.newSimpleWorld();
         Civilization c1 = new Civilization(mockWorld, 0);
-        Workers workers = UnitFactory.newInstance(Workers.INSTANCE, c1, new Point(2, 0));
-        Warriors warriors = UnitFactory.newInstance(Warriors.INSTANCE, c1, new Point(2, 1));
+        Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID, c1, new Point(2, 0));
+        Warriors warriors = UnitFactory.newInstance(Warriors.CLASS_UUID, c1, new Point(2, 1));
         City city1 = new City(c1, new Point(2, 2));
 
         ClientSession session = Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
@@ -52,8 +52,8 @@ public class GetCivilizationStatusTest {
         MockWorld mockWorld = MockWorld.newSimpleWorld();
         Civilization c1 = new Civilization(mockWorld, 0);
         Civilization c2 = new Civilization(mockWorld, 1);
-        Workers workers = UnitFactory.newInstance(Workers.INSTANCE, c2, new Point(2, 0));
-        Warriors warriors = UnitFactory.newInstance(Warriors.INSTANCE, c2, new Point(2, 1));
+        Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID, c2, new Point(2, 0));
+        Warriors warriors = UnitFactory.newInstance(Warriors.CLASS_UUID, c2, new Point(2, 1));
         City city1 = new City(c2, new Point(2, 2));
 
         ClientSession session = Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");

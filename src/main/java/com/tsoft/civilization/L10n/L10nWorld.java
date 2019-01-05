@@ -114,22 +114,22 @@ public class L10nWorld {
     /** Events */
 
     public static L10nMap DECLARE_WAR_EVENT = new L10nMap()
-            .set("en", "A war has been declared !")
-            .set("ru", "\u0411\u044b\u043b\u0430 \u043e\u0431\u044a\u044f\u0432\u043b\u0435\u043d\u0430 \u0432\u043e\u0439\u043d\u0430 !");
+            .set("en", "A war has been declared between %s and %s !")
+            .set("ru", "\u0411\u044b\u043b\u0430 \u043e\u0431\u044a\u044f\u0432\u043b\u0435\u043d\u0430 \u0432\u043e\u0439\u043d\u0430 between %s and %s !");
 
     public static L10nMap DECLARE_FRIENDS_EVENT = new L10nMap()
-            .set("en", "A war has stopped !")
-            .set("ru", "\u0412\u043e\u0439\u043d\u0430 \u043f\u0440\u0435\u043a\u0440\u0430\u0449\u0435\u043d\u0430 !");
+            .set("en", "A war has stopped between %s and %s !")
+            .set("ru", "\u0412\u043e\u0439\u043d\u0430 \u043f\u0440\u0435\u043a\u0440\u0430\u0449\u0435\u043d\u0430 between %s and %s !");
 
     public static L10nMap NEW_CIVILIZATION_EVENT = new L10nMap()
-            .set("en", "New Civilization has been founded")
-            .set("ru", "\u0411\u044b\u043b\u0430 \u043e\u0441\u043d\u043e\u0432\u0430\u043d\u0430 \u043d\u043e\u0432\u0430\u044f \u0446\u0438\u0432\u0438\u043b\u0438\u0437\u0430\u0446\u0438\u044f");
+            .set("en", "New Civilization %s has been founded")
+            .set("ru", "\u0411\u044b\u043b\u0430 \u043e\u0441\u043d\u043e\u0432\u0430\u043d\u0430 %s \u043d\u043e\u0432\u0430\u044f \u0446\u0438\u0432\u0438\u043b\u0438\u0437\u0430\u0446\u0438\u044f");
 
     public static L10nMap MOVE_DONE_EVENT = new L10nMap()
-            .set("en", "Civilization has made its move")
-            .set("ru", "\u0426\u0438\u0432\u0438\u043b\u0438\u0437\u0430\u0446\u0438\u044f \u0441\u0434\u0435\u043b\u0430\u043b\u0430 \u0445\u043e\u0434");
+            .set("en", "Civilization %s has made its move")
+            .set("ru", "\u0426\u0438\u0432\u0438\u043b\u0438\u0437\u0430\u0446\u0438\u044f %s \u0441\u0434\u0435\u043b\u0430\u043b\u0430 \u0445\u043e\u0434");
 
     public static L10nMap NEW_YEAR_EVENT = new L10nMap()
-            .set("en", "All civilizations has moved into new Year !")
-            .set("ru", "\u0412\u0441\u0435 \u0446\u0438\u0432\u0438\u043b\u0438\u0437\u0430\u0446\u0438\u0438 \u0432\u043e\u0448\u043b\u0438 \u0432 \u041d\u043e\u0432\u044b\u0439 \u0413\u043e\u0434 !");
+            .set("en", "All civilizations has moved into new Year %d !")
+            .set("ru", "\u0412\u0441\u0435 \u0446\u0438\u0432\u0438\u043b\u0438\u0437\u0430\u0446\u0438\u0438 \u0432\u043e\u0448\u043b\u0438 \u0432 \u041d\u043e\u0432\u044b\u0439 \u0413\u043e\u0434 %d !");
 }

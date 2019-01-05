@@ -30,7 +30,7 @@ public class RemoveForestActionTest {
         MockWorld mockWorld = new MockWorld(mockTilesMap);
         Civilization civilization = new Civilization(mockWorld, 0);
         AbstractTile tile = mockTilesMap.getTile(1, 1);
-        Workers workers = UnitFactory.newInstance(Workers.INSTANCE, civilization, tile.getLocation());
+        Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID, civilization, tile.getLocation());
 
         // case 1
         // no needed technology
@@ -57,7 +57,7 @@ public class RemoveForestActionTest {
         civilization.addTechnology(Technology.MINING);
 
         AbstractTile tile = mockTilesMap.getTile(1, 1);
-        Workers workers = UnitFactory.newInstance(Workers.INSTANCE, civilization, tile.getLocation());
+        Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID, civilization, tile.getLocation());
 
         for (int i = 0; i < 4; i ++) {
             assertEquals(WorkersActionResults.REMOVING_FOREST, RemoveForestAction.removeForest(workers));

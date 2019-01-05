@@ -9,14 +9,12 @@ import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.base.TileType;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.web.view.tile.feature.AbstractFeatureView;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Constructor;
 
+@Slf4j
 public abstract class TerrainFeature<V extends AbstractFeatureView> {
-    private static final Logger log = LoggerFactory.getLogger(TerrainFeature.class);
-
     public static final int FEATURE_NOT_INITIALIZED = -1;
     public static final int FEATURE_REMOVED = 0;
 
@@ -45,7 +43,7 @@ public abstract class TerrainFeature<V extends AbstractFeatureView> {
 
             return feature;
         } catch (Exception ex) {
-            log.error("Can't create an object", ex);
+            log.error("Can't create an object {}", feature.getClass().getSimpleName(), ex);
         }
         return null;
     }

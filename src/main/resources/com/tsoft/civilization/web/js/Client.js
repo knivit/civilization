@@ -56,7 +56,6 @@ var client = {
     },
 
     // Subscribe to get Notifications from the Server
-
     getNotifications: function() {
         var eventSource = new EventSource("GetNotifications");
 

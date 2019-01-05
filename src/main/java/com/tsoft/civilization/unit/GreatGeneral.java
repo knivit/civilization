@@ -5,8 +5,6 @@ import com.tsoft.civilization.util.Year;
 import com.tsoft.civilization.web.view.unit.GreatGeneralView;
 import com.tsoft.civilization.world.Civilization;
 
-import java.util.UUID;
-
 /**
  * Movement: 2; Strength: 0; Ranged Strength: 0
  *
@@ -16,18 +14,13 @@ import java.util.UUID;
  * only be built in your own territory (unlike a regular Fort, which can be built in unclaimed territory.
  */
 public class GreatGeneral extends AbstractUnit<GreatGeneralView> {
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
+    public static final String CLASS_UUID = "fa1b9d47-01bf-47c5-9673-95ed64514990";
     public static final GreatGeneral INSTANCE = new GreatGeneral();
 
     private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
             .setStrength(0);
 
     private static final GreatGeneralView VIEW = new GreatGeneralView();
-
-    @Override
-    public UnitType getUnitType() {
-        return UnitType.GREAT_GENERAL;
-    }
 
     @Override
     public UnitCategory getUnitCategory() {

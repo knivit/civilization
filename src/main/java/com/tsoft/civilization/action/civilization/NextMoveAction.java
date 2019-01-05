@@ -5,17 +5,21 @@ import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.world.Civilization;
 import com.tsoft.civilization.world.World;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 public class NextMoveAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     public static ActionAbstractResult nextMove(World world) {
-        ActionAbstractResult canGoNext = canNextMove(world);
-        if (canGoNext.isFail()) {
-            return canGoNext;
+        ActionAbstractResult result = canNextMove(world);
+        log.debug("{}", result);
+
+        if (result.isFail()) {
+            return result;
         }
 
         world.nextMove();

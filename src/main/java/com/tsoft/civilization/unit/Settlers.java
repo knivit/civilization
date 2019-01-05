@@ -30,11 +30,6 @@ public class Settlers extends AbstractUnit<SettlersView> {
     private static final SettlersView VIEW = new SettlersView();
 
     @Override
-    public UnitType getUnitType() {
-        return UnitType.SETTLERS;
-    }
-
-    @Override
     public UnitCategory getUnitCategory() {
         return UnitCategory.CIVIL;
     }

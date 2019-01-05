@@ -12,15 +12,14 @@ import com.tsoft.civilization.world.Civilization;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.world.util.Event;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
 import java.util.UUID;
-import java.util.logging.Logger;
 
+@Slf4j
 public abstract class AbstractBuilding<V extends AbstractBuildingView> implements CanBeBuilt {
-    private static final Logger log = Logger.getLogger(AbstractBuilding.class.getName());
-
     private String id;
     private City city;
 
@@ -49,7 +48,7 @@ public abstract class AbstractBuilding<V extends AbstractBuildingView> implement
 
             return building;
         } catch (Exception ex) {
-            log.throwing(AbstractBuilding.class.getName(), "newInstance", ex);
+            log.error("Error on newInstance of {}", building.getClass().getSimpleName(), ex);
         }
         return null;
     }
@@ -101,8 +100,9 @@ public abstract class AbstractBuilding<V extends AbstractBuildingView> implement
     public void remove() {
         isDestroyed = true;
 
-        Event event = new Event(this, L10nBuilding.BUILDING_DESTROYED, Event.INFORMATION);
+        Event event = new Event(Event.INFORMATION, this, L10nBuilding.BUILDING_DESTROYED, getView().getLocalizedName());
         getCivilization().addEvent(event);
+        log.debug("{}", event);
 
         city.destroyBuilding(this);
     }

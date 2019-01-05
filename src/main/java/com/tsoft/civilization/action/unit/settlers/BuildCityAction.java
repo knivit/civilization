@@ -8,15 +8,19 @@ import com.tsoft.civilization.unit.Settlers;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.Civilization;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
+@Slf4j
 public class BuildCityAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     public static ActionAbstractResult buildCity(Settlers settlers) {
         ActionAbstractResult result = canBuildCity(settlers);
+        log.debug("{}", result.getLocalized());
+
         if (result.isFail()) {
             return result;
         }

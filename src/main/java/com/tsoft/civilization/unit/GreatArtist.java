@@ -5,8 +5,6 @@ import com.tsoft.civilization.util.Year;
 import com.tsoft.civilization.web.view.unit.GreatArtistView;
 import com.tsoft.civilization.world.Civilization;
 
-import java.util.UUID;
-
 /**
  * Movement: 2;
  * Strength: 0;
@@ -17,18 +15,13 @@ import java.util.UUID;
  * The Culture Bomb target tile cannot be in foreign territory, though it can be in unclaimed territory.
  */
 public class GreatArtist extends AbstractUnit<GreatArtistView> {
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
+    public static final String CLASS_UUID = "06ec3e9f-69a7-4d43-985b-c638aee17d7d";
     public static final GreatArtist INSTANCE = new GreatArtist();
 
     private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
             .setStrength(20);
 
     private static final GreatArtistView VIEW = new GreatArtistView();
-
-    @Override
-    public UnitType getUnitType() {
-        return UnitType.GREAT_ARTIST;
-    }
 
     @Override
     public UnitCategory getUnitCategory() {

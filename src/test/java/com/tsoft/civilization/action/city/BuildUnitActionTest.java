@@ -33,7 +33,7 @@ public class BuildUnitActionTest {
         civilization.addTechnology(Technology.ARCHERY);
         City city = new City(civilization, new Point(2, 0));
         city.setPassScore(1);
-        assertTrue(new SupplyMock("F1 P3 G3 S3 C1 H-1 O1").isEqualTo(civilization.getSupply()));
+        assertTrue(new SupplyMock("F1 P3 G3 S3 C1 H-1 O1").isEqualTo(civilization.calcSupply()));
 
         // Start build Archers
         ActionAbstractResult actionResult = BuildUnitAction.buildUnit(city, Archers.CLASS_UUID);

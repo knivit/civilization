@@ -31,7 +31,7 @@ public class CivilizationScoreTest {
         Civilization c1 = new Civilization(world, 0);
 
         world.step();
-        assertTrue(new SupplyMock("F0 P0 G0 S0 C0 H0 O0").isEqualTo(c1.getSupply()));
+        assertTrue(new SupplyMock("F0 P0 G0 S0 C0 H0 O0").isEqualTo(c1.calcSupply()));
     }
 
     @Test
@@ -57,7 +57,7 @@ public class CivilizationScoreTest {
         // -----------------------------------------------------------------
         //    1 |    3 |    3 |       3 |       1 |        -1 |          1 |
         world.step();
-        assertTrue(new SupplyMock("F1 P3 G3 S3 C1 H-1 O1").isEqualTo(c1.getSupply()));
+        assertTrue(new SupplyMock("F1 P3 G3 S3 C1 H-1 O1").isEqualTo(c1.calcSupply()));
 
         // Step 2
         // food | prod | gold | science | culture | happiness | population | produced/consumed by
@@ -68,7 +68,7 @@ public class CivilizationScoreTest {
         // -----------------------------------------------------------------
         //    1 |    3 |    6 |       6 |       2 |        -1 |          1 |
         world.step();
-        assertTrue(new SupplyMock("F1 P3 G6 S6 C2 H-1 O1").isEqualTo(c1.getSupply()));
+        assertTrue(new SupplyMock("F1 P3 G6 S6 C2 H-1 O1").isEqualTo(c1.calcSupply()));
     }
 
     @Test
@@ -118,7 +118,7 @@ public class CivilizationScoreTest {
         // -----------------------------------------------------------------
         //   4  |    8 |    5 |       3 |       1 |        -1 |          1 |
         world.step();
-        assertTrue(new SupplyMock("F4 P8 G5 S3 C1 H-1 O1").isEqualTo(c1.getSupply()));
+        assertTrue(new SupplyMock("F4 P8 G5 S3 C1 H-1 O1").isEqualTo(c1.calcSupply()));
 
         // check the citizens don't work on tiles with empty supply
         assertTrue(Collections.disjoint(city.getCitizenLocations(), Arrays.asList(new Point(2, 0), new Point(3, 0), new Point(1, 1), new Point(3, 1))));
@@ -151,7 +151,7 @@ public class CivilizationScoreTest {
         world.step();
         assertTrue(city.getCitizenLocations().contains(new Point(1, 0)));
         assertTrue(city.getCitizenLocations().contains(new Point(1, 2)));
-        assertTrue(new SupplyMock("F-1 P6 G3 S3 C1 H-1 O1").isEqualTo(c1.getSupply()));
+        assertTrue(new SupplyMock("F1 P6 G3 S3 C1 H-1 O2").isEqualTo(c1.calcSupply()));
 
         // Step 2
         // food | prod | gold | science | culture | happiness | population | produced/consumed by
@@ -166,6 +166,6 @@ public class CivilizationScoreTest {
         world.step();
         assertTrue(city.getCitizenLocations().contains(new Point(1, 1)));
         assertTrue(city.getCitizenLocations().contains(new Point(1, 2)));
-        assertTrue(new SupplyMock("F0 P10 G6 S6 C2 H-1 O1").isEqualTo(c1.getSupply()));
+        assertTrue(new SupplyMock("F0 P10 G6 S6 C2 H-1 O1").isEqualTo(c1.calcSupply()));
     }
 }

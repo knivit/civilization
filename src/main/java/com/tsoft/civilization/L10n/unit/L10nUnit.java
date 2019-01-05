@@ -58,8 +58,8 @@ public class L10nUnit {
     /** Events */
 
     public static L10nMap UNIT_WAS_DESTROYED_EVENT = new L10nMap()
-            .set("en", "Unit was destroyed")
-            .set("ru", "\u042e\u043d\u0438\u0442 \u0431\u044b\u043b \u0443\u043d\u0438\u0447\u0442\u043e\u0436\u0435\u043d");
+            .set("en", "Unit %s was destroyed")
+            .set("ru", "\u042e\u043d\u0438\u0442 %s \u0431\u044b\u043b \u0443\u043d\u0438\u0447\u0442\u043e\u0436\u0435\u043d");
 
     public static L10nMap UNIT_HAS_WON_ATTACK_EVENT = new L10nMap()
             .set("en", "Unit has won the attack")

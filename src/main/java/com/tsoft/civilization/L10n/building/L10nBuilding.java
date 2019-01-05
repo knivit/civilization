@@ -12,8 +12,8 @@ public class L10nBuilding {
             .set("ru", "\u0417\u0434\u0430\u043d\u0438\u0435 \u043d\u0435 \u043c\u043e\u0436\u0435\u0442 \u0431\u044b\u0442\u044c \u0440\u0430\u0437\u0440\u0443\u0448\u0435\u043d\u043e");
 
     public static L10nMap BUILDING_DESTROYED = new L10nMap()
-            .set("en", "Building has been destroyed")
-            .set("ru", "\u0417\u0434\u0430\u043d\u0438\u0435 \u0440\u0430\u0437\u0440\u0443\u0448\u0435\u043d\u043e");
+            .set("en", "Building %s has been destroyed")
+            .set("ru", "\u0417\u0434\u0430\u043d\u0438\u0435 %s \u0440\u0430\u0437\u0440\u0443\u0448\u0435\u043d\u043e");
 
     public static L10nMap DESTROY = new L10nMap()
             .set("en", "Destroy")

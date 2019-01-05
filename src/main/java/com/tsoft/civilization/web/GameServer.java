@@ -1,7 +1,6 @@
 package com.tsoft.civilization.web;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -12,9 +11,8 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.Enumeration;
 
+@Slf4j
 public class GameServer {
-    private static final Logger log = LoggerFactory.getLogger(GameServer.class);
-
     private int port;
 
     public GameServer(String port) throws Throwable {
@@ -34,7 +32,7 @@ public class GameServer {
             ClientServiceThread clientThread = new ClientServiceThread(socket, tick);
             Thread thread = new Thread(clientThread);
 
-            log.info("Started to serve a request from {}", clientThread.getLogInfo());
+            log.info("{} started to serve a request", thread.getName());
             thread.start();
         }
     }

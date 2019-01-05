@@ -88,7 +88,7 @@ public class GetEvents extends AbstractAjaxRequest {
                 "<tr><td>$serverTime<br>$description</td></tr>",
 
                 "$serverTime", event.getServerEventTime(),
-                "$description", event.getDescription()
+                "$description", event.getLocalized()
             ));
         }
 

@@ -27,18 +27,13 @@ public abstract class AbstractLuxury {
     }
 
     public static AbstractLuxury newInstance(Class<? extends AbstractLuxury> luxuryClass) {
-        Exception ex;
         try {
             AbstractLuxury luxury = luxuryClass.newInstance();
             return luxury;
-        } catch (IllegalAccessException ex1) {
-            ex = ex1;
-        } catch (InstantiationException ex2) {
-            ex = ex2;
+        } catch (Exception ex) {
+            log.error("Can't instantiate a Luxury by its class = {}", luxuryClass.getSimpleName());
+            throw new IllegalArgumentException(ex);
         }
-
-        log.error("Can't instantiate a Luxury by its class = {}", luxuryClass.getName());
-        throw new IllegalArgumentException(ex);
     }
 
     public static List<AbstractLuxury> getLuxuries() {

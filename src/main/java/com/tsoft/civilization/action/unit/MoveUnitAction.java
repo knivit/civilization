@@ -89,7 +89,7 @@ public class MoveUnitAction {
 
         // If the unit has moved, then send the notifications
         if (isMoved) {
-            unit.getWorld().sendEvent(new Event(unit, L10nUnit.UNIT_MOVED_EVENT, Event.UPDATE_WORLD + Event.UPDATE_STATUS_PANEL + Event.UPDATE_CONTROL_PANEL));
+            unit.getWorld().sendEvent(new Event(Event.UPDATE_WORLD + Event.UPDATE_STATUS_PANEL + Event.UPDATE_CONTROL_PANEL, unit, L10nUnit.UNIT_MOVED_EVENT));
         }
 
         return moveResults;

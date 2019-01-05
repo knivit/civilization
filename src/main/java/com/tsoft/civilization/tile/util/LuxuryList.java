@@ -14,14 +14,12 @@ import com.tsoft.civilization.tile.luxury.Wine;
 import com.tsoft.civilization.world.generator.Climate;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.util.Point;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 
+@Slf4j
 public class LuxuryList {
-    private static final Logger log = LoggerFactory.getLogger(LuxuryList.class);
-
     private class LuxuryInfo {
         private Class<? extends AbstractLuxury> luxuryClass;
 

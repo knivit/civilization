@@ -6,14 +6,18 @@ import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.world.Civilization;
 import com.tsoft.civilization.world.CivilizationsRelations;
 import com.tsoft.civilization.world.World;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.UUID;
 
+@Slf4j
 public class DeclareWarAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     public static ActionAbstractResult declareWar(Civilization myCivilization, Civilization otherCivilization) {
         ActionAbstractResult result = canDeclareWar(myCivilization, otherCivilization);
+        log.debug("{}", result);
+
         if (result.isFail()) {
             return result;
         }

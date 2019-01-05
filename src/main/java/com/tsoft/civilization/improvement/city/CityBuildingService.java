@@ -9,7 +9,9 @@ import com.tsoft.civilization.building.util.UnmodifiableBuildingList;
 import com.tsoft.civilization.improvement.CanBeBuilt;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.world.economic.Supply;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class CityBuildingService {
     private City city;
 
@@ -79,6 +81,7 @@ public class CityBuildingService {
         destroyedBuildings.clear();
 
         if (construction == null) {
+            log.debug("No construction is in progress");
             return;
         }
 

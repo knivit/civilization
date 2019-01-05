@@ -8,12 +8,10 @@ import com.tsoft.civilization.web.util.ContentType;
 import com.tsoft.civilization.world.Civilization;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.world.util.Event;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class NotificationRequestProcessor {
-    private static final Logger log = LoggerFactory.getLogger(NotificationRequestProcessor.class);
-
     private NotificationRequestProcessor() { }
 
     public static void processRequest(ServerClient client) {

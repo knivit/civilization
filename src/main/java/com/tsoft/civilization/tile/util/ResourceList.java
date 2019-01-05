@@ -12,14 +12,12 @@ import com.tsoft.civilization.tile.resource.Uranium;
 import com.tsoft.civilization.world.generator.Climate;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.util.Point;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 
+@Slf4j
 public class ResourceList {
-    private static final Logger log = LoggerFactory.getLogger(ResourceList.class);
-
     private class ResourceInfo {
         private Class<? extends AbstractResource> resourceClass;
 

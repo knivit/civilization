@@ -6,8 +6,7 @@ import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.util.Request;
 import com.tsoft.civilization.web.util.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.net.InetSocketAddress;
@@ -15,9 +14,8 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
 
+@Slf4j
 public class ServerClient {
-    private static final Logger log = LoggerFactory.getLogger(ServerClient.class);
-
     private BufferedReader inputStream;
     private OutputStream outputStream;
 

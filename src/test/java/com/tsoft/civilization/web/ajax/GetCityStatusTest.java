@@ -35,7 +35,7 @@ public class GetCityStatusTest {
         City city1 = new City(c1, new Point(2, 0));
         Civilization c2 = new Civilization(mockWorld, 1);
         mockWorld.setCivilizationsRelations(c1, c2, CivilizationsRelations.WAR);
-        Warriors foreignWarriors = UnitFactory.newInstance(Warriors.INSTANCE, c2, new Point(2, 1));
+        Warriors foreignWarriors = UnitFactory.newInstance(Warriors.CLASS_UUID, c2, new Point(2, 1));
 
         ClientSession session = Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
         Worlds.add(mockWorld);

@@ -33,10 +33,10 @@ public class AttackActionTest {
         Civilization c2 = new Civilization(mockWorld, 1);
         mockWorld.setCivilizationsRelations(c1, c2, CivilizationsRelations.WAR);
 
-        Warriors warriors = UnitFactory.newInstance(Warriors.INSTANCE, c1, new Point(1, 0));
-        Workers foreignWorkers = UnitFactory.newInstance(Workers.INSTANCE, c2, new Point(1, 1));
-        Warriors foreignWarriors1 = UnitFactory.newInstance(Warriors.INSTANCE, c2, new Point(2, 1));
-        Warriors foreignWarriors2 = UnitFactory.newInstance(Warriors.INSTANCE, c2, new Point(2, 2));
+        Warriors warriors = UnitFactory.newInstance(Warriors.CLASS_UUID, c1, new Point(1, 0));
+        Workers foreignWorkers = UnitFactory.newInstance(Workers.CLASS_UUID, c2, new Point(1, 1));
+        Warriors foreignWarriors1 = UnitFactory.newInstance(Warriors.CLASS_UUID, c2, new Point(2, 1));
+        Warriors foreignWarriors2 = UnitFactory.newInstance(Warriors.CLASS_UUID, c2, new Point(2, 2));
 
         // first, there is foreign workers to attack
         HasCombatStrengthList targets = AttackAction.getTargetsToAttack(warriors);
@@ -86,15 +86,15 @@ public class AttackActionTest {
         mockWorld.setCivilizationsRelations(c1, c2, CivilizationsRelations.WAR);
 
         // our forces
-        Archers archers = UnitFactory.newInstance(Archers.INSTANCE, c1, new Point(2, 1));
+        Archers archers = UnitFactory.newInstance(Archers.CLASS_UUID, c1, new Point(2, 1));
 
         // foreign forces
-        Workers foreignWorkers = UnitFactory.newInstance(Workers.INSTANCE, c2, new Point(3, 1));
-        Warriors foreignWarriors1 = UnitFactory.newInstance(Warriors.INSTANCE, c2, new Point(2, 2));
-        Warriors foreignWarriors2 = UnitFactory.newInstance(Warriors.INSTANCE, c2, new Point(4, 2));
-        Archers foreignArchers1 = UnitFactory.newInstance(Archers.INSTANCE, c2, new Point(1, 3));
+        Workers foreignWorkers = UnitFactory.newInstance(Workers.CLASS_UUID, c2, new Point(3, 1));
+        Warriors foreignWarriors1 = UnitFactory.newInstance(Warriors.CLASS_UUID, c2, new Point(2, 2));
+        Warriors foreignWarriors2 = UnitFactory.newInstance(Warriors.CLASS_UUID, c2, new Point(4, 2));
+        Archers foreignArchers1 = UnitFactory.newInstance(Archers.CLASS_UUID, c2, new Point(1, 3));
         City foreignCity = new City(c2, new Point(2, 3));
-        Archers foreignArchers2 = UnitFactory.newInstance(Archers.INSTANCE, c2, new Point(3, 3));
+        Archers foreignArchers2 = UnitFactory.newInstance(Archers.CLASS_UUID, c2, new Point(3, 3));
 
         // look for targets
         HasCombatStrengthList targets = AttackAction.getTargetsToAttack(archers);
@@ -164,16 +164,16 @@ public class AttackActionTest {
 
         // our forces
         City city = new City(c1, new Point(2, 0));
-        Warriors warriors1 = UnitFactory.newInstance(Warriors.INSTANCE, c1, new Point(4, 2));
-        Warriors warriors2 = UnitFactory.newInstance(Warriors.INSTANCE, c1, new Point(5, 2));
-        Warriors warriors3 = UnitFactory.newInstance(Warriors.INSTANCE, c1, new Point(3, 3));
-        Warriors warriors4 = UnitFactory.newInstance(Warriors.INSTANCE, c1, new Point(5, 4));
+        Warriors warriors1 = UnitFactory.newInstance(Warriors.CLASS_UUID, c1, new Point(4, 2));
+        Warriors warriors2 = UnitFactory.newInstance(Warriors.CLASS_UUID, c1, new Point(5, 2));
+        Warriors warriors3 = UnitFactory.newInstance(Warriors.CLASS_UUID, c1, new Point(3, 3));
+        Warriors warriors4 = UnitFactory.newInstance(Warriors.CLASS_UUID, c1, new Point(5, 4));
 
         // foreign forces
         City foreignCity = new City(c2, new Point(4, 3));
         foreignCity.getCombatStrength().setStrength(30);
-        Warriors foreignWarriors = UnitFactory.newInstance(Warriors.INSTANCE, c2, new Point(4, 3));
-        Workers foreignWorkers = UnitFactory.newInstance(Workers.INSTANCE, c2, new Point(4, 3));
+        Warriors foreignWarriors = UnitFactory.newInstance(Warriors.CLASS_UUID, c2, new Point(4, 3));
+        Workers foreignWorkers = UnitFactory.newInstance(Workers.CLASS_UUID, c2, new Point(4, 3));
 
         // strike 1
         ActionAbstractResult result = AttackAction.attack(warriors1, foreignCity.getLocation());

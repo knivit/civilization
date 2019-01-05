@@ -13,14 +13,12 @@ import com.tsoft.civilization.tile.resource.AbstractResource;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.view.tile.base.AbstractTileView;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Constructor;
 
+@Slf4j
 public abstract class AbstractTile<V extends AbstractTileView> {
-    private static final Logger log = LoggerFactory.getLogger(AbstractTile.class);
-
     private Point location;
     private AbstractLuxury luxury;
     private AbstractResource resource;

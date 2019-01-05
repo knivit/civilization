@@ -5,8 +5,6 @@ import com.tsoft.civilization.util.Year;
 import com.tsoft.civilization.web.view.unit.GreatScientistView;
 import com.tsoft.civilization.world.Civilization;
 
-import java.util.UUID;
-
 /**
  * Movement: 2; Strength: 0; Ranged Strength: 0
  *
@@ -15,18 +13,13 @@ import java.util.UUID;
  * that you could normally research at that point.
  */
 public class GreatScientist extends AbstractUnit<GreatScientistView> {
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
+    public static final String CLASS_UUID = "95e2ae90-c9db-425d-a599-89bec1001076";
     public static final GreatScientist INSTANCE = new GreatScientist();
 
     private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
             .setStrength(0);
 
     private static final GreatScientistView VIEW = new GreatScientistView();
-
-    @Override
-    public UnitType getUnitType() {
-        return UnitType.GREAT_SCIENTIST;
-    }
 
     @Override
     public UnitCategory getUnitCategory() {

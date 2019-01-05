@@ -31,14 +31,12 @@ import com.tsoft.civilization.world.agreement.OpenBordersAgreement;
 import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.world.util.Event;
 import com.tsoft.civilization.world.util.EventsByYearMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 
+@Slf4j
 public class Civilization {
-    private static final Logger log = LoggerFactory.getLogger(Civilization.class);
-
     private final CivilizationView CIVILIZATION_VIEW;
 
     private L10nMap name;
@@ -93,14 +91,14 @@ public class Civilization {
     }
 
     public void addFirstUnits() {
-        Settlers settlers = UnitFactory.newInstance(Settlers.INSTANCE, this, settlersLocation);
+        Settlers settlers = UnitFactory.newInstance(Settlers.CLASS_UUID, this, settlersLocation);
 
         // try to place Warriors near the Settlers
         ArrayList<Point> locations = world.getLocationsAround(settlersLocation, 2);
         for (Point location : locations) {
             AbstractTile tile = world.getTilesMap().getTile(location);
             if (tile.getPassCost(settlers) != TilePassCostTable.UNPASSABLE) {
-                UnitFactory.newInstance(Warriors.INSTANCE, this, location);
+                UnitFactory.newInstance(Warriors.CLASS_UUID, this, location);
                 break;
             }
         }
@@ -159,7 +157,10 @@ public class Civilization {
         }
 
         isMoved = true;
-        addEvent(new Event(this, L10nWorld.MOVE_DONE_EVENT, Event.UPDATE_CONTROL_PANEL));
+
+        Event event = new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.MOVE_DONE_EVENT, this.getView().getLocalizedCivilizationName());
+        addEvent(event);
+        log.debug("{}", event);
     }
 
     public EventsByYearMap getEvents() {
@@ -188,7 +189,7 @@ public class Civilization {
         cities.add(city);
         city.setCivilization(this);
 
-        world.sendEvent(new Event(city, L10nCity.NEW_CITY_EVENT, Event.UPDATE_WORLD));
+        world.sendEvent(new Event(Event.UPDATE_WORLD, city, L10nCity.NEW_CITY_EVENT, city.getView().getLocalizedCityName()));
     }
 
     public void removeCity(City city) {
@@ -258,7 +259,7 @@ public class Civilization {
         destroyedUnits.add(unit);
         unit.setCivilization(null);
 
-        world.sendEvent(new Event(this, L10nUnit.UNIT_WAS_DESTROYED_EVENT, Event.UPDATE_WORLD));
+        world.sendEvent(new Event(Event.UPDATE_WORLD, this, L10nUnit.UNIT_WAS_DESTROYED_EVENT, unit.getView().getLocalizedName()));
     }
 
     public boolean canBuyUnit(AbstractUnit unit) {
@@ -269,21 +270,17 @@ public class Civilization {
         return true;
     }
 
-    public void addEvent(Object object, L10nMap description) {
-        Event event = new Event(object, description, Event.INFORMATION);
-        events.add(event);
-        addEvent(event);
-    }
-
     public void buyUnit(String unitClassUuid, City city) {
-        AbstractUnit catalogUnit = UnitFactory.getUnitFromCatalogByClassUuid(unitClassUuid);
-        int gold = catalogUnit.getGoldCost();
+        AbstractUnit unit = UnitFactory.newInstance(unitClassUuid, this, city.getLocation());
+
+        int gold = unit.getGoldCost();
         Supply expenses = new Supply().setGold(gold);
 
         supply.add(expenses);
-        addEvent(supply, L10nCivilization.BUY_UNIT_EVENT);
 
-        UnitFactory.newInstance(catalogUnit, this, city.getLocation());
+        Event event = new Event(Event.INFORMATION, supply, L10nCivilization.BUY_UNIT_EVENT);
+        addEvent(event);
+        log.debug("{}", event);
     }
 
     public boolean canBuyBuilding(AbstractBuilding building) {
@@ -300,7 +297,10 @@ public class Civilization {
 
         Supply expenses = new Supply().setGold(gold);
         supply.add(expenses);
-        addEvent(supply, L10nCivilization.BUY_BUILDING_EVENT);
+
+        Event event = new Event(Event.INFORMATION, supply, L10nCivilization.BUY_BUILDING_EVENT);
+        addEvent(event);
+        log.debug("{}", event);
 
         AbstractBuilding.newInstance(buildingClassUuid, city);
     }
@@ -366,7 +366,11 @@ public class Civilization {
         return new Point(0, 0);
     }
 
-    public Supply getSupply() {
+    public void addSupply(Supply supply) {
+        this.supply.add(supply);
+    }
+
+    public Supply calcSupply() {
         Supply supply = new Supply();
 
         // income
@@ -398,8 +402,8 @@ public class Civilization {
             city.step(year);
         }
 
-        Supply supply = getSupply();
-        this.supply.add(supply);
+        Supply supply = calcSupply();
+        supply.add(supply);
 
         // reset unit's pass score
         units.resetPassScore();

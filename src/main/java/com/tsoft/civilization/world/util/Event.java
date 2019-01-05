@@ -3,7 +3,9 @@ package com.tsoft.civilization.world.util;
 import com.tsoft.civilization.L10n.L10nMap;
 import com.tsoft.civilization.web.view.JSONBlock;
 
-import java.util.Date;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 public class Event {
     public static final int INFORMATION = 0;
@@ -11,26 +13,32 @@ public class Event {
     public static final int UPDATE_CONTROL_PANEL = 2;
     public static final int UPDATE_STATUS_PANEL = 4;
 
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter
+            .ofPattern("yyyy-MM-dd HH:mm:ss")
+            .withZone(ZoneId.of("UTC"));
+
     private Object obj;
 
-    private Date serverEventTime;
+    private Instant serverEventTime;
     private L10nMap description;
+    private Object[] args;
     private int flags;
 
-    public Event(Object obj, L10nMap description, int flags) {
+    public Event(int flags, Object obj, L10nMap description, Object ... args) {
+        this.flags = flags;
         this.obj = obj;
         this.description = description;
-        this.flags = flags;
+        this.args = args;
 
-        serverEventTime = new Date();
+        serverEventTime = Instant.now();
     }
 
-    public Date getServerEventTime() {
+    public Instant getServerEventTime() {
         return serverEventTime;
     }
 
-    public L10nMap getDescription() {
-        return description;
+    public String getLocalized() {
+        return description.getLocalized(args);
     }
 
     public boolean isUpdateWorldEvent() {
@@ -47,8 +55,13 @@ public class Event {
 
     public JSONBlock getJSON() {
         JSONBlock block = new JSONBlock();
-        block.addParam("description", description);
-        block.addParam("serverTime", String.format("%1$tb %1$td, %1$tY %1$tl:%1$tM:%1$tS %1$Tp", serverEventTime));
+        block.addParam("description", getLocalized());
+        block.addParam("serverTime", DATE_TIME_FORMATTER.format(serverEventTime));
         return block;
+    }
+
+    @Override
+    public String toString() {
+        return DATE_TIME_FORMATTER.format(serverEventTime) + " " + getLocalized();
     }
 }

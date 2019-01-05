@@ -5,8 +5,6 @@ import com.tsoft.civilization.util.Year;
 import com.tsoft.civilization.web.view.unit.GreatMerchantView;
 import com.tsoft.civilization.world.Civilization;
 
-import java.util.UUID;
-
 /**
  * Movement: 2; Strength: 0; Ranged Strength: 0
  *
@@ -16,18 +14,13 @@ import java.util.UUID;
  * influence with that city-state. Trade Missions can no longer be conducted with other civilizations.
  */
 public class GreatMerchant extends AbstractUnit<GreatMerchantView> {
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
+    public static final String CLASS_UUID = "77b3aa05-4843-482b-a661-8233136d5fdd";
     public static final GreatMerchant INSTANCE = new GreatMerchant();
 
     private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
             .setStrength(0);
 
     private static final GreatMerchantView VIEW = new GreatMerchantView();
-
-    @Override
-    public UnitType getUnitType() {
-        return UnitType.GREAT_MERCHANT;
-    }
 
     @Override
     public UnitCategory getUnitCategory() {

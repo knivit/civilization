@@ -7,14 +7,18 @@ import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.util.BuildingCatalog;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.util.Format;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.UUID;
 
+@Slf4j
 public class BuyBuildingAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     public static ActionAbstractResult buyBuilding(City city, String buildingClassUuid) {
         ActionAbstractResult result = canBuyBuilding(city, buildingClassUuid);
+        log.debug("{}", result);
+
         if (result.isFail()) {
             return result;
         }
@@ -55,10 +59,6 @@ public class BuyBuildingAction {
 
     private static String getLocalizedName() {
         return L10nBuilding.BUY.getLocalized();
-    }
-
-    private static String getLocalizedDescription() {
-        return L10nBuilding.BUY_DESCRIPTION.getLocalized();
     }
 
     public static StringBuilder getHtml(City city, String buildingClassUuid) {

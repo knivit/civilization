@@ -9,6 +9,7 @@ import com.tsoft.civilization.action.ActionSuccessResult;
 
 public class CityActionResults {
     public static final ActionSuccessResult CAN_START_CONSTRUCTION = new ActionSuccessResult(L10nCity.CAN_START_CONSTRUCTION);
+    public static final ActionSuccessResult CAN_BUY_UNIT = new ActionSuccessResult(L10nCity.CAN_BUY_THIS_UNIT);
     public static final ActionSuccessResult BUILDING_CONSTRUCTION_IS_STARTED = new ActionSuccessResult(L10nCity.BUILDING_CONSTRUCTION_IS_STARTED);
     public static final ActionSuccessResult UNIT_CONSTRUCTION_IS_STARTED = new ActionSuccessResult(L10nCity.UNIT_CONSTRUCTION_IS_STARTED);
     public static final ActionSuccessResult CAN_DESTROY_BUILDING = new ActionSuccessResult(L10nBuilding.CAN_DESTROY);

@@ -2,26 +2,20 @@ package com.tsoft.civilization.unit.util;
 
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.unit.*;
-import com.tsoft.civilization.unit.UnitType;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.Civilization;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
+
+@Slf4j
 public class UnitFactory {
-    private static final Logger log = LoggerFactory.getLogger(UnitFactory.class);
-
-    private static UnitCollection unitCatalog = new UnitList();
-
-    static {
-        for (UnitType unitType : UnitType.values()) {
-            unitCatalog.add(createUnit(unitType));
-        }
-    }
 
     private UnitFactory() { }
 
-    public static <T extends AbstractUnit> T newInstance(T unit, Civilization civilization, Point location) {
+    public static <T extends AbstractUnit> T newInstance(String classUuid, Civilization civilization, Point location) {
         TilesMap tilesMap = civilization.getTilesMap();
 
         // If the given location is invalid, change it to (0, 0)
@@ -32,32 +26,47 @@ public class UnitFactory {
             location = new Point(0, 0);
         }
 
-        T clone = (T)createUnit(unit.getUnitType());
-        clone.init(civilization, location);
+        T unit = (T)createUnit(classUuid);
+        unit.init(civilization, location);
 
-        return clone;
+        return unit;
     }
 
-    public static UnitCollection getUnitCatalog() {
-        return unitCatalog;
+    private static final Map<String, Supplier<AbstractUnit>> UNIT_CATALOG = new HashMap<>();
+
+    static {
+        UNIT_CATALOG.put(Archers.CLASS_UUID, Archers::new);
+
+        UNIT_CATALOG.put(GreatArtist.CLASS_UUID, GreatArtist::new);
+        UNIT_CATALOG.put(GreatEngineer.CLASS_UUID, GreatEngineer::new);
+        UNIT_CATALOG.put(GreatGeneral.CLASS_UUID, GreatGeneral::new);
+        UNIT_CATALOG.put(GreatMerchant.CLASS_UUID, GreatMerchant::new);
+        UNIT_CATALOG.put(GreatScientist.CLASS_UUID, GreatScientist::new);
+
+        UNIT_CATALOG.put(Settlers.CLASS_UUID, Settlers::new);
+        UNIT_CATALOG.put(Warriors.CLASS_UUID, Warriors::new);
+        UNIT_CATALOG.put(Workers.CLASS_UUID, Workers::new);
     }
 
-    public static AbstractUnit getUnitFromCatalogByClassUuid(String classUuid) {
-        return unitCatalog.findByClassUuid(classUuid);
-    }
+    public static UnitCollection getPossibleUnits(Civilization civilization) {
+        UnitCollection result = new UnitList();
 
-    private static AbstractUnit createUnit(UnitType unitType) {
-        switch (unitType) {
-            case ARCHERS: return new Archers();
-            case GREAT_ARTIST: return new GreatArtist();
-            case GREAT_ENGINEER: return new GreatEngineer();
-            case GREAT_GENERAL: return new GreatGeneral();
-            case GREAT_MERCHANT: return new GreatMerchant();
-            case GREAT_SCIENTIST: return new GreatScientist();
-            case SETTLERS: return new Settlers();
-            case WARRIORS: return new Warriors();
-            case WORKERS: return new Workers();
-            default: throw new IllegalArgumentException("Unknown unit type " + unitType);
+        for (Supplier<AbstractUnit> supplier : UNIT_CATALOG.values()) {
+            AbstractUnit unit = supplier.get();
+            if (unit.checkEraAndTechnology(civilization)) {
+                result.add(unit);
+            }
         }
+
+        return result;
     }
+
+    public static AbstractUnit createUnit(String unitClassUuid) {
+        Supplier<AbstractUnit> supplier = UNIT_CATALOG.get(unitClassUuid);
+        if (supplier == null) {
+            throw new IllegalArgumentException("Unknown unit classUuid = " + unitClassUuid);
+        }
+        return supplier.get();
+    }
+
 }

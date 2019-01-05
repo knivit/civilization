@@ -191,7 +191,7 @@ public class AttackAction {
         attacker.setPassScore(0);
 
         // send the event about the attack
-        world.sendEvent(new Event(attacker, L10nUnit.ATTACK_DONE_EVENT, Event.UPDATE_WORLD + Event.UPDATE_STATUS_PANEL));
+        world.sendEvent(new Event(Event.UPDATE_WORLD + Event.UPDATE_STATUS_PANEL, attacker, L10nUnit.ATTACK_DONE_EVENT));
 
         // return the result
         if (isAttackerAlive && !isTargetAlive) {

@@ -32,9 +32,9 @@ public class WorldViewTest {
 
         // a city with two units in it
         City city1 = new City(c1, new Point(0, 0));
-        Warriors warriors = UnitFactory.newInstance(Warriors.INSTANCE, c1, new Point(0, 0));
-        Workers workers = UnitFactory.newInstance(Workers.INSTANCE, c1, new Point(0, 0));
-        Settlers settlers = UnitFactory.newInstance(Settlers.INSTANCE, c1, new Point(1, 0));
+        Warriors warriors = UnitFactory.newInstance(Warriors.CLASS_UUID, c1, new Point(0, 0));
+        Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID, c1, new Point(0, 0));
+        Settlers settlers = UnitFactory.newInstance(Settlers.CLASS_UUID, c1, new Point(1, 0));
 
         JSONBlock worldBlock = mockWorld.getView().getJSON();
         //assertEquals("{\"width\":\"3\",\"height\":\"2\",

@@ -1,11 +1,9 @@
 package com.tsoft.civilization.tile.resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public abstract class AbstractResource {
-    private static final Logger log = LoggerFactory.getLogger(AbstractResource.class);
-
     public abstract ResourceType getResourceType();
 
     public abstract char getAsciiChar();
@@ -15,15 +13,12 @@ public abstract class AbstractResource {
     }
 
     public static AbstractResource newInstance(Class<? extends AbstractResource> resourceClass) {
-        Exception ex;
         try {
             AbstractResource resource = resourceClass.newInstance();
             return resource;
-        } catch (Exception ex1) {
-            ex = ex1;
+        } catch (Exception ex) {
+            log.error("Can't instantiate a Resource by its class = {}", resourceClass.getSimpleName());
+            throw new IllegalArgumentException(ex);
         }
-
-        log.error("Can't instantiate a Resource by its class = {}", resourceClass.getName());
-        throw new IllegalArgumentException(ex);
     }
 }

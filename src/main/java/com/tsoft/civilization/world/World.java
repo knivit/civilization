@@ -81,7 +81,7 @@ public class World {
 
         // send an event to civilizations about the new one
         // clients need to update their maps to see the new civilization (settlers and warriors)
-        sendEvent(new Event(civilization, L10nWorld.NEW_CIVILIZATION_EVENT, Event.UPDATE_WORLD));
+        sendEvent(new Event(Event.UPDATE_WORLD, civilization, L10nWorld.NEW_CIVILIZATION_EVENT, civilization.getView().getLocalizedCivilizationName()));
     }
 
     public CivilizationsRelations getCivilizationsRelations(Civilization c1, Civilization c2) {
@@ -101,12 +101,12 @@ public class World {
         // send an Event about that to all civilizations
         switch (rel.getState()) {
             case CivilizationsRelations.WAR_STATE: {
-                sendEvent(new Event(this, L10nWorld.DECLARE_WAR_EVENT, Event.UPDATE_STATUS_PANEL));
+                sendEvent(new Event(Event.UPDATE_STATUS_PANEL, this, L10nWorld.DECLARE_WAR_EVENT, c1.getView().getLocalizedCivilizationName(), c2.getView().getLocalizedCivilizationName()));
                 break;
             }
 
             case CivilizationsRelations.FRIENDS_STATE: {
-                sendEvent(new Event(this, L10nWorld.DECLARE_FRIENDS_EVENT, Event.UPDATE_STATUS_PANEL));
+                sendEvent(new Event(Event.UPDATE_STATUS_PANEL, this, L10nWorld.DECLARE_FRIENDS_EVENT, c1.getView().getLocalizedCivilizationName(), c2.getView().getLocalizedCivilizationName()));
                 break;
             }
         }
@@ -253,7 +253,7 @@ public class World {
             civilization.step(year);
         }
 
-        sendEvent(new Event(this, L10nWorld.NEW_YEAR_EVENT, Event.UPDATE_CONTROL_PANEL));
+        sendEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.NEW_YEAR_EVENT, year.getValue()));
     }
 
     public List<Year> getYears() {

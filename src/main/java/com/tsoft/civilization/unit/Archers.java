@@ -35,11 +35,6 @@ public class Archers extends AbstractUnit<ArchersView> {
     private static final ArchersView VIEW = new ArchersView();
 
     @Override
-    public UnitType getUnitType() {
-        return UnitType.ARCHERS;
-    }
-
-    @Override
     public UnitCategory getUnitCategory() {
         return UnitCategory.MILITARY_RANGED;
     }

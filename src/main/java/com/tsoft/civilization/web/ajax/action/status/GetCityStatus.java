@@ -182,7 +182,7 @@ public class GetCityStatus extends AbstractAjaxRequest {
 
     private StringBuilder getUnitConstructionActions(City city) {
         StringBuilder buf = new StringBuilder();
-        UnitCollection units = UnitFactory.getUnitCatalog();
+        UnitCollection units = UnitFactory.getPossibleUnits(city.getCivilization());
         for (AbstractUnit unit : units) {
             StringBuilder buyUnitAction = BuildUnitAction.getHtml(city, unit.getClassUuid());
             StringBuilder buildUnitAction = BuyUnitAction.getHtml(city, unit.getClassUuid());

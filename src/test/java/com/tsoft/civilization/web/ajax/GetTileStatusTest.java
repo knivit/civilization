@@ -32,7 +32,7 @@ public class GetTileStatusTest {
         MockWorld mockWorld = MockWorld.newWorldWithFeatures();
         Civilization c1 = new Civilization(mockWorld, 0);
         City city1 = new City(c1, new Point(2, 0));
-        Workers workers1 = UnitFactory.newInstance(Workers.INSTANCE, c1, city1.getLocation());
+        Workers workers1 = UnitFactory.newInstance(Workers.CLASS_UUID, c1, city1.getLocation());
 
         ClientSession session = Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
         Worlds.add(mockWorld);
@@ -52,7 +52,7 @@ public class GetTileStatusTest {
         Civilization c1 = new Civilization(mockWorld, 0);
         Civilization c2 = new Civilization(mockWorld, 1);
         City city1 = new City(c1, new Point(2, 0));
-        Workers workers1 = UnitFactory.newInstance(Workers.INSTANCE, c1, city1.getLocation());
+        Workers workers1 = UnitFactory.newInstance(Workers.CLASS_UUID, c1, city1.getLocation());
 
         ClientSession session = Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
         Worlds.add(mockWorld);
