@@ -1,8 +1,9 @@
 package com.tsoft.civilization.tile.util;
 
 import com.tsoft.civilization.tile.TilesMap;
-import com.tsoft.civilization.tile.base.Coast;
+import com.tsoft.civilization.tile.feature.Coast;
 import com.tsoft.civilization.tile.base.Grassland;
+import com.tsoft.civilization.tile.feature.TerrainFeature;
 import com.tsoft.civilization.tile.luxury.AbstractLuxury;
 import com.tsoft.civilization.tile.luxury.Bananas;
 import com.tsoft.civilization.tile.luxury.Fish;
@@ -17,6 +18,8 @@ import com.tsoft.civilization.util.Point;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
 public class LuxuryList {
@@ -90,14 +93,21 @@ public class LuxuryList {
 
     // Add luxuries to the Map
     private void addLuxuriesToMap() {
-        addLuxury(Coast.class, LuxuryType.SEA_FOOD);
-        addLuxury(Grassland.class, LuxuryType.FOOD);
+        addLuxuryOnFeature(Coast.class, LuxuryType.SEA_FOOD);
+        addLuxuryOnTile(Grassland.class, LuxuryType.FOOD);
     }
 
-    private void addLuxury(Class<? extends AbstractTile<?>> tileClass, LuxuryType luxuryType) {
-        ArrayList<Point> tilePoints = tilesMap.getTileClassLocations(tileClass);
-        if (tilePoints.size() == 0) {
-            log.warn("There is no tile's class = {}, so Luxury with type = {} is skipped",  tileClass.getName(), luxuryType.name());
+    private void addLuxuryOnFeature(Class<? extends TerrainFeature<?>> featureClass, LuxuryType luxuryType) {
+        addLuxury(featureClass.getSimpleName(), tilesMap.getTerrainFeatureClassLocations(featureClass), luxuryType);
+    }
+
+    private void addLuxuryOnTile(Class<? extends AbstractTile<?>> tileClass, LuxuryType luxuryType) {
+        addLuxury(tileClass.getSimpleName(), tilesMap.getTileClassLocations(tileClass), luxuryType);
+    }
+
+    private void addLuxury(String className, List<Point> locations, LuxuryType luxuryType) {
+        if (locations.size() == 0) {
+            log.warn("There is no tiles (or features) with class = {}, so Luxury with type = {} is skipped",  className, luxuryType.name());
             return;
         }
 
@@ -110,8 +120,8 @@ public class LuxuryList {
             for (int n = 0 ; n < luxuryInfo.getCount(); n ++) {
                 AbstractLuxury luxury = AbstractLuxury.newInstance(luxuryInfo.getLuxuryClass());
 
-                int index = (int)(Math.random() * tilePoints.size());
-                Point point = tilePoints.get(index);
+                int index = ThreadLocalRandom.current().nextInt(locations.size());
+                Point point = locations.get(index);
                 AbstractTile<?> tile = tilesMap.getTile(point);
                 if (tile.setLuxury(luxury)) {
                     count ++;

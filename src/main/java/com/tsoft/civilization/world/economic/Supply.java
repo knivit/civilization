@@ -1,29 +1,31 @@
 package com.tsoft.civilization.world.economic;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
+import lombok.Builder;
+import lombok.Getter;
 
-@Data
-@NoArgsConstructor
-@Accessors(chain = true)
+@Getter
+@Builder
 public class Supply {
-    private int food;
-    private int production;
-    private int gold;
-    private int science;
-    private int culture;
-    private int happiness;
-    private int population;
+    public static final Supply EMPTY_SUPPLY = Supply.builder().build();
 
-    public void add(Supply supply) {
-        food += supply.food;
-        production += supply.production;
-        gold += supply.gold;
-        science += supply.science;
-        culture += supply.culture;
-        happiness += supply.happiness;
-        population += supply.population;
+    private final int food;
+    private final int production;
+    private final int gold;
+    private final int science;
+    private final int culture;
+    private final int happiness;
+    private final int population;
+
+    public Supply add(Supply other) {
+        return Supply.builder()
+            .food(food + other.food)
+            .production(production + other.production)
+            .gold(gold + other.gold)
+            .science(science + other.science)
+            .culture(culture + other.culture)
+            .happiness(happiness + other.happiness)
+            .population(population + other.population)
+            .build();
     }
 
     @Override

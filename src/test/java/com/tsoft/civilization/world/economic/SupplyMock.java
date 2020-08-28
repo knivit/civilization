@@ -1,7 +1,9 @@
 package com.tsoft.civilization.world.economic;
 
-public class SupplyMock extends Supply {
-    public SupplyMock(String str) {
+public class SupplyMock {
+    public static Supply of(String str) {
+        Supply result = Supply.EMPTY_SUPPLY;
+
         int i = 0;
         char type = '\0';
         boolean typeMode = true;
@@ -27,70 +29,31 @@ public class SupplyMock extends Supply {
             i = k;
             typeMode = true;
 
-            setValue(type, value);
+            result = result.add(getSupply(type, value));
         }
+
+        return result;
     }
 
-    private void setValue(char type, int value) {
+    private static Supply getSupply(char type, int value) {
         switch (type) {
-            case 'F': { setFood(value); return; }
-            case 'P': { setProduction(value); return; }
-            case 'G': { setGold(value); return; }
-            case 'S': { setScience(value); return; }
-            case 'C': { setCulture(value); return; }
-            case 'H': { setHappiness(value); return; }
-            case 'O': { setPopulation(value); return; }
+            case 'F': return Supply.builder().food(value).build();
+            case 'P': return Supply.builder().production(value).build();
+            case 'G': return Supply.builder().gold(value).build();
+            case 'S': return Supply.builder().science(value).build();
+            case 'C': return Supply.builder().culture(value).build();
+            case 'H': return Supply.builder().happiness(value).build();
+            case 'O': return Supply.builder().population(value).build();
         }
 
         throw new IllegalArgumentException("Unknown type = " + type);
     }
 
-    @Override
-    public SupplyMock setFood(int food) {
-        super.setFood(food);
-        return this;
-    }
-
-    @Override
-    public SupplyMock setProduction(int production) {
-        super.setProduction(production);
-        return this;
-    }
-
-    @Override
-    public SupplyMock setGold(int gold) {
-        super.setGold(gold);
-        return this;
-    }
-
-    @Override
-    public SupplyMock setScience(int science) {
-        super.setScience(science);
-        return this;
-    }
-
-    @Override
-    public SupplyMock setCulture(int culture) {
-        super.setCulture(culture);
-        return this;
-    }
-
-    @Override
-    public SupplyMock setHappiness(int happiness) {
-        super.setHappiness(happiness);
-        return this;
-    }
-
-    @Override
-    public SupplyMock setPopulation(int population) {
-        super.setPopulation(population);
-        return this;
-    }
-
-    public boolean isEqualTo(Supply supply) {
-        boolean isEqual = getFood() == supply.getFood() &&
-                getProduction() == supply.getProduction() &&
-                getGold() == supply.getGold();
+    public static boolean equals(Supply a, Supply b) {
+        boolean isEqual =
+            a.getFood() == b.getFood() &&
+            a.getProduction() == b.getProduction() &&
+            a.getGold() == b.getGold();
 
         // log them out as jUnit doesn't show the values in assertTrue
         if (!isEqual) {
@@ -104,13 +67,14 @@ public class SupplyMock extends Supply {
                 "Culture    |     %9$5d  |    %10$5d\n" +
                 "Happiness  |     %11$5d  |    %12$5d\n" +
                 "Population |     %13$5d  |    %14$5d\n",
-                getFood(), supply.getFood(),
-                getProduction(), supply.getProduction(),
-                getGold(), supply.getGold(),
-                getScience(), supply.getScience(),
-                getCulture(), supply.getCulture(),
-                getHappiness(), supply.getHappiness(),
-                getPopulation(), supply.getPopulation()
+
+                a.getFood(), b.getFood(),
+                a.getProduction(), b.getProduction(),
+                a.getGold(), b.getGold(),
+                a.getScience(), b.getScience(),
+                a.getCulture(), b.getCulture(),
+                a.getHappiness(), b.getHappiness(),
+                a.getPopulation(), b.getPopulation()
             ));
         }
 

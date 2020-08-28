@@ -7,16 +7,16 @@ import com.tsoft.civilization.util.Point;
 import java.util.Collection;
 import java.util.List;
 
-public interface UnitCollection extends List<AbstractUnit> {
-    AbstractUnit findByClassUuid(String uuid);
+public interface UnitCollection extends List<AbstractUnit<?>> {
+    AbstractUnit<?> findByClassUuid(String uuid);
 
-    int getUnitClassCount(Class<? extends AbstractUnit> unitClass);
+    int getUnitClassCount(Class<? extends AbstractUnit<?>> unitClass);
 
-    AbstractUnit findMilitaryUnit();
+    AbstractUnit<?> findMilitaryUnit();
 
-    AbstractUnit findCivilUnit();
+    AbstractUnit<?> findCivilUnit();
 
-    AbstractUnit findUnitByUnitKind(UnitCategory unitCategory);
+    AbstractUnit<?> findUnitByUnitKind(UnitCategory unitCategory);
 
     int getMilitaryCount();
 
@@ -26,7 +26,7 @@ public interface UnitCollection extends List<AbstractUnit> {
 
     List<Point> getLocations();
 
-    AbstractUnit getUnitById(String unitId);
+    AbstractUnit<?> getUnitById(String unitId);
 
     UnitCollection getUnitsAtLocations(Collection<Point> locations);
 

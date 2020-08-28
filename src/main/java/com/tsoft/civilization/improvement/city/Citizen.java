@@ -6,6 +6,8 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class Citizen {
+    public static final String CLASS_UUID = UUID.randomUUID().toString();
+
     private String id = UUID.randomUUID().toString();
 
     // null, if the citizen is unemployed
@@ -19,7 +21,7 @@ public class Citizen {
         this.location = location;
     }
 
-    public boolean isUnemplyed() {
+    public boolean isUnemployed() {
         return location == null;
     }
 

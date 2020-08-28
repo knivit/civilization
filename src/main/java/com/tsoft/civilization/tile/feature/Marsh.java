@@ -7,9 +7,11 @@ import com.tsoft.civilization.web.view.tile.feature.MarshView;
 import java.util.UUID;
 
 /**
- * Sugar resources can occur here, but the marsh needs to be removed by Workers
- * (ability gained with Masonry) before a Plantation can be built. Some improvements
- * such as farms can be built directly on a marsh, but with the -1 food penalty.
+ * Production Modifier: Food -1.
+ * Movement Cost: 2
+ * Notes: Sugar resources can occur here, but the marsh needs to be removed by Workers
+ * (ability gained with Masonry) before a Plantation can be built.
+ * Some improvements such as farms can be built directly on a marsh, but with the -1 food penalty.
  */
 public class Marsh extends TerrainFeature<MarshView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
@@ -23,7 +25,7 @@ public class Marsh extends TerrainFeature<MarshView> {
 
     @Override
     public Supply getSupply() {
-        return new Supply().setFood(-1);
+        return Supply.builder().food(-1).build();
     }
 
     @Override

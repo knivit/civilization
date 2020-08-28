@@ -5,6 +5,8 @@ import com.tsoft.civilization.util.Year;
 import com.tsoft.civilization.web.view.unit.SettlersView;
 import com.tsoft.civilization.world.Civilization;
 
+import java.util.UUID;
+
 /**
  * Movement: 2;
  * Strength: 0;
@@ -21,7 +23,7 @@ import com.tsoft.civilization.world.Civilization;
  * the Asian version has a water buffalo, and the African/Middle Eastern version has a camel.
  */
 public class Settlers extends AbstractUnit<SettlersView> {
-    public static final String CLASS_UUID = "782ad244-ffb7-11e7-b852-13a241fdfbd0";
+    public static final String CLASS_UUID = UUID.randomUUID().toString();
     public static final Settlers INSTANCE = new Settlers();
 
     private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()

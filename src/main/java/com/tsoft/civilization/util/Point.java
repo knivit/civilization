@@ -1,9 +1,10 @@
 package com.tsoft.civilization.util;
 
+// Immutable
 public class Point {
-    private int x;
+    private final int x;
 
-    private int y;
+    private final int y;
 
     // Don't implement "add" method
     // As the used map is cyclic, use TilesMap.addDirToLocation() instead
@@ -45,10 +46,8 @@ public class Point {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append("{x=").append(x);
-        sb.append(", y=").append(y);
-        sb.append('}');
-        return sb.toString();
+        return  "{x=" + x +
+            ", y=" + y +
+            '}';
     }
 }

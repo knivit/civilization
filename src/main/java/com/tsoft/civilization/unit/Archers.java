@@ -6,6 +6,8 @@ import com.tsoft.civilization.util.Year;
 import com.tsoft.civilization.web.view.unit.ArchersView;
 import com.tsoft.civilization.world.Civilization;
 
+import java.util.UUID;
+
 /**
  * Movement: 2;
  * Strength: 4;
@@ -21,7 +23,7 @@ import com.tsoft.civilization.world.Civilization;
  * Note: The bombardment range for archers is 2 hexes.
  */
 public class Archers extends AbstractUnit<ArchersView> {
-    public static final String CLASS_UUID = "8c09e944-ffb7-11e7-9e0a-8b95b9043f2e";
+    public static final String CLASS_UUID = UUID.randomUUID().toString();
     public static final Archers INSTANCE = new Archers();
 
     private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()

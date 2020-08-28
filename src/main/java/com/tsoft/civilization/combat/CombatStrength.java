@@ -142,6 +142,7 @@ public class CombatStrength {
 
     private int calcAttackerStrikeHappinessPercent() {
         int value = 0;
+
         Supply supply = attacker.getCivilization().calcSupply();
         if (supply.getHappiness() < -30) {
             value -= 33;

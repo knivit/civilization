@@ -7,30 +7,32 @@ import com.tsoft.civilization.util.Point;
 import java.util.HashMap;
 
 public class MockTilesMap extends TilesMap {
-    private static HashMap<Character, String> tileCodes = new HashMap<Character, String>();
+    private static HashMap<Character, String> tileCodes = new HashMap<>();
 
     static {
+        // base tiles
         tileCodes.put('.', Ocean.CLASS_UUID);
-        tileCodes.put(',', Coast.CLASS_UUID);
         tileCodes.put('g', Grassland.CLASS_UUID);
         tileCodes.put('d', Desert.CLASS_UUID);
         tileCodes.put('i', Ice.CLASS_UUID);
         tileCodes.put('l', Lake.CLASS_UUID);
-        tileCodes.put('M', Mountain.CLASS_UUID);
         tileCodes.put('p', Plain.CLASS_UUID);
         tileCodes.put('s', Snow.CLASS_UUID);
         tileCodes.put('t', Tundra.CLASS_UUID);
 
+        // terrain features
+        tileCodes.put(',', Coast.CLASS_UUID);
         tileCodes.put('f', Forest.CLASS_UUID);
         tileCodes.put('n', FloodPlain.CLASS_UUID);
         tileCodes.put('h', Hill.CLASS_UUID);
+        tileCodes.put('M', Mountain.CLASS_UUID);
         tileCodes.put('j', Jungle.CLASS_UUID);
         tileCodes.put('m', Marsh.CLASS_UUID);
         tileCodes.put('o', Oasis.CLASS_UUID);
     }
 
-    private HashMap<Character, String> asciiTileClasses = new HashMap<Character, String>();
-    private HashMap<String, Character> tilesAscii = new HashMap<String, Character>();
+    private HashMap<Character, String> asciiTileClasses = new HashMap<>();
+    private HashMap<String, Character> tilesAscii = new HashMap<>();
 
     /** To use with one layer (i.e. tiles only, without features) */
     public MockTilesMap(MapType mapType, String ... asciiLines) {
@@ -78,7 +80,7 @@ public class MockTilesMap extends TilesMap {
             }
 
             if (isTile) {
-                AbstractTile tile = AbstractTile.newInstance(classUuid);
+                AbstractTile<?> tile = AbstractTile.newInstance(classUuid);
                 if (tile == null) {
                     throw new IllegalArgumentException(("Unknown tile's char = " + ch));
                 }
@@ -94,8 +96,8 @@ public class MockTilesMap extends TilesMap {
             }
 
             // System.out.println("(" + x + "," + y + ") " + ch);
-            AbstractTile tile = getTile(x, y);
-            TerrainFeature feature = TerrainFeature.newInstance(classUuid, tile);
+            AbstractTile<?> tile = getTile(x, y);
+            TerrainFeature<?> feature = TerrainFeature.newInstance(classUuid, tile);
             if (feature == null) {
                 throw new IllegalArgumentException("Unknown feature's char = " + ch);
             }

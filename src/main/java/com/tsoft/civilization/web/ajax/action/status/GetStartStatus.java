@@ -8,6 +8,7 @@ import com.tsoft.civilization.web.util.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class GetStartStatus extends AbstractAjaxRequest {
     @Override
@@ -16,7 +17,7 @@ public class GetStartStatus extends AbstractAjaxRequest {
             "images/logos/borobudur.jpg",
             "images/logos/castle.jpg"
         };
-        int n = new Random().nextInt(2);
+        int n = ThreadLocalRandom.current().nextInt(2);
 
         String value = new StringBuilder(String.format(
             "<table id='title_table'>" +

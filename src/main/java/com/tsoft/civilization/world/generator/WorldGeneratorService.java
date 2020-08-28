@@ -6,6 +6,7 @@ import com.tsoft.civilization.util.Rect;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class WorldGeneratorService {
     private static WorldGenerator[] generators = new WorldGenerator[] {
@@ -129,7 +130,7 @@ public class WorldGeneratorService {
     }
 
     private static boolean placeCivilization(ArrayList<Point> startPoints, ArrayList<Point> tiles) {
-        int tileIndex = (int)(Math.random() * tiles.size());
+        int tileIndex = ThreadLocalRandom.current().nextInt(tiles.size());
 
         // check is this tile already assigned
         boolean found = false;

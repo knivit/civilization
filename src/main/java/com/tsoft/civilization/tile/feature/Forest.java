@@ -7,8 +7,10 @@ import com.tsoft.civilization.web.view.tile.feature.ForestView;
 import java.util.UUID;
 
 /**
- * Tiles with forests covering them always yield 1 Food and 1 Production,
- * regardless of the underlying terrain type. Forests can be cleared by Workers (with the Advent of Mining).
+ * Production: 1 Food, 1 Hammer
+ * Movement Cost: 2; Defensive Bonus: +25%
+ * Notes: Tiles with forests covering them always yield 1 Food and 1 Production, regardless of the underlying terrain type.
+ * Forests can be cleared by Workers (with the Advent of Mining).
  */
 public class Forest extends TerrainFeature<ForestView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
@@ -22,7 +24,7 @@ public class Forest extends TerrainFeature<ForestView> {
 
     @Override
     public Supply getSupply() {
-        return new Supply().setFood(1).setProduction(1);
+        return Supply.builder().food(1).production(1).build();
     }
 
     @Override

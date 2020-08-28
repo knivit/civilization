@@ -1,8 +1,9 @@
 package com.tsoft.civilization.tile.util;
 
 import com.tsoft.civilization.tile.TilesMap;
-import com.tsoft.civilization.tile.base.Coast;
+import com.tsoft.civilization.tile.feature.Coast;
 import com.tsoft.civilization.tile.base.Grassland;
+import com.tsoft.civilization.tile.feature.TerrainFeature;
 import com.tsoft.civilization.tile.resource.AbstractResource;
 import com.tsoft.civilization.tile.resource.Aluminium;
 import com.tsoft.civilization.tile.resource.Iron;
@@ -15,10 +16,12 @@ import com.tsoft.civilization.util.Point;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
 public class ResourceList {
-    private class ResourceInfo {
+    private static class ResourceInfo {
         private Class<? extends AbstractResource> resourceClass;
 
         private int count;
@@ -86,14 +89,21 @@ public class ResourceList {
 
     // Add resources to the Map
     private void addResourcesToMap() {
-        addResource(Coast.class, ResourceType.EARTH_SEA);
-        addResource(Grassland.class, ResourceType.EARTH);
+        addResourcesOnFeature(Coast.class, ResourceType.EARTH_SEA);
+        addResourcesOnTile(Grassland.class, ResourceType.EARTH);
     }
 
-    private void addResource(Class<? extends AbstractTile<?>> tileClass, ResourceType resourceType) {
-        ArrayList<Point> tilePoints = tilesMap.getTileClassLocations(tileClass);
-        if (tilePoints.size() == 0) {
-            log.warn("There is no Tiles class = {}, so Resource with type = {} is skipped",  tileClass.getName(), resourceType.name());
+    private void addResourcesOnFeature(Class<? extends TerrainFeature<?>> featureClass, ResourceType resourceType) {
+        addResource(featureClass.getSimpleName(), tilesMap.getTerrainFeatureClassLocations(featureClass), resourceType);
+    }
+
+    private void addResourcesOnTile(Class<? extends AbstractTile<?>> tileClass, ResourceType resourceType) {
+        addResource(tileClass.getSimpleName(), tilesMap.getTileClassLocations(tileClass), resourceType);
+    }
+
+    private void addResource(String className, List<Point> locations, ResourceType resourceType) {
+        if (locations.size() == 0) {
+            log.warn("There is no tiles (or features) with class = {}, so Resource with type = {} is skipped",  className, resourceType.name());
             return;
         }
 
@@ -106,8 +116,8 @@ public class ResourceList {
             for (int n = 0 ; n < resourceInfo.getCount(); n ++) {
                 AbstractResource resource = AbstractResource.newInstance(resourceInfo.getResourceClass());
 
-                int index = (int)(Math.random() * tilePoints.size());
-                Point point = tilePoints.get(index);
+                int index = ThreadLocalRandom.current().nextInt(locations.size());
+                Point point = locations.get(index);
                 AbstractTile<?> tile = tilesMap.getTile(point);
                 if (tile.setResource(resource)) {
                     count ++;

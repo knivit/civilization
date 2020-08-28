@@ -31,7 +31,7 @@ public abstract class TerrainFeature<V extends AbstractFeatureView> {
     public abstract V getView();
 
     public static TerrainFeature<?> newInstance(String classUuid, AbstractTile<?> tile) {
-        TerrainFeature<?> feature = getFeatureFromCatalogByClassUuid(classUuid);
+        TerrainFeature<?> feature = TileCatalog.findFeatureByClassUuid(classUuid);
         if (feature == null) {
             return null;
         }

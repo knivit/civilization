@@ -26,7 +26,7 @@ public class Walls extends AbstractBuilding<WallsView> {
      */
     @Override
     public Supply getSupply(City city) {
-        return new Supply().setGold(-1);
+        return Supply.builder().gold(-1).build();
     }
 
     @Override

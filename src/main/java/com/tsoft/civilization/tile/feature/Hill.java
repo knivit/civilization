@@ -7,7 +7,9 @@ import com.tsoft.civilization.web.view.tile.feature.HillView;
 import java.util.UUID;
 
 /**
- * Hills yield 0 Food and 2 Hammers, regardless of the underlying terrain type.
+ * Basic Production: 0 Food, 2 Hammers
+ * Movement Cost: 2; Defensive Bonus: +25%
+ * Notes: Hills yield 0 Food and 2 Hammers, regardless of the underlying terrain type.
  */
 public class Hill extends TerrainFeature<HillView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
@@ -21,12 +23,12 @@ public class Hill extends TerrainFeature<HillView> {
 
     @Override
     public Supply getSupply() {
-        return new Supply().setProduction(2);
+        return Supply.builder().production(2).build();
     }
 
     @Override
     public boolean isBlockingTileSupply() {
-        return false;
+        return true;
     }
 
     @Override

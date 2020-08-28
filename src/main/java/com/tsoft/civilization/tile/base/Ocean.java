@@ -5,6 +5,10 @@ import com.tsoft.civilization.web.view.tile.base.OceanView;
 
 import java.util.UUID;
 
+/**
+ * Basic Production: 1 Food, 1 Gold
+ * Movement Cost: 1
+ */
 public class Ocean extends AbstractTile<OceanView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
@@ -17,7 +21,7 @@ public class Ocean extends AbstractTile<OceanView> {
 
     @Override
     public Supply getBaseSupply() {
-        return new Supply().setFood(1).setGold(1);
+        return Supply.builder().food(1).gold(1).build();
     }
 
     @Override

@@ -7,6 +7,9 @@ import com.tsoft.civilization.web.view.tile.feature.FalloutView;
 import java.util.UUID;
 
 /**
+ * Fallout
+ * Production Modifiers: Food -3, Production -3, Gold -3
+ * Movement Cost: 2
  * Fallout must be cleared by a Worker before any improvements can be built.
  */
 public class Fallout extends TerrainFeature<FalloutView> {
@@ -21,7 +24,7 @@ public class Fallout extends TerrainFeature<FalloutView> {
 
     @Override
     public Supply getSupply() {
-        return new Supply().setFood(-3).setProduction(-3).setGold(-3);
+        return Supply.builder().food(-3).production(-3).gold(-3).build();
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.tsoft.civilization.web.view.tile.feature.OasisView;
 import java.util.UUID;
 
 /**
+ * Production Modifier: +3 Food, +1 Gold
  * Oasis can't be improved (except with roads)
  */
 public class Oasis extends TerrainFeature<OasisView> {
@@ -21,7 +22,7 @@ public class Oasis extends TerrainFeature<OasisView> {
 
     @Override
     public Supply getSupply() {
-        return new Supply().setFood(3).setGold(1);
+        return Supply.builder().food(3).gold(1).build();
     }
 
     @Override

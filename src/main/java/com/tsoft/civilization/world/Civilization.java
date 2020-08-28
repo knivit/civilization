@@ -87,7 +87,7 @@ public class Civilization {
 
         world.addCivilization(this);
 
-        supply = new Supply();
+        supply = Supply.EMPTY_SUPPLY;
     }
 
     public void addFirstUnits() {
@@ -96,7 +96,7 @@ public class Civilization {
         // try to place Warriors near the Settlers
         ArrayList<Point> locations = world.getLocationsAround(settlersLocation, 2);
         for (Point location : locations) {
-            AbstractTile tile = world.getTilesMap().getTile(location);
+            AbstractTile<?> tile = world.getTilesMap().getTile(location);
             if (tile.getPassCost(settlers) != TilePassCostTable.UNPASSABLE) {
                 UnitFactory.newInstance(Warriors.CLASS_UUID, this, location);
                 break;
@@ -263,19 +263,16 @@ public class Civilization {
 
     public boolean canBuyUnit(AbstractUnit<?> unit) {
         int gold = supply.getGold();
-        if (gold < unit.getGoldCost()) {
-            return false;
-        }
-        return true;
+        return gold >= unit.getGoldCost();
     }
 
     public void buyUnit(String unitClassUuid, City city) {
         AbstractUnit<?> unit = UnitFactory.newInstance(unitClassUuid, this, city.getLocation());
 
         int gold = unit.getGoldCost();
-        Supply expenses = new Supply().setGold(gold);
+        Supply expenses = Supply.builder().gold(gold).build();
 
-        supply.add(expenses);
+        supply = supply.add(expenses);
 
         Event event = new Event(Event.INFORMATION, supply, L10nCivilization.BUY_UNIT_EVENT);
         addEvent(event);
@@ -284,18 +281,15 @@ public class Civilization {
 
     public boolean canBuyBuilding(AbstractBuilding<?> building) {
         int gold = supply.getGold();
-        if (gold < building.getGoldCost()) {
-            return false;
-        }
-        return true;
+        return gold >= building.getGoldCost();
     }
 
     public void buyBuilding(String buildingClassUuid, City city) {
         AbstractBuilding<?> catalogBuilding = BuildingCatalog.findByClassUuid(buildingClassUuid);
         int gold = catalogBuilding.getGoldCost();
 
-        Supply expenses = new Supply().setGold(gold);
-        supply.add(expenses);
+        Supply expenses = Supply.builder().gold(gold).build();
+        supply = supply.add(expenses);
 
         Event event = new Event(Event.INFORMATION, supply, L10nCivilization.BUY_BUILDING_EVENT);
         addEvent(event);
@@ -328,11 +322,7 @@ public class Civilization {
 
         AgreementList agrs = getAgreementsWithCivilization(otherCivilization);
         OpenBordersAgreement openBordersAgreement = agrs.get(OpenBordersAgreement.class);
-        if (openBordersAgreement != null) {
-            return true;
-        }
-
-        return false;
+        return openBordersAgreement != null;
     }
 
     public boolean isWar(Civilization otherCivilization) {
@@ -366,15 +356,15 @@ public class Civilization {
     }
 
     public void addSupply(Supply supply) {
-        this.supply.add(supply);
+        this.supply = this.supply.add(supply);
     }
 
     public Supply calcSupply() {
-        Supply supply = new Supply();
+        Supply supply = Supply.EMPTY_SUPPLY;
 
         // income
         for (City city : cities) {
-            supply.add(city.getSupply());
+            supply = supply.add(city.getSupply());
         }
 
         // expenses on cities
@@ -382,7 +372,7 @@ public class Civilization {
             // units keeping
             int unitKeepingGold = units.getGoldKeepingExpenses();
             if (unitKeepingGold != 0) {
-                supply.add(new Supply().setGold(-unitKeepingGold));
+                supply = supply.add(Supply.builder().gold(-unitKeepingGold).build());
             }
         }
 
@@ -402,7 +392,7 @@ public class Civilization {
         }
 
         Supply supply = calcSupply();
-        supply.add(supply);
+        this.supply = this.supply.add(supply);
 
         // reset unit's pass score
         units.resetPassScore();
@@ -423,10 +413,7 @@ public class Civilization {
         if (o == null || getClass() != o.getClass()) return false;
 
         Civilization that = (Civilization) o;
-
-        if (!id.equals(that.id)) return false;
-
-        return true;
+        return id.equals(that.id);
     }
 
     @Override

@@ -19,8 +19,7 @@ public class Road extends AbstractImprovement {
 
     @Override
     public Supply getSupply() {
-        Supply supply = new Supply().setGold(-2);
-        return supply;
+        return Supply.builder().gold(-2).build();
     }
 
     @Override

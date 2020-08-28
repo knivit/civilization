@@ -2,15 +2,7 @@ package com.tsoft.civilization.tile.util;
 
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.improvement.City;
-import com.tsoft.civilization.tile.feature.TerrainFeature;
-import com.tsoft.civilization.tile.feature.Atoll;
-import com.tsoft.civilization.tile.feature.Fallout;
-import com.tsoft.civilization.tile.feature.FloodPlain;
-import com.tsoft.civilization.tile.feature.Forest;
-import com.tsoft.civilization.tile.feature.Hill;
-import com.tsoft.civilization.tile.feature.Jungle;
-import com.tsoft.civilization.tile.feature.Marsh;
-import com.tsoft.civilization.tile.feature.Oasis;
+import com.tsoft.civilization.tile.feature.*;
 import com.tsoft.civilization.unit.Archers;
 
 import java.util.HashMap;
@@ -28,6 +20,7 @@ public class MissileFeaturePastCostTable {
         table.put(Archers.CLASS_UUID + FloodPlain.CLASS_UUID, 1);
         table.put(Archers.CLASS_UUID + Forest.CLASS_UUID, 3);
         table.put(Archers.CLASS_UUID + Hill.CLASS_UUID, 2);
+        table.put(Archers.CLASS_UUID + Ice.CLASS_UUID, 1);
         table.put(Archers.CLASS_UUID + Jungle.CLASS_UUID, 3);
         table.put(Archers.CLASS_UUID + Marsh.CLASS_UUID, 1);
         table.put(Archers.CLASS_UUID + Oasis.CLASS_UUID, 2);
@@ -37,6 +30,7 @@ public class MissileFeaturePastCostTable {
         table.put(City.CLASS_UUID + FloodPlain.CLASS_UUID, 1);
         table.put(City.CLASS_UUID + Forest.CLASS_UUID, 3);
         table.put(City.CLASS_UUID + Hill.CLASS_UUID, 2);
+        table.put(City.CLASS_UUID + Ice.CLASS_UUID, 1);
         table.put(City.CLASS_UUID + Jungle.CLASS_UUID, 3);
         table.put(City.CLASS_UUID + Marsh.CLASS_UUID, 1);
         table.put(City.CLASS_UUID + Oasis.CLASS_UUID, 2);

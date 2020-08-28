@@ -4,6 +4,7 @@ import com.tsoft.civilization.L10n.L10nCity;
 import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.tile.base.AbstractTile;
+import com.tsoft.civilization.tile.util.FeaturePassCostTable;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.util.Year;
 import com.tsoft.civilization.world.economic.Supply;
@@ -11,6 +12,7 @@ import com.tsoft.civilization.world.util.Event;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Excess food above the 2 per citizen required to feed the existing population goes
@@ -51,13 +53,10 @@ public class CityPopulationService {
     }
 
     public List<Point> getPopulationLocations() {
-        ArrayList<Point> locations = new ArrayList<>();
-        for (Citizen citizen : citizens) {
-            if (citizen.getLocation() != null) {
-                locations.add(citizen.getLocation());
-            }
-        }
-        return locations;
+        return citizens.stream()
+            .map(Citizen::getLocation)
+            .filter(Objects::nonNull)
+            .collect(Collectors.toList());
     }
 
     private Point findLocationForCitizen(List<Point> usedLocations) {
@@ -66,12 +65,18 @@ public class CityPopulationService {
 
         Point bestLocation = null;
         for (Point location : locations) {
+            AbstractTile<?> tile = city.getTilesMap().getTile(location);
+
+            // don't place a citizen on unpassable tile (terrain feature)
+            // FIXME boolean unpassableLocation = FeaturePassCostTable.get();
+            // if (unpassableLocation) continue;
+
             // if the selected tile provides empty (or negative) supply, don't place a citizen here
-            AbstractTile tile = city.getTilesMap().getTile(location);
             Supply tileSupply = tile.getSupply();
-            boolean negative = (tileSupply.getFood() < 0) ||
-                    (tileSupply.getProduction() < 0) ||
-                    (tileSupply.getGold() < 0);
+            boolean negative =
+                (tileSupply.getFood() < 0) ||
+                (tileSupply.getProduction() < 0) ||
+                (tileSupply.getGold() < 0);
             if (negative) {
                 continue;
             }
@@ -81,7 +86,7 @@ public class CityPopulationService {
                 continue;
             }
 
-            AbstractTile bestTile = city.getTilesMap().getTile(bestLocation);
+            AbstractTile<?> bestTile = city.getTilesMap().getTile(bestLocation);
             Supply bestTileSupply = bestTile.getSupply();
 
             // in case a tile gives the same amount of needed supply,
@@ -141,67 +146,64 @@ public class CityPopulationService {
     }
 
     public Supply getTilesSupply() {
-        Supply supply = new Supply();
+        Supply supply = Supply.EMPTY_SUPPLY;
         for (Citizen citizen : citizens) {
             Supply tileSupply = getTileSupply(citizen);
-            supply.add(tileSupply);
+            supply = supply.add(tileSupply);
         }
         return supply;
     }
 
     // Get supply from tiles without improvements where the citizen is working
     private Supply getTileSupply(Citizen citizen) {
-        Supply supply = new Supply();
-
-        // Unemployed citizens (those not working a tile or assigned as a specialist) produce 1 hammer
-        if (citizen.isUnemplyed()) {
-            return supply.setProduction(1);
+        // Unemployed citizens (those not working a tile or assigned as specialists) produce 1 hammer
+        if (citizen.isUnemployed()) {
+            return Supply.builder().production(1).build();
         }
 
         Point location = citizen.getLocation();
-        AbstractTile tile = city.getTilesMap().getTile(location);
-        AbstractImprovement improvement = tile.getImprovement();
+        AbstractTile<?> tile = city.getTilesMap().getTile(location);
+        AbstractImprovement<?> improvement = tile.getImprovement();
         if (improvement == null || !improvement.isBlockingTileSupply()) {
-            supply.add(tile.getSupply());
+            return tile.getSupply();
         }
 
-        return supply;
+        return Supply.EMPTY_SUPPLY;
     }
 
     // Get supply from improvements where citizen is working
     private Supply getImprovementsSupply(Citizen citizen) {
-        Supply supply = new Supply();
-        if (citizen.isUnemplyed()) {
-            return supply;
+        if (citizen.isUnemployed()) {
+            return Supply.EMPTY_SUPPLY;
         }
 
         Point location = citizen.getLocation();
-        AbstractTile tile = city.getTilesMap().getTile(location);
-        AbstractImprovement improvement = tile.getImprovement();
+        AbstractTile<?> tile = city.getTilesMap().getTile(location);
+        AbstractImprovement<?> improvement = tile.getImprovement();
         if (improvement != null && !(improvement instanceof City)) {
-            supply.add(improvement.getSupply());
+            return improvement.getSupply();
         }
 
-        return supply;
+        return Supply.EMPTY_SUPPLY;
     }
 
     // Income from a citizen
     private Supply getCitizenSupply(Citizen citizen) {
-        Supply supply = new Supply();
-        supply.add(getTileSupply(citizen));
-        supply.add(getImprovementsSupply(citizen));
+        Supply supply = Supply.EMPTY_SUPPLY
+            .add(getTileSupply(citizen))
+            .add(getImprovementsSupply(citizen));
 
         return supply;
     }
 
     public Supply calcSupply() {
-        Supply supply = new Supply();
+        Supply supply = Supply.EMPTY_SUPPLY;
         for (Citizen citizen : citizens) {
-            supply.add(getCitizenSupply(citizen));
+            supply = supply.add(getCitizenSupply(citizen));
         }
 
         // 1 citizen consumes 1 food
-        supply.add(new Supply().setFood(-citizens.size()));
+        supply = supply.add(Supply.builder().food(-citizens.size()).build());
 
         return supply;
     }

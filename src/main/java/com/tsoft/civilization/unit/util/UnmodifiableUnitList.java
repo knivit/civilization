@@ -8,7 +8,7 @@ import com.tsoft.civilization.util.UnmodifiableList;
 import java.util.Collection;
 import java.util.List;
 
-public class UnmodifiableUnitList extends UnmodifiableList<AbstractUnit> implements UnitCollection {
+public class UnmodifiableUnitList extends UnmodifiableList<AbstractUnit<?>> implements UnitCollection {
     private UnitCollection units;
 
     public UnmodifiableUnitList(UnitCollection units) {
@@ -16,27 +16,27 @@ public class UnmodifiableUnitList extends UnmodifiableList<AbstractUnit> impleme
     }
 
     @Override
-    public AbstractUnit findByClassUuid(String classUuid) {
+    public AbstractUnit<?> findByClassUuid(String classUuid) {
         return units.findByClassUuid(classUuid);
     }
 
     @Override
-    public int getUnitClassCount(Class<? extends AbstractUnit> unitClass) {
+    public int getUnitClassCount(Class<? extends AbstractUnit<?>> unitClass) {
         return units.getUnitClassCount(unitClass);
     }
 
     @Override
-    public AbstractUnit findMilitaryUnit() {
+    public AbstractUnit<?> findMilitaryUnit() {
         return units.findMilitaryUnit();
     }
 
     @Override
-    public AbstractUnit findCivilUnit() {
+    public AbstractUnit<?> findCivilUnit() {
         return units.findCivilUnit();
     }
 
     @Override
-    public AbstractUnit findUnitByUnitKind(UnitCategory unitCategory) {
+    public AbstractUnit<?> findUnitByUnitKind(UnitCategory unitCategory) {
         return units.findUnitByUnitKind(unitCategory);
     }
 
@@ -61,7 +61,7 @@ public class UnmodifiableUnitList extends UnmodifiableList<AbstractUnit> impleme
     }
 
     @Override
-    public AbstractUnit getUnitById(String unitId) {
+    public AbstractUnit<?> getUnitById(String unitId) {
         return units.getUnitById(unitId);
     }
 
@@ -86,7 +86,7 @@ public class UnmodifiableUnitList extends UnmodifiableList<AbstractUnit> impleme
     }
 
     @Override
-    protected List<AbstractUnit> getList() {
+    protected List<AbstractUnit<?>> getList() {
         return units;
     }
 

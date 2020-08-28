@@ -4,6 +4,8 @@ import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.web.view.unit.WorkersView;
 import com.tsoft.civilization.world.Civilization;
 
+import java.util.UUID;
+
 /**
  * Movement: 2;
  * Strength: 0;
@@ -21,7 +23,7 @@ import com.tsoft.civilization.world.Civilization;
  * As civilian units, Workers have no defense and so are captured if attacked by an enemy unit.
  */
 public class Workers extends AbstractUnit<WorkersView> {
-    public static final String CLASS_UUID = "6b14240d-bcf6-41d5-84a3-170622b9d47c";
+    public static final String CLASS_UUID = UUID.randomUUID().toString();
     public static final Workers INSTANCE = new Workers();
 
     private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()

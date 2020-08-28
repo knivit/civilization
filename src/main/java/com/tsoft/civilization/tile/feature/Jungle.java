@@ -6,6 +6,12 @@ import com.tsoft.civilization.web.view.tile.feature.JungleView;
 
 import java.util.UUID;
 
+/**
+ * Production Modifier: -1 Hammer
+ * Movement Cost: 2; Defensive Bonus: +25%
+ * Notes: Jungle can be cleared by Workers (with the advent of Bronze Working).
+ * Jungle no longer has a negative modifier to Food production.
+ */
 public class Jungle extends TerrainFeature<JungleView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
@@ -18,7 +24,7 @@ public class Jungle extends TerrainFeature<JungleView> {
 
     @Override
     public Supply getSupply() {
-        return new Supply().setProduction(-1);
+        return Supply.builder().production(-1).build();
     }
 
     @Override

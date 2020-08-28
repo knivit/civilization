@@ -16,6 +16,7 @@ import com.tsoft.civilization.world.util.Event;
 import com.tsoft.civilization.world.util.UnmodifiableCivilizationList;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class World {
     private String id;
@@ -136,7 +137,7 @@ public class World {
         List<Point> possibleLocations = tilesMap.getTilesToStartCivilization();
         possibleLocations.removeAll(busyLocations);
 
-        int n = (int)Math.round(Math.random() * (possibleLocations.size() - 1));
+        int n = ThreadLocalRandom.current().nextInt(possibleLocations.size());
         return possibleLocations.get(n);
     }
 

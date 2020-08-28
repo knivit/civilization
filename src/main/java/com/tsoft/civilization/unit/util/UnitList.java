@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class UnitList extends ArrayList<AbstractUnit> implements UnitCollection {
+public class UnitList extends ArrayList<AbstractUnit<?>> implements UnitCollection {
     public UnitList() {
         super();
     }
@@ -21,8 +21,8 @@ public class UnitList extends ArrayList<AbstractUnit> implements UnitCollection 
     }
 
     @Override
-    public AbstractUnit findByClassUuid(String classUuid) {
-        for (AbstractUnit unit : this) {
+    public AbstractUnit<?> findByClassUuid(String classUuid) {
+        for (AbstractUnit<?> unit : this) {
             if (unit.getClassUuid().equals(classUuid)) {
                 return unit;
             }
@@ -31,9 +31,9 @@ public class UnitList extends ArrayList<AbstractUnit> implements UnitCollection 
     }
 
     @Override
-    public int getUnitClassCount(Class<? extends AbstractUnit> unitClass) {
+    public int getUnitClassCount(Class<? extends AbstractUnit<?>> unitClass) {
         int count = 0;
-        for (AbstractUnit unit : this) {
+        for (AbstractUnit<?> unit : this) {
             if (unitClass.equals(unit.getClass())) {
                 count ++;
             }
@@ -42,8 +42,8 @@ public class UnitList extends ArrayList<AbstractUnit> implements UnitCollection 
     }
 
     @Override
-    public AbstractUnit findMilitaryUnit() {
-        for (AbstractUnit unit : this) {
+    public AbstractUnit<?> findMilitaryUnit() {
+        for (AbstractUnit<?> unit : this) {
             if (unit.getUnitCategory().isMilitary()) {
                 return unit;
             }
@@ -52,8 +52,8 @@ public class UnitList extends ArrayList<AbstractUnit> implements UnitCollection 
     }
 
     @Override
-    public AbstractUnit findCivilUnit() {
-        for (AbstractUnit unit : this) {
+    public AbstractUnit<?> findCivilUnit() {
+        for (AbstractUnit<?> unit : this) {
             if (!unit.getUnitCategory().isMilitary()) {
                 return unit;
             }
@@ -62,8 +62,8 @@ public class UnitList extends ArrayList<AbstractUnit> implements UnitCollection 
     }
 
     @Override
-    public AbstractUnit findUnitByUnitKind(UnitCategory unitCategory) {
-        for (AbstractUnit unit : this) {
+    public AbstractUnit<?> findUnitByUnitKind(UnitCategory unitCategory) {
+        for (AbstractUnit<?> unit : this) {
             if (unitCategory.equals(unit.getUnitCategory())) {
                 return unit;
             }
@@ -74,7 +74,7 @@ public class UnitList extends ArrayList<AbstractUnit> implements UnitCollection 
     @Override
     public int getMilitaryCount() {
         int n = 0;
-        for (AbstractUnit unit : this) {
+        for (AbstractUnit<?> unit : this) {
             if (unit.getUnitCategory().isMilitary()) {
                 n ++;
             }
@@ -95,15 +95,15 @@ public class UnitList extends ArrayList<AbstractUnit> implements UnitCollection 
     @Override
     public List<Point> getLocations() {
         List<Point> locations = new ArrayList<>(size());
-        for (AbstractUnit unit : this) {
+        for (AbstractUnit<?> unit : this) {
             locations.add(unit.getLocation());
         }
         return locations;
     }
 
     @Override
-    public AbstractUnit getUnitById(String unitId) {
-        for (AbstractUnit unit : this) {
+    public AbstractUnit<?> getUnitById(String unitId) {
+        for (AbstractUnit<?> unit : this) {
             if (unit.getId().equals(unitId)) {
                 return unit;
             }
@@ -118,7 +118,7 @@ public class UnitList extends ArrayList<AbstractUnit> implements UnitCollection 
         }
 
         UnitList unitsAtLocations = new UnitList();
-        for (AbstractUnit unit : this) {
+        for (AbstractUnit<?> unit : this) {
             if (locations.contains(unit.getLocation())) {
                 unitsAtLocations.add(unit);
             }
@@ -129,7 +129,7 @@ public class UnitList extends ArrayList<AbstractUnit> implements UnitCollection 
     @Override
     public UnitCollection getUnitsWithActionsAvailable() {
         UnitCollection units = new UnitList();
-        for (AbstractUnit unit : this) {
+        for (AbstractUnit<?> unit : this) {
             if (!unit.isDestroyed() && unit.getPassScore() > 0) {
                 units.add(unit);
             }
@@ -139,7 +139,7 @@ public class UnitList extends ArrayList<AbstractUnit> implements UnitCollection 
 
     @Override
     public void resetPassScore() {
-        for (AbstractUnit unit : this) {
+        for (AbstractUnit<?> unit : this) {
             unit.step();
         }
     }
@@ -147,7 +147,7 @@ public class UnitList extends ArrayList<AbstractUnit> implements UnitCollection 
     @Override
     public int getGoldKeepingExpenses() {
         int goldExpenses = 0;
-        for (AbstractUnit unit : this) {
+        for (AbstractUnit<?> unit : this) {
             goldExpenses += unit.getGoldUnitKeepingExpenses();
         }
         return goldExpenses;

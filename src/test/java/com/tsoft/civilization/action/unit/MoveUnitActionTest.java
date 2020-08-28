@@ -309,15 +309,15 @@ public class MoveUnitActionTest {
 
     @Test
     public void getTilesToMove() {
-        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES,
-                " |0 1 2 3 4 ",
-                "-+----------",
-                "0|g g g g g ",
-                "1| g g g g g",
-                "2|M g g g g ",
-                "3| g M M g g",
-                "4|M g g g g ",
-                "5| g g g g g");
+        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES, 2,
+                " |0 1 2 3 4 ", " |0 1 2 3 4 ",
+                "-+----------", "-+----------",
+                "0|g g g g g ", "0|. . . . . ",
+                "1| g g g g g", "1| . . . . .",
+                "2|g g g g g ", "2|M . . . . ",
+                "3| g g g g g", "3| . M M . .",
+                "4|g g g g g ", "4|M . . . . ",
+                "5| g g g g g", "5| . . . . .");
         MockWorld mockWorld = new MockWorld(mockTilesMap);
         Civilization c1 = new Civilization(mockWorld, 0);
         Civilization c2 = new Civilization(mockWorld, 1);
@@ -335,15 +335,15 @@ public class MoveUnitActionTest {
 
     @Test
     public void findRoute1() {
-        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES,
-                " |0 1 2 3 4 ",
-                "-+----------",
-                "0|g g g g g ",
-                "1| g M M g g",
-                "2|M g g M g ",
-                "3| g M M g g",
-                "4|M g g g g ",
-                "5| g g g g g");
+        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES, 2,
+                " |0 1 2 3 4 ", " |0 1 2 3 4 ",
+                "-+----------", "-+----------",
+                "0|g g g g g ", "0|. . . . . ",
+                "1| g g g g g", "1| . M M . .",
+                "2|g g g g g ", "2|M . . M . ",
+                "3| g g g g g", "3| . M M . .",
+                "4|g g g g g ", "4|M . . . . ",
+                "5| g g g g g", "5| . . . . .");
         MockWorld mockWorld = new MockWorld(mockTilesMap);
         Civilization c1 = new Civilization(mockWorld, 0);
 
@@ -355,15 +355,15 @@ public class MoveUnitActionTest {
 
     @Test
     public void findRoute2() {
-        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES,
-                " |0 1 2 3 4 ",
-                "-+----------",
-                "0|g g g g g ",
-                "1| M M M g g",
-                "2|M g g M g ",
-                "3| g M M g g",
-                "4|M g g g g ",
-                "5| g g g g g");
+        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES, 2,
+                " |0 1 2 3 4 ", " |0 1 2 3 4 ",
+                "-+----------", "-+----------",
+                "0|g g g g g ", "0|. . . . . ",
+                "1| g g g g g", "1| M M M . .",
+                "2|g g g g g ", "2|M . . M . ",
+                "3| g g g g g", "3| . M M . .",
+                "4|g g g g g ", "4|M . . . . ",
+                "5| g g g g g", "5| . . . . .");
         MockWorld mockWorld = new MockWorld(mockTilesMap);
         Civilization c1 = new Civilization(mockWorld, 0);
 
@@ -377,15 +377,15 @@ public class MoveUnitActionTest {
 
     @Test
     public void findRoute3() {
-        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES,
-                " |0 1 2 3 4 ",
-                "-+----------",
-                "0|g g g g g ",
-                "1| M M M g M",
-                "2|M g g M g ",
-                "3| g M M g M",
-                "4|M g g g M ",
-                "5| M M M M M");
+        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES, 2,
+                " |0 1 2 3 4 ", " |0 1 2 3 4 ",
+                "-+----------", "-+----------",
+                "0|g g g g g ", "0|. . . . . ",
+                "1| g g g g g", "1| M M M . M",
+                "2|g g g g g ", "2|M . . M . ",
+                "3| g g g g g", "3| . M M . M",
+                "4|g g g g g ", "4|M . . . M ",
+                "5| g g g g g", "5| M M M M M");
         MockWorld mockWorld = new MockWorld(mockTilesMap);
         Civilization c1 = new Civilization(mockWorld, 0);
 
@@ -398,15 +398,15 @@ public class MoveUnitActionTest {
 
     @Test
     public void findRoute4() {
-        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES,
-                " |0 1 2 3 4 ",
-                "-+----------",
-                "0|g g g g g ",
-                "1| M M M M M",
-                "2|M g g M g ",
-                "3| g M M g M",
-                "4|M g g g M ",
-                "5| M M M M M");
+        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES, 2,
+                " |0 1 2 3 4 ", " |0 1 2 3 4 ",
+                "-+----------", "-+----------",
+                "0|g g g g g ", "0|. . . . . ",
+                "1| g g g g g", "1| M M M M M",
+                "2|g g g g g ", "2|M . . M . ",
+                "3| g g g g g", "3| . M M . M",
+                "4|g g g g g ", "4|M . . . M ",
+                "5| g g g g g", "5| M M M M M");
         MockWorld mockWorld = new MockWorld(mockTilesMap);
         Civilization c1 = new Civilization(mockWorld, 0);
 

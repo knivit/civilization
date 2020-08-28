@@ -24,7 +24,7 @@ public class Palace extends AbstractBuilding<PalaceView> {
      */
     @Override
     public Supply getSupply(City city) {
-        return new Supply().setProduction(3).setGold(3).setScience(3).setCulture(1);
+        return Supply.builder().production(3).gold(3).science(3).culture(1).build();
     }
 
     @Override

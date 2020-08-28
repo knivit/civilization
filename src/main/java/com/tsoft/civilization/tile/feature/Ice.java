@@ -1,14 +1,15 @@
-package com.tsoft.civilization.tile.base;
+package com.tsoft.civilization.tile.feature;
 
+import com.tsoft.civilization.tile.base.TileType;
 import com.tsoft.civilization.world.economic.Supply;
-import com.tsoft.civilization.web.view.tile.base.IceView;
+import com.tsoft.civilization.web.view.tile.feature.IceView;
 
 import java.util.UUID;
 
 /**
  * Impassable except to Air and Submarine units.
  */
-public class Ice extends AbstractTile<IceView> {
+public class Ice extends TerrainFeature<IceView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private static final IceView VIEW = new IceView();
@@ -19,8 +20,8 @@ public class Ice extends AbstractTile<IceView> {
     }
 
     @Override
-    public Supply getBaseSupply() {
-        return new Supply();
+    public Supply getSupply() {
+        return Supply.EMPTY_SUPPLY;
     }
 
     @Override
@@ -30,6 +31,11 @@ public class Ice extends AbstractTile<IceView> {
 
     @Override
     public int getDefensiveBonusPercent() {
+        return 0;
+    }
+
+    @Override
+    public int getMaxStrength() {
         return 0;
     }
 

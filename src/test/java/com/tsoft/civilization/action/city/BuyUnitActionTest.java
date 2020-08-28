@@ -29,7 +29,7 @@ public class BuyUnitActionTest {
         City city = new City(civilization, new Point(2, 0));
 
         city.setPassScore(1);
-        civilization.addSupply(new Supply().setGold(Archers.INSTANCE.getGoldCost()));
+        civilization.addSupply(Supply.builder().gold(Archers.INSTANCE.getGoldCost()).build());
 
         assertEquals(CityActionResults.UNIT_WAS_BOUGHT, BuyUnitAction.buyUnit(city, Archers.CLASS_UUID));
     }

@@ -26,10 +26,10 @@ public class CityBuildingService {
         this.city = city;
 
         if (city.getCivilization().getCities().size() == 1) {
-            AbstractBuilding palace = AbstractBuilding.newInstance(Palace.CLASS_UUID, city);
+            AbstractBuilding<?> palace = AbstractBuilding.newInstance(Palace.CLASS_UUID, city);
             add(palace); // A capital
         } else {
-            AbstractBuilding settlement = AbstractBuilding.newInstance(Settlement.CLASS_UUID, city);
+            AbstractBuilding<?> settlement = AbstractBuilding.newInstance(Settlement.CLASS_UUID, city);
             add(settlement);
         }
     }
@@ -38,20 +38,20 @@ public class CityBuildingService {
         return unmodifiableBuildings;
     }
 
-    public AbstractBuilding getBuildingById(String buildingId) {
+    public AbstractBuilding<?> getBuildingById(String buildingId) {
         return buildings.getBuildingById(buildingId);
     }
 
-    public void add(AbstractBuilding building) {
+    public void add(AbstractBuilding<?> building) {
         buildings.add(building);
     }
 
-    public void remove(AbstractBuilding building) {
+    public void remove(AbstractBuilding<?> building) {
         destroyedBuildings.add(building);
         buildings.remove(building);
     }
 
-    public AbstractBuilding findByClassUuid(String classUuid) {
+    public AbstractBuilding<?> findByClassUuid(String classUuid) {
         return buildings.findByClassUuid(classUuid);
     }
 
@@ -69,27 +69,27 @@ public class CityBuildingService {
     }
 
     public Supply getSupply() {
-        Supply supply = new Supply();
-        for (AbstractBuilding building : buildings) {
-            supply.add(building.getSupply(city));
+        Supply supply = Supply.EMPTY_SUPPLY;
+        for (AbstractBuilding<?> building : buildings) {
+            supply = supply.add(building.getSupply(city));
         }
         return supply;
     }
 
     // Buildings and units construction
-    public void step(Supply citySupply) {
+    public Supply step(Supply citySupply) {
         destroyedBuildings.clear();
 
         if (construction == null) {
             log.debug("No construction is in progress");
-            return;
+            return citySupply;
         }
 
         int productionCost = construction.getProductionCost();
         int cityProduction = citySupply.getProduction();
         if (productionCost <= cityProduction) {
-            Supply constructionExpenses = new Supply().setProduction(-productionCost);
-            citySupply.add(constructionExpenses);
+            Supply constructionExpenses = Supply.builder().production(-productionCost).build();
+            citySupply = citySupply.add(constructionExpenses);
 
             // construction ended, the building is built
             city.constructionDone(construction);
@@ -97,8 +97,10 @@ public class CityBuildingService {
         } else {
             construction.setProductionCost(productionCost - cityProduction);
 
-            Supply constructionExpenses = new Supply().setProduction(-cityProduction);
-            citySupply.add(constructionExpenses);
+            Supply constructionExpenses = Supply.builder().production(-cityProduction).build();
+            citySupply = citySupply.add(constructionExpenses);
         }
+
+        return citySupply;
     }
 }

@@ -1,15 +1,17 @@
-package com.tsoft.civilization.tile.base;
+package com.tsoft.civilization.tile.feature;
 
+import com.tsoft.civilization.tile.base.TileType;
 import com.tsoft.civilization.world.economic.Supply;
-import com.tsoft.civilization.web.view.tile.base.CoastView;
+import com.tsoft.civilization.web.view.tile.feature.CoastView;
 
 import java.util.UUID;
 
 /**
+ * Basic Production: +1 Gold
  * Coastal tiles now often go several hexes out into the water,
- * allowing for better freedom of movement for ancient units that are restricted from deep water
+ * allowing for better freedom of movement for ancient units that are restricted from deep ocean.
  */
-public class Coast extends AbstractTile<CoastView> {
+public class Coast extends TerrainFeature<CoastView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private static final CoastView VIEW = new CoastView();
@@ -20,8 +22,8 @@ public class Coast extends AbstractTile<CoastView> {
     }
 
     @Override
-    public Supply getBaseSupply() {
-        return new Supply().setGold(1);
+    public Supply getSupply() {
+        return Supply.builder().gold(1).build();
     }
 
     @Override
@@ -31,6 +33,11 @@ public class Coast extends AbstractTile<CoastView> {
 
     @Override
     public int getDefensiveBonusPercent() {
+        return 0;
+    }
+
+    @Override
+    public int getMaxStrength() {
         return 0;
     }
 

@@ -76,7 +76,7 @@ public class AttackActionTest {
         MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES, 2,
                 " |0 1 2 3 4 5 6 ", " |0 1 2 3 4 5 6 ",
                 "-+--------------", "-+--------------",
-                "0|. . M M . . . ", "0|. . . . . . . ",
+                "0|. . g g . . . ", "0|. . M M . . . ",
                 "1| . . g g . . .", "1| . . . j . . .",
                 "2|. . g . g . . ", "2|. . f . . . . ",
                 "3| . g g g . . .", "3| . . . h . . .");

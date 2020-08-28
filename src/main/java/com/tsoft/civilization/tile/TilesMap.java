@@ -1,6 +1,7 @@
 package com.tsoft.civilization.tile;
 
 import com.tsoft.civilization.tile.base.AbstractTile;
+import com.tsoft.civilization.tile.feature.TerrainFeature;
 import com.tsoft.civilization.util.AbstractDir;
 import com.tsoft.civilization.util.Dir6;
 import com.tsoft.civilization.util.NumberUtil;
@@ -8,9 +9,12 @@ import com.tsoft.civilization.util.Point;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class TilesMap {
-    private AbstractTile[][] tiles;
+    private AbstractTile<?>[][] tiles;
     private MapType mapType;
 
     private int width;
@@ -41,14 +45,14 @@ public class TilesMap {
         return height;
     }
 
-    public AbstractTile getTile(int x, int y) {
+    public AbstractTile<?> getTile(int x, int y) {
         assert (x >= 0 && x < getWidth()) : "x = " + x + " is not in range [0.." + (getWidth() - 1) + "]";
         assert (y >= 0 && y < getHeight()) : "y = " + y + " is not in range [0.." + (getHeight() - 1) + "]";
 
         return tiles[x][y];
     }
 
-    public AbstractTile getTile(Point location) {
+    public AbstractTile<?> getTile(Point location) {
         return getTile(location.getX(), location.getY());
     }
 
@@ -144,7 +148,7 @@ public class TilesMap {
     }
 
     // End point doesn't included
-    // sideNo - number of hexagonal's side (0 - Up, 1 - (Right, Up) etc clockwise)
+    // sideNo - number of hexagon's side (0 - Up, 1 - (Right, Up) etc clockwise)
     private ArrayList<Point> getLocationsOnLine(Point a, Point b, int sideNo) {
         assert (sideNo >= 0 && sideNo <= 5) : "sideNo = " + sideNo + ", but must be in [0..5]";
 
@@ -160,7 +164,10 @@ public class TilesMap {
         Dir6[] leftDownToLeftZero = new Dir6[] { new Dir6(-1, -1), new Dir6(0, -1) };
         Dir6[] leftZeroToLeftUp = new Dir6[] { new Dir6(0, -1), new Dir6(1, -1) };
 
-        Dir6[][] allDirs = new Dir6[][] { leftUpToRightUp, rightUpToRightZero, rightZeroToRightDown, rightDownToLeftDown, leftDownToLeftZero, leftZeroToLeftUp };
+        Dir6[][] allDirs = new Dir6[][] {
+            leftUpToRightUp, rightUpToRightZero, rightZeroToRightDown,
+            rightDownToLeftDown, leftDownToLeftZero, leftZeroToLeftUp
+        };
 
         Dir6[] dirs = allDirs[sideNo];
         if (sideNo == 0 || sideNo == 3) {
@@ -185,20 +192,26 @@ public class TilesMap {
         return locations;
     }
 
-    public ArrayList<Point> getTileClassLocations(Class<? extends AbstractTile> tileClass) {
-        assert (tileClass != null) : "Tile Class must be not null";
+    private Stream<AbstractTile<?>> tiles() {
+        return Stream.of(tiles).flatMap(Stream::of);
+    }
 
-        ArrayList<Point> points = new ArrayList<>();
-        for (int y = 0; y < getHeight(); y ++) {
-            for (int x = 0; x < getWidth(); x ++) {
-                AbstractTile tile = getTile(x, y);
-                if (tileClass.equals(tile.getClass())) {
-                    Point point = new Point(x, y);
-                    points.add(point);
-                }
-            }
-        }
-        return points;
+    public List<Point> getTileClassLocations(Class<? extends AbstractTile<?>> tileClass) {
+        Objects.requireNonNull(tileClass, "Tile class must be not null");
+
+        return tiles()
+            .filter(t -> t.getClass().equals(tileClass))
+            .map(AbstractTile::getLocation)
+            .collect(Collectors.toList());
+    }
+
+    public List<Point> getTerrainFeatureClassLocations(Class<? extends TerrainFeature<?>> featureClass) {
+        Objects.requireNonNull(featureClass, "TerrainFeature class must be not null");
+
+        return tiles()
+            .filter(t -> t.getFeature(featureClass) != null)
+            .map(AbstractTile::getLocation)
+            .collect(Collectors.toList());
     }
 
     /** Return null if the given coordinates not on the map */
@@ -213,16 +226,9 @@ public class TilesMap {
     }
 
     public List<Point> getTilesToStartCivilization() {
-        ArrayList<Point> points = new ArrayList<>();
-        for (int y = 0; y < getHeight(); y ++) {
-            for (int x = 0; x < getWidth(); x ++) {
-                AbstractTile tile = getTile(x, y);
-                if (tile.canBuildCity()) {
-                    Point point = new Point(x, y);
-                    points.add(point);
-                }
-            }
-        }
-        return points;
+        return tiles()
+            .filter(AbstractTile::canBuildCity)
+            .map(AbstractTile::getLocation)
+            .collect(Collectors.toList());
     }
 }

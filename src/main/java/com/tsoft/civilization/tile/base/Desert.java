@@ -5,6 +5,10 @@ import com.tsoft.civilization.web.view.tile.base.DesertView;
 
 import java.util.UUID;
 
+/**
+ * Basic Production: (none)
+ * Movement Cost: 1; Defensive Bonus: -33%
+ */
 public class Desert extends AbstractTile<DesertView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
@@ -17,7 +21,7 @@ public class Desert extends AbstractTile<DesertView> {
 
     @Override
     public Supply getBaseSupply() {
-        return new Supply();
+        return Supply.EMPTY_SUPPLY;
     }
 
     @Override

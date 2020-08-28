@@ -5,6 +5,10 @@ import com.tsoft.civilization.web.view.tile.base.GrasslandView;
 
 import java.util.UUID;
 
+/**
+ * Basic Production: 2 Food
+ * Movement Cost: 1; Defensive Bonus: -33%
+ */
 public class Grassland extends AbstractTile<GrasslandView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
@@ -17,7 +21,7 @@ public class Grassland extends AbstractTile<GrasslandView> {
 
     @Override
     public Supply getBaseSupply() {
-        return new Supply().setFood(2);
+        return Supply.builder().food(2).build();
     }
 
     @Override

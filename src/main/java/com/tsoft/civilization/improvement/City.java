@@ -68,7 +68,7 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
         civilization.addCity(this);
 
         // economics
-        citySupply = new Supply();
+        citySupply = Supply.EMPTY_SUPPLY;
 
         // city's tiles
         locations.add(location);
@@ -215,10 +215,11 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
 
     @Override
     public Supply getSupply() {
-        Supply supply = new Supply().setHappiness(-1).setPopulation(getCitizenCount());
+        Supply supply = Supply.builder().happiness(-1).population(getCitizenCount()).build();
 
-        supply.add(citizenService.calcSupply());
-        supply.add(buildingService.getSupply());
+        supply = supply
+            .add(citizenService.calcSupply())
+            .add(buildingService.getSupply());
 
         return supply;
     }
@@ -232,10 +233,10 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
         citizenService.step(year);
 
         // buildings & construction
-        buildingService.step(citySupply);
+        citySupply = buildingService.step(citySupply);
 
         Supply supply = getSupply();
-        citySupply.add(supply);
+        citySupply = citySupply.add(supply);
         log.debug("City: Year {}, supply = {}, total supply = {}", year, supply, citySupply);
 
         // can do actions (attack, buy, build etc)

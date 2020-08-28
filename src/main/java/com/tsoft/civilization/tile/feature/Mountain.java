@@ -1,11 +1,16 @@
-package com.tsoft.civilization.tile.base;
+package com.tsoft.civilization.tile.feature;
 
+import com.tsoft.civilization.tile.base.TileType;
 import com.tsoft.civilization.world.economic.Supply;
-import com.tsoft.civilization.web.view.tile.base.MountainView;
+import com.tsoft.civilization.web.view.tile.feature.MountainView;
 
 import java.util.UUID;
 
-public class Mountain extends AbstractTile<MountainView> {
+/**
+ * Production: 0
+ * Movement Cost: Impassable except to Air units; Defensive Bonus: +25%
+ */
+public class Mountain extends TerrainFeature<MountainView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private static final MountainView VIEW = new MountainView();
@@ -16,8 +21,8 @@ public class Mountain extends AbstractTile<MountainView> {
     }
 
     @Override
-    public Supply getBaseSupply() {
-        return new Supply();
+    public Supply getSupply() {
+        return Supply.EMPTY_SUPPLY;
     }
 
     @Override
@@ -27,6 +32,11 @@ public class Mountain extends AbstractTile<MountainView> {
 
     @Override
     public int getDefensiveBonusPercent() {
+        return 25;
+    }
+
+    @Override
+    public int getMaxStrength() {
         return 0;
     }
 

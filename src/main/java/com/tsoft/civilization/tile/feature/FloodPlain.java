@@ -6,6 +6,9 @@ import com.tsoft.civilization.web.view.tile.feature.FloodPlainView;
 
 import java.util.UUID;
 
+/**
+ * Production Modifier: +2 Food
+ */
 public class FloodPlain extends TerrainFeature<FloodPlainView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
@@ -18,7 +21,7 @@ public class FloodPlain extends TerrainFeature<FloodPlainView> {
 
     @Override
     public Supply getSupply() {
-        return new Supply().setFood(2);
+        return Supply.builder().food(2).build();
     }
 
     @Override

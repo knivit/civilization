@@ -1,11 +1,6 @@
 package com.tsoft.civilization.world.generator;
 
-import com.tsoft.civilization.tile.feature.TerrainFeature;
-import com.tsoft.civilization.tile.feature.Forest;
-import com.tsoft.civilization.tile.feature.Hill;
-import com.tsoft.civilization.tile.feature.Jungle;
-import com.tsoft.civilization.tile.feature.Marsh;
-import com.tsoft.civilization.tile.feature.Oasis;
+import com.tsoft.civilization.tile.feature.*;
 import com.tsoft.civilization.tile.util.LuxuryList;
 import com.tsoft.civilization.tile.util.ResourceList;
 import com.tsoft.civilization.tile.TilesMap;
@@ -14,6 +9,7 @@ import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.util.Rect;
 
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 /*
  * One big continent, small ocean (80% earth, 20% ocean)
@@ -54,7 +50,7 @@ public class OneContinentWorldGenerator implements WorldGenerator {
 
     }
 
-    private class TP {
+    private static class TP {
         private String[] tileClasses;
         private int probabilityPercent;
 
@@ -133,10 +129,10 @@ public class OneContinentWorldGenerator implements WorldGenerator {
         int y2 = (tilesMap.getHeight() / 2) + (int)Math.round(toY * onePercent);
 
         // get locations of earth tiles
-        ArrayList<Point> points = new ArrayList<Point>();
+        ArrayList<Point> points = new ArrayList<>();
         for (int y = y1; y < y2; y ++) {
             for (int x = 0; x < tilesMap.getWidth(); x ++) {
-                AbstractTile tile = tilesMap.getTile(x, y);
+                AbstractTile<?> tile = tilesMap.getTile(x, y);
                 if (tile.getTileType().isEarth()) {
                     points.add(tile.getLocation());
                 }
@@ -150,7 +146,7 @@ public class OneContinentWorldGenerator implements WorldGenerator {
             }
         } else {
             for (Point point : points) {
-                int random = (int)Math.round(Math.random() * 100.0);
+                int random = ThreadLocalRandom.current().nextInt(100 + 1);
                 for (TP tp : tps) {
                     random -= tp.probabilityPercent;
                     if (random < 0) {
@@ -166,13 +162,13 @@ public class OneContinentWorldGenerator implements WorldGenerator {
         assert (classes.length > 0) : "Length must be more than 0";
 
         // First goes a tile
-        AbstractTile tile = AbstractTile.newInstance(classes[0]);
+        AbstractTile<?> tile = AbstractTile.newInstance(classes[0]);
         assert (tile != null) : "Invalid tile " + classes[0];
         tilesMap.setTile(location, tile);
 
         // Next may be features
         for (int i = 1; i < classes.length; i ++) {
-            TerrainFeature feature = TerrainFeature.newInstance(classes[i], tile);
+            TerrainFeature<?> feature = TerrainFeature.newInstance(classes[i], tile);
         }
     }
 
@@ -180,8 +176,11 @@ public class OneContinentWorldGenerator implements WorldGenerator {
     private void defineContinent(Rect continent) {
         for (int y = 0; y < tilesMap.getHeight(); y ++) {
             for (int x = 0; x < tilesMap.getWidth(); x ++) {
-                if (x >= continent.getX1() && x < continent.getX2() &&
-                        y >= continent.getY1() && y < continent.getY2()) {
+                boolean isContinent =
+                    (x >= continent.getX1() && x < continent.getX2()) &&
+                    (y >= continent.getY1() && y < continent.getY2());
+
+                if (isContinent) {
                     tilesMap.setTile(new Point(x, y), new Grassland());
                 } else {
                     tilesMap.setTile(new Point(x, y), new Ocean());
@@ -223,9 +222,9 @@ public class OneContinentWorldGenerator implements WorldGenerator {
 
                         ArrayList<Point> locations = tilesMap.getLocationsAround(new Point(x, y), 1);
                         for (Point loc : locations) {
-                            AbstractTile tile = tilesMap.getTile(loc);
+                            AbstractTile<?> tile = tilesMap.getTile(loc);
                             if (tile.getTileType().isEarth()) {
-                                tilesMap.setTile(loc, new Coast());
+                                tile.addFeature(new Coast());
                                 break;
                             }
                         }

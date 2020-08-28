@@ -5,6 +5,10 @@ import com.tsoft.civilization.web.view.tile.base.LakeView;
 
 import java.util.UUID;
 
+/**
+ * Basic Production: 2 Food, 1 Gold
+ * Movement Cost: 1
+ */
 public class Lake extends AbstractTile<LakeView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
@@ -17,7 +21,7 @@ public class Lake extends AbstractTile<LakeView> {
 
     @Override
     public Supply getBaseSupply() {
-        return new Supply().setFood(2).setGold(1);
+        return Supply.builder().food(2).gold(1).build();
     }
 
     @Override

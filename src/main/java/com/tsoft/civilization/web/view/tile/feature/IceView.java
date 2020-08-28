@@ -1,8 +1,8 @@
-package com.tsoft.civilization.web.view.tile.base;
+package com.tsoft.civilization.web.view.tile.feature;
 
 import com.tsoft.civilization.L10n.L10nTile;
 
-public class IceView extends AbstractTileView {
+public class IceView extends AbstractFeatureView {
     @Override
     public String getLocalizedName() {
         return L10nTile.ICE_NAME.getLocalized();

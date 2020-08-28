@@ -31,7 +31,7 @@ public class CivilizationScoreTest {
         Civilization c1 = new Civilization(world, 0);
 
         world.step();
-        assertTrue(new SupplyMock("F0 P0 G0 S0 C0 H0 O0").isEqualTo(c1.calcSupply()));
+        assertTrue(SupplyMock.equals(SupplyMock.of("F0 P0 G0 S0 C0 H0 O0"), c1.calcSupply()));
     }
 
     @Test
@@ -57,7 +57,7 @@ public class CivilizationScoreTest {
         // -----------------------------------------------------------------
         //    1 |    3 |    3 |       3 |       1 |        -1 |          1 |
         world.step();
-        assertTrue(new SupplyMock("F1 P3 G3 S3 C1 H-1 O1").isEqualTo(c1.calcSupply()));
+        assertTrue(SupplyMock.equals(SupplyMock.of("F1 P3 G3 S3 C1 H-1 O1"), c1.calcSupply()));
 
         // Step 2
         // food | prod | gold | science | culture | happiness | population | produced/consumed by
@@ -68,7 +68,7 @@ public class CivilizationScoreTest {
         // -----------------------------------------------------------------
         //    1 |    3 |    6 |       6 |       2 |        -1 |          1 |
         world.step();
-        assertTrue(new SupplyMock("F1 P3 G6 S6 C2 H-1 O1").isEqualTo(c1.calcSupply()));
+        assertTrue(SupplyMock.equals(SupplyMock.of("F1 P3 G6 S6 C2 H-1 O1"), c1.calcSupply()));
     }
 
     @Test
@@ -76,8 +76,8 @@ public class CivilizationScoreTest {
         MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES, 3,
                 " |0 1 2 3 4 ", " |0 1 2 3 4 ", " |0 1 2 3 4 ",
                 "-+----------", "-+----------", "-+----------",
-                "0|. g d i . ", "0|. . . . . ", "0|. . . . . ",
-                "1| l M p s t", "1| . . . . .", "1| . . . . .",
+                "0|. g d p . ", "0|. . . i . ", "0|. . . . . ",
+                "1| l g p s t", "1| . M . . .", "1| . . . . .",
                 "2|g g g g g ", "2|n f h h m ", "2|. . . f . ",
                 "3| . g p . .", "3| . j o . .", "3| . . . . .");
 
@@ -118,7 +118,7 @@ public class CivilizationScoreTest {
         // -----------------------------------------------------------------
         //   4  |    8 |    5 |       3 |       1 |        -1 |          1 |
         world.step();
-        assertTrue(new SupplyMock("F4 P8 G5 S3 C1 H-1 O1").isEqualTo(c1.calcSupply()));
+        assertTrue(SupplyMock.equals(SupplyMock.of("F4 P8 G5 S3 C1 H-1 O1"), c1.calcSupply()));
 
         // check the citizens don't work on tiles with empty supply
         assertTrue(Collections.disjoint(city.getCitizenLocations(), Arrays.asList(new Point(2, 0), new Point(3, 0), new Point(1, 1), new Point(3, 1))));
@@ -151,7 +151,7 @@ public class CivilizationScoreTest {
         world.step();
         assertTrue(city.getCitizenLocations().contains(new Point(1, 0)));
         assertTrue(city.getCitizenLocations().contains(new Point(1, 2)));
-        assertTrue(new SupplyMock("F1 P6 G3 S3 C1 H-1 O2").isEqualTo(c1.calcSupply()));
+        assertTrue(SupplyMock.equals(SupplyMock.of("F-1 P6 G3 S3 C1 H-1 O2"), c1.calcSupply()));
 
         // Step 2
         // food | prod | gold | science | culture | happiness | population | produced/consumed by
@@ -166,6 +166,6 @@ public class CivilizationScoreTest {
         world.step();
         assertTrue(city.getCitizenLocations().contains(new Point(1, 1)));
         assertTrue(city.getCitizenLocations().contains(new Point(1, 2)));
-        assertTrue(new SupplyMock("F0 P10 G6 S6 C2 H-1 O1").isEqualTo(c1.calcSupply()));
+        assertTrue(SupplyMock.equals(SupplyMock.of("F0 P10 G6 S6 C2 H-1 O1"), c1.calcSupply()));
     }
 }

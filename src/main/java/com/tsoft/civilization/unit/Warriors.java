@@ -5,6 +5,8 @@ import com.tsoft.civilization.util.Year;
 import com.tsoft.civilization.web.view.unit.WarriorsView;
 import com.tsoft.civilization.world.Civilization;
 
+import java.util.UUID;
+
 /**
  * Movement: 2; Strength: 6; Ranged Strength: 0; Cost: 40; Requires Resource: none
  * Technology: (none); Obsolete with: Metal Casting; Upgrades to: Swordsman (80 gold)
@@ -14,7 +16,7 @@ import com.tsoft.civilization.world.Civilization;
  * into the Ancient and even Classical eras than in previous games.
  */
 public class Warriors extends AbstractUnit<WarriorsView> {
-    public static final String CLASS_UUID = "f6552b9a-1807-4b0d-8d90-f1e4028d9825";
+    public static final String CLASS_UUID = UUID.randomUUID().toString();
     public static final Warriors INSTANCE = new Warriors();
 
     private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()

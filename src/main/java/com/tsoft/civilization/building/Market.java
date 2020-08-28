@@ -31,7 +31,7 @@ public class Market extends AbstractBuilding<MarketView> {
             if (gold == 0) gold = 1;
         }
 
-        return new Supply().setGold(2 + gold);
+        return Supply.builder().gold(2 + gold).build();
     }
 
     @Override

@@ -6,6 +6,11 @@ import com.tsoft.civilization.web.view.tile.feature.AtollView;
 
 import java.util.UUID;
 
+/**
+ * Atoll
+ * Production Modifiers: Food 1, Production +1
+ * Movement Cost: 1
+ */
 public class Atoll extends TerrainFeature<AtollView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
@@ -18,7 +23,7 @@ public class Atoll extends TerrainFeature<AtollView> {
 
     @Override
     public Supply getSupply() {
-        return new Supply().setFood(1).setProduction(1);
+        return Supply.builder().food(1).production(1).build();
     }
 
     @Override

@@ -5,6 +5,10 @@ import com.tsoft.civilization.web.view.tile.base.TundraView;
 
 import java.util.UUID;
 
+/**
+ * Basic Production: 1 Food
+ * Movement Cost: 1
+ */
 public class Tundra extends AbstractTile<TundraView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
@@ -17,7 +21,7 @@ public class Tundra extends AbstractTile<TundraView> {
 
     @Override
     public Supply getBaseSupply() {
-        return new Supply().setFood(1);
+        return Supply.builder().food(1).build();
     }
 
     @Override

@@ -35,7 +35,7 @@ public class Granary extends AbstractBuilding<GranaryView> {
             }
         }
 
-        return new Supply().setFood(food).setProduction(2).setGold(-1);
+        return Supply.builder().food(food).production(2).gold(-1).build();
     }
 
     @Override

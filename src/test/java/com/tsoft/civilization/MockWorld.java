@@ -10,7 +10,7 @@ public class MockWorld extends World {
                 " |0 1 2 3 ",
                 "-+--------",
                 "0|. . g . ",
-                "1| . M g .",
+                "1| . p g .",
                 "2|. . g . ",
                 "3| . . . .");
         return new MockWorld(simpleMap);
@@ -21,7 +21,7 @@ public class MockWorld extends World {
                 " |0 1 2 3 ", " |0 1 2 3 ", " |0 1 2 3 ",
                 "-+--------", "-+--------", "-+--------",
                 "0|. . g . ", "0|. . h . ", "0|. . f . ",
-                "1| . M g .", "1| . . f .", "1| . . . .",
+                "1| . g g .", "1| . M f .", "1| . . . .",
                 "2|. . g . ", "2|. . h . ", "2|. . . . ",
                 "3| . . . .", "3| . . . .", "3| . . . .");
         return new MockWorld(simpleMap);
