@@ -46,7 +46,7 @@ public class ResourceList {
         }
     }
 
-    private ArrayList<ResourceInfo> resourceInfoList = new ArrayList<ResourceInfo>();
+    private ArrayList<ResourceInfo> resourceInfoList = new ArrayList<>();
 
     private TilesMap tilesMap;
 
@@ -90,7 +90,7 @@ public class ResourceList {
         addResource(Grassland.class, ResourceType.EARTH);
     }
 
-    private void addResource(Class<? extends AbstractTile> tileClass, ResourceType resourceType) {
+    private void addResource(Class<? extends AbstractTile<?>> tileClass, ResourceType resourceType) {
         ArrayList<Point> tilePoints = tilesMap.getTileClassLocations(tileClass);
         if (tilePoints.size() == 0) {
             log.warn("There is no Tiles class = {}, so Resource with type = {} is skipped",  tileClass.getName(), resourceType.name());
@@ -108,11 +108,12 @@ public class ResourceList {
 
                 int index = (int)(Math.random() * tilePoints.size());
                 Point point = tilePoints.get(index);
-                AbstractTile tile = tilesMap.getTile(point);
+                AbstractTile<?> tile = tilesMap.getTile(point);
                 if (tile.setResource(resource)) {
                     count ++;
                 }
             }
+
             log.info("Added {} resources of {} type", count, resourceInfo.getResourceClass().getName());
         }
     }

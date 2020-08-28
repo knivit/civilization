@@ -21,47 +21,47 @@ import com.tsoft.civilization.tile.feature.Jungle;
 import com.tsoft.civilization.tile.feature.Marsh;
 import com.tsoft.civilization.tile.feature.Oasis;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TileCatalog {
-    private static final ArrayList<AbstractTile> tilesCatalog = new ArrayList<>();
+    private static final Map<String, AbstractTile<?>> tilesCatalog = new HashMap<>();
 
     // Read-only objects, this map is to use as a catalog only
     static {
-        tilesCatalog.add(new Coast());
-        tilesCatalog.add(new Desert());
-        tilesCatalog.add(new Grassland());
-        tilesCatalog.add(new Ice());
-        tilesCatalog.add(new Lake());
-        tilesCatalog.add(new Mountain());
-        tilesCatalog.add(new Ocean());
-        tilesCatalog.add(new Plain());
-        tilesCatalog.add(new Snow());
-        tilesCatalog.add(new Tundra());
+        tilesCatalog.put(Coast.CLASS_UUID, new Coast());
+        tilesCatalog.put(Desert.CLASS_UUID, new Desert());
+        tilesCatalog.put(Grassland.CLASS_UUID, new Grassland());
+        tilesCatalog.put(Ice.CLASS_UUID, new Ice());
+        tilesCatalog.put(Lake.CLASS_UUID, new Lake());
+        tilesCatalog.put(Mountain.CLASS_UUID, new Mountain());
+        tilesCatalog.put(Ocean.CLASS_UUID, new Ocean());
+        tilesCatalog.put(Plain.CLASS_UUID, new Plain());
+        tilesCatalog.put(Snow.CLASS_UUID, new Snow());
+        tilesCatalog.put(Tundra.CLASS_UUID, new Tundra());
     }
 
-    private static final List<TerrainFeature> featuresCatalog = new ArrayList<>();
+    private static final Map<String, TerrainFeature<?>> featuresCatalog = new HashMap<>();
 
     // Read-only objects, this map is to use as a catalog only
     static {
-        featuresCatalog.add(new Atoll());
-        featuresCatalog.add(new Fallout());
-        featuresCatalog.add(new FloodPlain());
-        featuresCatalog.add(new Forest());
-        featuresCatalog.add(new Hill());
-        featuresCatalog.add(new Jungle());
-        featuresCatalog.add(new Marsh());
-        featuresCatalog.add(new Oasis());
+        featuresCatalog.put(Atoll.CLASS_UUID, new Atoll());
+        featuresCatalog.put(Fallout.CLASS_UUID, new Fallout());
+        featuresCatalog.put(FloodPlain.CLASS_UUID, new FloodPlain());
+        featuresCatalog.put(Forest.CLASS_UUID, new Forest());
+        featuresCatalog.put(Hill.CLASS_UUID, new Hill());
+        featuresCatalog.put(Jungle.CLASS_UUID, new Jungle());
+        featuresCatalog.put(Marsh.CLASS_UUID, new Marsh());
+        featuresCatalog.put(Oasis.CLASS_UUID, new Oasis());
     }
 
     private TileCatalog() { }
 
-    public static List<AbstractTile> baseTiles() {
-        return tilesCatalog;
+    public static AbstractTile<?> findTileByClassUuid(String classUuid) {
+        return tilesCatalog.getOrDefault(classUuid, null);
     }
 
-    public static List<TerrainFeature> features() {
-        return featuresCatalog;
+    public static TerrainFeature<?> findFeatureByClassUuid(String classUuid) {
+        return featuresCatalog.getOrDefault(classUuid, null);
     }
 }

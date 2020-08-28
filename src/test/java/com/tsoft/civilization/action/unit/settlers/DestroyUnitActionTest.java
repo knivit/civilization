@@ -9,9 +9,9 @@ import com.tsoft.civilization.unit.Settlers;
 import com.tsoft.civilization.unit.util.UnitFactory;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.Civilization;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DestroyUnitActionTest {
     @Test

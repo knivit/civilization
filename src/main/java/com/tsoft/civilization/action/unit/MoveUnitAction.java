@@ -28,7 +28,7 @@ import java.util.UUID;
 public class MoveUnitAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    public static ActionAbstractResult move(AbstractUnit unit, Point location) {
+    public static ActionAbstractResult move(AbstractUnit<?> unit, Point location) {
         if (location == null) {
             return MoveUnitActionResults.INVALID_LOCATION;
         }
@@ -49,7 +49,7 @@ public class MoveUnitAction {
         return MoveUnitActionResults.UNIT_MOVED;
     }
 
-    public static ActionAbstractResult canMove(AbstractUnit unit) {
+    public static ActionAbstractResult canMove(AbstractUnit<?> unit) {
         if (unit == null || unit.isDestroyed()) {
             return MoveUnitActionResults.UNIT_NOT_FOUND;
         }
@@ -64,7 +64,7 @@ public class MoveUnitAction {
 
     // Move the unit along the given route
     // All passed steps are removed from the route
-    public static ArrayList<UnitMoveResult> moveByRoute(AbstractUnit unit, UnitRoute route) {
+    public static ArrayList<UnitMoveResult> moveByRoute(AbstractUnit<?> unit, UnitRoute route) {
         route.saveOriginalSize();
 
         boolean isMoved = false;
@@ -96,7 +96,7 @@ public class MoveUnitAction {
     }
 
     // Check can we move there
-    public static UnitMoveResult getMoveResult(AbstractUnit unit, Point nextLocation, boolean canSwapLocations) {
+    public static UnitMoveResult getMoveResult(AbstractUnit<?> unit, Point nextLocation, boolean canSwapLocations) {
         UnitMoveResult moveResult;
 
         // check is the passing score enough
@@ -138,7 +138,7 @@ public class MoveUnitAction {
     }
 
     // Check can we move there during melee attack
-    public static UnitMoveResult getMoveOnAttackResult(AbstractUnit unit, Point nextLocation) {
+    public static UnitMoveResult getMoveOnAttackResult(AbstractUnit<?> unit, Point nextLocation) {
         UnitMoveResult moveResult;
 
         // check is the passing score enough
@@ -163,7 +163,7 @@ public class MoveUnitAction {
     }
 
     // Check can we move there during a capturing
-    public static UnitMoveResult getMoveOnCaptureResult(AbstractUnit unit, Point nextLocation) {
+    public static UnitMoveResult getMoveOnCaptureResult(AbstractUnit<?> unit, Point nextLocation) {
         UnitMoveResult moveResult;
 
         // check is the passing score enough
@@ -193,8 +193,8 @@ public class MoveUnitAction {
         return UnitMoveResult.SUCCESS_MOVED;
     }
 
-    private static UnitMoveResult checkCanMoveOnTile(AbstractUnit unit, Point location) {
-        AbstractTile tile = unit.getTilesMap().getTile(location);
+    private static UnitMoveResult checkCanMoveOnTile(AbstractUnit<?> unit, Point location) {
+        AbstractTile<?> tile = unit.getTilesMap().getTile(location);
         int tilePassCost = tile.getPassCost(unit);
 
         int passScore = unit.getPassScore();
@@ -204,7 +204,7 @@ public class MoveUnitAction {
         return UnitMoveResult.CHECK_FAILED;
     }
 
-    private static UnitMoveResult checkOwnCity(AbstractUnit unit, Point location) {
+    private static UnitMoveResult checkOwnCity(AbstractUnit<?> unit, Point location) {
         Civilization thisCivilization = unit.getCivilization();
         City city = thisCivilization.getCityAtLocation(location);
         if (city == null) {
@@ -213,7 +213,7 @@ public class MoveUnitAction {
 
         // get units located in the city
         UnitCollection units = thisCivilization.getUnitsAtLocation(location);
-        AbstractUnit nextUnit = units.findUnitByUnitKind(unit.getUnitCategory());
+        AbstractUnit<?> nextUnit = units.findUnitByUnitKind(unit.getUnitCategory());
 
         // no units of such type, so we can enter into city
         if (nextUnit == null) {
@@ -223,9 +223,9 @@ public class MoveUnitAction {
         return UnitMoveResult.FAIL_TILE_OCCUPIED;
     }
 
-    private static UnitMoveResult checkUnitsSwap(AbstractUnit unit, Point nextLocation, boolean canSwapLocations) {
+    private static UnitMoveResult checkUnitsSwap(AbstractUnit<?> unit, Point nextLocation, boolean canSwapLocations) {
         UnitCollection units = unit.getCivilization().getUnitsAtLocation(nextLocation);
-        AbstractUnit nextUnit = units.findUnitByUnitKind(unit.getUnitCategory());
+        AbstractUnit<?> nextUnit = units.findUnitByUnitKind(unit.getUnitCategory());
         if (nextUnit == null) {
             return UnitMoveResult.CHECK_FAILED;
         }
@@ -247,7 +247,7 @@ public class MoveUnitAction {
         return UnitMoveResult.SUCCESS_SWAPPED;
     }
 
-    private static UnitMoveResult checkForeignTile(AbstractUnit unit, Point location) {
+    private static UnitMoveResult checkForeignTile(AbstractUnit<?> unit, Point location) {
         Civilization thisCivilization = unit.getCivilization();
         Civilization nextCivilization = unit.getWorld().getCivilizationOnTile(location);
         if (nextCivilization == null || thisCivilization.equals(nextCivilization)) {
@@ -263,7 +263,7 @@ public class MoveUnitAction {
         return UnitMoveResult.CHECK_FAILED;
     }
 
-    private static UnitMoveResult checkForeignCity(AbstractUnit unit, Point location) {
+    private static UnitMoveResult checkForeignCity(AbstractUnit<?> unit, Point location) {
         // first, check is there a foreign city
         City city = unit.getWorld().getCityAtLocation(location);
         if (city == null) {
@@ -273,7 +273,7 @@ public class MoveUnitAction {
         return UnitMoveResult.FAIL_TILE_OCCUPIED;
     }
 
-    private static UnitMoveResult checkForeignUnits(AbstractUnit unit, Point location) {
+    private static UnitMoveResult checkForeignUnits(AbstractUnit<?> unit, Point location) {
         UnitCollection units = unit.getWorld().getUnitsAtLocation(location, unit.getCivilization());
         if (units.isEmpty()) {
             return UnitMoveResult.CHECK_FAILED;
@@ -282,7 +282,7 @@ public class MoveUnitAction {
         return UnitMoveResult.FAIL_TILE_OCCUPIED_BY_FOREIGN_UNIT;
     }
 
-    public static UnitRoute findRoute(AbstractUnit unit, Point location) {
+    public static UnitRoute findRoute(AbstractUnit<?> unit, Point location) {
         UnitRoute unitRoute = new UnitRoute();
         if ((location == null) || (unit.getLocation().equals(location))) {
             return unitRoute;
@@ -313,14 +313,13 @@ public class MoveUnitAction {
         return unitRoute;
     }
 
-    private static Map<Point, DirPassScore> getAllLocationsDirPassScore(AbstractUnit unit, int passScore, Point finishLocation) {
+    private static Map<Point, DirPassScore> getAllLocationsDirPassScore(AbstractUnit<?> unit, int passScore, Point finishLocation) {
         TilesMap tilesMap = unit.getTilesMap();
 
         Map<Point, DirPassScore> tileScores = new HashMap<>();
         tileScores.put(unit.getLocation(), new DirPassScore(passScore, null, 0));
 
-        ArrayList<Point> currLocations = new ArrayList<>();
-        currLocations.addAll(tileScores.keySet());
+        ArrayList<Point> currLocations = new ArrayList<>(tileScores.keySet());
 
         boolean foundFinish = false;
         while (currLocations.size() > 0 && !foundFinish) {
@@ -336,7 +335,7 @@ public class MoveUnitAction {
                 // look around
                 for (Dir6 dir : Dir6.staticGetDirs(currLocation.getY())) {
                     Point nextLocation = tilesMap.addDirToLocation(currLocation, dir);
-                    AbstractTile nextTile = tilesMap.getTile(nextLocation);
+                    AbstractTile<?> nextTile = tilesMap.getTile(nextLocation);
 
                     int nextPassScore = passScore - nextTile.getPassCost(unit);
                     if (nextPassScore >= 0) {
@@ -378,10 +377,10 @@ public class MoveUnitAction {
     // Any units and foreign cities blocks further movement
     // (i.e. when there is a narrow passage the enter of which
     // is blocked by any unit or foreign city, we can not pass trough it)
-    private static Set<Point> getCandidatesToMove(AbstractUnit unit) {
+    private static Set<Point> getCandidatesToMove(AbstractUnit<?> unit) {
         int passScore = unit.getPassScore();
         if (passScore == 0) {
-            return Collections.EMPTY_SET;
+            return Collections.emptySet();
         }
 
         Map<Point, DirPassScore> tileScores = getAllLocationsDirPassScore(unit, unit.getPassScore(), null);
@@ -389,7 +388,7 @@ public class MoveUnitAction {
     }
 
     // Find out tiles possible to move in
-    public static Set<Point> getLocationsToMove(AbstractUnit unit) {
+    public static Set<Point> getLocationsToMove(AbstractUnit<?> unit) {
         Set<Point> locations = getCandidatesToMove(unit);
 
         // Exclude tiles occupied by
@@ -397,7 +396,7 @@ public class MoveUnitAction {
         // - all foreign units
         // - all foreign cities
         UnitCollection units = unit.getWorld().getUnitsAtLocations(locations);
-        for (AbstractUnit ua : units) {
+        for (AbstractUnit<?> ua : units) {
             if (unit.getCivilization().equals(ua.getCivilization())) {
                 if (unit.getUnitCategory().isMilitary() == ua.getUnitCategory().isMilitary()) {
                     locations.remove(ua.getLocation());
@@ -441,7 +440,7 @@ public class MoveUnitAction {
         }
     }
 
-    private static String getClientJSCode(AbstractUnit unit) {
+    private static String getClientJSCode(AbstractUnit<?> unit) {
         JSONBlock block = new JSONBlock('\'');
         block.startArray("locations");
         Set<Point> locations = getLocationsToMove(unit);
@@ -465,7 +464,7 @@ public class MoveUnitAction {
         return L10nUnit.MOVE_DESCRIPTION.getLocalized();
     }
 
-    public static StringBuilder getHtml(AbstractUnit unit) {
+    public static StringBuilder getHtml(AbstractUnit<?> unit) {
         if (canMove(unit).isFail()) {
             return null;
         }

@@ -15,11 +15,12 @@ import com.tsoft.civilization.unit.Archers;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class MissileFeaturePastCostTable {
     private MissileFeaturePastCostTable() { }
 
-    private static Map<String, Integer> table = new HashMap<String, Integer>();
+    private static Map<String, Integer> table = new HashMap<>();
 
     static {
         table.put(Archers.CLASS_UUID + Atoll.CLASS_UUID, 1);
@@ -41,15 +42,13 @@ public class MissileFeaturePastCostTable {
         table.put(City.CLASS_UUID + Oasis.CLASS_UUID, 2);
     }
 
-    public static int get(HasCombatStrength attacker, TerrainFeature feature) {
-        assert (attacker != null && feature != null) : "Attacker and/or feature can't be null";
+    public static int get(HasCombatStrength attacker, TerrainFeature<?> feature) {
+        Objects.requireNonNull(attacker, "Attacker can't be null");
+        Objects.requireNonNull(feature, "Feature can't be null");
+
         String key = attacker.getClassUuid() + feature.getClassUuid();
-
         Integer passCost = table.get(key);
-        if (passCost == null) {
-            return 0;
-        }
 
-        return passCost;
+        return (passCost == null) ? 0 : passCost;
     }
 }

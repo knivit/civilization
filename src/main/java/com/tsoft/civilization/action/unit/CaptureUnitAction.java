@@ -16,7 +16,7 @@ import java.util.UUID;
 public class CaptureUnitAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    public static ActionAbstractResult capture(AbstractUnit attacker, Point location) {
+    public static ActionAbstractResult capture(AbstractUnit<?> attacker, Point location) {
         ActionAbstractResult result = canCapture(attacker);
         if (result.isFail()) {
             return result;
@@ -31,7 +31,7 @@ public class CaptureUnitAction {
             return CaptureUnitActionResults.NOTHING_TO_CAPTURE;
         }
 
-        AbstractUnit foreignUnit = getTargetToCaptureAtLocation(attacker, location);
+        AbstractUnit<?> foreignUnit = getTargetToCaptureAtLocation(attacker, location);
         if (foreignUnit == null) {
             return CaptureUnitActionResults.NO_LOCATIONS_TO_CAPTURE;
         }
@@ -45,7 +45,7 @@ public class CaptureUnitAction {
         return CaptureUnitActionResults.FOREIGN_UNIT_CAPTURED;
     }
 
-    public static ActionAbstractResult canCapture(AbstractUnit attacker) {
+    public static ActionAbstractResult canCapture(AbstractUnit<?> attacker) {
         if (attacker == null || attacker.isDestroyed()) {
             return CaptureUnitActionResults.ATTACKER_NOT_FOUND;
         }
@@ -69,7 +69,7 @@ public class CaptureUnitAction {
                 continue;
             }
 
-            AbstractUnit foreignUnit = getTargetToCaptureAtLocation(capturer, location);
+            AbstractUnit<?> foreignUnit = getTargetToCaptureAtLocation(capturer, location);
             if (foreignUnit != null) {
                 units.add(foreignUnit);
             }
@@ -78,7 +78,7 @@ public class CaptureUnitAction {
         return units;
     }
 
-    public static AbstractUnit getTargetToCaptureAtLocation(AbstractUnit capturer, Point location) {
+    public static AbstractUnit<?> getTargetToCaptureAtLocation(AbstractUnit<?> capturer, Point location) {
         UnitCollection foreignUnits = capturer.getWorld().getUnitsAtLocation(location, capturer.getCivilization());
 
         // if there are military units, protecting the civilians, then there is nothing to capture
@@ -86,19 +86,19 @@ public class CaptureUnitAction {
             return null;
         }
 
-        AbstractUnit foreignUnit = foreignUnits.get(0);
+        AbstractUnit<?> foreignUnit = foreignUnits.get(0);
         if (foreignUnit.canBeCaptured()) {
             return foreignUnit;
         }
         return null;
     }
 
-    public static List<Point> getLocationsToCapture(AbstractUnit unit) {
+    public static List<Point> getLocationsToCapture(AbstractUnit<?> unit) {
         UnitCollection units = getTargetsToCapture(unit);
         return units.getLocations();
     }
 
-    private static String getClientJSCode(AbstractUnit unit) {
+    private static String getClientJSCode(AbstractUnit<?> unit) {
         JSONBlock block = new JSONBlock('\'');
         block.startArray("locations");
         List<Point> locations = getLocationsToCapture(unit);
@@ -122,7 +122,7 @@ public class CaptureUnitAction {
         return L10nUnit.CAPTURE_DESCRIPTION.getLocalized();
     }
 
-    public static StringBuilder getHtml(AbstractUnit attacker) {
+    public static StringBuilder getHtml(AbstractUnit<?> attacker) {
         if (canCapture(attacker).isFail()) {
             return null;
         }

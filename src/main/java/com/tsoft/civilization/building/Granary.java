@@ -29,14 +29,13 @@ public class Granary extends AbstractBuilding<GranaryView> {
     public Supply getSupply(City city) {
         int food = 0;
         for (Point location : getCity().getCitizenLocations()) {
-            AbstractTile tile = getTile(location);
+            AbstractTile<?> tile = getTile(location);
             if (Bananas.class.equals(tile.getLuxury().getClass())) {
                 food ++;
             }
         }
 
-        Supply supply = new Supply().setFood(food).setProduction(2).setGold(-1);
-        return supply;
+        return new Supply().setFood(food).setProduction(2).setGold(-1);
     }
 
     @Override

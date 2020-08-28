@@ -9,7 +9,7 @@ public abstract class AbstractFeatureView {
     public abstract String getJSONName();
     public abstract String getStatusImageSrc();
 
-    public JSONBlock getJSON(TerrainFeature feature) {
+    public JSONBlock getJSON(TerrainFeature<?> feature) {
         JSONBlock tileBlock = new JSONBlock();
         tileBlock.addParam("name", feature.getView().getJSONName());
         return tileBlock;

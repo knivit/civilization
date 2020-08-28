@@ -5,10 +5,7 @@ import com.tsoft.civilization.L10n.L10nMap;
 import com.tsoft.civilization.action.unit.AttackAction;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.util.Format;
-import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.view.JSONBlock;
-
-import java.util.Iterator;
 
 public class CityView extends AbstractImprovementView {
     private L10nMap name;
@@ -48,15 +45,12 @@ public class CityView extends AbstractImprovementView {
 
         // tiles owned by the city
         cityBlock.startArray("locations");
-        Iterator<Point> locations = city.getLocations().iterator();
-        while (locations.hasNext()) {
-            Point loc = locations.next();
-
+        city.getLocations().forEach(loc -> {
             JSONBlock locBlock = new JSONBlock();
             locBlock.addParam("col", loc.getX());
             locBlock.addParam("row", loc.getY());
             cityBlock.addElement(locBlock.getText());
-        }
+        });
         cityBlock.stopArray();
 
         return cityBlock;

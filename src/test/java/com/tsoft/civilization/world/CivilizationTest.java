@@ -8,12 +8,12 @@ import com.tsoft.civilization.unit.util.UnitCollection;
 import com.tsoft.civilization.unit.Warriors;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.generator.WorldGeneratorService;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CivilizationTest {
     @Test

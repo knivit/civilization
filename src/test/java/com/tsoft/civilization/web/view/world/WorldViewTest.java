@@ -1,5 +1,7 @@
 package com.tsoft.civilization.web.view.world;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.tile.MapType;
@@ -9,19 +11,16 @@ import com.tsoft.civilization.unit.Warriors;
 import com.tsoft.civilization.unit.Workers;
 import com.tsoft.civilization.unit.util.UnitFactory;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.web.TestGameServer;
-import com.tsoft.civilization.web.TestJavaScriptResult;
 import com.tsoft.civilization.web.view.JSONBlock;
 import com.tsoft.civilization.world.Civilization;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import javax.script.ScriptException;
-
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class WorldViewTest {
     @Test
-    public void worldView() throws ScriptException {
+    public void worldView() throws Exception {
         MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES, 3,
                 " |0 1 2 ", " |0 1 2 ", " |0 1 2 ",
                 "-+------", "-+------", "-+------",
@@ -56,28 +55,37 @@ public class WorldViewTest {
         //
         // \"cities\":[{\"col\":\"0\",\"row\":\"0\",\"name\":\"Moscow\",\"civilization\":\"Russia\",\"isCapital\":\"true\",\"locations\":[{\"col\":\"0\",\"row\":\"1\"},{\"col\":\"0\",\"row\":\"0\"},{\"col\":\"1\",\"row\":\"0\"},{\"col\":\"2\",\"row\":\"0\"},{\"col\":\"2\",\"row\":\"1\"}]}]}", worldBlock.getText());
 
-        TestGameServer jsClient = new TestGameServer();
-
-        TestJavaScriptResult jsonObj = jsClient.parseJSON(worldBlock.getText());
+        JsonNode jsonObj = new ObjectMapper().readTree(worldBlock.getText());
+        assertNotNull(jsonObj);
         assertEquals(6, jsonObj.size());
-        assertEquals(Integer.valueOf(3), jsonObj.getInt("width"));
-        assertEquals(Integer.valueOf(2), jsonObj.getInt("height"));
+        assertEquals(3, jsonObj.get("width").asInt());
+        assertEquals(2, jsonObj.get("height").asInt());
 
-        TestJavaScriptResult tilesObj = jsonObj.getChild("tiles");
+        JsonNode tilesObj = jsonObj.get("tiles");
         assertEquals(3 * 2, tilesObj.size());
-        assertEquals("g", tilesObj.getChild("0").getString("name"));
-        assertEquals(2, tilesObj.getChild("0").getChild("features").size()); // h + f
-        assertEquals("g", tilesObj.getChild("1").getString("name"));
-        assertEquals(1, tilesObj.getChild("1").getChild("features").size()); // h
+        assertEquals("g", tilesObj.get(0).get("name").asText());
+        assertEquals(2, tilesObj.get(0).get("features").size()); // h + f
+        assertEquals("g", tilesObj.get(1).get("name").asText());
+        assertEquals(1, tilesObj.get(1).get("features").size()); // h
+        assertEquals("g", tilesObj.get(2).get("name").asText());
+        assertEquals(0, tilesObj.get(2).get("features").size()); // <empty>
+        assertEquals("g", tilesObj.get(3).get("name").asText());
+        assertEquals(2, tilesObj.get(3).get("features").size()); // h + f
+        assertEquals("g", tilesObj.get(4).get("name").asText());
+        assertEquals(1, tilesObj.get(4).get("features").size()); // h
+        assertEquals("g", tilesObj.get(5).get("name").asText());
+        assertEquals(0, tilesObj.get(5).get("features").size()); // <empty>
 
-        TestJavaScriptResult civilizationsObj = jsonObj.getChild("civilizations");
+        JsonNode civilizationsObj = jsonObj.get("civilizations");
         assertEquals(1, civilizationsObj.size());
-        assertEquals("Russia", civilizationsObj.getChild("0").getString("name"));
+        assertEquals("Russia", civilizationsObj.get(0).get("name").asText());
 
-        TestJavaScriptResult unitsObj = jsonObj.getChild("units");
+        JsonNode unitsObj = jsonObj.get("units");
         assertEquals(3, unitsObj.size());
+        assertEquals("Warriors", unitsObj.get(0).get("name").asText());
+        assertEquals("Russia", unitsObj.get(0).get("civ").asText());
 
-        TestJavaScriptResult citiesObj = jsonObj.getChild("cities");
+        JsonNode citiesObj = jsonObj.get("cities");
         assertEquals(1, citiesObj.size());
     }
 }

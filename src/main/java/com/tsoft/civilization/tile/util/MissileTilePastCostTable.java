@@ -17,13 +17,14 @@ import com.tsoft.civilization.unit.Archers;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public final class MissileTilePastCostTable {
     public static int UNPASSABLE = Integer.MAX_VALUE;
 
     private MissileTilePastCostTable() { }
 
-    private static Map<String, Integer> table = new HashMap<String, Integer>();
+    private static Map<String, Integer> table = new HashMap<>();
 
     static {
         table.put(Archers.CLASS_UUID + Coast.CLASS_UUID, 1);
@@ -49,15 +50,13 @@ public final class MissileTilePastCostTable {
         table.put(City.CLASS_UUID + Tundra.CLASS_UUID, 1);
     }
 
-    public static int get(HasCombatStrength attacker, AbstractTile tile) {
-        assert (attacker != null && tile != null) : "Attacker and/or tile can't be null";
+    public static int get(HasCombatStrength attacker, AbstractTile<?> tile) {
+        Objects.requireNonNull(attacker, "Attacker can't be null");
+        Objects.requireNonNull(tile, "Tile can't be null");
+
         String key = attacker.getClassUuid() + tile.getClassUuid();
-
         Integer passCost = table.get(key);
-        if (passCost == null) {
-            return UNPASSABLE;
-        }
 
-        return passCost;
+        return (passCost == null) ? UNPASSABLE : passCost;
     }
 }

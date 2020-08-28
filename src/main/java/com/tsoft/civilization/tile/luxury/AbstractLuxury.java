@@ -28,8 +28,7 @@ public abstract class AbstractLuxury {
 
     public static AbstractLuxury newInstance(Class<? extends AbstractLuxury> luxuryClass) {
         try {
-            AbstractLuxury luxury = luxuryClass.newInstance();
-            return luxury;
+            return luxuryClass.getDeclaredConstructor().newInstance();
         } catch (Exception ex) {
             log.error("Can't instantiate a Luxury by its class = {}", luxuryClass.getSimpleName());
             throw new IllegalArgumentException(ex);

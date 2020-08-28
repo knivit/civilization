@@ -12,7 +12,7 @@ import java.util.UUID;
 public class DestroyBuildingAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    public static ActionAbstractResult destroyBuilding(AbstractBuilding building) {
+    public static ActionAbstractResult destroyBuilding(AbstractBuilding<?> building) {
         ActionAbstractResult result = canDestroyBuilding(building);
         if (result.isFail()) {
             return result;
@@ -23,7 +23,7 @@ public class DestroyBuildingAction {
         return CityActionResults.BUILDING_DESTROYED;
     }
 
-    private static ActionAbstractResult canDestroyBuilding(AbstractBuilding building) {
+    private static ActionAbstractResult canDestroyBuilding(AbstractBuilding<?> building) {
         if (building == null || building.isDestroyed()) {
             return CityActionResults.BUILDING_NOT_FOUND;
         }
@@ -35,7 +35,7 @@ public class DestroyBuildingAction {
         return CityActionResults.CAN_DESTROY_BUILDING;
     }
 
-    private static String getClientJSCode(AbstractBuilding building) {
+    private static String getClientJSCode(AbstractBuilding<?> building) {
         return String.format("client.destroyBuildingAction({ building:'%1$s' })", building.getId());
     }
 
@@ -47,7 +47,7 @@ public class DestroyBuildingAction {
         return L10nBuilding.DESTROY_DESCRIPTION.getLocalized();
     }
 
-    public static StringBuilder getHtml(AbstractBuilding building) {
+    public static StringBuilder getHtml(AbstractBuilding<?> building) {
         if (canDestroyBuilding(building).isFail()) {
             return null;
         }

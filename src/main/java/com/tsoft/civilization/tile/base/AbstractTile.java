@@ -22,7 +22,7 @@ public abstract class AbstractTile<V extends AbstractTileView> {
     private Point location;
     private AbstractLuxury luxury;
     private AbstractResource resource;
-    private AbstractImprovement improvement;
+    private AbstractImprovement<?> improvement;
     private TerrainFeatureList terrainFeatures = new TerrainFeatureList();
 
     public abstract TileType getTileType();
@@ -35,28 +35,19 @@ public abstract class AbstractTile<V extends AbstractTileView> {
 
     public abstract Supply getBaseSupply();
 
-    public static AbstractTile newInstance(String classUuid) {
-        AbstractTile tile = getTileFromCatalogByClassUuid(classUuid);
+    public static AbstractTile<?> newInstance(String classUuid) {
+        AbstractTile<?> tile = TileCatalog.findTileByClassUuid(classUuid);
         if (tile == null) {
             return null;
         }
 
         try {
-            Constructor constructor = tile.getClass().getConstructor();
-            tile = (AbstractTile)constructor.newInstance();
+            Constructor<?> constructor = tile.getClass().getConstructor();
+            tile = (AbstractTile<?>)constructor.newInstance();
 
             return tile;
         } catch (Exception ex) {
             log.error("Can't create an object", ex);
-        }
-        return null;
-    }
-
-    public static AbstractTile getTileFromCatalogByClassUuid(String classUuid) {
-        for (AbstractTile tile : TileCatalog.baseTiles()) {
-            if (tile.getClassUuid().equals(classUuid)) {
-                return tile;
-            }
         }
         return null;
     }
@@ -93,11 +84,11 @@ public abstract class AbstractTile<V extends AbstractTileView> {
         return false;
     }
 
-    public AbstractImprovement getImprovement() {
+    public AbstractImprovement<?> getImprovement() {
         return improvement;
     }
 
-    public void setImprovement(AbstractImprovement improvement) {
+    public void setImprovement(AbstractImprovement<?> improvement) {
         this.improvement = improvement;
     }
 
@@ -105,16 +96,15 @@ public abstract class AbstractTile<V extends AbstractTileView> {
         return terrainFeatures;
     }
 
-    public <F extends TerrainFeature> F getFeature(Class<F> featureClass) {
-        F feature = terrainFeatures.getByClass(featureClass);
-        return feature;
+    public <F extends TerrainFeature<?>> F getFeature(Class<F> featureClass) {
+        return terrainFeatures.getByClass(featureClass);
     }
 
-    public void addFeature(TerrainFeature feature) {
+    public void addFeature(TerrainFeature<?> feature) {
         terrainFeatures.add(feature);
     }
 
-    public void removeFeature(TerrainFeature feature) {
+    public void removeFeature(TerrainFeature<?> feature) {
         terrainFeatures.remove(feature);
     }
 

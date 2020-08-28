@@ -177,7 +177,7 @@ public class Civilization {
         return cities.getCityById(cityId);
     }
 
-    public AbstractBuilding getBuildingById(String buildingId) {
+    public AbstractBuilding<?> getBuildingById(String buildingId) {
         return cities.getBuildingById(buildingId);
     }
 
@@ -212,7 +212,7 @@ public class Civilization {
         return cities.getCitiesWithActionsAvailable();
     }
 
-    public AbstractUnit getUnitById(String unitId) {
+    public AbstractUnit<?> getUnitById(String unitId) {
         return units.getUnitById(unitId);
     }
 
@@ -233,8 +233,7 @@ public class Civilization {
 
     public UnitCollection getUnitsAround(Point location, int radius) {
         Collection<Point> locations = world.getLocationsAround(location, radius);
-        UnitCollection unitsAround = getUnitsAtLocations(locations);
-        return unitsAround;
+        return getUnitsAtLocations(locations);
     }
 
     public UnitCollection getUnitsWithActionsAvailable() {
@@ -249,12 +248,12 @@ public class Civilization {
         return attacker;
     }
 
-    public void addUnit(AbstractUnit unit) {
+    public void addUnit(AbstractUnit<?> unit) {
         units.add(unit);
         unit.setCivilization(this);
     }
 
-    public void removeUnit(AbstractUnit unit) {
+    public void removeUnit(AbstractUnit<?> unit) {
         units.remove(unit);
         destroyedUnits.add(unit);
         unit.setCivilization(null);
@@ -262,7 +261,7 @@ public class Civilization {
         world.sendEvent(new Event(Event.UPDATE_WORLD, this, L10nUnit.UNIT_WAS_DESTROYED_EVENT, unit.getView().getLocalizedName()));
     }
 
-    public boolean canBuyUnit(AbstractUnit unit) {
+    public boolean canBuyUnit(AbstractUnit<?> unit) {
         int gold = supply.getGold();
         if (gold < unit.getGoldCost()) {
             return false;
@@ -271,7 +270,7 @@ public class Civilization {
     }
 
     public void buyUnit(String unitClassUuid, City city) {
-        AbstractUnit unit = UnitFactory.newInstance(unitClassUuid, this, city.getLocation());
+        AbstractUnit<?> unit = UnitFactory.newInstance(unitClassUuid, this, city.getLocation());
 
         int gold = unit.getGoldCost();
         Supply expenses = new Supply().setGold(gold);
@@ -283,7 +282,7 @@ public class Civilization {
         log.debug("{}", event);
     }
 
-    public boolean canBuyBuilding(AbstractBuilding building) {
+    public boolean canBuyBuilding(AbstractBuilding<?> building) {
         int gold = supply.getGold();
         if (gold < building.getGoldCost()) {
             return false;
@@ -292,7 +291,7 @@ public class Civilization {
     }
 
     public void buyBuilding(String buildingClassUuid, City city) {
-        AbstractBuilding catalogBuilding = BuildingCatalog.values().findByClassUuid(buildingClassUuid);
+        AbstractBuilding<?> catalogBuilding = BuildingCatalog.findByClassUuid(buildingClassUuid);
         int gold = catalogBuilding.getGoldCost();
 
         Supply expenses = new Supply().setGold(gold);

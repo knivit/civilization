@@ -20,8 +20,7 @@ public class Settlement extends AbstractBuilding<SettlementView> {
 
     @Override
     public Supply getSupply(City city) {
-        Supply supply = new Supply().setProduction(1).setGold(1).setCulture(1);
-        return supply;
+        return new Supply().setProduction(1).setGold(1).setCulture(1);
     }
 
     @Override

@@ -21,6 +21,7 @@ import com.tsoft.civilization.world.Civilization;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public final class TilePassCostTable {
     public static int UNPASSABLE = Integer.MAX_VALUE;
@@ -75,10 +76,11 @@ public final class TilePassCostTable {
         table.put(Workers.CLASS_UUID + Tundra.CLASS_UUID, new PassCostList().add(null, 1));
     }
 
-    public static int get(AbstractUnit unit, AbstractTile tile) {
-        assert (unit != null && tile != null) : "Unit and/or tile can't be null";
-        String key = unit.getClassUuid() + tile.getClassUuid();
+    public static int get(AbstractUnit<?> unit, AbstractTile<?> tile) {
+        Objects.requireNonNull(unit, "Unit can't be null");
+        Objects.requireNonNull(tile, "Tile can't be null");
 
+        String key = unit.getClassUuid() + tile.getClassUuid();
         PassCostList list = table.get(key);
         if (list == null) {
             return UNPASSABLE;

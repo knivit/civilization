@@ -4,10 +4,10 @@ import com.tsoft.civilization.building.AbstractBuilding;
 
 import java.util.List;
 
-public interface BuildingCollection extends List<AbstractBuilding> {
-    public AbstractBuilding getBuildingById(String buildingId);
+public interface BuildingCollection extends List<AbstractBuilding<?>> {
+    AbstractBuilding<?> getBuildingById(String buildingId);
 
-    public AbstractBuilding findByClassUuid(String classUuid);
+    AbstractBuilding<?> findByClassUuid(String classUuid);
 
-    public void sortByName();
+    void sortByName();
 }

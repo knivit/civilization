@@ -12,17 +12,17 @@ import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.state.Worlds;
 import com.tsoft.civilization.world.Civilization;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GetTileStatusTest {
     private static AbstractAjaxRequest ajaxRequest;
 
-    @BeforeClass
+    @BeforeAll
     public static void classSetUp() {
         ajaxRequest = AbstractAjaxRequest.getInstance("GetTileStatus");
     }

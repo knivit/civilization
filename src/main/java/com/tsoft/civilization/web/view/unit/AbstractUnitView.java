@@ -8,7 +8,7 @@ import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.view.JSONBlock;
 
-public abstract class AbstractUnitView<U extends AbstractUnit> {
+public abstract class AbstractUnitView<U extends AbstractUnit<?>> {
     public abstract String getLocalizedName();
     public abstract String getLocalizedDescription();
     public abstract String getJSONName();

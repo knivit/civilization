@@ -33,7 +33,7 @@ public class BuyUnitAction {
             return CityActionResults.CITY_NOT_FOUND;
         }
 
-        AbstractUnit unit = UnitFactory.createUnit(unitClassUuid);
+        AbstractUnit<?> unit = UnitFactory.createUnit(unitClassUuid);
         if (unit.getGoldCost() < 0) {
             return CityActionResults.INVALID_UNIT;
         }

@@ -35,15 +35,15 @@ public abstract class AbstractBuilding<V extends AbstractBuildingView> implement
     // Method of a unit from the catalog (they don't have civilization etc)
     public abstract boolean checkEraAndTechnology(Civilization civilization);
 
-    public static AbstractBuilding newInstance(String classUuid, City city) {
-        AbstractBuilding building = BuildingCatalog.values().findByClassUuid(classUuid);
+    public static AbstractBuilding<?> newInstance(String classUuid, City city) {
+        AbstractBuilding<?> building = BuildingCatalog.findByClassUuid(classUuid);
         if (building == null) {
             return null;
         }
 
         try {
-            Constructor constructor = building.getClass().getConstructor();
-            building = (AbstractBuilding)constructor.newInstance();
+            Constructor<?> constructor = building.getClass().getConstructor();
+            building = (AbstractBuilding<?>)constructor.newInstance();
             building.init(city);
 
             return building;
@@ -53,12 +53,8 @@ public abstract class AbstractBuilding<V extends AbstractBuildingView> implement
         return null;
     }
 
-    public static List<AbstractBuilding> getBuildingsCatalog() {
-        return BuildingCatalog.values();
-    }
-
-    public static AbstractBuilding getBuildingFromCatalogByClassUuid(String classUuid) {
-        return BuildingCatalog.values().findByClassUuid(classUuid);
+    public static AbstractBuilding<?> getBuildingFromCatalogByClassUuid(String classUuid) {
+        return BuildingCatalog.findByClassUuid(classUuid);
     }
 
     protected AbstractBuilding() { }

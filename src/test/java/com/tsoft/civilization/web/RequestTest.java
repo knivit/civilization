@@ -2,14 +2,12 @@ package com.tsoft.civilization.web;
 
 import com.tsoft.civilization.web.util.Request;
 import com.tsoft.civilization.web.util.RequestType;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.io.StringReader;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RequestTest {
     @Test

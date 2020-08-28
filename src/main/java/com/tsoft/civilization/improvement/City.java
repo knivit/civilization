@@ -4,6 +4,7 @@ import com.tsoft.civilization.L10n.L10nChainedArrayList;
 import com.tsoft.civilization.L10n.L10nCity;
 import com.tsoft.civilization.L10n.L10nMap;
 import com.tsoft.civilization.building.AbstractBuilding;
+import com.tsoft.civilization.building.util.BuildingCatalog;
 import com.tsoft.civilization.building.util.BuildingCollection;
 import com.tsoft.civilization.building.Palace;
 import com.tsoft.civilization.combat.CombatStrength;
@@ -147,11 +148,11 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
         return buildingService.getBuildings();
     }
 
-    public AbstractBuilding getBuildingById(String buildingId) {
+    public AbstractBuilding<?> getBuildingById(String buildingId) {
         return buildingService.getBuildingById(buildingId);
     }
 
-    public void addBuilding(AbstractBuilding building) {
+    public void addBuilding(AbstractBuilding<?> building) {
         buildingService.add(building);
 
         Event event = new Event(Event.INFORMATION, this, L10nCity.NEW_BUILDING_BUILT_EVENT, building.getView().getLocalizedName());
@@ -164,7 +165,7 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
         getCombatStrength().setStrength(strength);
     }
 
-    public void destroyBuilding(AbstractBuilding building) {
+    public void destroyBuilding(AbstractBuilding<?> building) {
         buildingService.remove(building);
     }
 
@@ -172,7 +173,7 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
         return citizenService.getPopulationLocations();
     }
 
-    public AbstractBuilding findBuildingByClassUuid(String classUuid) {
+    public AbstractBuilding<?> findBuildingByClassUuid(String classUuid) {
         return buildingService.findByClassUuid(classUuid);
     }
 
@@ -196,13 +197,13 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
     public void constructionDone(Construction construction) {
         CanBeBuilt obj = construction.getObject();
         if (obj instanceof AbstractBuilding) {
-            AbstractBuilding building = AbstractBuilding.newInstance(obj.getClassUuid(), this);
+            AbstractBuilding<?> building = AbstractBuilding.newInstance(obj.getClassUuid(), this);
             addBuilding(building);
             return;
         }
 
         if (obj instanceof AbstractUnit) {
-            AbstractUnit unit = (AbstractUnit)obj;
+            AbstractUnit<?> unit = (AbstractUnit<?>)obj;
             unit.init(getCivilization(), getLocation());
             getWorld().sendEvent(new Event(Event.UPDATE_WORLD, obj, L10nCity.NEW_UNIT_BUILT_EVENT, unit.getView().getLocalizedName()));
             return;
@@ -281,7 +282,7 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
 
         // destroy all military units located in the city and capture civilians
         UnitCollection units = civilization.getWorld().getUnitsAtLocation(location);
-        for (AbstractUnit unit : units) {
+        for (AbstractUnit<?> unit : units) {
             if (unit.getUnitCategory().isMilitary()) {
                 unit.destroyedBy(destroyer, false);
             } else {
@@ -291,33 +292,33 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
     }
 
     public int getUnitProductionCost(String unitClassUuid) {
-        AbstractUnit unit = UnitFactory.createUnit(unitClassUuid);
+        AbstractUnit<?> unit = UnitFactory.createUnit(unitClassUuid);
         return unit.getProductionCost();
     }
 
     public int getUnitBuyCost(String unitClassUuid) {
-        AbstractUnit unit = UnitFactory.createUnit(unitClassUuid);
+        AbstractUnit<?> unit = UnitFactory.createUnit(unitClassUuid);
         return unit.getGoldCost();
     }
 
     /** Return true, if the unit can be placed (i.e. after a buy or on entering) in the city */
-    public boolean canTakeUnit(AbstractUnit unit) {
+    public boolean canTakeUnit(AbstractUnit<?> unit) {
         UnitCollection units = getWorld().getUnitsAtLocation(getLocation());
-        AbstractUnit sameTypeUnit = units.findUnitByUnitKind(unit.getUnitCategory());
+        AbstractUnit<?> sameTypeUnit = units.findUnitByUnitKind(unit.getUnitCategory());
         return sameTypeUnit == null;
     }
 
-    public int getBuildingProductionCost(String unitClassUuid) {
-        AbstractBuilding building = AbstractBuilding.getBuildingFromCatalogByClassUuid(unitClassUuid);
+    public int getBuildingProductionCost(String buildingClassUuid) {
+        AbstractBuilding<?> building = BuildingCatalog.findByClassUuid(buildingClassUuid);
         return building.getProductionCost();
     }
 
-    public int getBuildingBuyCost(String unitClassUuid) {
-        AbstractBuilding building = AbstractBuilding.getBuildingFromCatalogByClassUuid(unitClassUuid);
+    public int getBuildingBuyCost(String buildingClassUuid) {
+        AbstractBuilding<?> building = BuildingCatalog.findByClassUuid(buildingClassUuid);
         return building.getGoldCost();
     }
 
-    public boolean canPlaceBuilding(AbstractBuilding building) {
+    public boolean canPlaceBuilding(AbstractBuilding<?> building) {
         return findBuildingByClassUuid(building.getClassUuid()) == null;
     }
 

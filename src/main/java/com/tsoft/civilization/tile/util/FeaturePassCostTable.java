@@ -17,13 +17,14 @@ import com.tsoft.civilization.unit.Workers;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public final class FeaturePassCostTable {
     public static int UNPASSABLE = Integer.MAX_VALUE;
 
     private FeaturePassCostTable() { }
 
-    private static Map<String, Integer> table = new HashMap<String, Integer>();
+    private static Map<String, Integer> table = new HashMap<>();
 
     static {
         table.put(Archers.CLASS_UUID + Atoll.CLASS_UUID, 1);
@@ -63,15 +64,13 @@ public final class FeaturePassCostTable {
         table.put(Workers.CLASS_UUID + Oasis.CLASS_UUID, 1);
     }
 
-    public static int get(AbstractUnit unit, TerrainFeature feature) {
-        assert (unit != null && feature != null) : "Unit and/or feature can't be null";
+    public static int get(AbstractUnit<?> unit, TerrainFeature<?> feature) {
+        Objects.requireNonNull(unit, "Unit can't be null");
+        Objects.requireNonNull(feature, "Feature can't be null");
+
         String key = unit.getClassUuid() + feature.getClassUuid();
-
         Integer passCost = table.get(key);
-        if (passCost == null) {
-            return UNPASSABLE;
-        }
 
-        return passCost;
+        return (passCost == null) ? UNPASSABLE : passCost;
     }
 }

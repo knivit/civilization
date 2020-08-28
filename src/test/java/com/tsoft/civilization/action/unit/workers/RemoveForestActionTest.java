@@ -11,10 +11,10 @@ import com.tsoft.civilization.tile.feature.Hill;
 import com.tsoft.civilization.unit.Workers;
 import com.tsoft.civilization.unit.util.UnitFactory;
 import com.tsoft.civilization.world.Civilization;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class RemoveForestActionTest {
     @Test

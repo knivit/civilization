@@ -14,8 +14,7 @@ public abstract class AbstractResource {
 
     public static AbstractResource newInstance(Class<? extends AbstractResource> resourceClass) {
         try {
-            AbstractResource resource = resourceClass.newInstance();
-            return resource;
+            return resourceClass.getDeclaredConstructor().newInstance();
         } catch (Exception ex) {
             log.error("Can't instantiate a Resource by its class = {}", resourceClass.getSimpleName());
             throw new IllegalArgumentException(ex);

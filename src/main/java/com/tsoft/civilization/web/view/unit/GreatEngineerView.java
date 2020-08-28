@@ -31,11 +31,11 @@ public class GreatEngineerView extends AbstractUnitView<GreatEngineer> {
     public StringBuilder getHtmlActions(GreatEngineer unit) {
         return Format.text(
             "$commonActions" +
-            "<tr id='actions_table_row'>$manufactoryImprovementAction</tr>" +
+            "<tr id='actions_table_row'>$manufactureImprovementAction</tr>" +
             "<tr id='actions_table_row'>$hurryProductionAction</tr>",
 
             "$commonActions", super.getHtmlActions(unit),
-            "$manufactoryImprovementAction", ManufactureImprovementAction.getHtml(unit),
+            "$manufactureImprovementAction", ManufactureImprovementAction.getHtml(unit),
             "$hurryProductionAction", HurryProductionAction.getHtml(unit)
         );
     }

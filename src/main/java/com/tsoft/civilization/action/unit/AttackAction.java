@@ -73,7 +73,7 @@ public class AttackAction {
 
         // second, see is there a military unit
         UnitCollection foreignUnits = civilization.getWorld().getUnitsAtLocation(location, civilization);
-        AbstractUnit militaryUnit = foreignUnits.findMilitaryUnit();
+        AbstractUnit<?> militaryUnit = foreignUnits.findMilitaryUnit();
         if (militaryUnit != null) {
             return militaryUnit;
         }
@@ -99,7 +99,7 @@ public class AttackAction {
         int missileStrength = attacker.getCombatStrength().calcStrikeStrength(rangedAttackStrength, target);
 
         for (Point loc : path) {
-            AbstractTile tile = attacker.getCivilization().getTilesMap().getTile(loc);
+            AbstractTile<?> tile = attacker.getCivilization().getTilesMap().getTile(loc);
             missileStrength -= tile.getMissilePastCost(attacker);
             if (missileStrength <= 0) {
                 break;
@@ -116,7 +116,7 @@ public class AttackAction {
         }
 
         // attacker must be able to pass to target's tile
-        UnitMoveResult moveResult = MoveUnitAction.getMoveOnAttackResult((AbstractUnit)attacker, target.getLocation());
+        UnitMoveResult moveResult = MoveUnitAction.getMoveOnAttackResult((AbstractUnit<?>)attacker, target.getLocation());
         if (moveResult.isFailed()) {
             return AttackActionResults.MELEE_NOT_ENOUGH_PASS_SCORE;
         }
@@ -162,7 +162,7 @@ public class AttackAction {
                 target.destroyedBy(attacker, true);
 
                 // second, move the attacker there
-                ((AbstractUnit)attacker).moveTo(location);
+                ((AbstractUnit<?>)attacker).moveTo(location);
             }
         } else {
             target.getCombatStrength().setStrength(targetStrength);
@@ -252,7 +252,7 @@ public class AttackAction {
             }
 
             // check we can move to the location
-            UnitMoveResult moveResult = MoveUnitAction.getMoveOnAttackResult((AbstractUnit)attacker, target.getLocation());
+            UnitMoveResult moveResult = MoveUnitAction.getMoveOnAttackResult((AbstractUnit<?>)attacker, target.getLocation());
             if (moveResult.isFailed()) {
                 continue;
             }
@@ -286,7 +286,7 @@ public class AttackAction {
         int iy1 = from.getY();
         int ix2 = to.getX();
         int iy2 = to.getY();
-        int len = Math.max(Math.abs(ix2 - ix1), Math.abs(iy2 - iy1));
+        float len = Math.max(Math.abs(ix2 - ix1), Math.abs(iy2 - iy1));
         float dX = (ix2 - ix1) / len;
         float dY = (iy2 - iy1) / len;
 

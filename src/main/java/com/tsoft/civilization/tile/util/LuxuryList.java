@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 @Slf4j
 public class LuxuryList {
-    private class LuxuryInfo {
+    private static class LuxuryInfo {
         private Class<? extends AbstractLuxury> luxuryClass;
 
         private int count;
@@ -48,7 +48,7 @@ public class LuxuryList {
         }
     }
 
-    private ArrayList<LuxuryInfo> luxuryInfoList = new ArrayList<LuxuryInfo>();
+    private ArrayList<LuxuryInfo> luxuryInfoList = new ArrayList<>();
 
     private TilesMap tilesMap;
 
@@ -94,7 +94,7 @@ public class LuxuryList {
         addLuxury(Grassland.class, LuxuryType.FOOD);
     }
 
-    private void addLuxury(Class<? extends AbstractTile> tileClass, LuxuryType luxuryType) {
+    private void addLuxury(Class<? extends AbstractTile<?>> tileClass, LuxuryType luxuryType) {
         ArrayList<Point> tilePoints = tilesMap.getTileClassLocations(tileClass);
         if (tilePoints.size() == 0) {
             log.warn("There is no tile's class = {}, so Luxury with type = {} is skipped",  tileClass.getName(), luxuryType.name());
@@ -112,7 +112,7 @@ public class LuxuryList {
 
                 int index = (int)(Math.random() * tilePoints.size());
                 Point point = tilePoints.get(index);
-                AbstractTile tile = tilesMap.getTile(point);
+                AbstractTile<?> tile = tilesMap.getTile(point);
                 if (tile.setLuxury(luxury)) {
                     count ++;
                 }

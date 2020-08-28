@@ -1,11 +1,6 @@
 package com.tsoft.civilization.building.util;
 
-import com.tsoft.civilization.building.Granary;
-import com.tsoft.civilization.building.Market;
-import com.tsoft.civilization.building.Monument;
-import com.tsoft.civilization.building.Palace;
-import com.tsoft.civilization.building.Settlement;
-import com.tsoft.civilization.building.Walls;
+import com.tsoft.civilization.building.*;
 
 public class BuildingCatalog {
     private static final BuildingCollection buildingsCatalog = new BuildingList();
@@ -21,7 +16,12 @@ public class BuildingCatalog {
         buildingsCatalog.add(new Walls());
     }
 
-    private BuildingCatalog() { }
+    private BuildingCatalog() {
+    }
+
+    public static AbstractBuilding<?> findByClassUuid(String classUuid) {
+        return buildingsCatalog.findByClassUuid(classUuid);
+    }
 
     public static BuildingCollection values() {
         return unmodifiableBuildingsCatalog;

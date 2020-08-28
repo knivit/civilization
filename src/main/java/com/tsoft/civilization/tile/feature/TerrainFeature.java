@@ -18,7 +18,7 @@ public abstract class TerrainFeature<V extends AbstractFeatureView> {
     public static final int FEATURE_NOT_INITIALIZED = -1;
     public static final int FEATURE_REMOVED = 0;
 
-    private AbstractTile tile;
+    private AbstractTile<?> tile;
 
     private int strength = FEATURE_NOT_INITIALIZED;
 
@@ -30,15 +30,15 @@ public abstract class TerrainFeature<V extends AbstractFeatureView> {
     public abstract String getClassUuid();
     public abstract V getView();
 
-    public static TerrainFeature newInstance(String classUuid, AbstractTile tile) {
-        TerrainFeature feature = getFeatureFromCatalogByClassUuid(classUuid);
+    public static TerrainFeature<?> newInstance(String classUuid, AbstractTile<?> tile) {
+        TerrainFeature<?> feature = getFeatureFromCatalogByClassUuid(classUuid);
         if (feature == null) {
             return null;
         }
 
         try {
-            Constructor constructor = feature.getClass().getConstructor();
-            feature = (TerrainFeature)constructor.newInstance();
+            Constructor<?> constructor = feature.getClass().getConstructor();
+            feature = (TerrainFeature<?>)constructor.newInstance();
             feature.init(tile);
 
             return feature;
@@ -50,18 +50,13 @@ public abstract class TerrainFeature<V extends AbstractFeatureView> {
 
     protected TerrainFeature() { }
 
-    private void init(AbstractTile tile) {
+    private void init(AbstractTile<?> tile) {
         this.tile = tile;
         tile.addFeature(this);
     }
 
-    public static TerrainFeature getFeatureFromCatalogByClassUuid(String classUuid) {
-        for (TerrainFeature feature : TileCatalog.features()) {
-            if (feature.getClassUuid().equals(classUuid)) {
-                return feature;
-            }
-        }
-        return null;
+    public static TerrainFeature<?> getFeatureFromCatalogByClassUuid(String classUuid) {
+        return TileCatalog.findFeatureByClassUuid(classUuid);
     }
 
     public boolean isBlockingTileSupply() {
@@ -87,7 +82,7 @@ public abstract class TerrainFeature<V extends AbstractFeatureView> {
         return getStrength() == FEATURE_REMOVED;
     }
 
-    public int getPassCost(AbstractUnit unit) {
+    public int getPassCost(AbstractUnit<?> unit) {
         return FeaturePassCostTable.get(unit, this);
     }
 

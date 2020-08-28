@@ -221,8 +221,9 @@ public class GetCityStatus extends AbstractAjaxRequest {
 
     private StringBuilder getBuildingConstructionActions(City city) {
         StringBuilder buf = new StringBuilder();
+
         BuildingCollection buildings = BuildingCatalog.values();
-        for (AbstractBuilding building : buildings) {
+        for (AbstractBuilding<?> building : buildings) {
             StringBuilder buyBuildingAction = BuildBuildingAction.getHtml(city, building.getClassUuid());
             StringBuilder buildBuildingAction = BuyBuildingAction.getHtml(city, building.getClassUuid());
 

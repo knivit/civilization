@@ -24,8 +24,7 @@ public class Monument extends AbstractBuilding<MonumentView> {
      */
     @Override
     public Supply getSupply(City city) {
-        Supply supply = new Supply().setGold(-1).setCulture(2);
-        return supply;
+        return new Supply().setGold(-1).setCulture(2);
     }
 
     @Override
