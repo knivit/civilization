@@ -1,5 +1,11 @@
 package com.tsoft.civilization.world.generator;
 
+import com.tsoft.civilization.tile.base.desert.Desert;
+import com.tsoft.civilization.tile.base.grassland.Grassland;
+import com.tsoft.civilization.tile.base.ocean.Ocean;
+import com.tsoft.civilization.tile.base.plain.Plain;
+import com.tsoft.civilization.tile.base.snow.Snow;
+import com.tsoft.civilization.tile.base.tundra.Tundra;
 import com.tsoft.civilization.tile.feature.*;
 import com.tsoft.civilization.tile.feature.coast.Coast;
 import com.tsoft.civilization.tile.feature.forest.Forest;

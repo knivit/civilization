@@ -1,5 +1,13 @@
 package com.tsoft.civilization.tile.base;
 
+import com.tsoft.civilization.tile.base.desert.Desert;
+import com.tsoft.civilization.tile.base.grassland.Grassland;
+import com.tsoft.civilization.tile.base.lake.Lake;
+import com.tsoft.civilization.tile.base.ocean.Ocean;
+import com.tsoft.civilization.tile.base.plain.Plain;
+import com.tsoft.civilization.tile.base.snow.Snow;
+import com.tsoft.civilization.tile.base.tundra.Tundra;
+
 import java.util.HashMap;
 import java.util.Map;
 

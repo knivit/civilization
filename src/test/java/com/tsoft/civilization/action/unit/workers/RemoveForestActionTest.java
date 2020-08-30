@@ -6,7 +6,7 @@ import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.tile.base.AbstractTile;
-import com.tsoft.civilization.tile.base.Grassland;
+import com.tsoft.civilization.tile.base.grassland.Grassland;
 import com.tsoft.civilization.tile.feature.hill.Hill;
 import com.tsoft.civilization.unit.civil.Workers;
 import com.tsoft.civilization.unit.util.UnitFactory;

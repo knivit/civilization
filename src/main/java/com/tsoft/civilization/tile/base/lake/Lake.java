@@ -1,5 +1,7 @@
-package com.tsoft.civilization.tile.base;
+package com.tsoft.civilization.tile.base.lake;
 
+import com.tsoft.civilization.tile.base.AbstractTile;
+import com.tsoft.civilization.tile.base.TileType;
 import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.web.view.tile.base.LakeView;
 

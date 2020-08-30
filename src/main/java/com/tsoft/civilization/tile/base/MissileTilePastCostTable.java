@@ -2,17 +2,16 @@ package com.tsoft.civilization.tile.base;
 
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.improvement.City;
-import com.tsoft.civilization.tile.base.AbstractTile;
+import com.tsoft.civilization.tile.base.grassland.Grassland;
+import com.tsoft.civilization.tile.base.lake.Lake;
+import com.tsoft.civilization.tile.base.ocean.Ocean;
+import com.tsoft.civilization.tile.base.plain.Plain;
+import com.tsoft.civilization.tile.base.snow.Snow;
+import com.tsoft.civilization.tile.base.tundra.Tundra;
 import com.tsoft.civilization.tile.feature.coast.Coast;
-import com.tsoft.civilization.tile.base.Desert;
-import com.tsoft.civilization.tile.base.Grassland;
+import com.tsoft.civilization.tile.base.desert.Desert;
 import com.tsoft.civilization.tile.feature.ice.Ice;
-import com.tsoft.civilization.tile.base.Lake;
 import com.tsoft.civilization.tile.feature.mountain.Mountain;
-import com.tsoft.civilization.tile.base.Ocean;
-import com.tsoft.civilization.tile.base.Plain;
-import com.tsoft.civilization.tile.base.Snow;
-import com.tsoft.civilization.tile.base.Tundra;
 import com.tsoft.civilization.unit.military.Archers;
 
 import java.util.HashMap;

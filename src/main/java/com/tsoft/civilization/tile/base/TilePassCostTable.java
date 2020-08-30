@@ -1,20 +1,21 @@
 package com.tsoft.civilization.tile.base;
 
-import com.tsoft.civilization.technology.Technology;
-import com.tsoft.civilization.tile.base.AbstractTile;
-import com.tsoft.civilization.tile.base.Desert;
-import com.tsoft.civilization.tile.base.Grassland;
-import com.tsoft.civilization.tile.base.Lake;
-import com.tsoft.civilization.tile.base.Ocean;
-import com.tsoft.civilization.tile.base.Plain;
-import com.tsoft.civilization.tile.base.Snow;
-import com.tsoft.civilization.tile.base.Tundra;
+import com.tsoft.civilization.tile.base.desert.Desert;
+import com.tsoft.civilization.tile.base.desert.DesertPassCostTable;
+import com.tsoft.civilization.tile.base.grassland.Grassland;
+import com.tsoft.civilization.tile.base.grassland.GrasslandPassCostTable;
+import com.tsoft.civilization.tile.base.lake.Lake;
+import com.tsoft.civilization.tile.base.lake.LakePassCostTable;
+import com.tsoft.civilization.tile.base.ocean.Ocean;
+import com.tsoft.civilization.tile.base.ocean.OceanPassCostTable;
+import com.tsoft.civilization.tile.base.plain.Plain;
+import com.tsoft.civilization.tile.base.plain.PlainPassCostTable;
+import com.tsoft.civilization.tile.base.snow.Snow;
+import com.tsoft.civilization.tile.base.snow.SnowPassCostTable;
+import com.tsoft.civilization.tile.base.tundra.Tundra;
+import com.tsoft.civilization.tile.base.tundra.TundraPassCostTable;
 import com.tsoft.civilization.tile.util.PassCostList;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.military.Archers;
-import com.tsoft.civilization.unit.civil.Settlers;
-import com.tsoft.civilization.unit.military.Warriors;
-import com.tsoft.civilization.unit.civil.Workers;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,48 +26,24 @@ public final class TilePassCostTable {
 
     private TilePassCostTable() { }
 
-    private static Map<String, PassCostList> table = new HashMap<>();
+    private final static Map<Class<? extends AbstractTile<?>>, Map<String, PassCostList>> table = new HashMap<>();
 
     static {
-        table.put(Archers.CLASS_UUID + Desert.CLASS_UUID, PassCostList.of(null, 1));
-        table.put(Archers.CLASS_UUID + Grassland.CLASS_UUID, PassCostList.of(null, 1));
-        table.put(Archers.CLASS_UUID + Lake.CLASS_UUID, PassCostList.of(null, UNPASSABLE, Technology.NAVIGATION, 2));
-        table.put(Archers.CLASS_UUID + Ocean.CLASS_UUID, PassCostList.of(null, UNPASSABLE, Technology.NAVIGATION, 2));
-        table.put(Archers.CLASS_UUID + Plain.CLASS_UUID, PassCostList.of(null, 1));
-        table.put(Archers.CLASS_UUID + Snow.CLASS_UUID, PassCostList.of(null, 1));
-        table.put(Archers.CLASS_UUID + Tundra.CLASS_UUID, PassCostList.of(null, 1));
-
-        table.put(Settlers.CLASS_UUID + Desert.CLASS_UUID, PassCostList.of(null, 1));
-        table.put(Settlers.CLASS_UUID + Grassland.CLASS_UUID, PassCostList.of(null, 1));
-        table.put(Settlers.CLASS_UUID + Lake.CLASS_UUID, PassCostList.of(null, UNPASSABLE, Technology.NAVIGATION, 2));
-        table.put(Settlers.CLASS_UUID + Ocean.CLASS_UUID, PassCostList.of(null, UNPASSABLE, Technology.NAVIGATION, 2));
-        table.put(Settlers.CLASS_UUID + Plain.CLASS_UUID, PassCostList.of(null, 1));
-        table.put(Settlers.CLASS_UUID + Snow.CLASS_UUID, PassCostList.of(null, 1));
-        table.put(Settlers.CLASS_UUID + Tundra.CLASS_UUID, PassCostList.of(null, 1));
-
-        table.put(Warriors.CLASS_UUID + Desert.CLASS_UUID, PassCostList.of(null, 1));
-        table.put(Warriors.CLASS_UUID + Grassland.CLASS_UUID, PassCostList.of(null, 1));
-        table.put(Warriors.CLASS_UUID + Lake.CLASS_UUID, PassCostList.of(null, UNPASSABLE, Technology.NAVIGATION, 2));
-        table.put(Warriors.CLASS_UUID + Ocean.CLASS_UUID, PassCostList.of(null, UNPASSABLE, Technology.NAVIGATION, 2));
-        table.put(Warriors.CLASS_UUID + Plain.CLASS_UUID, PassCostList.of(null, 1));
-        table.put(Warriors.CLASS_UUID + Snow.CLASS_UUID, PassCostList.of(null, 1));
-        table.put(Warriors.CLASS_UUID + Tundra.CLASS_UUID, PassCostList.of(null, 1));
-
-        table.put(Workers.CLASS_UUID + Desert.CLASS_UUID, PassCostList.of(null, 1));
-        table.put(Workers.CLASS_UUID + Grassland.CLASS_UUID, PassCostList.of(null, 1));
-        table.put(Workers.CLASS_UUID + Lake.CLASS_UUID, PassCostList.of(null, UNPASSABLE, Technology.NAVIGATION, 2));
-        table.put(Workers.CLASS_UUID + Ocean.CLASS_UUID, PassCostList.of(null, UNPASSABLE, Technology.NAVIGATION, 2));
-        table.put(Workers.CLASS_UUID + Plain.CLASS_UUID, PassCostList.of(null, 1));
-        table.put(Workers.CLASS_UUID + Snow.CLASS_UUID, PassCostList.of(null, 1));
-        table.put(Workers.CLASS_UUID + Tundra.CLASS_UUID, PassCostList.of(null, 1));
+        table.put(Desert.class, DesertPassCostTable.table);
+        table.put(Grassland.class, GrasslandPassCostTable.table);
+        table.put(Lake.class, LakePassCostTable.table);
+        table.put(Ocean.class, OceanPassCostTable.table);
+        table.put(Plain.class, PlainPassCostTable.table);
+        table.put(Snow.class, SnowPassCostTable.table);
+        table.put(Tundra.class, TundraPassCostTable.table);
     }
 
     public static int get(AbstractUnit<?> unit, AbstractTile<?> tile) {
         Objects.requireNonNull(unit, "Unit can't be null");
         Objects.requireNonNull(tile, "Tile can't be null");
 
-        String key = unit.getClassUuid() + tile.getClassUuid();
-        PassCostList list = table.get(key);
+        Map<String, PassCostList> passCostTable = table.get(tile.getClass());
+        PassCostList list = passCostTable.get(unit.getClassUuid());
         return (list == null) ? UNPASSABLE : list.getPassCost(unit.getCivilization());
     }
 }

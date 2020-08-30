@@ -1,18 +1,20 @@
-package com.tsoft.civilization.tile.base;
+package com.tsoft.civilization.tile.base.grassland;
 
+import com.tsoft.civilization.tile.base.AbstractTile;
+import com.tsoft.civilization.tile.base.TileType;
 import com.tsoft.civilization.world.economic.Supply;
-import com.tsoft.civilization.web.view.tile.base.PlainView;
+import com.tsoft.civilization.web.view.tile.base.GrasslandView;
 
 import java.util.UUID;
 
 /**
- * Basic Production: 1 Food, 1 Hammer
+ * Basic Production: 2 Food
  * Movement Cost: 1; Defensive Bonus: -33%
  */
-public class Plain extends AbstractTile<PlainView> {
+public class Grassland extends AbstractTile<GrasslandView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    private static final PlainView VIEW = new PlainView();
+    private static final GrasslandView VIEW = new GrasslandView();
 
     @Override
     public TileType getTileType() {
@@ -21,7 +23,7 @@ public class Plain extends AbstractTile<PlainView> {
 
     @Override
     public Supply getBaseSupply() {
-        return Supply.builder().food(1).production(1).build();
+        return Supply.builder().food(2).build();
     }
 
     @Override
@@ -29,13 +31,12 @@ public class Plain extends AbstractTile<PlainView> {
         return true;
     }
 
-    @Override
     public int getDefensiveBonusPercent() {
         return -33;
     }
 
     @Override
-    public PlainView getView() {
+    public GrasslandView getView() {
         return VIEW;
     }
 

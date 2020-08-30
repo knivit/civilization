@@ -1,18 +1,20 @@
-package com.tsoft.civilization.tile.base;
+package com.tsoft.civilization.tile.base.plain;
 
+import com.tsoft.civilization.tile.base.AbstractTile;
+import com.tsoft.civilization.tile.base.TileType;
 import com.tsoft.civilization.world.economic.Supply;
-import com.tsoft.civilization.web.view.tile.base.DesertView;
+import com.tsoft.civilization.web.view.tile.base.PlainView;
 
 import java.util.UUID;
 
 /**
- * Basic Production: (none)
+ * Basic Production: 1 Food, 1 Hammer
  * Movement Cost: 1; Defensive Bonus: -33%
  */
-public class Desert extends AbstractTile<DesertView> {
+public class Plain extends AbstractTile<PlainView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    private static final DesertView VIEW = new DesertView();
+    private static final PlainView VIEW = new PlainView();
 
     @Override
     public TileType getTileType() {
@@ -21,7 +23,7 @@ public class Desert extends AbstractTile<DesertView> {
 
     @Override
     public Supply getBaseSupply() {
-        return Supply.EMPTY_SUPPLY;
+        return Supply.builder().food(1).production(1).build();
     }
 
     @Override
@@ -35,7 +37,7 @@ public class Desert extends AbstractTile<DesertView> {
     }
 
     @Override
-    public DesertView getView() {
+    public PlainView getView() {
         return VIEW;
     }
 
