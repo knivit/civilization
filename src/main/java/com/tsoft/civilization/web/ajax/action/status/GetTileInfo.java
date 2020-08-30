@@ -3,7 +3,7 @@ package com.tsoft.civilization.web.ajax.action.status;
 import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.L10n.L10nTile;
 import com.tsoft.civilization.L10n.L10nWorld;
-import com.tsoft.civilization.tile.util.TilePassCostTable;
+import com.tsoft.civilization.tile.base.TilePassCostTable;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.util.Request;

@@ -3,7 +3,7 @@ package com.tsoft.civilization.web.view.unit;
 import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.action.unit.greatengeneer.HurryProductionAction;
 import com.tsoft.civilization.action.unit.greatengeneer.ManufactureImprovementAction;
-import com.tsoft.civilization.unit.GreatEngineer;
+import com.tsoft.civilization.unit.civil.GreatEngineer;
 import com.tsoft.civilization.util.Format;
 
 public class GreatEngineerView extends AbstractUnitView<GreatEngineer> {

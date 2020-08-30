@@ -3,7 +3,7 @@ package com.tsoft.civilization.web.view.unit;
 import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.action.unit.workers.RemoveForestAction;
 import com.tsoft.civilization.action.unit.workers.RemoveHillAction;
-import com.tsoft.civilization.unit.Workers;
+import com.tsoft.civilization.unit.civil.Workers;
 import com.tsoft.civilization.util.Format;
 
 public class WorkersView extends AbstractUnitView<Workers> {

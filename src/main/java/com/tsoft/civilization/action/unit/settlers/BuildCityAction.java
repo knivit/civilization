@@ -4,7 +4,7 @@ import com.tsoft.civilization.L10n.unit.L10nSettlers;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.tile.base.AbstractTile;
-import com.tsoft.civilization.unit.Settlers;
+import com.tsoft.civilization.unit.civil.Settlers;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.Civilization;

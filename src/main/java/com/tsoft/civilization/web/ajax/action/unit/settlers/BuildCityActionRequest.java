@@ -3,7 +3,7 @@ package com.tsoft.civilization.web.ajax.action.unit.settlers;
 import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.action.unit.settlers.BuildCityAction;
-import com.tsoft.civilization.unit.Settlers;
+import com.tsoft.civilization.unit.civil.Settlers;
 import com.tsoft.civilization.web.util.ContentType;
 import com.tsoft.civilization.web.util.Request;
 import com.tsoft.civilization.web.util.Response;

@@ -2,7 +2,7 @@ package com.tsoft.civilization.action.unit.greatengeneer;
 
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.action.unit.MoveUnitActionResults;
-import com.tsoft.civilization.unit.GreatEngineer;
+import com.tsoft.civilization.unit.civil.GreatEngineer;
 import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;

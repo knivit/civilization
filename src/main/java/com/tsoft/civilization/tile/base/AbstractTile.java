@@ -2,10 +2,7 @@ package com.tsoft.civilization.tile.base;
 
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.improvement.AbstractImprovement;
-import com.tsoft.civilization.tile.util.TerrainFeatureList;
-import com.tsoft.civilization.tile.util.MissileTilePastCostTable;
-import com.tsoft.civilization.tile.util.TileCatalog;
-import com.tsoft.civilization.tile.util.TilePassCostTable;
+import com.tsoft.civilization.tile.feature.TerrainFeatureList;
 import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.tile.feature.*;
 import com.tsoft.civilization.tile.luxury.AbstractLuxury;
@@ -36,7 +33,7 @@ public abstract class AbstractTile<V extends AbstractTileView> {
     public abstract Supply getBaseSupply();
 
     public static AbstractTile<?> newInstance(String classUuid) {
-        AbstractTile<?> tile = TileCatalog.findTileByClassUuid(classUuid);
+        AbstractTile<?> tile = TileCatalog.findByClassUuid(classUuid);
         if (tile == null) {
             return null;
         }
@@ -138,7 +135,13 @@ public abstract class AbstractTile<V extends AbstractTileView> {
             // start from last (i.e. on top) feature
             for (int i = terrainFeatures.size() - 1; i >= 0; i --) {
                 TerrainFeature<?> feature = terrainFeatures.get(i);
-                passCost += feature.getPassCost(unit);
+
+                int featurePassCost = feature.getPassCost(unit);
+                if (featurePassCost == TilePassCostTable.UNPASSABLE) {
+                    return TilePassCostTable.UNPASSABLE;
+                }
+
+                passCost += featurePassCost;
             }
         }
         return passCost;
@@ -151,7 +154,13 @@ public abstract class AbstractTile<V extends AbstractTileView> {
             // start from last (i.e. on top) feature
             for (int i = terrainFeatures.size() - 1; i >= 0; i --) {
                 TerrainFeature<?> feature = terrainFeatures.get(i);
-                passCost += feature.getMissilePassCost(attacker);
+
+                int featurePassCost = feature.getMissilePassCost(attacker);
+                if (featurePassCost == TilePassCostTable.UNPASSABLE) {
+                    return TilePassCostTable.UNPASSABLE;
+                }
+
+                passCost += featurePassCost;
             }
         }
         return passCost;

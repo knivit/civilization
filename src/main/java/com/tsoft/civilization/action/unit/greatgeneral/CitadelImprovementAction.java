@@ -2,7 +2,7 @@ package com.tsoft.civilization.action.unit.greatgeneral;
 
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.action.unit.MoveUnitActionResults;
-import com.tsoft.civilization.unit.GreatGeneral;
+import com.tsoft.civilization.unit.civil.GreatGeneral;
 import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;

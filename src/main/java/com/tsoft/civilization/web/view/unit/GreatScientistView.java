@@ -3,7 +3,7 @@ package com.tsoft.civilization.web.view.unit;
 import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.action.unit.greatscientist.AcademyImprovementAction;
 import com.tsoft.civilization.action.unit.greatscientist.LearnNewTechnologyAction;
-import com.tsoft.civilization.unit.GreatScientist;
+import com.tsoft.civilization.unit.civil.GreatScientist;
 import com.tsoft.civilization.util.Format;
 
 public class GreatScientistView extends AbstractUnitView<GreatScientist> {

@@ -225,7 +225,7 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
     }
 
     public Supply getTilesSupply() {
-        return citizenService.getTilesSupply();
+        return citizenService.getAllCitizensSupply();
     }
 
     public void step(Year year) {

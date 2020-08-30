@@ -3,7 +3,6 @@ package com.tsoft.civilization.util;
 // Immutable
 public class Point {
     private final int x;
-
     private final int y;
 
     // Don't implement "add" method
@@ -41,7 +40,7 @@ public class Point {
 
     @Override
     public int hashCode() {
-        return 1001 * y + x;
+        return 10001 * y + x;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.tsoft.civilization.web.view.unit;
 
 import com.tsoft.civilization.L10n.unit.L10nUnit;
-import com.tsoft.civilization.unit.GreatArtist;
+import com.tsoft.civilization.unit.civil.GreatArtist;
 
 public class GreatArtistView extends AbstractUnitView<GreatArtist> {
     @Override

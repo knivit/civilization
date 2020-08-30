@@ -2,7 +2,7 @@ package com.tsoft.civilization.web.ajax;
 
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.improvement.City;
-import com.tsoft.civilization.unit.Workers;
+import com.tsoft.civilization.unit.civil.Workers;
 import com.tsoft.civilization.unit.util.UnitFactory;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.MockRequest;

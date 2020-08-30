@@ -3,7 +3,7 @@ package com.tsoft.civilization.web.view.unit;
 import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.action.unit.greatmerchant.CustomsHouseImprovementAction;
 import com.tsoft.civilization.action.unit.greatmerchant.TradeMissionAction;
-import com.tsoft.civilization.unit.GreatMerchant;
+import com.tsoft.civilization.unit.civil.GreatMerchant;
 import com.tsoft.civilization.util.Format;
 
 public class GreatMerchantView extends AbstractUnitView<GreatMerchant> {

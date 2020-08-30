@@ -4,7 +4,7 @@ import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
-import com.tsoft.civilization.unit.Settlers;
+import com.tsoft.civilization.unit.civil.Settlers;
 import com.tsoft.civilization.unit.util.UnitFactory;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.Civilization;

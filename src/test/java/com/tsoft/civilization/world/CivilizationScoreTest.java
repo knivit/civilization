@@ -13,8 +13,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CivilizationScoreTest {
     @Test
@@ -164,8 +163,7 @@ public class CivilizationScoreTest {
         //    0 |   10 |    6 |       6 |       2 |        -1 |          1 |
         city.setSupplyStrategy(CitySupplyStrategy.MAX_FOOD);
         world.step();
-        assertTrue(city.getCitizenLocations().contains(new Point(1, 1)));
-        assertTrue(city.getCitizenLocations().contains(new Point(1, 2)));
+        assertIterableEquals(Arrays.asList(new Point(1, 1), new Point(1, 2)), city.getCitizenLocations());
         assertTrue(SupplyMock.equals(SupplyMock.of("F0 P10 G6 S6 C2 H-1 O1"), c1.calcSupply()));
     }
 }

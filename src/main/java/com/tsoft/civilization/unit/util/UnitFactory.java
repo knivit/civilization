@@ -2,6 +2,9 @@ package com.tsoft.civilization.unit.util;
 
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.unit.*;
+import com.tsoft.civilization.unit.civil.*;
+import com.tsoft.civilization.unit.military.Archers;
+import com.tsoft.civilization.unit.military.Warriors;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.Civilization;
 import lombok.extern.slf4j.Slf4j;

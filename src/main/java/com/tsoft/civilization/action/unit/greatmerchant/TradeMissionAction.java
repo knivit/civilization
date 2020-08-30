@@ -2,7 +2,7 @@ package com.tsoft.civilization.action.unit.greatmerchant;
 
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.action.unit.MoveUnitActionResults;
-import com.tsoft.civilization.unit.GreatMerchant;
+import com.tsoft.civilization.unit.civil.GreatMerchant;
 import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;

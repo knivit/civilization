@@ -19,13 +19,18 @@ import java.util.*;
 
 /**
  * - Only one unit of each category (Military, Naval or Civilian) is allowed per hex.
- * - Air units are an exception to the one unit per hex rule. Aircraft and missiles can stack in a city (no limit) or on a Carrier (up to 3). Missiles can also stack on a Missile Cruiser (up to 3) or on a Nuclear Submarine (up to 2).
+ * - Air units are an exception to the one unit per hex rule. Aircraft and missiles can stack in a city (no limit) or on a Carrier (up to 3).
+ *   Missiles can also stack on a Missile Cruiser (up to 3) or on a Nuclear Submarine (up to 2).
  * - Ranged units (including ships) can only used ranged attacks, and cannot melee attack (though they will defend if attacked).
  * - Land units can now embark on water with the Embarkation promotion, attained with Optics.
- * - Military land units exert a 1-hex zone of control, which reduces adjacent enemy movement to 1 hex per turn. "If you move a unit from one tile adjacent to an enemy to another tile adjacent to that same enemy it uses up your turn, no matter how many movement points you have." - Jon Shafer
+ * - Military land units exert a 1-hex zone of control, which reduces adjacent enemy movement to 1 hex per turn.
+ *   "If you move a unit from one tile adjacent to an enemy to another tile adjacent to that same enemy it uses up your turn,
+ *   no matter how many movement points you have." - Jon Shafer
  * - Siege units have a bonus attacking cities, but most must "set up" to fire first, and so can't move and fire in the same turn.
  * - In addition to any resources they require, units also require maintenance in gold.
- * - There is now a hard cap on the number of units your empire can support. It is calculated as (Base Supply + Number of Cities + Number of Citizens). For Normal difficulty, Base Supply appears to be 5. So this number is fairly generous; the only time you will run up against this cap is when trying to build a large early army with only a single city.
+ * - There is now a hard cap on the number of units your empire can support. It is calculated as (Base Supply + Number of Cities + Number of Citizens).
+ *   For Normal difficulty, Base Supply appears to be 5. So this number is fairly generous;
+ *   the only time you will run up against this cap is when trying to build a large early army with only a single city.
  * - Decommissioning units now refunds some gold, if done inside your borders.
  * - All units have 100 hit points.
  */

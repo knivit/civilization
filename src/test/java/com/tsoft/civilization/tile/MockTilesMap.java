@@ -2,6 +2,15 @@ package com.tsoft.civilization.tile;
 
 import com.tsoft.civilization.tile.base.*;
 import com.tsoft.civilization.tile.feature.*;
+import com.tsoft.civilization.tile.feature.coast.Coast;
+import com.tsoft.civilization.tile.feature.floodplain.FloodPlain;
+import com.tsoft.civilization.tile.feature.forest.Forest;
+import com.tsoft.civilization.tile.feature.hill.Hill;
+import com.tsoft.civilization.tile.feature.ice.Ice;
+import com.tsoft.civilization.tile.feature.jungle.Jungle;
+import com.tsoft.civilization.tile.feature.marsh.Marsh;
+import com.tsoft.civilization.tile.feature.mountain.Mountain;
+import com.tsoft.civilization.tile.feature.oasis.Oasis;
 import com.tsoft.civilization.util.Point;
 
 import java.util.HashMap;

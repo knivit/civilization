@@ -1,7 +1,7 @@
 package com.tsoft.civilization.tile.util;
 
 import com.tsoft.civilization.tile.TilesMap;
-import com.tsoft.civilization.tile.feature.Coast;
+import com.tsoft.civilization.tile.feature.coast.Coast;
 import com.tsoft.civilization.tile.base.Grassland;
 import com.tsoft.civilization.tile.feature.TerrainFeature;
 import com.tsoft.civilization.tile.resource.AbstractResource;

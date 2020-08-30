@@ -1,7 +1,7 @@
 package com.tsoft.civilization.unit.util;
 
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.GreatGeneral;
+import com.tsoft.civilization.unit.civil.GreatGeneral;
 import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.util.Point;
 

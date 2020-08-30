@@ -1,7 +1,14 @@
 package com.tsoft.civilization.world.generator;
 
 import com.tsoft.civilization.tile.feature.*;
-import com.tsoft.civilization.tile.util.LuxuryList;
+import com.tsoft.civilization.tile.feature.coast.Coast;
+import com.tsoft.civilization.tile.feature.forest.Forest;
+import com.tsoft.civilization.tile.feature.hill.Hill;
+import com.tsoft.civilization.tile.feature.ice.Ice;
+import com.tsoft.civilization.tile.feature.jungle.Jungle;
+import com.tsoft.civilization.tile.feature.marsh.Marsh;
+import com.tsoft.civilization.tile.feature.oasis.Oasis;
+import com.tsoft.civilization.tile.luxury.LuxuryList;
 import com.tsoft.civilization.tile.util.ResourceList;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.tile.base.*;

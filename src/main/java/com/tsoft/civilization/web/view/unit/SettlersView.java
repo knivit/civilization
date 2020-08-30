@@ -2,7 +2,7 @@ package com.tsoft.civilization.web.view.unit;
 
 import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.action.unit.settlers.BuildCityAction;
-import com.tsoft.civilization.unit.Settlers;
+import com.tsoft.civilization.unit.civil.Settlers;
 import com.tsoft.civilization.util.Format;
 
 public class SettlersView extends AbstractUnitView<Settlers> {

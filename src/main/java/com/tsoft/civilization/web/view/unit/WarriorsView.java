@@ -1,7 +1,7 @@
 package com.tsoft.civilization.web.view.unit;
 
 import com.tsoft.civilization.L10n.unit.L10nUnit;
-import com.tsoft.civilization.unit.Warriors;
+import com.tsoft.civilization.unit.military.Warriors;
 
 public class WarriorsView extends AbstractUnitView<Warriors> {
     @Override

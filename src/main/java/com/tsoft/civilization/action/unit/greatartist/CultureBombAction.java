@@ -2,7 +2,7 @@ package com.tsoft.civilization.action.unit.greatartist;
 
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.action.unit.MoveUnitActionResults;
-import com.tsoft.civilization.unit.GreatArtist;
+import com.tsoft.civilization.unit.civil.GreatArtist;
 import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;

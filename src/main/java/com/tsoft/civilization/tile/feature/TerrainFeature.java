@@ -1,9 +1,7 @@
 package com.tsoft.civilization.tile.feature;
 
 import com.tsoft.civilization.combat.HasCombatStrength;
-import com.tsoft.civilization.tile.util.FeaturePassCostTable;
-import com.tsoft.civilization.tile.util.MissileFeaturePastCostTable;
-import com.tsoft.civilization.tile.util.TileCatalog;
+import com.tsoft.civilization.tile.base.TileCatalog;
 import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.base.TileType;
@@ -31,7 +29,7 @@ public abstract class TerrainFeature<V extends AbstractFeatureView> {
     public abstract V getView();
 
     public static TerrainFeature<?> newInstance(String classUuid, AbstractTile<?> tile) {
-        TerrainFeature<?> feature = TileCatalog.findFeatureByClassUuid(classUuid);
+        TerrainFeature<?> feature = FeatureCatalog.findByClassUuid(classUuid);
         if (feature == null) {
             return null;
         }
@@ -53,10 +51,6 @@ public abstract class TerrainFeature<V extends AbstractFeatureView> {
     private void init(AbstractTile<?> tile) {
         this.tile = tile;
         tile.addFeature(this);
-    }
-
-    public static TerrainFeature<?> getFeatureFromCatalogByClassUuid(String classUuid) {
-        return TileCatalog.findFeatureByClassUuid(classUuid);
     }
 
     public boolean isBlockingTileSupply() {

@@ -3,7 +3,7 @@ package com.tsoft.civilization.action.city;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.technology.Technology;
-import com.tsoft.civilization.unit.Archers;
+import com.tsoft.civilization.unit.military.Archers;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.Civilization;
 import com.tsoft.civilization.world.economic.Supply;

@@ -3,7 +3,7 @@ package com.tsoft.civilization.web.view.unit;
 import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.action.unit.greatgeneral.CitadelImprovementAction;
 import com.tsoft.civilization.action.unit.greatgeneral.CombatBonusAction;
-import com.tsoft.civilization.unit.GreatGeneral;
+import com.tsoft.civilization.unit.civil.GreatGeneral;
 import com.tsoft.civilization.util.Format;
 
 public class GreatGeneralView extends AbstractUnitView<GreatGeneral> {

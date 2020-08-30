@@ -1,6 +1,7 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
 import com.tsoft.civilization.L10n.*;
+import com.tsoft.civilization.tile.feature.FeatureCatalog;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.util.Request;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
@@ -15,7 +16,7 @@ public class GetFeatureInfo extends AbstractAjaxRequest {
     @Override
     public Response getJSON(Request request) {
         String featureClassUuid = request.get("feature");
-        TerrainFeature feature = TerrainFeature.getFeatureFromCatalogByClassUuid(featureClassUuid);
+        TerrainFeature<?> feature = FeatureCatalog.findByClassUuid(featureClassUuid);
         if (feature == null) {
             return Response.newErrorInstance(L10nFeature.FEATURE_NOT_FOUND);
         }
@@ -31,7 +32,7 @@ public class GetFeatureInfo extends AbstractAjaxRequest {
         return new Response(ResponseCode.OK, value.toString(), ContentType.TEXT_HTML);
     }
 
-    private StringBuilder getFeatureInfo(TerrainFeature feature) {
+    private StringBuilder getFeatureInfo(TerrainFeature<?> feature) {
         AbstractFeatureView view = feature.getView();
         return Format.text(
             "<table id='title_table'>" +
@@ -46,7 +47,7 @@ public class GetFeatureInfo extends AbstractAjaxRequest {
         );
     }
 
-    private StringBuilder getFeatureSupplyInfo(TerrainFeature feature) {
+    private StringBuilder getFeatureSupplyInfo(TerrainFeature<?> feature) {
         Supply featureSupply = feature.getSupply();
         return Format.text(
             "<table id='info_table'>" +

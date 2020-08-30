@@ -5,7 +5,7 @@ import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.Archers;
+import com.tsoft.civilization.unit.military.Archers;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.Civilization;
 import com.tsoft.civilization.world.economic.SupplyMock;

@@ -4,8 +4,8 @@ import com.tsoft.civilization.L10n.unit.L10nWorkers;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.tile.base.AbstractTile;
-import com.tsoft.civilization.tile.feature.Hill;
-import com.tsoft.civilization.unit.Workers;
+import com.tsoft.civilization.tile.feature.hill.Hill;
+import com.tsoft.civilization.unit.civil.Workers;
 import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;
