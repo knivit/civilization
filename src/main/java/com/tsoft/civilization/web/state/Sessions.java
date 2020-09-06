@@ -19,7 +19,9 @@ public class Sessions {
     }
 
     public static void setCurrent(String sessionId) {
-        currentSession.set(sessions.get(sessionId));
+        if (sessionId != null) {
+            currentSession.set(sessions.get(sessionId));
+        }
     }
 
     public static ClientSession getCurrent() {

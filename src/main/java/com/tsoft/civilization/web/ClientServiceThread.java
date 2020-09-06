@@ -10,12 +10,9 @@ import java.time.Instant;
 public class ClientServiceThread implements Runnable {
     private Socket socket;
     private ServerClient client;
-    private Instant tick;
 
     public ClientServiceThread(Socket socket) throws Throwable {
         this.socket = socket;
-
-        tick = Instant.now();
 
         client = new ServerClient();
         client.readRequest(socket);
@@ -23,6 +20,7 @@ public class ClientServiceThread implements Runnable {
 
     @Override
     public void run() {
+        Instant tick = Instant.now();
         try {
             try {
                 log.info("Started to serve {}", client.getRequest());

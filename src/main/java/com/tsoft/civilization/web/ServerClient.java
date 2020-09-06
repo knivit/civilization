@@ -3,7 +3,6 @@ package com.tsoft.civilization.web;
 import com.tsoft.civilization.L10n.L10nMap;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.RequestReader;
-import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.Response;
@@ -45,31 +44,30 @@ public class ServerClient {
     }
 
     public void processRequest() {
+        if (request.getRequestType() == null) {
+            return;
+        }
+
         switch (request.getRequestType()) {
             case GET -> {
                 if ("GetNotifications".equals(request.getRequestUrl())) {
+                    Sessions.setCurrent(request.getSessionId());
                     NotificationRequestProcessor.processRequest(this);
                 } else {
                     GetRequestProcessor.processRequest(this);
                 }
             }
             case POST -> {
-                PostRequestProcessor.processRequest(this);
+                Sessions.setCurrent(request.getSessionId());
+                Response response = PostRequestProcessor.processRequest(request);
+                sendResponse(response);
             }
-            default -> {
-                log.info("Unknown request type {}", request.getRequestType());
-            }
+            default -> log.info("Unknown request type {}", request.getRequestType());
         }
     }
 
     public Request getRequest() {
         return request;
-    }
-
-    public ClientSession getSession() {
-        String sessionId = request.getSessionId();
-        Sessions.setCurrent(sessionId);
-        return Sessions.getCurrent();
     }
 
     public boolean sendBytes(byte[] bytes) {

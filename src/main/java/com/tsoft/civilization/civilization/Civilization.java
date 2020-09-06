@@ -295,9 +295,9 @@ public class Civilization {
     // Start point for a Civilization
     public Point getStartPoint() {
         // First, this is Settler's location
-        Settlers settlers = (Settlers)getUnits().findByClassUuid(Settlers.CLASS_UUID);
-        if (settlers != null) {
-            return settlers.getLocation();
+        UnitCollection units = getUnits().findByClassUuid(Settlers.CLASS_UUID);
+        if (units != null && !units.isEmpty()) {
+            return units.get(0).getLocation();
         }
 
         // If Settlers were destroyed then it is the first city's location
@@ -306,7 +306,7 @@ public class Civilization {
         }
 
         // If there is no cities, then the first Unit's
-        UnitCollection units = unitService.getUnits();
+        units = unitService.getUnits();
         if (!units.isEmpty()) {
             return units.get(0).getLocation();
         }

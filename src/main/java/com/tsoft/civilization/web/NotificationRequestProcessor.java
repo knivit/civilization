@@ -6,6 +6,7 @@ import com.tsoft.civilization.util.NumberUtil;
 import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.world.event.Event;
 import lombok.extern.slf4j.Slf4j;
@@ -15,8 +16,8 @@ public class NotificationRequestProcessor {
     private NotificationRequestProcessor() { }
 
     public static void processRequest(ServerClient client) {
-        ClientSession session = client.getSession();
-        if (session == null) {
+        ClientSession session = Sessions.getCurrent();
+        if (Sessions.getCurrent() == null) {
             // Sending HTTP 400 will stop other requests from EventSource
             client.sendError(L10nServer.INVALID_SESSION);
             return;

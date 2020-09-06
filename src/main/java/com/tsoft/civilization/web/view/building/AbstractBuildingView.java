@@ -4,7 +4,7 @@ import com.tsoft.civilization.action.city.DestroyBuildingAction;
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.util.Format;
 
-public abstract class AbstractBuildingView<B extends AbstractBuilding> {
+public abstract class AbstractBuildingView<B extends AbstractBuilding<?>> {
     public abstract String getLocalizedName();
     public abstract String getLocalizedDescription();
     public abstract String getStatusImageSrc();

@@ -122,6 +122,7 @@ public class RequestReader {
                 return cookies.substring(n);
             }
         }
+
         return null;
     }
 
