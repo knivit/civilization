@@ -7,7 +7,7 @@ import com.tsoft.civilization.unit.util.UnitCollection;
 import com.tsoft.civilization.web.view.JSONBlock;
 import com.tsoft.civilization.web.view.improvement.CityView;
 import com.tsoft.civilization.web.view.tile.base.AbstractTileView;
-import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.World;
 
 public class WorldView {

@@ -1,5 +1,6 @@
 package com.tsoft.civilization.tile.feature;
 
+import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.tile.feature.atoll.Atoll;
 import com.tsoft.civilization.tile.feature.atoll.AtollPassCostTable;
 import com.tsoft.civilization.tile.feature.coast.Coast;
@@ -50,12 +51,12 @@ public final class FeaturePassCostTable {
         table.put(Oasis.class, OasisPassCostTable.table);
     }
 
-    public static int get(AbstractUnit<?> unit, TerrainFeature<?> feature) {
+    public static int get(Civilization civilization, AbstractUnit<?> unit, TerrainFeature<?> feature) {
         Objects.requireNonNull(unit, "unit can't be null");
         Objects.requireNonNull(feature, "feature can't be null");
 
         Map<String, PassCostList> passCostTable = table.get(feature.getClass());
         PassCostList list = passCostTable.get(unit.getClassUuid());
-        return (list == null) ? UNPASSABLE : list.getPassCost(unit.getCivilization());
+        return (list == null) ? UNPASSABLE : list.getPassCost(civilization);
     }
 }

@@ -1,20 +1,18 @@
 package com.tsoft.civilization.building;
 
 import com.tsoft.civilization.L10n.building.L10nBuilding;
-import com.tsoft.civilization.building.util.BuildingCatalog;
 import com.tsoft.civilization.building.util.BuildingType;
 import com.tsoft.civilization.improvement.CanBeBuilt;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.view.building.AbstractBuildingView;
-import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.world.economic.Supply;
-import com.tsoft.civilization.world.util.Event;
+import com.tsoft.civilization.world.event.Event;
 import lombok.extern.slf4j.Slf4j;
 
-import java.lang.reflect.Constructor;
 import java.util.UUID;
 
 /**
@@ -95,8 +93,8 @@ import java.util.UUID;
  */
 @Slf4j
 public abstract class AbstractBuilding<V extends AbstractBuildingView> implements CanBeBuilt {
-    private String id;
-    private City city;
+    private final String id = UUID.randomUUID().toString();
+    private final City city;
 
     private boolean isDestroyed;
 
@@ -107,34 +105,12 @@ public abstract class AbstractBuilding<V extends AbstractBuildingView> implement
     public abstract V getView();
     public abstract String getClassUuid();
 
+    protected AbstractBuilding(City city) {
+        this.city = city;
+    }
+
     // Method of a unit from the catalog (they don't have civilization etc)
     public abstract boolean checkEraAndTechnology(Civilization civilization);
-
-    public static AbstractBuilding<?> newInstance(String classUuid, City city) {
-        AbstractBuilding<?> building = BuildingCatalog.findByClassUuid(classUuid);
-        if (building == null) {
-            return null;
-        }
-
-        try {
-            Constructor<?> constructor = building.getClass().getConstructor();
-            building = (AbstractBuilding<?>)constructor.newInstance();
-            building.init(city);
-
-            return building;
-        } catch (Exception ex) {
-            log.error("Error on newInstance of {}", building.getClass().getSimpleName(), ex);
-        }
-        return null;
-    }
-
-    protected AbstractBuilding() { }
-
-    // Initialization on create the object
-    private void init(City city) {
-        this.city = city;
-        this.id = UUID.randomUUID().toString();
-    }
 
     public String getId() {
         return id;
@@ -169,7 +145,6 @@ public abstract class AbstractBuilding<V extends AbstractBuildingView> implement
 
         Event event = new Event(Event.INFORMATION, this, L10nBuilding.BUILDING_DESTROYED, getView().getLocalizedName());
         getCivilization().addEvent(event);
-        log.debug("{}", event);
 
         city.destroyBuilding(this);
     }

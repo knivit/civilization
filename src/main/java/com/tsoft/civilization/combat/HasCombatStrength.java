@@ -4,7 +4,7 @@ import com.tsoft.civilization.combat.skill.AbstractSkill;
 import com.tsoft.civilization.unit.util.UnitCollection;
 import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.civilization.Civilization;
 
 import java.util.List;
 

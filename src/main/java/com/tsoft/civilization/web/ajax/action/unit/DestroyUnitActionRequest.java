@@ -10,7 +10,7 @@ import com.tsoft.civilization.web.util.Response;
 import com.tsoft.civilization.web.util.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.web.view.JSONBlock;
-import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.civilization.Civilization;
 
 public class DestroyUnitActionRequest extends AbstractAjaxRequest {
     @Override

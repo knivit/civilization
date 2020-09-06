@@ -5,7 +5,7 @@ import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.util.UnitFactory;
+import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;

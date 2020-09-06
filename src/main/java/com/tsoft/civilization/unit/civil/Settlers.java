@@ -3,9 +3,9 @@ package com.tsoft.civilization.unit.civil;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitCategory;
-import com.tsoft.civilization.util.Year;
+import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.web.view.unit.SettlersView;
-import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.civilization.Civilization;
 
 import java.util.UUID;
 
@@ -26,7 +26,7 @@ import java.util.UUID;
  */
 public class Settlers extends AbstractUnit<SettlersView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
-    public static final Settlers INSTANCE = new Settlers();
+    public static final Settlers STUB = new Settlers();
 
     private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
             .setStrength(0);

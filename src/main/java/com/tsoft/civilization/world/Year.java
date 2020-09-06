@@ -1,9 +1,7 @@
-package com.tsoft.civilization.util;
+package com.tsoft.civilization.world;
 
 import com.tsoft.civilization.L10n.L10nMap;
 import com.tsoft.civilization.L10n.L10nWorld;
-
-import java.util.Objects;
 
 public class Year {
     public static int ANCIENT_ERA = 1000;

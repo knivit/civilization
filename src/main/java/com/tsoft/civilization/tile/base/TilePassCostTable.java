@@ -1,5 +1,6 @@
 package com.tsoft.civilization.tile.base;
 
+import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.tile.base.desert.Desert;
 import com.tsoft.civilization.tile.base.desert.DesertPassCostTable;
 import com.tsoft.civilization.tile.base.grassland.Grassland;
@@ -38,12 +39,12 @@ public final class TilePassCostTable {
         table.put(Tundra.class, TundraPassCostTable.table);
     }
 
-    public static int get(AbstractUnit<?> unit, AbstractTile<?> tile) {
+    public static int get(Civilization civilization, AbstractUnit<?> unit, AbstractTile<?> tile) {
         Objects.requireNonNull(unit, "Unit can't be null");
         Objects.requireNonNull(tile, "Tile can't be null");
 
         Map<String, PassCostList> passCostTable = table.get(tile.getClass());
         PassCostList list = passCostTable.get(unit.getClassUuid());
-        return (list == null) ? UNPASSABLE : list.getPassCost(unit.getCivilization());
+        return (list == null) ? UNPASSABLE : list.getPassCost(civilization);
     }
 }

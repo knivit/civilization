@@ -47,15 +47,11 @@ public class L10nMap extends HashMap<String, String> {
     }
 
     public String getValue(String language) {
-        String value = super.get(language);
-        return value;
+        return super.get(language);
     }
 
     public boolean isEnglishEquals(L10nMap other) {
-        if (other != null && getEnglish().equals(other.getEnglish())) {
-            return true;
-        }
-        return false;
+        return other != null && getEnglish().equals(other.getEnglish());
     }
 
     @Override

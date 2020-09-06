@@ -1,7 +1,7 @@
 package com.tsoft.civilization.tile.util;
 
 import com.tsoft.civilization.technology.Technology;
-import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.civilization.Civilization;
 
 import java.util.ArrayList;
 

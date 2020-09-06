@@ -97,8 +97,8 @@ public class L10nCity {
             .set("en", "City not found")
             .set("ru", "\u0413\u043e\u0440\u043e\u0434 \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d");
 
-    public static L10nMap CITY_CANT_TAKE_UNIT = new L10nMap()
-            .set("en", "City can't take the unit")
+    public static L10nMap CITY_CANT_PLACE_UNIT = new L10nMap()
+            .set("en", "City can't place the unit")
             .set("ru", "\u0413\u043e\u0440\u043e\u0434 \u043d\u0435 \u043c\u043e\u0436\u0435\u0442 \u043f\u0440\u0438\u043d\u044f\u0442\u044c \u044d\u0442\u043e\u0442 \u044e\u043d\u0438\u0442");
 
     /** Events */
@@ -106,6 +106,10 @@ public class L10nCity {
     public static L10nMap NEW_CITY_EVENT = new L10nMap()
             .set("en", "A new city %s was founded")
             .set("ru", "\u041e\u0441\u043d\u043e\u0432\u0430\u043d \u043d\u043e\u0432\u044b\u0439 %s \u0433\u043e\u0440\u043e\u0434");
+
+    public static L10nMap REMOVE_CITY_EVENT = new L10nMap()
+        .set("en", "City %s was removed")
+        .set("ru", "Город %s удален");
 
     public static L10nMap CITY_WAS_CAPTURED = new L10nMap()
             .set("en", "City %s was captured")

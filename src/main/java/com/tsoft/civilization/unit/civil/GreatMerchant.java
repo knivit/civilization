@@ -3,9 +3,11 @@ package com.tsoft.civilization.unit.civil;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitCategory;
-import com.tsoft.civilization.util.Year;
+import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.web.view.unit.GreatMerchantView;
-import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.civilization.Civilization;
+
+import java.util.UUID;
 
 /**
  * Movement: 2; Strength: 0; Ranged Strength: 0
@@ -16,8 +18,8 @@ import com.tsoft.civilization.world.Civilization;
  * influence with that city-state. Trade Missions can no longer be conducted with other civilizations.
  */
 public class GreatMerchant extends AbstractUnit<GreatMerchantView> {
-    public static final String CLASS_UUID = "77b3aa05-4843-482b-a661-8233136d5fdd";
-    public static final GreatMerchant INSTANCE = new GreatMerchant();
+    public static final String CLASS_UUID = UUID.randomUUID().toString();
+    public static final GreatMerchant STUB = new GreatMerchant();
 
     private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
             .setStrength(0);

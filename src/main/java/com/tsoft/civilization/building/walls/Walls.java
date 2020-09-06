@@ -1,19 +1,24 @@
-package com.tsoft.civilization.building;
+package com.tsoft.civilization.building.walls;
 
+import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.util.BuildingType;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.technology.Technology;
-import com.tsoft.civilization.util.Year;
-import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.world.Year;
+import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.web.view.building.WallsView;
 import com.tsoft.civilization.world.economic.Supply;
 
 import java.util.UUID;
 
 public class Walls extends AbstractBuilding<WallsView> {
+    public static final Walls STUB = new Walls(null);
     public static final String CLASS_UUID = UUID.randomUUID().toString();
-
     private static final WallsView VIEW = new WallsView();
+
+    public Walls(City city) {
+        super(city);
+    }
 
     @Override
     public BuildingType getBuildingType() {

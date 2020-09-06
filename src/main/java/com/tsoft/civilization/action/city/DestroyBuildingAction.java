@@ -3,8 +3,8 @@ package com.tsoft.civilization.action.city;
 import com.tsoft.civilization.L10n.building.L10nBuilding;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.building.AbstractBuilding;
-import com.tsoft.civilization.building.Palace;
-import com.tsoft.civilization.building.Settlement;
+import com.tsoft.civilization.building.palace.Palace;
+import com.tsoft.civilization.building.settlement.Settlement;
 import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;

@@ -4,15 +4,15 @@ import com.tsoft.civilization.L10n.L10nEvent;
 import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.NumberUtil;
-import com.tsoft.civilization.util.Year;
+import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.web.util.ContentType;
 import com.tsoft.civilization.web.util.Request;
 import com.tsoft.civilization.web.util.Response;
 import com.tsoft.civilization.web.util.ResponseCode;
-import com.tsoft.civilization.world.Civilization;
-import com.tsoft.civilization.world.util.Event;
-import com.tsoft.civilization.world.util.EventList;
+import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.world.event.Event;
+import com.tsoft.civilization.world.event.EventList;
 
 public class GetEvents extends AbstractAjaxRequest {
     @Override

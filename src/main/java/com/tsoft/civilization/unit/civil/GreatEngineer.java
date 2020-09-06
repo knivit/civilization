@@ -3,9 +3,11 @@ package com.tsoft.civilization.unit.civil;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitCategory;
-import com.tsoft.civilization.util.Year;
+import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.web.view.unit.GreatEngineerView;
-import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.civilization.Civilization;
+
+import java.util.UUID;
 
 /**
  * Movement: 2;
@@ -16,8 +18,8 @@ import com.tsoft.civilization.world.Civilization;
  * building or wonder, or trigger a Golden Age.
  */
 public class GreatEngineer extends AbstractUnit<GreatEngineerView> {
-    public static final String CLASS_UUID = "7fcdb183-8a4a-4c6f-9b11-febfe46fe7e9";
-    public static final GreatEngineer INSTANCE = new GreatEngineer();
+    public static final String CLASS_UUID = UUID.randomUUID().toString();
+    public static final GreatEngineer STUB = new GreatEngineer();
 
     private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
             .setStrength(0);

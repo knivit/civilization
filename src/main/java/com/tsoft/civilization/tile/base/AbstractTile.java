@@ -1,5 +1,6 @@
 package com.tsoft.civilization.tile.base;
 
+import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.tile.feature.TerrainFeatureList;
@@ -129,21 +130,27 @@ public abstract class AbstractTile<V extends AbstractTileView> {
 
     // Returns passing cost for a unit
     public int getPassCost(AbstractUnit<?> unit) {
-        int passCost = TilePassCostTable.get(unit, this);
+        return getPassCost(unit.getCivilization(), unit);
+    }
 
-        if (!terrainFeatures.isEmpty()) {
-            // start from last (i.e. on top) feature
-            for (int i = terrainFeatures.size() - 1; i >= 0; i --) {
-                TerrainFeature<?> feature = terrainFeatures.get(i);
-
-                int featurePassCost = feature.getPassCost(unit);
-                if (featurePassCost == TilePassCostTable.UNPASSABLE) {
-                    return TilePassCostTable.UNPASSABLE;
-                }
-
-                passCost += featurePassCost;
-            }
+    public int getPassCost(Civilization civilization, AbstractUnit<?> unit) {
+        int passCost = TilePassCostTable.get(civilization, unit, this);
+        if (terrainFeatures.isEmpty()) {
+            return passCost;
         }
+
+        // add features starting from the uppermost
+        for (int i = terrainFeatures.size() - 1; i >= 0; i --) {
+            TerrainFeature<?> feature = terrainFeatures.get(i);
+
+            int featurePassCost = feature.getPassCost(unit);
+            if (featurePassCost == TilePassCostTable.UNPASSABLE) {
+                return TilePassCostTable.UNPASSABLE;
+            }
+
+            passCost += featurePassCost;
+        }
+
         return passCost;
     }
 

@@ -24,7 +24,8 @@ public class GameServer {
     public void start() throws Throwable {
         // Start listening sockets
         ServerSocket ss = new ServerSocket(port);
-        System.out.println("Server started on port " + port);
+
+        log.info("Server started on port " + port);
         while (true) {
             Socket socket = ss.accept();
 

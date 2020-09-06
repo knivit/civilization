@@ -3,7 +3,7 @@ package com.tsoft.civilization.web.view.world;
 import com.tsoft.civilization.L10n.L10nCivilization;
 import com.tsoft.civilization.L10n.L10nMap;
 import com.tsoft.civilization.web.view.JSONBlock;
-import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.civilization.Civilization;
 
 public class CivilizationView {
     private L10nMap name;

@@ -1,9 +1,10 @@
-package com.tsoft.civilization.building;
+package com.tsoft.civilization.building.granary;
 
+import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.util.BuildingType;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.technology.Technology;
-import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.luxury.Bananas;
 import com.tsoft.civilization.util.Point;
@@ -13,9 +14,14 @@ import com.tsoft.civilization.world.economic.Supply;
 import java.util.UUID;
 
 public class Granary extends AbstractBuilding<GranaryView> {
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
+    public static final Granary STUB = new Granary(null);
 
+    public static final String CLASS_UUID = UUID.randomUUID().toString();
     private static final GranaryView VIEW = new GranaryView();
+
+    public Granary(City city) {
+        super(city);
+    }
 
     @Override
     public BuildingType getBuildingType() {

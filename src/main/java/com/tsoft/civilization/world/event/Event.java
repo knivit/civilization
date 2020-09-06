@@ -1,4 +1,4 @@
-package com.tsoft.civilization.world.util;
+package com.tsoft.civilization.world.event;
 
 import com.tsoft.civilization.L10n.L10nMap;
 import com.tsoft.civilization.web.view.JSONBlock;

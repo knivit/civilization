@@ -1,4 +1,4 @@
-package com.tsoft.civilization.world;
+package com.tsoft.civilization.util;
 
 public class Pair<T> {
     private T obj1;

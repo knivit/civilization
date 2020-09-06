@@ -3,9 +3,9 @@ package com.tsoft.civilization.unit.military;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitCategory;
-import com.tsoft.civilization.util.Year;
+import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.web.view.unit.WarriorsView;
-import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.civilization.Civilization;
 
 import java.util.UUID;
 
@@ -19,7 +19,7 @@ import java.util.UUID;
  */
 public class Warriors extends AbstractUnit<WarriorsView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
-    public static final Warriors INSTANCE = new Warriors();
+    public static final Warriors STUB = new Warriors();
 
     private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
             .setMeleeAttackStrength(10)

@@ -4,7 +4,7 @@ import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.view.improvement.AbstractImprovementView;
 import com.tsoft.civilization.web.view.improvement.RoadView;
-import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.economic.Supply;
 
 public class Road extends AbstractImprovement {

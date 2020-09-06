@@ -7,7 +7,7 @@ import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.unit.civil.Settlers;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.civilization.Civilization;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;

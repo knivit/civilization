@@ -1,28 +1,30 @@
 package com.tsoft.civilization.world;
 
 import com.tsoft.civilization.L10n.L10nWorld;
+import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.civilization.CivilizationsRelations;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.improvement.city.CityCollection;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.util.UnitCollection;
+import com.tsoft.civilization.util.Pair;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.util.Year;
 import com.tsoft.civilization.web.view.world.WorldView;
-import com.tsoft.civilization.world.util.CivilizationCollection;
-import com.tsoft.civilization.world.util.CivilizationList;
-import com.tsoft.civilization.world.util.Event;
-import com.tsoft.civilization.world.util.UnmodifiableCivilizationList;
+import com.tsoft.civilization.civilization.CivilizationCollection;
+import com.tsoft.civilization.civilization.CivilizationList;
+import com.tsoft.civilization.world.event.Event;
+import com.tsoft.civilization.civilization.UnmodifiableCivilizationList;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class World {
-    private String id;
+    private final String id = UUID.randomUUID().toString();
     private Year year;
     private TilesMap tilesMap;
-    private final WorldView worldView;
+    private final WorldView VIEW;
 
     // Filled on World creation
     private String name;
@@ -36,8 +38,7 @@ public class World {
     private List<Year> years = new ArrayList<>();
 
     public World(MapType mapType, int width, int height) {
-        id = UUID.randomUUID().toString();
-        worldView = new WorldView(this);
+        VIEW = new WorldView(this);
 
         // Create a new year and add it to the history
         year = new Year(-3000);
@@ -119,23 +120,33 @@ public class World {
     }
 
     // Find a location to place a Settlers
-    public Point getCivilizationStartLocation() {
+    public Point getCivilizationStartLocation(Civilization civ) {
         // not less than 4 tiles from other civilizations tiles
         // location must be passable for the Settlers
         // there are must be 3 tiles of Earth around the location
         Set<Point> busyLocations = new HashSet<>();
         for (Civilization civilization : civilizations) {
+            // skip the target civilization
+            if (civilization.equals(civ)) {
+                continue;
+            }
+
+            // exclude cities
             for (City city : civilization.getCities()) {
                 busyLocations.addAll(city.getLocations());
             }
 
-            for (AbstractUnit unit : civilization.getUnits()) {
+            // exclude units
+            for (AbstractUnit<?> unit : civilization.getUnits()) {
                 busyLocations.add(unit.getLocation());
             }
         }
 
         List<Point> possibleLocations = tilesMap.getTilesToStartCivilization();
         possibleLocations.removeAll(busyLocations);
+        if (possibleLocations.isEmpty()) {
+            return null;
+        }
 
         int n = ThreadLocalRandom.current().nextInt(possibleLocations.size());
         return possibleLocations.get(n);
@@ -184,7 +195,7 @@ public class World {
     }
 
     public WorldView getView() {
-        return worldView;
+        return VIEW;
     }
 
     public String getName() {
@@ -249,12 +260,13 @@ public class World {
 
         // add it to the history
         years.add(year);
+        sendEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.NEW_YEAR_START_EVENT, year.getValue()));
 
         for (Civilization civilization : civilizations) {
             civilization.step(year);
         }
 
-        sendEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.NEW_YEAR_EVENT, year.getValue()));
+        sendEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.NEW_YEAR_COMPLETE_EVENT, year.getValue()));
     }
 
     public List<Year> getYears() {

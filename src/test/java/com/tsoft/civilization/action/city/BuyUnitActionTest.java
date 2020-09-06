@@ -5,7 +5,7 @@ import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.unit.military.Archers;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.economic.Supply;
 import org.junit.jupiter.api.Test;
 
@@ -28,8 +28,10 @@ public class BuyUnitActionTest {
         civilization.addTechnology(Technology.ARCHERY);
         City city = new City(civilization, new Point(2, 0));
 
+        Civilization puppet = new Civilization(mockWorld, 1);
+
         city.setPassScore(1);
-        civilization.addSupply(Supply.builder().gold(Archers.INSTANCE.getGoldCost()).build());
+        civilization.giftReceived(puppet, Supply.builder().gold(Archers.STUB.getGoldCost()).build());
 
         assertEquals(CityActionResults.UNIT_WAS_BOUGHT, BuyUnitAction.buyUnit(city, Archers.CLASS_UUID));
     }

@@ -1,10 +1,11 @@
 package com.tsoft.civilization.improvement.city;
 
 import com.tsoft.civilization.building.AbstractBuilding;
+import com.tsoft.civilization.building.BuildingFactory;
 import com.tsoft.civilization.building.util.BuildingCollection;
 import com.tsoft.civilization.building.util.BuildingList;
-import com.tsoft.civilization.building.Palace;
-import com.tsoft.civilization.building.Settlement;
+import com.tsoft.civilization.building.palace.Palace;
+import com.tsoft.civilization.building.settlement.Settlement;
 import com.tsoft.civilization.building.util.UnmodifiableBuildingList;
 import com.tsoft.civilization.improvement.CanBeBuilt;
 import com.tsoft.civilization.improvement.City;
@@ -13,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class CityBuildingService {
-    private City city;
+    private final City city;
 
     private BuildingList buildings = new BuildingList();
     private UnmodifiableBuildingList unmodifiableBuildings = new UnmodifiableBuildingList(buildings);
@@ -26,10 +27,10 @@ public class CityBuildingService {
         this.city = city;
 
         if (city.getCivilization().getCities().size() == 1) {
-            AbstractBuilding<?> palace = AbstractBuilding.newInstance(Palace.CLASS_UUID, city);
+            AbstractBuilding<?> palace = BuildingFactory.newInstance(Palace.CLASS_UUID, city);
             add(palace); // A capital
         } else {
-            AbstractBuilding<?> settlement = AbstractBuilding.newInstance(Settlement.CLASS_UUID, city);
+            AbstractBuilding<?> settlement = BuildingFactory.newInstance(Settlement.CLASS_UUID, city);
             add(settlement);
         }
     }

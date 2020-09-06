@@ -13,9 +13,9 @@ import com.tsoft.civilization.util.AbstractDir;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.view.JSONBlock;
-import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.World;
-import com.tsoft.civilization.world.util.Event;
+import com.tsoft.civilization.world.event.Event;
 
 import java.util.*;
 

@@ -9,8 +9,8 @@ import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.base.grassland.Grassland;
 import com.tsoft.civilization.tile.feature.hill.Hill;
 import com.tsoft.civilization.unit.civil.Workers;
-import com.tsoft.civilization.unit.util.UnitFactory;
-import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.unit.UnitFactory;
+import com.tsoft.civilization.civilization.Civilization;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,8 +29,9 @@ public class RemoveForestActionTest {
 
         MockWorld mockWorld = new MockWorld(mockTilesMap);
         Civilization civilization = new Civilization(mockWorld, 0);
-        AbstractTile tile = mockTilesMap.getTile(1, 1);
-        Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID, civilization, tile.getLocation());
+        AbstractTile<?> tile = mockTilesMap.getTile(1, 1);
+        Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);
+        civilization.addUnit(workers, tile.getLocation());
 
         // case 1
         // no needed technology
@@ -56,8 +57,9 @@ public class RemoveForestActionTest {
         Civilization civilization = new Civilization(mockWorld, 0);
         civilization.addTechnology(Technology.MINING);
 
-        AbstractTile tile = mockTilesMap.getTile(1, 1);
-        Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID, civilization, tile.getLocation());
+        AbstractTile<?> tile = mockTilesMap.getTile(1, 1);
+        Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);
+        civilization.addUnit(workers, tile.getLocation());
 
         for (int i = 0; i < 4; i ++) {
             assertEquals(WorkersActionResults.REMOVING_FOREST, RemoveForestAction.removeForest(workers));

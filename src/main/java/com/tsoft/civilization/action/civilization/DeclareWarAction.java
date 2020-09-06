@@ -3,8 +3,8 @@ package com.tsoft.civilization.action.civilization;
 import com.tsoft.civilization.L10n.L10nCivilization;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.util.Format;
-import com.tsoft.civilization.world.Civilization;
-import com.tsoft.civilization.world.CivilizationsRelations;
+import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.civilization.CivilizationsRelations;
 import com.tsoft.civilization.world.World;
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,7 +1,7 @@
 package com.tsoft.civilization.web.ajax;
 
 import com.tsoft.civilization.MockWorld;
-import com.tsoft.civilization.building.Palace;
+import com.tsoft.civilization.building.palace.Palace;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.MockRequest;
@@ -10,7 +10,7 @@ import com.tsoft.civilization.web.util.ResponseCode;
 import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.state.Worlds;
-import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.civilization.Civilization;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

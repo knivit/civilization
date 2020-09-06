@@ -3,9 +3,11 @@ package com.tsoft.civilization.unit.civil;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitCategory;
-import com.tsoft.civilization.util.Year;
+import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.web.view.unit.GreatScientistView;
-import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.civilization.Civilization;
+
+import java.util.UUID;
 
 /**
  * Movement: 2; Strength: 0; Ranged Strength: 0
@@ -15,8 +17,8 @@ import com.tsoft.civilization.world.Civilization;
  * that you could normally research at that point.
  */
 public class GreatScientist extends AbstractUnit<GreatScientistView> {
-    public static final String CLASS_UUID = "95e2ae90-c9db-425d-a599-89bec1001076";
-    public static final GreatScientist INSTANCE = new GreatScientist();
+    public static final String CLASS_UUID = UUID.randomUUID().toString();
+    public static final GreatScientist STUB = new GreatScientist();
 
     private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
             .setStrength(0);

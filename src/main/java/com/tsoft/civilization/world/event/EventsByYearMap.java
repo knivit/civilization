@@ -1,6 +1,6 @@
-package com.tsoft.civilization.world.util;
+package com.tsoft.civilization.world.event;
 
-import com.tsoft.civilization.util.Year;
+import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.world.World;
 
 import java.util.HashMap;

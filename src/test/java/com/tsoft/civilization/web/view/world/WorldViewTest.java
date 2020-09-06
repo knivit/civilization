@@ -9,10 +9,10 @@ import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.unit.civil.Settlers;
 import com.tsoft.civilization.unit.military.Warriors;
 import com.tsoft.civilization.unit.civil.Workers;
-import com.tsoft.civilization.unit.util.UnitFactory;
+import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.view.JSONBlock;
-import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.civilization.Civilization;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,9 +31,12 @@ public class WorldViewTest {
 
         // a city with two units in it
         City city1 = new City(c1, new Point(0, 0));
-        Warriors warriors = UnitFactory.newInstance(Warriors.CLASS_UUID, c1, new Point(0, 0));
-        Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID, c1, new Point(0, 0));
-        Settlers settlers = UnitFactory.newInstance(Settlers.CLASS_UUID, c1, new Point(1, 0));
+        Warriors warriors = UnitFactory.newInstance(Warriors.CLASS_UUID);
+        c1.addUnit(warriors, new Point(0, 0));
+        Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);
+        c1.addUnit(workers, new Point(0, 0));
+        Settlers settlers = UnitFactory.newInstance(Settlers.CLASS_UUID);
+        c1.addUnit(settlers, new Point(1, 0));
 
         JSONBlock worldBlock = mockWorld.getView().getJSON();
         //assertEquals("{\"width\":\"3\",\"height\":\"2\",

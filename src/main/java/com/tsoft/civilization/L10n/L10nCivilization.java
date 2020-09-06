@@ -122,12 +122,16 @@ public class L10nCivilization {
             .set("ru", "\u042e\u043d\u0438\u0442 \u0431\u044b\u043b \u043a\u0443\u043f\u043b\u0435\u043d");
 
     public static L10nMap BUY_BUILDING_EVENT = new L10nMap()
-            .set("en", "A building was bought")
-            .set("ru", "\u0417\u0434\u0430\u043d\u0438\u0435 \u0431\u044b\u043b\u043e \u043a\u0443\u043f\u043b\u0435\u043d\u043e");
+            .set("en", "A building %s was bought")
+            .set("ru", "Куплено здание %s");
 
     public static L10nMap ACCUMULATION_SUPPLY = new L10nMap()
             .set("en", "Accumulated supply")
             .set("ru", "\u041d\u0430\u043a\u043e\u043f\u043b\u0435\u043d\u0438\u044f");
+
+    public static L10nMap GIFT_RECEIVED = new L10nMap()
+        .set("en", "A gift %s received from %s")
+        .set("ru", "Получен подарок %s от %s");
 
     /** Civilizations */
 

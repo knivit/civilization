@@ -5,7 +5,7 @@ import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.util.UnitFactory;
+import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.util.Format;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,7 +24,6 @@ public class BuyUnitAction {
         }
 
         city.getCivilization().buyUnit(unitClassUuid, city);
-
         return CityActionResults.UNIT_WAS_BOUGHT;
     }
 
@@ -46,8 +45,8 @@ public class BuyUnitAction {
             return CityActionResults.NOT_ENOUGH_MONEY;
         }
 
-        if (!city.canTakeUnit(unit)) {
-            return CityActionResults.CITY_CANT_TAKE_UNIT;
+        if (!city.canPlaceUnit(unit)) {
+            return CityActionResults.CITY_CANT_PLACE_UNIT;
         }
 
         return CityActionResults.CAN_BUY_UNIT;

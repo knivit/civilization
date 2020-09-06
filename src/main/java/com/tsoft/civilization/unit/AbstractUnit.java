@@ -10,8 +10,8 @@ import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.unit.util.UnitCollection;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.view.unit.AbstractUnitView;
-import com.tsoft.civilization.world.Civilization;
-import com.tsoft.civilization.world.util.Event;
+import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.world.event.Event;
 import com.tsoft.civilization.world.World;
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,7 +36,7 @@ import java.util.*;
  */
 @Slf4j
 public abstract class AbstractUnit<V extends AbstractUnitView> implements HasCombatStrength, CanBeBuilt {
-    private String id;
+    private String id = UUID.randomUUID().toString();
     private Civilization civilization;
 
     // unit's location
@@ -64,13 +64,7 @@ public abstract class AbstractUnit<V extends AbstractUnitView> implements HasCom
     protected AbstractUnit() { }
 
     // Initialization on create the object
-    public void init(Civilization civilization, Point location) {
-        this.civilization = civilization;
-        this.location = location;
-
-        id = UUID.randomUUID().toString();
-        civilization.addUnit(this);
-
+    public void init() {
         combatStrength = new CombatStrength(this, getBaseCombatStrength());
         initPassScore();
     }
@@ -101,7 +95,7 @@ public abstract class AbstractUnit<V extends AbstractUnitView> implements HasCom
         return getWorld().getTilesMap();
     }
 
-    public AbstractTile getTile() {
+    public AbstractTile<?> getTile() {
         return getTilesMap().getTile(location);
     }
 
@@ -156,12 +150,12 @@ public abstract class AbstractUnit<V extends AbstractUnitView> implements HasCom
     public void capturedBy(HasCombatStrength capturer) {
         civilization.removeUnit(this);
 
-        // re-create foreign's unit ID so it can't be used anymore
+        // re-create foreigner's unit ID so it can't be used anymore
         id = UUID.randomUUID().toString();
 
         // captured unit can't move
         setPassScore(0);
-        capturer.getCivilization().addUnit(this);
+        capturer.getCivilization().addUnit(this, location);
     }
 
     @Override
@@ -177,13 +171,12 @@ public abstract class AbstractUnit<V extends AbstractUnitView> implements HasCom
         if (destroyer != null) {
             Event event = new Event(Event.UPDATE_WORLD, destroyer, L10nUnit.UNIT_HAS_WON_ATTACK_EVENT);
             destroyer.getCivilization().addEvent(event);
-            log.debug("{}", event);
         }
 
         // destroy all units located in that location
         if (destroyOtherUnitsAtLocation) {
             UnitCollection units = civilization.getWorld().getUnitsAtLocation(location);
-            for (AbstractUnit unit : units) {
+            for (AbstractUnit<?> unit : units) {
                 // to prevent a recursion
                 if (!unit.equals(this)) {
                     unit.destroyedBy(destroyer, false);

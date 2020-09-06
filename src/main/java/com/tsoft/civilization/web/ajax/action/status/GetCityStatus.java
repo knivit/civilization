@@ -16,14 +16,14 @@ import com.tsoft.civilization.building.util.BuildingList;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.util.UnitCollection;
-import com.tsoft.civilization.unit.util.UnitFactory;
+import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.util.ContentType;
 import com.tsoft.civilization.web.util.Request;
 import com.tsoft.civilization.web.util.Response;
 import com.tsoft.civilization.web.util.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
-import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.civilization.Civilization;
 
 public class GetCityStatus extends AbstractAjaxRequest {
     @Override

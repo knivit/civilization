@@ -1,4 +1,4 @@
-package com.tsoft.civilization.world;
+package com.tsoft.civilization.civilization;
 
 import com.tsoft.civilization.L10n.L10nMap;
 import com.tsoft.civilization.L10n.L10nWorld;

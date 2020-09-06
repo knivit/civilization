@@ -6,9 +6,9 @@ import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.unit.civil.citizen.Citizen;
 import com.tsoft.civilization.unit.civil.citizen.CitizenPlacementTable;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.util.Year;
+import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.world.economic.Supply;
-import com.tsoft.civilization.world.util.Event;
+import com.tsoft.civilization.world.event.Event;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -91,44 +91,39 @@ public class CityPopulationService {
             Supply bestTileSupply = bestTile.getSupply();
 
             // in case a tile gives the same amount of needed supply,
-            // check also other supplements and select the best supply
+            // do check other supplements and select the best supply
             switch (city.getSupplyStrategy()) {
-                case MAX_FOOD: {
+                case MAX_FOOD -> {
                     if (tileSupply.getFood() > bestTileSupply.getFood()) {
                         bestLocation = location;
                     }
                     if (tileSupply.getFood() == bestTileSupply.getFood() &&
                         (tileSupply.getProduction() > bestTileSupply.getProduction() ||
-                         (tileSupply.getGold() > bestTileSupply.getGold()))) {
+                            (tileSupply.getGold() > bestTileSupply.getGold()))) {
                         bestLocation = location;
                     }
-                    break;
                 }
-                case MAX_PRODUCTION: {
+                case MAX_PRODUCTION -> {
                     if (tileSupply.getProduction() > bestTileSupply.getProduction()) {
                         bestLocation = location;
                     }
                     if (tileSupply.getProduction() == bestTileSupply.getProduction() &&
                         (tileSupply.getFood() > bestTileSupply.getFood() ||
-                         (tileSupply.getGold() > bestTileSupply.getGold()))) {
+                            (tileSupply.getGold() > bestTileSupply.getGold()))) {
                         bestLocation = location;
                     }
-                    break;
                 }
-                case MAX_GOLD: {
+                case MAX_GOLD -> {
                     if (tileSupply.getGold() > bestTileSupply.getGold()) {
                         bestLocation = location;
                     }
                     if (tileSupply.getGold() == bestTileSupply.getGold() &&
                         (tileSupply.getFood() > bestTileSupply.getFood() ||
-                         (tileSupply.getProduction() > bestTileSupply.getProduction()))) {
+                            (tileSupply.getProduction() > bestTileSupply.getProduction()))) {
                         bestLocation = location;
                     }
-                    break;
                 }
-                default: {
-                    throw new IllegalArgumentException("Unknown supply strategy = " + city.getSupplyStrategy());
-                }
+                default -> throw new IllegalArgumentException("Unknown supply strategy = " + city.getSupplyStrategy());
             }
         }
 
@@ -155,15 +150,9 @@ public class CityPopulationService {
     }
 
     public Supply calcSupply() {
-        Supply supply = Supply.EMPTY_SUPPLY;
-        for (Citizen citizen : citizens) {
-            supply = supply.add(citizen.getSupply());
-        }
-
         // 1 citizen consumes 1 food
-        supply = getAllCitizensSupply().add(Supply.builder().food(-citizens.size()).build());
-
-        return supply;
+        return getAllCitizensSupply()
+            .add(Supply.builder().food(-citizens.size()).build());
     }
 
     // Citizen's birth, death, happiness
@@ -192,7 +181,6 @@ public class CityPopulationService {
 
                 Event event = new Event(Event.INFORMATION, city, L10nCity.STARVATION_ENDED);
                 city.getCivilization().addEvent(event);
-                log.debug("{}", event);
             }
 
             // Excess food above the 2 per citizen goes into a pool for growth
@@ -228,7 +216,6 @@ public class CityPopulationService {
 
         Event event = new Event(Event.INFORMATION, city, L10nCity.CITIZEN_WAS_BORN, city.getView().getLocalizedCityName());
         city.getCivilization().addEvent(event);
-        log.debug("{}", event);
     }
 
     // If the growth pool is emptied, one citizen is dying of starvation
@@ -260,7 +247,6 @@ public class CityPopulationService {
 
         Event event = new Event(Event.INFORMATION, city, L10nCity.CITIZEN_HAS_DIED, city.getView().getLocalizedCityName());
         city.getCivilization().addEvent(event);
-        log.debug("{}", event);
     }
 
     // The supply strategy has changed, reorganize citizens for best profit

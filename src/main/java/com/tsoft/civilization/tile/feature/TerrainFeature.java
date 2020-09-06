@@ -1,7 +1,7 @@
 package com.tsoft.civilization.tile.feature;
 
+import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.combat.HasCombatStrength;
-import com.tsoft.civilization.tile.base.TileCatalog;
 import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.base.TileType;
@@ -77,7 +77,11 @@ public abstract class TerrainFeature<V extends AbstractFeatureView> {
     }
 
     public int getPassCost(AbstractUnit<?> unit) {
-        return FeaturePassCostTable.get(unit, this);
+        return getPassCost(unit.getCivilization(), unit);
+    }
+
+    public int getPassCost(Civilization civilization, AbstractUnit<?> unit) {
+        return FeaturePassCostTable.get(civilization, unit, this);
     }
 
     public int getMissilePassCost(HasCombatStrength attacker) {

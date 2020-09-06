@@ -1,6 +1,6 @@
 package com.tsoft.civilization.technology;
 
-import com.tsoft.civilization.util.Year;
+import com.tsoft.civilization.world.Year;
 
 public enum Technology {
     AGRICULTURE(Year.ANCIENT_ERA, null, 0),

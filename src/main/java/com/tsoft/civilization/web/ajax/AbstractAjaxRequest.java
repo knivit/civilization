@@ -6,7 +6,7 @@ import com.tsoft.civilization.web.util.Request;
 import com.tsoft.civilization.web.util.Response;
 import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.state.Sessions;
-import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.World;
 
 public abstract class AbstractAjaxRequest {

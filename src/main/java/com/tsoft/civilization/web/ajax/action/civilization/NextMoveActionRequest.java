@@ -3,14 +3,13 @@ package com.tsoft.civilization.web.ajax.action.civilization;
 import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.action.civilization.NextMoveAction;
-import com.tsoft.civilization.action.civilization.NextMoveActionResults;
 import com.tsoft.civilization.web.util.ContentType;
 import com.tsoft.civilization.web.util.Request;
 import com.tsoft.civilization.web.util.Response;
 import com.tsoft.civilization.web.util.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.web.view.JSONBlock;
-import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.civilization.Civilization;
 
 public class NextMoveActionRequest extends AbstractAjaxRequest {
     @Override

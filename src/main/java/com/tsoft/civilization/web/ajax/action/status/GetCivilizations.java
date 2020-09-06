@@ -9,11 +9,11 @@ import com.tsoft.civilization.web.util.Request;
 import com.tsoft.civilization.web.util.Response;
 import com.tsoft.civilization.web.util.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
-import com.tsoft.civilization.world.Civilization;
-import com.tsoft.civilization.world.CivilizationsRelations;
+import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.civilization.CivilizationsRelations;
 import com.tsoft.civilization.world.World;
-import com.tsoft.civilization.world.util.CivilizationCollection;
-import com.tsoft.civilization.world.util.CivilizationList;
+import com.tsoft.civilization.civilization.CivilizationCollection;
+import com.tsoft.civilization.civilization.CivilizationList;
 
 public class GetCivilizations extends AbstractAjaxRequest {
     @Override

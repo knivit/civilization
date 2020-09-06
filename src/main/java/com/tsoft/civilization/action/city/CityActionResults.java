@@ -31,5 +31,5 @@ public class CityActionResults {
     public static final ActionFailureResult BUILDING_NOT_FOUND = new ActionFailureResult(L10nCity.BUILDING_NOT_FOUND);
     public static final ActionFailureResult NOT_ENOUGH_MONEY = new ActionFailureResult(L10nCivilization.NOT_ENOUGH_MONEY);
     public static final ActionFailureResult CITY_NOT_FOUND = new ActionFailureResult(L10nCity.CITY_NOT_FOUND);
-    public static final ActionFailureResult CITY_CANT_TAKE_UNIT = new ActionFailureResult(L10nCity.CITY_CANT_TAKE_UNIT);
+    public static final ActionFailureResult CITY_CANT_PLACE_UNIT = new ActionFailureResult(L10nCity.CITY_CANT_PLACE_UNIT);
 }

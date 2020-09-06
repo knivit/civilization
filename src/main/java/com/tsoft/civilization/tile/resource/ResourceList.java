@@ -1,15 +1,9 @@
-package com.tsoft.civilization.tile.util;
+package com.tsoft.civilization.tile.resource;
 
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.tile.feature.coast.Coast;
 import com.tsoft.civilization.tile.base.grassland.Grassland;
 import com.tsoft.civilization.tile.feature.TerrainFeature;
-import com.tsoft.civilization.tile.resource.AbstractResource;
-import com.tsoft.civilization.tile.resource.Aluminium;
-import com.tsoft.civilization.tile.resource.Iron;
-import com.tsoft.civilization.tile.resource.Oil;
-import com.tsoft.civilization.tile.resource.ResourceType;
-import com.tsoft.civilization.tile.resource.Uranium;
 import com.tsoft.civilization.world.generator.Climate;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.util.Point;

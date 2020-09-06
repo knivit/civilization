@@ -9,7 +9,7 @@ import com.tsoft.civilization.web.util.ResponseCode;
 import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.state.Worlds;
-import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.civilization.Civilization;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

@@ -16,7 +16,7 @@ public class UnmodifiableUnitList extends UnmodifiableList<AbstractUnit<?>> impl
     }
 
     @Override
-    public AbstractUnit<?> findByClassUuid(String classUuid) {
+    public UnitCollection findByClassUuid(String classUuid) {
         return units.findByClassUuid(classUuid);
     }
 
@@ -73,16 +73,6 @@ public class UnmodifiableUnitList extends UnmodifiableList<AbstractUnit<?>> impl
     @Override
     public UnitCollection getUnitsWithActionsAvailable() {
         return units.getUnitsWithActionsAvailable();
-    }
-
-    @Override
-    public void resetPassScore() {
-        units.resetPassScore();
-    }
-
-    @Override
-    public int getGoldKeepingExpenses() {
-        return units.getGoldKeepingExpenses();
     }
 
     @Override

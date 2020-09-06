@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web.state;
 
-import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.World;
 
 import java.util.Date;

@@ -1,18 +1,22 @@
-package com.tsoft.civilization.building;
+package com.tsoft.civilization.building.monument;
 
+import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.util.BuildingType;
 import com.tsoft.civilization.improvement.City;
-import com.tsoft.civilization.technology.Technology;
-import com.tsoft.civilization.world.Civilization;
-import com.tsoft.civilization.web.view.building.MarketView;
+import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.web.view.building.MonumentView;
 import com.tsoft.civilization.world.economic.Supply;
 
 import java.util.UUID;
 
-public class Market extends AbstractBuilding<MarketView> {
+public class Monument extends AbstractBuilding<MonumentView> {
+    public static final Monument STUB = new Monument(null);
     public static final String CLASS_UUID = UUID.randomUUID().toString();
+    private static final MonumentView VIEW = new MonumentView();
 
-    private static final MarketView VIEW = new MarketView();
+    public Monument(City city) {
+        super(city);
+    }
 
     @Override
     public BuildingType getBuildingType() {
@@ -20,18 +24,12 @@ public class Market extends AbstractBuilding<MarketView> {
     }
 
     /**
-     * The Market significantly increases a city's output of gold.
+     * The Monument increases the Culture of a city speeding the growth of the city's territory
+     * and the civilization's acquisition of Social Policies.
      */
     @Override
     public Supply getSupply(City city) {
-        Supply tileScore = city.getTilesSupply();
-        int gold = tileScore.getGold();
-        if (gold > 0) {
-            gold = (int) Math.round(gold * 0.25);
-            if (gold == 0) gold = 1;
-        }
-
-        return Supply.builder().gold(2 + gold).build();
+        return Supply.builder().gold(-1).culture(2).build();
     }
 
     @Override
@@ -41,21 +39,21 @@ public class Market extends AbstractBuilding<MarketView> {
 
     @Override
     public int getProductionCost() {
-        return 120;
+        return 40;
     }
 
     @Override
     public boolean checkEraAndTechnology(Civilization civilization) {
-        return civilization.isResearched(Technology.CURRENCY);
+        return true;
     }
 
     @Override
     public int getGoldCost() {
-        return 580;
+        return 280;
     }
 
     @Override
-    public MarketView getView() {
+    public MonumentView getView() {
         return VIEW;
     }
 

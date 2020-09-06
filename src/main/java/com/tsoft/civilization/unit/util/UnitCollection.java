@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.List;
 
 public interface UnitCollection extends List<AbstractUnit<?>> {
-    AbstractUnit<?> findByClassUuid(String uuid);
+    UnitCollection findByClassUuid(String uuid);
 
     int getUnitClassCount(Class<? extends AbstractUnit<?>> unitClass);
 
@@ -31,10 +31,6 @@ public interface UnitCollection extends List<AbstractUnit<?>> {
     UnitCollection getUnitsAtLocations(Collection<Point> locations);
 
     UnitCollection getUnitsWithActionsAvailable();
-
-    void resetPassScore();
-
-    int getGoldKeepingExpenses();
 
     void sortByName();
 }

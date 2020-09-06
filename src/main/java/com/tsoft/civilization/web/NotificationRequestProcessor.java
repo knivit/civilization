@@ -5,9 +5,9 @@ import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.NumberUtil;
 import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.util.ContentType;
-import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.World;
-import com.tsoft.civilization.world.util.Event;
+import com.tsoft.civilization.world.event.Event;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

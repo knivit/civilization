@@ -21,13 +21,10 @@ public class UnitList extends ArrayList<AbstractUnit<?>> implements UnitCollecti
     }
 
     @Override
-    public AbstractUnit<?> findByClassUuid(String classUuid) {
-        for (AbstractUnit<?> unit : this) {
-            if (unit.getClassUuid().equals(classUuid)) {
-                return unit;
-            }
-        }
-        return null;
+    public UnitCollection findByClassUuid(String classUuid) {
+        UnitCollection list = new UnitList();
+        stream().filter(u -> u.getClassUuid().equals(classUuid)).forEach(list::add);
+        return list;
     }
 
     @Override
@@ -135,22 +132,6 @@ public class UnitList extends ArrayList<AbstractUnit<?>> implements UnitCollecti
             }
         }
         return units;
-    }
-
-    @Override
-    public void resetPassScore() {
-        for (AbstractUnit<?> unit : this) {
-            unit.step();
-        }
-    }
-
-    @Override
-    public int getGoldKeepingExpenses() {
-        int goldExpenses = 0;
-        for (AbstractUnit<?> unit : this) {
-            goldExpenses += unit.getGoldUnitKeepingExpenses();
-        }
-        return goldExpenses;
     }
 
     @Override

@@ -4,7 +4,7 @@ import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.web.view.unit.WorkersView;
-import com.tsoft.civilization.world.Civilization;
+import com.tsoft.civilization.civilization.Civilization;
 
 import java.util.UUID;
 
@@ -26,7 +26,7 @@ import java.util.UUID;
  */
 public class Workers extends AbstractUnit<WorkersView> {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
-    public static final Workers INSTANCE = new Workers();
+    public static final Workers STUB = new Workers();
 
     private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
             .setStrength(0);

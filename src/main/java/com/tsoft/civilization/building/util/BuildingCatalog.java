@@ -1,6 +1,12 @@
 package com.tsoft.civilization.building.util;
 
 import com.tsoft.civilization.building.*;
+import com.tsoft.civilization.building.granary.Granary;
+import com.tsoft.civilization.building.market.Market;
+import com.tsoft.civilization.building.monument.Monument;
+import com.tsoft.civilization.building.palace.Palace;
+import com.tsoft.civilization.building.settlement.Settlement;
+import com.tsoft.civilization.building.walls.Walls;
 
 public class BuildingCatalog {
     private static final BuildingCollection buildingsCatalog = new BuildingList();
@@ -8,12 +14,12 @@ public class BuildingCatalog {
 
     // Read-only objects, this map is to use as a catalog only
     static {
-        buildingsCatalog.add(new Granary());
-        buildingsCatalog.add(new Market());
-        buildingsCatalog.add(new Monument());
-        buildingsCatalog.add(new Palace());
-        buildingsCatalog.add(new Settlement());
-        buildingsCatalog.add(new Walls());
+        buildingsCatalog.add(Granary.STUB);
+        buildingsCatalog.add(Market.STUB);
+        buildingsCatalog.add(Monument.STUB);
+        buildingsCatalog.add(Palace.STUB);
+        buildingsCatalog.add(Settlement.STUB);
+        buildingsCatalog.add(Walls.STUB);
     }
 
     private BuildingCatalog() {

@@ -125,11 +125,23 @@ public class L10nWorld {
             .set("en", "New Civilization %s has been founded")
             .set("ru", "\u0411\u044b\u043b\u0430 \u043e\u0441\u043d\u043e\u0432\u0430\u043d\u0430 %s \u043d\u043e\u0432\u0430\u044f \u0446\u0438\u0432\u0438\u043b\u0438\u0437\u0430\u0446\u0438\u044f");
 
+    public static L10nMap DESTROY_CIVILIZATION_EVENT = new L10nMap()
+        .set("en", "Civilization %s has been destroyed")
+        .set("ru", "Цивилизация %s уничтожена");
+
+    public static L10nMap MOVE_START_EVENT = new L10nMap()
+        .set("en", "Civilization %s move begins")
+        .set("ru", "Цивилизация %s начинает свой ход");
+
     public static L10nMap MOVE_DONE_EVENT = new L10nMap()
             .set("en", "Civilization %s has made its move")
             .set("ru", "\u0426\u0438\u0432\u0438\u043b\u0438\u0437\u0430\u0446\u0438\u044f %s \u0441\u0434\u0435\u043b\u0430\u043b\u0430 \u0445\u043e\u0434");
 
-    public static L10nMap NEW_YEAR_EVENT = new L10nMap()
-            .set("en", "All civilizations has moved into new Year %d !")
-            .set("ru", "\u0412\u0441\u0435 \u0446\u0438\u0432\u0438\u043b\u0438\u0437\u0430\u0446\u0438\u0438 \u0432\u043e\u0448\u043b\u0438 \u0432 \u041d\u043e\u0432\u044b\u0439 \u0413\u043e\u0434 %d !");
+    public static L10nMap NEW_YEAR_START_EVENT = new L10nMap()
+        .set("en", "Started new Year %d !")
+        .set("ru", "Начался новый год %d !");
+
+    public static L10nMap NEW_YEAR_COMPLETE_EVENT = new L10nMap()
+            .set("en", "All civilizations has moved into new Year %d")
+            .set("ru", "\u0412\u0441\u0435 \u0446\u0438\u0432\u0438\u043b\u0438\u0437\u0430\u0446\u0438\u0438 \u0432\u043e\u0448\u043b\u0438 \u0432 \u041d\u043e\u0432\u044b\u0439 \u0413\u043e\u0434 %d");
 }
