@@ -2,10 +2,10 @@ package com.tsoft.civilization.web.ajax.action.world;
 
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.util.NumberUtil;
-import com.tsoft.civilization.web.util.ContentType;
-import com.tsoft.civilization.web.util.Request;
-import com.tsoft.civilization.web.util.Response;
-import com.tsoft.civilization.web.util.ResponseCode;
+import com.tsoft.civilization.web.response.ContentType;
+import com.tsoft.civilization.web.request.Request;
+import com.tsoft.civilization.web.response.Response;
+import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.state.Worlds;

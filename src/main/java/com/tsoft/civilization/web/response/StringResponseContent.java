@@ -1,4 +1,6 @@
-package com.tsoft.civilization.web.util;
+package com.tsoft.civilization.web.response;
+
+import com.tsoft.civilization.web.response.AbstractResponseContent;
 
 import java.nio.charset.StandardCharsets;
 

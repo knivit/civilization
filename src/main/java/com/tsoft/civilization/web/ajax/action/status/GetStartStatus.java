@@ -1,13 +1,12 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
 import com.tsoft.civilization.L10n.L10nServer;
-import com.tsoft.civilization.web.util.ContentType;
-import com.tsoft.civilization.web.util.Request;
-import com.tsoft.civilization.web.util.Response;
-import com.tsoft.civilization.web.util.ResponseCode;
+import com.tsoft.civilization.web.response.ContentType;
+import com.tsoft.civilization.web.request.Request;
+import com.tsoft.civilization.web.response.Response;
+import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GetStartStatus extends AbstractAjaxRequest {

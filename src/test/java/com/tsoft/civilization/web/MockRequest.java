@@ -1,17 +1,21 @@
 package com.tsoft.civilization.web;
 
-import com.tsoft.civilization.web.util.Request;
+import com.tsoft.civilization.web.request.Request;
 
-public class MockRequest extends Request {
-    public static MockRequest newInstance() {
-        return new MockRequest("127.0.0.1", 80);
-    }
+import java.util.HashMap;
+import java.util.Map;
 
-    public MockRequest(String clientIP, int clientPort) {
-        super(clientIP, clientPort);
-    }
+public class MockRequest {
+    public static Request newInstance(String ... params) {
+        Map<String, String> paramsMap = new HashMap<>();
+        for (int i = 0; i < params.length; i += 2) {
+            paramsMap.put(params[i], params[i + 1]);
+        }
 
-    public void put(String paramName, String paramValue) {
-        getParams().put(paramName, paramValue);
+        return Request.builder()
+            .clientIp("127.0.0.1")
+            .clientPort(80)
+            .params(paramsMap)
+            .build();
     }
 }

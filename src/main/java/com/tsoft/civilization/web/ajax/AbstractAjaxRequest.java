@@ -2,8 +2,8 @@ package com.tsoft.civilization.web.ajax;
 
 import com.tsoft.civilization.L10n.L10nClient;
 import com.tsoft.civilization.util.Format;
-import com.tsoft.civilization.web.util.Request;
-import com.tsoft.civilization.web.util.Response;
+import com.tsoft.civilization.web.request.Request;
+import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.civilization.Civilization;

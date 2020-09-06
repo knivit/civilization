@@ -1,5 +1,6 @@
-package com.tsoft.civilization.web.util;
+package com.tsoft.civilization.web.response;
 
+import com.tsoft.civilization.web.response.AbstractResponseContent;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;

@@ -4,7 +4,7 @@ import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.NumberUtil;
 import com.tsoft.civilization.web.state.ClientSession;
-import com.tsoft.civilization.web.util.ContentType;
+import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.world.event.Event;

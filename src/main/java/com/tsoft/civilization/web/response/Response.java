@@ -1,4 +1,4 @@
-package com.tsoft.civilization.web.util;
+package com.tsoft.civilization.web.response;
 
 import com.tsoft.civilization.L10n.L10nMap;
 import com.tsoft.civilization.web.state.ClientSession;

@@ -2,10 +2,11 @@ package com.tsoft.civilization.web;
 
 import com.tsoft.civilization.L10n.L10nMap;
 import com.tsoft.civilization.util.Format;
+import com.tsoft.civilization.web.request.RequestReader;
 import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.state.Sessions;
-import com.tsoft.civilization.web.util.Request;
-import com.tsoft.civilization.web.util.Response;
+import com.tsoft.civilization.web.request.Request;
+import com.tsoft.civilization.web.response.Response;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
@@ -16,6 +17,8 @@ import java.nio.charset.StandardCharsets;
 
 @Slf4j
 public class ServerClient {
+    private final RequestReader requestReader = new RequestReader();
+
     private OutputStream outputStream;
 
     private Request request;
@@ -23,19 +26,17 @@ public class ServerClient {
     public void readRequest(Socket socket) throws IOException {
         // Get the client's address
         InetSocketAddress clientAddress = (InetSocketAddress)socket.getRemoteSocketAddress();
-        String clientIP = clientAddress.getAddress().toString();
+        String clientIp = clientAddress.getAddress().toString();
         int clientPort = clientAddress.getPort();
-        if (clientIP != null) {
-            clientIP = clientIP.substring(1);
+        if (clientIp != null) {
+            clientIp = clientIp.substring(1);
         }
 
         BufferedReader inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         outputStream = socket.getOutputStream();
 
         // Create a Request
-        request = new Request(clientIP, clientPort);
-        request.readHeaders(inputStream);
-        request.readPostData(inputStream);
+        request = requestReader.readRequest(clientIp, clientPort, inputStream);
 
         // Set properties as a client is needed
         if ("keep-alive".equals(request.getHeader("Connection"))) {
@@ -45,23 +46,18 @@ public class ServerClient {
 
     public void processRequest() {
         switch (request.getRequestType()) {
-            case GET: {
+            case GET -> {
                 if ("GetNotifications".equals(request.getRequestUrl())) {
                     NotificationRequestProcessor.processRequest(this);
                 } else {
                     GetRequestProcessor.processRequest(this);
                 }
-                break;
             }
-
-            case POST: {
+            case POST -> {
                 PostRequestProcessor.processRequest(this);
-                break;
             }
-
-            default: {
+            default -> {
                 log.info("Unknown request type {}", request.getRequestType());
-                break;
             }
         }
     }
@@ -85,7 +81,7 @@ public class ServerClient {
             // java.net.SocketException: Broken pipe - client disconnected
             return false;
         } catch (IOException ex) {
-            log.error("An error occurred during sending a response. Request: " + request.getParamsAsString(), ex);
+            log.error("An error occurred during sending a response. Request: {}", request.getParamsAsString(), ex);
         }
         return false;
     }

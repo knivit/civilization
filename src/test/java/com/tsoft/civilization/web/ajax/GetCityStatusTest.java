@@ -6,8 +6,9 @@ import com.tsoft.civilization.unit.military.Warriors;
 import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.MockRequest;
-import com.tsoft.civilization.web.util.Response;
-import com.tsoft.civilization.web.util.ResponseCode;
+import com.tsoft.civilization.web.request.Request;
+import com.tsoft.civilization.web.response.Response;
+import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.state.Worlds;
@@ -42,8 +43,7 @@ public class GetCityStatusTest {
         Worlds.add(mockWorld);
         session.setWorldAndCivilizationIds(c1);
 
-        MockRequest request = MockRequest.newInstance();
-        request.put("city", city1.getId());
+        Request request = MockRequest.newInstance("city", city1.getId());
 
         Response response = ajaxRequest.getJSON(request);
         assertEquals(ResponseCode.OK, response.getErrorCode());
@@ -60,8 +60,7 @@ public class GetCityStatusTest {
         Worlds.add(mockWorld);
         session.setWorldAndCivilizationIds(c1);
 
-        MockRequest request = MockRequest.newInstance();
-        request.put("city", city1.getId());
+        Request request = MockRequest.newInstance("city", city1.getId());
 
         Response response = ajaxRequest.getJSON(request);
         assertEquals(ResponseCode.OK, response.getErrorCode());
@@ -80,8 +79,7 @@ public class GetCityStatusTest {
         Worlds.add(mockWorld);
         session.setWorldAndCivilizationIds(c1);
 
-        MockRequest mockRequest = MockRequest.newInstance();
-        mockRequest.put("city", city2.getId());
+        Request mockRequest = MockRequest.newInstance("city", city2.getId());
 
         Response response = ajaxRequest.getJSON(mockRequest);
         assertEquals(ResponseCode.OK, response.getErrorCode());

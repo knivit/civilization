@@ -5,8 +5,9 @@ import com.tsoft.civilization.building.palace.Palace;
 import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.MockRequest;
-import com.tsoft.civilization.web.util.Response;
-import com.tsoft.civilization.web.util.ResponseCode;
+import com.tsoft.civilization.web.request.Request;
+import com.tsoft.civilization.web.response.Response;
+import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.state.Worlds;
@@ -36,8 +37,7 @@ public class GetBuildingStatusTest {
         Worlds.add(mockWorld);
         session.setWorldAndCivilizationIds(c1);
 
-        MockRequest request = MockRequest.newInstance();
-        request.put("building", city1.getBuildings().findByClassUuid(Palace.CLASS_UUID).getId());
+        Request request = MockRequest.newInstance("building", city1.getBuildings().findByClassUuid(Palace.CLASS_UUID).getId());
 
         Response response = ajaxRequest.getJSON(request);
         assertEquals(ResponseCode.OK, response.getErrorCode());
@@ -55,8 +55,7 @@ public class GetBuildingStatusTest {
         Worlds.add(mockWorld);
         session.setWorldAndCivilizationIds(c1);
 
-        MockRequest request = MockRequest.newInstance();
-        request.put("building", city2.getBuildings().findByClassUuid(Palace.CLASS_UUID).getId());
+        Request request = MockRequest.newInstance("building", city2.getBuildings().findByClassUuid(Palace.CLASS_UUID).getId());
 
         Response response = ajaxRequest.getJSON(request);
         assertEquals(ResponseCode.BAD_REQUEST, response.getErrorCode());

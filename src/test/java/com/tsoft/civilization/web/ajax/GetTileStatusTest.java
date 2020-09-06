@@ -6,8 +6,9 @@ import com.tsoft.civilization.unit.civil.Workers;
 import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.MockRequest;
-import com.tsoft.civilization.web.util.Response;
-import com.tsoft.civilization.web.util.ResponseCode;
+import com.tsoft.civilization.web.request.Request;
+import com.tsoft.civilization.web.response.Response;
+import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.state.Worlds;
@@ -39,9 +40,7 @@ public class GetTileStatusTest {
         Worlds.add(mockWorld);
         session.setWorldAndCivilizationIds(c1);
 
-        MockRequest request = MockRequest.newInstance();
-        request.put("col", "2");
-        request.put("row", "0");
+        Request request = MockRequest.newInstance("col", "2", "row", "0");
 
         Response response = ajaxRequest.getJSON(request);
         assertEquals(ResponseCode.OK, response.getErrorCode());
@@ -60,9 +59,7 @@ public class GetTileStatusTest {
         Worlds.add(mockWorld);
         session.setWorldAndCivilizationIds(c2);
 
-        MockRequest request = MockRequest.newInstance();
-        request.put("col", "2");
-        request.put("row", "0");
+        Request request = MockRequest.newInstance("col", "2", "row", "0");
 
         Response response = ajaxRequest.getJSON(request);
         assertEquals(ResponseCode.OK, response.getErrorCode());

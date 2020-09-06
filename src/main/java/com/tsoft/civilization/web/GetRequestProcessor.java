@@ -2,8 +2,8 @@ package com.tsoft.civilization.web;
 
 import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.state.Sessions;
-import com.tsoft.civilization.web.util.Response;
-import com.tsoft.civilization.web.util.ResponseCode;
+import com.tsoft.civilization.web.response.Response;
+import com.tsoft.civilization.web.response.ResponseCode;
 
 public class GetRequestProcessor {
     private GetRequestProcessor() { }
@@ -18,7 +18,7 @@ public class GetRequestProcessor {
 
             // Create an user's session if a cookie is empty or stale
             String sessionId = client.getRequest().getSessionId();
-            String clientIP = client.getRequest().getClientIP();
+            String clientIP = client.getRequest().getClientIp();
             String userAgent = client.getRequest().getUserAgent();
             ClientSession session = Sessions.findOrCreateNewAndSetAsCurrent(sessionId, clientIP, userAgent);
             if (!session.getSessionId().equals(sessionId)) {

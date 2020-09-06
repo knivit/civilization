@@ -1,4 +1,4 @@
-package com.tsoft.civilization.web.util;
+package com.tsoft.civilization.web.response;
 
 public final class ResponseCode {
     public static final String OK = "200 OK";

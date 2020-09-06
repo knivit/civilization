@@ -3,7 +3,7 @@ package com.tsoft.civilization.web;
 import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.web.state.ClientSession;
-import com.tsoft.civilization.web.util.Response;
+import com.tsoft.civilization.web.response.Response;
 
 public class PostRequestProcessor {
     private PostRequestProcessor() { }

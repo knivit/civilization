@@ -1,4 +1,4 @@
-package com.tsoft.civilization.web.util;
+package com.tsoft.civilization.web.response;
 
 public final class ContentType {
     public static final String APPLICATION_JSON = "application/json; charset=utf-8";

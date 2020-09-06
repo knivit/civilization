@@ -1,4 +1,4 @@
-package com.tsoft.civilization.web.util;
+package com.tsoft.civilization.web.response;
 
 public abstract class AbstractResponseContent {
     public abstract int getLength();

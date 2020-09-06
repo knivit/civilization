@@ -5,10 +5,10 @@ import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.util.Format;
-import com.tsoft.civilization.web.util.ContentType;
-import com.tsoft.civilization.web.util.Request;
-import com.tsoft.civilization.web.util.Response;
-import com.tsoft.civilization.web.util.ResponseCode;
+import com.tsoft.civilization.web.response.ContentType;
+import com.tsoft.civilization.web.request.Request;
+import com.tsoft.civilization.web.response.Response;
+import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
 

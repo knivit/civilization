@@ -3,8 +3,9 @@ package com.tsoft.civilization.web.ajax;
 import com.tsoft.civilization.MockWorld;
 
 import com.tsoft.civilization.web.MockRequest;
-import com.tsoft.civilization.web.util.Response;
-import com.tsoft.civilization.web.util.ResponseCode;
+import com.tsoft.civilization.web.request.Request;
+import com.tsoft.civilization.web.response.Response;
+import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.state.Worlds;
@@ -34,7 +35,7 @@ public class GetCivilizationsTest {
         Worlds.add(mockWorld);
         session.setWorldAndCivilizationIds(c1);
 
-        MockRequest request = MockRequest.newInstance();
+        Request request = MockRequest.newInstance();
 
         Response response = ajaxRequest.getJSON(request);
         assertEquals(ResponseCode.OK, response.getErrorCode());

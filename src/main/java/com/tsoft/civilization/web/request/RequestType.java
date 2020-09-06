@@ -1,4 +1,4 @@
-package com.tsoft.civilization.web.util;
+package com.tsoft.civilization.web.request;
 
 public enum RequestType {
     GET,
