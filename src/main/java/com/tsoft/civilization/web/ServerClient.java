@@ -44,6 +44,8 @@ public class ServerClient {
     }
 
     public void processRequest() {
+        log.info("Started to serve {}", request);
+
         if (request.getRequestType() == null) {
             return;
         }

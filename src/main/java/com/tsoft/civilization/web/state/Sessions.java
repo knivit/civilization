@@ -14,6 +14,7 @@ public class Sessions {
             session = new ClientSession(ip, userAgent);
             sessions.put(session.getSessionId(), session);
         }
+
         currentSession.set(session);
         return session;
     }

@@ -1,8 +1,9 @@
 package com.tsoft.civilization.web.view.building;
 
 import com.tsoft.civilization.L10n.building.L10nMarket;
+import com.tsoft.civilization.building.market.Market;
 
-public class MarketView extends AbstractBuildingView {
+public class MarketView extends AbstractBuildingView<Market> {
     @Override
     public String getLocalizedName() {
         return L10nMarket.NAME.getLocalized();

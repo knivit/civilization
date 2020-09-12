@@ -1,8 +1,9 @@
 package com.tsoft.civilization.web.view.building;
 
 import com.tsoft.civilization.L10n.building.L10nGranary;
+import com.tsoft.civilization.building.granary.Granary;
 
-public class GranaryView extends AbstractBuildingView {
+public class GranaryView extends AbstractBuildingView<Granary> {
     @Override
     public String getLocalizedName() {
         return L10nGranary.NAME.getLocalized();

@@ -1,8 +1,9 @@
 package com.tsoft.civilization.web.view.building;
 
 import com.tsoft.civilization.L10n.building.L10nPalace;
+import com.tsoft.civilization.building.palace.Palace;
 
-public class PalaceView extends AbstractBuildingView {
+public class PalaceView extends AbstractBuildingView<Palace> {
     @Override
     public String getLocalizedName() {
         return L10nPalace.NAME.getLocalized();

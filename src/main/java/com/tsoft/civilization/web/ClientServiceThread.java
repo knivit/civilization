@@ -8,14 +8,10 @@ import java.time.Instant;
 
 @Slf4j
 public class ClientServiceThread implements Runnable {
-    private Socket socket;
-    private ServerClient client;
+    private final Socket socket;
 
-    public ClientServiceThread(Socket socket) throws Throwable {
+    public ClientServiceThread(Socket socket) {
         this.socket = socket;
-
-        client = new ServerClient();
-        client.readRequest(socket);
     }
 
     @Override
@@ -23,10 +19,11 @@ public class ClientServiceThread implements Runnable {
         Instant tick = Instant.now();
         try {
             try {
-                log.info("Started to serve {}", client.getRequest());
+                ServerClient client = new ServerClient();
+                client.readRequest(socket);
                 client.processRequest();
             } catch (Throwable ex) {
-                log.error("Error during {} processing", client.getRequest(), ex);
+                log.error("Error during a request processing", ex);
             } finally {
                 try {
                     socket.close();
@@ -35,7 +32,7 @@ public class ClientServiceThread implements Runnable {
                 }
             }
         } finally {
-            log.debug("Work is done, took {} (ms)\n", Duration.between(tick, Instant.now()));
+            log.debug("Work is done, took {} (ms)", Duration.between(tick, Instant.now()));
         }
     }
 
