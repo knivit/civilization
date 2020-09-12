@@ -2,7 +2,7 @@ package com.tsoft.civilization.web.ajax;
 
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.building.palace.Palace;
-import com.tsoft.civilization.improvement.City;
+import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.MockRequest;
 import com.tsoft.civilization.web.request.Request;

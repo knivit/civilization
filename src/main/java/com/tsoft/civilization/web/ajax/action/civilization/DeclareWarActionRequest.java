@@ -2,7 +2,7 @@ package com.tsoft.civilization.web.ajax.action.civilization;
 
 import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.action.civilization.DeclareWarAction;
+import com.tsoft.civilization.civilization.action.DeclareWarAction;
 import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.Response;

@@ -1,7 +1,7 @@
 package com.tsoft.civilization.tile.feature;
 
 import com.tsoft.civilization.combat.HasCombatStrength;
-import com.tsoft.civilization.improvement.City;
+import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.feature.atoll.Atoll;
 import com.tsoft.civilization.tile.feature.fallout.Fallout;
 import com.tsoft.civilization.tile.feature.floodplain.FloodPlain;
@@ -11,7 +11,7 @@ import com.tsoft.civilization.tile.feature.ice.Ice;
 import com.tsoft.civilization.tile.feature.jungle.Jungle;
 import com.tsoft.civilization.tile.feature.marsh.Marsh;
 import com.tsoft.civilization.tile.feature.oasis.Oasis;
-import com.tsoft.civilization.unit.military.Archers;
+import com.tsoft.civilization.unit.military.archers.Archers;
 
 import java.util.HashMap;
 import java.util.Map;

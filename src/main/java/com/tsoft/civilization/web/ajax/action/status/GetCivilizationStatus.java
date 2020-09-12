@@ -5,11 +5,11 @@ import com.tsoft.civilization.L10n.L10nCity;
 import com.tsoft.civilization.L10n.L10nCivilization;
 import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.L10n.unit.L10nUnit;
-import com.tsoft.civilization.action.civilization.DeclareWarAction;
-import com.tsoft.civilization.improvement.City;
+import com.tsoft.civilization.civilization.action.DeclareWarAction;
+import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityCollection;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.util.UnitCollection;
+import com.tsoft.civilization.unit.UnitCollection;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.response.ContentType;
 

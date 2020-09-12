@@ -1,8 +1,7 @@
 package com.tsoft.civilization.improvement.city;
 
-import com.tsoft.civilization.action.unit.AttackAction;
+import com.tsoft.civilization.unit.action.AttackAction;
 import com.tsoft.civilization.building.AbstractBuilding;
-import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.util.Point;
 
 import java.util.ArrayList;

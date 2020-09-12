@@ -3,7 +3,6 @@ package com.tsoft.civilization.improvement;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.web.view.improvement.AbstractImprovementView;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.world.economic.Supply;

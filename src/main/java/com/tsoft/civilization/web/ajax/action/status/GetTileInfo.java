@@ -11,11 +11,11 @@ import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.util.UnitCollection;
+import com.tsoft.civilization.unit.UnitCollection;
 import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
-import com.tsoft.civilization.web.view.tile.base.AbstractTileView;
+import com.tsoft.civilization.tile.base.AbstractTileView;
 import com.tsoft.civilization.civilization.Civilization;
 
 public class GetTileInfo extends AbstractAjaxRequest {

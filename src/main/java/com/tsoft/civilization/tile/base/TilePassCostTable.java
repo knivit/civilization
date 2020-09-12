@@ -15,7 +15,7 @@ import com.tsoft.civilization.tile.base.snow.Snow;
 import com.tsoft.civilization.tile.base.snow.SnowPassCostTable;
 import com.tsoft.civilization.tile.base.tundra.Tundra;
 import com.tsoft.civilization.tile.base.tundra.TundraPassCostTable;
-import com.tsoft.civilization.tile.util.PassCostList;
+import com.tsoft.civilization.tile.PassCostList;
 import com.tsoft.civilization.unit.AbstractUnit;
 
 import java.util.HashMap;

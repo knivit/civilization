@@ -1,14 +1,13 @@
 package com.tsoft.civilization.tile;
 
 import com.tsoft.civilization.util.AbstractDir;
-import com.tsoft.civilization.util.Dir4;
 import com.tsoft.civilization.util.Dir6;
 import com.tsoft.civilization.util.Dir8;
 
 public enum MapType {
-    FOUR_TILES(1, new Dir4(-1, 0)),
-    SIX_TILES(2, new Dir6(-1, 0)),
-    EIGHT_TILES(3, new Dir8(-1, 0));
+
+    SIX_TILES(1, new Dir6(-1, 0)),
+    EIGHT_TILES(2, new Dir8(-1, 0));
 
     private int id;
 

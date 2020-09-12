@@ -1,11 +1,10 @@
 package com.tsoft.civilization.civilization;
 
-import com.tsoft.civilization.improvement.City;
+import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityCollection;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.util.UnitCollection;
+import com.tsoft.civilization.unit.UnitCollection;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.civilization.Civilization;
 
 import java.util.Collection;
 import java.util.List;

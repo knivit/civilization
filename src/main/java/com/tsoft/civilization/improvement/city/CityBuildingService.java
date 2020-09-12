@@ -2,13 +2,12 @@ package com.tsoft.civilization.improvement.city;
 
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.BuildingFactory;
-import com.tsoft.civilization.building.util.BuildingCollection;
-import com.tsoft.civilization.building.util.BuildingList;
+import com.tsoft.civilization.building.BuildingCollection;
+import com.tsoft.civilization.building.BuildingList;
 import com.tsoft.civilization.building.palace.Palace;
 import com.tsoft.civilization.building.settlement.Settlement;
-import com.tsoft.civilization.building.util.UnmodifiableBuildingList;
+import com.tsoft.civilization.building.UnmodifiableBuildingList;
 import com.tsoft.civilization.improvement.CanBeBuilt;
-import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.world.economic.Supply;
 import lombok.extern.slf4j.Slf4j;
 

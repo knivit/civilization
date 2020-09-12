@@ -3,7 +3,7 @@ package com.tsoft.civilization.web.ajax.action.status;
 import com.tsoft.civilization.L10n.L10nCity;
 import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.L10n.L10nTile;
-import com.tsoft.civilization.improvement.City;
+import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityCollection;
 import com.tsoft.civilization.improvement.city.CityList;
 import com.tsoft.civilization.util.Format;

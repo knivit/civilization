@@ -8,9 +8,12 @@ import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.base.grassland.Grassland;
 import com.tsoft.civilization.tile.feature.hill.Hill;
-import com.tsoft.civilization.unit.civil.Workers;
+import com.tsoft.civilization.unit.civil.workers.Workers;
 import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.unit.civil.workers.action.RemoveForestAction;
+import com.tsoft.civilization.unit.civil.workers.action.RemoveHillAction;
+import com.tsoft.civilization.unit.civil.workers.action.WorkersActionResults;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

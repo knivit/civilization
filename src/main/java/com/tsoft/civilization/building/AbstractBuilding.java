@@ -1,12 +1,10 @@
 package com.tsoft.civilization.building;
 
 import com.tsoft.civilization.L10n.building.L10nBuilding;
-import com.tsoft.civilization.building.util.BuildingType;
 import com.tsoft.civilization.improvement.CanBeBuilt;
-import com.tsoft.civilization.improvement.City;
+import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.web.view.building.AbstractBuildingView;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.world.economic.Supply;

@@ -2,7 +2,7 @@ package com.tsoft.civilization.web.ajax.action.city;
 
 import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.action.city.DestroyBuildingAction;
+import com.tsoft.civilization.improvement.city.action.DestroyBuildingAction;
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.web.request.Request;

@@ -2,7 +2,7 @@ package com.tsoft.civilization.world;
 
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.improvement.City;
+import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CitySupplyStrategy;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;

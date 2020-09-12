@@ -6,7 +6,6 @@ import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.base.TileType;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.web.view.tile.feature.AbstractFeatureView;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Constructor;

@@ -2,7 +2,7 @@ package com.tsoft.civilization.web.ajax.action.unit;
 
 import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.action.unit.MoveUnitAction;
+import com.tsoft.civilization.unit.action.MoveUnitAction;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.response.ContentType;

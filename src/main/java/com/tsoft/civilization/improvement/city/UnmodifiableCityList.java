@@ -1,7 +1,6 @@
 package com.tsoft.civilization.improvement.city;
 
 import com.tsoft.civilization.building.AbstractBuilding;
-import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.util.UnmodifiableList;
 

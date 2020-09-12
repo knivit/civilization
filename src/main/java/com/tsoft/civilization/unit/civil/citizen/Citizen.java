@@ -1,7 +1,7 @@
 package com.tsoft.civilization.unit.civil.citizen;
 
 import com.tsoft.civilization.improvement.AbstractImprovement;
-import com.tsoft.civilization.improvement.City;
+import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.economic.Supply;

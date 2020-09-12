@@ -2,9 +2,9 @@ package com.tsoft.civilization.web.ajax.action.status;
 
 import com.tsoft.civilization.L10n.L10nCivilization;
 import com.tsoft.civilization.L10n.L10nServer;
-import com.tsoft.civilization.action.civilization.NextMoveAction;
+import com.tsoft.civilization.civilization.action.NextMoveAction;
 import com.tsoft.civilization.improvement.city.CityCollection;
-import com.tsoft.civilization.unit.util.UnitCollection;
+import com.tsoft.civilization.unit.UnitCollection;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.web.request.Request;

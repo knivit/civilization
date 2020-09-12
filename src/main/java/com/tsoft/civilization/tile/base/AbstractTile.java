@@ -10,7 +10,6 @@ import com.tsoft.civilization.tile.luxury.AbstractLuxury;
 import com.tsoft.civilization.tile.resource.AbstractResource;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.web.view.tile.base.AbstractTileView;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Constructor;

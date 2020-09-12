@@ -1,7 +1,7 @@
 package com.tsoft.civilization.combat;
 
 import com.tsoft.civilization.combat.skill.AbstractSkill;
-import com.tsoft.civilization.unit.util.UnitCollection;
+import com.tsoft.civilization.unit.UnitCollection;
 import com.tsoft.civilization.world.economic.Supply;
 
 public class CombatStrength {

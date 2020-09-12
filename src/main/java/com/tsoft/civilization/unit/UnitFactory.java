@@ -1,10 +1,14 @@
 package com.tsoft.civilization.unit;
 
-import com.tsoft.civilization.unit.civil.*;
-import com.tsoft.civilization.unit.military.Archers;
-import com.tsoft.civilization.unit.military.Warriors;
-import com.tsoft.civilization.unit.util.UnitCollection;
-import com.tsoft.civilization.unit.util.UnitList;
+import com.tsoft.civilization.unit.civil.Settlers.Settlers;
+import com.tsoft.civilization.unit.civil.greatartist.GreatArtist;
+import com.tsoft.civilization.unit.civil.greatengineer.GreatEngineer;
+import com.tsoft.civilization.unit.civil.greatgeneral.GreatGeneral;
+import com.tsoft.civilization.unit.civil.greatmerchant.GreatMerchant;
+import com.tsoft.civilization.unit.civil.greatscientist.GreatScientist;
+import com.tsoft.civilization.unit.civil.workers.Workers;
+import com.tsoft.civilization.unit.military.archers.Archers;
+import com.tsoft.civilization.unit.military.warriors.Warriors;
 import com.tsoft.civilization.civilization.Civilization;
 import lombok.extern.slf4j.Slf4j;
 

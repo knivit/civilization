@@ -1,7 +1,6 @@
 package com.tsoft.civilization.improvement.city;
 
 import com.tsoft.civilization.L10n.L10nCity;
-import com.tsoft.civilization.improvement.City;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.unit.civil.citizen.Citizen;
 import com.tsoft.civilization.unit.civil.citizen.CitizenPlacementTable;

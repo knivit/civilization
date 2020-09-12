@@ -18,13 +18,13 @@ public class GetStartStatus extends AbstractAjaxRequest {
         };
         int n = ThreadLocalRandom.current().nextInt(2);
 
-        String value = new StringBuilder(String.format(
+        String value = String.format(
             "<table id='title_table'>" +
                 "<tr><td><img src='%1$s'/></td></tr>" +
                 "<tr><td>%2$s</td></tr>" +
-            "</table>",
+                "</table>",
             images[n], L10nServer.WELCOME
-        )).toString();
+        );
         return new Response(ResponseCode.OK, value, ContentType.TEXT_HTML);
     }
 }

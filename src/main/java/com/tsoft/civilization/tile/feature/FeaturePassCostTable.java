@@ -23,7 +23,7 @@ import com.tsoft.civilization.tile.feature.mountain.Mountain;
 import com.tsoft.civilization.tile.feature.mountain.MountainPassCostTable;
 import com.tsoft.civilization.tile.feature.oasis.Oasis;
 import com.tsoft.civilization.tile.feature.oasis.OasisPassCostTable;
-import com.tsoft.civilization.tile.util.PassCostList;
+import com.tsoft.civilization.tile.PassCostList;
 import com.tsoft.civilization.unit.AbstractUnit;
 
 import java.util.HashMap;

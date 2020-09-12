@@ -2,10 +2,12 @@ package com.tsoft.civilization.action.city;
 
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.improvement.City;
+import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.improvement.city.action.BuildUnitAction;
+import com.tsoft.civilization.improvement.city.action.CityActionResults;
 import com.tsoft.civilization.technology.Technology;
-import com.tsoft.civilization.unit.military.Archers;
-import com.tsoft.civilization.unit.util.UnitCollection;
+import com.tsoft.civilization.unit.military.archers.Archers;
+import com.tsoft.civilization.unit.UnitCollection;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.economic.SupplyMock;

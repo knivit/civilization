@@ -1,11 +1,13 @@
 package com.tsoft.civilization.action.unit.settlers;
 
 import com.tsoft.civilization.MockWorld;
-import com.tsoft.civilization.improvement.City;
+import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
-import com.tsoft.civilization.unit.civil.Settlers;
+import com.tsoft.civilization.unit.civil.Settlers.Settlers;
 import com.tsoft.civilization.unit.UnitFactory;
+import com.tsoft.civilization.unit.civil.settlers.action.BuildCityAction;
+import com.tsoft.civilization.unit.civil.settlers.action.SettlersActionResults;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
 import org.junit.jupiter.api.Test;

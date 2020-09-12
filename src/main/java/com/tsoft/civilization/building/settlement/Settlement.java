@@ -1,10 +1,9 @@
 package com.tsoft.civilization.building.settlement;
 
 import com.tsoft.civilization.building.AbstractBuilding;
-import com.tsoft.civilization.building.util.BuildingType;
-import com.tsoft.civilization.improvement.City;
+import com.tsoft.civilization.building.BuildingType;
+import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.web.view.building.SettlementView;
 import com.tsoft.civilization.world.economic.Supply;
 
 import java.util.UUID;

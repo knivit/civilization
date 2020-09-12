@@ -10,7 +10,7 @@ import com.tsoft.civilization.tile.feature.TerrainFeature;
 import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
-import com.tsoft.civilization.web.view.tile.feature.AbstractFeatureView;
+import com.tsoft.civilization.tile.feature.AbstractFeatureView;
 
 public class GetFeatureInfo extends AbstractAjaxRequest {
     @Override

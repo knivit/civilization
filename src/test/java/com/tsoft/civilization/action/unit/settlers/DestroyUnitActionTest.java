@@ -1,11 +1,11 @@
 package com.tsoft.civilization.action.unit.settlers;
 
 import com.tsoft.civilization.MockWorld;
-import com.tsoft.civilization.action.unit.DestroyUnitAction;
-import com.tsoft.civilization.action.unit.DestroyUnitResults;
+import com.tsoft.civilization.unit.action.DestroyUnitAction;
+import com.tsoft.civilization.unit.action.DestroyUnitResults;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
-import com.tsoft.civilization.unit.civil.Settlers;
+import com.tsoft.civilization.unit.civil.Settlers.Settlers;
 import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;

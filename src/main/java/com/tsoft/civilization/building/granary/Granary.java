@@ -1,14 +1,13 @@
 package com.tsoft.civilization.building.granary;
 
 import com.tsoft.civilization.building.AbstractBuilding;
-import com.tsoft.civilization.building.util.BuildingType;
-import com.tsoft.civilization.improvement.City;
+import com.tsoft.civilization.building.BuildingType;
+import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.luxury.Bananas;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.web.view.building.GranaryView;
 import com.tsoft.civilization.world.economic.Supply;
 
 import java.util.UUID;

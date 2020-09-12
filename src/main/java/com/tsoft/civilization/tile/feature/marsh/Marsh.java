@@ -3,7 +3,6 @@ package com.tsoft.civilization.tile.feature.marsh;
 import com.tsoft.civilization.tile.feature.TerrainFeature;
 import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.tile.base.TileType;
-import com.tsoft.civilization.web.view.tile.feature.MarshView;
 
 import java.util.UUID;
 

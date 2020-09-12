@@ -1,7 +1,6 @@
 package com.tsoft.civilization.building;
 
-import com.tsoft.civilization.building.util.BuildingCatalog;
-import com.tsoft.civilization.improvement.City;
+import com.tsoft.civilization.improvement.city.City;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Constructor;

@@ -1,12 +1,11 @@
 package com.tsoft.civilization.civilization;
 
-import com.tsoft.civilization.civilization.CivilizationCollection;
-import com.tsoft.civilization.improvement.City;
+import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityCollection;
 import com.tsoft.civilization.improvement.city.CityList;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.util.UnitCollection;
-import com.tsoft.civilization.unit.util.UnitList;
+import com.tsoft.civilization.unit.UnitCollection;
+import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Point;
 
 import java.util.ArrayList;
@@ -74,7 +73,7 @@ public class CivilizationList extends ArrayList<Civilization> implements Civiliz
         }
 
         for (Civilization civilization : this) {
-            if ((excludeCivilization != null) && (civilization.equals(excludeCivilization))) {
+            if (civilization.equals(excludeCivilization)) {
                 continue;
             }
             units.addAll(civilization.getUnitsAtLocation(location));
@@ -86,7 +85,7 @@ public class CivilizationList extends ArrayList<Civilization> implements Civiliz
     public UnitCollection getUnitsAtLocations(Collection<Point> locations, Civilization excludeCivilization) {
         UnitList units = new UnitList();
         for (Civilization civilization : this) {
-            if ((excludeCivilization != null) && (civilization.equals(excludeCivilization))) {
+            if (civilization.equals(excludeCivilization)) {
                 continue;
             }
             units.addAll(civilization.getUnitsAtLocations(locations));
@@ -95,13 +94,13 @@ public class CivilizationList extends ArrayList<Civilization> implements Civiliz
     }
 
     @Override
-    public AbstractUnit getUnitById(String unitId) {
+    public AbstractUnit<?> getUnitById(String unitId) {
         if (unitId == null) {
             return null;
         }
 
         for (Civilization civilization : this) {
-            AbstractUnit unit = civilization.getUnitById(unitId);
+            AbstractUnit<?> unit = civilization.getUnitById(unitId);
             if (unit != null) {
                 return unit;
             }
@@ -109,6 +108,7 @@ public class CivilizationList extends ArrayList<Civilization> implements Civiliz
         return null;
     }
 
+    @Override
     public City getCityById(String cityId) {
         if (cityId == null) {
             return null;
@@ -125,12 +125,6 @@ public class CivilizationList extends ArrayList<Civilization> implements Civiliz
 
     @Override
     public void sortByName() {
-        // sort by name
-        Collections.sort(this, new Comparator<Civilization>() {
-            @Override
-            public int compare(Civilization c1, Civilization c2) {
-                return c1.getView().getLocalizedCivilizationName().compareTo(c2.getView().getLocalizedCivilizationName());
-            }
-        });
+        Collections.sort(this, Comparator.comparing(c -> c.getView().getLocalizedCivilizationName()));
     }
 }
