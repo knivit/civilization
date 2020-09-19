@@ -9,7 +9,7 @@ import com.tsoft.civilization.civilization.action.DeclareWarAction;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityCollection;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.UnitCollection;
+import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.response.ContentType;
 
@@ -124,7 +124,7 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
             return null;
         }
 
-        UnitCollection units = civilization.getUnitsWithActionsAvailable();
+        UnitList<?> units = civilization.getUnitsWithActionsAvailable();
         if (units.isEmpty()) {
             return null;
         }

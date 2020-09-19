@@ -4,7 +4,6 @@ import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.unit.AbstractUnitView;
 import com.tsoft.civilization.unit.civil.greatgeneral.action.CitadelImprovementAction;
 import com.tsoft.civilization.unit.civil.greatgeneral.action.CombatBonusAction;
-import com.tsoft.civilization.unit.civil.greatgeneral.GreatGeneral;
 import com.tsoft.civilization.util.Format;
 
 public class GreatGeneralView extends AbstractUnitView<GreatGeneral> {
@@ -19,7 +18,7 @@ public class GreatGeneralView extends AbstractUnitView<GreatGeneral> {
     }
 
     @Override
-    public String getJSONName() {
+    public String getJsonName() {
         return "GreatGeneral";
     }
 

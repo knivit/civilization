@@ -8,11 +8,9 @@ import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.base.TilePassCostTable;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitFactory;
-import com.tsoft.civilization.unit.civil.Settlers.Settlers;
+import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.unit.military.warriors.Warriors;
-import com.tsoft.civilization.unit.UnitCollection;
 import com.tsoft.civilization.unit.UnitList;
-import com.tsoft.civilization.unit.UnmodifiableUnitList;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.world.economic.Supply;
@@ -27,9 +25,8 @@ public class CivilizationUnitService {
     private final Civilization civilization;
 
     // Active units and destroyed (on this step) units
-    private UnitCollection units = new UnitList();
-    private UnmodifiableUnitList unmodifiableUnits = new UnmodifiableUnitList(units);
-    private UnitCollection destroyedUnits = new UnitList();
+    private final UnitList<?> units = new UnitList<>();
+    private UnitList<?> destroyedUnits = new UnitList<>();
 
     public CivilizationUnitService(Civilization civilization) {
         this.civilization = civilization;
@@ -59,31 +56,31 @@ public class CivilizationUnitService {
         }
     }
 
-    public AbstractUnit<?> getUnitById(String unitId) {
+    public AbstractUnit getUnitById(String unitId) {
         return units.getUnitById(unitId);
     }
 
-    public UnitCollection getUnits() {
-        return unmodifiableUnits;
+    public UnitList<?> getUnits() {
+        return units.unmodifiableList();
     }
 
-    public UnitCollection getUnitsAtLocation(Point location) {
+    public UnitList<?> getUnitsAtLocation(Point location) {
         List<Point> locations = new ArrayList<>(1);
         locations.add(location);
 
         return getUnitsAtLocations(locations);
     }
 
-    public UnitCollection getUnitsAtLocations(Collection<Point> locations) {
+    public UnitList<?> getUnitsAtLocations(Collection<Point> locations) {
         return units.getUnitsAtLocations(locations);
     }
 
-    public UnitCollection getUnitsAround(Point location, int radius) {
+    public UnitList<?> getUnitsAround(Point location, int radius) {
         Collection<Point> locations = world.getLocationsAround(location, radius);
         return getUnitsAtLocations(locations);
     }
 
-    public UnitCollection getUnitsWithActionsAvailable() {
+    public UnitList<?> getUnitsWithActionsAvailable() {
         return units.getUnitsWithActionsAvailable();
     }
 
@@ -95,13 +92,13 @@ public class CivilizationUnitService {
         return attacker;
     }
 
-    public void addUnit(AbstractUnit<?> unit, Point location) {
+    public void addUnit(AbstractUnit unit, Point location) {
         units.add(unit);
         unit.setLocation(location);
         unit.setCivilization(civilization);
     }
 
-    public void removeUnit(AbstractUnit<?> unit) {
+    public void removeUnit(AbstractUnit unit) {
         units.remove(unit);
         destroyedUnits.add(unit);
         unit.setCivilization(null);
@@ -109,13 +106,13 @@ public class CivilizationUnitService {
         world.sendEvent(new Event(Event.UPDATE_WORLD, this, L10nUnit.UNIT_WAS_DESTROYED_EVENT, unit.getView().getLocalizedName()));
     }
 
-    public boolean canBuyUnit(AbstractUnit<?> unit) {
+    public boolean canBuyUnit(AbstractUnit unit) {
         int gold = civilization.getSupply().getGold();
         return gold >= unit.getGoldCost();
     }
 
     public Supply buyUnit(String unitClassUuid, City city) {
-        AbstractUnit<?> unit = UnitFactory.newInstance(unitClassUuid);
+        AbstractUnit unit = UnitFactory.newInstance(unitClassUuid);
         civilization.addUnit(unit, city.getLocation());
 
         int gold = unit.getGoldCost();
@@ -127,19 +124,19 @@ public class CivilizationUnitService {
 
     public int getGoldKeepingExpenses() {
         int goldExpenses = 0;
-        for (AbstractUnit<?> unit : units) {
+        for (AbstractUnit unit : units) {
             goldExpenses += unit.getGoldUnitKeepingExpenses();
         }
         return goldExpenses;
     }
 
     public void resetPassScore() {
-        for (AbstractUnit<?> unit : units) {
+        for (AbstractUnit unit : units) {
             unit.step();
         }
     }
 
     public void clearDestroyedUnits() {
-        destroyedUnits.clear();
+        destroyedUnits = new UnitList<>();
     }
 }

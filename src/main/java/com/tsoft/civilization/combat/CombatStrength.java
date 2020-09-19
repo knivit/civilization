@@ -1,7 +1,7 @@
 package com.tsoft.civilization.combat;
 
 import com.tsoft.civilization.combat.skill.AbstractSkill;
-import com.tsoft.civilization.unit.UnitCollection;
+import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.world.economic.Supply;
 
 public class CombatStrength {
@@ -187,7 +187,7 @@ public class CombatStrength {
     }
 
     private int getGreatGeneralCount(HasCombatStrength unit) {
-        UnitCollection unitsAround = unit.getUnitsAround(2);
+        UnitList<?> unitsAround = unit.getUnitsAround(2);
         return unitsAround.getGreatGeneralCount();
     }
 }

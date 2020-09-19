@@ -6,6 +6,7 @@ import com.tsoft.civilization.L10n.L10nTile;
 import com.tsoft.civilization.L10n.L10nWorld;
 import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
@@ -14,7 +15,6 @@ import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.feature.TerrainFeature;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.UnitCollection;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.web.response.Response;
@@ -52,7 +52,7 @@ public class GetTileStatus extends AbstractAjaxRequest {
     }
 
     private StringBuilder getUnitsInfo(Point location, World world) {
-        UnitCollection units = world.getUnitsAtLocation(location);
+        UnitList<?> units = world.getUnitsAtLocation(location);
         if (units.isEmpty()) {
             return null;
         }

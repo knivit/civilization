@@ -12,7 +12,6 @@ import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationsRelations;
 import com.tsoft.civilization.world.World;
-import com.tsoft.civilization.civilization.CivilizationCollection;
 import com.tsoft.civilization.civilization.CivilizationList;
 
 public class GetCivilizations extends AbstractAjaxRequest {
@@ -35,7 +34,7 @@ public class GetCivilizations extends AbstractAjaxRequest {
     }
 
     private StringBuilder getCivilizations(World world) {
-        CivilizationCollection civilizations = new CivilizationList(world.getCivilizations());
+        CivilizationList civilizations = world.getCivilizations();
 
         civilizations.sortByName();
         Civilization myCivilization = getMyCivilization();

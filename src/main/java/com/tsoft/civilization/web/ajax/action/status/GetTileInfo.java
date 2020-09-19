@@ -4,6 +4,7 @@ import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.L10n.L10nTile;
 import com.tsoft.civilization.L10n.L10nWorld;
 import com.tsoft.civilization.tile.base.TilePassCostTable;
+import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.request.Request;
@@ -11,7 +12,6 @@ import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.UnitCollection;
 import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
@@ -91,7 +91,7 @@ public class GetTileInfo extends AbstractAjaxRequest {
 
     private StringBuilder getTilePassInfo(AbstractTile tile, Civilization civilization) {
         StringBuilder buf = new StringBuilder();
-        UnitCollection units = civilization.getUnits();
+        UnitList<?> units = civilization.getUnits();
         for (AbstractUnit unit : units) {
             int passCost = tile.getPassCost(unit);
             buf.append(Format.text(

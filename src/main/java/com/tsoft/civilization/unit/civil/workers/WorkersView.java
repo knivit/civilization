@@ -18,7 +18,7 @@ public class WorkersView extends AbstractUnitView<Workers> {
     }
 
     @Override
-    public String getJSONName() {
+    public String getJsonName() {
         return "Workers";
     }
 

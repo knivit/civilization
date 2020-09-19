@@ -23,7 +23,7 @@ import java.util.UUID;
  * so you may construct a Worker right away without hampering your new city's starting growth.
  * As civilian units, Workers have no defense and so are captured if attacked by an enemy unit.
  */
-public class Workers extends AbstractUnit<WorkersView> {
+public class Workers extends AbstractUnit {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
     public static final Workers STUB = new Workers();
 

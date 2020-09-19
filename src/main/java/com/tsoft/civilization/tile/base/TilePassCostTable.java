@@ -39,7 +39,7 @@ public final class TilePassCostTable {
         table.put(Tundra.class, TundraPassCostTable.table);
     }
 
-    public static int get(Civilization civilization, AbstractUnit<?> unit, AbstractTile<?> tile) {
+    public static int get(Civilization civilization, AbstractUnit unit, AbstractTile<?> tile) {
         Objects.requireNonNull(unit, "Unit can't be null");
         Objects.requireNonNull(tile, "Tile can't be null");
 

@@ -2,7 +2,7 @@ package com.tsoft.civilization.tile.feature.ice;
 
 import com.tsoft.civilization.unit.civil.citizen.Citizen;
 import com.tsoft.civilization.tile.PassCostList;
-import com.tsoft.civilization.unit.civil.Settlers.Settlers;
+import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.unit.civil.workers.Workers;
 import com.tsoft.civilization.unit.military.archers.Archers;
 import com.tsoft.civilization.unit.military.warriors.Warriors;

@@ -3,7 +3,6 @@ package com.tsoft.civilization.web.ajax.action.status;
 import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.UnitCollection;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.response.ContentType;
@@ -45,7 +44,7 @@ public class GetMyUnits extends AbstractAjaxRequest {
     }
 
     private StringBuilder getUnitsInfo(Civilization civilization) {
-        UnitCollection units = new UnitList(civilization.getUnits());
+        UnitList<?> units = civilization.getUnits();
         if (units.isEmpty()) {
             return Format.text(
                 "<table id='actions_table'><tr><th>$text</th></tr></table>",

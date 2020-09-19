@@ -4,8 +4,8 @@ import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
-import com.tsoft.civilization.unit.civil.Settlers.Settlers;
-import com.tsoft.civilization.unit.UnitCollection;
+import com.tsoft.civilization.unit.UnitList;
+import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.unit.military.warriors.Warriors;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.generator.WorldGeneratorService;
@@ -65,7 +65,7 @@ public class CivilizationTest {
         Civilization civilization = new Civilization(mockWorld, 0);
 
         civilization.addFirstUnits();
-        UnitCollection units = civilization.getUnits();
+        UnitList<?> units = civilization.getUnits();
         assertEquals(2, units.size());
         assertEquals(1, units.getUnitClassCount(Settlers.class));
         assertEquals(1, units.getUnitClassCount(Warriors.class));
@@ -88,7 +88,7 @@ public class CivilizationTest {
         Civilization civilization = new Civilization(mockWorld, 0);
         civilization.addFirstUnits();
 
-        UnitCollection units = civilization.getUnits();
+        UnitList<?> units = civilization.getUnits();
         assertEquals(1, units.size());
         assertEquals(1, units.getUnitClassCount(Settlers.class));
     }

@@ -75,11 +75,11 @@ public abstract class TerrainFeature<V extends AbstractFeatureView> {
         return getStrength() == FEATURE_REMOVED;
     }
 
-    public int getPassCost(AbstractUnit<?> unit) {
+    public int getPassCost(AbstractUnit unit) {
         return getPassCost(unit.getCivilization(), unit);
     }
 
-    public int getPassCost(Civilization civilization, AbstractUnit<?> unit) {
+    public int getPassCost(Civilization civilization, AbstractUnit unit) {
         return FeaturePassCostTable.get(civilization, unit, this);
     }
 

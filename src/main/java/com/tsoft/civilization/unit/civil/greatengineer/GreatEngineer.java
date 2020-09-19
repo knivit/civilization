@@ -16,7 +16,7 @@ import java.util.UUID;
  * Notes: Can sacrifice himself to construct a Manufactory improvement, to hurry production of a unit,
  * building or wonder, or trigger a Golden Age.
  */
-public class GreatEngineer extends AbstractUnit<GreatEngineerView> {
+public class GreatEngineer extends AbstractUnit {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
     public static final GreatEngineer STUB = new GreatEngineer();
 

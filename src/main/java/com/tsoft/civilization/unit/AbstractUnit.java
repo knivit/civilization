@@ -33,7 +33,7 @@ import java.util.*;
  * - All units have 100 hit points.
  */
 @Slf4j
-public abstract class AbstractUnit<V extends AbstractUnitView> implements HasCombatStrength, CanBeBuilt {
+public abstract class AbstractUnit implements HasCombatStrength, CanBeBuilt {
     private String id = UUID.randomUUID().toString();
     private Civilization civilization;
 
@@ -51,7 +51,7 @@ public abstract class AbstractUnit<V extends AbstractUnitView> implements HasCom
     public abstract UnitCategory getUnitCategory();
     public abstract void initPassScore();
     public abstract int getGoldCost();
-    public abstract V getView();
+    public abstract AbstractUnitView getView();
     public abstract String getClassUuid();
 
     // Method of a unit from the catalog (they don't have civilization etc)
@@ -130,7 +130,7 @@ public abstract class AbstractUnit<V extends AbstractUnitView> implements HasCom
     }
 
     @Override
-    public UnitCollection getUnitsAround(int radius) {
+    public UnitList<?> getUnitsAround(int radius) {
         return civilization.getUnitsAround(location, radius);
     }
 
@@ -173,8 +173,8 @@ public abstract class AbstractUnit<V extends AbstractUnitView> implements HasCom
 
         // destroy all units located in that location
         if (destroyOtherUnitsAtLocation) {
-            UnitCollection units = civilization.getWorld().getUnitsAtLocation(location);
-            for (AbstractUnit<?> unit : units) {
+            UnitList<?> units = civilization.getWorld().getUnitsAtLocation(location);
+            for (AbstractUnit unit : units) {
                 // to prevent a recursion
                 if (!unit.equals(this)) {
                     unit.destroyedBy(destroyer, false);
@@ -190,7 +190,7 @@ public abstract class AbstractUnit<V extends AbstractUnitView> implements HasCom
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AbstractUnit<?> that = (AbstractUnit<?>) o;
+        AbstractUnit that = (AbstractUnit) o;
         return Objects.equals(id, that.id);
     }
 

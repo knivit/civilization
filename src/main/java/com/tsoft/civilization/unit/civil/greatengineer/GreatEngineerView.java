@@ -4,7 +4,6 @@ import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.unit.AbstractUnitView;
 import com.tsoft.civilization.unit.civil.greatengineer.action.HurryProductionAction;
 import com.tsoft.civilization.unit.civil.greatengineer.action.ManufactureImprovementAction;
-import com.tsoft.civilization.unit.civil.greatengineer.GreatEngineer;
 import com.tsoft.civilization.util.Format;
 
 public class GreatEngineerView extends AbstractUnitView<GreatEngineer> {
@@ -19,7 +18,7 @@ public class GreatEngineerView extends AbstractUnitView<GreatEngineer> {
     }
 
     @Override
-    public String getJSONName() {
+    public String getJsonName() {
         return "GreatEngineer";
     }
 

@@ -8,11 +8,11 @@ import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityCollection;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.UnitCollection;
+import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.AbstractDir;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.web.view.JSONBlock;
+import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.world.event.Event;
@@ -42,7 +42,7 @@ public class AttackAction {
         }
 
         // For a melee unit, move to the target first, then attack
-        return meleeAttack(attacker, target);
+        return meleeAttack((AbstractUnit)attacker, target);
     }
 
     private static ActionAbstractResult canAttack(HasCombatStrength attacker) {
@@ -72,13 +72,13 @@ public class AttackAction {
         }
 
         // second, see is there a military unit
-        UnitCollection foreignUnits = civilization.getWorld().getUnitsAtLocation(location, civilization);
-        AbstractUnit<?> militaryUnit = foreignUnits.findMilitaryUnit();
+        UnitList<?> foreignUnits = civilization.getWorld().getUnitsAtLocation(location, civilization);
+        AbstractUnit militaryUnit = foreignUnits.findFirstMilitaryUnit();
         if (militaryUnit != null) {
             return militaryUnit;
         }
 
-        return foreignUnits.get(0);
+        return foreignUnits.getFirst();
     }
 
     // No need to move, this is a ranged attack
@@ -108,7 +108,7 @@ public class AttackAction {
         return missileStrength;
     }
 
-    private static ActionAbstractResult meleeAttack(HasCombatStrength attacker, HasCombatStrength target) {
+    private static ActionAbstractResult meleeAttack(AbstractUnit attacker, HasCombatStrength target) {
         // target must be next to the attacker
         AbstractDir dir = attacker.getCivilization().getTilesMap().getDirToLocation(attacker.getLocation(), target.getLocation());
         if (dir == null) {
@@ -116,7 +116,7 @@ public class AttackAction {
         }
 
         // attacker must be able to pass to target's tile
-        UnitMoveResult moveResult = MoveUnitAction.getMoveOnAttackResult((AbstractUnit<?>)attacker, target.getLocation());
+        UnitMoveResult moveResult = MoveUnitAction.getMoveOnAttackResult(attacker, target.getLocation());
         if (moveResult.isFailed()) {
             return AttackActionResults.MELEE_NOT_ENOUGH_PASS_SCORE;
         }
@@ -162,7 +162,7 @@ public class AttackAction {
                 target.destroyedBy(attacker, true);
 
                 // second, move the attacker there
-                ((AbstractUnit<?>)attacker).moveTo(location);
+                ((AbstractUnit)attacker).moveTo(location);
             }
         } else {
             target.getCombatStrength().setStrength(targetStrength);
@@ -225,6 +225,7 @@ public class AttackAction {
         HasCombatStrengthList targetsAround = getPossibleTargetsAround(attacker, attackRadius);
         Civilization myCivilization = attacker.getCivilization();
         World world = myCivilization.getWorld();
+
         for (HasCombatStrength target : targetsAround) {
             Civilization otherCivilization = target.getCivilization();
             if (!myCivilization.equals(otherCivilization) && world.isWar(myCivilization, otherCivilization)) {
@@ -252,7 +253,7 @@ public class AttackAction {
             }
 
             // check we can move to the location
-            UnitMoveResult moveResult = MoveUnitAction.getMoveOnAttackResult((AbstractUnit<?>)attacker, target.getLocation());
+            UnitMoveResult moveResult = MoveUnitAction.getMoveOnAttackResult((AbstractUnit)attacker, target.getLocation());
             if (moveResult.isFailed()) {
                 continue;
             }
@@ -268,7 +269,7 @@ public class AttackAction {
         Collection<Point> locations = world.getLocationsAround(attacker.getLocation(), radius);
 
         CityCollection citiesAround = world.getCitiesAtLocations(locations, attacker.getCivilization());
-        UnitCollection unitsAround = world.getUnitsAtLocations(locations, attacker.getCivilization());
+        UnitList<?> unitsAround = world.getUnitsAtLocations(locations, attacker.getCivilization());
 
         HasCombatStrengthList targets = new HasCombatStrengthList();
         targets.addAll(citiesAround);
@@ -280,7 +281,7 @@ public class AttackAction {
     // Digital Differential Analyzer (DDA) algorithm for rasterization of lines
     // Point 'from' doesn't included
     private static List<Point> getMissilePath(Point from, Point to) {
-        List<Point> path = new ArrayList<Point>();
+        List<Point> path = new ArrayList<>();
 
         int ix1 = from.getX();
         int iy1 = from.getY();
@@ -301,11 +302,11 @@ public class AttackAction {
     }
 
     private static String getClientJSCode(HasCombatStrength attacker) {
-        JSONBlock block = new JSONBlock('\'');
+        JsonBlock block = new JsonBlock('\'');
         block.startArray("locations");
         HasCombatStrengthList targets = getTargetsToAttack(attacker);
         for (HasCombatStrength target : targets) {
-            JSONBlock locBlock = new JSONBlock('\'');
+            JsonBlock locBlock = new JsonBlock('\'');
             locBlock.addParam("col", target.getLocation().getX());
             locBlock.addParam("row", target.getLocation().getY());
             block.addElement(locBlock.getText());

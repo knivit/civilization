@@ -5,19 +5,19 @@ import com.tsoft.civilization.unit.action.CaptureUnitAction;
 import com.tsoft.civilization.unit.action.DestroyUnitAction;
 import com.tsoft.civilization.unit.action.MoveUnitAction;
 import com.tsoft.civilization.util.Format;
-import com.tsoft.civilization.web.view.JSONBlock;
+import com.tsoft.civilization.web.view.JsonBlock;
 
-public abstract class AbstractUnitView<U extends AbstractUnit<?>> {
+public abstract class AbstractUnitView<U extends AbstractUnit> {
     public abstract String getLocalizedName();
     public abstract String getLocalizedDescription();
-    public abstract String getJSONName();
+    public abstract String getJsonName();
     public abstract String getStatusImageSrc();
 
-    public JSONBlock getJSON(U unit) {
-        JSONBlock unitBlock = new JSONBlock();
+    public JsonBlock getJson(AbstractUnit unit) {
+        JsonBlock unitBlock = new JsonBlock();
         unitBlock.addParam("col", unit.getLocation().getX());
         unitBlock.addParam("row", unit.getLocation().getY());
-        unitBlock.addParam("name", unit.getView().getJSONName());
+        unitBlock.addParam("name", unit.getView().getJsonName());
         unitBlock.addParam("civ", unit.getCivilization().getView().getJSONName());
         return unitBlock;
     }

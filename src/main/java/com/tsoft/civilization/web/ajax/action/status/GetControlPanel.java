@@ -4,7 +4,7 @@ import com.tsoft.civilization.L10n.L10nCivilization;
 import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.civilization.action.NextMoveAction;
 import com.tsoft.civilization.improvement.city.CityCollection;
-import com.tsoft.civilization.unit.UnitCollection;
+import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.web.request.Request;
@@ -42,7 +42,7 @@ public class GetControlPanel extends AbstractAjaxRequest {
     }
 
     private StringBuilder getControls(Civilization civilization) {
-        UnitCollection units = civilization.getUnitsWithActionsAvailable();
+        UnitList<?> units = civilization.getUnitsWithActionsAvailable();
         CityCollection cities = civilization.getCitiesWithActionsAvailable();
 
         StringBuilder controls = new StringBuilder();

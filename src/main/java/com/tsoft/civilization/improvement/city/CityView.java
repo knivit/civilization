@@ -4,7 +4,7 @@ import com.tsoft.civilization.L10n.L10nCity;
 import com.tsoft.civilization.L10n.L10nMap;
 import com.tsoft.civilization.unit.action.AttackAction;
 import com.tsoft.civilization.util.Format;
-import com.tsoft.civilization.web.view.JSONBlock;
+import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.improvement.AbstractImprovementView;
 
 public class CityView extends AbstractImprovementView {
@@ -33,8 +33,8 @@ public class CityView extends AbstractImprovementView {
         return name.getLocalized();
     }
 
-    public JSONBlock getJSON(City city) {
-        JSONBlock cityBlock = new JSONBlock();
+    public JsonBlock getJSON(City city) {
+        JsonBlock cityBlock = new JsonBlock();
         cityBlock.addParam("col", city.getLocation().getX());
         cityBlock.addParam("row", city.getLocation().getY());
         cityBlock.addParam("name", city.getView().getLocalizedCityName());
@@ -46,7 +46,7 @@ public class CityView extends AbstractImprovementView {
         // tiles owned by the city
         cityBlock.startArray("locations");
         city.getLocations().forEach(loc -> {
-            JSONBlock locBlock = new JSONBlock();
+            JsonBlock locBlock = new JsonBlock();
             locBlock.addParam("col", loc.getX());
             locBlock.addParam("row", loc.getY());
             cityBlock.addElement(locBlock.getText());

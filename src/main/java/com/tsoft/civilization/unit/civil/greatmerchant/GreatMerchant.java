@@ -16,7 +16,7 @@ import java.util.UUID;
  * (with which you are at peace), and by consuming the Great Merchant, will produce gold and increased
  * influence with that city-state. Trade Missions can no longer be conducted with other civilizations.
  */
-public class GreatMerchant extends AbstractUnit<GreatMerchantView> {
+public class GreatMerchant extends AbstractUnit {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
     public static final GreatMerchant STUB = new GreatMerchant();
 

@@ -7,7 +7,7 @@ import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
-import com.tsoft.civilization.web.view.JSONBlock;
+import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.civilization.Civilization;
 
 public class LoadWorld extends AbstractAjaxRequest {
@@ -19,7 +19,7 @@ public class LoadWorld extends AbstractAjaxRequest {
         }
 
         // map
-        JSONBlock response = myCivilization.getWorld().getView().getJSON();
+        JsonBlock response = myCivilization.getWorld().getView().getJSON();
 
         // starting point
         Point startPoint = myCivilization.getStartPoint();

@@ -6,12 +6,12 @@ import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
-import com.tsoft.civilization.unit.civil.Settlers.Settlers;
+import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.unit.military.warriors.Warriors;
 import com.tsoft.civilization.unit.civil.workers.Workers;
 import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.web.view.JSONBlock;
+import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.civilization.Civilization;
 import org.junit.jupiter.api.Test;
 
@@ -38,7 +38,7 @@ public class WorldViewTest {
         Settlers settlers = UnitFactory.newInstance(Settlers.CLASS_UUID);
         c1.addUnit(settlers, new Point(1, 0));
 
-        JSONBlock worldBlock = mockWorld.getView().getJSON();
+        JsonBlock worldBlock = mockWorld.getView().getJSON();
         //assertEquals("{\"width\":\"3\",\"height\":\"2\",
         // \"tiles\":[
         //   {\"name\":\"g\",

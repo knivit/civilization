@@ -16,7 +16,7 @@ import java.util.UUID;
  * The Warrior has a fairly decent combat strength, and can be expected to be useful deeper
  * into the Ancient and even Classical eras than in previous games.
  */
-public class Warriors extends AbstractUnit<WarriorsView> {
+public class Warriors extends AbstractUnit {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
     public static final Warriors STUB = new Warriors();
 

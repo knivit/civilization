@@ -2,9 +2,8 @@ package com.tsoft.civilization.unit.military.warriors;
 
 import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.unit.AbstractUnitView;
-import com.tsoft.civilization.unit.military.warriors.Warriors;
 
-public class WarriorsView extends AbstractUnitView<Warriors> {
+public class WarriorsView extends AbstractUnitView {
     @Override
     public String getLocalizedName() {
         return L10nUnit.WARRIORS_NAME.getLocalized();
@@ -16,7 +15,7 @@ public class WarriorsView extends AbstractUnitView<Warriors> {
     }
 
     @Override
-    public String getJSONName() {
+    public String getJsonName() {
         return "Warriors";
     }
 

@@ -13,13 +13,10 @@ import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.combat.skill.AbstractSkill;
 import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.improvement.CanBeBuilt;
-import com.tsoft.civilization.unit.UnitCollection;
-import com.tsoft.civilization.unit.UnitFactory;
+import com.tsoft.civilization.unit.*;
 import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.world.economic.*;
 import com.tsoft.civilization.world.event.Event;
-import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
 import lombok.extern.slf4j.Slf4j;
@@ -198,14 +195,14 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
         }
 
         if (obj instanceof AbstractUnit) {
-            AbstractUnit<?> unit = (AbstractUnit<?>)obj;
+            AbstractUnit unit = (AbstractUnit)obj;
             addUnit(unit);
             getWorld().sendEvent(new Event(Event.UPDATE_WORLD, obj, L10nCity.NEW_UNIT_BUILT_EVENT, unit.getView().getLocalizedName()));
             return;
         }
 
         String objectInfo = (obj == null ? "null" : obj.getClass().getName());
-        throw new IllegalArgumentException("Unknown object is constructed: " + objectInfo);
+        throw new IllegalArgumentException("Unknown object is built: " + objectInfo);
     }
 
     @Override
@@ -249,7 +246,7 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
     }
 
     @Override
-    public UnitCollection getUnitsAround(int radius) {
+    public UnitList<?> getUnitsAround(int radius) {
         return civilization.getUnitsAround(getLocation(), radius);
     }
 
@@ -275,8 +272,8 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
         destroyer.getCivilization().addCity(this);
 
         // destroy all military units located in the city and capture civilians
-        UnitCollection units = civilization.getWorld().getUnitsAtLocation(location);
-        for (AbstractUnit<?> unit : units) {
+        UnitList<?> units = civilization.getWorld().getUnitsAtLocation(location);
+        for (AbstractUnit unit : units) {
             if (unit.getUnitCategory().isMilitary()) {
                 unit.destroyedBy(destroyer, false);
             } else {
@@ -285,24 +282,24 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
         }
     }
 
-    public void addUnit(AbstractUnit<?> unit) {
+    public void addUnit(AbstractUnit unit) {
         civilization.addUnit(unit, location);
     }
 
     public int getUnitProductionCost(String unitClassUuid) {
-        AbstractUnit<?> unit = UnitFactory.createUnit(unitClassUuid);
+        AbstractUnit unit = UnitFactory.createUnit(unitClassUuid);
         return unit.getProductionCost();
     }
 
     public int getUnitBuyCost(String unitClassUuid) {
-        AbstractUnit<?> unit = UnitFactory.createUnit(unitClassUuid);
+        AbstractUnit unit = UnitFactory.createUnit(unitClassUuid);
         return unit.getGoldCost();
     }
 
     /** Return true, if the unit can be placed (i.e. after a buy or on entering) in the city */
-    public boolean canPlaceUnit(AbstractUnit<?> unit) {
-        UnitCollection units = getWorld().getUnitsAtLocation(getLocation());
-        AbstractUnit<?> sameTypeUnit = units.findUnitByUnitKind(unit.getUnitCategory());
+    public boolean canPlaceUnit(AbstractUnit unit) {
+        UnitList<?> units = getWorld().getUnitsAtLocation(getLocation());
+        AbstractUnit sameTypeUnit = units.findUnitByUnitKind(unit.getUnitCategory());
         return sameTypeUnit == null;
     }
 

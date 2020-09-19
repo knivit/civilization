@@ -14,8 +14,8 @@ import com.tsoft.civilization.improvement.city.UnmodifiableCityList;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.civil.Settlers.Settlers;
-import com.tsoft.civilization.unit.UnitCollection;
+import com.tsoft.civilization.unit.UnitList;
+import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.technology.TechnologySet;
@@ -196,27 +196,27 @@ public class Civilization {
         return cities.getCitiesWithActionsAvailable();
     }
 
-    public AbstractUnit<?> getUnitById(String unitId) {
+    public AbstractUnit getUnitById(String unitId) {
         return unitService.getUnitById(unitId);
     }
 
-    public UnitCollection getUnits() {
+    public UnitList<?> getUnits() {
         return unitService.getUnits();
     }
 
-    public UnitCollection getUnitsAtLocation(Point location) {
+    public UnitList<?> getUnitsAtLocation(Point location) {
         return unitService.getUnitsAtLocation(location);
     }
 
-    public UnitCollection getUnitsAtLocations(Collection<Point> locations) {
+    public UnitList<?> getUnitsAtLocations(Collection<Point> locations) {
         return unitService.getUnitsAtLocations(locations);
     }
 
-    public UnitCollection getUnitsAround(Point location, int radius) {
+    public UnitList<?> getUnitsAround(Point location, int radius) {
         return unitService.getUnitsAround(location, radius);
     }
 
-    public UnitCollection getUnitsWithActionsAvailable() {
+    public UnitList<?> getUnitsWithActionsAvailable() {
         return unitService.getUnitsWithActionsAvailable();
     }
 
@@ -224,15 +224,15 @@ public class Civilization {
         return unitService.getAttackerById(attackerId);
     }
 
-    public void addUnit(AbstractUnit<?> unit, Point location) {
+    public void addUnit(AbstractUnit unit, Point location) {
         unitService.addUnit(unit, location);
     }
 
-    public void removeUnit(AbstractUnit<?> unit) {
+    public void removeUnit(AbstractUnit unit) {
         unitService.removeUnit(unit);
     }
 
-    public boolean canBuyUnit(AbstractUnit<?> unit) {
+    public boolean canBuyUnit(AbstractUnit unit) {
         return unitService.canBuyUnit(unit);
     }
 
@@ -294,9 +294,9 @@ public class Civilization {
     // Start point for a Civilization
     public Point getStartPoint() {
         // First, this is Settler's location
-        UnitCollection units = getUnits().findByClassUuid(Settlers.CLASS_UUID);
+        UnitList<?> units = getUnits().findByClassUuid(Settlers.CLASS_UUID);
         if (units != null && !units.isEmpty()) {
-            return units.get(0).getLocation();
+            return units.getFirst().getLocation();
         }
 
         // If Settlers were destroyed then it is the first city's location
@@ -307,7 +307,7 @@ public class Civilization {
         // If there is no cities, then the first Unit's
         units = unitService.getUnits();
         if (!units.isEmpty()) {
-            return units.get(0).getLocation();
+            return units.getFirst().getLocation();
         }
 
         // If there is no units then (0, 0)

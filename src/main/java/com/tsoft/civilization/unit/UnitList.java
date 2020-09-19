@@ -3,42 +3,82 @@ package com.tsoft.civilization.unit;
 import com.tsoft.civilization.unit.civil.greatgeneral.GreatGeneral;
 import com.tsoft.civilization.util.Point;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
-public class UnitList extends ArrayList<AbstractUnit<?>> implements UnitCollection {
-    public UnitList() {
-        super();
-    }
+public class UnitList<E extends AbstractUnit> implements Iterable<E> {
+    private final List<E> units = new ArrayList<>();
+    private boolean isUnmodifiable;
 
-    public UnitList(UnitCollection units) {
-        super(units);
-    }
+    public UnitList() { }
 
-    @Override
-    public UnitCollection findByClassUuid(String classUuid) {
-        UnitCollection list = new UnitList();
-        stream().filter(u -> u.getClassUuid().equals(classUuid)).forEach(list::add);
+    public UnitList<E> unmodifiableList() {
+        UnitList<E> list = new UnitList<>();
+        list.units.addAll(units);
+        list.isUnmodifiable = true;
         return list;
     }
 
     @Override
-    public int getUnitClassCount(Class<? extends AbstractUnit<?>> unitClass) {
-        int count = 0;
-        for (AbstractUnit<?> unit : this) {
-            if (unitClass.equals(unit.getClass())) {
-                count ++;
-            }
-        }
-        return count;
+    public Iterator<E> iterator() {
+        return units.iterator();
     }
 
-    @Override
-    public AbstractUnit<?> findMilitaryUnit() {
-        for (AbstractUnit<?> unit : this) {
+    public E getFirst() {
+        return units.isEmpty() ? null : units.get(0);
+    }
+
+    private void checkIsUnmodifiable() {
+        if (isUnmodifiable) {
+            throw new UnsupportedOperationException("The list is unmodifiable");
+        }
+    }
+
+    public UnitList<E> add(AbstractUnit unit) {
+        checkIsUnmodifiable();
+        units.add((E)unit);
+        return this;
+    }
+
+    public UnitList<E> addAll(UnitList<?> otherUnits) {
+        checkIsUnmodifiable();
+
+        if (otherUnits != null && !otherUnits.isEmpty()) {
+            for (AbstractUnit unit : otherUnits ) {
+                units.add((E)unit);
+            }
+        }
+        return this;
+    }
+
+    public UnitList<E> remove(AbstractUnit unit) {
+        units.remove((E)unit);
+        return this;
+    }
+
+    public boolean isEmpty() {
+        return units.isEmpty();
+    }
+
+    public int size() {
+        return units.size();
+    }
+
+    public UnitList<E> findByClassUuid(String classUuid) {
+        UnitList<E> list = new UnitList<>();
+        units.stream().filter(u -> u.getClassUuid().equals(classUuid)).forEach(list::add);
+        return list;
+    }
+
+    public int getUnitClassCount(Class<? extends AbstractUnit> unitClass) {
+        return (int)units.stream().filter(e -> e.getClass().equals(unitClass)).count();
+    }
+
+    public AbstractUnit findUnitByUnitKind(UnitCategory unitCategory) {
+        return units.stream().filter(e -> e.getUnitCategory().equals(unitCategory)).findFirst().orElse(null);
+    }
+
+    public AbstractUnit findFirstMilitaryUnit() {
+        for (AbstractUnit unit : units) {
             if (unit.getUnitCategory().isMilitary()) {
                 return unit;
             }
@@ -46,9 +86,8 @@ public class UnitList extends ArrayList<AbstractUnit<?>> implements UnitCollecti
         return null;
     }
 
-    @Override
-    public AbstractUnit<?> findCivilUnit() {
-        for (AbstractUnit<?> unit : this) {
+    public AbstractUnit findFirstCivilUnit() {
+        for (AbstractUnit unit : units) {
             if (!unit.getUnitCategory().isMilitary()) {
                 return unit;
             }
@@ -56,64 +95,37 @@ public class UnitList extends ArrayList<AbstractUnit<?>> implements UnitCollecti
         return null;
     }
 
-    @Override
-    public AbstractUnit<?> findUnitByUnitKind(UnitCategory unitCategory) {
-        for (AbstractUnit<?> unit : this) {
-            if (unitCategory.equals(unit.getUnitCategory())) {
-                return unit;
-            }
-        }
-        return null;
-    }
-
-    @Override
     public int getMilitaryCount() {
-        int n = 0;
-        for (AbstractUnit<?> unit : this) {
-            if (unit.getUnitCategory().isMilitary()) {
-                n ++;
-            }
-        }
-        return n;
+        return (int)units.stream().filter(e -> e.getUnitCategory().isMilitary()).count();
     }
 
-    @Override
     public int getCivilCount() {
         return size() - getMilitaryCount();
     }
 
-    @Override
     public int getGreatGeneralCount() {
         return getUnitClassCount(GreatGeneral.class);
     }
 
-    @Override
     public List<Point> getLocations() {
         List<Point> locations = new ArrayList<>(size());
-        for (AbstractUnit<?> unit : this) {
+        for (AbstractUnit unit : units) {
             locations.add(unit.getLocation());
         }
         return locations;
     }
 
-    @Override
-    public AbstractUnit<?> getUnitById(String unitId) {
-        for (AbstractUnit<?> unit : this) {
-            if (unit.getId().equals(unitId)) {
-                return unit;
-            }
-        }
-        return null;
+    public AbstractUnit getUnitById(String unitId) {
+        return units.stream().filter(e -> e.getId().equals(unitId)).findFirst().orElse(null);
     }
 
-    @Override
-    public UnitCollection getUnitsAtLocations(Collection<Point> locations) {
-        if (locations == null) {
-            return new UnitList();
+    public UnitList<?> getUnitsAtLocations(Collection<Point> locations) {
+        if (locations == null || locations.isEmpty()) {
+            return new UnitList<>();
         }
 
-        UnitList unitsAtLocations = new UnitList();
-        for (AbstractUnit<?> unit : this) {
+        UnitList<?> unitsAtLocations = new UnitList<>();
+        for (AbstractUnit unit : units) {
             if (locations.contains(unit.getLocation())) {
                 unitsAtLocations.add(unit);
             }
@@ -121,10 +133,9 @@ public class UnitList extends ArrayList<AbstractUnit<?>> implements UnitCollecti
         return unitsAtLocations;
     }
 
-    @Override
-    public UnitCollection getUnitsWithActionsAvailable() {
-        UnitCollection units = new UnitList();
-        for (AbstractUnit<?> unit : this) {
+    public UnitList<?> getUnitsWithActionsAvailable() {
+        UnitList<?> units = new UnitList<>();
+        for (AbstractUnit unit : units) {
             if (!unit.isDestroyed() && unit.getPassScore() > 0) {
                 units.add(unit);
             }
@@ -132,8 +143,7 @@ public class UnitList extends ArrayList<AbstractUnit<?>> implements UnitCollecti
         return units;
     }
 
-    @Override
     public void sortByName() {
-        Collections.sort(this, Comparator.comparing(unit -> unit.getView().getLocalizedName()));
+        units.sort(Comparator.comparing(unit -> unit.getView().getLocalizedName()));
     }
 }

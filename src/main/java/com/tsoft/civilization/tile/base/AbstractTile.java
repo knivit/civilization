@@ -128,11 +128,11 @@ public abstract class AbstractTile<V extends AbstractTileView> {
     }
 
     // Returns passing cost for a unit
-    public int getPassCost(AbstractUnit<?> unit) {
+    public int getPassCost(AbstractUnit unit) {
         return getPassCost(unit.getCivilization(), unit);
     }
 
-    public int getPassCost(Civilization civilization, AbstractUnit<?> unit) {
+    public int getPassCost(Civilization civilization, AbstractUnit unit) {
         int passCost = TilePassCostTable.get(civilization, unit, this);
         if (terrainFeatures.isEmpty()) {
             return passCost;

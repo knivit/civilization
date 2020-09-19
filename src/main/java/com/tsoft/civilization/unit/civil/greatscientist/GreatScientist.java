@@ -15,7 +15,7 @@ import java.util.UUID;
  * All these consume the unit. The technology can be chosen from a list of any technologies
  * that you could normally research at that point.
  */
-public class GreatScientist extends AbstractUnit<GreatScientistView> {
+public class GreatScientist extends AbstractUnit {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
     public static final GreatScientist STUB = new GreatScientist();
 

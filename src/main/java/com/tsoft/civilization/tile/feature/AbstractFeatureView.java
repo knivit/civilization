@@ -1,7 +1,6 @@
 package com.tsoft.civilization.tile.feature;
 
-import com.tsoft.civilization.tile.feature.TerrainFeature;
-import com.tsoft.civilization.web.view.JSONBlock;
+import com.tsoft.civilization.web.view.JsonBlock;
 
 public abstract class AbstractFeatureView {
     public abstract String getLocalizedName();
@@ -9,8 +8,8 @@ public abstract class AbstractFeatureView {
     public abstract String getJSONName();
     public abstract String getStatusImageSrc();
 
-    public JSONBlock getJSON(TerrainFeature<?> feature) {
-        JSONBlock tileBlock = new JSONBlock();
+    public JsonBlock getJSON(TerrainFeature<?> feature) {
+        JsonBlock tileBlock = new JsonBlock();
         tileBlock.addParam("name", feature.getView().getJSONName());
         return tileBlock;
     }

@@ -15,7 +15,7 @@ public class ArchersView extends AbstractUnitView {
     }
 
     @Override
-    public String getJSONName() {
+    public String getJsonName() {
         return "Archers";
     }
 

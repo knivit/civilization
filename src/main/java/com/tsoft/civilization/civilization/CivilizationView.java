@@ -2,8 +2,7 @@ package com.tsoft.civilization.civilization;
 
 import com.tsoft.civilization.L10n.L10nCivilization;
 import com.tsoft.civilization.L10n.L10nMap;
-import com.tsoft.civilization.web.view.JSONBlock;
-import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.web.view.JsonBlock;
 
 public class CivilizationView {
     private L10nMap name;
@@ -32,8 +31,8 @@ public class CivilizationView {
         return name.getEnglish();
     }
 
-    public JSONBlock getJSON(Civilization civilization) {
-        JSONBlock civBlock = new JSONBlock();
+    public JsonBlock getJSON(Civilization civilization) {
+        JsonBlock civBlock = new JsonBlock();
         civBlock.addParam("name", civilization.getView().getJSONName());
 
         return civBlock;

@@ -4,27 +4,51 @@ import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityCollection;
 import com.tsoft.civilization.improvement.city.CityList;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.UnitCollection;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Point;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 
-public class CivilizationList extends ArrayList<Civilization> implements CivilizationCollection {
-    public CivilizationList() {
-        super();
-    }
+public class CivilizationList implements Iterable<Civilization> {
+    private final List<Civilization> civilizations = new ArrayList<>();
+    private boolean isUnmodifiable;
 
-    public CivilizationList(CivilizationCollection civilizations) {
-        super(civilizations);
+    public CivilizationList() { }
+
+    public CivilizationList unmodifiableList() {
+        CivilizationList list = new CivilizationList();
+        list.civilizations.addAll(civilizations);
+        list.isUnmodifiable = true;
+        return list;
     }
 
     @Override
+    public Iterator<Civilization> iterator() {
+        return civilizations.listIterator();
+    }
+
+    private void checkIsUnmodifiable() {
+        if (isUnmodifiable) {
+            throw new UnsupportedOperationException("The list is unmodifiable");
+        }
+    }
+
+    public CivilizationList add(Civilization civilization) {
+        checkIsUnmodifiable();
+        civilizations.add(civilization);
+        return this;
+    }
+
+    public boolean isEmpty() {
+        return civilizations.isEmpty();
+    }
+
+    public int size() {
+        return civilizations.size();
+    }
+
     public Civilization getCivilizationById(String civilizationId) {
-        for (Civilization civilization : this) {
+        for (Civilization civilization : civilizations) {
             if (civilization.getId().equals(civilizationId)) {
                 return civilization;
             }
@@ -32,9 +56,8 @@ public class CivilizationList extends ArrayList<Civilization> implements Civiliz
         return null;
     }
 
-    @Override
     public Civilization getCivilizationOnTile(Point location) {
-        for (Civilization civilization : this) {
+        for (Civilization civilization : civilizations) {
             if (civilization.isHavingTile(location)) {
                 return civilization;
             }
@@ -42,9 +65,8 @@ public class CivilizationList extends ArrayList<Civilization> implements Civiliz
         return null;
     }
 
-    @Override
     public City getCityAtLocation(Point location) {
-        for (Civilization civilization : this) {
+        for (Civilization civilization : civilizations) {
             City city = civilization.getCityAtLocation(location);
             if (city != null) {
                 return city;
@@ -53,11 +75,10 @@ public class CivilizationList extends ArrayList<Civilization> implements Civiliz
         return null;
     }
 
-    @Override
     public CityCollection getCitiesAtLocations(Collection<Point> locations, Civilization excludeCivilization) {
         CityList cities = new CityList();
-        for (Civilization civilization : this) {
-            if ((excludeCivilization != null) && (civilization.equals(excludeCivilization))) {
+        for (Civilization civilization : civilizations) {
+            if (civilization.equals(excludeCivilization)) {
                 continue;
             }
             cities.addAll(civilization.getCitiesAtLocations(locations));
@@ -65,14 +86,13 @@ public class CivilizationList extends ArrayList<Civilization> implements Civiliz
         return cities;
     }
 
-    @Override
-    public UnitCollection getUnitsAtLocation(Point location, Civilization excludeCivilization) {
-        UnitList units = new UnitList();
+    public UnitList<?> getUnitsAtLocation(Point location, Civilization excludeCivilization) {
+        UnitList<?> units = new UnitList<>();
         if (location == null) {
             return units;
         }
 
-        for (Civilization civilization : this) {
+        for (Civilization civilization : civilizations) {
             if (civilization.equals(excludeCivilization)) {
                 continue;
             }
@@ -81,10 +101,9 @@ public class CivilizationList extends ArrayList<Civilization> implements Civiliz
         return units;
     }
 
-    @Override
-    public UnitCollection getUnitsAtLocations(Collection<Point> locations, Civilization excludeCivilization) {
-        UnitList units = new UnitList();
-        for (Civilization civilization : this) {
+    public UnitList<?> getUnitsAtLocations(Collection<Point> locations, Civilization excludeCivilization) {
+        UnitList<?> units = new UnitList<>();
+        for (Civilization civilization : civilizations) {
             if (civilization.equals(excludeCivilization)) {
                 continue;
             }
@@ -93,14 +112,13 @@ public class CivilizationList extends ArrayList<Civilization> implements Civiliz
         return units;
     }
 
-    @Override
-    public AbstractUnit<?> getUnitById(String unitId) {
+    public AbstractUnit getUnitById(String unitId) {
         if (unitId == null) {
             return null;
         }
 
-        for (Civilization civilization : this) {
-            AbstractUnit<?> unit = civilization.getUnitById(unitId);
+        for (Civilization civilization : civilizations) {
+            AbstractUnit unit = civilization.getUnitById(unitId);
             if (unit != null) {
                 return unit;
             }
@@ -108,13 +126,12 @@ public class CivilizationList extends ArrayList<Civilization> implements Civiliz
         return null;
     }
 
-    @Override
     public City getCityById(String cityId) {
         if (cityId == null) {
             return null;
         }
 
-        for (Civilization civilization : this) {
+        for (Civilization civilization : civilizations) {
             City city = civilization.getCityById(cityId);
             if (city != null) {
                 return city;
@@ -123,8 +140,7 @@ public class CivilizationList extends ArrayList<Civilization> implements Civiliz
         return null;
     }
 
-    @Override
     public void sortByName() {
-        Collections.sort(this, Comparator.comparing(c -> c.getView().getLocalizedCivilizationName()));
+        civilizations.sort(Comparator.comparing(c -> c.getView().getLocalizedCivilizationName()));
     }
 }

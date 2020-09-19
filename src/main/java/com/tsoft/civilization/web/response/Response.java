@@ -3,7 +3,7 @@ package com.tsoft.civilization.web.response;
 import com.tsoft.civilization.L10n.L10nMap;
 import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.state.Sessions;
-import com.tsoft.civilization.web.view.JSONBlock;
+import com.tsoft.civilization.web.view.JsonBlock;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +29,7 @@ public class Response {
         String enText = messages.getEnglish();
 
         ClientSession session = Sessions.getCurrent();
-        JSONBlock block = new JSONBlock();
+        JsonBlock block = new JsonBlock();
         block.addParam("error", session == null ? enText : messages.getLocalized());
 
         return new Response(ResponseCode.BAD_REQUEST, block.getText(), ContentType.APPLICATION_JSON);

@@ -51,7 +51,7 @@ public final class FeaturePassCostTable {
         table.put(Oasis.class, OasisPassCostTable.table);
     }
 
-    public static int get(Civilization civilization, AbstractUnit<?> unit, TerrainFeature<?> feature) {
+    public static int get(Civilization civilization, AbstractUnit unit, TerrainFeature<?> feature) {
         Objects.requireNonNull(unit, "unit can't be null");
         Objects.requireNonNull(feature, "feature can't be null");
 

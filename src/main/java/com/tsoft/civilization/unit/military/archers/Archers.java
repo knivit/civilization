@@ -23,7 +23,7 @@ import java.util.UUID;
  * Abilities: May not melee attack, -25% vs. Cities
  * Note: The bombardment range for archers is 2 hexes.
  */
-public class Archers extends AbstractUnit<ArchersView> {
+public class Archers extends AbstractUnit {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
     public static final Archers STUB = new Archers();
 

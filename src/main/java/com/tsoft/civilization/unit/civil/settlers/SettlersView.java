@@ -3,7 +3,6 @@ package com.tsoft.civilization.unit.civil.settlers;
 import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.unit.AbstractUnitView;
 import com.tsoft.civilization.unit.civil.settlers.action.BuildCityAction;
-import com.tsoft.civilization.unit.civil.Settlers.Settlers;
 import com.tsoft.civilization.util.Format;
 
 public class SettlersView extends AbstractUnitView<Settlers> {
@@ -18,7 +17,7 @@ public class SettlersView extends AbstractUnitView<Settlers> {
     }
 
     @Override
-    public String getJSONName() {
+    public String getJsonName() {
         return "Settlers";
     }
 

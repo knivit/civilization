@@ -3,19 +3,19 @@ package com.tsoft.civilization.web.view;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class JSONBlock {
+public class JsonBlock {
     private int paramCount;
     private int elementCount;
     private boolean isArray;
 
     private StringBuilder buf = new StringBuilder();
-    private char quoteChar;
+    private final char quoteChar;
 
-    public JSONBlock() {
+    public JsonBlock() {
         this('"');
     }
 
-    public JSONBlock(char quoteChar) {
+    public JsonBlock(char quoteChar) {
         this.quoteChar = quoteChar;
     }
 

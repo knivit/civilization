@@ -9,7 +9,7 @@ import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
-import com.tsoft.civilization.web.view.JSONBlock;
+import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.civilization.Civilization;
 
 public class BuyUnitActionRequest extends AbstractAjaxRequest {
@@ -24,13 +24,13 @@ public class BuyUnitActionRequest extends AbstractAjaxRequest {
         String unitUuid = request.get("unitUuid");
         ActionAbstractResult result = BuyUnitAction.buyUnit(city, unitUuid);
         if (result.isFail()) {
-            JSONBlock response = new JSONBlock();
+            JsonBlock response = new JsonBlock();
             response.addParam("message", result.getLocalized());
             return new Response(ResponseCode.ACCEPTED, response.getText(), ContentType.APPLICATION_JSON);
         }
 
         // return the map
-        JSONBlock response = myCivilization.getWorld().getView().getJSON();
+        JsonBlock response = myCivilization.getWorld().getView().getJSON();
         return new Response(ResponseCode.OK, response.getText(), ContentType.APPLICATION_JSON);
     }
 }

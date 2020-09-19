@@ -1,7 +1,7 @@
 package com.tsoft.civilization.world.event;
 
 import com.tsoft.civilization.L10n.L10nMap;
-import com.tsoft.civilization.web.view.JSONBlock;
+import com.tsoft.civilization.web.view.JsonBlock;
 
 import java.time.Instant;
 import java.time.ZoneId;
@@ -53,8 +53,8 @@ public class Event {
         return (flags & UPDATE_STATUS_PANEL) != 0;
     }
 
-    public JSONBlock getJSON() {
-        JSONBlock block = new JSONBlock();
+    public JsonBlock getJSON() {
+        JsonBlock block = new JsonBlock();
         block.addParam("description", getLocalized());
         block.addParam("serverTime", DATE_TIME_FORMATTER.format(serverEventTime));
         return block;

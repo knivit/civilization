@@ -1,10 +1,9 @@
-package com.tsoft.civilization.unit.civil.Settlers;
+package com.tsoft.civilization.unit.civil.settlers;
 
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.world.Year;
-import com.tsoft.civilization.unit.civil.settlers.SettlersView;
 import com.tsoft.civilization.civilization.Civilization;
 
 import java.util.UUID;
@@ -24,7 +23,7 @@ import java.util.UUID;
  * in addition to regional costume, the European version has a mule, the Native American version has a Llama,
  * the Asian version has a water buffalo, and the African/Middle Eastern version has a camel.
  */
-public class Settlers extends AbstractUnit<SettlersView> {
+public class Settlers extends AbstractUnit {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
     public static final Settlers STUB = new Settlers();
 

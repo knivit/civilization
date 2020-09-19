@@ -5,14 +5,14 @@ import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
+import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.unit.action.MoveUnitAction;
 import com.tsoft.civilization.unit.action.MoveUnitActionResults;
 import com.tsoft.civilization.unit.action.UnitMoveResult;
 import com.tsoft.civilization.unit.civil.greatartist.GreatArtist;
-import com.tsoft.civilization.unit.civil.Settlers.Settlers;
+import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.unit.civil.workers.Workers;
 import com.tsoft.civilization.unit.military.warriors.Warriors;
-import com.tsoft.civilization.unit.UnitCollection;
 import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.unit.UnitRoute;
 import com.tsoft.civilization.util.Dir6;
@@ -322,7 +322,7 @@ public class MoveUnitActionTest {
         assertEquals(5, workers.getPassScore());
 
         assertEquals(city, civilization.getCityAtLocation(new Point(2, 1)));
-        UnitCollection units = civilization.getUnits();
+        UnitList<?> units = civilization.getUnits();
         assertEquals(2, units.size());
         units = civilization.getUnitsAtLocation(new Point(2, 1));
         assertEquals(1, units.size());

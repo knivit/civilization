@@ -1,6 +1,6 @@
 package com.tsoft.civilization.unit;
 
-import com.tsoft.civilization.unit.civil.Settlers.Settlers;
+import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.unit.civil.greatartist.GreatArtist;
 import com.tsoft.civilization.unit.civil.greatengineer.GreatEngineer;
 import com.tsoft.civilization.unit.civil.greatgeneral.GreatGeneral;
@@ -21,14 +21,14 @@ public final class UnitFactory {
 
     private UnitFactory() { }
 
-    public static <T extends AbstractUnit<?>> T newInstance(String classUuid) {
+    public static <T extends AbstractUnit> T newInstance(String classUuid) {
         T unit = (T)createUnit(classUuid);
         unit.init();
 
         return unit;
     }
 
-    private static final Map<String, Supplier<AbstractUnit<?>>> UNIT_CATALOG = new HashMap<>();
+    private static final Map<String, Supplier<AbstractUnit>> UNIT_CATALOG = new HashMap<>();
 
     static {
         UNIT_CATALOG.put(Archers.CLASS_UUID, Archers::new);
@@ -44,11 +44,11 @@ public final class UnitFactory {
         UNIT_CATALOG.put(Workers.CLASS_UUID, Workers::new);
     }
 
-    public static UnitCollection getPossibleUnits(Civilization civilization) {
-        UnitCollection result = new UnitList();
+    public static UnitList<?> getPossibleUnits(Civilization civilization) {
+        UnitList<?> result = new UnitList<>();
 
-        for (Supplier<AbstractUnit<?>> supplier : UNIT_CATALOG.values()) {
-            AbstractUnit<?> unit = supplier.get();
+        for (Supplier<AbstractUnit> supplier : UNIT_CATALOG.values()) {
+            AbstractUnit unit = supplier.get();
             if (unit.checkEraAndTechnology(civilization)) {
                 result.add(unit);
             }
@@ -57,8 +57,8 @@ public final class UnitFactory {
         return result;
     }
 
-    public static AbstractUnit<?> createUnit(String unitClassUuid) {
-        Supplier<AbstractUnit<?>> supplier = UNIT_CATALOG.get(unitClassUuid);
+    public static AbstractUnit createUnit(String unitClassUuid) {
+        Supplier<AbstractUnit> supplier = UNIT_CATALOG.get(unitClassUuid);
         if (supplier == null) {
             throw new IllegalArgumentException("Unknown unit classUuid = " + unitClassUuid);
         }

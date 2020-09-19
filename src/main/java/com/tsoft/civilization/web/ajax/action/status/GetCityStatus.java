@@ -15,8 +15,8 @@ import com.tsoft.civilization.building.BuildingCollection;
 import com.tsoft.civilization.building.BuildingList;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.UnitCollection;
 import com.tsoft.civilization.unit.UnitFactory;
+import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.web.request.Request;
@@ -182,7 +182,7 @@ public class GetCityStatus extends AbstractAjaxRequest {
 
     private StringBuilder getUnitConstructionActions(City city) {
         StringBuilder buf = new StringBuilder();
-        UnitCollection units = UnitFactory.getPossibleUnits(city.getCivilization());
+        UnitList<?> units = UnitFactory.getPossibleUnits(city.getCivilization());
         for (AbstractUnit unit : units) {
             StringBuilder buyUnitAction = BuildUnitAction.getHtml(city, unit.getClassUuid());
             StringBuilder buildUnitAction = BuyUnitAction.getHtml(city, unit.getClassUuid());

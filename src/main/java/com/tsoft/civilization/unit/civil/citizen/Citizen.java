@@ -35,7 +35,7 @@ import java.util.UUID;
 public class Citizen {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    private String id = UUID.randomUUID().toString();
+    private final String id = UUID.randomUUID().toString();
 
     private City city;
     private Point location;

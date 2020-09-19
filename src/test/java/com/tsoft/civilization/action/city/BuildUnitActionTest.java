@@ -6,8 +6,8 @@ import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.action.BuildUnitAction;
 import com.tsoft.civilization.improvement.city.action.CityActionResults;
 import com.tsoft.civilization.technology.Technology;
+import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.unit.military.archers.Archers;
-import com.tsoft.civilization.unit.UnitCollection;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.economic.SupplyMock;
@@ -55,10 +55,10 @@ public class BuildUnitActionTest {
         assertNull(city.getConstruction());
         assertEquals(1, civilization.getUnits().size());
 
-        UnitCollection list = civilization.getUnits().findByClassUuid(Archers.CLASS_UUID);
+        UnitList<?> list = civilization.getUnits().findByClassUuid(Archers.CLASS_UUID);
         assertTrue(list != null && list.size() == 1);
-        assertNotNull(list.get(0).getId());
-        assertEquals(city.getLocation(), list.get(0).getLocation());
-        assertEquals(city.getCivilization(), list.get(0).getCivilization());
+        assertNotNull(list.getFirst().getId());
+        assertEquals(city.getLocation(), list.getFirst().getLocation());
+        assertEquals(city.getCivilization(), list.getFirst().getCivilization());
     }
 }

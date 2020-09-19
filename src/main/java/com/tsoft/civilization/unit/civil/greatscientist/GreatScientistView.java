@@ -4,7 +4,6 @@ import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.unit.AbstractUnitView;
 import com.tsoft.civilization.unit.civil.greatscientist.action.AcademyImprovementAction;
 import com.tsoft.civilization.unit.civil.greatscientist.action.LearnNewTechnologyAction;
-import com.tsoft.civilization.unit.civil.greatscientist.GreatScientist;
 import com.tsoft.civilization.util.Format;
 
 public class GreatScientistView extends AbstractUnitView<GreatScientist> {
@@ -19,7 +18,7 @@ public class GreatScientistView extends AbstractUnitView<GreatScientist> {
     }
 
     @Override
-    public String getJSONName() {
+    public String getJsonName() {
         return "GreatScientist";
     }
 

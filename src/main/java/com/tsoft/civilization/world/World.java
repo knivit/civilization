@@ -8,13 +8,11 @@ import com.tsoft.civilization.improvement.city.CityCollection;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.UnitCollection;
+import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Pair;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.civilization.CivilizationCollection;
 import com.tsoft.civilization.civilization.CivilizationList;
 import com.tsoft.civilization.world.event.Event;
-import com.tsoft.civilization.civilization.UnmodifiableCivilizationList;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -30,10 +28,9 @@ public class World {
     private int maxNumberOfCivilizations;
 
     // use ArrayList as almost always we need to iterate through it
-    private CivilizationCollection civilizations = new CivilizationList();
-    private CivilizationCollection unmodifiableCivilizations = new UnmodifiableCivilizationList(civilizations);
+    private CivilizationList civilizations = new CivilizationList();
 
-    private HashMap<Pair, CivilizationsRelations> relations = new HashMap<>();
+    private HashMap<Pair<Civilization>, CivilizationsRelations> relations = new HashMap<>();
     private List<Year> years = new ArrayList<>();
 
     public World(MapType mapType, int width, int height) {
@@ -91,8 +88,7 @@ public class World {
         }
 
         Pair<Civilization> key = new Pair<>(c1, c2);
-        CivilizationsRelations rel = relations.get(key);
-        return rel;
+        return relations.get(key);
     }
 
     public void setCivilizationsRelations(Civilization c1, Civilization c2, CivilizationsRelations rel) {
@@ -101,15 +97,11 @@ public class World {
 
         // send an Event about that to all civilizations
         switch (rel.getState()) {
-            case CivilizationsRelations.WAR_STATE: {
+            case CivilizationsRelations.WAR_STATE ->
                 sendEvent(new Event(Event.UPDATE_STATUS_PANEL, this, L10nWorld.DECLARE_WAR_EVENT, c1.getView().getLocalizedCivilizationName(), c2.getView().getLocalizedCivilizationName()));
-                break;
-            }
 
-            case CivilizationsRelations.FRIENDS_STATE: {
+            case CivilizationsRelations.FRIENDS_STATE ->
                 sendEvent(new Event(Event.UPDATE_STATUS_PANEL, this, L10nWorld.DECLARE_FRIENDS_EVENT, c1.getView().getLocalizedCivilizationName(), c2.getView().getLocalizedCivilizationName()));
-                break;
-            }
         }
     }
 
@@ -136,7 +128,7 @@ public class World {
             }
 
             // exclude units
-            for (AbstractUnit<?> unit : civilization.getUnits()) {
+            for (AbstractUnit unit : civilization.getUnits()) {
                 busyLocations.add(unit.getLocation());
             }
         }
@@ -173,19 +165,19 @@ public class World {
         return civilizations.getCitiesAtLocations(locations, excludeCivilization);
     }
 
-    public UnitCollection getUnitsAtLocation(Point location) {
+    public UnitList<?> getUnitsAtLocation(Point location) {
         return getUnitsAtLocation(location, null);
     }
 
-    public UnitCollection getUnitsAtLocation(Point location, Civilization excludeCivilization) {
+    public UnitList<?> getUnitsAtLocation(Point location, Civilization excludeCivilization) {
         return civilizations.getUnitsAtLocation(location, excludeCivilization);
     }
 
-    public UnitCollection getUnitsAtLocations(Collection<Point> locations) {
+    public UnitList<?> getUnitsAtLocations(Collection<Point> locations) {
         return getUnitsAtLocations(locations, null);
     }
 
-    public UnitCollection getUnitsAtLocations(Collection<Point> locations, Civilization excludeCivilization) {
+    public UnitList<?> getUnitsAtLocations(Collection<Point> locations, Civilization excludeCivilization) {
         return civilizations.getUnitsAtLocations(locations, excludeCivilization);
     }
 
@@ -213,8 +205,8 @@ public class World {
         this.maxNumberOfCivilizations = maxNumberOfCivilizations;
     }
 
-    public CivilizationCollection getCivilizations() {
-        return unmodifiableCivilizations;
+    public CivilizationList getCivilizations() {
+        return civilizations.unmodifiableList();
     }
 
     public AbstractUnit getUnitById(String unitId) {
@@ -225,8 +217,8 @@ public class World {
         return civilizations.getCityById(cityId);
     }
 
-    public List<Civilization> getNotMovedHumanCivilizations() {
-        List<Civilization> result = new ArrayList<>();
+    public CivilizationList getNotMovedHumanCivilizations() {
+        CivilizationList result = new CivilizationList();
         for (Civilization civilization : civilizations) {
             if (!civilization.isMoved() && !civilization.isArtificialIntelligence()) {
                 result.add(civilization);

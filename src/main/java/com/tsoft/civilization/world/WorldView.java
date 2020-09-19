@@ -3,8 +3,8 @@ package com.tsoft.civilization.world;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.UnitCollection;
-import com.tsoft.civilization.web.view.JSONBlock;
+import com.tsoft.civilization.unit.UnitList;
+import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.improvement.city.CityView;
 import com.tsoft.civilization.tile.base.AbstractTileView;
 import com.tsoft.civilization.civilization.Civilization;
@@ -17,8 +17,8 @@ public class WorldView {
         this.world = world;
     }
 
-    public JSONBlock getJSON() {
-        JSONBlock worldBlock = new JSONBlock();
+    public JsonBlock getJSON() {
+        JsonBlock worldBlock = new JsonBlock();
 
         // map definition
         int width = world.getTilesMap().getWidth();
@@ -50,9 +50,9 @@ public class WorldView {
         for (int y = 0; y < height; y ++) {
             for (int x = 0; x < width; x ++) {
                 AbstractTile tile = world.getTilesMap().getTile(x, y);
-                UnitCollection units = world.getUnitsAtLocation(tile.getLocation());
+                UnitList<?> units = world.getUnitsAtLocation(tile.getLocation());
                 for (AbstractUnit unit : units) {
-                    JSONBlock unitBlock = unit.getView().getJSON(unit);
+                    JsonBlock unitBlock = unit.getView().getJson(unit);
                     worldBlock.addElement(unitBlock.getText());
                 }
             }

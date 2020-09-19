@@ -5,7 +5,7 @@ import com.tsoft.civilization.unit.action.DestroyUnitAction;
 import com.tsoft.civilization.unit.action.DestroyUnitResults;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
-import com.tsoft.civilization.unit.civil.Settlers.Settlers;
+import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;

@@ -4,7 +4,6 @@ import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.unit.AbstractUnitView;
 import com.tsoft.civilization.unit.civil.greatmerchant.action.CustomsHouseImprovementAction;
 import com.tsoft.civilization.unit.civil.greatmerchant.action.TradeMissionAction;
-import com.tsoft.civilization.unit.civil.greatmerchant.GreatMerchant;
 import com.tsoft.civilization.util.Format;
 
 public class GreatMerchantView extends AbstractUnitView<GreatMerchant> {
@@ -19,7 +18,7 @@ public class GreatMerchantView extends AbstractUnitView<GreatMerchant> {
     }
 
     @Override
-    public String getJSONName() {
+    public String getJsonName() {
         return "GreatMerchant";
     }
 

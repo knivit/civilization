@@ -8,7 +8,7 @@ import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
-import com.tsoft.civilization.web.view.JSONBlock;
+import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.civilization.Civilization;
 
 public class DeclareWarActionRequest extends AbstractAjaxRequest {
@@ -27,7 +27,7 @@ public class DeclareWarActionRequest extends AbstractAjaxRequest {
 
         ActionAbstractResult result = DeclareWarAction.declareWar(myCivilization, otherCivilization);
         if (result.isFail()) {
-            JSONBlock response = new JSONBlock();
+            JsonBlock response = new JsonBlock();
             response.addParam("message", result.getLocalized());
             return new Response(ResponseCode.ACCEPTED, response.getText(), ContentType.APPLICATION_JSON);
         }

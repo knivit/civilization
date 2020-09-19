@@ -1,6 +1,6 @@
 package com.tsoft.civilization.tile.base;
 
-import com.tsoft.civilization.web.view.JSONBlock;
+import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.tile.feature.AbstractFeatureView;
 
 public abstract class AbstractTileView {
@@ -9,8 +9,8 @@ public abstract class AbstractTileView {
     public abstract String getJSONName();
     public abstract String getStatusImageSrc();
 
-    public JSONBlock getJSON(AbstractTile<?> tile) {
-        JSONBlock tileBlock = new JSONBlock();
+    public JsonBlock getJSON(AbstractTile<?> tile) {
+        JsonBlock tileBlock = new JsonBlock();
         tileBlock.addParam("name", tile.getView().getJSONName());
 
         tileBlock.startArray("features");

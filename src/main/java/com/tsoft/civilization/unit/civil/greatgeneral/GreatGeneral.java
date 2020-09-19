@@ -16,7 +16,7 @@ import java.util.UUID;
  * himself to create a Citadel (a super-Fort), or to trigger a Golden Age. The Citadel can
  * only be built in your own territory (unlike a regular Fort, which can be built in unclaimed territory.
  */
-public class GreatGeneral extends AbstractUnit<GreatGeneralView> {
+public class GreatGeneral extends AbstractUnit {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
     public static final GreatGeneral STUB = new GreatGeneral();
 
