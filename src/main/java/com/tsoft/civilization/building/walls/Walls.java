@@ -10,7 +10,7 @@ import com.tsoft.civilization.world.economic.Supply;
 
 import java.util.UUID;
 
-public class Walls extends AbstractBuilding<WallsView> {
+public class Walls extends AbstractBuilding {
     public static final Walls STUB = new Walls(null);
     public static final String CLASS_UUID = UUID.randomUUID().toString();
     private static final WallsView VIEW = new WallsView();

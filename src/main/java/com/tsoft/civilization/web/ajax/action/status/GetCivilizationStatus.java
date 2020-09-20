@@ -7,9 +7,11 @@ import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.civilization.action.DeclareWarAction;
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.improvement.city.CityCollection;
+import com.tsoft.civilization.improvement.city.CityList;
+import com.tsoft.civilization.improvement.city.CityListService;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
+import com.tsoft.civilization.unit.UnitListService;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.response.ContentType;
 
@@ -20,6 +22,9 @@ import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
 
 public class GetCivilizationStatus extends AbstractAjaxRequest {
+    private final CityListService cityListService = new CityListService();
+    private final UnitListService unitListService = new UnitListService();
+
     @Override
     public Response getJSON(Request request) {
         Civilization myCivilization = getMyCivilization();
@@ -129,7 +134,7 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
             return null;
         }
 
-        units.sortByName();
+        units = unitListService.sortByName(units);
 
         StringBuilder unitBuf = new StringBuilder();
         for (AbstractUnit unit : units) {
@@ -164,12 +169,12 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
             return null;
         }
 
-        CityCollection cities = civilization.getCitiesWithActionsAvailable();
+        CityList cities = civilization.getCitiesWithActionsAvailable();
         if (cities.isEmpty()) {
             return null;
         }
 
-        cities.sortByName();
+        cities = cityListService.sortByName(cities);
 
         StringBuilder citiesBuf = new StringBuilder();
         for (City city : cities) {

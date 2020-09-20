@@ -16,7 +16,7 @@ public class BuildBuildingAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     public static ActionAbstractResult buildBuilding(City city, String buildingClassUuid) {
-        AbstractBuilding<?> building = BuildingCatalog.findByClassUuid(buildingClassUuid);
+        AbstractBuilding building = BuildingCatalog.findByClassUuid(buildingClassUuid);
         ActionAbstractResult result = canBuildBuilding(city, building);
         log.debug("{}", result);
 
@@ -28,7 +28,7 @@ public class BuildBuildingAction {
         return CityActionResults.BUILDING_CONSTRUCTION_IS_STARTED;
     }
 
-    private static ActionAbstractResult canBuildBuilding(City city, AbstractBuilding<?> building) {
+    private static ActionAbstractResult canBuildBuilding(City city, AbstractBuilding building) {
         if (city == null || city.isDestroyed()) {
             return CityActionResults.CITY_NOT_FOUND;
         }
@@ -65,7 +65,7 @@ public class BuildBuildingAction {
     }
 
     public static StringBuilder getHtml(City city, String buildingClassUuid) {
-        AbstractBuilding<?> building = BuildingCatalog.findByClassUuid(buildingClassUuid);
+        AbstractBuilding building = BuildingCatalog.findByClassUuid(buildingClassUuid);
         if (canBuildBuilding(city, building).isFail()) {
             return null;
         }

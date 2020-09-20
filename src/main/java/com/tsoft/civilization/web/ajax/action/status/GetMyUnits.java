@@ -4,6 +4,7 @@ import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
+import com.tsoft.civilization.unit.UnitListService;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.web.request.Request;
@@ -13,6 +14,8 @@ import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
 
 public class GetMyUnits extends AbstractAjaxRequest {
+    private final UnitListService unitListService = new UnitListService();
+
     @Override
     public Response getJSON(Request request) {
         Civilization civilization = getMyCivilization();
@@ -53,7 +56,7 @@ public class GetMyUnits extends AbstractAjaxRequest {
             );
         }
 
-        units.sortByName();
+        units = unitListService.sortByName(units);
 
         StringBuilder buf = new StringBuilder();
         for (AbstractUnit unit : units) {

@@ -4,8 +4,8 @@ import com.tsoft.civilization.L10n.L10nCity;
 import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.L10n.L10nTile;
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.improvement.city.CityCollection;
 import com.tsoft.civilization.improvement.city.CityList;
+import com.tsoft.civilization.improvement.city.CityListService;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.web.request.Request;
@@ -15,6 +15,8 @@ import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
 
 public class GetMyCities extends AbstractAjaxRequest {
+    private final CityListService cityListService = new CityListService();
+
     @Override
     public Response getJSON(Request request) {
         Civilization civilization = getMyCivilization();
@@ -46,7 +48,7 @@ public class GetMyCities extends AbstractAjaxRequest {
     }
 
     private StringBuilder getCitiesInfo(Civilization civilization) {
-        CityCollection cities = new CityList(civilization.getCities());
+        CityList cities = civilization.getCities();
         if (cities.isEmpty()) {
             return Format.text(
                 "<table id='actions_table'><tr><th>$text</th></tr></table>",
@@ -55,7 +57,7 @@ public class GetMyCities extends AbstractAjaxRequest {
             );
         }
 
-        cities.sortByName();
+        cities = cityListService.sortByName(cities);
 
         StringBuilder buf = new StringBuilder();
         for (City city : cities) {

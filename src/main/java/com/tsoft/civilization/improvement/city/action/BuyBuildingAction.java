@@ -33,7 +33,7 @@ public class BuyBuildingAction {
             return CityActionResults.CITY_NOT_FOUND;
         }
 
-        AbstractBuilding<?> building = BuildingCatalog.findByClassUuid(buildingClassUuid);
+        AbstractBuilding building = BuildingCatalog.findByClassUuid(buildingClassUuid);
         if (building == null || building.getGoldCost() < 0) {
             return CityActionResults.INVALID_BUILDING;
         }

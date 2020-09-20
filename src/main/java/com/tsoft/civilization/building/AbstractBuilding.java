@@ -90,7 +90,7 @@ import java.util.UUID;
  * Pagoda	(Pagoda Belief)	                200	    -	    +2 Happ, +2 Cult, +2 Faith	-	 	        Can only be built in cities following a religion with the Pagodas belief. Construct this building by purchasing it with Faith.
  */
 @Slf4j
-public abstract class AbstractBuilding<V extends AbstractBuildingView> implements CanBeBuilt {
+public abstract class AbstractBuilding implements CanBeBuilt {
     private final String id = UUID.randomUUID().toString();
     private final City city;
 
@@ -100,7 +100,7 @@ public abstract class AbstractBuilding<V extends AbstractBuildingView> implement
     public abstract Supply getSupply(City city);
     public abstract int getGoldCost();
     public abstract int getStrength();
-    public abstract V getView();
+    public abstract AbstractBuildingView getView();
     public abstract String getClassUuid();
 
     protected AbstractBuilding(City city) {
@@ -152,7 +152,7 @@ public abstract class AbstractBuilding<V extends AbstractBuildingView> implement
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        AbstractBuilding<?> building = (AbstractBuilding<?>) o;
+        AbstractBuilding building = (AbstractBuilding) o;
         return id.equals(building.id);
     }
 

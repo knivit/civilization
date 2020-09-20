@@ -223,7 +223,7 @@ public class GetCityStatus extends AbstractAjaxRequest {
         StringBuilder buf = new StringBuilder();
 
         BuildingCollection buildings = BuildingCatalog.values();
-        for (AbstractBuilding<?> building : buildings) {
+        for (AbstractBuilding building : buildings) {
             StringBuilder buyBuildingAction = BuildBuildingAction.getHtml(city, building.getClassUuid());
             StringBuilder buildBuildingAction = BuyBuildingAction.getHtml(city, building.getClassUuid());
 
@@ -292,7 +292,7 @@ public class GetCityStatus extends AbstractAjaxRequest {
         buildings.sortByName();
 
         StringBuilder buf = new StringBuilder();
-        for (AbstractBuilding<?> building : buildings) {
+        for (AbstractBuilding building : buildings) {
             buf.append(Format.text(
                 "<tr><td><button onclick=\"server.sendAsyncAjax('ajax/GetBuildingStatus', { building:'$building' })\">$buttonLabel</button></td></tr>",
 

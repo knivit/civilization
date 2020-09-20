@@ -8,9 +8,7 @@ import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.BuildingFactory;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.improvement.city.CityCollection;
 import com.tsoft.civilization.improvement.city.CityList;
-import com.tsoft.civilization.improvement.city.UnmodifiableCityList;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.unit.AbstractUnit;
@@ -43,9 +41,8 @@ public class Civilization {
     private World world;
 
     // Active cities and destroyed (on this step) cities
-    private CityCollection cities = new CityList();
-    private UnmodifiableCityList unmodifiableCities = new UnmodifiableCityList(cities);
-    private CityCollection destroyedCities = new CityList();
+    private CityList cities = new CityList();
+    private CityList destroyedCities = new CityList();
 
     private CivilizationUnitService unitService;
 
@@ -157,12 +154,12 @@ public class Civilization {
         return cities.getCityById(cityId);
     }
 
-    public AbstractBuilding<?> getBuildingById(String buildingId) {
+    public AbstractBuilding getBuildingById(String buildingId) {
         return cities.getBuildingById(buildingId);
     }
 
-    public CityCollection getCities() {
-        return unmodifiableCities;
+    public CityList getCities() {
+        return cities.unmodifiableList();
     }
 
     public void addCity(City city) {
@@ -188,11 +185,11 @@ public class Civilization {
         return cities.getCityAtLocation(location);
     }
 
-    public CityCollection getCitiesAtLocations(Collection<Point> locations) {
+    public CityList getCitiesAtLocations(Collection<Point> locations) {
         return cities.getCitiesAtLocations(locations);
     }
 
-    public CityCollection getCitiesWithActionsAvailable() {
+    public CityList getCitiesWithActionsAvailable() {
         return cities.getCitiesWithActionsAvailable();
     }
 
@@ -241,13 +238,13 @@ public class Civilization {
         supply = supply.add(expenses);
     }
 
-    public boolean canBuyBuilding(AbstractBuilding<?> building) {
+    public boolean canBuyBuilding(AbstractBuilding building) {
         int gold = supply.getGold();
         return gold >= building.getGoldCost();
     }
 
     public void buyBuilding(String buildingClassUuid, City city) {
-        AbstractBuilding<?> building = BuildingFactory.newInstance(buildingClassUuid, city);
+        AbstractBuilding building = BuildingFactory.newInstance(buildingClassUuid, city);
 
         int gold = building.getGoldCost();
         Supply expenses = Supply.builder().gold(-gold).build();
@@ -301,7 +298,7 @@ public class Civilization {
 
         // If Settlers were destroyed then it is the first city's location
         if (cities.size() > 0) {
-            return cities.get(0).getLocation();
+            return cities.getAny().getLocation();
         }
 
         // If there is no cities, then the first Unit's
@@ -340,7 +337,7 @@ public class Civilization {
         if (isDestroyed) return;
 
         unitService.clearDestroyedUnits();
-        destroyedCities.clear();
+        destroyedCities = new CityList();
 
         for (City city : cities) {
             city.step(year);

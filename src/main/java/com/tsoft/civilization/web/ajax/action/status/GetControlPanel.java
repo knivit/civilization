@@ -3,7 +3,7 @@ package com.tsoft.civilization.web.ajax.action.status;
 import com.tsoft.civilization.L10n.L10nCivilization;
 import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.civilization.action.NextMoveAction;
-import com.tsoft.civilization.improvement.city.CityCollection;
+import com.tsoft.civilization.improvement.city.CityList;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.response.ContentType;
@@ -43,7 +43,7 @@ public class GetControlPanel extends AbstractAjaxRequest {
 
     private StringBuilder getControls(Civilization civilization) {
         UnitList<?> units = civilization.getUnitsWithActionsAvailable();
-        CityCollection cities = civilization.getCitiesWithActionsAvailable();
+        CityList cities = civilization.getCitiesWithActionsAvailable();
 
         StringBuilder controls = new StringBuilder();
         if (!units.isEmpty() || !cities.isEmpty()) {

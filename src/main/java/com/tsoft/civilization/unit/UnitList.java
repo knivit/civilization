@@ -4,12 +4,22 @@ import com.tsoft.civilization.unit.civil.greatgeneral.GreatGeneral;
 import com.tsoft.civilization.util.Point;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class UnitList<E extends AbstractUnit> implements Iterable<E> {
-    private final List<E> units = new ArrayList<>();
+    private List<E> units = new ArrayList<>();
     private boolean isUnmodifiable;
 
     public UnitList() { }
+
+    public UnitList(List<E> units) {
+        Objects.requireNonNull(units);
+        this.units = units;
+    }
+
+    public List<E> getList() {
+        return new ArrayList<>(units);
+    }
 
     public UnitList<E> unmodifiableList() {
         UnitList<E> list = new UnitList<>();
@@ -108,15 +118,11 @@ public class UnitList<E extends AbstractUnit> implements Iterable<E> {
     }
 
     public List<Point> getLocations() {
-        List<Point> locations = new ArrayList<>(size());
-        for (AbstractUnit unit : units) {
-            locations.add(unit.getLocation());
-        }
-        return locations;
+        return units.stream().map(e -> e.getLocation()).collect(Collectors.toList());
     }
 
     public AbstractUnit getUnitById(String unitId) {
-        return units.stream().filter(e -> e.getId().equals(unitId)).findFirst().orElse(null);
+        return units.stream().filter(e -> e.getId().equals(unitId)).findAny().orElse(null);
     }
 
     public UnitList<?> getUnitsAtLocations(Collection<Point> locations) {
@@ -141,9 +147,5 @@ public class UnitList<E extends AbstractUnit> implements Iterable<E> {
             }
         }
         return units;
-    }
-
-    public void sortByName() {
-        units.sort(Comparator.comparing(unit -> unit.getView().getLocalizedName()));
     }
 }

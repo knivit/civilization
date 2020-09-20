@@ -1,7 +1,6 @@
 package com.tsoft.civilization.civilization;
 
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.improvement.city.CityCollection;
 import com.tsoft.civilization.improvement.city.CityList;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
@@ -75,13 +74,14 @@ public class CivilizationList implements Iterable<Civilization> {
         return null;
     }
 
-    public CityCollection getCitiesAtLocations(Collection<Point> locations, Civilization excludeCivilization) {
+    public CityList getCitiesAtLocations(Collection<Point> locations, Civilization excludeCivilization) {
         CityList cities = new CityList();
+
         for (Civilization civilization : civilizations) {
             if (civilization.equals(excludeCivilization)) {
                 continue;
             }
-            cities.addAll(civilization.getCitiesAtLocations(locations));
+            cities.add(civilization.getCitiesAtLocations(locations));
         }
         return cities;
     }

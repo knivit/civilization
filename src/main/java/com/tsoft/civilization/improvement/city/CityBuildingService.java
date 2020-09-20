@@ -26,10 +26,10 @@ public class CityBuildingService {
         this.city = city;
 
         if (city.getCivilization().getCities().size() == 1) {
-            AbstractBuilding<?> palace = BuildingFactory.newInstance(Palace.CLASS_UUID, city);
+            AbstractBuilding palace = BuildingFactory.newInstance(Palace.CLASS_UUID, city);
             add(palace); // A capital
         } else {
-            AbstractBuilding<?> settlement = BuildingFactory.newInstance(Settlement.CLASS_UUID, city);
+            AbstractBuilding settlement = BuildingFactory.newInstance(Settlement.CLASS_UUID, city);
             add(settlement);
         }
     }
@@ -38,20 +38,20 @@ public class CityBuildingService {
         return unmodifiableBuildings;
     }
 
-    public AbstractBuilding<?> getBuildingById(String buildingId) {
+    public AbstractBuilding getBuildingById(String buildingId) {
         return buildings.getBuildingById(buildingId);
     }
 
-    public void add(AbstractBuilding<?> building) {
+    public void add(AbstractBuilding building) {
         buildings.add(building);
     }
 
-    public void remove(AbstractBuilding<?> building) {
+    public void remove(AbstractBuilding building) {
         destroyedBuildings.add(building);
         buildings.remove(building);
     }
 
-    public AbstractBuilding<?> findByClassUuid(String classUuid) {
+    public AbstractBuilding findByClassUuid(String classUuid) {
         return buildings.findByClassUuid(classUuid);
     }
 
@@ -70,7 +70,7 @@ public class CityBuildingService {
 
     public Supply getSupply() {
         Supply supply = Supply.EMPTY_SUPPLY;
-        for (AbstractBuilding<?> building : buildings) {
+        for (AbstractBuilding building : buildings) {
             supply = supply.add(building.getSupply(city));
         }
         return supply;

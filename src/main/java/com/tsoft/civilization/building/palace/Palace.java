@@ -8,7 +8,7 @@ import com.tsoft.civilization.world.economic.Supply;
 
 import java.util.UUID;
 
-public class Palace extends AbstractBuilding<PalaceView> {
+public class Palace extends AbstractBuilding {
     public static final Palace STUB = new Palace(null);
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();

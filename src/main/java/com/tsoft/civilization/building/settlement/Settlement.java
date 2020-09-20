@@ -8,7 +8,7 @@ import com.tsoft.civilization.world.economic.Supply;
 
 import java.util.UUID;
 
-public class Settlement extends AbstractBuilding<SettlementView> {
+public class Settlement extends AbstractBuilding {
     public static final Settlement STUB = new Settlement(null);
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();

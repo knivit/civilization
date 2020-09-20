@@ -24,7 +24,7 @@ public class BuildingCatalog {
     private BuildingCatalog() {
     }
 
-    public static AbstractBuilding<?> findByClassUuid(String classUuid) {
+    public static AbstractBuilding findByClassUuid(String classUuid) {
         return buildingsCatalog.findByClassUuid(classUuid);
     }
 

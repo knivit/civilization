@@ -142,11 +142,11 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
         return buildingService.getBuildings();
     }
 
-    public AbstractBuilding<?> getBuildingById(String buildingId) {
+    public AbstractBuilding getBuildingById(String buildingId) {
         return buildingService.getBuildingById(buildingId);
     }
 
-    public void addBuilding(AbstractBuilding<?> building) {
+    public void addBuilding(AbstractBuilding building) {
         buildingService.add(building);
 
         // check is this building adds defense strength
@@ -155,7 +155,7 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
         getCombatStrength().setStrength(strength);
     }
 
-    public void destroyBuilding(AbstractBuilding<?> building) {
+    public void destroyBuilding(AbstractBuilding building) {
         buildingService.remove(building);
     }
 
@@ -163,7 +163,7 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
         return citizenService.getPopulationLocations();
     }
 
-    public AbstractBuilding<?> findBuildingByClassUuid(String classUuid) {
+    public AbstractBuilding findBuildingByClassUuid(String classUuid) {
         return buildingService.findByClassUuid(classUuid);
     }
 
@@ -188,7 +188,7 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
         CanBeBuilt obj = construction.getObject();
 
         if (obj instanceof AbstractBuilding) {
-            AbstractBuilding<?> building = BuildingFactory.newInstance(obj.getClassUuid(), this);
+            AbstractBuilding building = BuildingFactory.newInstance(obj.getClassUuid(), this);
             addBuilding(building);
             getWorld().sendEvent(new Event(Event.UPDATE_WORLD, obj, L10nCity.NEW_BUILDING_BUILT_EVENT, building.getView().getLocalizedName()));
             return;
@@ -304,16 +304,16 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
     }
 
     public int getBuildingProductionCost(String buildingClassUuid) {
-        AbstractBuilding<?> building = BuildingCatalog.findByClassUuid(buildingClassUuid);
+        AbstractBuilding building = BuildingCatalog.findByClassUuid(buildingClassUuid);
         return building.getProductionCost();
     }
 
     public int getBuildingBuyCost(String buildingClassUuid) {
-        AbstractBuilding<?> building = BuildingCatalog.findByClassUuid(buildingClassUuid);
+        AbstractBuilding building = BuildingCatalog.findByClassUuid(buildingClassUuid);
         return building.getGoldCost();
     }
 
-    public boolean canPlaceBuilding(AbstractBuilding<?> building) {
+    public boolean canPlaceBuilding(AbstractBuilding building) {
         return findBuildingByClassUuid(building.getClassUuid()) == null;
     }
 

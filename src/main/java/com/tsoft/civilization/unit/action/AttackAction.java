@@ -5,7 +5,7 @@ import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrengthList;
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.improvement.city.CityCollection;
+import com.tsoft.civilization.improvement.city.CityList;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
@@ -268,7 +268,7 @@ public class AttackAction {
         World world = attacker.getCivilization().getWorld();
         Collection<Point> locations = world.getLocationsAround(attacker.getLocation(), radius);
 
-        CityCollection citiesAround = world.getCitiesAtLocations(locations, attacker.getCivilization());
+        CityList citiesAround = world.getCitiesAtLocations(locations, attacker.getCivilization());
         UnitList<?> unitsAround = world.getUnitsAtLocations(locations, attacker.getCivilization());
 
         HasCombatStrengthList targets = new HasCombatStrengthList();

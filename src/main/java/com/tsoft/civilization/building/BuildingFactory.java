@@ -10,15 +10,15 @@ public final class BuildingFactory {
 
     private BuildingFactory() { }
 
-    public static AbstractBuilding<?> newInstance(String classUuid, City city) {
-        AbstractBuilding<?> building = BuildingCatalog.findByClassUuid(classUuid);
+    public static AbstractBuilding newInstance(String classUuid, City city) {
+        AbstractBuilding building = BuildingCatalog.findByClassUuid(classUuid);
         if (building == null) {
             throw new IllegalArgumentException("Unknown building classUuid = " + classUuid);
         }
 
         try {
             Constructor<?> constructor = building.getClass().getConstructor(City.class);
-            building = (AbstractBuilding<?>)constructor.newInstance(city);
+            building = (AbstractBuilding)constructor.newInstance(city);
 
             return building;
         } catch (Exception ex) {

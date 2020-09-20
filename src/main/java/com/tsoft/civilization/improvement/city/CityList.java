@@ -4,42 +4,84 @@ import com.tsoft.civilization.unit.action.AttackAction;
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.util.Point;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
+import java.util.stream.Collectors;
 
-public class CityList extends ArrayList<City> implements CityCollection {
-    public CityList() {
-        super();
+public class CityList implements Iterable<City> {
+    private List<City> cities = new ArrayList<>();
+    private boolean isUnmodifiable;
+
+    public CityList() { }
+
+    public CityList(List<City> cities) {
+        Objects.requireNonNull(cities);
+        this.cities = cities;
     }
 
-    public CityList(CityCollection cities) {
-        super(cities);
+    public List<City> getList() {
+        return new ArrayList<>(cities);
+    }
+
+    public CityList unmodifiableList() {
+        CityList list = new CityList();
+        list.cities.addAll(cities);
+        list.isUnmodifiable = true;
+        return list;
     }
 
     @Override
+    public Iterator<City> iterator() {
+        return cities.iterator();
+    }
+
+    private void checkIsUnmodifiable() {
+        if (isUnmodifiable) {
+            throw new UnsupportedOperationException("The list is unmodifiable");
+        }
+    }
+
+    public boolean isEmpty() {
+        return cities.isEmpty();
+    }
+
+    public int size() {
+        return cities.size();
+    }
+
+    public City getAny() {
+        return (cities.size() == 0) ? null : cities.get(0);
+    }
+
+    public CityList add(City city) {
+        checkIsUnmodifiable();
+        cities.add(city);
+        return this;
+    }
+
+    public CityList add(CityList other) {
+        checkIsUnmodifiable();
+        if (other != null && !other.isEmpty()) {
+            cities.addAll(other.cities);
+        }
+        return this;
+    }
+
+    public CityList remove(City city) {
+        checkIsUnmodifiable();
+        cities.remove(city);
+        return this;
+    }
+
     public Collection<Point> getLocations() {
-        Collection<Point> locations = new ArrayList<>(size());
-        for (City city : this) {
-            locations.add(city.getLocation());
-        }
-        return locations;
+        return cities.stream().map(e -> e.getLocation()).collect(Collectors.toList());
     }
 
-    @Override
     public City getCityById(String cityId) {
-        for (City city : this) {
-            if (city.getId().equals(cityId)) {
-                return city;
-            }
-        }
-        return null;
+        return cities.stream().filter(e -> e.getId().equals(cityId)).findAny().orElse(null);
     }
 
-    @Override
     public AbstractBuilding getBuildingById(String buildingId) {
-        for (City city : this) {
+        for (City city : cities) {
             AbstractBuilding building = city.getBuildingById(buildingId);
             if (building != null) {
                 return building;
@@ -48,9 +90,8 @@ public class CityList extends ArrayList<City> implements CityCollection {
         return null;
     }
 
-    @Override
     public City getCityAtLocation(Point location) {
-        for (City city : this) {
+        for (City city : cities) {
             if (city.getLocation().equals(location)) {
                 return city;
             }
@@ -58,25 +99,23 @@ public class CityList extends ArrayList<City> implements CityCollection {
         return null;
     }
 
-    @Override
-    public CityCollection getCitiesAtLocations(Collection<Point> locations) {
-        if (locations == null) {
+    public CityList getCitiesAtLocations(Collection<Point> locations) {
+        if (locations == null || locations.isEmpty()) {
             return new CityList();
         }
 
-        CityList citiesAtLocations = new CityList();
-        for (City city : this) {
+        CityList result = new CityList();
+        for (City city : cities) {
             if (locations.contains(city.getLocation())) {
-                citiesAtLocations.add(city);
+                result.add(city);
             }
         }
-        return citiesAtLocations;
+        return result;
     }
 
-    @Override
-    public CityCollection getCitiesWithActionsAvailable() {
-        CityCollection cities = new CityList();
-        for (City city : this) {
+    public CityList getCitiesWithActionsAvailable() {
+        CityList cities = new CityList();
+        for (City city : cities) {
             boolean canAttack = (city.getPassScore() > 0) && !AttackAction.getTargetsToAttack(city).isEmpty();
             if (!city.isDestroyed() && (canAttack || city.canStartConstruction())) {
                 cities.add(city);
@@ -85,23 +124,12 @@ public class CityList extends ArrayList<City> implements CityCollection {
         return cities;
     }
 
-    @Override
     public boolean isHavingTile(Point location) {
-        for (City city : this) {
+        for (City city : cities) {
             if (city.isHavingTile(location)) {
                 return true;
             }
         }
         return false;
-    }
-
-    @Override
-    public void sortByName() {
-        Collections.sort(this, new Comparator<City>() {
-            @Override
-            public int compare(City city1, City city2) {
-                return city1.getView().getLocalizedCityName().compareTo(city2.getView().getLocalizedCityName());
-            }
-        });
     }
 }

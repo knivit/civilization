@@ -9,7 +9,7 @@ import com.tsoft.civilization.world.economic.Supply;
 
 import java.util.UUID;
 
-public class Market extends AbstractBuilding<MarketView> {
+public class Market extends AbstractBuilding {
     public static final Market STUB = new Market(null);
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();

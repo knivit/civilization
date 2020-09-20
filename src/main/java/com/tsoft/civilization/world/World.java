@@ -4,7 +4,7 @@ import com.tsoft.civilization.L10n.L10nWorld;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationsRelations;
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.improvement.city.CityCollection;
+import com.tsoft.civilization.improvement.city.CityList;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.unit.AbstractUnit;
@@ -19,6 +19,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class World {
     private final String id = UUID.randomUUID().toString();
+
     private Year year;
     private TilesMap tilesMap;
     private final WorldView VIEW;
@@ -157,11 +158,11 @@ public class World {
         return civilizations.getCityAtLocation(location);
     }
 
-    public CityCollection getCitiesAtLocations(Collection<Point> locations) {
+    public CityList getCitiesAtLocations(Collection<Point> locations) {
         return getCitiesAtLocations(locations, null);
     }
 
-    public CityCollection getCitiesAtLocations(Collection<Point> locations, Civilization excludeCivilization) {
+    public CityList getCitiesAtLocations(Collection<Point> locations, Civilization excludeCivilization) {
         return civilizations.getCitiesAtLocations(locations, excludeCivilization);
     }
 

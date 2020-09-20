@@ -10,7 +10,7 @@ import java.util.List;
  * Unit's route is an array of directions
  */
 public class UnitRoute {
-    private ArrayList<AbstractDir> dirs = new ArrayList<AbstractDir>();
+    private ArrayList<AbstractDir> dirs = new ArrayList<>();
 
     // size of the route before unit's movement
     private int originalSize;

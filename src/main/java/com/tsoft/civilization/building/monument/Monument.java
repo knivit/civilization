@@ -8,7 +8,7 @@ import com.tsoft.civilization.world.economic.Supply;
 
 import java.util.UUID;
 
-public class Monument extends AbstractBuilding<MonumentView> {
+public class Monument extends AbstractBuilding {
     public static final Monument STUB = new Monument(null);
     public static final String CLASS_UUID = UUID.randomUUID().toString();
     private static final MonumentView VIEW = new MonumentView();

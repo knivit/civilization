@@ -3,7 +3,7 @@ package com.tsoft.civilization.unit.action;
 import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.improvement.city.CityCollection;
+import com.tsoft.civilization.improvement.city.CityList;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.unit.AbstractUnit;
@@ -406,7 +406,7 @@ public class MoveUnitAction {
             }
         }
 
-        CityCollection cities = unit.getWorld().getCitiesAtLocations(locations);
+        CityList cities = unit.getWorld().getCitiesAtLocations(locations);
         for (City city : cities) {
             if (!city.getCivilization().equals(unit.getCivilization())) {
                 locations.remove(city.getLocation());

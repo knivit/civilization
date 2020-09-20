@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class BuildingList extends ArrayList<AbstractBuilding<?>> implements BuildingCollection {
+public class BuildingList extends ArrayList<AbstractBuilding> implements BuildingCollection {
     public BuildingList() {
         super();
     }
@@ -14,8 +14,8 @@ public class BuildingList extends ArrayList<AbstractBuilding<?>> implements Buil
     }
 
     @Override
-    public AbstractBuilding<?> getBuildingById(String buildingId) {
-        for (AbstractBuilding<?> building : this) {
+    public AbstractBuilding getBuildingById(String buildingId) {
+        for (AbstractBuilding building : this) {
             if (building.getId().equals(buildingId)) {
                 return building;
             }
@@ -24,8 +24,8 @@ public class BuildingList extends ArrayList<AbstractBuilding<?>> implements Buil
     }
 
     @Override
-    public AbstractBuilding<?> findByClassUuid(String classUuid) {
-        for (AbstractBuilding<?> building : this) {
+    public AbstractBuilding findByClassUuid(String classUuid) {
+        for (AbstractBuilding building : this) {
             if (building.getClassUuid().equals(classUuid)) {
                 return building;
             }

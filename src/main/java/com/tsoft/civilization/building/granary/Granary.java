@@ -12,7 +12,7 @@ import com.tsoft.civilization.world.economic.Supply;
 
 import java.util.UUID;
 
-public class Granary extends AbstractBuilding<GranaryView> {
+public class Granary extends AbstractBuilding {
     public static final Granary STUB = new Granary(null);
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();
