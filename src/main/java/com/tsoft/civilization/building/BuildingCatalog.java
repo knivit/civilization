@@ -8,27 +8,30 @@ import com.tsoft.civilization.building.settlement.Settlement;
 import com.tsoft.civilization.building.walls.Walls;
 
 public class BuildingCatalog {
-    private static final BuildingCollection buildingsCatalog = new BuildingList();
-    private static final BuildingCollection unmodifiableBuildingsCatalog = new UnmodifiableBuildingList(buildingsCatalog);
+    private static BuildingList catalog;
 
     // Read-only objects, this map is to use as a catalog only
     static {
-        buildingsCatalog.add(Granary.STUB);
-        buildingsCatalog.add(Market.STUB);
-        buildingsCatalog.add(Monument.STUB);
-        buildingsCatalog.add(Palace.STUB);
-        buildingsCatalog.add(Settlement.STUB);
-        buildingsCatalog.add(Walls.STUB);
+        BuildingList buildings = new BuildingList(
+            Granary.STUB,
+            Market.STUB,
+            Monument.STUB,
+            Palace.STUB,
+            Settlement.STUB,
+            Walls.STUB
+        );
+
+        catalog = buildings.unmodifiableList();
     }
 
     private BuildingCatalog() {
     }
 
     public static AbstractBuilding findByClassUuid(String classUuid) {
-        return buildingsCatalog.findByClassUuid(classUuid);
+        return catalog.findByClassUuid(classUuid);
     }
 
-    public static BuildingCollection values() {
-        return unmodifiableBuildingsCatalog;
+    public static BuildingList values() {
+        return catalog;
     }
 }

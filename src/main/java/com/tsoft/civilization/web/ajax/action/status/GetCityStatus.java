@@ -5,14 +5,11 @@ import com.tsoft.civilization.L10n.L10nCity;
 import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.L10n.building.L10nBuilding;
 import com.tsoft.civilization.L10n.unit.L10nUnit;
+import com.tsoft.civilization.building.*;
 import com.tsoft.civilization.improvement.city.action.BuildBuildingAction;
 import com.tsoft.civilization.improvement.city.action.BuildUnitAction;
 import com.tsoft.civilization.improvement.city.action.BuyBuildingAction;
 import com.tsoft.civilization.improvement.city.action.BuyUnitAction;
-import com.tsoft.civilization.building.AbstractBuilding;
-import com.tsoft.civilization.building.BuildingCatalog;
-import com.tsoft.civilization.building.BuildingCollection;
-import com.tsoft.civilization.building.BuildingList;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitFactory;
@@ -26,6 +23,8 @@ import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
 
 public class GetCityStatus extends AbstractAjaxRequest {
+    private final BuildingListService buildingListService = new BuildingListService();
+
     @Override
     public Response getJSON(Request request) {
         Civilization myCivilization = getMyCivilization();
@@ -222,7 +221,7 @@ public class GetCityStatus extends AbstractAjaxRequest {
     private StringBuilder getBuildingConstructionActions(City city) {
         StringBuilder buf = new StringBuilder();
 
-        BuildingCollection buildings = BuildingCatalog.values();
+        BuildingList buildings = BuildingCatalog.values();
         for (AbstractBuilding building : buildings) {
             StringBuilder buyBuildingAction = BuildBuildingAction.getHtml(city, building.getClassUuid());
             StringBuilder buildBuildingAction = BuyBuildingAction.getHtml(city, building.getClassUuid());
@@ -280,7 +279,7 @@ public class GetCityStatus extends AbstractAjaxRequest {
             return null;
         }
 
-        BuildingCollection buildings = new BuildingList(city.getBuildings());
+        BuildingList buildings = city.getBuildings();
         if (buildings.isEmpty()) {
             return Format.text(
                 "<table id='actions_table'><tr><th>$text</th></tr></table>",
@@ -289,7 +288,7 @@ public class GetCityStatus extends AbstractAjaxRequest {
         }
 
         // sort the buildings by name
-        buildings.sortByName();
+        buildings = buildingListService.sortByName(buildings);
 
         StringBuilder buf = new StringBuilder();
         for (AbstractBuilding building : buildings) {

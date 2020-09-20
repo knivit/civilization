@@ -3,10 +3,7 @@ package com.tsoft.civilization.improvement.city;
 import com.tsoft.civilization.L10n.L10nChainedArrayList;
 import com.tsoft.civilization.L10n.L10nCity;
 import com.tsoft.civilization.L10n.L10nMap;
-import com.tsoft.civilization.building.AbstractBuilding;
-import com.tsoft.civilization.building.BuildingFactory;
-import com.tsoft.civilization.building.BuildingCatalog;
-import com.tsoft.civilization.building.BuildingCollection;
+import com.tsoft.civilization.building.*;
 import com.tsoft.civilization.building.palace.Palace;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrength;
@@ -138,7 +135,7 @@ public class City extends AbstractImprovement<CityView> implements HasCombatStre
         return citizenService.getCitizenCount();
     }
 
-    public BuildingCollection getBuildings() {
+    public BuildingList getBuildings() {
         return buildingService.getBuildings();
     }
 

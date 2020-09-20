@@ -2,11 +2,9 @@ package com.tsoft.civilization.improvement.city;
 
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.BuildingFactory;
-import com.tsoft.civilization.building.BuildingCollection;
 import com.tsoft.civilization.building.BuildingList;
 import com.tsoft.civilization.building.palace.Palace;
 import com.tsoft.civilization.building.settlement.Settlement;
-import com.tsoft.civilization.building.UnmodifiableBuildingList;
 import com.tsoft.civilization.improvement.CanBeBuilt;
 import com.tsoft.civilization.world.economic.Supply;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +14,6 @@ public class CityBuildingService {
     private final City city;
 
     private BuildingList buildings = new BuildingList();
-    private UnmodifiableBuildingList unmodifiableBuildings = new UnmodifiableBuildingList(buildings);
     private BuildingList destroyedBuildings = new BuildingList();
 
     // Current construction (building, unit) or null
@@ -34,8 +31,8 @@ public class CityBuildingService {
         }
     }
 
-    public BuildingCollection getBuildings() {
-        return unmodifiableBuildings;
+    public BuildingList getBuildings() {
+        return buildings.unmodifiableList();
     }
 
     public AbstractBuilding getBuildingById(String buildingId) {
@@ -78,7 +75,7 @@ public class CityBuildingService {
 
     // Buildings and units construction
     public Supply step(Supply citySupply) {
-        destroyedBuildings.clear();
+        destroyedBuildings = new BuildingList();
 
         if (construction == null) {
             log.debug("No construction is in progress");
