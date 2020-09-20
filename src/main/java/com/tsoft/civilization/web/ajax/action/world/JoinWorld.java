@@ -13,7 +13,7 @@ import com.tsoft.civilization.world.World;
 
 public class JoinWorld extends AbstractAjaxRequest {
     @Override
-    public Response getJSON(Request request) {
+    public Response getJson(Request request) {
         World world = Worlds.getWorld(request.get("world"));
         if (world == null) {
             return Response.newErrorInstance(L10nServer.WORLD_NOT_FOUND);

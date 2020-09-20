@@ -46,7 +46,7 @@ public class GetCivilizationStatusTest {
 
         Request mockRequest = MockRequest.newInstance("civilization", c1.getId());
 
-        Response response = ajaxRequest.getJSON(mockRequest);
+        Response response = ajaxRequest.getJson(mockRequest);
         assertEquals(ResponseCode.OK, response.getErrorCode());
     }
 
@@ -69,7 +69,7 @@ public class GetCivilizationStatusTest {
 
         Request mockRequest = MockRequest.newInstance("civilization", c1.getId());
 
-        Response response = ajaxRequest.getJSON(mockRequest);
+        Response response = ajaxRequest.getJson(mockRequest);
         assertEquals(ResponseCode.OK, response.getErrorCode());
     }
 }

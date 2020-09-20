@@ -37,7 +37,7 @@ public class GetCivilizationsTest {
 
         Request request = MockRequest.newInstance();
 
-        Response response = ajaxRequest.getJSON(request);
+        Response response = ajaxRequest.getJson(request);
         assertEquals(ResponseCode.OK, response.getErrorCode());
     }
 }

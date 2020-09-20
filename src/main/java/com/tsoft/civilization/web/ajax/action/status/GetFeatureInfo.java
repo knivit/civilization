@@ -14,7 +14,7 @@ import com.tsoft.civilization.tile.feature.AbstractFeatureView;
 
 public class GetFeatureInfo extends AbstractAjaxRequest {
     @Override
-    public Response getJSON(Request request) {
+    public Response getJson(Request request) {
         String featureClassUuid = request.get("feature");
         TerrainFeature<?> feature = FeatureCatalog.findByClassUuid(featureClassUuid);
         if (feature == null) {

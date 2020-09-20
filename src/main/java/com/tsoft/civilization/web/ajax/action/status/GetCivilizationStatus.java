@@ -26,7 +26,7 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
     private final UnitListService unitListService = new UnitListService();
 
     @Override
-    public Response getJSON(Request request) {
+    public Response getJson(Request request) {
         Civilization myCivilization = getMyCivilization();
         if (myCivilization == null) {
             return Response.newErrorInstance(L10nServer.CIVILIZATION_NOT_FOUND);

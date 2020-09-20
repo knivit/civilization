@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GetStartStatus extends AbstractAjaxRequest {
     @Override
-    public Response getJSON(Request request) {
+    public Response getJson(Request request) {
         String[] images = new String[] {
             "images/logos/borobudur.jpg",
             "images/logos/castle.jpg"

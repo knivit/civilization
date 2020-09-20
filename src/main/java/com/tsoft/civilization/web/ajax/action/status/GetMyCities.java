@@ -18,7 +18,7 @@ public class GetMyCities extends AbstractAjaxRequest {
     private final CityListService cityListService = new CityListService();
 
     @Override
-    public Response getJSON(Request request) {
+    public Response getJson(Request request) {
         Civilization civilization = getMyCivilization();
         if (civilization == null) {
             return Response.newErrorInstance(L10nServer.CIVILIZATION_NOT_FOUND);

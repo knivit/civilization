@@ -14,7 +14,7 @@ import com.tsoft.civilization.civilization.Civilization;
 
 public class DestroyUnitActionRequest extends AbstractAjaxRequest {
     @Override
-    public Response getJSON(Request request) {
+    public Response getJson(Request request) {
         Civilization myCivilization = getMyCivilization();
         if (myCivilization == null) {
             return Response.newErrorInstance(L10nServer.CIVILIZATION_NOT_FOUND);

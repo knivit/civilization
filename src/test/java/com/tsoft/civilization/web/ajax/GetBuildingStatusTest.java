@@ -39,7 +39,7 @@ public class GetBuildingStatusTest {
 
         Request request = MockRequest.newInstance("building", city1.getBuildings().findByClassUuid(Palace.CLASS_UUID).getId());
 
-        Response response = ajaxRequest.getJSON(request);
+        Response response = ajaxRequest.getJson(request);
         assertEquals(ResponseCode.OK, response.getErrorCode());
     }
 
@@ -57,7 +57,7 @@ public class GetBuildingStatusTest {
 
         Request request = MockRequest.newInstance("building", city2.getBuildings().findByClassUuid(Palace.CLASS_UUID).getId());
 
-        Response response = ajaxRequest.getJSON(request);
+        Response response = ajaxRequest.getJson(request);
         assertEquals(ResponseCode.BAD_REQUEST, response.getErrorCode());
     }
 }

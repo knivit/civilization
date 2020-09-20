@@ -12,7 +12,7 @@ import com.tsoft.civilization.world.World;
 
 public class GetWorlds extends AbstractAjaxRequest {
     @Override
-    public Response getJSON(Request request) {
+    public Response getJson(Request request) {
         StringBuilder value = Format.text(
             "$existingWorlds\n" +
             "$createNewWorld\n",

@@ -16,7 +16,7 @@ import com.tsoft.civilization.world.event.EventList;
 
 public class GetEvents extends AbstractAjaxRequest {
     @Override
-    public Response getJSON(Request request) {
+    public Response getJson(Request request) {
         Civilization civilization = getMyCivilization();
         if (civilization == null) {
             return Response.newErrorInstance(L10nServer.CIVILIZATION_NOT_FOUND);

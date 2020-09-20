@@ -10,7 +10,7 @@ import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 
 public class GetCreateWorldForm extends AbstractAjaxRequest {
     @Override
-    public Response getJSON(Request request) {
+    public Response getJson(Request request) {
         StringBuilder backButton = Format.text(
             "<button onclick='client.getWorlds();'>$backButton</button>",
 

@@ -17,7 +17,7 @@ import com.tsoft.civilization.world.generator.WorldGenerator;
 
 public class CreateWorld extends AbstractAjaxRequest {
     @Override
-    public Response getJSON(Request request) {
+    public Response getJson(Request request) {
         String worldName = request.get("worldName");
         int mapWidth = NumberUtil.parseInt(request.get("mapWidth"), 20);
         int mapHeight = NumberUtil.parseInt(request.get("mapHeight"), 20);

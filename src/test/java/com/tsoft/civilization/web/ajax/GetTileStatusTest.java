@@ -42,7 +42,7 @@ public class GetTileStatusTest {
 
         Request request = MockRequest.newInstance("col", "2", "row", "0");
 
-        Response response = ajaxRequest.getJSON(request);
+        Response response = ajaxRequest.getJson(request);
         assertEquals(ResponseCode.OK, response.getErrorCode());
     }
 
@@ -61,7 +61,7 @@ public class GetTileStatusTest {
 
         Request request = MockRequest.newInstance("col", "2", "row", "0");
 
-        Response response = ajaxRequest.getJSON(request);
+        Response response = ajaxRequest.getJson(request);
         assertEquals(ResponseCode.OK, response.getErrorCode());
     }
 }

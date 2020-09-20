@@ -24,6 +24,6 @@ public class PostRequestProcessor {
             return Response.newErrorInstance(L10nServer.INVALID_SESSION);
         }
 
-        return ajaxRequest.getJSON(request);
+        return ajaxRequest.getJson(request);
     }
 }

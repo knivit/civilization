@@ -45,7 +45,7 @@ public class GetCityStatusTest {
 
         Request request = MockRequest.newInstance("city", city1.getId());
 
-        Response response = ajaxRequest.getJSON(request);
+        Response response = ajaxRequest.getJson(request);
         assertEquals(ResponseCode.OK, response.getErrorCode());
     }
 
@@ -62,7 +62,7 @@ public class GetCityStatusTest {
 
         Request request = MockRequest.newInstance("city", city1.getId());
 
-        Response response = ajaxRequest.getJSON(request);
+        Response response = ajaxRequest.getJson(request);
         assertEquals(ResponseCode.OK, response.getErrorCode());
     }
 
@@ -81,7 +81,7 @@ public class GetCityStatusTest {
 
         Request mockRequest = MockRequest.newInstance("city", city2.getId());
 
-        Response response = ajaxRequest.getJSON(mockRequest);
+        Response response = ajaxRequest.getJson(mockRequest);
         assertEquals(ResponseCode.OK, response.getErrorCode());
     }
 }
