@@ -34,7 +34,7 @@ public class Granary extends AbstractBuilding {
     public Supply getSupply(City city) {
         int food = 0;
         for (Point location : getCity().getCitizenLocations()) {
-            AbstractTile<?> tile = getTile(location);
+            AbstractTile tile = getTile(location);
             if (Bananas.class.equals(tile.getLuxury().getClass())) {
                 food ++;
             }

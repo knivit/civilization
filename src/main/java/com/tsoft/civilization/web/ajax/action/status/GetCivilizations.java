@@ -4,8 +4,8 @@ import com.tsoft.civilization.L10n.L10nCivilization;
 import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.L10n.L10nWorld;
 import com.tsoft.civilization.util.Format;
-import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.web.request.Request;
+import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
@@ -30,7 +30,7 @@ public class GetCivilizations extends AbstractAjaxRequest {
             "$civilizations", getCivilizations(myCivilization.getWorld())
         );
 
-        return new Response(ResponseCode.OK, value.toString(), ContentType.TEXT_HTML);
+        return new JsonResponse(ResponseCode.OK, value.toString());
     }
 
     private StringBuilder getCivilizations(World world) {

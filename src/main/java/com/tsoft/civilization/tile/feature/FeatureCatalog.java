@@ -19,24 +19,24 @@ public final class FeatureCatalog {
 
     private FeatureCatalog() { }
 
-    private static final Map<String, TerrainFeature<?>> featuresCatalog = new HashMap<>();
+    private static final Map<String, TerrainFeature> catalog = new HashMap<>();
 
     // Read-only objects, this map is to use as a catalog only
     static {
-        featuresCatalog.put(Atoll.CLASS_UUID, new Atoll());
-        featuresCatalog.put(Coast.CLASS_UUID, new Coast());
-        featuresCatalog.put(Fallout.CLASS_UUID, new Fallout());
-        featuresCatalog.put(FloodPlain.CLASS_UUID, new FloodPlain());
-        featuresCatalog.put(Forest.CLASS_UUID, new Forest());
-        featuresCatalog.put(Hill.CLASS_UUID, new Hill());
-        featuresCatalog.put(Ice.CLASS_UUID, new Ice());
-        featuresCatalog.put(Jungle.CLASS_UUID, new Jungle());
-        featuresCatalog.put(Marsh.CLASS_UUID, new Marsh());
-        featuresCatalog.put(Mountain.CLASS_UUID, new Mountain());
-        featuresCatalog.put(Oasis.CLASS_UUID, new Oasis());
+        catalog.put(Atoll.CLASS_UUID, Atoll.STUB);
+        catalog.put(Coast.CLASS_UUID, Coast.STUB);
+        catalog.put(Fallout.CLASS_UUID, Fallout.STUB);
+        catalog.put(FloodPlain.CLASS_UUID, FloodPlain.STUB);
+        catalog.put(Forest.CLASS_UUID, Forest.STUB);
+        catalog.put(Hill.CLASS_UUID, Hill.STUB);
+        catalog.put(Ice.CLASS_UUID, Ice.STUB);
+        catalog.put(Jungle.CLASS_UUID, Jungle.STUB);
+        catalog.put(Marsh.CLASS_UUID, Marsh.STUB);
+        catalog.put(Mountain.CLASS_UUID, Mountain.STUB);
+        catalog.put(Oasis.CLASS_UUID, Oasis.STUB);
     }
 
-    public static TerrainFeature<?> findByClassUuid(String classUuid) {
-        return featuresCatalog.getOrDefault(classUuid, null);
+    public static TerrainFeature findByClassUuid(String classUuid) {
+        return catalog.getOrDefault(classUuid, null);
     }
 }

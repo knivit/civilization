@@ -48,7 +48,7 @@ public class CivilizationUnitService {
         Warriors warriors = UnitFactory.newInstance(Warriors.CLASS_UUID);
         ArrayList<Point> locations = world.getLocationsAround(settlersLocation, 2);
         for (Point location : locations) {
-            AbstractTile<?> tile = world.getTilesMap().getTile(location);
+            AbstractTile tile = world.getTilesMap().getTile(location);
             if (tile.getPassCost(civilization, Warriors.STUB) != TilePassCostTable.UNPASSABLE) {
                 civilization.addUnit(warriors, location);
                 break;

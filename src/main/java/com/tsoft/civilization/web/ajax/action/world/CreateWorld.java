@@ -2,8 +2,8 @@ package com.tsoft.civilization.web.ajax.action.world;
 
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.util.NumberUtil;
-import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.web.request.Request;
+import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
@@ -42,6 +42,6 @@ public class CreateWorld extends AbstractAjaxRequest {
 
         Sessions.getCurrent().setWorldAndCivilizationIds(civilization);
 
-        return new Response(ResponseCode.OK, "", ContentType.APPLICATION_JSON);
+        return new JsonResponse(ResponseCode.OK, "");
     }
 }

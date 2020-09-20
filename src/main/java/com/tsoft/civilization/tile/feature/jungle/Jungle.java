@@ -12,7 +12,9 @@ import java.util.UUID;
  * Notes: Jungle can be cleared by Workers (with the advent of Bronze Working).
  * Jungle no longer has a negative modifier to Food production.
  */
-public class Jungle extends TerrainFeature<JungleView> {
+public class Jungle extends TerrainFeature {
+    public static final Jungle STUB = new Jungle();
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private static final JungleView VIEW = new JungleView();

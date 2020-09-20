@@ -64,7 +64,7 @@ public class CityPopulationService {
 
         Point bestLocation = null;
         for (Point location : locations) {
-            AbstractTile<?> tile = city.getTilesMap().getTile(location);
+            AbstractTile tile = city.getTilesMap().getTile(location);
 
             // don't place a citizen on harsh tiles (terrain features)
             if (!CitizenPlacementTable.canPlaceCitizen(tile)) {
@@ -86,7 +86,7 @@ public class CityPopulationService {
                 continue;
             }
 
-            AbstractTile<?> bestTile = city.getTilesMap().getTile(bestLocation);
+            AbstractTile bestTile = city.getTilesMap().getTile(bestLocation);
             Supply bestTileSupply = bestTile.getSupply();
 
             // in case a tile gives the same amount of needed supply,

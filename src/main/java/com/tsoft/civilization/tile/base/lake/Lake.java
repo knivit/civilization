@@ -10,7 +10,9 @@ import java.util.UUID;
  * Basic Production: 2 Food, 1 Gold
  * Movement Cost: 1
  */
-public class Lake extends AbstractTile<LakeView> {
+public class Lake extends AbstractTile {
+    public static final Lake STUB = new Lake();
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private static final LakeView VIEW = new LakeView();

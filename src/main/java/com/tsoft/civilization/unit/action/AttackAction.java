@@ -99,7 +99,7 @@ public class AttackAction {
         int missileStrength = attacker.getCombatStrength().calcStrikeStrength(rangedAttackStrength, target);
 
         for (Point loc : path) {
-            AbstractTile<?> tile = attacker.getCivilization().getTilesMap().getTile(loc);
+            AbstractTile tile = attacker.getCivilization().getTilesMap().getTile(loc);
             missileStrength -= tile.getMissilePastCost(attacker);
             if (missileStrength <= 0) {
                 break;

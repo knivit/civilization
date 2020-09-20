@@ -35,7 +35,7 @@ import static com.tsoft.civilization.tile.base.TilePassCostTable.UNPASSABLE;
 public final class FeaturePassCostTable {
     private FeaturePassCostTable() { }
 
-    private final static Map<Class<? extends TerrainFeature<?>>, Map<String, PassCostList>> table = new HashMap<>();
+    private final static Map<Class<? extends TerrainFeature>, Map<String, PassCostList>> table = new HashMap<>();
 
     static {
         table.put(Atoll.class, AtollPassCostTable.table);
@@ -51,7 +51,7 @@ public final class FeaturePassCostTable {
         table.put(Oasis.class, OasisPassCostTable.table);
     }
 
-    public static int get(Civilization civilization, AbstractUnit unit, TerrainFeature<?> feature) {
+    public static int get(Civilization civilization, AbstractUnit unit, TerrainFeature feature) {
         Objects.requireNonNull(unit, "unit can't be null");
         Objects.requireNonNull(feature, "feature can't be null");
 

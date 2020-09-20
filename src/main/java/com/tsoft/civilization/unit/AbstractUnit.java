@@ -93,7 +93,7 @@ public abstract class AbstractUnit implements HasCombatStrength, CanBeBuilt {
         return getWorld().getTilesMap();
     }
 
-    public AbstractTile<?> getTile() {
+    public AbstractTile getTile() {
         return getTilesMap().getTile(location);
     }
 

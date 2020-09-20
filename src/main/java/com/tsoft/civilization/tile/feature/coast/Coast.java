@@ -11,7 +11,9 @@ import java.util.UUID;
  * Coastal tiles now often go several hexes out into the water,
  * allowing for better freedom of movement for ancient units that are restricted from deep ocean.
  */
-public class Coast extends TerrainFeature<CoastView> {
+public class Coast extends TerrainFeature {
+    public static final Coast STUB = new Coast();
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private static final CoastView VIEW = new CoastView();

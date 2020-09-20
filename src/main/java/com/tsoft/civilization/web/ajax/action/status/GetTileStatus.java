@@ -10,13 +10,13 @@ import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
+import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.feature.TerrainFeature;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.civilization.Civilization;
@@ -48,7 +48,7 @@ public class GetTileStatus extends AbstractAjaxRequest {
             "$tileInfo", getTileInfo(tile),
             "$cityInfo", getCityInfo(myCivilization.getWorld(), tile),
             "$units", getUnitsInfo(tile.getLocation(), myCivilization.getWorld()));
-        return new Response(ResponseCode.OK, value.toString(), ContentType.TEXT_HTML);
+        return new HtmlResponse(ResponseCode.OK, value.toString());
     }
 
     private StringBuilder getUnitsInfo(Point location, World world) {

@@ -50,7 +50,7 @@ public final class MissileTilePastCostTable {
         table.put(City.CLASS_UUID + Tundra.CLASS_UUID, 1);
     }
 
-    public static int get(HasCombatStrength attacker, AbstractTile<?> tile) {
+    public static int get(HasCombatStrength attacker, AbstractTile tile) {
         Objects.requireNonNull(attacker, "Attacker can't be null");
         Objects.requireNonNull(tile, "Tile can't be null");
 

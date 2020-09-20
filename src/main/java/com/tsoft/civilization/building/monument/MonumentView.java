@@ -2,7 +2,6 @@ package com.tsoft.civilization.building.monument;
 
 import com.tsoft.civilization.L10n.building.L10nMonument;
 import com.tsoft.civilization.building.AbstractBuildingView;
-import com.tsoft.civilization.building.monument.Monument;
 
 public class MonumentView extends AbstractBuildingView<Monument> {
     @Override

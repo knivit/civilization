@@ -9,21 +9,20 @@ import com.tsoft.civilization.world.economic.Supply;
 
 import java.util.UUID;
 
-public abstract class AbstractImprovement<V extends AbstractImprovementView> {
-    private String id;
+public abstract class AbstractImprovement {
+    private final String id = UUID.randomUUID().toString();
 
     protected Civilization civilization;
     protected Point location;
 
     public abstract Supply getSupply();
     public abstract CombatStrength getBaseCombatStrength();
-    public abstract V getView();
+    public abstract AbstractImprovementView getView();
 
     public AbstractImprovement(Civilization civilization, Point location) {
         this.civilization = civilization;
         this.location = location;
 
-        id = UUID.randomUUID().toString();
         getTilesMap().getTile(location).setImprovement(this);
     }
 

@@ -2,7 +2,6 @@ package com.tsoft.civilization.building.walls;
 
 import com.tsoft.civilization.L10n.building.L10nWalls;
 import com.tsoft.civilization.building.AbstractBuildingView;
-import com.tsoft.civilization.building.walls.Walls;
 
 public class WallsView extends AbstractBuildingView<Walls> {
     @Override

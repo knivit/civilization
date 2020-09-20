@@ -194,7 +194,7 @@ public class MoveUnitAction {
     }
 
     private static UnitMoveResult checkCanMoveOnTile(AbstractUnit unit, Point location) {
-        AbstractTile<?> tile = unit.getTilesMap().getTile(location);
+        AbstractTile tile = unit.getTilesMap().getTile(location);
         int tilePassCost = tile.getPassCost(unit);
 
         int passScore = unit.getPassScore();
@@ -335,7 +335,7 @@ public class MoveUnitAction {
                 // look around
                 for (Dir6 dir : Dir6.staticGetDirs(currLocation.getY())) {
                     Point nextLocation = tilesMap.addDirToLocation(currLocation, dir);
-                    AbstractTile<?> nextTile = tilesMap.getTile(nextLocation);
+                    AbstractTile nextTile = tilesMap.getTile(nextLocation);
 
                     int nextPassScore = passScore - nextTile.getPassCost(unit);
                     if (nextPassScore >= 0) {

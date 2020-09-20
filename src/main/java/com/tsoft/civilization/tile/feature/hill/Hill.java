@@ -11,7 +11,9 @@ import java.util.UUID;
  * Movement Cost: 2; Defensive Bonus: +25%
  * Notes: Hills yield 0 Food and 2 Hammers, regardless of the underlying terrain type.
  */
-public class Hill extends TerrainFeature<HillView> {
+public class Hill extends TerrainFeature {
+    public final static Hill STUB = new Hill();
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private static final HillView VIEW = new HillView();

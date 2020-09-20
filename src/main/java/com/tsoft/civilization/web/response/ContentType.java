@@ -9,4 +9,6 @@ public final class ContentType {
     public static final String CSS = "text/css; charset=utf-8";
     public static final String ICON = "image/vnd.microsoft.icon";
     public static final String NOTIFICATION_EVENT = "text/event-stream";
+
+    private ContentType() { }
 }

@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.*;
 
 @Slf4j
-public class City extends AbstractImprovement<CityView> implements HasCombatStrength {
+public class City extends AbstractImprovement implements HasCombatStrength {
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 

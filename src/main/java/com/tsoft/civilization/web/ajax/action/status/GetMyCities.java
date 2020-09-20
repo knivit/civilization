@@ -7,8 +7,8 @@ import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityList;
 import com.tsoft.civilization.improvement.city.CityListService;
 import com.tsoft.civilization.util.Format;
-import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.web.request.Request;
+import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
@@ -32,7 +32,7 @@ public class GetMyCities extends AbstractAjaxRequest {
             "$navigationPanel", getNavigationPanel(),
             "$civilizationInfo", getCivilizationInfo(civilization),
             "$citiesInfo", getCitiesInfo(civilization));
-        return new Response(ResponseCode.OK, value.toString(), ContentType.TEXT_HTML);
+        return new HtmlResponse(ResponseCode.OK, value.toString());
     }
 
     private StringBuilder getCivilizationInfo(Civilization civilization) {

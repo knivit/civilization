@@ -10,7 +10,9 @@ import java.util.UUID;
  * Basic Production: 1 Food
  * Movement Cost: 1
  */
-public class Tundra extends AbstractTile<TundraView> {
+public class Tundra extends AbstractTile {
+    public static final Tundra STUB = new Tundra();
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private static final TundraView VIEW = new TundraView();

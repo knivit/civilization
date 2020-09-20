@@ -10,7 +10,9 @@ import java.util.UUID;
  * Basic Production: (none)
  * Movement Cost: 1; Defensive Bonus: -33%
  */
-public class Desert extends AbstractTile<DesertView> {
+public class Desert extends AbstractTile {
+    public static final Desert STUB = new Desert();
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private static final DesertView VIEW = new DesertView();

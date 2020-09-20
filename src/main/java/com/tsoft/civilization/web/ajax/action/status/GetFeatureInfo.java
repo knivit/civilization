@@ -5,9 +5,9 @@ import com.tsoft.civilization.tile.feature.FeatureCatalog;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
+import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.tile.feature.TerrainFeature;
-import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.tile.feature.AbstractFeatureView;
@@ -16,7 +16,7 @@ public class GetFeatureInfo extends AbstractAjaxRequest {
     @Override
     public Response getJson(Request request) {
         String featureClassUuid = request.get("feature");
-        TerrainFeature<?> feature = FeatureCatalog.findByClassUuid(featureClassUuid);
+        TerrainFeature feature = FeatureCatalog.findByClassUuid(featureClassUuid);
         if (feature == null) {
             return Response.newErrorInstance(L10nFeature.FEATURE_NOT_FOUND);
         }
@@ -29,10 +29,10 @@ public class GetFeatureInfo extends AbstractAjaxRequest {
             "$navigationPanel", getNavigationPanel(),
             "$featureInfo", getFeatureInfo(feature),
             "$supplyInfo", getFeatureSupplyInfo(feature));
-        return new Response(ResponseCode.OK, value.toString(), ContentType.TEXT_HTML);
+        return new HtmlResponse(ResponseCode.OK, value.toString());
     }
 
-    private StringBuilder getFeatureInfo(TerrainFeature<?> feature) {
+    private StringBuilder getFeatureInfo(TerrainFeature feature) {
         AbstractFeatureView view = feature.getView();
         return Format.text(
             "<table id='title_table'>" +
@@ -47,7 +47,7 @@ public class GetFeatureInfo extends AbstractAjaxRequest {
         );
     }
 
-    private StringBuilder getFeatureSupplyInfo(TerrainFeature<?> feature) {
+    private StringBuilder getFeatureSupplyInfo(TerrainFeature feature) {
         Supply featureSupply = feature.getSupply();
         return Format.text(
             "<table id='info_table'>" +

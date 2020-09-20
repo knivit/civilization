@@ -5,20 +5,7 @@ import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.view.JsonBlock;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Response {
-    private static final Map<String, String> mimeTypes = new HashMap<>();
-    static {
-        mimeTypes.put(".html", ContentType.TEXT_HTML);
-        mimeTypes.put(".js", ContentType.JAVASCRIPT);
-        mimeTypes.put(".jpg", ContentType.JPEG);
-        mimeTypes.put(".png", ContentType.PNG);
-        mimeTypes.put(".css", ContentType.CSS);
-        mimeTypes.put(".ico", ContentType.ICON);
-    }
-
     private String errorCode;
     private String contentType;
     private AbstractResponseContent content;
@@ -38,22 +25,12 @@ public class Response {
     public Response(String errorCode, String value, String contentType) {
         this.errorCode = errorCode;
         this.contentType = contentType;
-
         content = new StringResponseContent(value);
     }
 
-    public Response(String errorCode, Class resourceLoaderClass, String fileName) {
+    public Response(String errorCode, Class<?> resourceLoaderClass, String fileName) {
         this.errorCode = errorCode;
-
-        contentType = null;
-        int pos = fileName.lastIndexOf('.');
-        if (pos > 0) {
-            contentType = mimeTypes.get(fileName.substring(pos));
-        }
-        if (contentType == null) {
-            contentType = ContentType.TEXT_HTML;
-        }
-
+        contentType = MimeType.get(fileName);
         content = new ResourceResponseContent(resourceLoaderClass, fileName);
     }
 

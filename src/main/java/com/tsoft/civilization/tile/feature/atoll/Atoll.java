@@ -11,7 +11,9 @@ import java.util.UUID;
  * Production Modifiers: Food 1, Production +1
  * Movement Cost: 1
  */
-public class Atoll extends TerrainFeature<AtollView> {
+public class Atoll extends TerrainFeature {
+    public static final Atoll STUB = new Atoll();
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private static final AtollView VIEW = new AtollView();

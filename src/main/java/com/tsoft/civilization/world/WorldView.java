@@ -32,7 +32,7 @@ public class WorldView {
             for (int x = 0; x < width; x ++) {
                 AbstractTile tile = world.getTilesMap().getTile(x, y);
                 AbstractTileView tileView = tile.getView();
-                worldBlock.addElement(tileView.getJSON(tile).getText());
+                worldBlock.addElement(tileView.getJson(tile).getText());
             }
         }
         worldBlock.stopArray();

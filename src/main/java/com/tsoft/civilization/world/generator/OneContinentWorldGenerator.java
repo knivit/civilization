@@ -145,7 +145,7 @@ public class OneContinentWorldGenerator implements WorldGenerator {
         ArrayList<Point> points = new ArrayList<>();
         for (int y = y1; y < y2; y ++) {
             for (int x = 0; x < tilesMap.getWidth(); x ++) {
-                AbstractTile<?> tile = tilesMap.getTile(x, y);
+                AbstractTile tile = tilesMap.getTile(x, y);
                 if (tile.getTileType().isEarth()) {
                     points.add(tile.getLocation());
                 }
@@ -175,13 +175,13 @@ public class OneContinentWorldGenerator implements WorldGenerator {
         assert (classes.length > 0) : "Length must be more than 0";
 
         // First goes a tile
-        AbstractTile<?> tile = AbstractTile.newInstance(classes[0]);
+        AbstractTile tile = AbstractTile.newInstance(classes[0]);
         assert (tile != null) : "Invalid tile " + classes[0];
         tilesMap.setTile(location, tile);
 
         // Next may be features
         for (int i = 1; i < classes.length; i ++) {
-            TerrainFeature<?> feature = TerrainFeature.newInstance(classes[i], tile);
+            TerrainFeature feature = TerrainFeature.newInstance(classes[i], tile);
         }
     }
 
@@ -235,7 +235,7 @@ public class OneContinentWorldGenerator implements WorldGenerator {
 
                         ArrayList<Point> locations = tilesMap.getLocationsAround(new Point(x, y), 1);
                         for (Point loc : locations) {
-                            AbstractTile<?> tile = tilesMap.getTile(loc);
+                            AbstractTile tile = tilesMap.getTile(loc);
                             if (tile.getTileType().isEarth()) {
                                 tile.addFeature(new Coast());
                                 break;

@@ -9,10 +9,10 @@ import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
+import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.tile.base.AbstractTileView;
@@ -44,7 +44,7 @@ public class GetTileInfo extends AbstractAjaxRequest {
             "$tileDetails", getTileDetailInfo(tile),
             "$tilePassInfo", getTilePassInfo(tile, civilization)
         );
-        return new Response(ResponseCode.OK, value.toString(), ContentType.TEXT_HTML);
+        return new HtmlResponse(ResponseCode.OK, value.toString());
     }
 
     private StringBuilder getTileInfo(AbstractTile tile) {

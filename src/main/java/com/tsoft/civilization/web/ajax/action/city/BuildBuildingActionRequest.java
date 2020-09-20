@@ -4,8 +4,8 @@ import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.improvement.city.action.BuildBuildingAction;
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.web.request.Request;
+import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
@@ -26,11 +26,11 @@ public class BuildBuildingActionRequest extends AbstractAjaxRequest {
         if (result.isFail()) {
             JsonBlock response = new JsonBlock();
             response.addParam("error", result.getLocalized());
-            return new Response(ResponseCode.ACCEPTED, response.getText(), ContentType.APPLICATION_JSON);
+            return new JsonResponse(ResponseCode.ACCEPTED, response.getText());
         }
 
         // return the map
         JsonBlock response = myCivilization.getWorld().getView().getJSON();
-        return new Response(ResponseCode.OK, response.getText(), ContentType.APPLICATION_JSON);
+        return new JsonResponse(ResponseCode.OK, response.getText());
     }
 }

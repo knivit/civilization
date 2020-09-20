@@ -13,9 +13,9 @@ import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.unit.UnitListService;
 import com.tsoft.civilization.util.Format;
-import com.tsoft.civilization.web.response.ContentType;
 
 import com.tsoft.civilization.web.request.Request;
+import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
@@ -54,7 +54,7 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
             "$units", getUnitsWithAvailableActions(myCivilization, civilization),
             "$cities", getCitiesWithAvailableActions(myCivilization, civilization));
 
-        return new Response(ResponseCode.OK, value.toString(), ContentType.TEXT_HTML);
+        return new HtmlResponse(ResponseCode.OK, value.toString());
     }
 
     private StringBuilder getCivilizationTitle(Civilization civilization) {

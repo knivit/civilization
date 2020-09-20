@@ -28,7 +28,7 @@ public final class CitizenPlacementTable {
 
     private CitizenPlacementTable() { }
 
-    private static Map<Class<? extends AbstractTile<?>>, Boolean> tiles = new HashMap<>();
+    private static Map<Class<? extends AbstractTile>, Boolean> tiles = new HashMap<>();
 
     static {
         tiles.put(Desert.class, true);
@@ -40,7 +40,7 @@ public final class CitizenPlacementTable {
         tiles.put(Tundra.class, true);
     }
 
-    private static Map<Class<? extends TerrainFeature<?>>, Boolean> features = new HashMap<>();
+    private static Map<Class<? extends TerrainFeature>, Boolean> features = new HashMap<>();
 
     static {
         features.put(Atoll.class, true);
@@ -56,12 +56,12 @@ public final class CitizenPlacementTable {
         features.put(Oasis.class, true);
     }
 
-    public static boolean canPlaceCitizen(AbstractTile<?> tile) {
+    public static boolean canPlaceCitizen(AbstractTile tile) {
         if (!tiles.get(tile.getClass())) {
             return false;
         }
 
-        for (TerrainFeature<?> feature : tile.getTerrainFeatures()) {
+        for (TerrainFeature feature : tile.getTerrainFeatures()) {
             if (!features.get(feature.getClass())) {
                 return false;
             }

@@ -87,11 +87,11 @@ public class ResourceList {
         addResourcesOnTile(Grassland.class, ResourceType.EARTH);
     }
 
-    private void addResourcesOnFeature(Class<? extends TerrainFeature<?>> featureClass, ResourceType resourceType) {
+    private void addResourcesOnFeature(Class<? extends TerrainFeature> featureClass, ResourceType resourceType) {
         addResource(featureClass.getSimpleName(), tilesMap.getTerrainFeatureClassLocations(featureClass), resourceType);
     }
 
-    private void addResourcesOnTile(Class<? extends AbstractTile<?>> tileClass, ResourceType resourceType) {
+    private void addResourcesOnTile(Class<? extends AbstractTile> tileClass, ResourceType resourceType) {
         addResource(tileClass.getSimpleName(), tilesMap.getTileClassLocations(tileClass), resourceType);
     }
 
@@ -112,7 +112,7 @@ public class ResourceList {
 
                 int index = ThreadLocalRandom.current().nextInt(locations.size());
                 Point point = locations.get(index);
-                AbstractTile<?> tile = tilesMap.getTile(point);
+                AbstractTile tile = tilesMap.getTile(point);
                 if (tile.setResource(resource)) {
                     count ++;
                 }

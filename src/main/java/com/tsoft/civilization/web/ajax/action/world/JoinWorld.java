@@ -1,8 +1,8 @@
 package com.tsoft.civilization.web.ajax.action.world;
 
 import com.tsoft.civilization.L10n.L10nServer;
-import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.web.request.Request;
+import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
@@ -23,6 +23,6 @@ public class JoinWorld extends AbstractAjaxRequest {
         Sessions.getCurrent().setWorldAndCivilizationIds(civilization);
         civilization.addFirstUnits();
 
-        return new Response(ResponseCode.OK, "", ContentType.APPLICATION_JSON);
+        return new JsonResponse(ResponseCode.OK, "");
     }
 }

@@ -96,7 +96,7 @@ public class MockTilesMap extends TilesMap {
             }
 
             if (isTile) {
-                AbstractTile<?> tile = AbstractTile.newInstance(classUuid);
+                AbstractTile tile = AbstractTile.newInstance(classUuid);
                 if (tile == null) {
                     throw new IllegalArgumentException(("Unknown tile's char = " + ch));
                 }
@@ -112,8 +112,8 @@ public class MockTilesMap extends TilesMap {
             }
 
             // System.out.println("(" + x + "," + y + ") " + ch);
-            AbstractTile<?> tile = getTile(x, y);
-            TerrainFeature<?> feature = TerrainFeature.newInstance(classUuid, tile);
+            AbstractTile tile = getTile(x, y);
+            TerrainFeature feature = TerrainFeature.newInstance(classUuid, tile);
             if (feature == null) {
                 throw new IllegalArgumentException("Unknown feature's char = " + ch);
             }

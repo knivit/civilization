@@ -2,8 +2,8 @@ package com.tsoft.civilization.web.ajax.action.world;
 
 import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.web.request.Request;
+import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
@@ -26,6 +26,6 @@ public class LoadWorld extends AbstractAjaxRequest {
         response.addParam("selectedCol", startPoint.getX());
         response.addParam("selectedRow", startPoint.getY());
 
-        return new Response(ResponseCode.OK, response.getText(), ContentType.APPLICATION_JSON);
+        return new JsonResponse(ResponseCode.OK, response.getText());
     }
 }

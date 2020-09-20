@@ -13,7 +13,9 @@ import java.util.UUID;
  * (ability gained with Masonry) before a Plantation can be built.
  * Some improvements such as farms can be built directly on a marsh, but with the -1 food penalty.
  */
-public class Marsh extends TerrainFeature<MarshView> {
+public class Marsh extends TerrainFeature {
+    public static final Marsh STUB = new Marsh();
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private static final MarshView VIEW = new MarshView();

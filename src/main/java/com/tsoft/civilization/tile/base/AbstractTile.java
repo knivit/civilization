@@ -15,11 +15,11 @@ import lombok.extern.slf4j.Slf4j;
 import java.lang.reflect.Constructor;
 
 @Slf4j
-public abstract class AbstractTile<V extends AbstractTileView> {
+public abstract class AbstractTile {
     private Point location;
     private AbstractLuxury luxury;
     private AbstractResource resource;
-    private AbstractImprovement<?> improvement;
+    private AbstractImprovement improvement;
     private TerrainFeatureList terrainFeatures = new TerrainFeatureList();
 
     public abstract TileType getTileType();
@@ -28,19 +28,19 @@ public abstract class AbstractTile<V extends AbstractTileView> {
     public abstract int getDefensiveBonusPercent();
 
     public abstract String getClassUuid();
-    public abstract V getView();
+    public abstract AbstractTileView getView();
 
     public abstract Supply getBaseSupply();
 
-    public static AbstractTile<?> newInstance(String classUuid) {
-        AbstractTile<?> tile = TileCatalog.findByClassUuid(classUuid);
+    public static AbstractTile newInstance(String classUuid) {
+        AbstractTile tile = TileCatalog.findByClassUuid(classUuid);
         if (tile == null) {
             return null;
         }
 
         try {
             Constructor<?> constructor = tile.getClass().getConstructor();
-            tile = (AbstractTile<?>)constructor.newInstance();
+            tile = (AbstractTile)constructor.newInstance();
 
             return tile;
         } catch (Exception ex) {
@@ -81,11 +81,11 @@ public abstract class AbstractTile<V extends AbstractTileView> {
         return false;
     }
 
-    public AbstractImprovement<?> getImprovement() {
+    public AbstractImprovement getImprovement() {
         return improvement;
     }
 
-    public void setImprovement(AbstractImprovement<?> improvement) {
+    public void setImprovement(AbstractImprovement improvement) {
         this.improvement = improvement;
     }
 
@@ -93,15 +93,15 @@ public abstract class AbstractTile<V extends AbstractTileView> {
         return terrainFeatures;
     }
 
-    public <F extends TerrainFeature<?>> F getFeature(Class<F> featureClass) {
+    public <F extends TerrainFeature> F getFeature(Class<F> featureClass) {
         return terrainFeatures.getByClass(featureClass);
     }
 
-    public void addFeature(TerrainFeature<?> feature) {
+    public void addFeature(TerrainFeature feature) {
         terrainFeatures.add(feature);
     }
 
-    public void removeFeature(TerrainFeature<?> feature) {
+    public void removeFeature(TerrainFeature feature) {
         terrainFeatures.remove(feature);
     }
 
@@ -114,7 +114,7 @@ public abstract class AbstractTile<V extends AbstractTileView> {
         if (!terrainFeatures.isEmpty()) {
             // start from last (i.e. on top) feature
             for (int i = terrainFeatures.size() - 1; i >= 0; i --) {
-                TerrainFeature<?> feature = terrainFeatures.get(i);
+                TerrainFeature feature = terrainFeatures.get(i);
 
                 // look for a blocking feature
                 if (feature.isBlockingTileSupply()) {
@@ -140,7 +140,7 @@ public abstract class AbstractTile<V extends AbstractTileView> {
 
         // add features starting from the uppermost
         for (int i = terrainFeatures.size() - 1; i >= 0; i --) {
-            TerrainFeature<?> feature = terrainFeatures.get(i);
+            TerrainFeature feature = terrainFeatures.get(i);
 
             int featurePassCost = feature.getPassCost(unit);
             if (featurePassCost == TilePassCostTable.UNPASSABLE) {
@@ -159,7 +159,7 @@ public abstract class AbstractTile<V extends AbstractTileView> {
         if (!terrainFeatures.isEmpty()) {
             // start from last (i.e. on top) feature
             for (int i = terrainFeatures.size() - 1; i >= 0; i --) {
-                TerrainFeature<?> feature = terrainFeatures.get(i);
+                TerrainFeature feature = terrainFeatures.get(i);
 
                 int featurePassCost = feature.getMissilePassCost(attacker);
                 if (featurePassCost == TilePassCostTable.UNPASSABLE) {
@@ -177,7 +177,7 @@ public abstract class AbstractTile<V extends AbstractTileView> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        AbstractTile<?> that = (AbstractTile<?>) o;
+        AbstractTile that = (AbstractTile) o;
         return location.equals(that.location);
     }
 

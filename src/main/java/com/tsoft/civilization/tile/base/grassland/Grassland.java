@@ -10,7 +10,9 @@ import java.util.UUID;
  * Basic Production: 2 Food
  * Movement Cost: 1; Defensive Bonus: -33%
  */
-public class Grassland extends AbstractTile<GrasslandView> {
+public class Grassland extends AbstractTile {
+    public static final Grassland STUB = new Grassland();
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private static final GrasslandView VIEW = new GrasslandView();

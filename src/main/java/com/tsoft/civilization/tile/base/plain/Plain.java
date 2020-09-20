@@ -10,7 +10,9 @@ import java.util.UUID;
  * Basic Production: 1 Food, 1 Hammer
  * Movement Cost: 1; Defensive Bonus: -33%
  */
-public class Plain extends AbstractTile<PlainView> {
+public class Plain extends AbstractTile {
+    public static final Plain STUB = new Plain();
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private static final PlainView VIEW = new PlainView();

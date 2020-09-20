@@ -2,8 +2,8 @@ package com.tsoft.civilization.web.ajax.action.status;
 
 import com.tsoft.civilization.L10n.L10nWorld;
 import com.tsoft.civilization.util.Format;
-import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.web.request.Request;
+import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
@@ -21,7 +21,7 @@ public class GetWorlds extends AbstractAjaxRequest {
             "$createNewWorld", getCreateWorld()
         );
 
-        return new Response(ResponseCode.OK, value.toString(), ContentType.TEXT_HTML);
+        return new HtmlResponse(ResponseCode.OK, value.toString());
     }
 
     private StringBuilder getExistingWorlds() {

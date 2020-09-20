@@ -9,7 +9,9 @@ import java.util.UUID;
 /**
  * Impassable except to Air and Submarine units.
  */
-public class Ice extends TerrainFeature<IceView> {
+public class Ice extends TerrainFeature {
+    public final static Ice STUB = new Ice();
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private static final IceView VIEW = new IceView();

@@ -6,8 +6,8 @@ import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.L10n.building.L10nBuilding;
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.util.Format;
-import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.web.request.Request;
+import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
@@ -39,7 +39,7 @@ public class GetBuildingStatus extends AbstractAjaxRequest {
             "$buildingTitle", getBuildingTitle(building),
             "$buildingInfo", getBuildingInfo(building),
             "$actions", getActions(building));
-        return new Response(ResponseCode.OK, value.toString(), ContentType.TEXT_HTML);
+        return new HtmlResponse(ResponseCode.OK, value.toString());
     }
 
     private StringBuilder getBuildingTitle(AbstractBuilding building) {

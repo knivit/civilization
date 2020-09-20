@@ -87,8 +87,8 @@ public class Citizen {
 
     // Get supply from tiles without improvements where the citizen is working
     private Supply getTileSupply() {
-        AbstractTile<?> tile = city.getTilesMap().getTile(location);
-        AbstractImprovement<?> improvement = tile.getImprovement();
+        AbstractTile tile = city.getTilesMap().getTile(location);
+        AbstractImprovement improvement = tile.getImprovement();
         if (improvement == null || !improvement.isBlockingTileSupply()) {
             return tile.getSupply();
         }
@@ -98,8 +98,8 @@ public class Citizen {
 
     // Get supply from improvements where citizen is working
     private Supply getImprovementsSupply() {
-        AbstractTile<?> tile = city.getTilesMap().getTile(location);
-        AbstractImprovement<?> improvement = tile.getImprovement();
+        AbstractTile tile = city.getTilesMap().getTile(location);
+        AbstractImprovement improvement = tile.getImprovement();
         if (improvement != null && !(improvement instanceof City)) {
             return improvement.getSupply();
         }

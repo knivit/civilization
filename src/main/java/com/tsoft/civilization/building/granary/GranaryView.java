@@ -2,7 +2,6 @@ package com.tsoft.civilization.building.granary;
 
 import com.tsoft.civilization.L10n.building.L10nGranary;
 import com.tsoft.civilization.building.AbstractBuildingView;
-import com.tsoft.civilization.building.granary.Granary;
 
 public class GranaryView extends AbstractBuildingView<Granary> {
     @Override

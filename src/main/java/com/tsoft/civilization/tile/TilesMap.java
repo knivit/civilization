@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class TilesMap {
-    private AbstractTile<?>[][] tiles;
+    private AbstractTile[][] tiles;
     private MapType mapType;
 
     private int width;
@@ -45,14 +45,14 @@ public class TilesMap {
         return height;
     }
 
-    public AbstractTile<?> getTile(int x, int y) {
+    public AbstractTile getTile(int x, int y) {
         assert (x >= 0 && x < getWidth()) : "x = " + x + " is not in range [0.." + (getWidth() - 1) + "]";
         assert (y >= 0 && y < getHeight()) : "y = " + y + " is not in range [0.." + (getHeight() - 1) + "]";
 
         return tiles[x][y];
     }
 
-    public AbstractTile<?> getTile(Point location) {
+    public AbstractTile getTile(Point location) {
         return getTile(location.getX(), location.getY());
     }
 
@@ -192,11 +192,11 @@ public class TilesMap {
         return locations;
     }
 
-    private Stream<AbstractTile<?>> tiles() {
+    private Stream<AbstractTile> tiles() {
         return Stream.of(tiles).flatMap(Stream::of);
     }
 
-    public List<Point> getTileClassLocations(Class<? extends AbstractTile<?>> tileClass) {
+    public List<Point> getTileClassLocations(Class<? extends AbstractTile> tileClass) {
         Objects.requireNonNull(tileClass, "Tile class must be not null");
 
         return tiles()
@@ -205,7 +205,7 @@ public class TilesMap {
             .collect(Collectors.toList());
     }
 
-    public List<Point> getTerrainFeatureClassLocations(Class<? extends TerrainFeature<?>> featureClass) {
+    public List<Point> getTerrainFeatureClassLocations(Class<? extends TerrainFeature> featureClass) {
         Objects.requireNonNull(featureClass, "TerrainFeature class must be not null");
 
         return tiles()

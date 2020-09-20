@@ -32,7 +32,7 @@ public class RemoveForestActionTest {
 
         MockWorld mockWorld = new MockWorld(mockTilesMap);
         Civilization civilization = new Civilization(mockWorld, 0);
-        AbstractTile<?> tile = mockTilesMap.getTile(1, 1);
+        AbstractTile tile = mockTilesMap.getTile(1, 1);
         Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);
         civilization.addUnit(workers, tile.getLocation());
 
@@ -60,7 +60,7 @@ public class RemoveForestActionTest {
         Civilization civilization = new Civilization(mockWorld, 0);
         civilization.addTechnology(Technology.MINING);
 
-        AbstractTile<?> tile = mockTilesMap.getTile(1, 1);
+        AbstractTile tile = mockTilesMap.getTile(1, 1);
         Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);
         civilization.addUnit(workers, tile.getLocation());
 

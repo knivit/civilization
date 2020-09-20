@@ -11,11 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 import java.lang.reflect.Constructor;
 
 @Slf4j
-public abstract class TerrainFeature<V extends AbstractFeatureView> {
+public abstract class TerrainFeature {
     public static final int FEATURE_NOT_INITIALIZED = -1;
     public static final int FEATURE_REMOVED = 0;
 
-    private AbstractTile<?> tile;
+    private AbstractTile tile;
 
     private int strength = FEATURE_NOT_INITIALIZED;
 
@@ -25,17 +25,17 @@ public abstract class TerrainFeature<V extends AbstractFeatureView> {
     public abstract int getDefensiveBonusPercent();
     public abstract int getMaxStrength();
     public abstract String getClassUuid();
-    public abstract V getView();
+    public abstract AbstractFeatureView getView();
 
-    public static TerrainFeature<?> newInstance(String classUuid, AbstractTile<?> tile) {
-        TerrainFeature<?> feature = FeatureCatalog.findByClassUuid(classUuid);
+    public static TerrainFeature newInstance(String classUuid, AbstractTile tile) {
+        TerrainFeature feature = FeatureCatalog.findByClassUuid(classUuid);
         if (feature == null) {
             return null;
         }
 
         try {
             Constructor<?> constructor = feature.getClass().getConstructor();
-            feature = (TerrainFeature<?>)constructor.newInstance();
+            feature = (TerrainFeature)constructor.newInstance();
             feature.init(tile);
 
             return feature;
@@ -47,7 +47,7 @@ public abstract class TerrainFeature<V extends AbstractFeatureView> {
 
     protected TerrainFeature() { }
 
-    private void init(AbstractTile<?> tile) {
+    private void init(AbstractTile tile) {
         this.tile = tile;
         tile.addFeature(this);
     }

@@ -89,11 +89,11 @@ public class LuxuryList {
         addLuxuryOnTile(Grassland.class, LuxuryType.FOOD);
     }
 
-    private void addLuxuryOnFeature(Class<? extends TerrainFeature<?>> featureClass, LuxuryType luxuryType) {
+    private void addLuxuryOnFeature(Class<? extends TerrainFeature> featureClass, LuxuryType luxuryType) {
         addLuxury(featureClass.getSimpleName(), tilesMap.getTerrainFeatureClassLocations(featureClass), luxuryType);
     }
 
-    private void addLuxuryOnTile(Class<? extends AbstractTile<?>> tileClass, LuxuryType luxuryType) {
+    private void addLuxuryOnTile(Class<? extends AbstractTile> tileClass, LuxuryType luxuryType) {
         addLuxury(tileClass.getSimpleName(), tilesMap.getTileClassLocations(tileClass), luxuryType);
     }
 
@@ -114,7 +114,7 @@ public class LuxuryList {
 
                 int index = ThreadLocalRandom.current().nextInt(locations.size());
                 Point point = locations.get(index);
-                AbstractTile<?> tile = tilesMap.getTile(point);
+                AbstractTile tile = tilesMap.getTile(point);
                 if (tile.setLuxury(luxury)) {
                     count ++;
                 }

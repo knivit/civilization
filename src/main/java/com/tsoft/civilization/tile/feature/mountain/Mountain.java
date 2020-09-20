@@ -10,7 +10,9 @@ import java.util.UUID;
  * Production: 0
  * Movement Cost: Impassable except to Air units; Defensive Bonus: +25%
  */
-public class Mountain extends TerrainFeature<MountainView> {
+public class Mountain extends TerrainFeature {
+    public final static Mountain STUB = new Mountain();
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private static final MountainView VIEW = new MountainView();

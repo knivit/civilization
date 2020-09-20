@@ -12,7 +12,9 @@ import java.util.UUID;
  * Movement Cost: 2
  * Fallout must be cleared by a Worker before any improvements can be built.
  */
-public class Fallout extends TerrainFeature<FalloutView> {
+public class Fallout extends TerrainFeature {
+    public static final Fallout STUB = new Fallout();
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private static final FalloutView VIEW = new FalloutView();

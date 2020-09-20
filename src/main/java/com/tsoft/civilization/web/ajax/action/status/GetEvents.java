@@ -4,9 +4,9 @@ import com.tsoft.civilization.L10n.L10nEvent;
 import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.NumberUtil;
+import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
-import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
@@ -37,7 +37,7 @@ public class GetEvents extends AbstractAjaxRequest {
             "$navigationPanel", getNavigationPanel(),
             "$eventsNavigation", getEventsNavigation(civilization, year, stepNo),
             "$events", getEvents(civilization, year));
-        return new Response(ResponseCode.OK, value.toString(), ContentType.TEXT_HTML);
+        return new HtmlResponse(ResponseCode.OK, value.toString());
     }
 
     private StringBuilder getEventsNavigation(Civilization civilization, Year year, int stepNo) {

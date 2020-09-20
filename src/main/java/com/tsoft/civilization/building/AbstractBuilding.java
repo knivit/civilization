@@ -118,7 +118,7 @@ public abstract class AbstractBuilding implements CanBeBuilt {
         return city;
     }
 
-    public AbstractTile<?> getTile(Point location) {
+    public AbstractTile getTile(Point location) {
         return city.getTilesMap().getTile(location);
     }
 

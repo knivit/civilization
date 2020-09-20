@@ -44,7 +44,7 @@ public class MissileFeaturePastCostTable {
         table.put(City.CLASS_UUID + Oasis.CLASS_UUID, 2);
     }
 
-    public static int get(HasCombatStrength attacker, TerrainFeature<?> feature) {
+    public static int get(HasCombatStrength attacker, TerrainFeature feature) {
         Objects.requireNonNull(attacker, "Attacker can't be null");
         Objects.requireNonNull(feature, "Feature can't be null");
 

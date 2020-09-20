@@ -10,7 +10,9 @@ import java.util.UUID;
  * Basic Production: (none)
  * Movement Cost: 1; Defensive Bonus: -33%
  */
-public class Snow extends AbstractTile<SnowView> {
+public class Snow extends AbstractTile {
+    public static final Snow STUB = new Snow();
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private static final SnowView VIEW = new SnowView();

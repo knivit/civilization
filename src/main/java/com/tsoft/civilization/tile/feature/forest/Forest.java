@@ -12,7 +12,9 @@ import java.util.UUID;
  * Notes: Tiles with forests covering them always yield 1 Food and 1 Production, regardless of the underlying terrain type.
  * Forests can be cleared by Workers (with the Advent of Mining).
  */
-public class Forest extends TerrainFeature<ForestView> {
+public class Forest extends TerrainFeature {
+    public static final Forest STUB = new Forest();
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private static final ForestView VIEW = new ForestView();

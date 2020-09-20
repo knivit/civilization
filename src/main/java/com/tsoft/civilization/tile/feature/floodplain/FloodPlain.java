@@ -9,7 +9,9 @@ import java.util.UUID;
 /**
  * Production Modifier: +2 Food
  */
-public class FloodPlain extends TerrainFeature<FloodPlainView> {
+public class FloodPlain extends TerrainFeature {
+    public static final FloodPlain STUB = new FloodPlain();
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private static final FloodPlainView VIEW = new FloodPlainView();
