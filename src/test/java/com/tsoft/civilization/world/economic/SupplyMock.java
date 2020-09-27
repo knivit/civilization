@@ -2,7 +2,7 @@ package com.tsoft.civilization.world.economic;
 
 public class SupplyMock {
     public static Supply of(String str) {
-        Supply result = Supply.EMPTY_SUPPLY;
+        Supply supply = Supply.EMPTY_SUPPLY;
 
         int i = 0;
         char type = '\0';
@@ -29,10 +29,10 @@ public class SupplyMock {
             i = k;
             typeMode = true;
 
-            result = result.add(getSupply(type, value));
+            supply = supply.add(getSupply(type, value));
         }
 
-        return result;
+        return supply;
     }
 
     private static Supply getSupply(char type, int value) {
@@ -47,7 +47,7 @@ public class SupplyMock {
             case 'O': return Supply.builder().population(value).build();
 
             case 'A': return Supply.builder().greatArtist(value).build();
-            case 'M': return Supply.builder().greatMusicians(value).build();
+            case 'M': return Supply.builder().greatMusician(value).build();
             case 'W': return Supply.builder().greatWriter(value).build();
             case 'R': return Supply.builder().greatMerchant(value).build();
             case 'E': return Supply.builder().greatEngineer(value).build();
@@ -65,7 +65,18 @@ public class SupplyMock {
         boolean isEqual =
             a.getFood() == b.getFood() &&
             a.getProduction() == b.getProduction() &&
-            a.getGold() == b.getGold();
+            a.getGold() == b.getGold() &&
+            a.getScience() == b.getScience() &&
+            a.getCulture() == b.getCulture() &&
+            a.getHappiness() == b.getHappiness() &&
+            a.getUnhappiness() == b.getUnhappiness() &&
+            a.getPopulation() == b.getPopulation() &&
+            a.getGreatArtist() == b.getGreatArtist() &&
+            a.getGreatMusician() == b.getGreatMusician() &&
+            a.getGreatWriter() == b.getGreatWriter() &&
+            a.getGreatMerchant() == b.getGreatMerchant() &&
+            a.getGreatEngineer() == b.getGreatEngineer() &&
+            a.getGreatScientist() == b.getGreatScientist();
 
         // log them out as jUnit doesn't show the values in assertTrue
         if (!isEqual) {
@@ -98,7 +109,7 @@ public class SupplyMock {
                 a.getPopulation(), b.getPopulation(), cmp(a.getPopulation(), b.getPopulation()),
 
                 a.getGreatArtist(), b.getGreatArtist(), cmp(a.getGreatArtist(), b.getGreatArtist()),
-                a.getGreatMusicians(), b.getGreatMusicians(), cmp(a.getGreatMusicians(), b.getGreatMusicians()),
+                a.getGreatMusician(), b.getGreatMusician(), cmp(a.getGreatMusician(), b.getGreatMusician()),
                 a.getGreatWriter(), b.getGreatWriter(), cmp(a.getGreatWriter(), b.getGreatWriter()),
                 a.getGreatMerchant(), b.getGreatMerchant(), cmp(a.getGreatMerchant(), b.getGreatMerchant()),
                 a.getGreatEngineer(), b.getGreatEngineer(), cmp(a.getGreatEngineer(), b.getGreatEngineer()),

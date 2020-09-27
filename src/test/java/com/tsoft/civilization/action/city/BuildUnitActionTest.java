@@ -37,7 +37,7 @@ public class BuildUnitActionTest {
 
         City city = new City(civilization, new Point(2, 0));
         city.setPassScore(1);
-        assertTrue(SupplyMock.equals("F1 P3 G3 S3 C1 H0 U1 O1", civilization.calcSupply()));
+        assertTrue(SupplyMock.equals("F1 P3 G3 S4 C1 H0 U1 O1", civilization.calcSupply()));
 
         // Start build Archers
         ActionAbstractResult actionResult = BuildUnitAction.buildUnit(city, Archers.CLASS_UUID);

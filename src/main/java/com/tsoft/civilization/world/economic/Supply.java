@@ -18,7 +18,7 @@ public class Supply {
     private final int population;
 
     private final int greatArtist;
-    private final int greatMusicians;
+    private final int greatMusician;
     private final int greatWriter;
     private final int greatEngineer;
     private final int greatMerchant;
@@ -36,7 +36,7 @@ public class Supply {
             .population(population + other.population)
 
             .greatArtist(greatArtist + other.greatArtist)
-            .greatMusicians(greatMusicians + other.greatMusicians)
+            .greatMusician(greatMusician + other.greatMusician)
             .greatWriter(greatWriter + other.greatWriter)
             .greatEngineer(greatEngineer + other.greatEngineer)
             .greatMerchant(greatMerchant + other.greatMerchant)
@@ -57,12 +57,12 @@ public class Supply {
             ", unhappiness=" + unhappiness +
             ", population=" + population +
 
-            ", greatArtist=" + greatArtist +
-            ", greatMusicians=" + greatMusicians +
-            ", greatWriter=" + greatWriter +
-            ", greatEngineer=" + greatEngineer +
-            ", greatMerchant=" + greatMerchant +
-            ", greatScientist=" + greatScientist +
+            ", Great Artist=" + greatArtist +
+            ", Great Musician=" + greatMusician +
+            ", Great Writer=" + greatWriter +
+            ", Great Engineer=" + greatEngineer +
+            ", Great Merchant=" + greatMerchant +
+            ", Great Scientist=" + greatScientist +
         '}';
     }
 }

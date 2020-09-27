@@ -51,30 +51,29 @@ public class CivilizationScoreTest {
         City city = new City(c1, new Point(1, 1));
 
         // Step 1
-        // food | prod | gold | science | culture | unhappiness | population | produced/consumed by
-        //    0 |    0 |    0 |       0 |       0 |           1 |          1 | City
-        //    0 |    3 |    3 |       3 |       1 |             |            | Palace
-        //    2 |    0 |    0 |       0 |       0 |             |            | grassland
-        //   -1 |    0 |    0 |       0 |       0 |             |            | 1 citizen
-        // -------------------------------------------------------------------
-        //    1 |    3 |    3 |       3 |       1 |           1 |          1 |
+        // food | prod | gold | science | culture | happiness | unhappiness | population | produced/consumed by
+        //      |    3 |    3 |       3 |       1 |           |             |            | Palace
+        //    2 |      |      |         |         |           |             |            | grassland
+        //   -1 |      |      |       1 |         |           |           1 |          1 | 1 citizen
+        // -------------------------------------------------------------------------------
+        //    1 |    3 |    3 |       4 |       1 |           |           1 |          1 |
         world.step();
-        assertTrue(SupplyMock.equals("F1 P3 G3 S3 C1 U1 O1", c1.calcSupply()));
+        assertTrue(SupplyMock.equals("F1 P3 G3 S4 C1 H1 U1 O1", c1.calcSupply()));
 
         // Step 2
-        // food | prod | gold | science | culture | unhappiness | population | produced/consumed by
-        //    0 |    3 |    3 |       3 |       1 |           1 |          1 | Palace
-        //    2 |    0 |    0 |       0 |       0 |             |            | grassland
-        //   -1 |    0 |    0 |       0 |       0 |             |            | 1 citizen
-        // -------------------------------------------------------------------
-        //    1 |    3 |    3 |       3 |       1 |           1 |          1 |
-        // -------------------------------------------------------------------
-        //    0 |    0 |    3 |       3 |       1 |             |            | remains from the previous step
-        // -------------------------------------------------------------------
-        //    1 |    3 |    6 |       6 |       2 |           1 |          1 |
+        // food | prod | gold | science | culture | happiness | unhappiness | population | produced/consumed by
+        //      |    3 |    3 |       3 |       1 |           |             |            | Palace
+        //    2 |      |      |         |         |           |             |            | grassland
+        //   -1 |      |      |       1 |         |           |           1 |          1 | 1 citizen
+        // -------------------------------------------------------------------------------
+        //    1 |    3 |    3 |       4 |       1 |           |           1 |            |
+        // -------------------------------------------------------------------------------
+        //    1 |    3 |    3 |       4 |       1 |           |           1 |          1 | remains from the previous step
+        // --------------------------------------------------------------------------------
+        //    2 |    6 |    6 |       6 |       2 |           |           2 |          1 |
         world.step();
-        assertTrue(SupplyMock.equals("F1 P3 G3 S3 C1 U1 O1", c1.calcSupply()));
-        assertTrue(SupplyMock.equals("F1 P3 G6 S6 C2 U1 O1", c1.getSupply()));
+        assertTrue(SupplyMock.equals("F1 P3 G3 S4 C1 H0 U1 O1", c1.calcSupply()));
+        assertTrue(SupplyMock.equals("F2 P6 G6 S8 C2 H0 U2 O1", c1.getSupply()));
     }
 
     @Test
@@ -103,28 +102,28 @@ public class CivilizationScoreTest {
         assertEquals(15, city.getCitizenCount());
         assertEquals(11, city.getCitizenLocations().size());
 
-        // food | prod | gold | science | culture | unhappiness | population | produced/consumed by
-        //    0 |    3 |    3 |       3 |       1 |          1  |          1 | Palace
-        //    2 |    0 |    0 |         |         |             |            | grassland (1, 0)
-        //    0 |    0 |    0 |         |         |             |            | desert (2, 0)
-        //    0 |    0 |    0 |         |         |             |            | ice (3, 0)
-        //    2 |    0 |    1 |         |         |             |            | lake (0, 1)
-        //    0 |    0 |    0 |         |         |             |            | mountain (1, 1)
-        //    1 |    1 |    0 |         |         |             |            | plain (2, 1)
-        //    0 |    0 |    0 |         |         |             |            | snow (3, 1)
-        //    1 |    0 |    0 |         |         |             |            | tundra (4, 1)
-        //    4 |    0 |    0 |         |         |             |            | grassland + flood plain (0, 2)
-        //    1 |    1 |    0 |         |         |             |            | grassland + forest (1, 2)
-        //    0 |    2 |    0 |         |         |             |            | grassland + hill (2, 2)
-        //    1 |    1 |    0 |         |         |             |            | grassland + hill + forest (3, 2)
-        //    1 |    0 |    0 |         |         |             |            | grassland + marsh (4, 2)
-        //    2 |   -1 |    0 |         |         |             |            | grassland + jungle (1, 3)
-        //    4 |    1 |    1 |         |         |             |            | plain + oasis (2, 3)
-        //  -15 |    0 |    0 |         |         |             |            | 15 citizens
-        // -------------------------------------------------------------------
-        //   4  |    8 |    5 |       3 |       1 |           1 |          1 |
+        // food | prod | gold | science | culture | happiness | unhappiness | population | produced/consumed by
+        //    0 |    3 |    3 |       3 |       1 |           |          1  |          1 | Palace
+        //    2 |    0 |    0 |         |         |           |             |            | grassland (1, 0)
+        //    0 |    0 |    0 |         |         |           |             |            | desert (2, 0)
+        //    0 |    0 |    0 |         |         |           |             |            | ice (3, 0)
+        //    2 |    0 |    1 |         |         |           |             |            | lake (0, 1)
+        //    0 |    0 |    0 |         |         |           |             |            | mountain (1, 1)
+        //    1 |    1 |    0 |         |         |           |             |            | plain (2, 1)
+        //    0 |    0 |    0 |         |         |           |             |            | snow (3, 1)
+        //    1 |    0 |    0 |         |         |           |             |            | tundra (4, 1)
+        //    4 |    0 |    0 |         |         |           |             |            | grassland + flood plain (0, 2)
+        //    1 |    1 |    0 |         |         |           |             |            | grassland + forest (1, 2)
+        //    0 |    2 |    0 |         |         |           |             |            | grassland + hill (2, 2)
+        //    1 |    1 |    0 |         |         |           |             |            | grassland + hill + forest (3, 2)
+        //    1 |    0 |    0 |         |         |           |             |            | grassland + marsh (4, 2)
+        //    2 |   -1 |    0 |         |         |           |             |            | grassland + jungle (1, 3)
+        //    4 |    1 |    1 |         |         |           |             |            | plain + oasis (2, 3)
+        //  -15 |    0 |    0 |         |         |           |             |            | 15 citizens
+        // -------------------------------------------------------------------------------
+        //   4  |    8 |    5 |       3 |       1 |           |           1 |          1 |
         world.step();
-        assertTrue(SupplyMock.equals("F4 P8 G5 S3 C1 U1 O1", c1.calcSupply()));
+        assertTrue(SupplyMock.equals("F4 P8 G5 S3 C1 H0 U1 O1", c1.calcSupply()));
 
         // check the citizens don't work on tiles with empty supply
         assertTrue(Collections.disjoint(city.getCitizenLocations(), Arrays.asList(new Point(2, 0), new Point(3, 0), new Point(1, 1), new Point(3, 1))));
@@ -146,18 +145,18 @@ public class CivilizationScoreTest {
         city.addCitizen();
 
         // Step 1
-        // food | prod | gold | science | culture | unhappiness | population | produced/consumed by
-        //    0 |    3 |    3 |       3 |       1 |           1 |          1 | Palace
-        //    0 |    2 |    0 |         |         |             |            | grassland + hill (1, 0) - one citizen must work here
-        //    1 |    1 |    0 |         |         |             |            | grassland + hill + forest (1, 2) - another citizen
-        //   -2 |    0 |    0 |         |         |             |            | 2 citizens
-        // -------------------------------------------------------------------
-        //   -1 |    6 |    3 |       3 |       1 |           1 |          1 |
+        // food | prod | gold | science | culture | happiness | unhappiness | population | produced/consumed by
+        //    0 |    3 |    3 |       3 |       1 |           |           1 |          1 | Palace
+        //    0 |    2 |    0 |         |         |           |             |            | grassland + hill (1, 0) - one citizen must work here
+        //    1 |    1 |    0 |         |         |           |             |            | grassland + hill + forest (1, 2) - another citizen
+        //   -2 |    0 |    0 |         |         |           |             |            | 2 citizens
+        // -------------------------------------------------------------------------------
+        //   -1 |    6 |    3 |       3 |       1 |           |           1 |          1 |
         city.setSupplyStrategy(CitySupplyStrategy.MAX_PRODUCTION);
         world.step();
         assertTrue(city.getCitizenLocations().contains(new Point(1, 0)));
         assertTrue(city.getCitizenLocations().contains(new Point(1, 2)));
-        assertTrue(SupplyMock.equals("F-1 P6 G3 S3 C1 U1 O2", c1.calcSupply()));
+        assertTrue(SupplyMock.equals("F-1 P6 G3 S3 C1 H1 U1 O2", c1.calcSupply()));
 
         // Step 2
         // food | prod | gold | science | culture | unhappiness | population | produced/consumed by

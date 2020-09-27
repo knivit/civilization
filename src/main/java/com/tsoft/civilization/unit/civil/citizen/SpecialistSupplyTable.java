@@ -13,7 +13,7 @@ public final class SpecialistSupplyTable {
 
     static {
         table.put(SpecialistType.Artist, Supply.builder().culture(3).greatArtist(3).build());
-        table.put(SpecialistType.Musician, Supply.builder().culture(3).greatMusicians(3).build());
+        table.put(SpecialistType.Musician, Supply.builder().culture(3).greatMusician(3).build());
         table.put(SpecialistType.Writer, Supply.builder().culture(3).greatWriter(3).build());
         table.put(SpecialistType.Engineer, Supply.builder().production(2).greatEngineer(3).build());
         table.put(SpecialistType.Merchant, Supply.builder().gold(2).greatMerchant(3).build());
