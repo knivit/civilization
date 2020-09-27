@@ -47,7 +47,7 @@ public class GetMyUnits extends AbstractAjaxRequest {
     }
 
     private StringBuilder getUnitsInfo(Civilization civilization) {
-        UnitList<?> units = civilization.getUnits();
+        UnitList<?> units = civilization.units().getUnits();
         if (units.isEmpty()) {
             return Format.text(
                 "<table id='actions_table'><tr><th>$text</th></tr></table>",

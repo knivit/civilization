@@ -90,9 +90,9 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
             "$goldLabel", L10nCivilization.GOLD, "$gold", civilization.calcSupply().getGold(),
             "$foodLabel", L10nCivilization.FOOD, "$food", civilization.calcSupply().getFood(),
             "$happinessLabel", L10nCivilization.HAPPINESS, "$happiness", civilization.calcSupply().getHappiness(),
-            "$militaryUnitsLabel", L10nCivilization.MILITARY_UNITS_COUNT, "$militaryUnits", civilization.getUnits().getMilitaryCount(),
-            "$civilUnitsLabel", L10nCivilization.CIVIL_UNITS_COUNT, "$civilUnits", civilization.getUnits().getCivilCount(),
-            "$citiesLabel", L10nCivilization.CITIES_COUNT, "$cities", civilization.getCities().size()
+            "$militaryUnitsLabel", L10nCivilization.MILITARY_UNITS_COUNT, "$militaryUnits", civilization.units().getMilitaryCount(),
+            "$civilUnitsLabel", L10nCivilization.CIVIL_UNITS_COUNT, "$civilUnits", civilization.units().getCivilCount(),
+            "$citiesLabel", L10nCivilization.CITIES_COUNT, "$cities", civilization.cities().size()
         );
     }
 
@@ -129,7 +129,7 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
             return null;
         }
 
-        UnitList<?> units = civilization.getUnitsWithActionsAvailable();
+        UnitList<?> units = civilization.units().getUnitsWithActionsAvailable();
         if (units.isEmpty()) {
             return null;
         }
@@ -169,7 +169,7 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
             return null;
         }
 
-        CityList cities = civilization.getCitiesWithActionsAvailable();
+        CityList cities = civilization.cities().getCitiesWithActionsAvailable();
         if (cities.isEmpty()) {
             return null;
         }

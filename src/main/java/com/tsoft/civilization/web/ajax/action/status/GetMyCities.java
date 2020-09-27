@@ -48,7 +48,7 @@ public class GetMyCities extends AbstractAjaxRequest {
     }
 
     private StringBuilder getCitiesInfo(Civilization civilization) {
-        CityList cities = civilization.getCities();
+        CityList cities = civilization.cities().getCities();
         if (cities.isEmpty()) {
             return Format.text(
                 "<table id='actions_table'><tr><th>$text</th></tr></table>",

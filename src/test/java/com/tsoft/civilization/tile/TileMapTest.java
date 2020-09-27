@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TileMapTest {
     @Test
     public void getTilesAround1() {
-        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
                 " |0 1 2 3 4 5 6 7 ",
                 "-+----------------",
                 "0|. . . . . . . . ",
@@ -23,7 +23,7 @@ public class TileMapTest {
                 "7| . . . . . . . .");
 
         // round 1
-        ArrayList<Point> locations = mockTilesMap.getLocationsAround(new Point(3, 3), 1);
+        ArrayList<Point> locations = map.getLocationsAround(new Point(3, 3), 1);
 
         assertEquals(6, locations.size());
         assertEquals(new Point(3, 2), locations.get(0));
@@ -36,7 +36,7 @@ public class TileMapTest {
 
     @Test
     public void getTilesAround2() {
-        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
                 " |0 1 2 3 4 5 6 7 ",
                 "-+----------------",
                 "0|. . . . . . . . ",
@@ -49,7 +49,7 @@ public class TileMapTest {
                 "7| . . . . . . . .");
 
         // round 2
-        ArrayList<Point> locations = mockTilesMap.getLocationsAround(new Point(3, 3), 2);
+        ArrayList<Point> locations = map.getLocationsAround(new Point(3, 3), 2);
 
         assertEquals(6 + 12, locations.size());
 
@@ -78,7 +78,7 @@ public class TileMapTest {
 
     @Test
     public void getTilesAround3() {
-        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
                 " |0 1 2 3 4 5 6 7 ",
                 "-+----------------",
                 "0|. . . . . . . . ",
@@ -91,7 +91,7 @@ public class TileMapTest {
                 "7| . . . . . . . .");
 
         // round 3
-        ArrayList<Point> locations = mockTilesMap.getLocationsAround(new Point(3, 3), 3);
+        ArrayList<Point> locations = map.getLocationsAround(new Point(3, 3), 3);
 
         assertEquals(6 + 12 + 18, locations.size());
 

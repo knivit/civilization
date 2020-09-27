@@ -1,14 +1,11 @@
 package com.tsoft.civilization.civilization;
 
-import com.tsoft.civilization.L10n.L10nCity;
 import com.tsoft.civilization.L10n.L10nCivilization;
 import com.tsoft.civilization.L10n.L10nMap;
 import com.tsoft.civilization.L10n.L10nWorld;
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.BuildingFactory;
-import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.improvement.city.CityList;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.unit.AbstractUnit;
@@ -23,49 +20,46 @@ import com.tsoft.civilization.world.agreement.OpenBordersAgreement;
 import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.world.event.Event;
 import com.tsoft.civilization.world.event.EventsByYearMap;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 
 @Slf4j
+@EqualsAndHashCode(of = "id")
 public class Civilization {
+    private final String id = UUID.randomUUID().toString();
+
     private final CivilizationView VIEW;
 
-    private L10nMap name;
-    private final String id = UUID.randomUUID().toString();
-    private Year startYear;
+    private final L10nMap name;
+    private final Year startYear;
     private boolean isMoved;
     private boolean isArtificialIntelligence;
 
-    private World world;
+    private final World world;
 
-    // Active cities and destroyed (on this step) cities
-    private CityList cities = new CityList();
-    private CityList destroyedCities = new CityList();
+    private final CivilizationUnitService unitService;
+    private final CivilizationCityService cityService;
 
-    private CivilizationUnitService unitService;
-
-    private HashSet<Technology> technologies = new TechnologySet();
+    private final HashSet<Technology> technologies = new TechnologySet();
 
     @Getter
     private Supply supply;
 
     // Agreements which this civilization has with others
-    private HashMap<Civilization, AgreementList> agreements = new HashMap<>();
+    private final HashMap<Civilization, AgreementList> agreements = new HashMap<>();
 
     // true when any event that needs score to be calculated was generated
-    private EventsByYearMap events;
+    private final EventsByYearMap events;
 
-    private boolean isDestroyed;
+    public Civilization(World world, L10nMap name) {
+        Objects.requireNonNull(world, "world can't be null");
+        Objects.requireNonNull(name, "Civilization name can't be null");
 
-    public Civilization(World world, int index) {
         this.world = world;
-        if ((index < 0) || (index >= L10nCivilization.CIVILIZATIONS.size())) {
-            log.warn("Invalid civilization index={}", index);
-            index = 0;
-        }
-        name = L10nCivilization.CIVILIZATIONS.get(index);
+        this.name = name;
         VIEW = new CivilizationView(name);
 
         startYear = world.getYear();
@@ -74,16 +68,23 @@ public class Civilization {
         // initialize civ's params
         supply = Supply.EMPTY_SUPPLY;
         unitService = new CivilizationUnitService(this);
-
-        world.addCivilization(this);
-    }
-
-    public void addFirstUnits() {
-        unitService.addFirstUnits();
+        cityService = new CivilizationCityService(this);
     }
 
     public String getId() {
         return id;
+    }
+
+    public L10nMap getName() {
+        return name;
+    }
+
+    public CivilizationUnitService units() {
+        return unitService;
+    }
+
+    public CivilizationCityService cities() {
+        return cityService;
     }
 
     public Year getStartYear() {
@@ -107,7 +108,7 @@ public class Civilization {
     }
 
     public boolean isDestroyed() {
-        return isDestroyed;
+        return cities().isDestroyed();
     }
 
     public boolean isMoved() {
@@ -126,7 +127,7 @@ public class Civilization {
     }
 
     public void nextMove() {
-        if (isMoved || isDestroyed) {
+        if (isMoved || isDestroyed()) {
             return;
         }
 
@@ -150,94 +151,6 @@ public class Civilization {
         log.debug("{}", event);
     }
 
-    public City getCityById(String cityId) {
-        return cities.getCityById(cityId);
-    }
-
-    public AbstractBuilding getBuildingById(String buildingId) {
-        return cities.getBuildingById(buildingId);
-    }
-
-    public CityList getCities() {
-        return cities.unmodifiableList();
-    }
-
-    public void addCity(City city) {
-        cities.add(city);
-        city.setCivilization(this);
-
-        world.sendEvent(new Event(Event.UPDATE_WORLD, city, L10nCity.NEW_CITY_EVENT, city.getView().getLocalizedCityName()));
-    }
-
-    public void removeCity(City city) {
-        cities.remove(city);
-        destroyedCities.add(city);
-        world.sendEvent(new Event(Event.UPDATE_WORLD, city, L10nCity.REMOVE_CITY_EVENT, city.getView().getLocalizedCityName()));
-
-        // civilizations is destroyed when all the cities is destroyed
-        isDestroyed = cities.isEmpty();
-        if (isDestroyed) {
-            world.sendEvent(new Event(Event.UPDATE_WORLD, this, L10nWorld.DESTROY_CIVILIZATION_EVENT, getView().getLocalizedCivilizationName()));
-        }
-    }
-
-    public City getCityAtLocation(Point location) {
-        return cities.getCityAtLocation(location);
-    }
-
-    public CityList getCitiesAtLocations(Collection<Point> locations) {
-        return cities.getCitiesAtLocations(locations);
-    }
-
-    public CityList getCitiesWithActionsAvailable() {
-        return cities.getCitiesWithActionsAvailable();
-    }
-
-    public AbstractUnit getUnitById(String unitId) {
-        return unitService.getUnitById(unitId);
-    }
-
-    public UnitList<?> getUnits() {
-        return unitService.getUnits();
-    }
-
-    public UnitList<?> getUnitsAtLocation(Point location) {
-        return unitService.getUnitsAtLocation(location);
-    }
-
-    public UnitList<?> getUnitsAtLocations(Collection<Point> locations) {
-        return unitService.getUnitsAtLocations(locations);
-    }
-
-    public UnitList<?> getUnitsAround(Point location, int radius) {
-        return unitService.getUnitsAround(location, radius);
-    }
-
-    public UnitList<?> getUnitsWithActionsAvailable() {
-        return unitService.getUnitsWithActionsAvailable();
-    }
-
-    public HasCombatStrength getAttackerById(String attackerId) {
-        return unitService.getAttackerById(attackerId);
-    }
-
-    public void addUnit(AbstractUnit unit, Point location) {
-        unitService.addUnit(unit, location);
-    }
-
-    public void removeUnit(AbstractUnit unit) {
-        unitService.removeUnit(unit);
-    }
-
-    public boolean canBuyUnit(AbstractUnit unit) {
-        return unitService.canBuyUnit(unit);
-    }
-
-    public void buyUnit(String unitClassUuid, City city) {
-        Supply expenses = unitService.buyUnit(unitClassUuid, city);
-        supply = supply.add(expenses);
-    }
-
     public boolean canBuyBuilding(AbstractBuilding building) {
         int gold = supply.getGold();
         return gold >= building.getGoldCost();
@@ -251,6 +164,11 @@ public class Civilization {
         supply = supply.add(expenses);
 
         addEvent(new Event(Event.INFORMATION, supply, L10nCivilization.BUY_BUILDING_EVENT, building.getView().getLocalizedName()));
+    }
+
+    public void buyUnit(String unitClassUuid, City city) {
+        Supply expenses = units().buyUnit(unitClassUuid, city);
+        supply = supply.add(expenses);
     }
 
     public boolean isResearched(Technology technology) {
@@ -284,27 +202,24 @@ public class Civilization {
         return world.isWar(this, otherCivilization);
     }
 
-    public boolean isHavingTile(Point location) {
-        return cities.isHavingTile(location);
-    }
-
     // Start point for a Civilization
     public Point getStartPoint() {
         // First, this is Settler's location
-        UnitList<?> units = getUnits().findByClassUuid(Settlers.CLASS_UUID);
+        UnitList<?> units = unitService.findByClassUuid(Settlers.CLASS_UUID);
         if (units != null && !units.isEmpty()) {
-            return units.getFirst().getLocation();
+            return units.getAny().getLocation();
         }
 
         // If Settlers were destroyed then it is the first city's location
-        if (cities.size() > 0) {
-            return cities.getAny().getLocation();
+        City city = cityService.getAny();
+        if (city != null) {
+            return city.getLocation();
         }
 
-        // If there is no cities, then the first Unit's
-        units = unitService.getUnits();
-        if (!units.isEmpty()) {
-            return units.getFirst().getLocation();
+        // If there is no cities, then the first Unit's location
+        AbstractUnit unit = unitService.getAny();
+        if (unit != null) {
+            return unit.getLocation();
         }
 
         // If there is no units then (0, 0)
@@ -315,18 +230,10 @@ public class Civilization {
         Supply supply = Supply.EMPTY_SUPPLY;
 
         // income
-        for (City city : cities) {
-            supply = supply.add(city.getSupply());
-        }
+        supply = supply.add(cityService.getSupply());
 
-        // expenses on cities
-        if (!cities.isEmpty()) {
-            // units keeping
-            int unitKeepingGold = unitService.getGoldKeepingExpenses();
-            if (unitKeepingGold != 0) {
-                supply = supply.add(Supply.builder().gold(-unitKeepingGold).build());
-            }
-        }
+        // expenses
+        supply = supply.add(unitService.getSupply());
 
         // science
 
@@ -334,14 +241,12 @@ public class Civilization {
     }
 
     public void step(Year year) {
-        if (isDestroyed) return;
+        if (isDestroyed()) return;
 
         unitService.clearDestroyedUnits();
-        destroyedCities = new CityList();
+        cityService.clearDestroyedCities();
 
-        for (City city : cities) {
-            city.step(year);
-        }
+        cityService.step(year);
 
         supply = supply.add(calcSupply());
 
@@ -360,20 +265,6 @@ public class Civilization {
     public String toString() {
         return "Civilization{" +
                 "name='" + name + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Civilization that = (Civilization) o;
-        return id.equals(that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
+            '}';
     }
 }

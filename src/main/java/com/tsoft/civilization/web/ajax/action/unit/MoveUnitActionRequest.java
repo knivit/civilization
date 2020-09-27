@@ -22,7 +22,7 @@ public class MoveUnitActionRequest extends AbstractAjaxRequest {
         }
 
         String unitId = request.get("unit");
-        AbstractUnit unit = myCivilization.getUnitById(unitId);
+        AbstractUnit unit = myCivilization.units().getUnitById(unitId);
         Point location = myCivilization.getTilesMap().getLocation(request.get("col"), request.get("row"));
 
         ActionAbstractResult result = MoveUnitAction.move(unit, location);

@@ -13,13 +13,14 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CivilizationTest {
     @Test
     public void getCivilizationsStartPoints1() {
-        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
                 " |0 1 2 ",
                 "-+------",
                 "0|. . . ",
@@ -27,14 +28,14 @@ public class CivilizationTest {
                 "2|. . . ",
                 "3| . . .");
 
-        ArrayList<Point> locations = WorldGeneratorService.getCivilizationsStartLocations(1, mockTilesMap);
+        ArrayList<Point> locations = WorldGeneratorService.getCivilizationsStartLocations(1, map);
         assertEquals(1, locations.size());
         assertEquals(new Point(1, 1), locations.get(0));
     }
 
     @Test
     public void getCivilizationsStartPoints2() {
-        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
                 " |0 1 2 ",
                 "-+------",
                 "0|g g . ",
@@ -42,7 +43,7 @@ public class CivilizationTest {
                 "2|. . g ",
                 "3| . . .");
 
-        ArrayList<Point> locations = WorldGeneratorService.getCivilizationsStartLocations(2, mockTilesMap);
+        ArrayList<Point> locations = WorldGeneratorService.getCivilizationsStartLocations(2, map);
 
         assertEquals(2, locations.size());
         assertTrue(locations.get(0).equals(new Point(0, 0)) || locations.get(0).equals(new Point(1, 0)));
@@ -53,7 +54,7 @@ public class CivilizationTest {
     // After initialization, there must be Settlers and Warriors units
     @Test
     public void initCivilization1() {
-        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
                 " |0 1 2 ",
                 "-+------",
                 "0|. . . ",
@@ -61,11 +62,11 @@ public class CivilizationTest {
                 "2|. g . ",
                 "3| . . .");
 
-        MockWorld mockWorld = new MockWorld(mockTilesMap);
-        Civilization civilization = new Civilization(mockWorld, 0);
+        MockWorld world = new MockWorld(map);
+        Civilization civilization = world.createCivilization(RUSSIA);
 
-        civilization.addFirstUnits();
-        UnitList<?> units = civilization.getUnits();
+        civilization.units().addFirstUnits();
+        UnitList<?> units = civilization.units().getUnits();
         assertEquals(2, units.size());
         assertEquals(1, units.getUnitClassCount(Settlers.class));
         assertEquals(1, units.getUnitClassCount(Warriors.class));
@@ -76,7 +77,7 @@ public class CivilizationTest {
     // There is only one tile available, so after initialization, there must be only Settlers unit
     @Test
     public void initCivilization2() {
-        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
                 " |0 1 2 ",
                 "-+------",
                 "0|. . . ",
@@ -84,11 +85,11 @@ public class CivilizationTest {
                 "2|. . . ",
                 "3| . . .");
 
-        MockWorld mockWorld = new MockWorld(mockTilesMap);
-        Civilization civilization = new Civilization(mockWorld, 0);
-        civilization.addFirstUnits();
+        MockWorld world = new MockWorld(map);
+        Civilization civilization = world.createCivilization(RUSSIA);
+        civilization.units().addFirstUnits();
 
-        UnitList<?> units = civilization.getUnits();
+        UnitList<?> units = civilization.units().getUnits();
         assertEquals(1, units.size());
         assertEquals(1, units.getUnitClassCount(Settlers.class));
     }

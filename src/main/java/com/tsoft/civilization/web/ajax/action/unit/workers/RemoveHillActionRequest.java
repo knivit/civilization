@@ -22,7 +22,7 @@ public class RemoveHillActionRequest extends AbstractAjaxRequest {
         }
 
         String workersId = request.get("workers");
-        AbstractUnit workers = myCivilization.getUnitById(workersId);
+        AbstractUnit workers = myCivilization.units().getUnitById(workersId);
         Point location = myCivilization.getTilesMap().getLocation(request.get("col"), request.get("row"));
 
         ActionAbstractResult result = AttackAction.attack(workers, location);

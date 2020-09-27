@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
+import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GetMyCitiesTest {
@@ -28,12 +29,12 @@ public class GetMyCitiesTest {
 
     @Test
     public void getJSON() {
-        MockWorld mockWorld = MockWorld.newSimpleWorld();
-        Civilization c1 = new Civilization(mockWorld, 0);
+        MockWorld world = MockWorld.newSimpleWorld();
+        Civilization c1 = world.createCivilization(RUSSIA);
         City city1 = new City(c1, new Point(2, 0));
 
         ClientSession session = Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
-        Worlds.add(mockWorld);
+        Worlds.add(world);
         session.setWorldAndCivilizationIds(c1);
 
         Request request = MockRequest.newInstance();

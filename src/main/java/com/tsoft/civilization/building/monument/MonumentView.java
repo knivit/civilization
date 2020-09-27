@@ -3,7 +3,7 @@ package com.tsoft.civilization.building.monument;
 import com.tsoft.civilization.L10n.building.L10nMonument;
 import com.tsoft.civilization.building.AbstractBuildingView;
 
-public class MonumentView extends AbstractBuildingView<Monument> {
+public class MonumentView extends AbstractBuildingView {
     @Override
     public String getLocalizedName() {
         return L10nMonument.NAME.getLocalized();

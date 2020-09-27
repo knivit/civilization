@@ -11,6 +11,7 @@ import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.event.Event;
 import com.tsoft.civilization.world.World;
+import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -33,20 +34,17 @@ import java.util.*;
  * - All units have 100 hit points.
  */
 @Slf4j
+@EqualsAndHashCode(of = "id")
 public abstract class AbstractUnit implements HasCombatStrength, CanBeBuilt {
     private String id = UUID.randomUUID().toString();
+
     private Civilization civilization;
 
-    // unit's location
     private Point location;
-
-    // a passing ability of a unit
     private int passScore;
-
-    // unit's current strength
     private CombatStrength combatStrength;
 
-    private ArrayList<AbstractSkill> skills = new ArrayList<>();
+    private final ArrayList<AbstractSkill> skills = new ArrayList<>();
 
     public abstract UnitCategory getUnitCategory();
     public abstract void initPassScore();
@@ -131,7 +129,7 @@ public abstract class AbstractUnit implements HasCombatStrength, CanBeBuilt {
 
     @Override
     public UnitList<?> getUnitsAround(int radius) {
-        return civilization.getUnitsAround(location, radius);
+        return civilization.units().getUnitsAround(location, radius);
     }
 
     public void moveTo(Point location) {
@@ -146,14 +144,14 @@ public abstract class AbstractUnit implements HasCombatStrength, CanBeBuilt {
     }
 
     public void capturedBy(HasCombatStrength capturer) {
-        civilization.removeUnit(this);
+        civilization.units().removeUnit(this);
 
         // re-create foreigner's unit ID so it can't be used anymore
         id = UUID.randomUUID().toString();
 
         // captured unit can't move
         setPassScore(0);
-        capturer.getCivilization().addUnit(this, location);
+        capturer.getCivilization().units().addUnit(this, location);
     }
 
     @Override
@@ -183,19 +181,16 @@ public abstract class AbstractUnit implements HasCombatStrength, CanBeBuilt {
         }
 
         // destroy the unit itself
-        civilization.removeUnit(this);
+        civilization.units().removeUnit(this);
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AbstractUnit that = (AbstractUnit) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    public String toString() {
+        return getClass().getSimpleName() + "{" +
+            "civilization=" + civilization +
+            ", location=" + location +
+            ", passScore=" + passScore +
+            ", combatStrength=" + combatStrength +
+        "}";
     }
 }

@@ -20,7 +20,7 @@ public class BuildUnitActionRequest extends AbstractAjaxRequest {
             return Response.newErrorInstance(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
-        City city = myCivilization.getCityById(request.get("city"));
+        City city = myCivilization.cities().getCityById(request.get("city"));
         String unitUuid = request.get("unitUuid");
         ActionAbstractResult result = BuildUnitAction.buildUnit(city, unitUuid);
         if (result.isFail()) {

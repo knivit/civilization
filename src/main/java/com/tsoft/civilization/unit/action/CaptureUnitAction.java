@@ -85,7 +85,7 @@ public class CaptureUnitAction {
             return null;
         }
 
-        AbstractUnit foreignUnit = foreignUnits.getFirst();
+        AbstractUnit foreignUnit = foreignUnits.getAny();
         if (foreignUnit.canBeCaptured()) {
             return foreignUnit;
         }

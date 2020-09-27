@@ -19,6 +19,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
+import static com.tsoft.civilization.L10n.L10nCivilization.AMERICA;
+import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GetCityStatusTest {
@@ -31,16 +33,17 @@ public class GetCityStatusTest {
 
     @Test
     public void getJSONForMyCity() {
-        MockWorld mockWorld = MockWorld.newSimpleWorld();
-        Civilization c1 = new Civilization(mockWorld, 0);
+        MockWorld world = MockWorld.newSimpleWorld();
+        Civilization c1 = world.createCivilization(RUSSIA);
         City city1 = new City(c1, new Point(2, 0));
-        Civilization c2 = new Civilization(mockWorld, 1);
-        mockWorld.setCivilizationsRelations(c1, c2, CivilizationsRelations.WAR);
+
+        Civilization c2 = world.createCivilization(AMERICA);
+        world.setCivilizationsRelations(c1, c2, CivilizationsRelations.WAR);
         Warriors foreignWarriors = UnitFactory.newInstance(Warriors.CLASS_UUID);
-        c2.addUnit(foreignWarriors, new Point(2, 1));
+        c2.units().addUnit(foreignWarriors, new Point(2, 1));
 
         ClientSession session = Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
-        Worlds.add(mockWorld);
+        Worlds.add(world);
         session.setWorldAndCivilizationIds(c1);
 
         Request request = MockRequest.newInstance("city", city1.getId());
@@ -51,13 +54,13 @@ public class GetCityStatusTest {
 
     @Test
     public void getJSONForMyDestroyedCity() {
-        MockWorld mockWorld = MockWorld.newSimpleWorld();
-        Civilization c1 = new Civilization(mockWorld, 0);
+        MockWorld world = MockWorld.newSimpleWorld();
+        Civilization c1 = world.createCivilization(RUSSIA);
         City city1 = new City(c1, new Point(2, 0));
         city1.getCombatStrength().setDestroyed(true);
 
         ClientSession session = Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
-        Worlds.add(mockWorld);
+        Worlds.add(world);
         session.setWorldAndCivilizationIds(c1);
 
         Request request = MockRequest.newInstance("city", city1.getId());
@@ -68,15 +71,15 @@ public class GetCityStatusTest {
 
     @Test
     public void getJSONForForeignCity() {
-        MockWorld mockWorld = MockWorld.newSimpleWorld();
-        Civilization c1 = new Civilization(mockWorld, 0);
+        MockWorld world = MockWorld.newSimpleWorld();
+        Civilization c1 = world.createCivilization(RUSSIA);
         City city1 = new City(c1, new Point(2, 0));
 
-        Civilization c2 = new Civilization(mockWorld, 1);
+        Civilization c2 = world.createCivilization(AMERICA);
         City city2 = new City(c2, new Point(2, 2));
 
         ClientSession session = Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
-        Worlds.add(mockWorld);
+        Worlds.add(world);
         session.setWorldAndCivilizationIds(c1);
 
         Request mockRequest = MockRequest.newInstance("city", city2.getId());

@@ -206,13 +206,13 @@ public class MoveUnitAction {
 
     private static UnitMoveResult checkOwnCity(AbstractUnit unit, Point location) {
         Civilization thisCivilization = unit.getCivilization();
-        City city = thisCivilization.getCityAtLocation(location);
+        City city = thisCivilization.cities().getCityAtLocation(location);
         if (city == null) {
             return UnitMoveResult.CHECK_FAILED;
         }
 
         // get units located in the city
-        UnitList<?> units = thisCivilization.getUnitsAtLocation(location);
+        UnitList<?> units = thisCivilization.units().getUnitsAtLocation(location);
         AbstractUnit nextUnit = units.findUnitByUnitKind(unit.getUnitCategory());
 
         // no units of such type, so we can enter into city
@@ -224,7 +224,7 @@ public class MoveUnitAction {
     }
 
     private static UnitMoveResult checkUnitsSwap(AbstractUnit unit, Point nextLocation, boolean canSwapLocations) {
-        UnitList<?> units = unit.getCivilization().getUnitsAtLocation(nextLocation);
+        UnitList<?> units = unit.getCivilization().units().getUnitsAtLocation(nextLocation);
         AbstractUnit nextUnit = units.findUnitByUnitKind(unit.getUnitCategory());
         if (nextUnit == null) {
             return UnitMoveResult.CHECK_FAILED;

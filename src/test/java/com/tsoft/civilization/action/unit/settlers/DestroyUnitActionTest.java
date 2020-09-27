@@ -11,29 +11,30 @@ import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
 import org.junit.jupiter.api.Test;
 
+import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DestroyUnitActionTest {
     @Test
     public void buildCity1() {
-        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
                 " |0 1 2 ",
                 "-+------",
                 "0|. . . ",
                 "1| . g .",
                 "2|. . . ",
                 "3| . . .");
-        MockWorld mockWorld = new MockWorld(mockTilesMap);
-        Civilization civilization = new Civilization(mockWorld, 0);
+        MockWorld world = new MockWorld(map);
+        Civilization civilization = world.createCivilization(RUSSIA);
 
         // The only settlers can't be destroyed
         Settlers settlers1 = UnitFactory.newInstance(Settlers.CLASS_UUID);
-        civilization.addUnit(settlers1, new Point(1, 1));
+        civilization.units().addUnit(settlers1, new Point(1, 1));
         assertEquals(DestroyUnitResults.LAST_SETTLERS_CANT_BE_DESTOYED, DestroyUnitAction.destroyUnit(settlers1));
 
         // Add another settlers
         Settlers settlers2 = UnitFactory.newInstance(Settlers.CLASS_UUID);
-        civilization.addUnit(settlers2, new Point(2, 0));
+        civilization.units().addUnit(settlers2, new Point(2, 0));
 
         // Destroy the first ones
         DestroyUnitAction.destroyUnit(settlers1);

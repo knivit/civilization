@@ -124,7 +124,7 @@ public class L10nCity {
             .set("ru", "\u0411\u044b\u043b\u043e \u043f\u043e\u0441\u0442\u0440\u043e\u0435\u043d\u043e %s \u043d\u043e\u0432\u043e\u0435 \u0437\u0434\u0430\u043d\u0438\u0435");
 
     public static L10nMap NEW_UNIT_BUILT_EVENT = new L10nMap()
-            .set("en", "A new unit $s has been constructed")
+            .set("en", "A new unit %s has been constructed")
             .set("ru", "\u0411\u044b\u043b \u043f\u043e\u0441\u0442\u0440\u043e\u0435\u043d %s \u043d\u043e\u0432\u044b\u0439 \u044e\u043d\u0438\u0442");
 
     /** Population */

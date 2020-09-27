@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CityBuildingService {
     private final City city;
 
-    private BuildingList buildings = new BuildingList();
+    private final BuildingList buildings = new BuildingList();
     private BuildingList destroyedBuildings = new BuildingList();
 
     // Current construction (building, unit) or null
@@ -22,7 +22,7 @@ public class CityBuildingService {
     public CityBuildingService(City city) {
         this.city = city;
 
-        if (city.getCivilization().getCities().size() == 1) {
+        if (city.getCivilization().cities().getCities().size() == 1) {
             AbstractBuilding palace = BuildingFactory.newInstance(Palace.CLASS_UUID, city);
             add(palace); // A capital
         } else {

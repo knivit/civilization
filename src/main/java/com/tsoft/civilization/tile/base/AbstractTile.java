@@ -20,7 +20,8 @@ public abstract class AbstractTile {
     private AbstractLuxury luxury;
     private AbstractResource resource;
     private AbstractImprovement improvement;
-    private TerrainFeatureList terrainFeatures = new TerrainFeatureList();
+
+    private final TerrainFeatureList terrainFeatures = new TerrainFeatureList();
 
     public abstract TileType getTileType();
     public abstract boolean canBuildCity();

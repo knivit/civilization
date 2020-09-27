@@ -22,7 +22,7 @@ public class CaptureUnitActionRequest extends AbstractAjaxRequest {
         }
 
         String attackerId = request.get("attacker");
-        AbstractUnit attacker = myCivilization.getUnitById(attackerId);
+        AbstractUnit attacker = myCivilization.units().getUnitById(attackerId);
         Point location = myCivilization.getTilesMap().getLocation(request.get("col"), request.get("row"));
 
         ActionAbstractResult result = CaptureUnitAction.capture(attacker, location);

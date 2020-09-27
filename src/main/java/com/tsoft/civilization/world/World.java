@@ -1,5 +1,6 @@
 package com.tsoft.civilization.world;
 
+import com.tsoft.civilization.L10n.L10nMap;
 import com.tsoft.civilization.L10n.L10nWorld;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationsRelations;
@@ -29,10 +30,10 @@ public class World {
     private int maxNumberOfCivilizations;
 
     // use ArrayList as almost always we need to iterate through it
-    private CivilizationList civilizations = new CivilizationList();
+    private final CivilizationList civilizations = new CivilizationList();
 
-    private HashMap<Pair<Civilization>, CivilizationsRelations> relations = new HashMap<>();
-    private List<Year> years = new ArrayList<>();
+    private final HashMap<Pair<Civilization>, CivilizationsRelations> relations = new HashMap<>();
+    private final List<Year> years = new ArrayList<>();
 
     public World(MapType mapType, int width, int height) {
         VIEW = new WorldView(this);
@@ -67,7 +68,9 @@ public class World {
         }
     }
 
-    public void addCivilization(Civilization civilization) {
+    public Civilization createCivilization(L10nMap civilizationName) {
+        Civilization civilization = new Civilization(this, civilizationName);
+
         // set NEUTRAL state for this civilization with others
         for (Civilization otherCivilization : civilizations) {
             if (!civilization.equals(otherCivilization)) {
@@ -80,7 +83,10 @@ public class World {
 
         // send an event to civilizations about the new one
         // clients need to update their maps to see the new civilization (settlers and warriors)
-        sendEvent(new Event(Event.UPDATE_WORLD, civilization, L10nWorld.NEW_CIVILIZATION_EVENT, civilization.getView().getLocalizedCivilizationName()));
+        sendEvent(new Event(Event.UPDATE_WORLD, civilization, L10nWorld.NEW_CIVILIZATION_EVENT,
+            civilization.getView().getLocalizedCivilizationName(), year));
+
+        return civilization;
     }
 
     public CivilizationsRelations getCivilizationsRelations(Civilization c1, Civilization c2) {
@@ -124,12 +130,12 @@ public class World {
             }
 
             // exclude cities
-            for (City city : civilization.getCities()) {
+            for (City city : civilization.cities().getCities()) {
                 busyLocations.addAll(city.getLocations());
             }
 
             // exclude units
-            for (AbstractUnit unit : civilization.getUnits()) {
+            for (AbstractUnit unit : civilization.units().getUnits()) {
                 busyLocations.add(unit.getLocation());
             }
         }

@@ -7,6 +7,7 @@ import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Point;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 public class CivilizationList implements Iterable<Civilization> {
     private final List<Civilization> civilizations = new ArrayList<>();
@@ -57,7 +58,7 @@ public class CivilizationList implements Iterable<Civilization> {
 
     public Civilization getCivilizationOnTile(Point location) {
         for (Civilization civilization : civilizations) {
-            if (civilization.isHavingTile(location)) {
+            if (civilization.cities().isHavingTile(location)) {
                 return civilization;
             }
         }
@@ -66,7 +67,7 @@ public class CivilizationList implements Iterable<Civilization> {
 
     public City getCityAtLocation(Point location) {
         for (Civilization civilization : civilizations) {
-            City city = civilization.getCityAtLocation(location);
+            City city = civilization.cities().getCityAtLocation(location);
             if (city != null) {
                 return city;
             }
@@ -81,7 +82,7 @@ public class CivilizationList implements Iterable<Civilization> {
             if (civilization.equals(excludeCivilization)) {
                 continue;
             }
-            cities.add(civilization.getCitiesAtLocations(locations));
+            cities.add(civilization.cities().getCitiesAtLocations(locations));
         }
         return cities;
     }
@@ -96,7 +97,7 @@ public class CivilizationList implements Iterable<Civilization> {
             if (civilization.equals(excludeCivilization)) {
                 continue;
             }
-            units.addAll(civilization.getUnitsAtLocation(location));
+            units.addAll(civilization.units().getUnitsAtLocation(location));
         }
         return units;
     }
@@ -107,7 +108,7 @@ public class CivilizationList implements Iterable<Civilization> {
             if (civilization.equals(excludeCivilization)) {
                 continue;
             }
-            units.addAll(civilization.getUnitsAtLocations(locations));
+            units.addAll(civilization.units().getUnitsAtLocations(locations));
         }
         return units;
     }
@@ -118,7 +119,7 @@ public class CivilizationList implements Iterable<Civilization> {
         }
 
         for (Civilization civilization : civilizations) {
-            AbstractUnit unit = civilization.getUnitById(unitId);
+            AbstractUnit unit = civilization.units().getUnitById(unitId);
             if (unit != null) {
                 return unit;
             }
@@ -132,12 +133,22 @@ public class CivilizationList implements Iterable<Civilization> {
         }
 
         for (Civilization civilization : civilizations) {
-            City city = civilization.getCityById(cityId);
+            City city = civilization.cities().getCityById(cityId);
             if (city != null) {
                 return city;
             }
         }
         return null;
+    }
+
+    public CivilizationList filter(Predicate<Civilization> cond) {
+        CivilizationList list = new CivilizationList();
+        for (Civilization civ : civilizations) {
+            if (cond.test(civ)) {
+                list.add(civ);
+            }
+        }
+        return list;
     }
 
     public void sortByName() {

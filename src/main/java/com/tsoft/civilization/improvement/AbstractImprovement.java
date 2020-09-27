@@ -6,9 +6,12 @@ import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.world.economic.Supply;
+import lombok.EqualsAndHashCode;
 
+import java.util.Objects;
 import java.util.UUID;
 
+@EqualsAndHashCode(of = "id")
 public abstract class AbstractImprovement {
     private final String id = UUID.randomUUID().toString();
 
@@ -20,6 +23,9 @@ public abstract class AbstractImprovement {
     public abstract AbstractImprovementView getView();
 
     public AbstractImprovement(Civilization civilization, Point location) {
+        Objects.requireNonNull(civilization, "civilization can't be null");
+        Objects.requireNonNull(location, "location can't be null");
+
         this.civilization = civilization;
         this.location = location;
 
@@ -51,24 +57,7 @@ public abstract class AbstractImprovement {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        AbstractImprovement that = (AbstractImprovement) o;
-
-        if (!id.equals(that.id)) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
-
-    @Override
     public String toString() {
-        return getClass().getName() + " {location=" + location.toString() + '}';
+        return getClass().getName() + " {location=" + location + '}';
     }
 }

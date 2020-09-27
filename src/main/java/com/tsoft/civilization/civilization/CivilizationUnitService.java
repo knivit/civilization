@@ -33,6 +33,10 @@ public class CivilizationUnitService {
         this.world = civilization.getWorld();
     }
 
+    public UnitList<?> findByClassUuid(String classUuid) {
+        return units.findByClassUuid(classUuid);
+    }
+
     public void addFirstUnits() {
         // find a location for the Settlers
         Point settlersLocation = world.getCivilizationStartLocation(civilization);
@@ -42,7 +46,7 @@ public class CivilizationUnitService {
 
         // create the Settlers unit
         Settlers settlers = UnitFactory.newInstance(Settlers.CLASS_UUID);
-        civilization.addUnit(settlers, settlersLocation);
+        addUnit(settlers, settlersLocation);
 
         // try to place Warriors near the Settlers
         Warriors warriors = UnitFactory.newInstance(Warriors.CLASS_UUID);
@@ -50,10 +54,14 @@ public class CivilizationUnitService {
         for (Point location : locations) {
             AbstractTile tile = world.getTilesMap().getTile(location);
             if (tile.getPassCost(civilization, Warriors.STUB) != TilePassCostTable.UNPASSABLE) {
-                civilization.addUnit(warriors, location);
+                addUnit(warriors, location);
                 break;
             }
         }
+    }
+
+    public AbstractUnit getAny() {
+        return units.isEmpty() ? null : units.getAny();
     }
 
     public AbstractUnit getUnitById(String unitId) {
@@ -64,11 +72,23 @@ public class CivilizationUnitService {
         return units.unmodifiableList();
     }
 
+    public int size() {
+        return units.size();
+    }
+
     public UnitList<?> getUnitsAtLocation(Point location) {
         List<Point> locations = new ArrayList<>(1);
         locations.add(location);
 
         return getUnitsAtLocations(locations);
+    }
+
+    public int getMilitaryCount() {
+        return units.getMilitaryCount();
+    }
+
+    public int getCivilCount() {
+        return units.getCivilCount();
     }
 
     public UnitList<?> getUnitsAtLocations(Collection<Point> locations) {
@@ -87,7 +107,7 @@ public class CivilizationUnitService {
     public HasCombatStrength getAttackerById(String attackerId) {
         HasCombatStrength attacker = getUnitById(attackerId);
         if (attacker == null) {
-            attacker = civilization.getCityById(attackerId);
+            attacker = civilization.cities().getCityById(attackerId);
         }
         return attacker;
     }
@@ -113,7 +133,7 @@ public class CivilizationUnitService {
 
     public Supply buyUnit(String unitClassUuid, City city) {
         AbstractUnit unit = UnitFactory.newInstance(unitClassUuid);
-        civilization.addUnit(unit, city.getLocation());
+        addUnit(unit, city.getLocation());
 
         int gold = unit.getGoldCost();
         Supply expenses = Supply.builder().gold(-gold).build();
@@ -139,4 +159,16 @@ public class CivilizationUnitService {
     public void clearDestroyedUnits() {
         destroyedUnits = new UnitList<>();
     }
+
+    // units keeping
+    public Supply getSupply() {
+        Supply supply = Supply.EMPTY_SUPPLY;
+
+        int unitKeepingGold = getGoldKeepingExpenses();
+        if (unitKeepingGold != 0) {
+            supply = Supply.builder().gold(-unitKeepingGold).build();
+        }
+        return supply;
+    }
+
 }

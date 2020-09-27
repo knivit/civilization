@@ -3,22 +3,27 @@ package com.tsoft.civilization.world;
 import com.tsoft.civilization.L10n.L10nMap;
 import com.tsoft.civilization.L10n.L10nWorld;
 
+// immutable
 public class Year {
-    public static int ANCIENT_ERA = 1000;
-    public static int CLASSICAL_ERA = 1200;
-    public static int MEDIEVAL_ERA = 1600;
-    public static int RENAISSANCE_ERA = 1800;
-    public static int INDUSTRIAL_ERA = 1900;
-    public static int MODERN_ERA = 1950;
-    public static int ATOMIC_ERA = 2050;
-    public static int INFORMATION_ERA = Integer.MAX_VALUE;
+    public static final int ANCIENT_ERA = 1000;
+    public static final int CLASSICAL_ERA = 1200;
+    public static final int MEDIEVAL_ERA = 1600;
+    public static final int RENAISSANCE_ERA = 1800;
+    public static final int INDUSTRIAL_ERA = 1900;
+    public static final int MODERN_ERA = 1950;
+    public static final int ATOMIC_ERA = 2050;
+    public static final int INFORMATION_ERA = Integer.MAX_VALUE;
 
-    private int value;
-    private int stepNo;
+    private final int value;
+    private final int stepNo;
 
     public Year(int value) {
+        this(value, 0);
+    }
+
+    private Year(int value, int stepNo) {
         this.value = value;
-        stepNo = 0;
+        this.stepNo = stepNo;
     }
 
     public int getValue() {
@@ -59,9 +64,7 @@ public class Year {
         if (value < 2000) nextValue = value + 10;
         else nextValue = value + 1;
 
-        Year nextYear = new Year(nextValue);
-        nextYear.stepNo = stepNo + 1;
-        return nextYear;
+        return new Year(nextValue, stepNo + 1);
     }
 
     public String getYearLocalized() {
@@ -85,9 +88,7 @@ public class Year {
 
     @Override
     public String toString() {
-        return "Year{" +
-                "value=" + value +
-                '}';
+        return "Year{" + value + '}';
     }
 
     @Override

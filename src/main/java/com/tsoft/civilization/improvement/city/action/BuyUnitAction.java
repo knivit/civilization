@@ -41,7 +41,7 @@ public class BuyUnitAction {
             return CityActionResults.WRONG_ERA_OR_TECHNOLOGY;
         }
 
-        if (!city.getCivilization().canBuyUnit(unit)) {
+        if (!city.getCivilization().units().canBuyUnit(unit)) {
             return CityActionResults.NOT_ENOUGH_MONEY;
         }
 

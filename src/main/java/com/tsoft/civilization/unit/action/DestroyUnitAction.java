@@ -31,7 +31,7 @@ public class DestroyUnitAction {
             return DestroyUnitResults.NO_PASS_SCORE;
         }
 
-        if (unit instanceof Settlers && unit.getCivilization().getUnits().size() == 1) {
+        if (unit instanceof Settlers && unit.getCivilization().units().size() == 1) {
             return DestroyUnitResults.LAST_SETTLERS_CANT_BE_DESTOYED;
         }
 

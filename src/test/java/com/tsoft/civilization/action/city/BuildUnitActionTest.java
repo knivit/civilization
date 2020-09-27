@@ -13,6 +13,7 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.economic.SupplyMock;
 import org.junit.jupiter.api.Test;
 
+import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -21,8 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 public class BuildUnitActionTest {
     @Test
     public void failToBuildUnitNoTechnology() {
-        MockWorld mockWorld = MockWorld.newSimpleWorld();
-        Civilization civilization = new Civilization(mockWorld, 0);
+        MockWorld world = MockWorld.newSimpleWorld();
+        Civilization civilization = world.createCivilization(RUSSIA);
         City city = new City(civilization, new Point(2, 0));
 
         assertEquals(CityActionResults.WRONG_ERA_OR_TECHNOLOGY, BuildUnitAction.buildUnit(city, Archers.CLASS_UUID));
@@ -30,8 +31,8 @@ public class BuildUnitActionTest {
 
     @Test
     public void buildUnit() {
-        MockWorld mockWorld = MockWorld.newSimpleWorld();
-        Civilization civilization = new Civilization(mockWorld, 0);
+        MockWorld world = MockWorld.newSimpleWorld();
+        Civilization civilization = world.createCivilization(RUSSIA);
         civilization.addTechnology(Technology.ARCHERY);
 
         City city = new City(civilization, new Point(2, 0));
@@ -43,22 +44,22 @@ public class BuildUnitActionTest {
         assertEquals(CityActionResults.UNIT_CONSTRUCTION_IS_STARTED, actionResult);
 
         // Wait till it builds
-        int neededSteps = Archers.STUB.getProductionCost() / 3;
+        int neededSteps = Archers.STUB.getProductionCost() / 3 + 1;
         for (int i = 0; i < neededSteps; i ++) {
-            mockWorld.step();
+            world.step();
 
             assertNotNull(city.getConstruction().getObject());
-            assertEquals(0, civilization.getUnits().size());
+            assertEquals(0, civilization.units().size());
         }
-        mockWorld.step();
+        world.step();
 
         assertNull(city.getConstruction());
-        assertEquals(1, civilization.getUnits().size());
+        assertEquals(1, civilization.units().size());
 
-        UnitList<?> list = civilization.getUnits().findByClassUuid(Archers.CLASS_UUID);
+        UnitList<?> list = civilization.units().findByClassUuid(Archers.CLASS_UUID);
         assertTrue(list != null && list.size() == 1);
-        assertNotNull(list.getFirst().getId());
-        assertEquals(city.getLocation(), list.getFirst().getLocation());
-        assertEquals(city.getCivilization(), list.getFirst().getCivilization());
+        assertNotNull(list.getAny().getId());
+        assertEquals(city.getLocation(), list.getAny().getLocation());
+        assertEquals(city.getCivilization(), list.getAny().getCivilization());
     }
 }

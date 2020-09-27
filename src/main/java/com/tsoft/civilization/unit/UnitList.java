@@ -33,7 +33,7 @@ public class UnitList<E extends AbstractUnit> implements Iterable<E> {
         return units.iterator();
     }
 
-    public E getFirst() {
+    public E getAny() {
         return units.isEmpty() ? null : units.get(0);
     }
 

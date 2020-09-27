@@ -42,8 +42,8 @@ public class GetControlPanel extends AbstractAjaxRequest {
     }
 
     private StringBuilder getControls(Civilization civilization) {
-        UnitList<?> units = civilization.getUnitsWithActionsAvailable();
-        CityList cities = civilization.getCitiesWithActionsAvailable();
+        UnitList<?> units = civilization.units().getUnitsWithActionsAvailable();
+        CityList cities = civilization.cities().getCitiesWithActionsAvailable();
 
         StringBuilder controls = new StringBuilder();
         if (!units.isEmpty() || !cities.isEmpty()) {

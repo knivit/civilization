@@ -78,7 +78,7 @@ public class AttackAction {
             return militaryUnit;
         }
 
-        return foreignUnits.getFirst();
+        return foreignUnits.getAny();
     }
 
     // No need to move, this is a ranged attack

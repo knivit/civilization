@@ -9,6 +9,7 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.world.event.Event;
+import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.UUID;
@@ -90,10 +91,11 @@ import java.util.UUID;
  * Pagoda	(Pagoda Belief)	                200	    -	    +2 Happ, +2 Cult, +2 Faith	-	 	        Can only be built in cities following a religion with the Pagodas belief. Construct this building by purchasing it with Faith.
  */
 @Slf4j
+@EqualsAndHashCode(of = "id")
 public abstract class AbstractBuilding implements CanBeBuilt {
     private final String id = UUID.randomUUID().toString();
-    private final City city;
 
+    private final City city;
     private boolean isDestroyed;
 
     public abstract BuildingType getBuildingType();
@@ -145,19 +147,5 @@ public abstract class AbstractBuilding implements CanBeBuilt {
         getCivilization().addEvent(event);
 
         city.destroyBuilding(this);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        AbstractBuilding building = (AbstractBuilding) o;
-        return id.equals(building.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
     }
 }

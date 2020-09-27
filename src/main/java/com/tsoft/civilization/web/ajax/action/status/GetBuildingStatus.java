@@ -24,7 +24,7 @@ public class GetBuildingStatus extends AbstractAjaxRequest {
 
         // See buildings only for my civilization
         String buildingId = request.get("building");
-        AbstractBuilding building = myCivilization.getBuildingById(buildingId);
+        AbstractBuilding building = myCivilization.cities().getBuildingById(buildingId);
         if (building == null) {
             return Response.newErrorInstance(L10nBuilding.BUILDING_NOT_FOUND);
         }

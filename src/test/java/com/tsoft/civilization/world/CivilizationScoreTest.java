@@ -15,12 +15,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
+import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CivilizationScoreTest {
     @Test
     public void noCitiesScore() {
-        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
                 " |0 1 2 ",
                 "-+------",
                 "0|. . . ",
@@ -28,8 +29,8 @@ public class CivilizationScoreTest {
                 "2|. . . ",
                 "3| . . .");
 
-        MockWorld world = new MockWorld(mockTilesMap);
-        Civilization c1 = new Civilization(world, 0);
+        MockWorld world = new MockWorld(map);
+        Civilization c1 = world.createCivilization(RUSSIA);
 
         world.step();
         assertTrue(SupplyMock.equals(Supply.EMPTY_SUPPLY, c1.calcSupply()));
@@ -37,7 +38,7 @@ public class CivilizationScoreTest {
 
     @Test
     public void oneCityOneTileScore() {
-        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
                 " |0 1 2 ",
                 "-+------",
                 "0|. . . ",
@@ -45,8 +46,8 @@ public class CivilizationScoreTest {
                 "2|. . . ",
                 "3| . . .");
 
-        MockWorld world = new MockWorld(mockTilesMap);
-        Civilization c1 = new Civilization(world, 0);
+        MockWorld world = new MockWorld(map);
+        Civilization c1 = world.createCivilization(RUSSIA);
         City city = new City(c1, new Point(1, 1));
 
         // Step 1
@@ -78,7 +79,7 @@ public class CivilizationScoreTest {
 
     @Test
     public void oneCityAllTypesOfTilesScore() {
-        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES, 3,
+        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES, 3,
                 " |0 1 2 3 4 ", " |0 1 2 3 4 ", " |0 1 2 3 4 ",
                 "-+----------", "-+----------", "-+----------",
                 "0|. g d p . ", "0|. . . i . ", "0|. . . . . ",
@@ -86,12 +87,12 @@ public class CivilizationScoreTest {
                 "2|g g g g g ", "2|n f h h m ", "2|. . . f . ",
                 "3| . g p . .", "3| . j o . .", "3| . . . . .");
 
-        MockWorld world = new MockWorld(mockTilesMap);
-        Civilization c1 = new Civilization(world, 0);
+        MockWorld world = new MockWorld(map);
+        Civilization c1 = world.createCivilization(RUSSIA);
         City city = new City(c1, new Point(2, 1));
 
         // add all other tiles
-        Collection<Point> locations = mockTilesMap.getLocationsAround(new Point(2, 1), 3);
+        Collection<Point> locations = map.getLocationsAround(new Point(2, 1), 3);
         city.addLocations(locations);
 
         // add citizens to work on the tiles
@@ -131,7 +132,7 @@ public class CivilizationScoreTest {
 
     @Test
     public void maxSupplyStrategies() {
-        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES, 3,
+        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES, 3,
                 " |0 1 2 ", " |0 1 2 ", " |0 1 2 ",
                 "-+------", "-+------", "-+------",
                 "0|. g . ", "0|. h . ", "0|. . . ",
@@ -139,8 +140,8 @@ public class CivilizationScoreTest {
                 "2|. g . ", "2|. h . ", "2|. f . ",
                 "3| . . .", "3| . . .", "3| . . .");
 
-        MockWorld world = new MockWorld(mockTilesMap);
-        Civilization c1 = new Civilization(world, 0);
+        MockWorld world = new MockWorld(map);
+        Civilization c1 = world.createCivilization(RUSSIA);
         City city = new City(c1, new Point(1, 1));
         city.addCitizen();
 

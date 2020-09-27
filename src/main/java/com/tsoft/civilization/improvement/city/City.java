@@ -50,14 +50,14 @@ public class City extends AbstractImprovement implements HasCombatStrength {
         // city's name
         L10nMap civilizationName = civilization.getView().getName();
         L10nChainedArrayList<L10nMap> cities = L10nCity.CITIES.get(civilizationName);
-        int index = civilization.getCities().size();
+        int index = civilization.cities().size();
         if (index >= cities.size()) {
             index -= cities.size();
         }
         VIEW = new CityView(cities.get(index));
 
         // add the city to a civilization
-        civilization.addCity(this);
+        civilization.cities().addCity(this);
 
         // economics
         citySupply = Supply.EMPTY_SUPPLY;
@@ -244,7 +244,7 @@ public class City extends AbstractImprovement implements HasCombatStrength {
 
     @Override
     public UnitList<?> getUnitsAround(int radius) {
-        return civilization.getUnitsAround(getLocation(), radius);
+        return civilization.units().getUnitsAround(getLocation(), radius);
     }
 
     @Override
@@ -265,8 +265,8 @@ public class City extends AbstractImprovement implements HasCombatStrength {
         destroyer.getCivilization().addEvent(event);
 
         // capture the city
-        getCivilization().removeCity(this);
-        destroyer.getCivilization().addCity(this);
+        getCivilization().cities().removeCity(this);
+        destroyer.getCivilization().cities().addCity(this);
 
         // destroy all military units located in the city and capture civilians
         UnitList<?> units = civilization.getWorld().getUnitsAtLocation(location);
@@ -280,7 +280,7 @@ public class City extends AbstractImprovement implements HasCombatStrength {
     }
 
     public void addUnit(AbstractUnit unit) {
-        civilization.addUnit(unit, location);
+        civilization.units().addUnit(unit, location);
     }
 
     public int getUnitProductionCost(String unitClassUuid) {

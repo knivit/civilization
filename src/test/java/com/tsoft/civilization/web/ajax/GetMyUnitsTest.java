@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
+import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GetMyUnitsTest {
@@ -30,15 +31,15 @@ public class GetMyUnitsTest {
 
     @Test
     public void getJSON() {
-        MockWorld mockWorld = MockWorld.newSimpleWorld();
-        Civilization c1 = new Civilization(mockWorld, 0);
+        MockWorld world = MockWorld.newSimpleWorld();
+        Civilization c1 = world.createCivilization(RUSSIA);
         Archers archers = UnitFactory.newInstance(Archers.CLASS_UUID);
-        c1.addUnit(archers, new Point(2, 0));
+        c1.units().addUnit(archers, new Point(2, 0));
         Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);
-        c1.addUnit(workers, new Point(2, 0));
+        c1.units().addUnit(workers, new Point(2, 0));
 
         ClientSession session = Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
-        Worlds.add(mockWorld);
+        Worlds.add(world);
         session.setWorldAndCivilizationIds(c1);
 
         Request request = MockRequest.newInstance();

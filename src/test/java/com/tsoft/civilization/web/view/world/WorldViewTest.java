@@ -15,30 +15,31 @@ import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.civilization.Civilization;
 import org.junit.jupiter.api.Test;
 
+import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class WorldViewTest {
     @Test
     public void worldView() throws Exception {
-        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES, 3,
+        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES, 3,
                 " |0 1 2 ", " |0 1 2 ", " |0 1 2 ",
                 "-+------", "-+------", "-+------",
                 "0|g g g ", "0|h h . ", "0|f . . ",
                 "1| g g g", "1| h h .", "1| f . .");
-        MockWorld mockWorld = new MockWorld(mockTilesMap);
-        Civilization c1 = new Civilization(mockWorld, 0);
+        MockWorld world = new MockWorld(map);
+        Civilization c1 = world.createCivilization(RUSSIA);
 
         // a city with two units in it
         City city1 = new City(c1, new Point(0, 0));
         Warriors warriors = UnitFactory.newInstance(Warriors.CLASS_UUID);
-        c1.addUnit(warriors, new Point(0, 0));
+        c1.units().addUnit(warriors, new Point(0, 0));
         Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);
-        c1.addUnit(workers, new Point(0, 0));
+        c1.units().addUnit(workers, new Point(0, 0));
         Settlers settlers = UnitFactory.newInstance(Settlers.CLASS_UUID);
-        c1.addUnit(settlers, new Point(1, 0));
+        c1.units().addUnit(settlers, new Point(1, 0));
 
-        JsonBlock worldBlock = mockWorld.getView().getJSON();
+        JsonBlock worldBlock = world.getView().getJSON();
         //assertEquals("{\"width\":\"3\",\"height\":\"2\",
         // \"tiles\":[
         //   {\"name\":\"g\",

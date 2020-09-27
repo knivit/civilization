@@ -15,6 +15,10 @@ import com.tsoft.civilization.world.generator.WorldGeneratorService;
 import com.tsoft.civilization.world.generator.Climate;
 import com.tsoft.civilization.world.generator.WorldGenerator;
 
+import java.util.concurrent.ThreadLocalRandom;
+
+import static com.tsoft.civilization.L10n.L10nCivilization.*;
+
 public class CreateWorld extends AbstractAjaxRequest {
     @Override
     public Response getJson(Request request) {
@@ -37,11 +41,11 @@ public class CreateWorld extends AbstractAjaxRequest {
         generator.generate(world.getTilesMap(), Climate.getClimateByNo(climate));
 
         // create civilizations
-        Civilization civilization = new Civilization(world, world.getCivilizations().size());
-        civilization.addFirstUnits();
+        int random = ThreadLocalRandom.current().nextInt(CIVILIZATIONS.size());
+        Civilization civilization = world.createCivilization(CIVILIZATIONS.get(random));
+        civilization.units().addFirstUnits();
 
         Sessions.getCurrent().setWorldAndCivilizationIds(civilization);
-
         return new JsonResponse(ResponseCode.OK, "");
     }
 }

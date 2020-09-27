@@ -1,6 +1,5 @@
 package com.tsoft.civilization.world;
 
-import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
@@ -62,10 +61,10 @@ public class WorldView {
         // cities
         worldBlock.startArray(("cities"));
         for (Civilization civilization : world.getCivilizations()) {
-            for (City city : civilization.getCities()) {
+            civilization.cities().applyToAll(city -> {
                 CityView cityView = city.getView();
                 worldBlock.addElement(cityView.getJSON(city).getText());
-            }
+            });
         }
         worldBlock.stopArray();
 

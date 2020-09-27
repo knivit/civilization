@@ -12,96 +12,97 @@ import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
 import org.junit.jupiter.api.Test;
 
+import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BuildCityActionTest {
     @Test
     public void buildCity1() {
-        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
                 " |0 1 2 ",
                 "-+------",
                 "0|. . . ",
                 "1| . g .",
                 "2|. . . ",
                 "3| . . .");
-        MockWorld mockWorld = new MockWorld(mockTilesMap);
-        Civilization civilization = new Civilization(mockWorld, 0);
+        MockWorld world = new MockWorld(map);
+        Civilization civilization = world.createCivilization(RUSSIA);
 
         // Build a city
         Settlers settlers1 = UnitFactory.newInstance(Settlers.CLASS_UUID);
-        civilization.addUnit(settlers1, new Point(1, 1));
+        civilization.units().addUnit(settlers1, new Point(1, 1));
         assertEquals(SettlersActionResults.CITY_BUILT, BuildCityAction.buildCity(settlers1));
 
         // check the city
-        assertEquals(1, civilization.getCities().size());
-        City city = civilization.getCities().iterator().next();
+        assertEquals(1, civilization.cities().size());
+        City city = civilization.cities().getAny();
 
         // city's tiles
         assertEquals(7, city.getLocations().size());
 
         // settlers must be destroyed
-        assertEquals(0, civilization.getUnits().size());
+        assertEquals(0, civilization.units().size());
 
         // A city can't be build on a tile where another city is built
         Settlers settlers2 = UnitFactory.newInstance(Settlers.CLASS_UUID);
-        civilization.addUnit(settlers2, new Point(1, 1));
+        civilization.units().addUnit(settlers2, new Point(1, 1));
         assertEquals(SettlersActionResults.CANT_BUILD_CITY_THERE_IS_ANOTHER_CITY_NEARBY, BuildCityAction.buildCity(settlers2));
     }
 
     @Test
     public void buildCity2() {
-        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
                 " |0 1 2 ",
                 "-+------",
                 "0|. . . ",
                 "1| . g .",
                 "2|. . . ",
                 "3| . . .");
-        MockWorld mockWorld = new MockWorld(mockTilesMap);
-        Civilization civilization = new Civilization(mockWorld, 0);
+        MockWorld world = new MockWorld(map);
+        Civilization civilization = world.createCivilization(RUSSIA);
 
         // check 1
         // Build a city
         Settlers settlers1 = UnitFactory.newInstance(Settlers.CLASS_UUID);
-        civilization.addUnit(settlers1, new Point(1, 1));
+        civilization.units().addUnit(settlers1, new Point(1, 1));
         assertEquals(SettlersActionResults.CITY_BUILT, BuildCityAction.buildCity(settlers1));
 
         // check 2
         // A city can not be build less than 4 tiles away from other city
         Settlers settlers2 = UnitFactory.newInstance(Settlers.CLASS_UUID);
-        civilization.addUnit(settlers2, new Point(2, 3));
+        civilization.units().addUnit(settlers2, new Point(2, 3));
         assertEquals(SettlersActionResults.CANT_BUILD_CITY_THERE_IS_ANOTHER_CITY_NEARBY, BuildCityAction.buildCity(settlers2));
     }
 
     @Test
     public void buildCity3() {
-        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
                 " |0 1 2 3 4 5 6 7 ",
                 "-+----------------",
                 "0|g . . . . . . . ",
                 "1| . . . . . . . .",
                 "2|. . . . . . . . ",
                 "3| . . . . . . . g");
-        MockWorld mockWorld = new MockWorld(mockTilesMap);
-        Civilization civilization = new Civilization(mockWorld, 0);
+        MockWorld world = new MockWorld(map);
+        Civilization civilization = world.createCivilization(RUSSIA);
 
         // check 1
         // Build a city
         Settlers settlers1 = UnitFactory.newInstance(Settlers.CLASS_UUID);
-        civilization.addUnit(settlers1, new Point(1, 1));
+        civilization.units().addUnit(settlers1, new Point(1, 1));
         assertEquals(SettlersActionResults.CITY_BUILT, BuildCityAction.buildCity(settlers1));
 
         // check 2
         // a city can not be build less than 4 tiles away from other city
         // (cities looks like far away, but don't forget - the map is cyclic)
         Settlers settlers2 = UnitFactory.newInstance(Settlers.CLASS_UUID);
-        civilization.addUnit(settlers2, new Point(7, 3));
+        civilization.units().addUnit(settlers2, new Point(7, 3));
         assertEquals(SettlersActionResults.CANT_BUILD_CITY_THERE_IS_ANOTHER_CITY_NEARBY, BuildCityAction.buildCity(settlers2));
     }
 
     @Test
     public void buildCity4() {
-        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
                 " |0 1 2 3 4 5 6 7 ",
                 "-+----------------",
                 "0|. . . . . . . . ",
@@ -112,19 +113,19 @@ public class BuildCityActionTest {
                 "5| . . . . . . . .",
                 "6|. . . . . . . . ",
                 "7| . . . . . . . .");
-        MockWorld mockWorld = new MockWorld(mockTilesMap);
-        Civilization civilization = new Civilization(mockWorld, 0);
+        MockWorld world = new MockWorld(map);
+        Civilization civilization = world.createCivilization(RUSSIA);
 
         // check 1
         // Build a city
         Settlers settlers1 = UnitFactory.newInstance(Settlers.CLASS_UUID);
-        civilization.addUnit(settlers1, new Point(2, 2));
+        civilization.units().addUnit(settlers1, new Point(2, 2));
         assertEquals(SettlersActionResults.CITY_BUILT, BuildCityAction.buildCity(settlers1));
 
         // check 2
         // Build a city - it's OK now
         Settlers settlers2 = UnitFactory.newInstance(Settlers.CLASS_UUID);
-        civilization.addUnit(settlers2, new Point(6, 4));
+        civilization.units().addUnit(settlers2, new Point(6, 4));
         assertEquals(SettlersActionResults.CITY_BUILT, BuildCityAction.buildCity(settlers2));
     }
 }

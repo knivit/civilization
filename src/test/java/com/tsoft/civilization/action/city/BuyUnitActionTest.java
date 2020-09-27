@@ -11,13 +11,15 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.economic.Supply;
 import org.junit.jupiter.api.Test;
 
+import static com.tsoft.civilization.L10n.L10nCivilization.AMERICA;
+import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BuyUnitActionTest {
     @Test
     public void failToBuyUnitNoTechnology() {
-        MockWorld mockWorld = MockWorld.newSimpleWorld();
-        Civilization civilization = new Civilization(mockWorld, 0);
+        MockWorld world = MockWorld.newSimpleWorld();
+        Civilization civilization = world.createCivilization(RUSSIA);
         City city = new City(civilization, new Point(2, 0));
 
         assertEquals(CityActionResults.WRONG_ERA_OR_TECHNOLOGY, BuyUnitAction.buyUnit(city, Archers.CLASS_UUID));
@@ -25,12 +27,12 @@ public class BuyUnitActionTest {
 
     @Test
     public void buyUnit() {
-        MockWorld mockWorld = MockWorld.newSimpleWorld();
-        Civilization civilization = new Civilization(mockWorld, 0);
+        MockWorld world = MockWorld.newSimpleWorld();
+        Civilization civilization = world.createCivilization(RUSSIA);
         civilization.addTechnology(Technology.ARCHERY);
         City city = new City(civilization, new Point(2, 0));
 
-        Civilization puppet = new Civilization(mockWorld, 1);
+        Civilization puppet = world.createCivilization(AMERICA);
 
         city.setPassScore(1);
         civilization.giftReceived(puppet, Supply.builder().gold(Archers.STUB.getGoldCost()).build());

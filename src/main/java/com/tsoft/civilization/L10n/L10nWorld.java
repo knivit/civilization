@@ -122,8 +122,8 @@ public class L10nWorld {
             .set("ru", "\u0412\u043e\u0439\u043d\u0430 \u043f\u0440\u0435\u043a\u0440\u0430\u0449\u0435\u043d\u0430 between %s and %s !");
 
     public static L10nMap NEW_CIVILIZATION_EVENT = new L10nMap()
-            .set("en", "New Civilization %s has been founded")
-            .set("ru", "\u0411\u044b\u043b\u0430 \u043e\u0441\u043d\u043e\u0432\u0430\u043d\u0430 %s \u043d\u043e\u0432\u0430\u044f \u0446\u0438\u0432\u0438\u043b\u0438\u0437\u0430\u0446\u0438\u044f");
+            .set("en", "A new Civilization %s has been founded on %s")
+            .set("ru", "\u0411\u044b\u043b\u0430 \u043e\u0441\u043d\u043e\u0432\u0430\u043d\u0430 %s \u043d\u043e\u0432\u0430\u044f \u0446\u0438\u0432\u0438\u043b\u0438\u0437\u0430\u0446\u0438\u044f %s");
 
     public static L10nMap DESTROY_CIVILIZATION_EVENT = new L10nMap()
         .set("en", "Civilization %s has been destroyed")
@@ -138,7 +138,7 @@ public class L10nWorld {
             .set("ru", "\u0426\u0438\u0432\u0438\u043b\u0438\u0437\u0430\u0446\u0438\u044f %s \u0441\u0434\u0435\u043b\u0430\u043b\u0430 \u0445\u043e\u0434");
 
     public static L10nMap NEW_YEAR_START_EVENT = new L10nMap()
-        .set("en", "Started new Year %d !")
+        .set("en", "Started a new Year %d !")
         .set("ru", "Начался новый год %d !");
 
     public static L10nMap NEW_YEAR_COMPLETE_EVENT = new L10nMap()

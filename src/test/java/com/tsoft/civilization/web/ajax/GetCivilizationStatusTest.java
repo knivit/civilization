@@ -19,6 +19,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
+import static com.tsoft.civilization.L10n.L10nCivilization.AMERICA;
+import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GetCivilizationStatusTest {
@@ -31,40 +33,40 @@ public class GetCivilizationStatusTest {
 
     @Test
     public void getJSONForMyCivilization() {
-        MockWorld mockWorld = MockWorld.newSimpleWorld();
+        MockWorld world = MockWorld.newSimpleWorld();
 
-        Civilization c1 = new Civilization(mockWorld, 0);
+        Civilization c1 = world.createCivilization(RUSSIA);
         Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);
-        c1.addUnit(workers, new Point(2, 0));
+        c1.units().addUnit(workers, new Point(2, 0));
         Warriors warriors = UnitFactory.newInstance(Warriors.CLASS_UUID);
-        c1.addUnit(warriors, new Point(2, 1));
+        c1.units().addUnit(warriors, new Point(2, 1));
         City city1 = new City(c1, new Point(2, 2));
 
         ClientSession session = Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
-        Worlds.add(mockWorld);
+        Worlds.add(world);
         session.setWorldAndCivilizationIds(c1);
 
-        Request mockRequest = MockRequest.newInstance("civilization", c1.getId());
+        Request request = MockRequest.newInstance("civilization", c1.getId());
 
-        Response response = ajaxRequest.getJson(mockRequest);
+        Response response = ajaxRequest.getJson(request);
         assertEquals(ResponseCode.OK, response.getErrorCode());
     }
 
     @Test
     public void getJSONForForeignCivilization() {
-        MockWorld mockWorld = MockWorld.newSimpleWorld();
+        MockWorld world = MockWorld.newSimpleWorld();
 
-        Civilization c1 = new Civilization(mockWorld, 0);
+        Civilization c1 = world.createCivilization(RUSSIA);
 
-        Civilization c2 = new Civilization(mockWorld, 1);
+        Civilization c2 = world.createCivilization(AMERICA);
         Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);
-        c2.addUnit(workers, new Point(2, 0));
+        c2.units().addUnit(workers, new Point(2, 0));
         Warriors warriors = UnitFactory.newInstance(Warriors.CLASS_UUID);
-        c2.addUnit(warriors, new Point(2, 1));
+        c2.units().addUnit(warriors, new Point(2, 1));
         City city1 = new City(c2, new Point(2, 2));
 
         ClientSession session = Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
-        Worlds.add(mockWorld);
+        Worlds.add(world);
         session.setWorldAndCivilizationIds(c1);
 
         Request mockRequest = MockRequest.newInstance("civilization", c1.getId());

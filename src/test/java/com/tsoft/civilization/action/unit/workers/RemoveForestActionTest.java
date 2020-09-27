@@ -16,13 +16,14 @@ import com.tsoft.civilization.unit.civil.workers.action.RemoveHillAction;
 import com.tsoft.civilization.unit.civil.workers.action.WorkersActionResults;
 import org.junit.jupiter.api.Test;
 
+import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class RemoveForestActionTest {
     @Test
     public void cantRemoveForestedHill() {
-        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES, 3,
+        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES, 3,
                 " |0 1 2 ", " |0 1 2 ", " |0 1 2 ",
                 "-+------", "-+------", "-+------",
                 "0|. . . ", "0|. . . ", "0|. . . ",
@@ -30,11 +31,11 @@ public class RemoveForestActionTest {
                 "2|. . . ", "2|. . . ", "2|. . . ",
                 "3| . . .", "3| . . .", "3| . . .");
 
-        MockWorld mockWorld = new MockWorld(mockTilesMap);
-        Civilization civilization = new Civilization(mockWorld, 0);
-        AbstractTile tile = mockTilesMap.getTile(1, 1);
+        MockWorld world = new MockWorld(map);
+        Civilization civilization = world.createCivilization(RUSSIA);
+        AbstractTile tile = map.getTile(1, 1);
         Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);
-        civilization.addUnit(workers, tile.getLocation());
+        civilization.units().addUnit(workers, tile.getLocation());
 
         // case 1
         // no needed technology
@@ -48,7 +49,7 @@ public class RemoveForestActionTest {
 
     @Test
     public void removeForestedHill() {
-        MockTilesMap mockTilesMap = new MockTilesMap(MapType.SIX_TILES, 3,
+        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES, 3,
                 " |0 1 2 ", " |0 1 2 ", " |0 1 2 ",
                 "-+------", "-+------", "-+------",
                 "0|. . . ", "0|. . . ", "0|. . . ",
@@ -56,13 +57,13 @@ public class RemoveForestActionTest {
                 "2|. . . ", "2|. . . ", "2|. . . ",
                 "3| . . .", "3| . . .", "3| . . .");
 
-        MockWorld mockWorld = new MockWorld(mockTilesMap);
-        Civilization civilization = new Civilization(mockWorld, 0);
+        MockWorld world = new MockWorld(map);
+        Civilization civilization = world.createCivilization(RUSSIA);
         civilization.addTechnology(Technology.MINING);
 
-        AbstractTile tile = mockTilesMap.getTile(1, 1);
+        AbstractTile tile = map.getTile(1, 1);
         Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);
-        civilization.addUnit(workers, tile.getLocation());
+        civilization.units().addUnit(workers, tile.getLocation());
 
         for (int i = 0; i < 4; i ++) {
             assertEquals(WorkersActionResults.REMOVING_FOREST, RemoveForestAction.removeForest(workers));
