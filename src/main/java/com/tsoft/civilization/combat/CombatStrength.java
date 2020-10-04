@@ -190,4 +190,19 @@ public class CombatStrength {
         UnitList<?> unitsAround = unit.getUnitsAround(2);
         return unitsAround.getGreatGeneralCount();
     }
+
+    @Override
+    public String toString() {
+        return "CombatStrength{" +
+            "meleeAttackStrength=" + meleeAttackStrength +
+            ", targetBackFireStrength=" + targetBackFireStrength +
+            ", strength=" + strength +
+            ", rangedAttackStrength=" + rangedAttackStrength +
+            ", rangedAttackRadius=" + rangedAttackRadius +
+            ", attackExperience=" + attackExperience +
+            ", defenseExperience=" + defenseExperience +
+            ", canConquerCity=" + canConquerCity +
+            ", isDestroyed=" + isDestroyed +
+        '}';
+    }
 }

@@ -19,7 +19,7 @@ public class NextMoveActionRequest extends AbstractAjaxRequest {
             return Response.newErrorInstance(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
-        myCivilization.nextMove();
+        myCivilization.move();
 
         ActionAbstractResult result = NextMoveAction.nextMove(myCivilization.getWorld());
 

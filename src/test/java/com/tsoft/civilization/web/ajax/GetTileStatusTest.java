@@ -34,13 +34,13 @@ public class GetTileStatusTest {
     public void getJSONForMyCityAndUnit() {
         MockWorld world = MockWorld.newWorldWithFeatures();
         Civilization c1 = world.createCivilization(RUSSIA);
-        City city1 = new City(c1, new Point(2, 0));
+        City city1 = c1.createCity(new Point(2, 0));
         Workers workers1 = UnitFactory.newInstance(Workers.CLASS_UUID);
         c1.units().addUnit(workers1, city1.getLocation());
 
         ClientSession session = Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
         Worlds.add(world);
-        session.setWorldAndCivilizationIds(c1);
+        session.setActiveCivilization(c1);
 
         Request request = MockRequest.newInstance("col", "2", "row", "0");
 
@@ -53,13 +53,13 @@ public class GetTileStatusTest {
         MockWorld world = MockWorld.newWorldWithFeatures();
         Civilization c1 = world.createCivilization(RUSSIA);
         Civilization c2 = world.createCivilization(AMERICA);
-        City city1 = new City(c1, new Point(2, 0));
+        City city1 = c1.createCity(new Point(2, 0));
         Workers workers1 = UnitFactory.newInstance(Workers.CLASS_UUID);
         c1.units().addUnit(workers1, city1.getLocation());
 
         ClientSession session = Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
         Worlds.add(world);
-        session.setWorldAndCivilizationIds(c2);
+        session.setActiveCivilization(c2);
 
         Request request = MockRequest.newInstance("col", "2", "row", "0");
 

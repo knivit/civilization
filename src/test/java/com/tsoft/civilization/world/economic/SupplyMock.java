@@ -81,23 +81,23 @@ public class SupplyMock {
         // log them out as jUnit doesn't show the values in assertTrue
         if (!isEqual) {
             System.out.printf(
-                "Type           | Expected   | Actual\n" +
-                "----------------------------------------\n" +
-                "Food           |     %5d  |    %5d | %s\n" +
-                "Production     |     %5d  |    %5d | %s\n" +
-                "Gold           |     %5d  |    %5d | %s\n" +
-                "Science        |     %5d  |    %5d | %s\n" +
-                "Culture        |     %5d  |    %5d | %s\n" +
-                "Happiness      |     %5d  |    %5d | %s\n" +
-                "Unhappiness    |     %5d  |    %5d | %s\n" +
-                "Population     |     %5d  |    %5d | %s\n" +
+                "Type            | Expected   | Actual\n" +
+                "-----------------------------------------\n" +
+                "Food            |     %5d  |    %5d | %s\n" +
+                "Production      |     %5d  |    %5d | %s\n" +
+                "Gold            |     %5d  |    %5d | %s\n" +
+                "Science         |     %5d  |    %5d | %s\n" +
+                "Culture         |     %5d  |    %5d | %s\n" +
+                "Happiness       |     %5d  |    %5d | %s\n" +
+                "Unhappiness     |     %5d  |    %5d | %s\n" +
+                "Population      |     %5d  |    %5d | %s\n" +
 
-                "greatArtist    |     %5d  |    %5d | %s\n" +
-                "greatMusicians |     %5d  |    %5d | %s\n" +
-                "greatWriter    |     %5d  |    %5d | %s\n" +
-                "greatMerchant  |     %5d  |    %5d | %s\n" +
-                "greatEngineer  |     %5d  |    %5d | %s\n" +
-                "greatScientist |     %5d  |    %5d | %s\n%n",
+                "Great Artist    |     %5d  |    %5d | %s\n" +
+                "Great Musicians |     %5d  |    %5d | %s\n" +
+                "Great Writer    |     %5d  |    %5d | %s\n" +
+                "Great Merchant  |     %5d  |    %5d | %s\n" +
+                "Great Engineer  |     %5d  |    %5d | %s\n" +
+                "Great Scientist |     %5d  |    %5d | %s\n%n",
 
                 a.getFood(), b.getFood(), cmp(a.getFood(), b.getFood()),
                 a.getProduction(), b.getProduction(), cmp(a.getProduction(), b.getProduction()),

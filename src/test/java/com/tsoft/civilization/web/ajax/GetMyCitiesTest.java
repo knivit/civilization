@@ -31,11 +31,11 @@ public class GetMyCitiesTest {
     public void getJSON() {
         MockWorld world = MockWorld.newSimpleWorld();
         Civilization c1 = world.createCivilization(RUSSIA);
-        City city1 = new City(c1, new Point(2, 0));
+        City city1 = c1.createCity(new Point(2, 0));
 
         ClientSession session = Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
         Worlds.add(world);
-        session.setWorldAndCivilizationIds(c1);
+        session.setActiveCivilization(c1);
 
         Request request = MockRequest.newInstance();
 

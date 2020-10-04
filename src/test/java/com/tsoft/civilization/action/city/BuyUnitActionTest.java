@@ -20,7 +20,7 @@ public class BuyUnitActionTest {
     public void failToBuyUnitNoTechnology() {
         MockWorld world = MockWorld.newSimpleWorld();
         Civilization civilization = world.createCivilization(RUSSIA);
-        City city = new City(civilization, new Point(2, 0));
+        City city = civilization.createCity(new Point(2, 0));
 
         assertEquals(CityActionResults.WRONG_ERA_OR_TECHNOLOGY, BuyUnitAction.buyUnit(city, Archers.CLASS_UUID));
     }
@@ -30,7 +30,7 @@ public class BuyUnitActionTest {
         MockWorld world = MockWorld.newSimpleWorld();
         Civilization civilization = world.createCivilization(RUSSIA);
         civilization.addTechnology(Technology.ARCHERY);
-        City city = new City(civilization, new Point(2, 0));
+        City city = civilization.createCity(new Point(2, 0));
 
         Civilization puppet = world.createCivilization(AMERICA);
 

@@ -116,8 +116,8 @@ public class L10nCity {
             .set("ru", "\u0413\u043e\u0440\u043e\u0434 %s \u0431\u044b\u043b \u0437\u0430\u0445\u0432\u0430\u0447\u0435\u043d");
 
     public static L10nMap UNIT_HAS_CAPTURED_CITY = new L10nMap()
-            .set("en", "A unit has captured the city")
-            .set("ru", "\u042e\u043d\u0438\u0442 \u0437\u0430\u0445\u0432\u0430\u0442\u0438\u043b \u0433\u043e\u0440\u043e\u0434");
+            .set("en", "A unit %s has captured the city")
+            .set("ru", "\u042e\u043d\u0438\u0442 %s \u0437\u0430\u0445\u0432\u0430\u0442\u0438\u043b \u0433\u043e\u0440\u043e\u0434");
 
     public static L10nMap NEW_BUILDING_BUILT_EVENT = new L10nMap()
             .set("en", "A new building %s has been constructed")

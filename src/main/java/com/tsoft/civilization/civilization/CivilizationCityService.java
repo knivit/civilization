@@ -1,17 +1,22 @@
 package com.tsoft.civilization.civilization;
 
+import com.tsoft.civilization.L10n.L10nChainedArrayList;
 import com.tsoft.civilization.L10n.L10nCity;
+import com.tsoft.civilization.L10n.L10nMap;
 import com.tsoft.civilization.L10n.L10nWorld;
 import com.tsoft.civilization.building.AbstractBuilding;
+import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityList;
+import com.tsoft.civilization.unit.AbstractUnit;
+import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.World;
-import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.world.event.Event;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 public class CivilizationCityService {
@@ -19,7 +24,7 @@ public class CivilizationCityService {
     private final World world;
 
     // Active cities and destroyed (on this step) cities
-    private CityList cities = new CityList();
+    private final CityList cities = new CityList();
     private CityList destroyedCities = new CityList();
 
     public CivilizationCityService(Civilization civilization) {
@@ -28,31 +33,11 @@ public class CivilizationCityService {
     }
 
     public void applyToAll(Consumer<City> fun) {
-        for (City city : cities) {
-            fun.accept(city);
-        }
+        cities.stream().forEach(fun);
     }
 
     public City getAny() {
         return cities.isEmpty() ? null : cities.getAny();
-    }
-
-    public void clearDestroyedCities() {
-        destroyedCities = new CityList();
-    }
-
-    public void step(Year year) {
-        for (City city : cities) {
-            city.step(year);
-        }
-    }
-
-    public Supply getSupply() {
-        Supply supply = Supply.EMPTY_SUPPLY;
-        for (City city : cities) {
-            supply = supply.add(city.getSupply());
-        }
-        return supply;
     }
 
     public boolean isHavingTile(Point location) {
@@ -62,7 +47,6 @@ public class CivilizationCityService {
     public City getCityById(String cityId) {
         return cities.getCityById(cityId);
     }
-
 
     public AbstractBuilding getBuildingById(String buildingId) {
         return cities.getBuildingById(buildingId);
@@ -76,10 +60,17 @@ public class CivilizationCityService {
         return cities.size();
     }
 
-    public void addCity(City city) {
-        cities.add(city);
-        city.setCivilization(civilization);
+    public L10nMap findCityName() {
+        L10nMap civilizationName = civilization.getView().getName();
+        L10nChainedArrayList<L10nMap> names = L10nCity.CITIES.get(civilizationName);
+        int index = size() % names.size();
+        return names.get(index);
+    }
 
+    public void addCity(City city) {
+        Objects.requireNonNull(city, "city can't be null");
+
+        cities.add(city);
         world.sendEvent(new Event(Event.UPDATE_WORLD, city, L10nCity.NEW_CITY_EVENT, city.getView().getLocalizedCityName()));
     }
 
@@ -92,6 +83,34 @@ public class CivilizationCityService {
         if (isDestroyed()) {
             world.sendEvent(new Event(Event.UPDATE_WORLD, this, L10nWorld.DESTROY_CIVILIZATION_EVENT, civilization.getView().getLocalizedCivilizationName()));
         }
+    }
+
+    public void captureCity(City city, HasCombatStrength destroyer, boolean destroyOtherUnitsAtLocation) {
+        city.getCombatStrength().setDestroyed(true);
+        city.setPassScore(0);
+
+        Event worldEvent = new Event(Event.UPDATE_WORLD, this, L10nCity.CITY_WAS_CAPTURED, city.getView().getLocalizedCityName());
+        world.sendEvent(worldEvent);
+
+        Event event = new Event(Event.UPDATE_WORLD, destroyer, L10nCity.UNIT_HAS_CAPTURED_CITY);
+        civilization.addEvent(event);
+
+        // remove the city from its civilization
+        city.getCivilization().cities().removeCity(city);
+
+        // destroy all military units located in the city and capture civilians
+        UnitList<?> units = world.getUnitsAtLocation(city.getLocation());
+        for (AbstractUnit unit : units) {
+            if (unit.getUnitCategory().isMilitary()) {
+                unit.destroyedBy(destroyer, false);
+            } else {
+                unit.capturedBy(destroyer);
+            }
+        }
+
+        // pass the city to the winner's civilization
+        city.moveToCivilization(civilization);
+        cities.add(city);
     }
 
     public boolean isDestroyed() {
@@ -110,4 +129,25 @@ public class CivilizationCityService {
         return cities.getCitiesWithActionsAvailable();
     }
 
+    public void startYear() {
+        destroyedCities = new CityList();
+        cities.forEach(City::startYear);
+    }
+
+    public void move() {
+        cities.forEach(City::move);
+    }
+
+    public Supply getSupply() {
+        Supply supply = Supply.EMPTY_SUPPLY;
+
+        for (City city : cities) {
+            supply = supply.add(city.getSupply());
+        }
+        return supply;
+    }
+
+    public void stopYear() {
+        cities.forEach(City::stopYear);
+    }
 }

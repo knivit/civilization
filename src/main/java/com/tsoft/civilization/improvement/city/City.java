@@ -1,6 +1,5 @@
 package com.tsoft.civilization.improvement.city;
 
-import com.tsoft.civilization.L10n.L10nChainedArrayList;
 import com.tsoft.civilization.L10n.L10nCity;
 import com.tsoft.civilization.L10n.L10nMap;
 import com.tsoft.civilization.building.*;
@@ -33,54 +32,43 @@ public class City extends AbstractImprovement implements HasCombatStrength {
 
     private final CityView VIEW;
 
-    private Set<Point> locations = new HashSet<>();
-    private Set<Point> unmodifiableLocations = Collections.unmodifiableSet(locations);
+    private final Set<Point> locations = new HashSet<>();
 
-    private CityPopulationService citizenService;
-    private CityBuildingService buildingService;
+    private final CityPopulationService populationService;
+    private final CityBuildingService buildingService;
 
     private Supply citySupply;
 
     private CombatStrength combatStrength;
     private int passScore;
 
-    public City(Civilization civilization, Point location) {
+    public City(Civilization civilization, L10nMap cityName, Point location, boolean isCapital) {
         super(civilization, location);
 
-        // city's name
-        L10nMap civilizationName = civilization.getView().getName();
-        L10nChainedArrayList<L10nMap> cities = L10nCity.CITIES.get(civilizationName);
-        int index = civilization.cities().size();
-        if (index >= cities.size()) {
-            index -= cities.size();
-        }
-        VIEW = new CityView(cities.get(index));
+        // area
+        locations.add(location);
+        locations.addAll(getTilesMap().getLocationsAround(location, 1));
 
-        // add the city to a civilization
-        civilization.cities().addCity(this);
+        // population
+        populationService = new CityPopulationService(this);
+        populationService.addCitizen();
 
         // economics
         citySupply = Supply.EMPTY_SUPPLY;
 
-        // city's tiles
-        locations.add(location);
-        locations.addAll(getTilesMap().getLocationsAround(location, 1));
-
-        // first citizen
-        citizenService = new CityPopulationService(this);
-        addCitizen();
-        Event event = new Event(Event.INFORMATION, citizenService, L10nCity.FOUNDED_SETTLERS, VIEW.getLocalizedCityName());
-        civilization.addEvent(event);
-
-        // city's initial buildings
+        // buildings
         buildingService = new CityBuildingService(this);
+        buildingService.addFirstBuilding(isCapital);
 
-        // City is a ranged military unit
+        // military
         combatStrength = new CombatStrength(this, getBaseCombatStrength());
+
+        // media
+        VIEW = new CityView(cityName);
     }
 
-    public void setCivilization(Civilization civilization) {
-        this.civilization = civilization;
+    public L10nMap getName() {
+        return VIEW.getName();
     }
 
     @Override
@@ -108,7 +96,7 @@ public class City extends AbstractImprovement implements HasCombatStrength {
     }
 
     public Set<Point> getLocations() {
-        return unmodifiableLocations;
+        return Collections.unmodifiableSet(locations);
     }
 
     public void addLocations(Collection<Point> locations) {
@@ -120,19 +108,19 @@ public class City extends AbstractImprovement implements HasCombatStrength {
     }
 
     public CitySupplyStrategy getSupplyStrategy() {
-        return citizenService.getSupplyStrategy();
+        return populationService.getSupplyStrategy();
     }
 
     public void setSupplyStrategy(CitySupplyStrategy supplyStrategy) {
-        citizenService.setSupplyStrategy(supplyStrategy);
+        populationService.setSupplyStrategy(supplyStrategy);
     }
 
     public void addCitizen() {
-        citizenService.addCitizen();
+        populationService.addCitizen();
     }
 
     public int getCitizenCount() {
-        return citizenService.getCitizenCount();
+        return populationService.getCitizenCount();
     }
 
     public BuildingList getBuildings() {
@@ -157,7 +145,7 @@ public class City extends AbstractImprovement implements HasCombatStrength {
     }
 
     public List<Point> getCitizenLocations() {
-        return citizenService.getPopulationLocations();
+        return populationService.getPopulationLocations();
     }
 
     public AbstractBuilding findBuildingByClassUuid(String classUuid) {
@@ -207,22 +195,29 @@ public class City extends AbstractImprovement implements HasCombatStrength {
         Supply supply = Supply.builder().population(getCitizenCount()).build();
 
         supply = supply
-            .add(citizenService.calcSupply())
+            .add(populationService.calcSupply())
             .add(buildingService.getSupply());
 
         return supply;
     }
 
     public Supply getTilesSupply() {
-        return citizenService.getAllCitizensSupply();
+        return populationService.getAllCitizensSupply();
     }
 
-    public void step(Year year) {
+    public void startYear() {
+        populationService.startYear();
+        buildingService.startYear();
+    }
+
+    public void move() {
+        Year year = civilization.getYear();
+
         // income from citizens
-        citizenService.step(year);
+        populationService.move(year);
 
         // buildings & construction
-        citySupply = buildingService.step(citySupply);
+        citySupply = buildingService.move(citySupply);
 
         Supply supply = getSupply();
         citySupply = citySupply.add(supply);
@@ -230,6 +225,11 @@ public class City extends AbstractImprovement implements HasCombatStrength {
 
         // can do actions (attack, buy, build etc)
         passScore = 1;
+    }
+
+    public void stopYear() {
+        populationService.stopYear();
+        buildingService.stopYear();
     }
 
     @Override
@@ -255,28 +255,12 @@ public class City extends AbstractImprovement implements HasCombatStrength {
     /** A city may be destroyed only during a melee attack */
     @Override
     public void destroyedBy(HasCombatStrength destroyer, boolean destroyOtherUnitsAtLocation) {
-        getCombatStrength().setDestroyed(true);
-        setPassScore(0);
+        destroyer.getCivilization().captureCity(this, destroyer);
+    }
 
-        Event worldEvent = new Event(Event.UPDATE_WORLD, this, L10nCity.CITY_WAS_CAPTURED, VIEW.getLocalizedCityName());
-        getWorld().sendEvent(worldEvent);
-
-        Event event = new Event(Event.UPDATE_WORLD, destroyer, L10nCity.UNIT_HAS_CAPTURED_CITY);
-        destroyer.getCivilization().addEvent(event);
-
-        // capture the city
-        getCivilization().cities().removeCity(this);
-        destroyer.getCivilization().cities().addCity(this);
-
-        // destroy all military units located in the city and capture civilians
-        UnitList<?> units = civilization.getWorld().getUnitsAtLocation(location);
-        for (AbstractUnit unit : units) {
-            if (unit.getUnitCategory().isMilitary()) {
-                unit.destroyedBy(destroyer, false);
-            } else {
-                unit.capturedBy(destroyer);
-            }
-        }
+    /** City has moved to another Civilization (was captured) */
+    public void moveToCivilization(Civilization civilization) {
+        this.civilization = civilization;
     }
 
     public void addUnit(AbstractUnit unit) {

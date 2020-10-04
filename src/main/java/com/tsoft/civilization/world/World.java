@@ -36,12 +36,8 @@ public class World {
     private final List<Year> years = new ArrayList<>();
 
     public World(MapType mapType, int width, int height) {
-        VIEW = new WorldView(this);
-
-        // Create a new year and add it to the history
         year = new Year(-3000);
-        years.add(year);
-
+        VIEW = new WorldView(this);
         tilesMap = new TilesMap(mapType, width, height);
     }
 
@@ -63,9 +59,8 @@ public class World {
 
     // Send an event to all civilizations
     public void sendEvent(Event event) {
-        for (Civilization civilization : civilizations) {
-            civilization.addEvent(event);
-        }
+        Objects.requireNonNull(event, "event can't be null");
+        civilizations.forEach(e -> e.addEvent(event));
     }
 
     public Civilization createCivilization(L10nMap civilizationName) {
@@ -234,37 +229,30 @@ public class World {
         return result;
     }
 
-    public void nextMove() {
-        // do not step into the next year
-        // if some non-artificial civilizations didn't move
-        if (!getNotMovedHumanCivilizations().isEmpty()) {
-            return;
-        }
-
-        // after all human-managed civilization did move,
-        // move AI-managed civilizations
-        for (Civilization civilization : civilizations) {
-            if (civilization.isArtificialIntelligence()) {
-                civilization.nextMove();
-            }
-        }
-
-        step();
+    public void move() {
+        startYear();
+        moveCivilizations();
+        stopYear();
     }
 
-    public void step() {
-        // start a new year
-        year = year.step();
+    // Start a new year
+    private void startYear() {
+        years.add(year);
+        civilizations.forEach(Civilization::startYear);
 
         // add it to the history
-        years.add(year);
         sendEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.NEW_YEAR_START_EVENT, year.getValue()));
+    }
 
-        for (Civilization civilization : civilizations) {
-            civilization.step(year);
-        }
+    private void moveCivilizations() {
+        civilizations.forEach(Civilization::move);
+    }
 
+    private void stopYear() {
+        civilizations.forEach(Civilization::stopYear);
         sendEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.NEW_YEAR_COMPLETE_EVENT, year.getValue()));
+
+        year = year.nextYear();
     }
 
     public List<Year> getYears() {

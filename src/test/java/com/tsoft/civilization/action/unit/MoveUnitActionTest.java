@@ -283,7 +283,7 @@ public class MoveUnitActionTest {
         civilization.units().addUnit(workers, new Point(1, 1));
         workers.setPassScore(1);
 
-        City city = new City(civilization, new Point(2, 1));
+        City city = civilization.createCity(new Point(2, 1));
 
         UnitRoute route = new UnitRoute(new Dir6(1, 0));
         ArrayList<UnitMoveResult> moveResults = MoveUnitAction.moveByRoute(workers, route);
@@ -309,7 +309,7 @@ public class MoveUnitActionTest {
         MockWorld world = new MockWorld(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
-        City city = new City(civilization, new Point(2, 1));
+        City city = civilization.createCity(new Point(2, 1));
         GreatArtist artist = UnitFactory.newInstance(GreatArtist.CLASS_UUID);
         civilization.units().addUnit(artist, city.getLocation());
         Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);

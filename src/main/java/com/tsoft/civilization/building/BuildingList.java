@@ -1,6 +1,7 @@
 package com.tsoft.civilization.building;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public class BuildingList implements Iterable<AbstractBuilding> {
     private List<AbstractBuilding> buildings = new ArrayList<>();
@@ -36,6 +37,10 @@ public class BuildingList implements Iterable<AbstractBuilding> {
         return buildings.iterator();
     }
 
+    public Stream<AbstractBuilding> stream() {
+        return buildings.stream();
+    }
+
     private void checkIsUnmodifiable() {
         if (isUnmodifiable) {
             throw new UnsupportedOperationException("The list is unmodifiable");
@@ -51,32 +56,28 @@ public class BuildingList implements Iterable<AbstractBuilding> {
     }
 
     public BuildingList add(AbstractBuilding building) {
+        Objects.requireNonNull(building, "building can't be null");
+
         checkIsUnmodifiable();
         buildings.add(building);
         return this;
     }
 
     public BuildingList remove(AbstractBuilding building) {
+        Objects.requireNonNull(building, "building can't be null");
+
         checkIsUnmodifiable();
         buildings.remove(building);
         return this;
     }
 
     public AbstractBuilding getBuildingById(String buildingId) {
-        for (AbstractBuilding building : buildings) {
-            if (building.getId().equals(buildingId)) {
-                return building;
-            }
-        }
-        return null;
+        Objects.requireNonNull(buildingId, "buildingId can't be null");
+        return buildings.stream().filter(e -> e.getId().equals(buildingId)).findFirst().orElse(null);
     }
 
     public AbstractBuilding findByClassUuid(String classUuid) {
-        for (AbstractBuilding building : buildings) {
-            if (building.getClassUuid().equals(classUuid)) {
-                return building;
-            }
-        }
-        return null;
+        Objects.requireNonNull(classUuid, "classUuid can't be null");
+        return buildings.stream().filter(e -> e.getClassUuid().equals(classUuid)).findFirst().orElse(null);
     }
 }

@@ -8,10 +8,14 @@ import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.improvement.AbstractImprovementView;
 
 public class CityView extends AbstractImprovementView {
-    private L10nMap name;
+    private final L10nMap name;
 
     public CityView(L10nMap name) {
         this.name = name;
+    }
+
+    public L10nMap getName() {
+        return name;
     }
 
     @Override

@@ -15,25 +15,25 @@ public class NextMoveAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     public static ActionAbstractResult nextMove(World world) {
-        ActionAbstractResult result = canNextMove(world);
+        ActionAbstractResult result = canMove(world);
         log.debug("{}", result);
 
         if (result.isFail()) {
             return result;
         }
 
-        world.nextMove();
+        world.move();
 
         return NextMoveActionResults.CAN_GO_NEXT;
     }
 
-    private static ActionAbstractResult canNextMove(World world) {
+    private static ActionAbstractResult canMove(World world) {
         CivilizationList notMoved = world.getNotMovedHumanCivilizations();
-        if (!notMoved.isEmpty()) {
-            return NextMoveActionResults.AWAITING_OTHERS_TO_MOVE;
+        if (notMoved.isEmpty()) {
+            return NextMoveActionResults.CAN_GO_NEXT;
         }
 
-        return NextMoveActionResults.CAN_GO_NEXT;
+        return NextMoveActionResults.AWAITING_OTHERS_TO_MOVE;
     }
 
     private static String getClientJSCode() {
@@ -49,7 +49,7 @@ public class NextMoveAction {
     }
 
     public static StringBuilder getHtml(Civilization civilization) {
-        if (canNextMove(civilization.getWorld()).isFail()) {
+        if (canMove(civilization.getWorld()).isFail()) {
             return null;
         }
 

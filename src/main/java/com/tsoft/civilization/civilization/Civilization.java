@@ -1,10 +1,12 @@
 package com.tsoft.civilization.civilization;
 
+import com.tsoft.civilization.L10n.L10nCity;
 import com.tsoft.civilization.L10n.L10nCivilization;
 import com.tsoft.civilization.L10n.L10nMap;
 import com.tsoft.civilization.L10n.L10nWorld;
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.BuildingFactory;
+import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.tile.TilesMap;
@@ -65,7 +67,7 @@ public class Civilization {
         startYear = world.getYear();
         events = new EventsByYearMap(world);
 
-        // initialize civ's params
+        // initialize params
         supply = Supply.EMPTY_SUPPLY;
         unitService = new CivilizationUnitService(this);
         cityService = new CivilizationCityService(this);
@@ -123,23 +125,6 @@ public class Civilization {
         isArtificialIntelligence = artificialIntelligence;
     }
 
-    private void aiMove() {
-    }
-
-    public void nextMove() {
-        if (isMoved || isDestroyed()) {
-            return;
-        }
-
-        addEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.MOVE_START_EVENT, getView().getLocalizedCivilizationName()));
-        if (isArtificialIntelligence) {
-            aiMove();
-        }
-        isMoved = true;
-
-        addEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.MOVE_DONE_EVENT, getView().getLocalizedCivilizationName()));
-    }
-
     public EventsByYearMap getEvents() {
         return events;
     }
@@ -148,7 +133,6 @@ public class Civilization {
      * a building was built, a unit has won etc) */
     public void addEvent(Event event) {
         events.add(event);
-        log.debug("{}", event);
     }
 
     public boolean canBuyBuilding(AbstractBuilding building) {
@@ -226,6 +210,21 @@ public class Civilization {
         return new Point(0, 0);
     }
 
+    public City createCity(Point location) {
+        L10nMap cityName = cityService.findCityName();
+        boolean isCapital = cityService.size() == 0;
+        City city = new City(this, cityName, location, isCapital);
+        cityService.addCity(city);
+
+        Event event = new Event(Event.INFORMATION, city, L10nCity.FOUNDED_SETTLERS, cityName);
+        addEvent(event);
+        return city;
+    }
+
+    public void captureCity(City city, HasCombatStrength destroyer) {
+        cityService.captureCity(city, destroyer, false);
+    }
+
     public Supply calcSupply() {
         Supply supply = Supply.EMPTY_SUPPLY;
 
@@ -235,25 +234,48 @@ public class Civilization {
         // expenses
         supply = supply.add(unitService.getSupply());
 
-        // science
-
         return supply;
     }
 
-    public void step(Year year) {
-        if (isDestroyed()) return;
+    private void humanMove() {
+        cityService.move();
+        unitService.move();
 
-        unitService.clearDestroyedUnits();
-        cityService.clearDestroyedCities();
+        supply = supply.addWithoutPopulation(calcSupply());
+    }
 
-        cityService.step(year);
+    private void aiMove() {
+        cityService.move();
+        unitService.move();
 
-        supply = supply.add(calcSupply());
+        supply = supply.addWithoutPopulation(calcSupply());
+    }
 
-        // reset unit's pass score
-        unitService.resetPassScore();
-
+    public void startYear() {
+        unitService.startYear();
+        cityService.startYear();
         isMoved = false;
+    }
+
+    public void move() {
+        if (isMoved || isDestroyed()) {
+            return;
+        }
+
+        addEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.MOVE_START_EVENT, getView().getLocalizedCivilizationName()));
+
+        if (isArtificialIntelligence) {
+            aiMove();
+        } else {
+            humanMove();
+        }
+        isMoved = true;
+
+        addEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.MOVE_DONE_EVENT, getView().getLocalizedCivilizationName()));
+    }
+
+    public void stopYear() {
+        unitService.stopYear();
     }
 
     public void giftReceived(Civilization sender, Supply receivedSupply) {

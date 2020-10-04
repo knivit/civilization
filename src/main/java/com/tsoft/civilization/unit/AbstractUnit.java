@@ -43,6 +43,7 @@ public abstract class AbstractUnit implements HasCombatStrength, CanBeBuilt {
     private Point location;
     private int passScore;
     private CombatStrength combatStrength;
+    private boolean isMoved;
 
     private final ArrayList<AbstractSkill> skills = new ArrayList<>();
 
@@ -65,8 +66,25 @@ public abstract class AbstractUnit implements HasCombatStrength, CanBeBuilt {
         initPassScore();
     }
 
-    public void step() {
+    public void startYear() {
         initPassScore();
+        isMoved = false;
+    }
+
+    public void move() {
+        if (!isMoved) {
+            doMove();
+        }
+    }
+
+    private void doMove() {
+        // TODO do an artificial move
+
+        isMoved = true;
+    }
+
+    public void stopYear() {
+
     }
 
     @Override

@@ -13,6 +13,7 @@ import com.tsoft.civilization.util.Point;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Constructor;
+import java.util.stream.Collectors;
 
 @Slf4j
 public abstract class AbstractTile {
@@ -157,6 +158,7 @@ public abstract class AbstractTile {
     // Returns passing (or flying) cost for attacker's missile
     public int getMissilePastCost(HasCombatStrength attacker) {
         int passCost = MissileTilePastCostTable.get(attacker, this);
+
         if (!terrainFeatures.isEmpty()) {
             // start from last (i.e. on top) feature
             for (int i = terrainFeatures.size() - 1; i >= 0; i --) {
@@ -189,6 +191,8 @@ public abstract class AbstractTile {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName();
+        String features = terrainFeatures.isEmpty() ? "" :
+            "[" + terrainFeatures.stream().map(e -> e.getClass().getSimpleName()).collect(Collectors.joining(", ")) + "]";
+        return getClass().getSimpleName() + location + features;
     }
 }

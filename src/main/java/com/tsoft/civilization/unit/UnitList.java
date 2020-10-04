@@ -5,6 +5,7 @@ import com.tsoft.civilization.util.Point;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class UnitList<E extends AbstractUnit> implements Iterable<E> {
     private List<E> units = new ArrayList<>();
@@ -31,6 +32,10 @@ public class UnitList<E extends AbstractUnit> implements Iterable<E> {
     @Override
     public Iterator<E> iterator() {
         return units.iterator();
+    }
+
+    public Stream<E> stream() {
+        return units.stream();
     }
 
     public E getAny() {

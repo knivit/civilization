@@ -110,7 +110,7 @@ public class AttackActionTest {
         c2.units().addUnit(foreignWarriors2, new Point(4, 2));
         Archers foreignArchers1 = UnitFactory.newInstance(Archers.CLASS_UUID);
         c2.units().addUnit(foreignArchers1, new Point(1, 3));
-        City foreignCity = new City(c2, new Point(2, 3));
+        City foreignCity = c2.createCity(new Point(2, 3));
         Archers foreignArchers2 = UnitFactory.newInstance(Archers.CLASS_UUID);
         c2.units().addUnit(foreignArchers2, new Point(3, 3));
 
@@ -140,20 +140,20 @@ public class AttackActionTest {
         assertEquals(7, foreignWarriors2.getCombatStrength().getStrength());
 
         // next step to be able to strike again
-        world.step();
+        world.move();
 
         // attack the foreign warriors again
         assertEquals(AttackActionResults.TARGET_DESTROYED, AttackAction.attack(archers, foreignWarriors2.getLocation()));
         assertEquals(0, archers.getPassScore());
 
         // next step
-        world.step();
+        world.move();
 
         // attack the second line - archers
         assertEquals(AttackActionResults.ATTACKED, AttackAction.attack(archers, foreignArchers1.getLocation()));
 
         // next step
-        world.step();
+        world.move();
 
         // attack the second line - foreign city
         assertEquals(AttackActionResults.ATTACKED, AttackAction.attack(archers, foreignCity.getLocation()));
@@ -181,7 +181,7 @@ public class AttackActionTest {
         world.setCivilizationsRelations(c1, c2, CivilizationsRelations.WAR);
 
         // our forces
-        City city = new City(c1, new Point(2, 0));
+        City city = c1.createCity(new Point(2, 0));
         Warriors warriors1 = UnitFactory.newInstance(Warriors.CLASS_UUID);
         c1.units().addUnit(warriors1, new Point(4, 2));
         Warriors warriors2 = UnitFactory.newInstance(Warriors.CLASS_UUID);
@@ -192,7 +192,7 @@ public class AttackActionTest {
         c1.units().addUnit(warriors4, new Point(5, 4));
 
         // foreign forces
-        City foreignCity = new City(c2, new Point(4, 3));
+        City foreignCity = c2.createCity(new Point(4, 3));
         foreignCity.getCombatStrength().setStrength(30);
         Warriors foreignWarriors = UnitFactory.newInstance(Warriors.CLASS_UUID);
         c2.units().addUnit(foreignWarriors, new Point(4, 3));

@@ -53,7 +53,7 @@ public class Year {
         return INFORMATION_ERA;
     }
 
-    public Year step() {
+    public Year nextYear() {
         int nextValue;
         if (value < -2000) nextValue = value + 150; else
         if (value < -1000) nextValue = value + 120; else

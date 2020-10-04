@@ -32,12 +32,13 @@ public class GetBuildingStatusTest {
     @Test
     public void getJSONForMyCityBuilding() {
         MockWorld world = MockWorld.newSimpleWorld();
+        Worlds.add(world);
+
         Civilization c1 = world.createCivilization(RUSSIA);
-        City city1 = new City(c1, new Point(2, 0));
+        City city1 = c1.createCity(new Point(2, 0));
 
         ClientSession session = Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
-        Worlds.add(world);
-        session.setWorldAndCivilizationIds(c1);
+        session.setActiveCivilization(c1);
 
         Request request = MockRequest.newInstance("building", city1.getBuildings().findByClassUuid(Palace.CLASS_UUID).getId());
 
@@ -48,14 +49,14 @@ public class GetBuildingStatusTest {
     @Test
     public void getJSONForForeignCityBuilding() {
         MockWorld world = MockWorld.newSimpleWorld();
-        Civilization c1 = world.createCivilization(RUSSIA);
+        Worlds.add(world);
 
+        Civilization c1 = world.createCivilization(RUSSIA);
         Civilization c2 = world.createCivilization(AMERICA);
-        City city2 = new City(c2, new Point(2, 0));
+        City city2 = c2.createCity(new Point(2, 0));
 
         ClientSession session = Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
-        Worlds.add(world);
-        session.setWorldAndCivilizationIds(c1);
+        session.setActiveCivilization(c1);
 
         Request request = MockRequest.newInstance("building", city2.getBuildings().findByClassUuid(Palace.CLASS_UUID).getId());
 

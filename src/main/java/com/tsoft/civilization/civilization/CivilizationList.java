@@ -8,6 +8,7 @@ import com.tsoft.civilization.util.Point;
 
 import java.util.*;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 public class CivilizationList implements Iterable<Civilization> {
     private final List<Civilization> civilizations = new ArrayList<>();
@@ -25,6 +26,10 @@ public class CivilizationList implements Iterable<Civilization> {
     @Override
     public Iterator<Civilization> iterator() {
         return civilizations.listIterator();
+    }
+
+    public Stream<Civilization> stream() {
+        return civilizations.stream();
     }
 
     private void checkIsUnmodifiable() {

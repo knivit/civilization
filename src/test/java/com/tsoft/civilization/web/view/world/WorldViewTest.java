@@ -31,7 +31,7 @@ public class WorldViewTest {
         Civilization c1 = world.createCivilization(RUSSIA);
 
         // a city with two units in it
-        City city1 = new City(c1, new Point(0, 0));
+        City city1 = c1.createCity(new Point(0, 0));
         Warriors warriors = UnitFactory.newInstance(Warriors.CLASS_UUID);
         c1.units().addUnit(warriors, new Point(0, 0));
         Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);

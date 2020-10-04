@@ -24,7 +24,7 @@ public class BuildUnitActionTest {
     public void failToBuildUnitNoTechnology() {
         MockWorld world = MockWorld.newSimpleWorld();
         Civilization civilization = world.createCivilization(RUSSIA);
-        City city = new City(civilization, new Point(2, 0));
+        City city = civilization.createCity(new Point(2, 0));
 
         assertEquals(CityActionResults.WRONG_ERA_OR_TECHNOLOGY, BuildUnitAction.buildUnit(city, Archers.CLASS_UUID));
     }
@@ -35,7 +35,7 @@ public class BuildUnitActionTest {
         Civilization civilization = world.createCivilization(RUSSIA);
         civilization.addTechnology(Technology.ARCHERY);
 
-        City city = new City(civilization, new Point(2, 0));
+        City city = civilization.createCity(new Point(2, 0));
         city.setPassScore(1);
         assertTrue(SupplyMock.equals("F1 P3 G3 S4 C1 H0 U1 O1", civilization.calcSupply()));
 
@@ -46,12 +46,12 @@ public class BuildUnitActionTest {
         // Wait till it builds
         int neededSteps = Archers.STUB.getProductionCost() / 3 + 1;
         for (int i = 0; i < neededSteps; i ++) {
-            world.step();
+            world.move();
 
             assertNotNull(city.getConstruction().getObject());
             assertEquals(0, civilization.units().size());
         }
-        world.step();
+        world.move();
 
         assertNull(city.getConstruction());
         assertEquals(1, civilization.units().size());

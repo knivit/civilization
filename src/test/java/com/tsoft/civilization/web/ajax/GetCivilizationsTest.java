@@ -35,7 +35,7 @@ public class GetCivilizationsTest {
 
         ClientSession session = Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
         Worlds.add(world);
-        session.setWorldAndCivilizationIds(c1);
+        session.setActiveCivilization(c1);
 
         Request request = MockRequest.newInstance();
 

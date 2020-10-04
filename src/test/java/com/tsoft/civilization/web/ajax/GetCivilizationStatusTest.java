@@ -40,11 +40,11 @@ public class GetCivilizationStatusTest {
         c1.units().addUnit(workers, new Point(2, 0));
         Warriors warriors = UnitFactory.newInstance(Warriors.CLASS_UUID);
         c1.units().addUnit(warriors, new Point(2, 1));
-        City city1 = new City(c1, new Point(2, 2));
+        City city1 = c1.createCity(new Point(2, 2));
 
         ClientSession session = Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
         Worlds.add(world);
-        session.setWorldAndCivilizationIds(c1);
+        session.setActiveCivilization(c1);
 
         Request request = MockRequest.newInstance("civilization", c1.getId());
 
@@ -63,11 +63,11 @@ public class GetCivilizationStatusTest {
         c2.units().addUnit(workers, new Point(2, 0));
         Warriors warriors = UnitFactory.newInstance(Warriors.CLASS_UUID);
         c2.units().addUnit(warriors, new Point(2, 1));
-        City city1 = new City(c2, new Point(2, 2));
+        City city1 = c2.createCity(new Point(2, 2));
 
         ClientSession session = Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
         Worlds.add(world);
-        session.setWorldAndCivilizationIds(c1);
+        session.setActiveCivilization(c1);
 
         Request mockRequest = MockRequest.newInstance("civilization", c1.getId());
 

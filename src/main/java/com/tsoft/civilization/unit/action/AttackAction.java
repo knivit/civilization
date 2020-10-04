@@ -130,16 +130,16 @@ public class AttackAction {
 
     private static ActionAbstractResult attackTarget(HasCombatStrength attacker, HasCombatStrength target, int strikeStrength) {
         World world = attacker.getCivilization().getWorld();
-        int unitStrength = attacker.getCombatStrength().getStrength();
+        int attackerStrength = attacker.getCombatStrength().getStrength();
         int targetStrength = target.getCombatStrength().getStrength();
+
+        // before the attack calculate target's backfire strength
         int targetBackFireStrength = attacker.getCombatStrength().calcTargetBackFireStrength(target);
 
         // decrease target's strength
         // take into account target's defense experience
         strikeStrength -= target.getCombatStrength().getDefenseExperience();
         if (strikeStrength <= 0) strikeStrength = 1;
-
-        boolean isTargetAlive= false;
         targetStrength -= strikeStrength;
 
         // a ranged attack can't destroy a city
@@ -149,40 +149,32 @@ public class AttackAction {
             }
         }
 
+        // see is the target destroyed
+        boolean isTargetAlive;
         if (targetStrength <= 0) {
-            Point location = target.getLocation();
-
-            if (attacker.getUnitCategory().isRanged()) {
-                // if the attacker is a ranged unit
-                // the destroy the target only
-                target.destroyedBy(attacker, false);
-            } else {
-                // if attacker is a melee unit
-                // then destroy all units on that location
-                target.destroyedBy(attacker, true);
-
-                // second, move the attacker there
-                ((AbstractUnit)attacker).moveTo(location);
-            }
+            destroyTarget(attacker, target);
+            isTargetAlive = false;
         } else {
             target.getCombatStrength().setStrength(targetStrength);
             target.getCombatStrength().addDefenseExperience(1);
             isTargetAlive = true;
         }
 
-        // is the attacker was destroyed during the attack ?
-        boolean isAttackerAlive = false;
-        unitStrength -= targetBackFireStrength;
+        // the target backfired the attacker
+        attackerStrength -= targetBackFireStrength;
 
         // fighting units can't be destroyed simultaneously
-        if (unitStrength <= 0 && !isTargetAlive) {
-            unitStrength = 1;
+        if (attackerStrength <= 0 && !isTargetAlive) {
+            attackerStrength = 1;
         }
 
-        if (unitStrength <= 0) {
+        // see is the attacked destroyed
+        boolean isAttackerAlive;
+        if (attackerStrength <= 0) {
             attacker.destroyedBy(target, false);
+            isAttackerAlive = false;
         } else {
-            attacker.getCombatStrength().setStrength(unitStrength);
+            attacker.getCombatStrength().setStrength(attackerStrength);
             attacker.getCombatStrength().addAttackExperience(2);
             isAttackerAlive = true;
         }
@@ -203,6 +195,23 @@ public class AttackAction {
         }
 
         return AttackActionResults.ATTACKER_IS_DESTROYED_DURING_ATTACK;
+    }
+
+    private static void destroyTarget(HasCombatStrength attacker, HasCombatStrength target) {
+        Point location = target.getLocation();
+
+        if (attacker.getUnitCategory().isRanged()) {
+            // if the attacker is a ranged unit
+            // the destroy the target only
+            target.destroyedBy(attacker, false);
+        } else {
+            // if attacker is a melee unit
+            // then destroy all units on that location
+            target.destroyedBy(attacker, true);
+
+            // second, move the attacker there
+            ((AbstractUnit)attacker).moveTo(location);
+        }
     }
 
     // Find out all targets to attack
@@ -228,7 +237,7 @@ public class AttackAction {
 
         for (HasCombatStrength target : targetsAround) {
             Civilization otherCivilization = target.getCivilization();
-            if (!myCivilization.equals(otherCivilization) && world.isWar(myCivilization, otherCivilization)) {
+            if (world.isWar(myCivilization, otherCivilization)) {
                 int missileStrength = getMissileStrength(attacker, target);
                 if (missileStrength > 0) {
                     targets.add(target);
@@ -246,9 +255,11 @@ public class AttackAction {
         // Add foreign units and cities if its civilization is in war with our
         List<HasCombatStrength> targetsAround = getPossibleTargetsAround(attacker, 1);
         Civilization myCivilization = attacker.getCivilization();
+        World world = myCivilization.getWorld();
+
         for (HasCombatStrength target : targetsAround) {
             // check there is a war
-            if (!attacker.getCivilization().getWorld().isWar(myCivilization, target.getCivilization())) {
+            if (!world.isWar(myCivilization, target.getCivilization())) {
                 continue;
             }
 

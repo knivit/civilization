@@ -44,7 +44,7 @@ public class JoinWorld extends AbstractAjaxRequest {
         Civilization civilization = world.createCivilization(notUsed.get(random));
         civilization.units().addFirstUnits();
 
-        Sessions.getCurrent().setWorldAndCivilizationIds(civilization);
+        Sessions.getCurrent().setActiveCivilization(civilization);
         return new JsonResponse(ResponseCode.OK, "");
     }
 }

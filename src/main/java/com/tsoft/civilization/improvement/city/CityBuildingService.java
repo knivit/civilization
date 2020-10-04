@@ -9,6 +9,8 @@ import com.tsoft.civilization.improvement.CanBeBuilt;
 import com.tsoft.civilization.world.economic.Supply;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Objects;
+
 @Slf4j
 public class CityBuildingService {
     private final City city;
@@ -21,8 +23,10 @@ public class CityBuildingService {
 
     public CityBuildingService(City city) {
         this.city = city;
+    }
 
-        if (city.getCivilization().cities().getCities().size() == 1) {
+    public void addFirstBuilding(boolean isCapital) {
+        if (isCapital) {
             AbstractBuilding palace = BuildingFactory.newInstance(Palace.CLASS_UUID, city);
             add(palace); // A capital
         } else {
@@ -44,6 +48,8 @@ public class CityBuildingService {
     }
 
     public void remove(AbstractBuilding building) {
+        Objects.requireNonNull(building, "building can't be null");
+
         destroyedBuildings.add(building);
         buildings.remove(building);
     }
@@ -73,10 +79,12 @@ public class CityBuildingService {
         return supply;
     }
 
-    // Buildings and units construction
-    public Supply step(Supply citySupply) {
+    public void startYear() {
         destroyedBuildings = new BuildingList();
+    }
 
+    // Buildings and units construction
+    public Supply move(Supply citySupply) {
         if (construction == null) {
             log.debug("No construction is in progress");
             return citySupply;
@@ -99,5 +107,9 @@ public class CityBuildingService {
         }
 
         return citySupply;
+    }
+
+    public void stopYear() {
+
     }
 }

@@ -103,7 +103,7 @@ public class TilesMap {
     // Get the locations around the given location within the radius
     // The point itself doesn't included
     public ArrayList<Point> getLocationsAround(Point location, int radius) {
-        ArrayList<Point> locations = new ArrayList<Point>();
+        ArrayList<Point> locations = new ArrayList<>();
         if (radius == 0) {
             return locations;
         }
@@ -112,7 +112,7 @@ public class TilesMap {
         // define the corners, their order must be clockwise, i.e. for SIX_TILES
         // (Left, Up) -> (Right, Up) -> (Right, Zero) -> (Right, Down) -> (Left, Down) -> (Left, Zero)
         ArrayList<? extends AbstractDir> dirs = mapType.getDir().getDirs(location.getY());
-        ArrayList<Point> corners = new ArrayList<Point>();
+        ArrayList<Point> corners = new ArrayList<>();
         for (AbstractDir dir : dirs) {
             Point cornerLocation = addDirToLocation(location, dir);
             corners.add(cornerLocation);

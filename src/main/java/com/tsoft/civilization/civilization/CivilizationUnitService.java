@@ -150,16 +150,6 @@ public class CivilizationUnitService {
         return goldExpenses;
     }
 
-    public void resetPassScore() {
-        for (AbstractUnit unit : units) {
-            unit.step();
-        }
-    }
-
-    public void clearDestroyedUnits() {
-        destroyedUnits = new UnitList<>();
-    }
-
     // units keeping
     public Supply getSupply() {
         Supply supply = Supply.EMPTY_SUPPLY;
@@ -169,6 +159,19 @@ public class CivilizationUnitService {
             supply = Supply.builder().gold(-unitKeepingGold).build();
         }
         return supply;
+    }
+
+    public void startYear() {
+        destroyedUnits = new UnitList<>();
+        units.stream().forEach(AbstractUnit::startYear);
+    }
+
+    public void move() {
+        units.stream().forEach(AbstractUnit::move);
+    }
+
+    public void stopYear() {
+        units.stream().forEach(AbstractUnit::stopYear);
     }
 
 }

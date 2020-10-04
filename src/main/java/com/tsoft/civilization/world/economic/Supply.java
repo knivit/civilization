@@ -25,6 +25,14 @@ public class Supply {
     private final int greatScientist;
 
     public Supply add(Supply other) {
+        return add(other, true);
+    }
+
+    public Supply addWithoutPopulation(Supply other) {
+        return add(other, false);
+    }
+
+    private Supply add(Supply other, boolean sumPopulation) {
         return Supply.builder()
             .food(food + other.food)
             .production(production + other.production)
@@ -33,7 +41,7 @@ public class Supply {
             .culture(culture + other.culture)
             .happiness(happiness + other.happiness)
             .unhappiness(unhappiness + other.unhappiness)
-            .population(population + other.population)
+            .population(sumPopulation ? population + other.population : other.population)
 
             .greatArtist(greatArtist + other.greatArtist)
             .greatMusician(greatMusician + other.greatMusician)

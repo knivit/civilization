@@ -6,6 +6,7 @@ import com.tsoft.civilization.util.Point;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CityList implements Iterable<City> {
     private List<City> cities = new ArrayList<>();
@@ -32,6 +33,10 @@ public class CityList implements Iterable<City> {
     @Override
     public Iterator<City> iterator() {
         return cities.iterator();
+    }
+
+    public Stream<City> stream() {
+        return cities.stream();
     }
 
     private void checkIsUnmodifiable() {
@@ -77,6 +82,7 @@ public class CityList implements Iterable<City> {
     }
 
     public City getCityById(String cityId) {
+        Objects.requireNonNull(cityId, "cityId can't be null");
         return cities.stream().filter(e -> e.getId().equals(cityId)).findAny().orElse(null);
     }
 

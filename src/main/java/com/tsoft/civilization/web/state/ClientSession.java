@@ -8,10 +8,10 @@ import java.util.UUID;
 
 public class ClientSession {
     // Client-server data
-    private String sessionId;
-    private String ip;
-    private String userAgent;
-    private Date createdTime;
+    private final String sessionId;
+    private final String ip;
+    private final String userAgent;
+    private final Date createdTime;
     private Date lastRequestTime;
     private int requestCount;
     private long receivedBytes;
@@ -58,7 +58,7 @@ public class ClientSession {
         return null;
     }
 
-    public void setWorldAndCivilizationIds(Civilization civilization) {
+    public void setActiveCivilization(Civilization civilization) {
         civilizationId = civilization.getId();
         worldId = civilization.getWorld().getId();
     }

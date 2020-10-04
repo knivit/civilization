@@ -25,7 +25,10 @@ public class BuildCityAction {
             return result;
         }
 
-        City city = new City(settlers.getCivilization(), settlers.getLocation());
+        Civilization civilization = settlers.getCivilization();
+        Point location = settlers.getLocation();
+        City city = civilization.createCity(location);
+
         settlers.destroyedBy(null, false);
 
         return SettlersActionResults.CITY_BUILT;
