@@ -14,7 +14,7 @@ public class BuildUnitAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     public static ActionAbstractResult buildUnit(City city, String unitClassUuid) {
-        AbstractUnit unit = UnitFactory.createUnit(unitClassUuid);
+        AbstractUnit unit = UnitFactory.newInstance(unitClassUuid);
         ActionAbstractResult result = canBuildUnit(city, unit);
         if (result.isFail()) {
             return result;
@@ -57,7 +57,7 @@ public class BuildUnitAction {
     }
 
     public static StringBuilder getHtml(City city, String unitClassUuid) {
-        AbstractUnit unit = UnitFactory.createUnit(unitClassUuid);
+        AbstractUnit unit = UnitFactory.newInstance(unitClassUuid);
         if (canBuildUnit(city, unit).isFail()) {
             return null;
         }

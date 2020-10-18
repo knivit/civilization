@@ -53,7 +53,7 @@ public class GetCivilizations extends AbstractAjaxRequest {
                 "$imageSrc", civilization.getView().getStatusImageSrc(),
                 "$civilizationId", civilization.getId(),
                 "$civilizationName", civilization.getView().getLocalizedCivilizationName(),
-                "$relations", (relations == null ? "" : relations.getDesription().toString())
+                "$relations", (relations == null ? "" : relations.getDescription().toString())
             ));
         }
 

@@ -16,7 +16,6 @@ public class CivilizationsRelations {
 
     public CivilizationsRelations(int state) {
         assert (state >= WAR_STATE && state <= FRIENDS_STATE) : "Wrong state = " + state + ". It must be in [-50..50]";
-
         this.state = state;
     }
 
@@ -36,7 +35,7 @@ public class CivilizationsRelations {
         return WAR.equals(this);
     }
 
-    public L10nMap getDesription() {
+    public L10nMap getDescription() {
         if (state == WAR_STATE) return L10nWorld.WAR_RELATIONS_DESCRIPTION;
         if (state < NEUTRAL.state) return L10nWorld.BAD_RELATIONS_DESCRIPTION;
         if (state == NEUTRAL.state) return L10nWorld.NEUTRAL_RELATIONS_DESCRIPTION;
@@ -63,7 +62,7 @@ public class CivilizationsRelations {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         sb.append("CivilizationsRelations");
         sb.append("{state=").append(state);
         sb.append('}');

@@ -7,6 +7,7 @@ import com.tsoft.civilization.L10n.L10nWorld;
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.BuildingFactory;
 import com.tsoft.civilization.combat.HasCombatStrength;
+import com.tsoft.civilization.improvement.ImprovementFactory;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.tile.TilesMap;
@@ -213,7 +214,8 @@ public class Civilization {
     public City createCity(Point location) {
         L10nMap cityName = cityService.findCityName();
         boolean isCapital = cityService.size() == 0;
-        City city = new City(this, cityName, location, isCapital);
+        City city = ImprovementFactory.newInstance(City.CLASS_UUID, this, location);
+        city.init(cityName, isCapital);
         cityService.addCity(city);
 
         Event event = new Event(Event.INFORMATION, city, L10nCity.FOUNDED_SETTLERS, cityName);

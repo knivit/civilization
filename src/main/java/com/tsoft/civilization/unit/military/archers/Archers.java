@@ -25,7 +25,6 @@ import java.util.UUID;
  */
 public class Archers extends AbstractUnit {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
-    public static final Archers STUB = new Archers();
 
     private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
             .setMeleeAttackStrength(5)

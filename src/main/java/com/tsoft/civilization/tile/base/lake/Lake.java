@@ -7,6 +7,8 @@ import com.tsoft.civilization.world.economic.Supply;
 import java.util.UUID;
 
 /**
+ * Lake: A body of water inside a landmass. It consists of one to ten water tiles that are enclosed by land tiles on all sides.
+ * Note that if more water tiles are enclosed (including some ocean tiles), they are considered an "inner sea" and not a lake!
  * Basic Production: 2 Food, 1 Gold
  * Movement Cost: 1
  */

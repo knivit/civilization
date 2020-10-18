@@ -4,6 +4,7 @@ import com.tsoft.civilization.unit.civil.greatgeneral.GreatGeneral;
 import com.tsoft.civilization.util.Point;
 
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -18,7 +19,7 @@ public class UnitList<E extends AbstractUnit> implements Iterable<E> {
         this.units = units;
     }
 
-    public List<E> getList() {
+    public List<E> getListCopy() {
         return new ArrayList<>(units);
     }
 
@@ -78,10 +79,8 @@ public class UnitList<E extends AbstractUnit> implements Iterable<E> {
         return units.size();
     }
 
-    public UnitList<E> findByClassUuid(String classUuid) {
-        UnitList<E> list = new UnitList<>();
-        units.stream().filter(u -> u.getClassUuid().equals(classUuid)).forEach(list::add);
-        return list;
+    public UnitList<?> findByClassUuid(String classUuid) {
+        return filter(u -> u.getClassUuid().equals(classUuid));
     }
 
     public int getUnitClassCount(Class<? extends AbstractUnit> unitClass) {
@@ -89,25 +88,15 @@ public class UnitList<E extends AbstractUnit> implements Iterable<E> {
     }
 
     public AbstractUnit findUnitByUnitKind(UnitCategory unitCategory) {
-        return units.stream().filter(e -> e.getUnitCategory().equals(unitCategory)).findFirst().orElse(null);
+        return findAny(e -> e.getUnitCategory().equals(unitCategory));
     }
 
     public AbstractUnit findFirstMilitaryUnit() {
-        for (AbstractUnit unit : units) {
-            if (unit.getUnitCategory().isMilitary()) {
-                return unit;
-            }
-        }
-        return null;
+        return findAny(e -> e.getUnitCategory().isMilitary());
     }
 
     public AbstractUnit findFirstCivilUnit() {
-        for (AbstractUnit unit : units) {
-            if (!unit.getUnitCategory().isMilitary()) {
-                return unit;
-            }
-        }
-        return null;
+        return findAny(e -> !e.getUnitCategory().isMilitary());
     }
 
     public int getMilitaryCount() {
@@ -127,30 +116,33 @@ public class UnitList<E extends AbstractUnit> implements Iterable<E> {
     }
 
     public AbstractUnit getUnitById(String unitId) {
-        return units.stream().filter(e -> e.getId().equals(unitId)).findAny().orElse(null);
+        return findAny(e -> e.getId().equals(unitId));
     }
 
     public UnitList<?> getUnitsAtLocations(Collection<Point> locations) {
-        if (locations == null || locations.isEmpty()) {
-            return new UnitList<>();
-        }
-
-        UnitList<?> unitsAtLocations = new UnitList<>();
-        for (AbstractUnit unit : units) {
-            if (locations.contains(unit.getLocation())) {
-                unitsAtLocations.add(unit);
-            }
-        }
-        return unitsAtLocations;
+        return (locations == null || locations.isEmpty()) ?
+            new UnitList<>() : filter(e -> locations.contains(e.getLocation()));
     }
 
     public UnitList<?> getUnitsWithActionsAvailable() {
-        UnitList<?> units = new UnitList<>();
+        return filter(AbstractUnit::isActionAvailable);
+    }
+
+    public UnitList<?> filter(Predicate<AbstractUnit> cond) {
+        UnitList<?> list = new UnitList<>();
         for (AbstractUnit unit : units) {
-            if (!unit.isDestroyed() && unit.getPassScore() > 0) {
-                units.add(unit);
+            if (cond.test(unit)) {
+                list.add(unit);
             }
         }
-        return units;
+        return list;
     }
+
+    public AbstractUnit findAny(Predicate<AbstractUnit> cond) {
+        return units.stream()
+            .filter(cond)
+            .findAny()
+            .orElse(null);
+    }
+
 }

@@ -3,7 +3,7 @@ package com.tsoft.civilization.unit.civil.greatartist;
 import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.unit.AbstractUnitView;
 
-public class GreatArtistView extends AbstractUnitView {
+public class GreatArtistView extends AbstractUnitView<GreatArtist> {
     @Override
     public String getLocalizedName() {
         return L10nUnit.GREAT_ARTIST_NAME.getLocalized();

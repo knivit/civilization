@@ -37,7 +37,7 @@ public class Citizen {
 
     private final String id = UUID.randomUUID().toString();
 
-    private City city;
+    private final City city;
     private Point location;
     private SpecialistType specialistType;
 

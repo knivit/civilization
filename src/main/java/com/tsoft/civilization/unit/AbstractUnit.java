@@ -202,6 +202,10 @@ public abstract class AbstractUnit implements HasCombatStrength, CanBeBuilt {
         civilization.units().removeUnit(this);
     }
 
+    public boolean isActionAvailable() {
+        return !isDestroyed() && (getPassScore() > 0);
+    }
+
     @Override
     public String toString() {
         return getClass().getSimpleName() + "{" +

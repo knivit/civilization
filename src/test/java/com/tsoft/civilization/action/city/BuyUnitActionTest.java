@@ -5,6 +5,7 @@ import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.action.BuyUnitAction;
 import com.tsoft.civilization.improvement.city.action.CityActionResults;
 import com.tsoft.civilization.technology.Technology;
+import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.unit.military.archers.Archers;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
@@ -35,7 +36,8 @@ public class BuyUnitActionTest {
         Civilization puppet = world.createCivilization(AMERICA);
 
         city.setPassScore(1);
-        civilization.giftReceived(puppet, Supply.builder().gold(Archers.STUB.getGoldCost()).build());
+        Archers archers = UnitFactory.newInstance(Archers.CLASS_UUID);
+        civilization.giftReceived(puppet, Supply.builder().gold(archers.getGoldCost()).build());
 
         assertEquals(CityActionResults.UNIT_WAS_BOUGHT, BuyUnitAction.buyUnit(city, Archers.CLASS_UUID));
     }

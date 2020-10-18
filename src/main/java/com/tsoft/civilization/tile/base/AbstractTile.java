@@ -191,8 +191,11 @@ public abstract class AbstractTile {
 
     @Override
     public String toString() {
-        String features = terrainFeatures.isEmpty() ? "" :
-            "[" + terrainFeatures.stream().map(e -> e.getClass().getSimpleName()).collect(Collectors.joining(", ")) + "]";
-        return getClass().getSimpleName() + location + features;
+        String features = terrainFeatures.stream().map(e -> e.getClass().getSimpleName()).collect(Collectors.joining(", "));
+        return getClass().getSimpleName() + location +
+            ", features=[" + features + "]" +
+            ", improvement=" + improvement +
+            ", luxury=" + luxury +
+            ", resource=" + resource;
     }
 }

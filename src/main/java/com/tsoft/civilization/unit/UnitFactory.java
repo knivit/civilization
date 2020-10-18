@@ -44,7 +44,7 @@ public final class UnitFactory {
         UNIT_CATALOG.put(Workers.CLASS_UUID, Workers::new);
     }
 
-    public static UnitList<?> getPossibleUnits(Civilization civilization) {
+    public static UnitList<?> getAvailableUnits(Civilization civilization) {
         UnitList<?> result = new UnitList<>();
 
         for (Supplier<AbstractUnit> supplier : UNIT_CATALOG.values()) {
@@ -57,7 +57,7 @@ public final class UnitFactory {
         return result;
     }
 
-    public static AbstractUnit createUnit(String unitClassUuid) {
+    private static AbstractUnit createUnit(String unitClassUuid) {
         Supplier<AbstractUnit> supplier = UNIT_CATALOG.get(unitClassUuid);
         if (supplier == null) {
             throw new IllegalArgumentException("Unknown unit classUuid = " + unitClassUuid);

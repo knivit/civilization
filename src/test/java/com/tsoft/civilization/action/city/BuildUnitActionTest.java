@@ -6,6 +6,7 @@ import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.action.BuildUnitAction;
 import com.tsoft.civilization.improvement.city.action.CityActionResults;
 import com.tsoft.civilization.technology.Technology;
+import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.unit.military.archers.Archers;
 import com.tsoft.civilization.util.Point;
@@ -44,7 +45,8 @@ public class BuildUnitActionTest {
         assertEquals(CityActionResults.UNIT_CONSTRUCTION_IS_STARTED, actionResult);
 
         // Wait till it builds
-        int neededSteps = Archers.STUB.getProductionCost() / 3 + 1;
+        Archers archers = UnitFactory.newInstance(Archers.CLASS_UUID);
+        int neededSteps = archers.getProductionCost() / 3 + 1;
         for (int i = 0; i < neededSteps; i ++) {
             world.move();
 

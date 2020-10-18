@@ -6,7 +6,7 @@ import java.util.List;
 public class UnitListService {
 
     public UnitList<?> sortByName(UnitList<?> units) {
-        List<? extends AbstractUnit> list = units.getList();
+        List<? extends AbstractUnit> list = units.getListCopy();
         list.sort(Comparator.comparing(e -> e.getView().getLocalizedName()));
         return new UnitList<>(list);
     }

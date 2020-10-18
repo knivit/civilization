@@ -58,6 +58,10 @@ public abstract class AbstractImprovement {
 
     @Override
     public String toString() {
-        return getClass().getName() + " {location=" + location + '}';
+        return getClass().getSimpleName() + '{' +
+            ((getCivilization() == null) ? "civilization=null" : getCivilization().toString()) +
+            ", name=" + ((getView() == null) ? "null" : getView().getLocalizedName()) +
+            ", location=" + location +
+        '}';
     }
 }

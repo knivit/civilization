@@ -21,8 +21,9 @@ import java.util.*;
 
 @Slf4j
 public class City extends AbstractImprovement implements HasCombatStrength {
-
     public static final String CLASS_UUID = UUID.randomUUID().toString();
+
+    private final Set<Point> locations = new HashSet<>();
 
     private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
             .setTargetBackFireStrength(5)
@@ -30,21 +31,21 @@ public class City extends AbstractImprovement implements HasCombatStrength {
             .setRangedAttackStrength(10)
             .setRangedAttackRadius(2);
 
-    private final CityView VIEW;
+    private CityView VIEW;
 
-    private final Set<Point> locations = new HashSet<>();
-
-    private final CityPopulationService populationService;
-    private final CityBuildingService buildingService;
+    private CityPopulationService populationService;
+    private CityBuildingService buildingService;
 
     private Supply citySupply;
 
     private CombatStrength combatStrength;
     private int passScore;
 
-    public City(Civilization civilization, L10nMap cityName, Point location, boolean isCapital) {
+    public City(Civilization civilization, Point location) {
         super(civilization, location);
+    }
 
+    public void init(L10nMap cityName, boolean isCapital) {
         // area
         locations.add(location);
         locations.addAll(getTilesMap().getLocationsAround(location, 1));
@@ -268,12 +269,12 @@ public class City extends AbstractImprovement implements HasCombatStrength {
     }
 
     public int getUnitProductionCost(String unitClassUuid) {
-        AbstractUnit unit = UnitFactory.createUnit(unitClassUuid);
+        AbstractUnit unit = UnitFactory.newInstance(unitClassUuid);
         return unit.getProductionCost();
     }
 
     public int getUnitBuyCost(String unitClassUuid) {
-        AbstractUnit unit = UnitFactory.createUnit(unitClassUuid);
+        AbstractUnit unit = UnitFactory.newInstance(unitClassUuid);
         return unit.getGoldCost();
     }
 

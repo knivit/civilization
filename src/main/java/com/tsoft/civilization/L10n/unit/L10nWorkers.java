@@ -21,6 +21,17 @@ public class L10nWorkers {
             .set("ru", "\u0425\u043e\u043b\u043c \u0431\u0443\u0434\u0435\u0442 \u0443\u0434\u0430\u043b\u0435\u043d. \u0422\u0435\u0445\u043d\u043e\u043b\u043e\u0433\u0438\u044f \u043e\u0431\u044b\u0447\u0438 \u0434\u043e\u043b\u0436\u043d\u0430 \u0431\u044b\u0442\u044c \u0438\u0441\u0441\u043b\u0435\u0434\u043e\u0432\u0430\u043d\u0430.");
 
     /** Actions */
+    public static L10nMap CAN_BUILD_IMPROVEMENT = new L10nMap()
+        .set("en", "Improvement %s can be built")
+        .set("ru", "Улучшение %s может быть построено");
+
+    public static L10nMap BUILDING_IMPROVEMENT = new L10nMap()
+        .set("en", "Building improvement %s")
+        .set("ru", "Строится улучшение %s");
+
+    public static L10nMap IMPROVEMENT_IS_BUILT = new L10nMap()
+        .set("en", "Improvement %s is built")
+        .set("ru", "Улучшение %s построено");
 
     public static L10nMap CAN_REMOVE_FOREST = new L10nMap()
             .set("en", "Forest can be removed")

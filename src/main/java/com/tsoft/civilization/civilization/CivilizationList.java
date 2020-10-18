@@ -53,21 +53,11 @@ public class CivilizationList implements Iterable<Civilization> {
     }
 
     public Civilization getCivilizationById(String civilizationId) {
-        for (Civilization civilization : civilizations) {
-            if (civilization.getId().equals(civilizationId)) {
-                return civilization;
-            }
-        }
-        return null;
+        return findAny(e -> e.getId().equals(civilizationId));
     }
 
     public Civilization getCivilizationOnTile(Point location) {
-        for (Civilization civilization : civilizations) {
-            if (civilization.cities().isHavingTile(location)) {
-                return civilization;
-            }
-        }
-        return null;
+        return findAny(e -> e.cities().isHavingTile(location));
     }
 
     public City getCityAtLocation(Point location) {
@@ -123,13 +113,11 @@ public class CivilizationList implements Iterable<Civilization> {
             return null;
         }
 
-        for (Civilization civilization : civilizations) {
-            AbstractUnit unit = civilization.units().getUnitById(unitId);
-            if (unit != null) {
-                return unit;
-            }
-        }
-        return null;
+        return civilizations.stream()
+            .map(e -> e.units().getUnitById(unitId))
+            .filter(Objects::nonNull)
+            .findAny()
+            .orElse(null);
     }
 
     public City getCityById(String cityId) {
@@ -137,13 +125,11 @@ public class CivilizationList implements Iterable<Civilization> {
             return null;
         }
 
-        for (Civilization civilization : civilizations) {
-            City city = civilization.cities().getCityById(cityId);
-            if (city != null) {
-                return city;
-            }
-        }
-        return null;
+        return civilizations.stream()
+            .map(e -> e.cities().getCityById(cityId))
+            .filter(Objects::nonNull)
+            .findAny()
+            .orElse(null);
     }
 
     public CivilizationList filter(Predicate<Civilization> cond) {
@@ -154,6 +140,13 @@ public class CivilizationList implements Iterable<Civilization> {
             }
         }
         return list;
+    }
+
+    public Civilization findAny(Predicate<Civilization> cond) {
+        return civilizations.stream()
+            .filter(cond)
+            .findAny()
+            .orElse(null);
     }
 
     public void sortByName() {

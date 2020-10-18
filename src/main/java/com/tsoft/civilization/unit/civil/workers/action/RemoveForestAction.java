@@ -20,7 +20,7 @@ public class RemoveForestAction {
         }
 
         AbstractTile tile = workers.getTile();
-        Forest forest = (Forest)tile.getFeature(Forest.class);
+        Forest forest = tile.getFeature(Forest.class);
         forest.addStrength(-1);
 
         return forest.isRemoved() ? WorkersActionResults.FOREST_IS_REMOVED : WorkersActionResults.REMOVING_FOREST;

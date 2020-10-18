@@ -49,12 +49,16 @@ public class CityPopulationService {
     }
 
     public void addCitizen() {
+        log.debug("Adding a citizen of City={}", city);
         Citizen citizen = new Citizen(city);
         Point location = findLocationForCitizen(getPopulationLocations());
 
         if (location != null) {
             citizen.setLocation(location);
             citizens.add(citizen);
+            log.debug("The citizen is placed on {}", city.getTilesMap().getTile(location));
+        } else {
+            log.debug("Can't place the citizen on a tile (no tiles found)");
         }
     }
 
