@@ -6,6 +6,7 @@ import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CitySupplyStrategy;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
+import com.tsoft.civilization.web.render.MapRender;
 import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.world.economic.SupplyMock;
 import com.tsoft.civilization.util.Point;
@@ -19,6 +20,8 @@ import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CivilizationScoreTest {
+    private static final MapRender mapRender = new MapRender(CivilizationScoreTest.class);
+
     @Test
     public void noCitiesScore() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
@@ -28,6 +31,7 @@ public class CivilizationScoreTest {
                 "1| . g .",
                 "2|. . . ",
                 "3| . . .");
+        mapRender.createSvg(map);
 
         MockWorld world = new MockWorld(map);
         Civilization c1 = world.createCivilization(RUSSIA);
@@ -45,6 +49,7 @@ public class CivilizationScoreTest {
                 "1| . g .",
                 "2|. . . ",
                 "3| . . .");
+        mapRender.createSvg(map);
 
         MockWorld world = new MockWorld(map);
         Civilization c1 = world.createCivilization(RUSSIA);
@@ -79,12 +84,13 @@ public class CivilizationScoreTest {
     @Test
     public void oneCityAllTypesOfTilesScore() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES, 3,
-                " |0 1 2 3 4 ", " |0 1 2 3 4 ", " |0 1 2 3 4 ",
-                "-+----------", "-+----------", "-+----------",
-                "0|. g d p . ", "0|. . . i . ", "0|. . . . . ",
-                "1| l g p s t", "1| . M . . .", "1| . . . . .",
-                "2|g g g g g ", "2|n f h h m ", "2|. . . f . ",
-                "3| . g p . .", "3| . j o . .", "3| . . . . .");
+            " |0 1 2 3 4 ", " |0 1 2 3 4 ", " |0 1 2 3 4 ",
+            "-+----------", "-+----------", "-+----------",
+            "0|. g d p . ", "0|. . . i . ", "0|. . . . . ",
+            "1| l g p s t", "1| . M . . .", "1| . . . . .",
+            "2|g g g g g ", "2|n f h h m ", "2|. . . f . ",
+            "3| . g p . .", "3| . j o . .", "3| . . . . .");
+        mapRender.createSvg(map); todo
 
         MockWorld world = new MockWorld(map);
         Civilization civilization = world.createCivilization(RUSSIA);
@@ -138,6 +144,7 @@ public class CivilizationScoreTest {
                 "1| g g .", "1| m f .",
                 "2|. g . ", "2|. n . ",
                 "3| . . .", "3| . . .");
+        mapRender.createSvg(map);
 
         MockWorld world = new MockWorld(map);
         Civilization c1 = world.createCivilization(RUSSIA);

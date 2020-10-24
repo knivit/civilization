@@ -7,12 +7,12 @@ import java.awt.*;
 public class HexagonRender {
 
     public void render(RenderContext context, Graphics g, int x, int y, Color color) {
-        int w = context.getTileWidth();
-        int h = context.getTileHeight();
         g.setColor(color);
 
-        g.fillPolygon(new int[] {x, x + w/2, x + w, x + w, x + w/2, x},
-            new int[] {r(y + h*2.0/3.0), y + h, r(y + h*2.0/3.0), r(y + h*1.0/3.0), y, r(y + h*1.0/3.0)}, 6);
+        float[] ox = context.getHexBordersX();
+        float[] oy = context.getHexBordersY();
+        g.fillPolygon(new int[] { r(x + ox[0]), r(x + ox[1]), r(x + ox[2]), r(x + ox[3]), r(x + ox[4]), r(x + ox[5]) },
+            new int[] { r(y + oy[0]), r(y + oy[1]), r(y + oy[2]), r(y + oy[3]), r(y + oy[4]), r(y + oy[5]) }, 6);
 /*
         if (config.isShowTileBorders) {
             drawMap.ctx.strokeStyle = "#ffffff";
@@ -21,7 +21,7 @@ public class HexagonRender {
         }*/
     }
 
-    private int r(double val) {
+    private int r(float val) {
         return (int)(Math.round(val));
     }
 }

@@ -8,6 +8,7 @@ import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.unit.military.warriors.Warriors;
 import com.tsoft.civilization.util.Point;
+import com.tsoft.civilization.web.render.MapRender;
 import com.tsoft.civilization.world.generator.WorldGeneratorService;
 import org.junit.jupiter.api.Test;
 
@@ -19,6 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CivilizationTest {
 
+    private static final MapRender mapRender = new MapRender(CivilizationTest.class);
+
     @Test
     public void getCivilizationsStartPoints1() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
@@ -28,6 +31,7 @@ public class CivilizationTest {
             "1| . g .",
             "2|. . . ",
             "3| . . .");
+        mapRender.createSvg(map);
 
         List<Point> locations = WorldGeneratorService.getCivilizationsStartLocations(1, map);
         assertEquals(1, locations.size());
@@ -43,6 +47,7 @@ public class CivilizationTest {
             "1| . . .",
             "2|. . g ",
             "3| . . .");
+        mapRender.createSvg(map);
 
         List<Point> locations = WorldGeneratorService.getCivilizationsStartLocations(2, map);
 
@@ -62,6 +67,7 @@ public class CivilizationTest {
             "1| . g .",
             "2|. g . ",
             "3| . . .");
+        mapRender.createSvg(map);
 
         MockWorld world = new MockWorld(map);
         Civilization civilization = world.createCivilization(RUSSIA);
@@ -85,6 +91,7 @@ public class CivilizationTest {
             "1| . g .",
             "2|. . . ",
             "3| . . .");
+        mapRender.createSvg(map);
 
         MockWorld world = new MockWorld(map);
         Civilization civilization = world.createCivilization(RUSSIA);

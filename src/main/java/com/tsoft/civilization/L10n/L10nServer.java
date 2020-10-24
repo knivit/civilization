@@ -17,6 +17,10 @@ public class L10nServer {
         .set("en", "Invalid session")
         .set("ru", "\u041d\u0435\u0432\u0435\u0440\u043d\u0430\u044f \u0441\u0435\u0441\u0441\u0438\u044f");
 
+    public static L10nMap INVALID_REQUEST = new L10nMap()
+        .set("en", "Invalid request")
+        .set("ru", "Неверный запрос к серверу");
+
     public static L10nMap WORLD_NOT_FOUND = new L10nMap()
         .set("en", "World not found")
         .set("ru", "\u041a\u0430\u0440\u0442\u0430 \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u0430");

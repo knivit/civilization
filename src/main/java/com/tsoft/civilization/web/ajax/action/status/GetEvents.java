@@ -14,7 +14,10 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.event.Event;
 import com.tsoft.civilization.world.event.EventList;
 
+import static com.tsoft.civilization.L10n.L10nServer.INVALID_REQUEST;
+
 public class GetEvents extends AbstractAjaxRequest {
+
     @Override
     public Response getJson(Request request) {
         Civilization civilization = getMyCivilization();
@@ -23,7 +26,11 @@ public class GetEvents extends AbstractAjaxRequest {
         }
 
         // Get the year's index in World.years list
-        int stepNo = NumberUtil.parseInt(request.get("year"), civilization.getStartYear().getStepNo());
+        int stepNo = NumberUtil.parseInt(request.get("year"), -1);
+        if (stepNo == -1) {
+            return Response.newErrorInstance(INVALID_REQUEST);
+        }
+
         if (stepNo > civilization.getYear().getStepNo()) {
             stepNo = civilization.getStartYear().getStepNo();
         }
