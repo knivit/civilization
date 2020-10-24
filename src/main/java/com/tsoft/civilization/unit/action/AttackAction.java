@@ -6,6 +6,7 @@ import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrengthList;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityList;
+import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
@@ -21,6 +22,8 @@ import java.util.*;
 
 public class AttackAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
+
+    private static final TileService tileService = new TileService();
 
     public static ActionAbstractResult attack(HasCombatStrength attacker, Point location) {
         ActionAbstractResult result = canAttack(attacker);
@@ -100,7 +103,7 @@ public class AttackAction {
 
         for (Point loc : path) {
             AbstractTile tile = attacker.getCivilization().getTilesMap().getTile(loc);
-            missileStrength -= tile.getMissilePastCost(attacker);
+            missileStrength -= tileService.getMissilePastCost(attacker, tile);
             if (missileStrength <= 0) {
                 break;
             }

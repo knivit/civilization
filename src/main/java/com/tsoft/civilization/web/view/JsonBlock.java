@@ -8,7 +8,7 @@ public class JsonBlock {
     private int elementCount;
     private boolean isArray;
 
-    private StringBuilder buf = new StringBuilder();
+    private final StringBuilder buf = new StringBuilder();
     private final char quoteChar;
 
     public JsonBlock() {
@@ -36,14 +36,20 @@ public class JsonBlock {
         String valueStr = null;
         if (value != null) {
             valueStr = value.toString();
+            if (valueStr.contains("\n")) {
+                log.error("A new line character (\\n) can not be used as it breaks Server push notifications, name={}, value={}", name, value);
+                throw new IllegalArgumentException("A new line character (\\n) can not be used");
+            }
         }
+
         if ((valueStr != null) && (valueStr.length() > 1) && (valueStr.charAt(0) == '{')) {
             buf.append(valueStr);
         } else {
             buf.append(quoteChar);
-            buf.append(value == null ? "" : value.toString());
+            buf.append(valueStr == null ? "" : valueStr);
             buf.append(quoteChar);
         }
+
         paramCount ++;
     }
 
@@ -51,6 +57,7 @@ public class JsonBlock {
         if (paramCount > 0) {
             buf.append(",");
         }
+
         buf.append(quoteChar).append(name).append(quoteChar).append(":[");
         paramCount ++;
         elementCount = 0;
@@ -61,6 +68,7 @@ public class JsonBlock {
         if (elementCount > 0) {
             buf.append(",");
         }
+
         buf.append(value);
         elementCount ++;
     }

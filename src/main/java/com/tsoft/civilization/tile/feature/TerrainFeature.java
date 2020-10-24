@@ -52,6 +52,10 @@ public abstract class TerrainFeature {
         tile.addFeature(this);
     }
 
+    public AbstractTile getBaseTile() {
+        return tile;
+    }
+
     public boolean isBlockingTileSupply() {
         return false;
     }

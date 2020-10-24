@@ -18,6 +18,7 @@ import com.tsoft.civilization.world.event.Event;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 public class CivilizationCityService {
     private final Civilization civilization;
@@ -30,6 +31,18 @@ public class CivilizationCityService {
     public CivilizationCityService(Civilization civilization) {
         this.civilization = civilization;
         world = civilization.getWorld();
+    }
+
+    public Stream<City> stream() {
+        return cities.stream();
+    }
+
+    public CityList getCities() {
+        return cities.unmodifiableList();
+    }
+
+    public int size() {
+        return cities.size();
     }
 
     public void applyToAll(Consumer<City> fun) {
@@ -50,14 +63,6 @@ public class CivilizationCityService {
 
     public AbstractBuilding getBuildingById(String buildingId) {
         return cities.getBuildingById(buildingId);
-    }
-
-    public CityList getCities() {
-        return cities.unmodifiableList();
-    }
-
-    public int size() {
-        return cities.size();
     }
 
     public L10nMap findCityName() {

@@ -3,7 +3,7 @@ package com.tsoft.civilization.tile;
 import com.tsoft.civilization.util.Point;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -23,7 +23,7 @@ public class TileMapTest {
                 "7| . . . . . . . .");
 
         // round 1
-        ArrayList<Point> locations = map.getLocationsAround(new Point(3, 3), 1);
+        List<Point> locations = map.getLocationsAround(new Point(3, 3), 1);
 
         assertEquals(6, locations.size());
         assertEquals(new Point(3, 2), locations.get(0));
@@ -49,7 +49,7 @@ public class TileMapTest {
                 "7| . . . . . . . .");
 
         // round 2
-        ArrayList<Point> locations = map.getLocationsAround(new Point(3, 3), 2);
+        List<Point> locations = map.getLocationsAround(new Point(3, 3), 2);
 
         assertEquals(6 + 12, locations.size());
 
@@ -91,7 +91,7 @@ public class TileMapTest {
                 "7| . . . . . . . .");
 
         // round 3
-        ArrayList<Point> locations = map.getLocationsAround(new Point(3, 3), 3);
+        List<Point> locations = map.getLocationsAround(new Point(3, 3), 3);
 
         assertEquals(6 + 12 + 18, locations.size());
 

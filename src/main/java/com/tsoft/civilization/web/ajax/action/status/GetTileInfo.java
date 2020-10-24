@@ -3,6 +3,7 @@ package com.tsoft.civilization.web.ajax.action.status;
 import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.L10n.L10nTile;
 import com.tsoft.civilization.L10n.L10nWorld;
+import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.base.TilePassCostTable;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Format;
@@ -19,6 +20,9 @@ import com.tsoft.civilization.tile.base.AbstractTileView;
 import com.tsoft.civilization.civilization.Civilization;
 
 public class GetTileInfo extends AbstractAjaxRequest {
+
+    private static final TileService tileService = new TileService();
+
     @Override
     public Response getJson(Request request) {
         Civilization civilization = getMyCivilization();
@@ -93,7 +97,7 @@ public class GetTileInfo extends AbstractAjaxRequest {
         StringBuilder buf = new StringBuilder();
         UnitList<?> units = civilization.units().getUnits();
         for (AbstractUnit unit : units) {
-            int passCost = tile.getPassCost(unit);
+            int passCost = tileService.getPassCost(unit, tile);
             buf.append(Format.text(
                 "<tr>" +
                     "<td><button onclick=\"client.getUnitStatus({ col:'$unitCol', row:'$unitRow', unit:'$unit' })\">$unitName</button></td>" +

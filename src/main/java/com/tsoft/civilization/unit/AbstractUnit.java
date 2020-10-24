@@ -5,6 +5,7 @@ import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.combat.skill.AbstractSkill;
 import com.tsoft.civilization.improvement.CanBeBuilt;
+import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.util.Point;
@@ -57,6 +58,8 @@ public abstract class AbstractUnit implements HasCombatStrength, CanBeBuilt {
     public abstract boolean checkEraAndTechnology(Civilization civilization);
 
     protected abstract CombatStrength getBaseCombatStrength();
+
+    private final TileService tileService = new TileService();
 
     protected AbstractUnit() { }
 
@@ -153,7 +156,8 @@ public abstract class AbstractUnit implements HasCombatStrength, CanBeBuilt {
     public void moveTo(Point location) {
         setLocation(location);
 
-        int tilePassCost = getTilesMap().getTile(location).getPassCost(this);
+        AbstractTile tile = getTilesMap().getTile(location);
+        int tilePassCost = tileService.getPassCost(this, tile);
         passScore -= tilePassCost;
     }
 

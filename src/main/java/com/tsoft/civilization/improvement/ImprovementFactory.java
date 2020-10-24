@@ -1,6 +1,7 @@
 package com.tsoft.civilization.improvement;
 
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.farm.Farm;
 import com.tsoft.civilization.improvement.road.Road;
 import com.tsoft.civilization.util.Point;
@@ -20,6 +21,7 @@ public final class ImprovementFactory {
     private static final Map<String, BiFunction<Civilization, Point, AbstractImprovement>> IMPROVEMENT_CATALOG = new HashMap<>();
 
     static {
+        IMPROVEMENT_CATALOG.put(City.CLASS_UUID, City::new);
         IMPROVEMENT_CATALOG.put(Road.CLASS_UUID, Road::new);
         IMPROVEMENT_CATALOG.put(Farm.CLASS_UUID, Farm::new);
     }

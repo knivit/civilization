@@ -7,6 +7,7 @@ import com.tsoft.civilization.civilization.CivilizationsRelations;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityList;
 import com.tsoft.civilization.tile.MapType;
+import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
@@ -34,6 +35,8 @@ public class World {
 
     private final HashMap<Pair<Civilization>, CivilizationsRelations> relations = new HashMap<>();
     private final List<Year> years = new ArrayList<>();
+
+    private final TileService tileService = new TileService();
 
     public World(MapType mapType, int width, int height) {
         year = new Year(-3000);
@@ -135,7 +138,7 @@ public class World {
             }
         }
 
-        List<Point> possibleLocations = tilesMap.getTilesToStartCivilization();
+        List<Point> possibleLocations = tileService.getTilesToStartCivilization(tilesMap);
         possibleLocations.removeAll(busyLocations);
         if (possibleLocations.isEmpty()) {
             return null;
@@ -183,7 +186,7 @@ public class World {
         return civilizations.getUnitsAtLocations(locations, excludeCivilization);
     }
 
-    public ArrayList<Point> getLocationsAround(Point location, int radius) {
+    public List<Point> getLocationsAround(Point location, int radius) {
         return getTilesMap().getLocationsAround(location, radius);
     }
 
@@ -238,6 +241,7 @@ public class World {
     // Start a new year
     private void startYear() {
         years.add(year);
+        tilesMap.startYear();
         civilizations.forEach(Civilization::startYear);
 
         // add it to the history
@@ -250,6 +254,7 @@ public class World {
 
     private void stopYear() {
         civilizations.forEach(Civilization::stopYear);
+
         sendEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.NEW_YEAR_COMPLETE_EVENT, year.getValue()));
 
         year = year.nextYear();

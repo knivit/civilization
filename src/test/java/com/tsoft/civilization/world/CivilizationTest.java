@@ -11,24 +11,25 @@ import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.generator.WorldGeneratorService;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CivilizationTest {
+
     @Test
     public void getCivilizationsStartPoints1() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
-                " |0 1 2 ",
-                "-+------",
-                "0|. . . ",
-                "1| . g .",
-                "2|. . . ",
-                "3| . . .");
+            " |0 1 2 ",
+            "-+------",
+            "0|. . . ",
+            "1| . g .",
+            "2|. . . ",
+            "3| . . .");
 
-        ArrayList<Point> locations = WorldGeneratorService.getCivilizationsStartLocations(1, map);
+        List<Point> locations = WorldGeneratorService.getCivilizationsStartLocations(1, map);
         assertEquals(1, locations.size());
         assertEquals(new Point(1, 1), locations.get(0));
     }
@@ -36,18 +37,18 @@ public class CivilizationTest {
     @Test
     public void getCivilizationsStartPoints2() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
-                " |0 1 2 ",
-                "-+------",
-                "0|g g . ",
-                "1| . . .",
-                "2|. . g ",
-                "3| . . .");
+            " |0 1 2 ",
+            "-+------",
+            "0|g g . ",
+            "1| . . .",
+            "2|. . g ",
+            "3| . . .");
 
-        ArrayList<Point> locations = WorldGeneratorService.getCivilizationsStartLocations(2, map);
+        List<Point> locations = WorldGeneratorService.getCivilizationsStartLocations(2, map);
 
         assertEquals(2, locations.size());
-        assertTrue(locations.get(0).equals(new Point(0, 0)) || locations.get(0).equals(new Point(1, 0)));
-        assertEquals(new Point(2, 2), locations.get(1));
+        assertTrue(locations.contains(new Point(2, 2)));
+        assertTrue(locations.contains(new Point(0, 0)) || locations.contains(new Point(1, 0)));
     }
 
     // Test for Civilization's initialization
@@ -55,12 +56,12 @@ public class CivilizationTest {
     @Test
     public void initCivilization1() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
-                " |0 1 2 ",
-                "-+------",
-                "0|. . . ",
-                "1| . g .",
-                "2|. g . ",
-                "3| . . .");
+            " |0 1 2 ",
+            "-+------",
+            "0|. . . ",
+            "1| . g .",
+            "2|. g . ",
+            "3| . . .");
 
         MockWorld world = new MockWorld(map);
         Civilization civilization = world.createCivilization(RUSSIA);
@@ -78,12 +79,12 @@ public class CivilizationTest {
     @Test
     public void initCivilization2() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
-                " |0 1 2 ",
-                "-+------",
-                "0|. . . ",
-                "1| . g .",
-                "2|. . . ",
-                "3| . . .");
+            " |0 1 2 ",
+            "-+------",
+            "0|. . . ",
+            "1| . g .",
+            "2|. . . ",
+            "3| . . .");
 
         MockWorld world = new MockWorld(map);
         Civilization civilization = world.createCivilization(RUSSIA);

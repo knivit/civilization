@@ -1,6 +1,7 @@
 package com.tsoft.civilization.tile;
 
 import com.tsoft.civilization.tile.base.AbstractTile;
+import com.tsoft.civilization.tile.base.ocean.Ocean;
 import com.tsoft.civilization.tile.feature.TerrainFeature;
 import com.tsoft.civilization.util.AbstractDir;
 import com.tsoft.civilization.util.Dir6;
@@ -14,11 +15,11 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class TilesMap {
-    private AbstractTile[][] tiles;
-    private MapType mapType;
+    private final AbstractTile[][] tiles;
+    private final MapType mapType;
 
-    private int width;
-    private int height;
+    private final int width;
+    private final int height;
 
     public TilesMap(MapType mapType, int width, int height) {
         assert (width >= 2 && width <= 1000) : "Width = " + width + " is not in range [2..1000]";
@@ -100,9 +101,15 @@ public class TilesMap {
         return null;
     }
 
+    public List<AbstractTile> getTilesAround(Point location, int radius) {
+        return getLocationsAround(location, radius).stream()
+            .map(p -> getTile(p))
+            .collect(Collectors.toList());
+    }
+
     // Get the locations around the given location within the radius
     // The point itself doesn't included
-    public ArrayList<Point> getLocationsAround(Point location, int radius) {
+    public List<Point> getLocationsAround(Point location, int radius) {
         ArrayList<Point> locations = new ArrayList<>();
         if (radius == 0) {
             return locations;
@@ -133,7 +140,7 @@ public class TilesMap {
                     // draw lines between corners and get tiles from that lines
                     for (int i = 0; i < corners.size(); i ++) {
                         int toCorner = (i == corners.size() - 1) ? 0 : i + 1;
-                        ArrayList<Point> locationsOnLine = getLocationsOnLine(corners.get(i), corners.get(toCorner), i);
+                        List<Point> locationsOnLine = getLocationsOnLine(corners.get(i), corners.get(toCorner), i);
                         locations.addAll(locationsOnLine);
                     }
                     break;
@@ -149,7 +156,7 @@ public class TilesMap {
 
     // End point doesn't included
     // sideNo - number of hexagon's side (0 - Up, 1 - (Right, Up) etc clockwise)
-    private ArrayList<Point> getLocationsOnLine(Point a, Point b, int sideNo) {
+    private List<Point> getLocationsOnLine(Point a, Point b, int sideNo) {
         assert (sideNo >= 0 && sideNo <= 5) : "sideNo = " + sideNo + ", but must be in [0..5]";
 
         ArrayList<Point> locations = new ArrayList<Point>();
@@ -192,7 +199,7 @@ public class TilesMap {
         return locations;
     }
 
-    private Stream<AbstractTile> tiles() {
+    public Stream<AbstractTile> tiles() {
         return Stream.of(tiles).flatMap(Stream::of);
     }
 
@@ -225,10 +232,17 @@ public class TilesMap {
         return new Point(c, r);
     }
 
-    public List<Point> getTilesToStartCivilization() {
-        return tiles()
-            .filter(AbstractTile::canBuildCity)
-            .map(AbstractTile::getLocation)
-            .collect(Collectors.toList());
+    /** Start a new year, refresh tiles' properties */
+    public void startYear() {
+        tiles()
+            .filter(t -> t.isOcean())
+            .filter(t -> isDeepOcean(t))
+            .forEach(t -> ((Ocean) t).setDeepOcean(true));
+    }
+
+    // If as far as 3 tiles around is ocean, then this tile is deep ocean
+    private boolean isDeepOcean(AbstractTile tile) {
+        return getTilesAround(tile.getLocation(), 2).stream()
+            .anyMatch(t -> !t.isOcean());
     }
 }

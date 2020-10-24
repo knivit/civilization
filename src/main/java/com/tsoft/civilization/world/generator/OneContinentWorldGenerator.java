@@ -22,6 +22,7 @@ import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.util.Rect;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 /*
@@ -142,7 +143,7 @@ public class OneContinentWorldGenerator implements WorldGenerator {
         int y2 = (tilesMap.getHeight() / 2) + (int)Math.round(toY * onePercent);
 
         // get locations of earth tiles
-        ArrayList<Point> points = new ArrayList<>();
+        List<Point> points = new ArrayList<>();
         for (int y = y1; y < y2; y ++) {
             for (int x = 0; x < tilesMap.getWidth(); x ++) {
                 AbstractTile tile = tilesMap.getTile(x, y);
@@ -233,7 +234,7 @@ public class OneContinentWorldGenerator implements WorldGenerator {
                             continue;
                         }
 
-                        ArrayList<Point> locations = tilesMap.getLocationsAround(new Point(x, y), 1);
+                        List<Point> locations = tilesMap.getLocationsAround(new Point(x, y), 1);
                         for (Point loc : locations) {
                             AbstractTile tile = tilesMap.getTile(loc);
                             if (tile.getTileType().isEarth()) {

@@ -4,6 +4,7 @@ import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityList;
+import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.unit.AbstractUnit;
@@ -27,6 +28,8 @@ import java.util.UUID;
 
 public class MoveUnitAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
+
+    private static final TileService tileService = new TileService();
 
     public static ActionAbstractResult move(AbstractUnit unit, Point location) {
         if (location == null) {
@@ -195,7 +198,7 @@ public class MoveUnitAction {
 
     private static UnitMoveResult checkCanMoveOnTile(AbstractUnit unit, Point location) {
         AbstractTile tile = unit.getTilesMap().getTile(location);
-        int tilePassCost = tile.getPassCost(unit);
+        int tilePassCost = tileService.getPassCost(unit, tile);
 
         int passScore = unit.getPassScore();
         if ((passScore - tilePassCost) < 0) {
@@ -337,7 +340,7 @@ public class MoveUnitAction {
                     Point nextLocation = tilesMap.addDirToLocation(currLocation, dir);
                     AbstractTile nextTile = tilesMap.getTile(nextLocation);
 
-                    int nextPassScore = passScore - nextTile.getPassCost(unit);
+                    int nextPassScore = passScore - tileService.getPassCost(unit, nextTile);
                     if (nextPassScore >= 0) {
                         // check for foreign city located there
                         boolean isBlocked = false;

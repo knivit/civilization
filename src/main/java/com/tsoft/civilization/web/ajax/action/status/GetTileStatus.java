@@ -6,6 +6,7 @@ import com.tsoft.civilization.L10n.L10nTile;
 import com.tsoft.civilization.L10n.L10nWorld;
 import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
@@ -22,6 +23,9 @@ import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.civilization.Civilization;
 
 public class GetTileStatus extends AbstractAjaxRequest {
+
+    private static final TileService tileService = new TileService();
+
     @Override
     public Response getJson(Request request) {
         Civilization myCivilization = getMyCivilization();
@@ -249,7 +253,7 @@ public class GetTileStatus extends AbstractAjaxRequest {
             return null;
         }
 
-        Supply supply = tile.getSupply();
+        Supply supply = tileService.getSupply(tile);
         return Format.text(
             "<tr>" +
                 "<td>$totalLabel</td>" +

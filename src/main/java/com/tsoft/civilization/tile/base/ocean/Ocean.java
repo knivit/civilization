@@ -16,6 +16,15 @@ public class Ocean extends AbstractTile {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private static final OceanView VIEW = new OceanView();
+    private boolean isDeepOcean;
+
+    public boolean isDeepOcean() {
+        return isDeepOcean;
+    }
+
+    public void setDeepOcean(boolean isDeepOcean) {
+        this.isDeepOcean = isDeepOcean;
+    }
 
     @Override
     public TileType getTileType() {

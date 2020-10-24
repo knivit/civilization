@@ -77,10 +77,6 @@ public class CityList implements Iterable<City> {
         return this;
     }
 
-    public Collection<Point> getLocations() {
-        return cities.stream().map(e -> e.getLocation()).collect(Collectors.toList());
-    }
-
     public City getCityById(String cityId) {
         Objects.requireNonNull(cityId, "cityId can't be null");
         return cities.stream().filter(e -> e.getId().equals(cityId)).findAny().orElse(null);

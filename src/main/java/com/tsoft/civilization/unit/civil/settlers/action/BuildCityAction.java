@@ -11,6 +11,7 @@ import com.tsoft.civilization.civilization.Civilization;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -52,7 +53,7 @@ public class BuildCityAction {
         }
 
         // there should be no cities as far as 4 tiles around
-        ArrayList<Point> locations = settlers.getTilesMap().getLocationsAround(location, 4);
+        List<Point> locations = settlers.getTilesMap().getLocationsAround(location, 4);
         locations.add(location);
         for (Point loc : locations) {
             AbstractTile tile = settlers.getTilesMap().getTile(loc);

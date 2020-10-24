@@ -54,6 +54,7 @@ public class WorkersView extends AbstractUnitView<Workers> {
     public StringBuilder getHtmlActions(Workers unit) {
         return Format.text(
             "$commonActions" +
+            "<tr id='actions_table_row'>$buildFarmAction</tr>",
             "<tr id='actions_table_row'>$removeForestAction</tr>" +
             "<tr id='actions_table_row'>$removeHillAction</tr>",
 

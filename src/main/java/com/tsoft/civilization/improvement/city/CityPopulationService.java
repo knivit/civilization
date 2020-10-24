@@ -1,6 +1,7 @@
 package com.tsoft.civilization.improvement.city;
 
 import com.tsoft.civilization.L10n.L10nCity;
+import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.unit.civil.citizen.Citizen;
 import com.tsoft.civilization.unit.civil.citizen.CitizenPlacementTable;
@@ -34,6 +35,7 @@ public class CityPopulationService {
 
     private CitySupplyStrategy supplyStrategy = CitySupplyStrategy.MAX_FOOD;
     private final SupplyService supplyService = new SupplyService();
+    private final TileService tileService = new TileService();
 
     private int growthPool = 0;
     private boolean isStarvation = false;
@@ -78,7 +80,7 @@ public class CityPopulationService {
         Supply bestTileSupply = null;
         for (Point location : locations) {
             AbstractTile tile = city.getTilesMap().getTile(location);
-            Supply tileSupply = tile.getSupply();
+            Supply tileSupply = tileService.getSupply(tile);
             log.trace("Supply of tile {} = {}", tile, tileSupply);
 
             // don't place a citizen on harsh tiles (terrain features)

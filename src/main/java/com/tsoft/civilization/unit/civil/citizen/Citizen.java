@@ -2,6 +2,7 @@ package com.tsoft.civilization.unit.civil.citizen;
 
 import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.economic.Supply;
@@ -24,7 +25,7 @@ import java.util.UUID;
  *
  * Each new city starts with a Population of 1, or 1 Citizen.
  * This means that it can work one nearby tile (in addition to the tile the city is placed upon, which is worked for free).
- * It can subsequently grow or shrink its Population according to the rules of 20xFood5 Food consumption and distribution,
+ * It can subsequently grow or shrink its Population according to the rules of Food consumption and distribution,
  * though it will always have at least 1 Citizen.
  *
  * Apart from producing tile yields, citizens also contribute to Science production at
@@ -40,6 +41,8 @@ public class Citizen {
     private final City city;
     private Point location;
     private SpecialistType specialistType;
+
+    private final TileService tileService = new TileService();
 
     public Citizen(City city) {
         this.city = city;
@@ -87,10 +90,14 @@ public class Citizen {
 
     // Get supply from tiles without improvements where the citizen is working
     private Supply getTileSupply() {
+        if (location == null) {
+            return Supply.EMPTY_SUPPLY;
+        }
+
         AbstractTile tile = city.getTilesMap().getTile(location);
         AbstractImprovement improvement = tile.getImprovement();
         if (improvement == null || !improvement.isBlockingTileSupply()) {
-            return tile.getSupply();
+            return tileService.getSupply(tile);
         }
 
         return Supply.EMPTY_SUPPLY;
@@ -98,6 +105,10 @@ public class Citizen {
 
     // Get supply from improvements where citizen is working
     private Supply getImprovementsSupply() {
+        if (location == null) {
+            return Supply.EMPTY_SUPPLY;
+        }
+
         AbstractTile tile = city.getTilesMap().getTile(location);
         AbstractImprovement improvement = tile.getImprovement();
         if (improvement != null && !(improvement instanceof City)) {

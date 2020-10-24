@@ -4,6 +4,7 @@ import com.tsoft.civilization.L10n.L10nCivilization;
 import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.base.TilePassCostTable;
 import com.tsoft.civilization.unit.AbstractUnit;
@@ -19,6 +20,7 @@ import com.tsoft.civilization.world.event.Event;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class CivilizationUnitService {
     private final World world;
@@ -28,9 +30,23 @@ public class CivilizationUnitService {
     private final UnitList<?> units = new UnitList<>();
     private UnitList<?> destroyedUnits = new UnitList<>();
 
+    private final TileService tileService = new TileService();
+
     public CivilizationUnitService(Civilization civilization) {
         this.civilization = civilization;
         this.world = civilization.getWorld();
+    }
+
+    public Stream<? extends AbstractUnit> stream() {
+        return units.stream();
+    }
+
+    public UnitList<?> getUnits() {
+        return units.unmodifiableList();
+    }
+
+    public int size() {
+        return units.size();
     }
 
     public UnitList<?> findByClassUuid(String classUuid) {
@@ -50,10 +66,10 @@ public class CivilizationUnitService {
 
         // try to place Warriors near the Settlers
         Warriors warriors = UnitFactory.newInstance(Warriors.CLASS_UUID);
-        ArrayList<Point> locations = world.getLocationsAround(settlersLocation, 2);
+        Collection<Point> locations = world.getLocationsAround(settlersLocation, 2);
         for (Point location : locations) {
             AbstractTile tile = world.getTilesMap().getTile(location);
-            if (tile.getPassCost(civilization, Warriors.STUB) != TilePassCostTable.UNPASSABLE) {
+            if (tileService.getPassCost(civilization, Warriors.STUB, tile) != TilePassCostTable.UNPASSABLE) {
                 addUnit(warriors, location);
                 break;
             }
@@ -66,14 +82,6 @@ public class CivilizationUnitService {
 
     public AbstractUnit getUnitById(String unitId) {
         return units.getUnitById(unitId);
-    }
-
-    public UnitList<?> getUnits() {
-        return units.unmodifiableList();
-    }
-
-    public int size() {
-        return units.size();
     }
 
     public UnitList<?> getUnitsAtLocation(Point location) {

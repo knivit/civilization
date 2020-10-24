@@ -45,6 +45,7 @@ public class Civilization {
 
     private final CivilizationUnitService unitService;
     private final CivilizationCityService cityService;
+    private final CivilizationTerritoryService territoryService;
 
     private final HashSet<Technology> technologies = new TechnologySet();
 
@@ -72,6 +73,7 @@ public class Civilization {
         supply = Supply.EMPTY_SUPPLY;
         unitService = new CivilizationUnitService(this);
         cityService = new CivilizationCityService(this);
+        territoryService = new CivilizationTerritoryService(this);
     }
 
     public String getId() {
@@ -88,6 +90,10 @@ public class Civilization {
 
     public CivilizationCityService cities() {
         return cityService;
+    }
+
+    public CivilizationTerritoryService territory() {
+        return territoryService;
     }
 
     public Year getStartYear() {
