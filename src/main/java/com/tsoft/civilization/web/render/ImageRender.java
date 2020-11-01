@@ -1,11 +1,10 @@
-package com.tsoft.civilization.web.render.tile;
+package com.tsoft.civilization.web.render;
 
 import lombok.RequiredArgsConstructor;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.ImageObserver;
-import java.io.IOException;
 import java.net.URL;
 
 @RequiredArgsConstructor
@@ -17,9 +16,9 @@ public class ImageRender {
     private Image image;
     private final Observer observer = new Observer();
 
-    public void render(Graphics g, int x, int y) {
+    public void render(GraphicsContext graphicsContext, int x, int y) {
         loadImage();
-        g.drawImage(image, x, y, observer);
+        graphicsContext.getG().drawImage(image, x, y, observer);
     }
 
     private static class Observer implements ImageObserver {
@@ -31,12 +30,15 @@ public class ImageRender {
     }
 
     private synchronized void loadImage() {
-        URL resource = getClass().getResource(imageFileName);
+        if (image != null) {
+            return;
+        }
 
+        URL resource = getClass().getClassLoader().getResource(imageFileName);
         try {
-            ImageIO.read(resource);
-        } catch (IOException e) {
-            throw new IllegalStateException("Can't load image " + resource.getFile());
+            image = ImageIO.read(resource);
+        } catch (Exception e) {
+            throw new IllegalStateException("Can't load image from " + imageFileName);
         }
     }
 }
