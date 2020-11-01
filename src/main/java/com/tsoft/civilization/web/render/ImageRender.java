@@ -7,6 +7,8 @@ import java.awt.*;
 import java.awt.image.ImageObserver;
 import java.net.URL;
 
+import static com.tsoft.civilization.web.render.Render.r;
+
 @RequiredArgsConstructor
 public class ImageRender {
 
@@ -16,9 +18,14 @@ public class ImageRender {
     private Image image;
     private final Observer observer = new Observer();
 
-    public void render(GraphicsContext graphicsContext, int x, int y) {
+    public void render(RenderContext context, GraphicsContext graphics, RenderTileInfo tileInfo) {
         loadImage();
-        graphicsContext.getG().drawImage(image, x, y, observer);
+
+        int x = tileInfo.x;
+        int y = tileInfo.y;
+        float[] ox = context.getHexBordersX();
+        float[] oy = context.getHexBordersY();
+        graphics.getG().drawImage(image, r(x), r(y + oy[0]), r(ox[3] - ox[0]), r(oy[3] - oy[2]), observer);
     }
 
     private static class Observer implements ImageObserver {

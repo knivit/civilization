@@ -9,12 +9,12 @@ public abstract class RenderCatalog<T> {
 
     private final Map<Class<T>, Render<T>> renders;
 
-    public void render(RenderContext renderContext, GraphicsContext graphicsContext, int x, int y, T objToRender) {
+    public void render(RenderContext renderContext, GraphicsContext graphicsContext, RenderTileInfo tileInfo, T objToRender) {
         Render<T> render = renders.get(objToRender.getClass());
         if (render == null) {
             throw new IllegalArgumentException("No render for " + objToRender.getClass().getName());
         }
 
-        render.render(renderContext, graphicsContext, x, y, objToRender);
+        render.render(renderContext, graphicsContext, tileInfo, objToRender);
     }
 }

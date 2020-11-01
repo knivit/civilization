@@ -32,7 +32,6 @@ public class GraphicsContext {
     public GraphicsContext build() {
         img = new BufferedImage(widthX, heightY, TYPE_INT_RGB);
         g = img.getGraphics();
-        //g.setFont(new Font());
         return this;
     }
 

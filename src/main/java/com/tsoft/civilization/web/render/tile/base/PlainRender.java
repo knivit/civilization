@@ -1,9 +1,7 @@
 package com.tsoft.civilization.web.render.tile.base;
 
 import com.tsoft.civilization.tile.base.plain.Plain;
-import com.tsoft.civilization.web.render.GraphicsContext;
-import com.tsoft.civilization.web.render.Render;
-import com.tsoft.civilization.web.render.RenderContext;
+import com.tsoft.civilization.web.render.*;
 import com.tsoft.civilization.web.render.tile.HexagonRender;
 
 import java.awt.*;
@@ -11,9 +9,11 @@ import java.awt.*;
 public class PlainRender implements Render<Plain> {
 
     private final HexagonRender hexagonRender = new HexagonRender();
+    private final ImageRender image = new ImageRender("web/images/status/tiles/plain.jpg");
 
     @Override
-    public void render(RenderContext context, GraphicsContext graphicsContext, int x, int y, Plain objToRender) {
-        hexagonRender.render(context, graphicsContext, x, y, new Color(h("#a89352")));
+    public void render(RenderContext context, GraphicsContext graphics, RenderTileInfo tileInfo, Plain objToRender) {
+        hexagonRender.render(context, graphics, tileInfo, new Color(h("#a89352")));
+        image.render(context, graphics, tileInfo);
     }
 }

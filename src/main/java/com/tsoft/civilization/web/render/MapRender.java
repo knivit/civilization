@@ -42,24 +42,24 @@ public class MapRender {
     }
 
     public void drawTiles(RenderContext renderContext, GraphicsContext graphicsContext, TilesMap map) {
-        for (RenderContext.RenderInfo renderInfo : renderContext.getRenderInfo()) {
-            AbstractTile tile = map.getTile(renderInfo.col, renderInfo.row);
-            drawTile(renderContext, graphicsContext, renderInfo.x, renderInfo.y, tile);
+        for (RenderTileInfo tileInfo : renderContext.getTilesInfo()) {
+            AbstractTile tile = map.getTile(tileInfo.col, tileInfo.row);
+            drawTile(renderContext, graphicsContext, tileInfo, tile);
         }
     }
 
-    private void drawTile(RenderContext renderContext, GraphicsContext graphicsContext, int x, int y, AbstractTile tile) {
-        tileRenderCatalog.render(renderContext, graphicsContext, x, y, tile);
-        drawTerrainFeatures(renderContext, graphicsContext, x, y, tile);
+    private void drawTile(RenderContext renderContext, GraphicsContext graphicsContext, RenderTileInfo tileInfo, AbstractTile tile) {
+        tileRenderCatalog.render(renderContext, graphicsContext, tileInfo, tile);
+        drawTerrainFeatures(renderContext, graphicsContext, tileInfo, tile);
     }
 
-    private void drawTerrainFeatures(RenderContext renderContext, GraphicsContext graphicsContext, int x, int y, AbstractTile tile) {
+    private void drawTerrainFeatures(RenderContext renderContext, GraphicsContext graphicsContext, RenderTileInfo tileInfo, AbstractTile tile) {
         for (TerrainFeature feature : tile.getTerrainFeatures()) {
-            drawTerrainFeature(renderContext, graphicsContext, x, y, feature);
+            drawTerrainFeature(renderContext, graphicsContext, tileInfo, feature);
         }
     }
 
-    private void drawTerrainFeature(RenderContext renderContext, GraphicsContext graphicsContext, int x, int y, TerrainFeature feature) {
-        terrainFeatureRenderCatalog.render(renderContext, graphicsContext, x, y, feature);
+    private void drawTerrainFeature(RenderContext renderContext, GraphicsContext graphicsContext, RenderTileInfo tileInfo, TerrainFeature feature) {
+        terrainFeatureRenderCatalog.render(renderContext, graphicsContext, tileInfo, feature);
     }
 }

@@ -57,13 +57,15 @@ public class WorldRender {
         Collection<com.tsoft.civilization.util.Point> points = civilization.territory().getCivilizationLocations();
     }
 
-    private void drawUnits(RenderContext context, GraphicsContext graphicsContext, CivilizationList civilizations) {
+    private void drawUnits(RenderContext context, GraphicsContext graphics, CivilizationList civilizations) {
         civilizations.stream()
             .flatMap(c -> c.units().stream())
-            .forEach(u -> drawUnit(context, graphicsContext, u.getLocation().getX(), u.getLocation().getY(), u));
+            .forEach(u -> drawUnit(context, graphics, context.getTileInfo(u.getLocation()), u));
     }
 
-    private void drawUnit(RenderContext context, GraphicsContext graphicsContext, int x, int y, AbstractUnit unit) {
-        unitRenderCatalog.render(context, graphicsContext, x, y, unit);
+    private void drawUnit(RenderContext context, GraphicsContext graphics, RenderTileInfo tileInfo, AbstractUnit unit) {
+        if (tileInfo != null) {
+            unitRenderCatalog.render(context, graphics, tileInfo, unit);
+        }
     }
 }

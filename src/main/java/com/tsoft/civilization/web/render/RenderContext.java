@@ -1,10 +1,12 @@
 package com.tsoft.civilization.web.render;
 
+import com.tsoft.civilization.util.Point;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 public class RenderContext {
@@ -45,16 +47,9 @@ public class RenderContext {
     private float[] hexBordersX;
     private float[] hexBordersY;
 
-    // Render area
-    @RequiredArgsConstructor
-    public static class RenderInfo {
-        final int x;
-        final int y;
-        final int col;
-        final int row;
-    }
-
-    private List<RenderInfo> renderInfo;
+    // Tiles' rendering info, a link between map (col, row) and screen (x, y)
+    private List<RenderTileInfo> tilesInfo;
+    private Map<Point, RenderTileInfo> tilesInfoMap;
 
     public RenderContext(int mapWidth, int mapHeight, float tileWidth, float tileHeight) {
         this.mapWidth = mapWidth;
@@ -102,7 +97,8 @@ public class RenderContext {
 
     // Create an array with (x,y), (col,row) info to update the canvas
     public void buildRenderInfo() {
-        renderInfo = new ArrayList<>();
+        tilesInfo = new ArrayList<>();
+        tilesInfoMap = new HashMap<>();
 
         int rn = 0;
         float y = getLuY();
@@ -123,14 +119,19 @@ public class RenderContext {
             }
 
             while (true) {
-                RenderInfo drawInfo = new RenderInfo(Math.round(x), Math.round(y), col, row);
-                renderInfo.add(drawInfo);
+                RenderTileInfo tileInfo = new RenderTileInfo(Math.round(x), Math.round(y), col, row);
+                tilesInfo.add(tileInfo);
+                tilesInfoMap.put(new Point(col, row), tileInfo);
 
                 x = x + getTileWidth();
-                if (x >= getCanvasWidth()) break;
+                if (x >= getCanvasWidth()) {
+                    break;
+                }
 
                 col ++;
-                if (col >= getMapWidth()) col = 0;
+                if (col >= getMapWidth()) {
+                    col = 0;
+                }
             }
 
             y = y + getHexTopHeight() + getHexMiddleHeight();
@@ -141,5 +142,10 @@ public class RenderContext {
 
             rn ++;
         }
+    }
+
+    /** Can return null */
+    public RenderTileInfo getTileInfo(Point location) {
+        return tilesInfoMap.get(location);
     }
 }
