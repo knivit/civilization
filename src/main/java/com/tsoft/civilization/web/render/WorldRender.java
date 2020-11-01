@@ -4,12 +4,11 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationList;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.unit.AbstractUnit;
+import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.render.unit.UnitRenderCatalog;
 import com.tsoft.civilization.world.World;
 import lombok.extern.slf4j.Slf4j;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Collection;
 
 @Slf4j
@@ -24,20 +23,9 @@ public class WorldRender {
         this.clazz = clazz;
     }
 
-    public void createSvg(World world) {
+    public void createPng(World world) {
         TilesMap map = world.getTilesMap();
-
-        String path = "target/" + clazz.getPackageName().replace('.', '/') + "/" + clazz.getSimpleName();
-        String outputFileName = path + "/" + (++ n) + "_map_" + map.getWidth() + "x" + map.getHeight() + ".png";
-
-        try {
-            Files.deleteIfExists(Path.of(outputFileName));
-            Files.createDirectories(Path.of(outputFileName));
-        } catch (Exception e) {
-            throw new IllegalStateException("Can't create file " + outputFileName, e);
-        }
-
-        RenderContext renderContext = new RenderContext(map.getWidth(), map.getHeight(), 80, 70);
+        RenderContext renderContext = new RenderContext(map.getWidth(), map.getHeight(), 120, 120);
         GraphicsContext graphicsContext = new GraphicsContext((int)renderContext.getMapWidthX(), (int)renderContext.getMapHeightY()).build();
 
         MapRender mapRender = new MapRender(clazz);
@@ -46,6 +34,8 @@ public class WorldRender {
         //drawCities(drawArea);
         drawCivilizationsBoundaries(renderContext, graphicsContext, world.getCivilizations());
 
+        String path = "target/" + clazz.getPackageName().replace('.', '/') + "/" + clazz.getSimpleName();
+        String outputFileName = path + "/" + (++ n) + "_world_" + map.getWidth() + "x" + map.getHeight() + ".png";
         graphicsContext.saveImageToFile(outputFileName);
     }
 
@@ -54,7 +44,7 @@ public class WorldRender {
     }
 
     private void drawCivilizationBoundary(RenderContext context, GraphicsContext graphicsContext, Civilization civilization) {
-        Collection<com.tsoft.civilization.util.Point> points = civilization.territory().getCivilizationLocations();
+        Collection<Point> points = civilization.territory().getCivilizationLocations();
     }
 
     private void drawUnits(RenderContext context, GraphicsContext graphics, CivilizationList civilizations) {

@@ -3,12 +3,12 @@ package com.tsoft.civilization.web.render;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.feature.TerrainFeature;
+import com.tsoft.civilization.web.render.tile.HexagonRender;
 import com.tsoft.civilization.web.render.tile.TerrainFeatureRenderCatalog;
 import com.tsoft.civilization.web.render.tile.TileRenderCatalog;
 import lombok.extern.slf4j.Slf4j;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.awt.*;
 
 @Slf4j
 public class MapRender {
@@ -23,21 +23,15 @@ public class MapRender {
         this.clazz = clazz;
     }
 
-    public void createSvg(TilesMap map) {
-        String path = "target/" + clazz.getPackageName().replace('.', '/') + "/" + clazz.getSimpleName();
-        String outputFileName = path + "/" + (++ n) + "_map_" + map.getWidth() + "x" + map.getHeight() + ".png";
-
-        try {
-            Files.deleteIfExists(Path.of(outputFileName));
-            Files.createDirectories(Path.of(outputFileName));
-        } catch (Exception e) {
-            throw new IllegalStateException("Can't create file " + outputFileName, e);
-        }
-
+    public void createPng(TilesMap map) {
         RenderContext renderContext = new RenderContext(map.getWidth(), map.getHeight(), 120, 120);
         GraphicsContext graphicsContext = new GraphicsContext((int)renderContext.getMapWidthX(), (int)renderContext.getMapHeightY()).build();
 
         drawTiles(renderContext, graphicsContext, map);
+        outlineTiles(renderContext, graphicsContext, map);
+
+        String path = "target/" + clazz.getPackageName().replace('.', '/') + "/" + clazz.getSimpleName();
+        String outputFileName = path + "/" + (++ n) + "_map_" + map.getWidth() + "x" + map.getHeight() + ".png";
         graphicsContext.saveImageToFile(outputFileName);
     }
 
@@ -61,5 +55,14 @@ public class MapRender {
 
     private void drawTerrainFeature(RenderContext renderContext, GraphicsContext graphicsContext, RenderTileInfo tileInfo, TerrainFeature feature) {
         terrainFeatureRenderCatalog.render(renderContext, graphicsContext, tileInfo, feature);
+    }
+
+    public void outlineTiles(RenderContext renderContext, GraphicsContext graphicsContext, TilesMap map) {
+        HexagonRender hexagonRender = new HexagonRender();
+
+        for (RenderTileInfo tileInfo : renderContext.getTilesInfo()) {
+            AbstractTile tile = map.getTile(tileInfo.col, tileInfo.row);
+            hexagonRender.outline(renderContext, graphicsContext, tileInfo, Color.WHITE);
+        }
     }
 }

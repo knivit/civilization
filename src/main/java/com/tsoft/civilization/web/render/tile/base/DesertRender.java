@@ -13,7 +13,7 @@ public class DesertRender implements Render<Desert> {
 
     @Override
     public void render(RenderContext context, GraphicsContext graphics, RenderTileInfo tileInfo, Desert objToRender) {
-        hexagonRender.render(context, graphics, tileInfo, new Color(h("#c5a376")));
+        hexagonRender.fill(context, graphics, tileInfo, new Color(h("#c5a376")));
         image.render(context, graphics, tileInfo);
     }
 }

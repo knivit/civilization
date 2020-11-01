@@ -13,7 +13,7 @@ public class TundraRender implements Render<Tundra> {
 
     @Override
     public void render(RenderContext context, GraphicsContext graphics, RenderTileInfo tileInfo, Tundra objToRender) {
-        hexagonRender.render(context, graphics, tileInfo, new Color(h("#6d6552")));
+        hexagonRender.fill(context, graphics, tileInfo, new Color(h("#6d6552")));
         image.render(context, graphics, tileInfo);
     }
 }

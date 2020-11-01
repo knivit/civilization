@@ -13,7 +13,7 @@ public class LakeRender implements Render<Lake> {
 
     @Override
     public void render(RenderContext context, GraphicsContext graphics, RenderTileInfo tileInfo, Lake objToRender) {
-        hexagonRender.render(context, graphics, tileInfo, new Color(h("#546a68")));
+        hexagonRender.fill(context, graphics, tileInfo, new Color(h("#546a68")));
         image.render(context, graphics, tileInfo);
     }
 }

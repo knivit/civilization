@@ -13,7 +13,7 @@ public class SnowRender implements Render<Snow> {
 
     @Override
     public void render(RenderContext context, GraphicsContext graphics, RenderTileInfo tileInfo, Snow objToRender) {
-        hexagonRender.render(context, graphics, tileInfo, new Color(h("#a1afb8")));
+        hexagonRender.fill(context, graphics, tileInfo, new Color(h("#a1afb8")));
         image.render(context, graphics, tileInfo);
     }
 }

@@ -13,7 +13,7 @@ public class PlainRender implements Render<Plain> {
 
     @Override
     public void render(RenderContext context, GraphicsContext graphics, RenderTileInfo tileInfo, Plain objToRender) {
-        hexagonRender.render(context, graphics, tileInfo, new Color(h("#a89352")));
+        hexagonRender.fill(context, graphics, tileInfo, new Color(h("#a89352")));
         image.render(context, graphics, tileInfo);
     }
 }

@@ -13,7 +13,7 @@ public class GrasslandRender implements Render<Grassland> {
 
     @Override
     public void render(RenderContext context, GraphicsContext graphics, RenderTileInfo tileInfo, Grassland objToRender) {
-        hexagonRender.render(context, graphics, tileInfo, new Color(h("#6a7a39")));
+        hexagonRender.fill(context, graphics, tileInfo, new Color(h("#6a7a39")));
         image.render(context, graphics, tileInfo);
     }
 }

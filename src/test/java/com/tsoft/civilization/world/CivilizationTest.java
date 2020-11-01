@@ -31,7 +31,7 @@ public class CivilizationTest {
             "1| . g .",
             "2|. . . ",
             "3| . . .");
-        mapRender.createSvg(map);
+        mapRender.createPng(map);
 
         List<Point> locations = WorldGeneratorService.getCivilizationsStartLocations(1, map);
         assertEquals(1, locations.size());
@@ -47,7 +47,7 @@ public class CivilizationTest {
             "1| . . .",
             "2|. . g ",
             "3| . . .");
-        mapRender.createSvg(map);
+        mapRender.createPng(map);
 
         List<Point> locations = WorldGeneratorService.getCivilizationsStartLocations(2, map);
 
@@ -67,7 +67,7 @@ public class CivilizationTest {
             "1| . g .",
             "2|. g . ",
             "3| . . .");
-        mapRender.createSvg(map);
+        mapRender.createPng(map);
 
         MockWorld world = new MockWorld(map);
         Civilization civilization = world.createCivilization(RUSSIA);
@@ -91,7 +91,7 @@ public class CivilizationTest {
             "1| . g .",
             "2|. . . ",
             "3| . . .");
-        mapRender.createSvg(map);
+        mapRender.createPng(map);
 
         MockWorld world = new MockWorld(map);
         Civilization civilization = world.createCivilization(RUSSIA);

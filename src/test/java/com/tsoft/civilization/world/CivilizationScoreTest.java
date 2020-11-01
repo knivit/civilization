@@ -31,7 +31,7 @@ public class CivilizationScoreTest {
                 "1| . g .",
                 "2|. . . ",
                 "3| . . .");
-        mapRender.createSvg(map);
+        mapRender.createPng(map);
 
         MockWorld world = new MockWorld(map);
         Civilization c1 = world.createCivilization(RUSSIA);
@@ -49,7 +49,7 @@ public class CivilizationScoreTest {
                 "1| . g .",
                 "2|. . . ",
                 "3| . . .");
-        mapRender.createSvg(map);
+        mapRender.createPng(map);
 
         MockWorld world = new MockWorld(map);
         Civilization c1 = world.createCivilization(RUSSIA);
@@ -90,7 +90,7 @@ public class CivilizationScoreTest {
             "1| l g p s t", "1| . M . . .", "1| . . . . .",
             "2|g g g g g ", "2|n f h h m ", "2|. . . f . ",
             "3| . g p . .", "3| . j o . .", "3| . . . . .");
-        mapRender.createSvg(map);
+        mapRender.createPng(map);
 
         MockWorld world = new MockWorld(map);
         Civilization civilization = world.createCivilization(RUSSIA);
@@ -144,7 +144,7 @@ public class CivilizationScoreTest {
                 "1| g g .", "1| m f .",
                 "2|. g . ", "2|. n . ",
                 "3| . . .", "3| . . .");
-        mapRender.createSvg(map);
+        mapRender.createPng(map);
 
         MockWorld world = new MockWorld(map);
         Civilization c1 = world.createCivilization(RUSSIA);
