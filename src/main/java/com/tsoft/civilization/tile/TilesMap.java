@@ -8,13 +8,11 @@ import com.tsoft.civilization.util.Dir6;
 import com.tsoft.civilization.util.NumberUtil;
 import com.tsoft.civilization.util.Point;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class TilesMap {
+public class TilesMap implements Iterable<AbstractTile> {
     private final AbstractTile[][] tiles;
     private final MapType mapType;
 
@@ -66,18 +64,28 @@ public class TilesMap {
         tile.setLocation(location);
     }
 
-    private int getXPlusDX(int x, int dx) {
-        x += dx;
-        if (x < 0) x += width;
-        else if (x > (width - 1)) x -= width;
-        return x;
+    @Override
+    public Iterator<AbstractTile> iterator() {
+        return new Iterator<>() {
+            private int n = 0;
+
+            @Override
+            public boolean hasNext() {
+                return n < (width * height);
+            }
+
+            @Override
+            public AbstractTile next() {
+                int x = n % width;
+                int y = n / width;
+                n ++;
+                return tiles[x][y];
+            }
+        };
     }
 
-    private int getYPlusDY(int y, int dy) {
-        y += dy;
-        if (y < 0) y += height;
-        else if (y > (height - 1)) y -= height;
-        return y;
+    public Stream<AbstractTile> tiles() {
+        return Stream.of(tiles).flatMap(Stream::of);
     }
 
     // The map is "cyclic", i.e. after a last tile
@@ -86,7 +94,7 @@ public class TilesMap {
     public Point addDirToLocation(Point location, AbstractDir dir) {
         int x = getXPlusDX(location.getX(), dir.getDX());
         int y = getYPlusDY(location.getY(), dir.getDY());
-        return new Point(x, y);
+        return tiles[x][y].getLocation();
     }
 
     public AbstractDir getDirToLocation(Point from, Point to) {
@@ -99,6 +107,20 @@ public class TilesMap {
             }
         }
         return null;
+    }
+
+    private int getXPlusDX(int x, int dx) {
+        x += dx;
+        if (x < 0) x += width;
+        else if (x > (width - 1)) x -= width;
+        return x;
+    }
+
+    private int getYPlusDY(int y, int dy) {
+        y += dy;
+        if (y < 0) y += height;
+        else if (y > (height - 1)) y -= height;
+        return y;
     }
 
     public List<AbstractTile> getTilesAround(Point location, int radius) {
@@ -159,7 +181,7 @@ public class TilesMap {
     private List<Point> getLocationsOnLine(Point a, Point b, int sideNo) {
         assert (sideNo >= 0 && sideNo <= 5) : "sideNo = " + sideNo + ", but must be in [0..5]";
 
-        ArrayList<Point> locations = new ArrayList<Point>();
+        ArrayList<Point> locations = new ArrayList<>();
 
         // horizontal
         Dir6[] leftUpToRightUp = new Dir6[] { new Dir6(1, 0) };
@@ -199,10 +221,6 @@ public class TilesMap {
         return locations;
     }
 
-    public Stream<AbstractTile> tiles() {
-        return Stream.of(tiles).flatMap(Stream::of);
-    }
-
     public List<Point> getTileClassLocations(Class<? extends AbstractTile> tileClass) {
         Objects.requireNonNull(tileClass, "Tile class must be not null");
 
@@ -229,7 +247,7 @@ public class TilesMap {
             return null;
         }
 
-        return new Point(c, r);
+        return tiles[c][r].getLocation();
     }
 
     /** Start a new year, refresh tiles' properties */

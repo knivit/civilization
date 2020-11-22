@@ -7,6 +7,7 @@ import com.tsoft.civilization.improvement.city.CitySupplyStrategy;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.web.render.MapRender;
+import com.tsoft.civilization.web.render.WorldRender;
 import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.world.economic.SupplyMock;
 import com.tsoft.civilization.util.Point;
@@ -21,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CivilizationScoreTest {
     private static final MapRender mapRender = new MapRender(CivilizationScoreTest.class);
+    private static final WorldRender worldRender = new WorldRender(CivilizationScoreTest.class);
 
     @Test
     public void noCitiesScore() {
@@ -35,6 +37,7 @@ public class CivilizationScoreTest {
 
         MockWorld world = new MockWorld(map);
         Civilization c1 = world.createCivilization(RUSSIA);
+        worldRender.createPng(world);
 
         world.move();
         assertTrue(SupplyMock.equals(Supply.EMPTY_SUPPLY, c1.calcSupply()));
@@ -90,11 +93,11 @@ public class CivilizationScoreTest {
             "1| l g p s t", "1| . M . . .", "1| . . . . .",
             "2|g g g g g ", "2|n f h h m ", "2|. . . f . ",
             "3| . g p . .", "3| . j o . .", "3| . . . . .");
-        mapRender.createPng(map);
 
         MockWorld world = new MockWorld(map);
         Civilization civilization = world.createCivilization(RUSSIA);
         City city = civilization.createCity(new Point(2, 1));
+        worldRender.createPng(world);
 
         // add all other tiles
         Collection<Point> locations = map.getLocationsAround(new Point(2, 1), 3);

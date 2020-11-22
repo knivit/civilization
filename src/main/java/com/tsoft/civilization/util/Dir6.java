@@ -26,10 +26,10 @@ import java.util.ArrayList;
  *
  */
 public class Dir6 extends AbstractDir {
-    private static ArrayList<Dir6> evenDirs = new ArrayList<Dir6>();
-    private static ArrayList<Dir6> inverseEvenDirs = new ArrayList<Dir6>();
-    private static ArrayList<Dir6> oddDirs = new ArrayList<Dir6>();
-    private static ArrayList<Dir6> inverseOddDirs = new ArrayList<Dir6>();
+    private static final ArrayList<Dir6> evenDirs = new ArrayList<>();
+    private static final ArrayList<Dir6> inverseEvenDirs = new ArrayList<>();
+    private static final ArrayList<Dir6> oddDirs = new ArrayList<>();
+    private static final ArrayList<Dir6> inverseOddDirs = new ArrayList<>();
 
     private static final Dir6 sDir = new Dir6(-1, -1);
 

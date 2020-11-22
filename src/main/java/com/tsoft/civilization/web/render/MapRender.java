@@ -13,26 +13,28 @@ import java.awt.*;
 @Slf4j
 public class MapRender {
 
-    private final Class<?> clazz;
-    private int n;
+    private RenderFileNameGenerator fileNameGenerator;
 
     private final RenderCatalog<AbstractTile> tileRenderCatalog = new TileRenderCatalog();
     private final RenderCatalog<TerrainFeature> terrainFeatureRenderCatalog = new TerrainFeatureRenderCatalog();
 
+    public MapRender() { }
+
     public MapRender(Class<?> clazz) {
-        this.clazz = clazz;
+        fileNameGenerator = new RenderFileNameGenerator(clazz, "map");
     }
 
     public void createPng(TilesMap map) {
         RenderContext renderContext = new RenderContext(map.getWidth(), map.getHeight(), 120, 120);
         GraphicsContext graphicsContext = new GraphicsContext((int)renderContext.getMapWidthX(), (int)renderContext.getMapHeightY()).build();
+        drawMap(renderContext, graphicsContext, map);
 
+        graphicsContext.saveImageToFile(fileNameGenerator.getOutputFileName());
+    }
+
+    public void drawMap(RenderContext renderContext, GraphicsContext graphicsContext, TilesMap map) {
         drawTiles(renderContext, graphicsContext, map);
         outlineTiles(renderContext, graphicsContext, map);
-
-        String path = "target/" + clazz.getPackageName().replace('.', '/') + "/" + clazz.getSimpleName();
-        String outputFileName = path + "/" + (++ n) + "_map_" + map.getWidth() + "x" + map.getHeight() + ".png";
-        graphicsContext.saveImageToFile(outputFileName);
     }
 
     public void drawTiles(RenderContext renderContext, GraphicsContext graphicsContext, TilesMap map) {
@@ -61,7 +63,6 @@ public class MapRender {
         HexagonRender hexagonRender = new HexagonRender();
 
         for (RenderTileInfo tileInfo : renderContext.getTilesInfo()) {
-            AbstractTile tile = map.getTile(tileInfo.col, tileInfo.row);
             hexagonRender.outline(renderContext, graphicsContext, tileInfo, Color.WHITE);
         }
     }

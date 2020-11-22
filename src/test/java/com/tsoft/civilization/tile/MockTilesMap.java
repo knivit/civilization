@@ -21,9 +21,10 @@ import com.tsoft.civilization.tile.feature.oasis.Oasis;
 import com.tsoft.civilization.util.Point;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class MockTilesMap extends TilesMap {
-    private static HashMap<Character, String> tileCodes = new HashMap<>();
+    private static final Map<Character, String> tileCodes = new HashMap<>();
 
     static {
         // base tiles
@@ -47,8 +48,8 @@ public class MockTilesMap extends TilesMap {
         tileCodes.put('o', Oasis.CLASS_UUID);
     }
 
-    private HashMap<Character, String> asciiTileClasses = new HashMap<>();
-    private HashMap<String, Character> tilesAscii = new HashMap<>();
+    private final Map<Character, String> asciiTileClasses = new HashMap<>();
+    private final Map<String, Character> tilesAscii = new HashMap<>();
 
     /** To use with one layer (i.e. tiles only, without features) */
     public MockTilesMap(MapType mapType, String ... asciiLines) {
@@ -65,7 +66,7 @@ public class MockTilesMap extends TilesMap {
     }
 
     // Set tiles' ascii codes
-    private void setTileCodes(HashMap<Character, String> tileCodes) {
+    private void setTileCodes(Map<Character, String> tileCodes) {
         for (Character ch : tileCodes.keySet()) {
             String tileClass = tileCodes.get(ch);
             asciiTileClasses.put(ch, tileClass);

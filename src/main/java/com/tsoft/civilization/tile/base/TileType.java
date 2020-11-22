@@ -7,7 +7,7 @@ public enum TileType {
 
     SEA(false);
 
-    private boolean isEarth;
+    private final boolean isEarth;
 
     TileType(boolean isEarth) {
         this.isEarth = isEarth;

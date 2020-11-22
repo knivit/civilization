@@ -1,13 +1,22 @@
 package com.tsoft.civilization.tile;
 
+import com.tsoft.civilization.MockWorld;
+import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.util.Point;
 import org.junit.jupiter.api.Test;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class TileMapTest {
+public class TilesMapTest {
+
     @Test
     public void getTilesAround1() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
@@ -136,5 +145,46 @@ public class TileMapTest {
         assertEquals(new Point(0, 3), locations.get(33));
         assertEquals(new Point(1, 2), locations.get(34));
         assertEquals(new Point(1, 1), locations.get(35));
+    }
+
+    @Test
+    public void testIterator() {
+        MockWorld world = MockWorld.newSimpleWorld();
+        TilesMap map = world.getMockTilesMap();
+
+        Iterator<AbstractTile> tiles = map.iterator();
+        for (int y = 0; y < map.getHeight(); y ++) {
+            for (int x = 0; x < map.getWidth(); x ++) {
+                assertEquals(map.getTile(x, y), tiles.next());
+            }
+        }
+
+        assertFalse(tiles.hasNext());
+    }
+
+    @Test
+    public void testParallelIterators() throws InterruptedException {
+        MockWorld world = MockWorld.newSimpleWorld();
+        TilesMap map = world.getMockTilesMap();
+
+        ExecutorService executors = Executors.newFixedThreadPool(16);
+        executors.submit(() -> {
+            int n = 0;
+            for (AbstractTile tile : map) n++;
+            assertEquals(map.getWidth() * map.getHeight(), n);
+        });
+        executors.shutdown();
+        executors.awaitTermination(10, TimeUnit.SECONDS);
+    }
+
+    @Test
+    public void testStream() {
+        AtomicInteger n = new AtomicInteger(0);
+
+        MockWorld world = MockWorld.newSimpleWorld();
+        TilesMap map = world.getMockTilesMap();
+
+        map.tiles().forEach(e -> n.incrementAndGet());
+        assertEquals(map.getWidth() * map.getHeight(), n.get());
     }
 }

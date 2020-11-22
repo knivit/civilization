@@ -61,7 +61,7 @@ public class RenderContext {
         buildRenderInfo();
     }
 
-    public void buildRenderContext() {
+    private void buildRenderContext() {
         tileWidth1of2 = tileWidth * 1/2;
         tileHeight2of3 = tileHeight * 2/3;
         tileHeight1of3 = tileHeight * 1/3;
@@ -96,7 +96,7 @@ public class RenderContext {
     }
 
     // Create an array with (x,y), (col,row) info to update the canvas
-    public void buildRenderInfo() {
+    private void buildRenderInfo() {
         tilesInfo = new ArrayList<>();
         tilesInfoMap = new HashMap<>();
 

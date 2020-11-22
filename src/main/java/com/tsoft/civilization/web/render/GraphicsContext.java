@@ -6,15 +6,14 @@ import lombok.extern.slf4j.Slf4j;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 
-@Getter
 @Slf4j
+@Getter
 public class GraphicsContext {
 
     // Rendered image size in pixels
@@ -39,16 +38,16 @@ public class GraphicsContext {
         return this;
     }
 
-    public void saveImageToFile(String outputFileName) {
+    public void saveImageToFile(Path outputFileName) {
         try {
-            Files.deleteIfExists(Path.of(outputFileName));
-            Files.createDirectories(Path.of(outputFileName));
+            Files.deleteIfExists(outputFileName);
+            Files.createDirectories(outputFileName);
         } catch (Exception e) {
             throw new IllegalStateException("Can't create file " + outputFileName, e);
         }
 
         try {
-            ImageIO.write(img, "png", new File(outputFileName));
+            ImageIO.write(img, "png", outputFileName.toFile());
             log.info("File {} generated", outputFileName);
         } catch (IOException e) {
             throw new IllegalStateException(e);

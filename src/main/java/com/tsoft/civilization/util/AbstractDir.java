@@ -3,9 +3,8 @@ package com.tsoft.civilization.util;
 import java.util.ArrayList;
 
 public abstract class AbstractDir {
-    private int dX;
-
-    private int dY;
+    private final int dX;
+    private final int dY;
 
     public abstract ArrayList<? extends AbstractDir> getDirs(int y);
 
