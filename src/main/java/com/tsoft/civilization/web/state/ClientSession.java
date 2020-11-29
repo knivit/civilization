@@ -12,10 +12,6 @@ public class ClientSession {
     private final String ip;
     private final String userAgent;
     private final Date createdTime;
-    private Date lastRequestTime;
-    private int requestCount;
-    private long receivedBytes;
-    private long sendBytes;
     private String language;
 
     // Game data
@@ -23,23 +19,15 @@ public class ClientSession {
     private String civilizationId;
 
     public ClientSession(String ip, String userAgent) {
-        this.ip = ip;
-        this.userAgent = userAgent;
-
         this.sessionId = UUID.randomUUID().toString();
         this.createdTime = new Date();
+
+        this.ip = ip;
+        this.userAgent = userAgent;
     }
 
     public String getSessionId() {
         return sessionId;
-    }
-
-    public Date getLastRequestTime() {
-        return lastRequestTime;
-    }
-
-    public void setLastRequestTime(Date lastRequestTime) {
-        this.lastRequestTime = lastRequestTime;
     }
 
     public String getLanguage() {
@@ -51,16 +39,24 @@ public class ClientSession {
     }
 
     public Civilization getCivilization() {
-        World world = Worlds.getWorld(worldId);
-        if (world != null) {
-            return world.getCivilizationById(civilizationId);
+        if (worldId != null) {
+            World world = Worlds.getWorld(worldId);
+            if (world != null && civilizationId != null) {
+                return world.getCivilizationById(civilizationId);
+            }
         }
+
         return null;
     }
 
     public void setActiveCivilization(Civilization civilization) {
-        civilizationId = civilization.getId();
-        worldId = civilization.getWorld().getId();
+        if (civilization == null) {
+            civilizationId = null;
+            worldId = null;
+        } else {
+            civilizationId = civilization.getId();
+            worldId = civilization.getWorld().getId();
+        }
     }
 
     @Override

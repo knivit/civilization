@@ -1,5 +1,7 @@
 package com.tsoft.civilization.unit.civil.citizen;
 
+import com.tsoft.civilization.unit.civil.citizen.view.*;
+
 /**
  * Specialists are citizens of your cities which, instead of trudging in the fields and mines around the cities,
  * dedicate themselves to more refined work in your special buildings' specialist slots.
@@ -19,5 +21,21 @@ package com.tsoft.civilization.unit.civil.citizen;
  * specialists produce no more Unhappiness than any other Citizen, and can even produce less with the right enhancers.
  */
 public enum SpecialistType {
-    Artist, Musician, Writer, Engineer, Merchant, Scientist;
+
+    ARTIST(new ArtistView()),
+    MUSICIAN(new MusicianView()),
+    WRITER(new WriterView()),
+    ENGINEER(new EngineerView()),
+    MERCHANT(new MerchantView()),
+    SCIENTIST(new ScientistView());
+
+    private final CitizenView view;
+
+    SpecialistType(CitizenView view) {
+        this.view = view;
+    }
+
+    public CitizenView getView() {
+        return view;
+    }
 }

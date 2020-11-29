@@ -24,7 +24,7 @@ public class DestroyUnitActionTest {
                 "1| . g .",
                 "2|. . . ",
                 "3| . . .");
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
         // The only settlers can't be destroyed

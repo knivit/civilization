@@ -36,7 +36,7 @@ public class AttackActionTest {
                 "1| . g g .",
                 "2|. . g . ",
                 "3| . . . .");
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
         Civilization c2 = world.createCivilization(AMERICA);
         world.setCivilizationsRelations(c1, c2, CivilizationsRelations.WAR);
@@ -92,7 +92,7 @@ public class AttackActionTest {
                 "1| . . g g . . .", "1| . . . j . . .",
                 "2|. . g . g . . ", "2|. . f . . . . ",
                 "3| . g g g . . .", "3| . . . h . . .");
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
         Civilization c2 = world.createCivilization(AMERICA);
         world.setCivilizationsRelations(c1, c2, CivilizationsRelations.WAR);
@@ -175,7 +175,7 @@ public class AttackActionTest {
                 "3| . . . g g g .",
                 "4|. . . . . g . ",
                 "5| . . . . . . .");
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
         Civilization c2 = world.createCivilization(AMERICA);
         world.setCivilizationsRelations(c1, c2, CivilizationsRelations.WAR);

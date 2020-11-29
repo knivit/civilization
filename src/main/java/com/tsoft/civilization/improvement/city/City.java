@@ -145,6 +145,10 @@ public class City extends AbstractImprovement implements HasCombatStrength {
         buildingService.remove(building);
     }
 
+    public CityPopulationService population() {
+        return populationService;
+    }
+
     public List<Point> getCitizenLocations() {
         return populationService.getPopulationLocations();
     }
@@ -161,7 +165,7 @@ public class City extends AbstractImprovement implements HasCombatStrength {
         return buildingService.canStartConstruction();
     }
 
-    public Construction getConstruction() {
+    public Construction<?> getConstruction() {
         return buildingService.getConstruction();
     }
 
@@ -170,7 +174,7 @@ public class City extends AbstractImprovement implements HasCombatStrength {
     }
 
     // Construction of a building or an unit is finished
-    public void constructionDone(Construction construction) {
+    public void constructionDone(Construction<?> construction) {
         CanBeBuilt obj = construction.getObject();
 
         if (obj instanceof AbstractBuilding) {

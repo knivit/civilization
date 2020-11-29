@@ -4,6 +4,7 @@ import com.tsoft.civilization.L10n.L10nCity;
 import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.unit.civil.citizen.Citizen;
+import com.tsoft.civilization.unit.civil.citizen.CitizenList;
 import com.tsoft.civilization.unit.civil.citizen.CitizenPlacementTable;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.Year;
@@ -13,7 +14,6 @@ import com.tsoft.civilization.world.event.Event;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Excess food above the 2 per citizen required to feed the existing population goes
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 public class CityPopulationService {
     private final City city;
 
-    private final List<Citizen> citizens = new ArrayList<>();
+    private final CitizenList citizens = new CitizenList();
 
     private final Map<Year, Supply> supplyHistory = new HashMap<>();
 
@@ -65,10 +65,11 @@ public class CityPopulationService {
     }
 
     public List<Point> getPopulationLocations() {
-        return citizens.stream()
-            .map(Citizen::getLocation)
-            .filter(Objects::nonNull)
-            .collect(Collectors.toList());
+        return citizens.getLocations();
+    }
+
+    public CitizenList getCitizens() {
+        return citizens.unmodifiableList();
     }
 
     /* Returns NULL when a location doesn't found */

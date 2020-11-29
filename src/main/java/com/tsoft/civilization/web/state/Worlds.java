@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Worlds {
-    private static Map<String, World> worlds = new HashMap<>();
+    private static final Map<String, World> worlds = new HashMap<>();
 
     public static synchronized void add(World world) {
         worlds.put(world.getId(), world);
@@ -19,7 +19,6 @@ public class Worlds {
     }
 
     public static synchronized List<World> getWorlds() {
-        List<World> list = new ArrayList<>(worlds.values());
-        return list;
+        return new ArrayList<>(worlds.values());
     }
 }

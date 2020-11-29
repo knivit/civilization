@@ -4,6 +4,7 @@ import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.base.AbstractTile;
+import com.tsoft.civilization.unit.civil.citizen.view.LaborerView;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.economic.Supply;
 
@@ -42,10 +43,16 @@ public class Citizen {
     private Point location;
     private SpecialistType specialistType;
 
+    private static final CitizenView VIEW = new LaborerView();
+
     private final TileService tileService = new TileService();
 
     public Citizen(City city) {
         this.city = city;
+    }
+
+    public City getCity() {
+        return city;
     }
 
     public Point getLocation() {
@@ -62,6 +69,10 @@ public class Citizen {
 
     public boolean isSpecialist() {
         return specialistType != null;
+    }
+
+    public CitizenView getView() {
+        return isSpecialist() ? specialistType.getView() : VIEW;
     }
 
     public Supply getSupply() {

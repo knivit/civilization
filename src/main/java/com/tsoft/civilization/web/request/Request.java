@@ -3,9 +3,10 @@ package com.tsoft.civilization.web.request;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.HashMap;
 import java.util.Map;
 
-@Builder
+@Builder(builderClassName = "RequestBuilder")
 public class Request {
     @Getter
     private final String clientIp;
@@ -25,6 +26,17 @@ public class Request {
 
     private final Map<String, String> headers;
     private final Map<String, String> params;
+
+    public static class RequestBuilder {
+        public RequestBuilder param(String key, Object value) {
+            if (params == null) {
+                params = new HashMap<>();
+            }
+
+            params.put(key, (value == null) ? null : value.toString());
+            return this;
+        }
+    }
 
     public String get(String paramName) {
         return params.get(paramName);

@@ -7,17 +7,15 @@ import com.tsoft.civilization.unit.civil.workers.Workers;
 import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.MockRequest;
+import com.tsoft.civilization.web.ajax.action.status.GetCivilizationStatus;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
-import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.state.Worlds;
 import com.tsoft.civilization.civilization.Civilization;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import java.util.UUID;
 
 import static com.tsoft.civilization.L10n.L10nCivilization.AMERICA;
 import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
@@ -28,7 +26,7 @@ public class GetCivilizationStatusTest {
 
     @BeforeAll
     public static void classSetUp() {
-        ajaxRequest = AbstractAjaxRequest.getInstance("GetCivilizationStatus");
+        ajaxRequest = AbstractAjaxRequest.getInstance(GetCivilizationStatus.class.getSimpleName());
     }
 
     @Test
@@ -42,10 +40,8 @@ public class GetCivilizationStatusTest {
         c1.units().addUnit(warriors, new Point(2, 1));
         City city1 = c1.createCity(new Point(2, 2));
 
-        ClientSession session = Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
         Worlds.add(world);
-        session.setActiveCivilization(c1);
-
+        Sessions.setActiveCivilization(c1);
         Request request = MockRequest.newInstance("civilization", c1.getId());
 
         Response response = ajaxRequest.getJson(request);
@@ -65,10 +61,8 @@ public class GetCivilizationStatusTest {
         c2.units().addUnit(warriors, new Point(2, 1));
         City city1 = c2.createCity(new Point(2, 2));
 
-        ClientSession session = Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
         Worlds.add(world);
-        session.setActiveCivilization(c1);
-
+        Sessions.setActiveCivilization(c1);
         Request mockRequest = MockRequest.newInstance("civilization", c1.getId());
 
         Response response = ajaxRequest.getJson(mockRequest);

@@ -3,17 +3,15 @@ package com.tsoft.civilization.web.ajax;
 import com.tsoft.civilization.MockWorld;
 
 import com.tsoft.civilization.web.MockRequest;
+import com.tsoft.civilization.web.ajax.action.status.GetCivilizations;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
-import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.state.Worlds;
 import com.tsoft.civilization.civilization.Civilization;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import java.util.UUID;
 
 import static com.tsoft.civilization.L10n.L10nCivilization.AMERICA;
 import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
@@ -24,7 +22,7 @@ public class GetCivilizationsTest {
 
     @BeforeAll
     public static void classSetUp() {
-        ajaxRequest = AbstractAjaxRequest.getInstance("GetCivilizations");
+        ajaxRequest = AbstractAjaxRequest.getInstance(GetCivilizations.class.getSimpleName());
     }
 
     @Test
@@ -33,10 +31,8 @@ public class GetCivilizationsTest {
         Civilization c1 = world.createCivilization(RUSSIA);
         Civilization c2 = world.createCivilization(AMERICA);
 
-        ClientSession session = Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
         Worlds.add(world);
-        session.setActiveCivilization(c1);
-
+        Sessions.setActiveCivilization(c1);
         Request request = MockRequest.newInstance();
 
         Response response = ajaxRequest.getJson(request);

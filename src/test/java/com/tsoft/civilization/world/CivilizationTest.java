@@ -69,7 +69,7 @@ public class CivilizationTest {
             "3| . . .");
         mapRender.createPng(map);
 
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
         civilization.units().addFirstUnits();
@@ -93,7 +93,7 @@ public class CivilizationTest {
             "3| . . .");
         mapRender.createPng(map);
 
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
         civilization.units().addFirstUnits();
 

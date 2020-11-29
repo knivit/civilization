@@ -31,7 +31,7 @@ public class RemoveForestActionTest {
                 "2|. . . ", "2|. . . ", "2|. . . ",
                 "3| . . .", "3| . . .", "3| . . .");
 
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
         AbstractTile tile = map.getTile(1, 1);
         Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);
@@ -57,7 +57,7 @@ public class RemoveForestActionTest {
                 "2|. . . ", "2|. . . ", "2|. . . ",
                 "3| . . .", "3| . . .", "3| . . .");
 
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
         civilization.addTechnology(Technology.MINING);
 

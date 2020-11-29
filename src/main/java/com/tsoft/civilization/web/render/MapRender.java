@@ -29,7 +29,7 @@ public class MapRender {
         GraphicsContext graphicsContext = new GraphicsContext((int)renderContext.getMapWidthX(), (int)renderContext.getMapHeightY()).build();
         drawMap(renderContext, graphicsContext, map);
 
-        graphicsContext.saveImageToFile(fileNameGenerator.getOutputFileName());
+        graphicsContext.saveImageToFile(fileNameGenerator.getOutputFileName(".png"));
     }
 
     public void drawMap(RenderContext renderContext, GraphicsContext graphicsContext, TilesMap map) {

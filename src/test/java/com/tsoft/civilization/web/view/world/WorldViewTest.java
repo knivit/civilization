@@ -27,7 +27,7 @@ public class WorldViewTest {
                 "-+------", "-+------", "-+------",
                 "0|g g g ", "0|h h . ", "0|f . . ",
                 "1| g g g", "1| h h .", "1| f . .");
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
 
         // a city with two units in it

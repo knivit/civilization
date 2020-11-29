@@ -35,7 +35,7 @@ public class CivilizationScoreTest {
                 "3| . . .");
         mapRender.createPng(map);
 
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
         worldRender.createPng(world);
 
@@ -54,7 +54,7 @@ public class CivilizationScoreTest {
                 "3| . . .");
         mapRender.createPng(map);
 
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
         City city = c1.createCity(new Point(1, 1));
 
@@ -94,10 +94,10 @@ public class CivilizationScoreTest {
             "2|g g g g g ", "2|n f h h m ", "2|. . . f . ",
             "3| . g p . .", "3| . j o . .", "3| . . . . .");
 
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
         City city = civilization.createCity(new Point(2, 1));
-        worldRender.createPng(world);
+        worldRender.createHtml(world, civilization);
 
         // add all other tiles
         Collection<Point> locations = map.getLocationsAround(new Point(2, 1), 3);
@@ -149,7 +149,7 @@ public class CivilizationScoreTest {
                 "3| . . .", "3| . . .");
         mapRender.createPng(map);
 
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
         City city = c1.createCity(new Point(1, 1));
         city.addCitizen();

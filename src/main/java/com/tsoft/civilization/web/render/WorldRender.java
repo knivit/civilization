@@ -10,10 +10,12 @@ import com.tsoft.civilization.web.render.civilization.BorderRender;
 import com.tsoft.civilization.web.render.civilization.CivilizationRender;
 import com.tsoft.civilization.web.render.city.CityRender;
 import com.tsoft.civilization.web.render.unit.UnitRenderCatalog;
+import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.world.World;
 import lombok.extern.slf4j.Slf4j;
 
 import java.awt.*;
+import java.nio.file.Path;
 import java.util.List;
 
 @Slf4j
@@ -31,7 +33,24 @@ public class WorldRender {
         fileNameGenerator = new RenderFileNameGenerator(clazz, "world");
     }
 
-    public void createPng(World world) {
+    public void createHtml(World world, Civilization activeCivilization) {
+        Civilization currentCivilization = Sessions.getCurrent().getCivilization();
+        try {
+            Sessions.getCurrent().setActiveCivilization(activeCivilization);
+
+            Path imageFileName = createPng(world);
+
+            StatusContext statusContext = new StatusContext();
+            StatusRender statusRender = new StatusRender();
+            statusContext.setImage(imageFileName);
+            statusRender.render(statusContext, world);
+            statusContext.saveHtmlToFile(fileNameGenerator.getOutputFileName(".html"));
+        } finally {
+            Sessions.getCurrent().setActiveCivilization(currentCivilization);
+        }
+    }
+
+    public Path createPng(World world) {
         TilesMap map = world.getTilesMap();
         RenderContext renderContext = new RenderContext(map.getWidth(), map.getHeight(), TILE_WIDTH_PX, TILE_HEIGHT_PX);
         GraphicsContext graphicsContext = new GraphicsContext((int)renderContext.getMapWidthX(), (int)renderContext.getMapHeightY()).build();
@@ -42,7 +61,9 @@ public class WorldRender {
         drawCities(renderContext, graphicsContext, world.getCivilizations());
         drawCivilizationsBoundaries(renderContext, graphicsContext, map, world.getCivilizations());
 
-        graphicsContext.saveImageToFile(fileNameGenerator.getOutputFileName());
+        Path generatedFileName = fileNameGenerator.getOutputFileName(".png");
+        graphicsContext.saveImageToFile(generatedFileName);
+        return generatedFileName;
     }
 
     private void drawCivilizationsBoundaries(RenderContext renderContext, GraphicsContext graphicsContext, TilesMap map, CivilizationList civilizations) {

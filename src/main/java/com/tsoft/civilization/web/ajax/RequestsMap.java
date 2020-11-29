@@ -16,13 +16,17 @@ import com.tsoft.civilization.web.ajax.action.world.GetCreateWorldForm;
 import com.tsoft.civilization.web.ajax.action.world.JoinWorld;
 import com.tsoft.civilization.web.ajax.action.world.LoadWorld;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class RequestsMap {
-    private static Map<String, AbstractAjaxRequest> requests = new HashMap<>();
+    private static final Map<String, AbstractAjaxRequest> REQUESTS;
 
     static {
+        Map<String, AbstractAjaxRequest> requests = new HashMap<>();
+        REQUESTS = Collections.unmodifiableMap(requests);
+
         // Worlds
         requests.put(GetWorlds.class.getSimpleName(), new GetWorlds());
         requests.put(CreateWorld.class.getSimpleName(), new CreateWorld());
@@ -73,6 +77,6 @@ public class RequestsMap {
     }
 
     public static AbstractAjaxRequest get(String name) {
-        return requests.get(name);
+        return REQUESTS.get(name);
     }
 }

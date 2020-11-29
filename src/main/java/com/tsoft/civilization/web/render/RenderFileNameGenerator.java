@@ -16,12 +16,15 @@ public class RenderFileNameGenerator {
         this.fileNameTemplate = fileNameTemplate;
     }
 
-    public Path getOutputFileName() {
+    public Path getOutputFileName(String ext) {
         StackWalker walker = StackWalker.getInstance();
-        String methodName = walker.walk(frames -> frames.skip(2).findFirst().map(StackWalker.StackFrame::getMethodName)).orElse("method");
+        String methodName = walker.walk(frames -> frames
+                .filter(s -> s.getClassName().endsWith("Test"))
+                .findFirst().map(StackWalker.StackFrame::getMethodName))
+            .orElse("method");
 
         AtomicInteger n = order.computeIfAbsent(methodName, (s) -> new AtomicInteger(0));
-        String fileName = methodName  + "_" + fileNameTemplate + "_" + n.addAndGet(1) + ".png";
+        String fileName = methodName  + "_" + fileNameTemplate + "_" + n.addAndGet(1) + ext;
 
         return Path.of("target", clazz.getPackageName().replace('.', '/'), clazz.getSimpleName(), fileName);
     }

@@ -2,19 +2,19 @@ package com.tsoft.civilization.improvement.city;
 
 import com.tsoft.civilization.improvement.CanBeBuilt;
 
-public class Construction {
+public class Construction <T extends CanBeBuilt> {
     // a building or an unit
-    private CanBeBuilt object;
+    private final T object;
 
     private int productionCost;
 
-    public Construction(CanBeBuilt object) {
+    public Construction(T object) {
         this.object = object;
 
         productionCost = object.getProductionCost();
     }
 
-    public CanBeBuilt getObject() {
+    public T getObject() {
         return object;
     }
 

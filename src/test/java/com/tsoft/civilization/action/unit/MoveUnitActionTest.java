@@ -38,7 +38,7 @@ public class MoveUnitActionTest {
                 "1| . g .",
                 "2|. . . ",
                 "3| . . .");
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
         // try out all possible directions - it must be impossible
@@ -63,7 +63,7 @@ public class MoveUnitActionTest {
                 "1| g g g",
                 "2|. g g ",
                 "3| . . .");
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
         // try out all possible directions - it must be OK
@@ -89,7 +89,7 @@ public class MoveUnitActionTest {
                 "1| g g g . . .",
                 "2|g . . . g g ",
                 "3| . . . g . g");
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
         // try one complex route - it must be OK
@@ -132,7 +132,7 @@ public class MoveUnitActionTest {
                 "1| . g g",
                 "2|. . . ",
                 "3| . . .");
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
         Settlers settlers1 = UnitFactory.newInstance(Settlers.CLASS_UUID);
@@ -169,7 +169,7 @@ public class MoveUnitActionTest {
                 "1| . g g",
                 "2|. . . ",
                 "3| . . .");
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
         Settlers settlers1 = UnitFactory.newInstance(Settlers.CLASS_UUID);
@@ -206,7 +206,7 @@ public class MoveUnitActionTest {
                 "1| . g .",
                 "2|. g . ",
                 "3| . g .");
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
         Settlers settlers1 = UnitFactory.newInstance(Settlers.CLASS_UUID);
@@ -244,7 +244,7 @@ public class MoveUnitActionTest {
                 "1| . g g",
                 "2|. . . ",
                 "3| . . .");
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
         Warriors warriors = UnitFactory.newInstance(Warriors.CLASS_UUID);
@@ -276,7 +276,7 @@ public class MoveUnitActionTest {
                 "1| . g g",
                 "2|. . . ",
                 "3| . . .");
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
         Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);
@@ -306,7 +306,7 @@ public class MoveUnitActionTest {
                 "1| . g g",
                 "2|. . . ",
                 "3| . . .");
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
         City city = civilization.createCity(new Point(2, 1));
@@ -341,7 +341,7 @@ public class MoveUnitActionTest {
                 "3| g g g g g", "3| . M M . .",
                 "4|g g g g g ", "4|M . . . . ",
                 "5| g g g g g", "5| . . . . .");
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
         Civilization c2 = world.createCivilization(AMERICA);
 
@@ -369,7 +369,7 @@ public class MoveUnitActionTest {
                 "3| g g g g g", "3| . M M . .",
                 "4|g g g g g ", "4|M . . . . ",
                 "5| g g g g g", "5| . . . . .");
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
 
         Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);
@@ -390,7 +390,7 @@ public class MoveUnitActionTest {
                 "3| g g g g g", "3| . M M . .",
                 "4|g g g g g ", "4|M . . . . ",
                 "5| g g g g g", "5| . . . . .");
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
 
         Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);
@@ -413,7 +413,7 @@ public class MoveUnitActionTest {
                 "3| g g g g g", "3| . M M . M",
                 "4|g g g g g ", "4|M . . . M ",
                 "5| g g g g g", "5| M M M M M");
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
 
         Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);
@@ -435,7 +435,7 @@ public class MoveUnitActionTest {
                 "3| g g g g g", "3| . M M . M",
                 "4|g g g g g ", "4|M . . . M ",
                 "5| g g g g g", "5| M M M M M");
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
 
         Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);

@@ -64,6 +64,10 @@ public class TilesMap implements Iterable<AbstractTile> {
         tile.setLocation(location);
     }
 
+    public Point getLocation(int x, int y) {
+        return getTile(x, y).getLocation();
+    }
+
     @Override
     public Iterator<AbstractTile> iterator() {
         return new Iterator<>() {

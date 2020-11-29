@@ -19,7 +19,7 @@ public class CityBuildingService {
     private BuildingList destroyedBuildings = new BuildingList();
 
     // Current construction (building, unit) or null
-    private Construction construction;
+    private Construction<? extends CanBeBuilt> construction;
 
     public CityBuildingService(City city) {
         this.city = city;
@@ -63,12 +63,12 @@ public class CityBuildingService {
         return (city.getPassScore() > 0) && (construction == null);
     }
 
-    public Construction getConstruction() {
+    public Construction<? extends CanBeBuilt> getConstruction() {
         return construction;
     }
 
-    public void startConstruction(CanBeBuilt object) {
-        construction = new Construction(object);
+    public <T extends CanBeBuilt> void startConstruction(T object) {
+        construction = new Construction<>(object);
     }
 
     public Supply getSupply() {
@@ -90,8 +90,15 @@ public class CityBuildingService {
             return citySupply;
         }
 
-        int productionCost = construction.getProductionCost();
         int cityProduction = citySupply.getProduction();
+        if (cityProduction <= 0) {
+            log.debug("The city has production <= 0, so any construction is postponed");
+            return citySupply;
+        }
+
+        int productionCost = construction.getProductionCost();
+
+        // Can we build the object during this step ?
         if (productionCost <= cityProduction) {
             Supply constructionExpenses = Supply.builder().production(-productionCost).build();
             citySupply = citySupply.add(constructionExpenses);
@@ -100,10 +107,10 @@ public class CityBuildingService {
             city.constructionDone(construction);
             construction = null;
         } else {
-            construction.setProductionCost(productionCost - cityProduction);
-
             Supply constructionExpenses = Supply.builder().production(-cityProduction).build();
             citySupply = citySupply.add(constructionExpenses);
+
+            construction.setProductionCost(productionCost - cityProduction);
         }
 
         return citySupply;

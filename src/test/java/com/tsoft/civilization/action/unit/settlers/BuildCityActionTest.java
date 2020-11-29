@@ -25,7 +25,7 @@ public class BuildCityActionTest {
                 "1| . g .",
                 "2|. . . ",
                 "3| . . .");
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
         // Build a city
@@ -58,7 +58,7 @@ public class BuildCityActionTest {
                 "1| . g .",
                 "2|. . . ",
                 "3| . . .");
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
         // check 1
@@ -83,7 +83,7 @@ public class BuildCityActionTest {
                 "1| . . . . . . . .",
                 "2|. . . . . . . . ",
                 "3| . . . . . . . g");
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
         // check 1
@@ -113,7 +113,7 @@ public class BuildCityActionTest {
                 "5| . . . . . . . .",
                 "6|. . . . . . . . ",
                 "7| . . . . . . . .");
-        MockWorld world = new MockWorld(map);
+        MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
         // check 1
