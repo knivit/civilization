@@ -20,13 +20,17 @@ import com.tsoft.civilization.tile.feature.mountain.Mountain;
 import com.tsoft.civilization.tile.feature.oasis.Oasis;
 import com.tsoft.civilization.util.Point;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MockTilesMap extends TilesMap {
-    private static final Map<Character, String> tileCodes = new HashMap<>();
+    private static final Map<Character, String> TILE_CODES;
 
     static {
+        Map<Character, String> tileCodes = new HashMap<>();
+        TILE_CODES = Collections.unmodifiableMap(tileCodes);
+
         // base tiles
         tileCodes.put('.', Ocean.CLASS_UUID);
         tileCodes.put('g', Grassland.CLASS_UUID);
@@ -54,14 +58,14 @@ public class MockTilesMap extends TilesMap {
     /** To use with one layer (i.e. tiles only, without features) */
     public MockTilesMap(MapType mapType, String ... asciiLines) {
         super(mapType, (asciiLines[0].length() - 2) / 2, asciiLines.length - 2);
-        setTileCodes(tileCodes);
+        setTileCodes(TILE_CODES);
         setMockTiles(1, asciiLines);
     }
 
     /** To use with features on the tiles */
     public MockTilesMap(MapType mapType, int layerCount, String ... asciiLines) {
         super(mapType, (asciiLines[0].length() - 2) / 2, asciiLines.length / layerCount - 2);
-        setTileCodes(tileCodes);
+        setTileCodes(TILE_CODES);
         setMockTiles(layerCount, asciiLines);
     }
 

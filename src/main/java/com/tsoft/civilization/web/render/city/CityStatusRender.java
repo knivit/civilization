@@ -24,16 +24,17 @@ public class CityStatusRender {
         // Locations of World's population
         Map<Point, Citizen> citizens = world
             .getCivilizations().stream()
-                .flatMap(e -> e.cities().stream()
-                    .flatMap(f -> f.population().getCitizens().stream()))
-                        .collect(Collectors.toMap(c -> c.getLocation(), r -> r));
+            .flatMap(e -> e.cities().stream()
+            .flatMap(f -> f.population().getCitizens().stream()))
+            .filter(c -> c.getLocation() != null)
+            .collect(Collectors.toMap(c -> c.getLocation(), r -> r));
 
         // Map of cities' territory
         Map<Point, City> cities = new HashMap<>();
         world
             .getCivilizations().stream()
-                .flatMap(e -> e.cities().stream())
-                    .forEach(c -> c.getLocations().forEach(l -> cities.put(l, c)));
+            .flatMap(e -> e.cities().stream())
+            .forEach(c -> c.getLocations().forEach(l -> cities.put(l, c)));
 
         TilesMap map = world.getTilesMap();
         for (int y = 0; y < map.getHeight(); y ++) {
@@ -56,10 +57,10 @@ public class CityStatusRender {
                     if (citizen != null) {
                         buf.append("<table>");
                         buf.append("<tr>")
-                            .append("<th>").append("Citizen").append("</th>")
-                            .append("<th>").append("Food").append("</th>")
-                            .append("<th>").append("Production").append("</th>")
-       ?                     .append("<th>").append("Gold").append("</th>")
+                            .append("<th>Citizen</th>")
+                            .append("<th>Food</th>")
+                            .append("<th>Production</th>")
+                            .append("<th>Gold</th>")
                             .append("</tr>");
 
                         Supply supply = citizen.getSupply();
@@ -68,7 +69,7 @@ public class CityStatusRender {
                             .append("<td>").append(supply.getFood()).append("</td>")
                             .append("<td>").append(supply.getProduction()).append("</td>")
                             .append("<td>").append(supply.getGold()).append("</td>")
-                            .append("</tr");
+                            .append("</tr>");
 
                         buf.append("</table>");
                     } else {

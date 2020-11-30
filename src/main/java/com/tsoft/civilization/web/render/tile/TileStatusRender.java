@@ -11,10 +11,10 @@ public class TileStatusRender {
         StringBuilder buf = new StringBuilder();
         buf.append("<table>");
         buf.append("<tr>")
-            .append("<th>").append("Name").append("</th>")
-            .append("<th>").append("Food").append("</th>")
-            .append("<th>").append("Production").append("</th>")
-            .append("<th>").append("Gold").append("</th>")
+            .append("<th>Name</th>")
+            .append("<th>Food</th>")
+            .append("<th>Production</th>")
+            .append("<th>Gold</th>")
             .append("</tr>");
 
         Supply tileSupply = tile.getBaseSupply();
