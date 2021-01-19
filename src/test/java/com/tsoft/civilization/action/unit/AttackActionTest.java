@@ -17,6 +17,7 @@ import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationsRelations;
+import com.tsoft.civilization.web.render.WorldRender;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -49,6 +50,7 @@ public class AttackActionTest {
         c2.units().addUnit(foreignWarriors1, new Point(2, 1));
         Warriors foreignWarriors2 = UnitFactory.newInstance(Warriors.CLASS_UUID);
         c2.units().addUnit(foreignWarriors2, new Point(2, 2));
+        WorldRender.of(this).createHtml(world, c1);
 
         // first, there is foreign workers to attack
         HasCombatStrengthList targets = AttackAction.getTargetsToAttack(warriors);

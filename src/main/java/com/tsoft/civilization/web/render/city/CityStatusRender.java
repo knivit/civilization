@@ -19,7 +19,7 @@ public class CityStatusRender {
 
     public void render(StatusContext statusContext, World world) {
         StringBuilder buf = new StringBuilder();
-        buf.append("<table id='tiles-table'>\n");
+        buf.append("<table id='cities-table'>\n");
 
         // Locations of World's population
         Map<Point, Citizen> citizens = world

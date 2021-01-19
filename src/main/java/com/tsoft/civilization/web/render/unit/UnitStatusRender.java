@@ -10,7 +10,7 @@ public class UnitStatusRender {
 
     public void render(StatusContext statusContext, World world) {
         StringBuilder buf = new StringBuilder();
-        buf.append("<table id='tiles-table'>\n");
+        buf.append("<table id='units-table'>\n");
 
         TilesMap map = world.getTilesMap();
         for (int y = 0; y < map.getHeight(); y ++) {
@@ -19,10 +19,24 @@ public class UnitStatusRender {
             for (int x = 0; x < map.getWidth(); x ++) {
                 UnitList<?> units = world.getUnitsAtLocation(map.getLocation(x, y));
 
-                for (AbstractUnit unit : units) {
-                    buf.append("<td>\n");
-                    buf.append(unit.getView().getLocalizedName());
-                    buf.append("</td>\n");
+                if (units.isEmpty()) {
+                    buf.append("<td />\n");
+                } else {
+                    buf.append("<table>")
+                        .append("<tr>")
+                        .append("<th>Name</th>")
+                        .append("<th>Skills</th>")
+                        .append("</tr>");
+
+                    for (AbstractUnit unit : units) {
+                        buf.append("<tr>");
+                        buf.append("<td>\n");
+                        buf.append(unit.getView().getLocalizedName());
+                        buf.append(unit.getSkills());
+                        buf.append("</td>\n");
+                        buf.append("</tr>");
+                    }
+                    buf.append("</table>");
                 }
             }
 

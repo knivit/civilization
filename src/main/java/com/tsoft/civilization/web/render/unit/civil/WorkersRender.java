@@ -5,7 +5,7 @@ import com.tsoft.civilization.web.render.*;
 
 public class WorkersRender implements Render<Workers> {
 
-    private final ImageRender image = new ImageRender("web/images/status/units/worker.jpg");
+    private final ImageRender image = new ImageRender("web/images/status/units/worker.png");
 
     @Override
     public void render(RenderContext context, GraphicsContext graphics, RenderTileInfo tileInfo, Workers objToRender) {

@@ -29,8 +29,12 @@ public class WorldRender {
     private final CityRender cityRender = new CityRender();
     private final RenderCatalog<AbstractUnit> unitRenderCatalog = new UnitRenderCatalog();
 
-    public WorldRender(Class<?> clazz) {
-        fileNameGenerator = new RenderFileNameGenerator(clazz, "world");
+    public static WorldRender of(Object testClassObj) {
+        return new WorldRender(testClassObj);
+    }
+
+    private WorldRender(Object testClassObj) {
+        fileNameGenerator = new RenderFileNameGenerator(testClassObj.getClass(), "world");
     }
 
     public void createHtml(World world, Civilization activeCivilization) {
@@ -44,6 +48,7 @@ public class WorldRender {
             StatusRender statusRender = new StatusRender();
             statusContext.setImage(imageFileName);
             statusRender.render(statusContext, world);
+
             statusContext.saveHtmlToFile(fileNameGenerator.getOutputFileName(".html"));
         } finally {
             Sessions.getCurrent().setActiveCivilization(currentCivilization);

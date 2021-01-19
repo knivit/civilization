@@ -5,7 +5,7 @@ import com.tsoft.civilization.web.render.*;
 
 public class WarriorsRender implements Render<Warriors> {
 
-    private final ImageRender image = new ImageRender("web/images/status/units/warrior.jpg");
+    private final ImageRender image = new ImageRender("web/images/status/units/warrior.png");
 
     @Override
     public void render(RenderContext context, GraphicsContext graphics, RenderTileInfo tileInfo, Warriors objToRender) {

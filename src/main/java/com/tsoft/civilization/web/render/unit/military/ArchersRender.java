@@ -5,7 +5,7 @@ import com.tsoft.civilization.web.render.*;
 
 public class ArchersRender implements Render<Archers> {
 
-    private final ImageRender image = new ImageRender("web/images/status/units/archer.jpg");
+    private final ImageRender image = new ImageRender("web/images/status/units/archer.png");
 
     @Override
     public void render(RenderContext context, GraphicsContext graphics, RenderTileInfo tileInfo, Archers objToRender) {

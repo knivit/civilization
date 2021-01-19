@@ -28,7 +28,8 @@ public class GraphicsContext {
         this.widthX = widthX;
         this.heightY = heightY;
 
-        log.debug("Available fonts: {}", GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames());
+        String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+        log.debug("Available fonts: {}", (Object[]) fonts);
     }
 
     public GraphicsContext build() {

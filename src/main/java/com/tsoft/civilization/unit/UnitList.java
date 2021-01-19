@@ -8,38 +8,38 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class UnitList<E extends AbstractUnit> implements Iterable<E> {
-    private List<E> units = new ArrayList<>();
+public class UnitList implements Iterable<AbstractUnit> {
+    private List<AbstractUnit> units = new ArrayList<>();
     private boolean isUnmodifiable;
 
     public UnitList() { }
 
-    public UnitList(List<E> units) {
+    public UnitList(List<AbstractUnit> units) {
         Objects.requireNonNull(units);
         this.units = units;
     }
 
-    public List<E> getListCopy() {
+    public List<AbstractUnit> getListCopy() {
         return new ArrayList<>(units);
     }
 
-    public UnitList<E> unmodifiableList() {
-        UnitList<E> list = new UnitList<>();
+    public UnitList unmodifiableList() {
+        UnitList list = new UnitList();
         list.units.addAll(units);
         list.isUnmodifiable = true;
         return list;
     }
 
     @Override
-    public Iterator<E> iterator() {
+    public Iterator<AbstractUnit> iterator() {
         return units.iterator();
     }
 
-    public Stream<E> stream() {
+    public Stream<AbstractUnit> stream() {
         return units.stream();
     }
 
-    public E getAny() {
+    public AbstractUnit getAny() {
         return units.isEmpty() ? null : units.get(0);
     }
 
@@ -49,25 +49,25 @@ public class UnitList<E extends AbstractUnit> implements Iterable<E> {
         }
     }
 
-    public UnitList<E> add(AbstractUnit unit) {
+    public UnitList add(AbstractUnit unit) {
         checkIsUnmodifiable();
-        units.add((E)unit);
+        units.add(unit);
         return this;
     }
 
-    public UnitList<E> addAll(UnitList<?> otherUnits) {
+    public UnitList addAll(UnitList otherUnits) {
         checkIsUnmodifiable();
 
         if (otherUnits != null && !otherUnits.isEmpty()) {
             for (AbstractUnit unit : otherUnits ) {
-                units.add((E)unit);
+                units.add(unit);
             }
         }
         return this;
     }
 
-    public UnitList<E> remove(AbstractUnit unit) {
-        units.remove((E)unit);
+    public UnitList remove(AbstractUnit unit) {
+        units.remove(unit);
         return this;
     }
 
@@ -79,7 +79,7 @@ public class UnitList<E extends AbstractUnit> implements Iterable<E> {
         return units.size();
     }
 
-    public UnitList<?> findByClassUuid(String classUuid) {
+    public UnitList findByClassUuid(String classUuid) {
         return filter(u -> u.getClassUuid().equals(classUuid));
     }
 
@@ -119,17 +119,17 @@ public class UnitList<E extends AbstractUnit> implements Iterable<E> {
         return findAny(e -> e.getId().equals(unitId));
     }
 
-    public UnitList<?> getUnitsAtLocations(Collection<Point> locations) {
+    public UnitList getUnitsAtLocations(Collection<Point> locations) {
         return (locations == null || locations.isEmpty()) ?
-            new UnitList<>() : filter(e -> locations.contains(e.getLocation()));
+            new UnitList() : filter(e -> locations.contains(e.getLocation()));
     }
 
-    public UnitList<?> getUnitsWithActionsAvailable() {
+    public UnitList getUnitsWithActionsAvailable() {
         return filter(AbstractUnit::isActionAvailable);
     }
 
-    public UnitList<?> filter(Predicate<AbstractUnit> cond) {
-        UnitList<?> list = new UnitList<>();
+    public UnitList filter(Predicate<AbstractUnit> cond) {
+        UnitList list = new UnitList();
         for (AbstractUnit unit : units) {
             if (cond.test(unit)) {
                 list.add(unit);

@@ -1,5 +1,6 @@
 package com.tsoft.civilization.combat.skill;
 
+import com.tsoft.civilization.L10n.L10nMap;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.base.TileType;
@@ -22,5 +23,10 @@ public class StrikeOnRoughTerrainSkill extends AbstractSkill {
     @Override
     public int getTargetStrikeOnDefensePercent(HasCombatStrength attacker, HasCombatStrength defender) {
         return 0;
+    }
+
+    @Override
+    public L10nMap getLocalizedName() {
+        return null;
     }
 }
