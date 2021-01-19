@@ -44,8 +44,8 @@ public final class UnitFactory {
         UNIT_CATALOG.put(Workers.CLASS_UUID, Workers::new);
     }
 
-    public static UnitList<?> getAvailableUnits(Civilization civilization) {
-        UnitList<?> result = new UnitList<>();
+    public static UnitList getAvailableUnits(Civilization civilization) {
+        UnitList result = new UnitList();
 
         for (Supplier<AbstractUnit> supplier : UNIT_CATALOG.values()) {
             AbstractUnit unit = supplier.get();

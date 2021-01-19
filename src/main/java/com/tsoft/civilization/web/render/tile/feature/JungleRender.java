@@ -5,11 +5,11 @@ import com.tsoft.civilization.web.render.*;
 
 public class JungleRender implements Render<Jungle> {
 
-    private final ImageRender image = new ImageRender("web/images/status/tiles/jungle.jpg");
+    private final IconRender icon = new IconRender("web/images/status/tiles/jungle.jpg");
 
     @Override
     public void render(RenderContext context, GraphicsContext graphics, RenderTileInfo tileInfo, Jungle objToRender) {
-        image.render(context, graphics, tileInfo);
+        icon.render(context, graphics, tileInfo);
     }
 }
 

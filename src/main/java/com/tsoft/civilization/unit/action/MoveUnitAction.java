@@ -215,7 +215,7 @@ public class MoveUnitAction {
         }
 
         // get units located in the city
-        UnitList<?> units = thisCivilization.units().getUnitsAtLocation(location);
+        UnitList units = thisCivilization.units().getUnitsAtLocation(location);
         AbstractUnit nextUnit = units.findUnitByUnitKind(unit.getUnitCategory());
 
         // no units of such type, so we can enter into city
@@ -227,7 +227,7 @@ public class MoveUnitAction {
     }
 
     private static UnitMoveResult checkUnitsSwap(AbstractUnit unit, Point nextLocation, boolean canSwapLocations) {
-        UnitList<?> units = unit.getCivilization().units().getUnitsAtLocation(nextLocation);
+        UnitList units = unit.getCivilization().units().getUnitsAtLocation(nextLocation);
         AbstractUnit nextUnit = units.findUnitByUnitKind(unit.getUnitCategory());
         if (nextUnit == null) {
             return UnitMoveResult.CHECK_FAILED;
@@ -277,7 +277,7 @@ public class MoveUnitAction {
     }
 
     private static UnitMoveResult checkForeignUnits(AbstractUnit unit, Point location) {
-        UnitList<?> units = unit.getWorld().getUnitsAtLocation(location, unit.getCivilization());
+        UnitList units = unit.getWorld().getUnitsAtLocation(location, unit.getCivilization());
         if (units.isEmpty()) {
             return UnitMoveResult.CHECK_FAILED;
         }
@@ -350,7 +350,7 @@ public class MoveUnitAction {
                         }
 
                         // check for units
-                        UnitList<?> units = unit.getWorld().getUnitsAtLocation(nextLocation);
+                        UnitList units = unit.getWorld().getUnitsAtLocation(nextLocation);
                         if (!units.isEmpty()) {
                             isBlocked = true;
                         }
@@ -398,7 +398,7 @@ public class MoveUnitAction {
         // - other the same kind units from this civilization
         // - all foreign units
         // - all foreign cities
-        UnitList<?> units = unit.getWorld().getUnitsAtLocations(locations);
+        UnitList units = unit.getWorld().getUnitsAtLocations(locations);
         for (AbstractUnit ua : units) {
             if (unit.getCivilization().equals(ua.getCivilization())) {
                 if (unit.getUnitCategory().isMilitary() == ua.getUnitCategory().isMilitary()) {

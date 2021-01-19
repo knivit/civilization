@@ -56,7 +56,7 @@ public class GetTileStatus extends AbstractAjaxRequest {
     }
 
     private StringBuilder getUnitsInfo(Point location, World world) {
-        UnitList<?> units = world.getUnitsAtLocation(location);
+        UnitList units = world.getUnitsAtLocation(location);
         if (units.isEmpty()) {
             return null;
         }

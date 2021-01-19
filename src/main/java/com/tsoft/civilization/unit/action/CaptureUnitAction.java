@@ -57,8 +57,8 @@ public class CaptureUnitAction {
         return CaptureUnitActionResults.CAN_CAPTURE;
     }
 
-    private static UnitList<?> getTargetsToCapture(AbstractUnit capturer) {
-        UnitList<?> units = new UnitList<>();
+    private static UnitList getTargetsToCapture(AbstractUnit capturer) {
+        UnitList units = new UnitList();
 
         Collection<Point> locations = capturer.getTilesMap().getLocationsAround(capturer.getLocation(), 1);
         for (Point location : locations) {
@@ -78,7 +78,7 @@ public class CaptureUnitAction {
     }
 
     public static AbstractUnit getTargetToCaptureAtLocation(AbstractUnit capturer, Point location) {
-        UnitList<?> foreignUnits = capturer.getWorld().getUnitsAtLocation(location, capturer.getCivilization());
+        UnitList foreignUnits = capturer.getWorld().getUnitsAtLocation(location, capturer.getCivilization());
 
         // if there are military units, protecting the civilians, then there is nothing to capture
         if (foreignUnits.size() != 1) {
@@ -93,7 +93,7 @@ public class CaptureUnitAction {
     }
 
     public static List<Point> getLocationsToCapture(AbstractUnit unit) {
-        UnitList<?> units = getTargetsToCapture(unit);
+        UnitList units = getTargetsToCapture(unit);
         return units.getLocations();
     }
 

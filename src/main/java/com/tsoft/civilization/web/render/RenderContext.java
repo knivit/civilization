@@ -49,7 +49,7 @@ public class RenderContext {
 
     // Tiles' rendering info, a link between map (col, row) and screen (x, y)
     private List<RenderTileInfo> tilesInfo;
-    private Map<Point, RenderTileInfo> tilesInfoMap;
+    private Map<Point, List<RenderTileInfo>> tilesInfoMap;
 
     public RenderContext(int mapWidth, int mapHeight, float tileWidth, float tileHeight) {
         this.mapWidth = mapWidth;
@@ -96,6 +96,19 @@ public class RenderContext {
     }
 
     // Create an array with (x,y), (col,row) info to update the canvas
+    // In a hexagonal map one half of a tile can start the row and the other half (the same tile) can be at the end of row
+    // The same rule for 0 row - it will be repeated at the bottom
+    //
+    // So, for example, for a map 3x4 tilesInfo will be:
+    //     (0,0), (1,0), (2,0), (3,0),               <-- 0 row
+    //  (3,1), (0,1), (1,1), (2,1), (3,1),           <-- 1/2 of the same tile at the start and at the end of odd row
+    //     (0,2), (1,2), (2,2), (3,2),
+    //  (3,3), (0,3), (1,3), (2,0), (3,3),
+    //     (0,0), (1,0), (2,0), (3,0)                 <-- the same as 0 row
+    //
+    // As a result, tilesInfoMap for the same point can return 1 or 2 tile infos:
+    //     (0,0) will return 1 tile info
+    //     (3,1) - 2 infos (at the start and at the end of a row)
     private void buildRenderInfo() {
         tilesInfo = new ArrayList<>();
         tilesInfoMap = new HashMap<>();
@@ -120,8 +133,11 @@ public class RenderContext {
 
             while (true) {
                 RenderTileInfo tileInfo = new RenderTileInfo(Math.round(x), Math.round(y), col, row);
+
                 tilesInfo.add(tileInfo);
-                tilesInfoMap.put(new Point(col, row), tileInfo);
+
+                List<RenderTileInfo> infos = tilesInfoMap.computeIfAbsent(new Point(col, row), p -> new ArrayList<>());
+                infos.add(tileInfo);
 
                 x = x + getTileWidth();
                 if (x >= getCanvasWidth()) {
@@ -144,8 +160,8 @@ public class RenderContext {
         }
     }
 
-    /** Can return null */
-    public RenderTileInfo getTileInfo(Point location) {
+    /** Can return null, 1 or 2 elements list */
+    public List<RenderTileInfo> getTileInfo(Point location) {
         return tilesInfoMap.get(location);
     }
 }

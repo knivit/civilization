@@ -170,19 +170,19 @@ public class World {
         return civilizations.getCitiesAtLocations(locations, excludeCivilization);
     }
 
-    public UnitList<?> getUnitsAtLocation(Point location) {
+    public UnitList getUnitsAtLocation(Point location) {
         return getUnitsAtLocation(location, null);
     }
 
-    public UnitList<?> getUnitsAtLocation(Point location, Civilization excludeCivilization) {
+    public UnitList getUnitsAtLocation(Point location, Civilization excludeCivilization) {
         return civilizations.getUnitsAtLocation(location, excludeCivilization);
     }
 
-    public UnitList<?> getUnitsAtLocations(Collection<Point> locations) {
+    public UnitList getUnitsAtLocations(Collection<Point> locations) {
         return getUnitsAtLocations(locations, null);
     }
 
-    public UnitList<?> getUnitsAtLocations(Collection<Point> locations, Civilization excludeCivilization) {
+    public UnitList getUnitsAtLocations(Collection<Point> locations, Civilization excludeCivilization) {
         return civilizations.getUnitsAtLocations(locations, excludeCivilization);
     }
 

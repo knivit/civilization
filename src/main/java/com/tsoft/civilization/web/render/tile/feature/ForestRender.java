@@ -5,10 +5,10 @@ import com.tsoft.civilization.web.render.*;
 
 public class ForestRender implements Render<Forest> {
 
-    private final ImageRender image = new ImageRender("web/images/status/tiles/forest.jpg");
+    private final IconRender icon = new IconRender("web/images/status/tiles/forest.jpg");
 
     @Override
     public void render(RenderContext context, GraphicsContext graphics, RenderTileInfo tileInfo, Forest objToRender) {
-        image.render(context, graphics, tileInfo);
+        icon.render(context, graphics, tileInfo);
     }
 }

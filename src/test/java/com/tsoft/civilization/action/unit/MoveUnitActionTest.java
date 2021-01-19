@@ -324,7 +324,7 @@ public class MoveUnitActionTest {
         assertEquals(5, workers.getPassScore());
 
         assertEquals(city, civilization.cities().getCityAtLocation(new Point(2, 1)));
-        UnitList<?> units = civilization.units().getUnits();
+        UnitList units = civilization.units().getUnits();
         assertEquals(2, units.size());
         units = civilization.units().getUnitsAtLocation(new Point(2, 1));
         assertEquals(1, units.size());

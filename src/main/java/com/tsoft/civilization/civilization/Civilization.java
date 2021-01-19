@@ -196,7 +196,7 @@ public class Civilization {
     // Start point for a Civilization
     public Point getStartPoint() {
         // First, this is Settler's location
-        UnitList<?> units = unitService.findByClassUuid(Settlers.CLASS_UUID);
+        UnitList units = unitService.findByClassUuid(Settlers.CLASS_UUID);
         if (units != null && !units.isEmpty()) {
             return units.getAny().getLocation();
         }

@@ -58,7 +58,7 @@ public class BuildUnitActionTest {
         assertNull(city.getConstruction());
         assertEquals(1, civilization.units().size());
 
-        UnitList<?> list = civilization.units().findByClassUuid(Archers.CLASS_UUID);
+        UnitList list = civilization.units().findByClassUuid(Archers.CLASS_UUID);
         assertTrue(list != null && list.size() == 1);
         assertNotNull(list.getAny().getId());
         assertEquals(city.getLocation(), list.getAny().getLocation());

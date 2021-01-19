@@ -149,7 +149,7 @@ public abstract class AbstractUnit implements HasCombatStrength, CanBeBuilt {
     }
 
     @Override
-    public UnitList<?> getUnitsAround(int radius) {
+    public UnitList getUnitsAround(int radius) {
         return civilization.units().getUnitsAround(location, radius);
     }
 
@@ -193,7 +193,7 @@ public abstract class AbstractUnit implements HasCombatStrength, CanBeBuilt {
 
         // destroy all units located in that location
         if (destroyOtherUnitsAtLocation) {
-            UnitList<?> units = civilization.getWorld().getUnitsAtLocation(location);
+            UnitList units = civilization.getWorld().getUnitsAtLocation(location);
             for (AbstractUnit unit : units) {
                 // to prevent a recursion
                 if (!unit.equals(this)) {

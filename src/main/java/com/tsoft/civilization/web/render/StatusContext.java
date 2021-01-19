@@ -123,13 +123,13 @@ public class StatusContext {
             </html>
             """;
 
-    private String image = "";
+    private String imageFileName = "";
     private String tiles = "";
     private String units = "";
     private String cities = "";
 
-    public void setImage(Path imageFileName) {
-        image = imageFileName.getFileName().toString();
+    public void setImageFileName(Path imageFileName) {
+        this.imageFileName = imageFileName.getFileName().toString();
     }
 
     public void setTiles(String tiles) {
@@ -146,7 +146,7 @@ public class StatusContext {
 
     public void saveHtmlToFile(Path outputFileName) {
         String page = HTML_PAGE;
-        page = page.replace("___IMAGE___", image);
+        page = page.replace("___IMAGE___", imageFileName);
         page = page.replace("___TILES___", tiles);
         page = page.replace("___UNITS___", units);
         page = page.replace("___CITIES___", cities);

@@ -248,7 +248,7 @@ public class City extends AbstractImprovement implements HasCombatStrength {
     }
 
     @Override
-    public UnitList<?> getUnitsAround(int radius) {
+    public UnitList getUnitsAround(int radius) {
         return civilization.units().getUnitsAround(getLocation(), radius);
     }
 
@@ -284,7 +284,7 @@ public class City extends AbstractImprovement implements HasCombatStrength {
 
     /** Return true, if the unit can be placed (i.e. after a buy or on entering) in the city */
     public boolean canPlaceUnit(AbstractUnit unit) {
-        UnitList<?> units = getWorld().getUnitsAtLocation(getLocation());
+        UnitList units = getWorld().getUnitsAtLocation(getLocation());
         AbstractUnit sameTypeUnit = units.findUnitByUnitKind(unit.getUnitCategory());
         return sameTypeUnit == null;
     }

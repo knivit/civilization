@@ -73,7 +73,7 @@ public class CivilizationTest {
         Civilization civilization = world.createCivilization(RUSSIA);
 
         civilization.units().addFirstUnits();
-        UnitList<?> units = civilization.units().getUnits();
+        UnitList units = civilization.units().getUnits();
         assertEquals(2, units.size());
         assertEquals(1, units.getUnitClassCount(Settlers.class));
         assertEquals(1, units.getUnitClassCount(Warriors.class));
@@ -97,7 +97,7 @@ public class CivilizationTest {
         Civilization civilization = world.createCivilization(RUSSIA);
         civilization.units().addFirstUnits();
 
-        UnitList<?> units = civilization.units().getUnits();
+        UnitList units = civilization.units().getUnits();
         assertEquals(1, units.size());
         assertEquals(1, units.getUnitClassCount(Settlers.class));
     }

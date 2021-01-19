@@ -38,7 +38,7 @@ public class CityStatusRender {
 
         TilesMap map = world.getTilesMap();
         for (int y = 0; y < map.getHeight(); y ++) {
-            buf.append("<tr>");
+            buf.append("<tr>\n");
 
             for (int x = 0; x < map.getWidth(); x ++) {
                 Point location = map.getLocation(x, y);
@@ -46,9 +46,9 @@ public class CityStatusRender {
                 Citizen citizen = citizens.get(location);
 
                 if (citizen == null && city == null) {
-                    buf.append("<td>\n")
+                    buf.append("<td>")
                         .append(" ")
-                        .append("</td>\n");
+                        .append("</td>");
                 } else {
                     Color color = (city == null) ? null : civilizationRender.getColor(city.getCivilization());
                     boolean isCityLocation = (city != null) && city.getLocations().contains(location);
@@ -75,7 +75,7 @@ public class CityStatusRender {
                     } else {
                         buf.append(" ");
                     }
-                    buf.append("</td>\n");
+                    buf.append("</td>");
                 }
             }
 

@@ -104,7 +104,7 @@ public class CivilizationCityService {
         city.getCivilization().cities().removeCity(city);
 
         // destroy all military units located in the city and capture civilians
-        UnitList<?> units = world.getUnitsAtLocation(city.getLocation());
+        UnitList units = world.getUnitsAtLocation(city.getLocation());
         for (AbstractUnit unit : units) {
             if (unit.getUnitCategory().isMilitary()) {
                 unit.destroyedBy(destroyer, false);

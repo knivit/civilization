@@ -9,11 +9,11 @@ import java.awt.*;
 public class TundraRender implements Render<Tundra> {
 
     private final HexagonRender hexagonRender = new HexagonRender();
-    private final ImageRender image = new ImageRender("web/images/status/tiles/tundra.jpg");
+    private final IconRender icon = new IconRender("web/images/status/tiles/tundra.jpg");
 
     @Override
     public void render(RenderContext context, GraphicsContext graphics, RenderTileInfo tileInfo, Tundra objToRender) {
         hexagonRender.fill(context, graphics, tileInfo, new Color(h("#6d6552")));
-        image.render(context, graphics, tileInfo);
+        icon.render(context, graphics, tileInfo);
     }
 }

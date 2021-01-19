@@ -5,11 +5,11 @@ import com.tsoft.civilization.web.render.*;
 
 public class OasisRender implements Render<Oasis> {
 
-    private final ImageRender image = new ImageRender("web/images/status/tiles/oasis.jpg");
+    private final IconRender icon = new IconRender("web/images/status/tiles/oasis.jpg");
 
     @Override
     public void render(RenderContext context, GraphicsContext graphics, RenderTileInfo tileInfo, Oasis objToRender) {
-        image.render(context, graphics, tileInfo);
+        icon.render(context, graphics, tileInfo);
     }
 }
 

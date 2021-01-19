@@ -82,8 +82,8 @@ public class CivilizationList implements Iterable<Civilization> {
         return cities;
     }
 
-    public UnitList<?> getUnitsAtLocation(Point location, Civilization excludeCivilization) {
-        UnitList<?> units = new UnitList<>();
+    public UnitList getUnitsAtLocation(Point location, Civilization excludeCivilization) {
+        UnitList units = new UnitList();
         if (location == null) {
             return units;
         }
@@ -97,8 +97,8 @@ public class CivilizationList implements Iterable<Civilization> {
         return units;
     }
 
-    public UnitList<?> getUnitsAtLocations(Collection<Point> locations, Civilization excludeCivilization) {
-        UnitList<?> units = new UnitList<>();
+    public UnitList getUnitsAtLocations(Collection<Point> locations, Civilization excludeCivilization) {
+        UnitList units = new UnitList();
         for (Civilization civilization : civilizations) {
             if (civilization.equals(excludeCivilization)) {
                 continue;

@@ -17,7 +17,7 @@ public interface HasCombatStrength {
 
     UnitCategory getUnitCategory();
 
-    UnitList<?> getUnitsAround(int radius);
+    UnitList getUnitsAround(int radius);
 
     List<AbstractSkill> getSkills();
 

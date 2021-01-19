@@ -18,7 +18,7 @@ public class HasCombatStrengthList extends ArrayList<HasCombatStrength> {
         return locations;
     }
 
-    public HasCombatStrengthList addAll(UnitList<?> units) {
+    public HasCombatStrengthList addAll(UnitList units) {
         if (units != null && !units.isEmpty()) {
             for (AbstractUnit unit : units) {
                 add(unit);

@@ -129,7 +129,7 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
             return null;
         }
 
-        UnitList<?> units = civilization.units().getUnitsWithActionsAvailable();
+        UnitList units = civilization.units().getUnitsWithActionsAvailable();
         if (units.isEmpty()) {
             return null;
         }

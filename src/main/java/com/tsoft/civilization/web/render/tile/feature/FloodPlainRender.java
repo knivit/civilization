@@ -5,11 +5,11 @@ import com.tsoft.civilization.web.render.*;
 
 public class FloodPlainRender implements Render<FloodPlain> {
 
-    private final ImageRender image = new ImageRender("web/images/status/tiles/floodplain.jpg");
+    private final IconRender icon = new IconRender("web/images/status/tiles/floodplain.jpg");
 
     @Override
     public void render(RenderContext context, GraphicsContext graphics, RenderTileInfo tileInfo, FloodPlain objToRender) {
-        image.render(context, graphics, tileInfo);
+        icon.render(context, graphics, tileInfo);
     }
 }
 

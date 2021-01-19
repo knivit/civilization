@@ -9,11 +9,11 @@ import java.awt.*;
 public class GrasslandRender implements Render<Grassland> {
 
     private final HexagonRender hexagonRender = new HexagonRender();
-    private final ImageRender image = new ImageRender("web/images/status/tiles/grassland.jpg");
+    private final IconRender icon = new IconRender("web/images/status/tiles/grassland.jpg");
 
     @Override
     public void render(RenderContext context, GraphicsContext graphics, RenderTileInfo tileInfo, Grassland objToRender) {
         hexagonRender.fill(context, graphics, tileInfo, new Color(h("#6a7a39")));
-        image.render(context, graphics, tileInfo);
+        icon.render(context, graphics, tileInfo);
     }
 }

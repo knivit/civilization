@@ -42,7 +42,7 @@ public class GetControlPanel extends AbstractAjaxRequest {
     }
 
     private StringBuilder getControls(Civilization civilization) {
-        UnitList<?> units = civilization.units().getUnitsWithActionsAvailable();
+        UnitList units = civilization.units().getUnitsWithActionsAvailable();
         CityList cities = civilization.cities().getCitiesWithActionsAvailable();
 
         StringBuilder controls = new StringBuilder();

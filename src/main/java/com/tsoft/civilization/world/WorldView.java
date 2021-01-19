@@ -49,7 +49,7 @@ public class WorldView {
         for (int y = 0; y < height; y ++) {
             for (int x = 0; x < width; x ++) {
                 AbstractTile tile = world.getTilesMap().getTile(x, y);
-                UnitList<?> units = world.getUnitsAtLocation(tile.getLocation());
+                UnitList units = world.getUnitsAtLocation(tile.getLocation());
                 for (AbstractUnit unit : units) {
                     JsonBlock unitBlock = unit.getView().getJson(unit);
                     worldBlock.addElement(unitBlock.getText());

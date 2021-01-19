@@ -27,8 +27,8 @@ public class CivilizationUnitService {
     private final Civilization civilization;
 
     // Active units and destroyed (on this step) units
-    private final UnitList<?> units = new UnitList<>();
-    private UnitList<?> destroyedUnits = new UnitList<>();
+    private final UnitList units = new UnitList();
+    private UnitList destroyedUnits = new UnitList();
 
     private final TileService tileService = new TileService();
 
@@ -41,7 +41,7 @@ public class CivilizationUnitService {
         return units.stream();
     }
 
-    public UnitList<?> getUnits() {
+    public UnitList getUnits() {
         return units.unmodifiableList();
     }
 
@@ -49,7 +49,7 @@ public class CivilizationUnitService {
         return units.size();
     }
 
-    public UnitList<?> findByClassUuid(String classUuid) {
+    public UnitList findByClassUuid(String classUuid) {
         return units.findByClassUuid(classUuid);
     }
 
@@ -84,7 +84,7 @@ public class CivilizationUnitService {
         return units.getUnitById(unitId);
     }
 
-    public UnitList<?> getUnitsAtLocation(Point location) {
+    public UnitList getUnitsAtLocation(Point location) {
         List<Point> locations = new ArrayList<>(1);
         locations.add(location);
 
@@ -99,16 +99,16 @@ public class CivilizationUnitService {
         return units.getCivilCount();
     }
 
-    public UnitList<?> getUnitsAtLocations(Collection<Point> locations) {
+    public UnitList getUnitsAtLocations(Collection<Point> locations) {
         return units.getUnitsAtLocations(locations);
     }
 
-    public UnitList<?> getUnitsAround(Point location, int radius) {
+    public UnitList getUnitsAround(Point location, int radius) {
         Collection<Point> locations = world.getLocationsAround(location, radius);
         return getUnitsAtLocations(locations);
     }
 
-    public UnitList<?> getUnitsWithActionsAvailable() {
+    public UnitList getUnitsWithActionsAvailable() {
         return units.getUnitsWithActionsAvailable();
     }
 
@@ -170,7 +170,7 @@ public class CivilizationUnitService {
     }
 
     public void startYear() {
-        destroyedUnits = new UnitList<>();
+        destroyedUnits = new UnitList();
         units.stream().forEach(AbstractUnit::startYear);
     }
 

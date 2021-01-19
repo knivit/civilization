@@ -75,7 +75,7 @@ public class AttackAction {
         }
 
         // second, see is there a military unit
-        UnitList<?> foreignUnits = civilization.getWorld().getUnitsAtLocation(location, civilization);
+        UnitList foreignUnits = civilization.getWorld().getUnitsAtLocation(location, civilization);
         AbstractUnit militaryUnit = foreignUnits.findFirstMilitaryUnit();
         if (militaryUnit != null) {
             return militaryUnit;
@@ -283,7 +283,7 @@ public class AttackAction {
         Collection<Point> locations = world.getLocationsAround(attacker.getLocation(), radius);
 
         CityList citiesAround = world.getCitiesAtLocations(locations, attacker.getCivilization());
-        UnitList<?> unitsAround = world.getUnitsAtLocations(locations, attacker.getCivilization());
+        UnitList unitsAround = world.getUnitsAtLocations(locations, attacker.getCivilization());
 
         HasCombatStrengthList targets = new HasCombatStrengthList();
         targets.addAll(citiesAround);

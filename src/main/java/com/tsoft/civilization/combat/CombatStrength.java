@@ -187,7 +187,7 @@ public class CombatStrength {
     }
 
     private int getGreatGeneralCount(HasCombatStrength unit) {
-        UnitList<?> unitsAround = unit.getUnitsAround(2);
+        UnitList unitsAround = unit.getUnitsAround(2);
         return unitsAround.getGreatGeneralCount();
     }
 

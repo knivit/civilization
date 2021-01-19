@@ -1,51 +1,100 @@
 package com.tsoft.civilization.web.render;
 
-import lombok.RequiredArgsConstructor;
+import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.civilization.CivilizationList;
+import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.tile.TilesMap;
+import com.tsoft.civilization.tile.base.AbstractTile;
+import com.tsoft.civilization.unit.AbstractUnit;
+import com.tsoft.civilization.web.render.city.CityRender;
+import com.tsoft.civilization.web.render.civilization.BorderRender;
+import com.tsoft.civilization.web.render.civilization.CivilizationRender;
+import com.tsoft.civilization.web.render.unit.UnitRenderCatalog;
+import com.tsoft.civilization.world.World;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.ImageObserver;
-import java.net.URL;
+import java.nio.file.Path;
+import java.util.List;
 
-import static com.tsoft.civilization.web.render.Render.r;
-
-@RequiredArgsConstructor
 public class ImageRender {
 
-    private final String imageFileName;
+    private static final int TILE_WIDTH_PX = 120;
+    private static final int TILE_HEIGHT_PX = 120;
 
-    // lazy load
-    private Image image;
-    private final Observer observer = new Observer();
+    private final CivilizationRender civilizationRender = new CivilizationRender();
+    private final CityRender cityRender = new CityRender();
+    private final RenderCatalog<AbstractUnit> unitRenderCatalog = new UnitRenderCatalog();
 
-    public void render(RenderContext context, GraphicsContext graphics, RenderTileInfo tileInfo) {
-        loadImage();
+    public void createPng(World world, Path outputImageFileName) {
+        TilesMap map = world.getTilesMap();
+        RenderContext renderContext = new RenderContext(map.getWidth(), map.getHeight(), TILE_WIDTH_PX, TILE_HEIGHT_PX);
+        GraphicsContext graphicsContext = new GraphicsContext((int)renderContext.getMapWidthX(), (int)renderContext.getMapHeightY()).build();
 
-        int x = tileInfo.x;
-        int y = tileInfo.y;
-        float[] ox = context.getHexBordersX();
-        float[] oy = context.getHexBordersY();
-        graphics.getG().drawImage(image, r(x), r(y + oy[0]), r(ox[3] - ox[0]), r(oy[3] - oy[2]), observer);
+        MapRender mapRender = new MapRender();
+        mapRender.drawMap(renderContext, graphicsContext, map);
+        drawUnits(renderContext, graphicsContext, world.getCivilizations());
+        drawCities(renderContext, graphicsContext, world.getCivilizations());
+        drawCivilizationsBoundaries(renderContext, graphicsContext, map, world.getCivilizations());
+
+        graphicsContext.saveImageToFile(outputImageFileName);
     }
 
-    private static class Observer implements ImageObserver {
+    private void drawCivilizationsBoundaries(RenderContext renderContext, GraphicsContext graphicsContext, TilesMap map, CivilizationList civilizations) {
+        BorderRender borderRender = new BorderRender();
 
-        @Override
-        public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
-            return true;
+        boolean[] sides = new boolean[6];
+        for (AbstractTile tile : map) {
+            Civilization civ = civilizations.getCivilizationOnTile(tile.getLocation());
+            if (civ == null) {
+                continue;
+            }
+
+            int side = 0;
+            List<AbstractTile> tilesAround = map.getTilesAround(tile.getLocation(), 1);
+            for (AbstractTile neighborTile : tilesAround) {
+                Civilization neighborCiv = civilizations.getCivilizationOnTile(neighborTile.getLocation());
+                sides[side] = (neighborCiv == null) || !neighborCiv.equals(civ);
+            }
+
+            Color color = civilizationRender.getColor(civ);
+            List<RenderTileInfo> infos = renderContext.getTileInfo(tile.getLocation());
+            for (RenderTileInfo tileInfo : infos) {
+                borderRender.outline(renderContext, graphicsContext, tileInfo, sides, color);
+            }
         }
     }
 
-    private synchronized void loadImage() {
-        if (image != null) {
-            return;
-        }
+    private void drawUnits(RenderContext renderContext, GraphicsContext graphics, CivilizationList civilizations) {
+        civilizations.stream()
+            .flatMap(c -> c.units().stream())
+            .forEach(u -> {
+                List<RenderTileInfo> infos = renderContext.getTileInfo(u.getLocation());
+                drawUnit(renderContext, graphics, infos, u);
+            });
+    }
 
-        URL resource = getClass().getClassLoader().getResource(imageFileName);
-        try {
-            image = ImageIO.read(resource);
-        } catch (Exception e) {
-            throw new IllegalStateException("Can't load image from " + imageFileName);
+    private void drawUnit(RenderContext context, GraphicsContext graphics, List<RenderTileInfo> infos, AbstractUnit unit) {
+        if (infos != null) {
+            for (RenderTileInfo tileInfo : infos) {
+                unitRenderCatalog.render(context, graphics, tileInfo, unit);
+            }
+        }
+    }
+
+    private void drawCities(RenderContext renderContext, GraphicsContext graphics, CivilizationList civilizations) {
+        civilizations.stream()
+            .flatMap(c -> c.cities().stream())
+            .forEach(c -> {
+                List<RenderTileInfo> infos = renderContext.getTileInfo(c.getLocation());
+                drawCity(renderContext, graphics, infos, c);
+            });
+    }
+
+    private void drawCity(RenderContext context, GraphicsContext graphics, List<RenderTileInfo> infos, City city) {
+        if (infos != null) {
+            for (RenderTileInfo tileInfo : infos) {
+                cityRender.render(context, graphics, tileInfo, city);
+            }
         }
     }
 }

@@ -14,14 +14,13 @@ public class UnitStatusRender {
 
         TilesMap map = world.getTilesMap();
         for (int y = 0; y < map.getHeight(); y ++) {
-            buf.append("<tr>");
+            buf.append("<tr>\n");
 
             for (int x = 0; x < map.getWidth(); x ++) {
-                UnitList<?> units = world.getUnitsAtLocation(map.getLocation(x, y));
+                UnitList units = world.getUnitsAtLocation(map.getLocation(x, y));
 
-                if (units.isEmpty()) {
-                    buf.append("<td />\n");
-                } else {
+                buf.append("<td>");
+                if (!units.isEmpty()) {
                     buf.append("<table>")
                         .append("<tr>")
                         .append("<th>Name</th>")
@@ -30,14 +29,15 @@ public class UnitStatusRender {
 
                     for (AbstractUnit unit : units) {
                         buf.append("<tr>");
-                        buf.append("<td>\n");
+                        buf.append("<td>");
                         buf.append(unit.getView().getLocalizedName());
                         buf.append(unit.getSkills());
-                        buf.append("</td>\n");
+                        buf.append("</td>");
                         buf.append("</tr>");
                     }
                     buf.append("</table>");
                 }
+                buf.append("</td>\n");
             }
 
             buf.append("</tr>\n");
