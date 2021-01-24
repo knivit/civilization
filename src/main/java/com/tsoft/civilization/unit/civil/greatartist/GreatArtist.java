@@ -19,12 +19,15 @@ import java.util.UUID;
  */
 public class GreatArtist extends AbstractUnit {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
-    public static final GreatArtist STUB = new GreatArtist();
 
     private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
             .setStrength(20);
 
     private static final GreatArtistView VIEW = new GreatArtistView();
+
+    public GreatArtist(Civilization civilization) {
+        super(civilization);
+    }
 
     @Override
     public UnitCategory getUnitCategory() {

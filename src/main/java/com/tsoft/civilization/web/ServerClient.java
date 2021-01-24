@@ -99,7 +99,7 @@ public class ServerClient {
             "Connection: keep-alive\r\n" +
              "\r\n",
 
-            "$errorCode", response.getErrorCode(),
+            "$errorCode", response.getResponseCode(),
             "$contentType", response.getContentType(),
             "$contentLength", response.getContentLength(),
             "$additionalHeaders", response.getAdditionalHeaders()

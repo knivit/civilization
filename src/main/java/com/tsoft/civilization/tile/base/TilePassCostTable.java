@@ -40,6 +40,7 @@ public final class TilePassCostTable {
     }
 
     public static int get(Civilization civilization, AbstractUnit unit, AbstractTile tile) {
+        Objects.requireNonNull(civilization, "Civilization can't be null");
         Objects.requireNonNull(unit, "Unit can't be null");
         Objects.requireNonNull(tile, "Tile can't be null");
 

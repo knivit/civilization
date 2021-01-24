@@ -2,13 +2,14 @@ package com.tsoft.civilization.tile;
 
 import com.tsoft.civilization.technology.Technology;
 
+// Immutable
 public class PassCost {
-    private int passCost;
-    private Technology technology;
+    private final Technology technology;
+    private final int passCost;
 
-    public PassCost(int passCost, Technology technology) {
-        this.passCost = passCost;
+    public PassCost(Technology technology, int passCost) {
         this.technology = technology;
+        this.passCost = passCost;
     }
 
     public int getPassCost() {

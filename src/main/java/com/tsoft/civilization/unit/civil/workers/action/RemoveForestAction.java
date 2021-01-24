@@ -21,8 +21,11 @@ public class RemoveForestAction {
 
         AbstractTile tile = workers.getTile();
         Forest forest = tile.getFeature(Forest.class);
-        forest.addStrength(-1);
+        if (forest == null) {
+            return WorkersActionResults.FAIL_NO_FOREST_HERE;
+        }
 
+        forest.addStrength(-1);
         return forest.isRemoved() ? WorkersActionResults.FOREST_IS_REMOVED : WorkersActionResults.REMOVING_FOREST;
     }
 
@@ -32,8 +35,7 @@ public class RemoveForestAction {
         }
 
         AbstractTile tile = workers.getTile();
-        Forest forest = (Forest)tile.getFeature(Forest.class);
-        if (forest == null) {
+        if (!tile.hasFeature(Forest.class)) {
             return WorkersActionResults.FAIL_NO_FOREST_HERE;
         }
 

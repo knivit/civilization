@@ -99,6 +99,19 @@ public abstract class AbstractTile {
         return terrainFeatures.getByClass(featureClass);
     }
 
+    @SafeVarargs
+    public final boolean hasFeature(Class<? extends TerrainFeature> ... features) {
+        if (features != null) {
+            for (Class<? extends TerrainFeature> feature : features) {
+                if (terrainFeatures.getByClass(feature) != null) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     public void addFeature(TerrainFeature feature) {
         terrainFeatures.add(feature);
     }
@@ -108,15 +121,28 @@ public abstract class AbstractTile {
     }
 
     public boolean isOcean() {
-        return Ocean.class.equals(getClass());
+        return isIn(Ocean.class);
     }
 
     public boolean isTundra() {
-        return Tundra.class.equals(getClass());
+        return isIn(Tundra.class);
     }
 
     public boolean isGrassland() {
-        return Grassland.class.equals(getClass());
+        return isIn(Grassland.class);
+    }
+
+    @SafeVarargs
+    public final boolean isIn(Class<? extends AbstractTile> ... classes) {
+        if (classes != null) {
+            for (Class<? extends AbstractTile> clazz : classes) {
+                if (clazz.equals(getClass())) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     @Override

@@ -38,7 +38,7 @@ public class BuyBuildingAction {
             return CityActionResults.INVALID_BUILDING;
         }
 
-        if (!building.checkEraAndTechnology(city.getCivilization())) {
+        if (!building.requiresEraAndTechnology(city.getCivilization())) {
             return CityActionResults.WRONG_ERA_OR_TECHNOLOGY;
         }
 

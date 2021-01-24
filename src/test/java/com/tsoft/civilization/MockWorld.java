@@ -12,23 +12,23 @@ public class MockWorld extends World {
 
     public static MockWorld newSimpleWorld() {
         MockTilesMap simpleMap = new MockTilesMap(MapType.SIX_TILES,
-                " |0 1 2 3 ",
-                "-+--------",
-                "0|. . g . ",
-                "1| . p g .",
-                "2|. . g . ",
-                "3| . . . .");
+            " |0 1 2 3 ",
+            "-+--------",
+            "0|. . g . ",
+            "1| . p g .",
+            "2|. . g . ",
+            "3| . . . .");
         return MockWorld.of(simpleMap);
     }
 
     public static MockWorld newWorldWithFeatures() {
         MockTilesMap simpleMap = new MockTilesMap(MapType.SIX_TILES, 3,
-                " |0 1 2 3 ", " |0 1 2 3 ", " |0 1 2 3 ",
-                "-+--------", "-+--------", "-+--------",
-                "0|. . g . ", "0|. . h . ", "0|. . f . ",
-                "1| . g g .", "1| . M f .", "1| . . . .",
-                "2|. . g . ", "2|. . h . ", "2|. . . . ",
-                "3| . . . .", "3| . . . .", "3| . . . .");
+            " |0 1 2 3 ", " |0 1 2 3 ", " |0 1 2 3 ",
+            "-+--------", "-+--------", "-+--------",
+            "0|. . g . ", "0|. . h . ", "0|. . f . ",
+            "1| . g g .", "1| . M f .", "1| . . . .",
+            "2|. . g . ", "2|. . h . ", "2|. . . . ",
+            "3| . . . .", "3| . . . .", "3| . . . .");
         return MockWorld.of(simpleMap);
     }
 

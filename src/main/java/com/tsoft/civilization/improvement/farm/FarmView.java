@@ -6,7 +6,7 @@ import com.tsoft.civilization.improvement.AbstractImprovementView;
 public class FarmView extends AbstractImprovementView {
     @Override
     public String getLocalizedName() {
-        return L10nImprovement.ROAD_NAME.getLocalized();
+        return L10nImprovement.FARM_NAME.getLocalized();
     }
 
     @Override
@@ -16,6 +16,6 @@ public class FarmView extends AbstractImprovementView {
 
     @Override
     public String getStatusImageSrc() {
-        return "";
+        return "images/status/improvements/farm.png";
     }
 }

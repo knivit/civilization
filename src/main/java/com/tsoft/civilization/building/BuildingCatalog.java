@@ -8,7 +8,7 @@ import com.tsoft.civilization.building.settlement.Settlement;
 import com.tsoft.civilization.building.walls.Walls;
 
 public class BuildingCatalog {
-    private static BuildingList catalog;
+    private static final BuildingList catalog;
 
     // Read-only objects, this map is to use as a catalog only
     static {

@@ -18,12 +18,15 @@ import java.util.UUID;
  */
 public class GreatMerchant extends AbstractUnit {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
-    public static final GreatMerchant STUB = new GreatMerchant();
 
     private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
             .setStrength(0);
 
     private static final GreatMerchantView VIEW = new GreatMerchantView();
+
+    public GreatMerchant(Civilization civilization) {
+        super(civilization);
+    }
 
     @Override
     public UnitCategory getUnitCategory() {

@@ -2,6 +2,7 @@ package com.tsoft.civilization.improvement;
 
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.tile.TilesMap;
+import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.World;
@@ -18,6 +19,8 @@ public abstract class AbstractImprovement {
     protected Civilization civilization;
     protected Point location;
 
+    public abstract boolean acceptEraAndTechnology(Civilization civilization);
+    public abstract boolean acceptTile(AbstractTile tile);
     public abstract Supply getSupply();
     public abstract CombatStrength getBaseCombatStrength();
     public abstract AbstractImprovementView getView();

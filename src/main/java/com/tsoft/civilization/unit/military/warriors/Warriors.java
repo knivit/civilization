@@ -18,7 +18,6 @@ import java.util.UUID;
  */
 public class Warriors extends AbstractUnit {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
-    public static final Warriors STUB = new Warriors();
 
     private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
             .setMeleeAttackStrength(10)
@@ -27,6 +26,10 @@ public class Warriors extends AbstractUnit {
             .setCanConquerCity(true);
 
     private static final WarriorsView VIEW = new WarriorsView();
+
+    public Warriors(Civilization civilization) {
+        super(civilization);
+    }
 
     @Override
     public UnitCategory getUnitCategory() {

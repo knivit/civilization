@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GetMyUnitsTest {
     private static AbstractAjaxRequest ajaxRequest;
@@ -31,16 +32,16 @@ public class GetMyUnitsTest {
     public void getJSON() {
         MockWorld world = MockWorld.newSimpleWorld();
         Civilization c1 = world.createCivilization(RUSSIA);
-        Archers archers = UnitFactory.newInstance(Archers.CLASS_UUID);
-        c1.units().addUnit(archers, new Point(2, 0));
-        Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);
-        c1.units().addUnit(workers, new Point(2, 0));
+        Archers archers = UnitFactory.newInstance(c1, Archers.CLASS_UUID);
+        assertTrue(c1.units().addUnit(archers, new Point(2, 0)));
+        Workers workers = UnitFactory.newInstance(c1, Workers.CLASS_UUID);
+        assertTrue(c1.units().addUnit(workers, new Point(2, 0)));
 
         Worlds.add(world);
         Sessions.setActiveCivilization(c1);
         Request request = MockRequest.newInstance();
 
         Response response = ajaxRequest.getJson(request);
-        assertEquals(ResponseCode.OK, response.getErrorCode());
+        assertEquals(ResponseCode.OK, response.getResponseCode());
     }
 }

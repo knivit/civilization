@@ -1,26 +1,20 @@
 package com.tsoft.civilization.tile;
 
-import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.civilization.Civilization;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PassCostList extends ArrayList<PassCost> {
-    public static PassCostList of(Object ... vals) {
+
+    public static PassCostList of(PassCost ... costs) {
         PassCostList result = new PassCostList();
-        for (int i = 0; i < vals.length; i += 2) {
-            result.add((Technology)vals[i], (int)vals[i + 1]);
-        }
+        result.addAll(Arrays.asList(costs));
         return result;
     }
 
     public PassCostList() {
         super();
-    }
-
-    private void add(Technology technology, int passCost) {
-        PassCost ps = new PassCost(passCost, technology);
-        super.add(ps);
     }
 
     public int getPassCost(Civilization civilization) {

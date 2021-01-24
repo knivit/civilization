@@ -45,7 +45,7 @@ public class BuildUnitActionTest {
         assertEquals(CityActionResults.UNIT_CONSTRUCTION_IS_STARTED, actionResult);
 
         // Wait till it builds
-        Archers archers = UnitFactory.newInstance(Archers.CLASS_UUID);
+        Archers archers = UnitFactory.newInstance(civilization, Archers.CLASS_UUID);
         int neededSteps = archers.getProductionCost() / 3 + 1;
         for (int i = 0; i < neededSteps; i ++) {
             world.move();

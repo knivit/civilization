@@ -36,7 +36,7 @@ public class BuyUnitActionTest {
         Civilization puppet = world.createCivilization(AMERICA);
 
         city.setPassScore(1);
-        Archers archers = UnitFactory.newInstance(Archers.CLASS_UUID);
+        Archers archers = UnitFactory.newInstance(puppet, Archers.CLASS_UUID);
         civilization.giftReceived(puppet, Supply.builder().gold(archers.getGoldCost()).build());
 
         assertEquals(CityActionResults.UNIT_WAS_BOUGHT, BuyUnitAction.buyUnit(city, Archers.CLASS_UUID));

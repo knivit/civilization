@@ -32,7 +32,7 @@ public class BuyUnitAction {
             return CityActionResults.CITY_NOT_FOUND;
         }
 
-        AbstractUnit unit = UnitFactory.newInstance(unitClassUuid);
+        AbstractUnit unit = UnitFactory.newInstance(city.getCivilization(), unitClassUuid);
         if (unit.getGoldCost() < 0) {
             return CityActionResults.INVALID_UNIT;
         }
@@ -41,12 +41,12 @@ public class BuyUnitAction {
             return CityActionResults.WRONG_ERA_OR_TECHNOLOGY;
         }
 
-        if (!city.getCivilization().units().canBuyUnit(unit)) {
-            return CityActionResults.NOT_ENOUGH_MONEY;
+        if (!city.getCivilization().units().canBePlaced(unit, city.getLocation())) {
+            return CityActionResults.CITY_CANT_PLACE_UNIT;
         }
 
-        if (!city.canPlaceUnit(unit)) {
-            return CityActionResults.CITY_CANT_PLACE_UNIT;
+        if (!city.getCivilization().units().canBuyUnit(unit, city)) {
+            return CityActionResults.NOT_ENOUGH_MONEY;
         }
 
         return CityActionResults.CAN_BUY_UNIT;

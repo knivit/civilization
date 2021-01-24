@@ -16,8 +16,7 @@ import com.tsoft.civilization.civilization.Civilization;
 import org.junit.jupiter.api.Test;
 
 import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class WorldViewTest {
     @Test
@@ -32,33 +31,14 @@ public class WorldViewTest {
 
         // a city with two units in it
         City city1 = c1.createCity(new Point(0, 0));
-        Warriors warriors = UnitFactory.newInstance(Warriors.CLASS_UUID);
-        c1.units().addUnit(warriors, new Point(0, 0));
-        Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);
-        c1.units().addUnit(workers, new Point(0, 0));
-        Settlers settlers = UnitFactory.newInstance(Settlers.CLASS_UUID);
-        c1.units().addUnit(settlers, new Point(1, 0));
+        Warriors warriors = UnitFactory.newInstance(c1, Warriors.CLASS_UUID);
+        assertTrue(c1.units().addUnit(warriors, new Point(0, 0)));
+        Workers workers = UnitFactory.newInstance(c1, Workers.CLASS_UUID);
+        assertTrue(c1.units().addUnit(workers, new Point(0, 0)));
+        Settlers settlers = UnitFactory.newInstance(c1, Settlers.CLASS_UUID);
+        assertTrue(c1.units().addUnit(settlers, new Point(1, 0)));
 
         JsonBlock worldBlock = world.getView().getJSON();
-        //assertEquals("{\"width\":\"3\",\"height\":\"2\",
-        // \"tiles\":[
-        //   {\"name\":\"g\",
-        //    \"features\":[
-        //       {\"name\":\"h\"},
-        //       {\"name\":\"f\"}]},
-        //   {\"name\":\"g\",
-        //    \"features\":[
-        //      {\"name\":\"h\"}]},{\"name\":\"g\",\"features\":[]},{\"name\":\"g\",\"features\":[{\"name\":\"h\"},{\"name\":\"f\"}]},{\"name\":\"g\",\"features\":[{\"name\":\"h\"}]},{\"name\":\"g\",\"features\":[]}],
-        //
-        // \"civilizations\":[{\"name\":\"Russia\"}],
-        //
-        // \"units\":[
-        //   {\"col\":\"0\",\"row\":\"0\",\"name\":\"Warriors\",\"civ\":\"Russia\"},
-        //   {\"col\":\"0\",\"row\":\"0\",\"name\":\"Workers\",\"civ\":\"Russia\"},
-        //   {\"col\":\"1\",\"row\":\"0\",\"name\":\"Settlers\",\"civ\":\"Russia\"}],
-        //
-        // \"cities\":[{\"col\":\"0\",\"row\":\"0\",\"name\":\"Moscow\",\"civilization\":\"Russia\",\"isCapital\":\"true\",\"locations\":[{\"col\":\"0\",\"row\":\"1\"},{\"col\":\"0\",\"row\":\"0\"},{\"col\":\"1\",\"row\":\"0\"},{\"col\":\"2\",\"row\":\"0\"},{\"col\":\"2\",\"row\":\"1\"}]}]}", worldBlock.getText());
-
         JsonNode jsonObj = new ObjectMapper().readTree(worldBlock.getText());
         assertNotNull(jsonObj);
         assertEquals(6, jsonObj.size());

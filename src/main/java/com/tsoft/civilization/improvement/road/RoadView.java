@@ -16,6 +16,6 @@ public class RoadView extends AbstractImprovementView {
 
     @Override
     public String getStatusImageSrc() {
-        return "";
+        return "images/status/improvements/road.png";
     }
 }

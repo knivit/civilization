@@ -53,7 +53,7 @@ public class MoveUnitAction {
     }
 
     public static ActionAbstractResult canMove(AbstractUnit unit) {
-        if (unit == null || unit.isDestroyed()) {
+        if (unit == null || unit.isDestroyed() || unit.getLocation() == null) {
             return MoveUnitActionResults.UNIT_NOT_FOUND;
         }
 
@@ -216,7 +216,7 @@ public class MoveUnitAction {
 
         // get units located in the city
         UnitList units = thisCivilization.units().getUnitsAtLocation(location);
-        AbstractUnit nextUnit = units.findUnitByUnitKind(unit.getUnitCategory());
+        AbstractUnit nextUnit = units.findUnitByCategory(unit.getUnitCategory());
 
         // no units of such type, so we can enter into city
         if (nextUnit == null) {
@@ -228,7 +228,7 @@ public class MoveUnitAction {
 
     private static UnitMoveResult checkUnitsSwap(AbstractUnit unit, Point nextLocation, boolean canSwapLocations) {
         UnitList units = unit.getCivilization().units().getUnitsAtLocation(nextLocation);
-        AbstractUnit nextUnit = units.findUnitByUnitKind(unit.getUnitCategory());
+        AbstractUnit nextUnit = units.findUnitByCategory(unit.getUnitCategory());
         if (nextUnit == null) {
             return UnitMoveResult.CHECK_FAILED;
         }

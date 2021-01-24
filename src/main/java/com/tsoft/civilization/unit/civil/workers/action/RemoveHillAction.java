@@ -20,9 +20,12 @@ public class RemoveHillAction {
         }
 
         AbstractTile tile = workers.getTile();
-        Hill hill = (Hill)tile.getFeature(Hill.class);
-        hill.addStrength(-1);
+        Hill hill = tile.getFeature(Hill.class);
+        if (hill == null) {
+            return WorkersActionResults.FAIL_NO_HILL_HERE;
+        }
 
+        hill.addStrength(-1);
         return hill.isRemoved() ? WorkersActionResults.HILL_IS_REMOVED : WorkersActionResults.REMOVING_HILL;
     }
 
@@ -32,8 +35,7 @@ public class RemoveHillAction {
         }
 
         AbstractTile tile = workers.getTile();
-        Hill hill = (Hill)tile.getFeature(Hill.class);
-        if (hill == null) {
+        if (!tile.hasFeature(Hill.class)) {
             return WorkersActionResults.FAIL_NO_HILL_HERE;
         }
 

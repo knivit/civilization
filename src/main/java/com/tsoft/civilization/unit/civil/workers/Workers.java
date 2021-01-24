@@ -25,12 +25,15 @@ import java.util.UUID;
  */
 public class Workers extends AbstractUnit {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
-    public static final Workers STUB = new Workers();
 
     private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
             .setStrength(0);
 
     private static final WorkersView VIEW = new WorkersView();
+
+    public Workers(Civilization civilization) {
+        super(civilization);
+    }
 
     @Override
     public UnitCategory getUnitCategory() {

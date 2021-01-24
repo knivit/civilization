@@ -61,16 +61,16 @@ public class CivilizationUnitService {
         }
 
         // create the Settlers unit
-        Settlers settlers = UnitFactory.newInstance(Settlers.CLASS_UUID);
-        addUnit(settlers, settlersLocation);
+        Settlers settlers = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
+        if (!addUnit(settlers, settlersLocation)) {
+            throw new IllegalStateException("Can't place the Settlers");
+        }
 
         // try to place Warriors near the Settlers
-        Warriors warriors = UnitFactory.newInstance(Warriors.CLASS_UUID);
+        Warriors warriors = UnitFactory.newInstance(civilization, Warriors.CLASS_UUID);
         Collection<Point> locations = world.getLocationsAround(settlersLocation, 2);
         for (Point location : locations) {
-            AbstractTile tile = world.getTilesMap().getTile(location);
-            if (tileService.getPassCost(civilization, Warriors.STUB, tile) != TilePassCostTable.UNPASSABLE) {
-                addUnit(warriors, location);
+            if (addUnit(warriors, location)) {
                 break;
             }
         }
@@ -120,10 +120,25 @@ public class CivilizationUnitService {
         return attacker;
     }
 
-    public void addUnit(AbstractUnit unit, Point location) {
-        units.add(unit);
-        unit.setLocation(location);
-        unit.setCivilization(civilization);
+    public boolean canBePlaced(AbstractUnit unit, Point location) {
+        AbstractTile tile = world.getTilesMap().getTile(location);
+        if (tileService.getPassCost(unit, tile) == TilePassCostTable.UNPASSABLE) {
+            return false;
+        }
+
+        UnitList units = world.getUnitsAtLocation(location);
+        AbstractUnit sameCategoryUnit = units.findUnitByCategory(unit.getUnitCategory());
+        return sameCategoryUnit == null;
+    }
+
+    public boolean addUnit(AbstractUnit unit, Point location) {
+        if (canBePlaced(unit, location)) {
+            units.add(unit);
+            unit.setLocation(location);
+            return true;
+        }
+
+        return false;
     }
 
     public void removeUnit(AbstractUnit unit) {
@@ -134,14 +149,19 @@ public class CivilizationUnitService {
         world.sendEvent(new Event(Event.UPDATE_WORLD, this, L10nUnit.UNIT_WAS_DESTROYED_EVENT, unit.getView().getLocalizedName()));
     }
 
-    public boolean canBuyUnit(AbstractUnit unit) {
-        int gold = civilization.getSupply().getGold();
-        return gold >= unit.getGoldCost();
+    public boolean canBuyUnit(AbstractUnit unit, City city) {
+        if (canBePlaced(unit, city.getLocation())) {
+            int gold = civilization.getSupply().getGold();
+            return gold >= unit.getGoldCost();
+        }
+        return false;
     }
 
     public Supply buyUnit(String unitClassUuid, City city) {
-        AbstractUnit unit = UnitFactory.newInstance(unitClassUuid);
-        addUnit(unit, city.getLocation());
+        AbstractUnit unit = UnitFactory.newInstance(civilization, unitClassUuid);
+        if (!addUnit(unit, city.getLocation())) {
+            throw new IllegalStateException("Can't buy a unit");
+        }
 
         int gold = unit.getGoldCost();
         Supply expenses = Supply.builder().gold(-gold).build();

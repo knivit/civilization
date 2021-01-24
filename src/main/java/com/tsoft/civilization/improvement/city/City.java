@@ -9,6 +9,8 @@ import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.combat.skill.AbstractSkill;
 import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.improvement.CanBeBuilt;
+import com.tsoft.civilization.tile.base.AbstractTile;
+import com.tsoft.civilization.tile.base.TileType;
 import com.tsoft.civilization.unit.*;
 import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.world.economic.*;
@@ -196,6 +198,16 @@ public class City extends AbstractImprovement implements HasCombatStrength {
     }
 
     @Override
+    public boolean acceptEraAndTechnology(Civilization civilization) {
+        return true;
+    }
+
+    @Override
+    public boolean acceptTile(AbstractTile tile) {
+        return (tile.getTileType() != TileType.SEA) && (tile.getTileType() != TileType.EARTH_ROUGH);
+    }
+
+    @Override
     public Supply getSupply() {
         Supply supply = Supply.builder().population(getCitizenCount()).build();
 
@@ -273,20 +285,13 @@ public class City extends AbstractImprovement implements HasCombatStrength {
     }
 
     public int getUnitProductionCost(String unitClassUuid) {
-        AbstractUnit unit = UnitFactory.newInstance(unitClassUuid);
+        AbstractUnit unit = UnitFactory.newInstance(civilization, unitClassUuid);
         return unit.getProductionCost();
     }
 
     public int getUnitBuyCost(String unitClassUuid) {
-        AbstractUnit unit = UnitFactory.newInstance(unitClassUuid);
+        AbstractUnit unit = UnitFactory.newInstance(civilization, unitClassUuid);
         return unit.getGoldCost();
-    }
-
-    /** Return true, if the unit can be placed (i.e. after a buy or on entering) in the city */
-    public boolean canPlaceUnit(AbstractUnit unit) {
-        UnitList units = getWorld().getUnitsAtLocation(getLocation());
-        AbstractUnit sameTypeUnit = units.findUnitByUnitKind(unit.getUnitCategory());
-        return sameTypeUnit == null;
     }
 
     public int getBuildingProductionCost(String buildingClassUuid) {

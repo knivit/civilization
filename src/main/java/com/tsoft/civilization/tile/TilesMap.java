@@ -127,6 +127,16 @@ public class TilesMap implements Iterable<AbstractTile> {
         return y;
     }
 
+    public boolean isTilesNearby(Point loc1, Point loc2) {
+        return isTilesNearby(loc1, loc2, 1);
+    }
+
+    public boolean isTilesNearby(Point loc1, Point loc2, int radius) {
+        List<Point> around = getLocationsAround(loc1, radius);
+        return around.stream()
+            .anyMatch(p -> p.equals(loc2));
+    }
+
     public List<AbstractTile> getTilesAround(Point location, int radius) {
         return getLocationsAround(location, radius).stream()
             .map(p -> getTile(p))
@@ -238,7 +248,7 @@ public class TilesMap implements Iterable<AbstractTile> {
         Objects.requireNonNull(featureClass, "TerrainFeature class must be not null");
 
         return tiles()
-            .filter(t -> t.getFeature(featureClass) != null)
+            .filter(t -> t.hasFeature(featureClass))
             .map(AbstractTile::getLocation)
             .collect(Collectors.toList());
     }

@@ -39,7 +39,7 @@ public class Year {
     }
 
     public boolean isAfter(int year) {
-        return value > year;
+        return value >= year;
     }
 
     public int getEra() {

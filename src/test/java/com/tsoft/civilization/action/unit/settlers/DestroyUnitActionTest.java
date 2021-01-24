@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DestroyUnitActionTest {
     @Test
@@ -22,22 +23,22 @@ public class DestroyUnitActionTest {
                 "-+------",
                 "0|. . . ",
                 "1| . g .",
-                "2|. . . ",
+                "2|. . g ",
                 "3| . . .");
         MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
         // The only settlers can't be destroyed
-        Settlers settlers1 = UnitFactory.newInstance(Settlers.CLASS_UUID);
-        civilization.units().addUnit(settlers1, new Point(1, 1));
+        Settlers settlers1 = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
+        assertTrue(civilization.units().addUnit(settlers1, new Point(1, 1)));
         assertEquals(DestroyUnitResults.LAST_SETTLERS_CANT_BE_DESTOYED, DestroyUnitAction.destroyUnit(settlers1));
 
         // Add another settlers
-        Settlers settlers2 = UnitFactory.newInstance(Settlers.CLASS_UUID);
-        civilization.units().addUnit(settlers2, new Point(2, 0));
+        Settlers settlers2 = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
+        assertTrue(civilization.units().addUnit(settlers2, new Point(2, 2)));
 
         // Destroy the first ones
-        DestroyUnitAction.destroyUnit(settlers1);
+        assertTrue(DestroyUnitAction.destroyUnit(settlers1).isSuccess());
         assertEquals(DestroyUnitResults.UNIT_NOT_FOUND, DestroyUnitAction.destroyUnit(settlers1));
 
         // The only settlers can't be destroyed

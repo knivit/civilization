@@ -17,8 +17,7 @@ import com.tsoft.civilization.unit.civil.workers.action.WorkersActionResults;
 import org.junit.jupiter.api.Test;
 
 import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class RemoveForestActionTest {
     @Test
@@ -34,8 +33,8 @@ public class RemoveForestActionTest {
         MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
         AbstractTile tile = map.getTile(1, 1);
-        Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);
-        civilization.units().addUnit(workers, tile.getLocation());
+        Workers workers = UnitFactory.newInstance(civilization, Workers.CLASS_UUID);
+        assertTrue(civilization.units().addUnit(workers, tile.getLocation()));
 
         // case 1
         // no needed technology
@@ -62,8 +61,8 @@ public class RemoveForestActionTest {
         civilization.addTechnology(Technology.MINING);
 
         AbstractTile tile = map.getTile(1, 1);
-        Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);
-        civilization.units().addUnit(workers, tile.getLocation());
+        Workers workers = UnitFactory.newInstance(civilization, Workers.CLASS_UUID);
+        assertTrue(civilization.units().addUnit(workers, tile.getLocation()));
 
         for (int i = 0; i < 4; i ++) {
             assertEquals(WorkersActionResults.REMOVING_FOREST, RemoveForestAction.removeForest(workers));

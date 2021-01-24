@@ -14,20 +14,26 @@ public class BuildUnitAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     public static ActionAbstractResult buildUnit(City city, String unitClassUuid) {
-        AbstractUnit unit = UnitFactory.newInstance(unitClassUuid);
-        ActionAbstractResult result = canBuildUnit(city, unit);
+        if (city == null || city.isDestroyed()) {
+            return CityActionResults.CITY_NOT_FOUND;
+        }
+
+        ActionAbstractResult result = canBuildUnit(city, unitClassUuid);
         if (result.isFail()) {
             return result;
         }
 
+        AbstractUnit unit = UnitFactory.newInstance(city.getCivilization(), unitClassUuid);
         city.startConstruction(unit);
         return CityActionResults.UNIT_CONSTRUCTION_IS_STARTED;
     }
 
-    public static ActionAbstractResult canBuildUnit(City city, AbstractUnit unit) {
+    private static ActionAbstractResult canBuildUnit(City city, String unitClassUuid) {
         if (city == null || city.isDestroyed()) {
             return CityActionResults.CITY_NOT_FOUND;
         }
+
+        AbstractUnit unit = UnitFactory.newInstance(city.getCivilization(), unitClassUuid);
 
         if (unit.getProductionCost() < 0) {
             return CityActionResults.INVALID_UNIT;
@@ -57,8 +63,7 @@ public class BuildUnitAction {
     }
 
     public static StringBuilder getHtml(City city, String unitClassUuid) {
-        AbstractUnit unit = UnitFactory.newInstance(unitClassUuid);
-        if (canBuildUnit(city, unit).isFail()) {
+        if (canBuildUnit(city, unitClassUuid).isFail()) {
             return null;
         }
 

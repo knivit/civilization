@@ -14,21 +14,21 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Supplier;
+import java.util.function.Function;
 
 @Slf4j
 public final class UnitFactory {
 
     private UnitFactory() { }
 
-    public static <T extends AbstractUnit> T newInstance(String classUuid) {
-        T unit = (T)createUnit(classUuid);
+    public static <T extends AbstractUnit> T newInstance(Civilization civilization, String classUuid) {
+        T unit = (T)createUnit(civilization, classUuid);
         unit.init();
 
         return unit;
     }
 
-    private static final Map<String, Supplier<AbstractUnit>> UNIT_CATALOG = new HashMap<>();
+    private static final Map<String, Function<Civilization, AbstractUnit>> UNIT_CATALOG = new HashMap<>();
 
     static {
         UNIT_CATALOG.put(Archers.CLASS_UUID, Archers::new);
@@ -47,8 +47,8 @@ public final class UnitFactory {
     public static UnitList getAvailableUnits(Civilization civilization) {
         UnitList result = new UnitList();
 
-        for (Supplier<AbstractUnit> supplier : UNIT_CATALOG.values()) {
-            AbstractUnit unit = supplier.get();
+        for (Function<Civilization, AbstractUnit> supplier : UNIT_CATALOG.values()) {
+            AbstractUnit unit = supplier.apply(civilization);
             if (unit.checkEraAndTechnology(civilization)) {
                 result.add(unit);
             }
@@ -57,11 +57,11 @@ public final class UnitFactory {
         return result;
     }
 
-    private static AbstractUnit createUnit(String unitClassUuid) {
-        Supplier<AbstractUnit> supplier = UNIT_CATALOG.get(unitClassUuid);
+    private static AbstractUnit createUnit(Civilization civilization, String unitClassUuid) {
+        Function<Civilization, AbstractUnit> supplier = UNIT_CATALOG.get(unitClassUuid);
         if (supplier == null) {
             throw new IllegalArgumentException("Unknown unit classUuid = " + unitClassUuid);
         }
-        return supplier.get();
+        return supplier.apply(civilization);
     }
 }

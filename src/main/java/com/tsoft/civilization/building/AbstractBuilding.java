@@ -109,8 +109,7 @@ public abstract class AbstractBuilding implements CanBeBuilt {
         this.city = city;
     }
 
-    // Method of a unit from the catalog (they don't have civilization etc)
-    public abstract boolean checkEraAndTechnology(Civilization civilization);
+    public abstract boolean requiresEraAndTechnology(Civilization civilization);
 
     public String getId() {
         return id;

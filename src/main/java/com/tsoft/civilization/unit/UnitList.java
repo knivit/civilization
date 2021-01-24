@@ -87,7 +87,7 @@ public class UnitList implements Iterable<AbstractUnit> {
         return (int)units.stream().filter(e -> e.getClass().equals(unitClass)).count();
     }
 
-    public AbstractUnit findUnitByUnitKind(UnitCategory unitCategory) {
+    public AbstractUnit findUnitByCategory(UnitCategory unitCategory) {
         return findAny(e -> e.getUnitCategory().equals(unitCategory));
     }
 

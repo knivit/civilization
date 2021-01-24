@@ -17,12 +17,15 @@ import java.util.UUID;
  */
 public class GreatScientist extends AbstractUnit {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
-    public static final GreatScientist STUB = new GreatScientist();
 
     private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
             .setStrength(0);
 
     private static final GreatScientistView VIEW = new GreatScientistView();
+
+    public GreatScientist(Civilization civilization) {
+        super(civilization);
+    }
 
     @Override
     public UnitCategory getUnitCategory() {

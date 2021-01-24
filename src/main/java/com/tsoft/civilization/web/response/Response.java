@@ -6,11 +6,11 @@ import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.view.JsonBlock;
 
 public class Response {
-    private String errorCode;
-    private String contentType;
-    private AbstractResponseContent content;
+    private final String responseCode;
+    private final String contentType;
+    private final AbstractResponseContent content;
 
-    private StringBuilder additionalHeaders = new StringBuilder();
+    private final StringBuilder additionalHeaders = new StringBuilder();
 
     public static Response newErrorInstance(L10nMap messages) {
         String enText = messages.getEnglish();
@@ -22,20 +22,20 @@ public class Response {
         return new Response(ResponseCode.BAD_REQUEST, block.getText(), ContentType.APPLICATION_JSON);
     }
 
-    public Response(String errorCode, String value, String contentType) {
-        this.errorCode = errorCode;
+    public Response(String responseCode, String value, String contentType) {
+        this.responseCode = responseCode;
         this.contentType = contentType;
         content = new StringResponseContent(value);
     }
 
-    public Response(String errorCode, Class<?> resourceLoaderClass, String fileName) {
-        this.errorCode = errorCode;
+    public Response(String responseCode, Class<?> resourceLoaderClass, String fileName) {
+        this.responseCode = responseCode;
         contentType = MimeType.get(fileName);
         content = new ResourceResponseContent(resourceLoaderClass, fileName);
     }
 
-    public String getErrorCode() {
-        return errorCode;
+    public String getResponseCode() {
+        return responseCode;
     }
 
     public int getContentLength() {

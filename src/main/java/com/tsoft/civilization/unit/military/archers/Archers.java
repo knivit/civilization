@@ -36,6 +36,10 @@ public class Archers extends AbstractUnit {
 
     private static final ArchersView VIEW = new ArchersView();
 
+    public Archers(Civilization civilization) {
+        super(civilization);
+    }
+
     @Override
     public UnitCategory getUnitCategory() {
         return UnitCategory.MILITARY_RANGED;

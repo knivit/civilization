@@ -42,14 +42,14 @@ public class AttackActionTest {
         Civilization c2 = world.createCivilization(AMERICA);
         world.setCivilizationsRelations(c1, c2, CivilizationsRelations.WAR);
 
-        Warriors warriors = UnitFactory.newInstance(Warriors.CLASS_UUID);
-        c1.units().addUnit(warriors, new Point(1, 0));
-        Workers foreignWorkers = UnitFactory.newInstance(Workers.CLASS_UUID);
-        c2.units().addUnit(foreignWorkers, new Point(1, 1));
-        Warriors foreignWarriors1 = UnitFactory.newInstance(Warriors.CLASS_UUID);
-        c2.units().addUnit(foreignWarriors1, new Point(2, 1));
-        Warriors foreignWarriors2 = UnitFactory.newInstance(Warriors.CLASS_UUID);
-        c2.units().addUnit(foreignWarriors2, new Point(2, 2));
+        Warriors warriors = UnitFactory.newInstance(c1, Warriors.CLASS_UUID);
+        assertTrue(c1.units().addUnit(warriors, new Point(1, 0)));
+        Workers foreignWorkers = UnitFactory.newInstance(c2, Workers.CLASS_UUID);
+        assertTrue(c2.units().addUnit(foreignWorkers, new Point(1, 1)));
+        Warriors foreignWarriors1 = UnitFactory.newInstance(c2, Warriors.CLASS_UUID);
+        assertTrue(c2.units().addUnit(foreignWarriors1, new Point(2, 1)));
+        Warriors foreignWarriors2 = UnitFactory.newInstance(c2, Warriors.CLASS_UUID);
+        assertTrue(c2.units().addUnit(foreignWarriors2, new Point(2, 2)));
         WorldRender.of(this).createHtml(world, c1);
 
         // first, there is foreign workers to attack
@@ -100,21 +100,21 @@ public class AttackActionTest {
         world.setCivilizationsRelations(c1, c2, CivilizationsRelations.WAR);
 
         // our forces
-        Archers archers = UnitFactory.newInstance(Archers.CLASS_UUID);
-        c1.units().addUnit(archers, new Point(2, 1));
+        Archers archers = UnitFactory.newInstance(c1, Archers.CLASS_UUID);
+        assertTrue(c1.units().addUnit(archers, new Point(2, 1)));
 
         // foreign forces
-        Workers foreignWorkers = UnitFactory.newInstance(Workers.CLASS_UUID);
-        c2.units().addUnit(foreignWorkers, new Point(3, 1));
-        Warriors foreignWarriors1 = UnitFactory.newInstance(Warriors.CLASS_UUID);
-        c2.units().addUnit(foreignWarriors1, new Point(2, 2));
-        Warriors foreignWarriors2 = UnitFactory.newInstance(Warriors.CLASS_UUID);
-        c2.units().addUnit(foreignWarriors2, new Point(4, 2));
-        Archers foreignArchers1 = UnitFactory.newInstance(Archers.CLASS_UUID);
-        c2.units().addUnit(foreignArchers1, new Point(1, 3));
+        Workers foreignWorkers = UnitFactory.newInstance(c2, Workers.CLASS_UUID);
+        assertTrue(c2.units().addUnit(foreignWorkers, new Point(3, 1)));
+        Warriors foreignWarriors1 = UnitFactory.newInstance(c2, Warriors.CLASS_UUID);
+        assertTrue(c2.units().addUnit(foreignWarriors1, new Point(2, 2)));
+        Warriors foreignWarriors2 = UnitFactory.newInstance(c2, Warriors.CLASS_UUID);
+        assertTrue(c2.units().addUnit(foreignWarriors2, new Point(4, 2)));
+        Archers foreignArchers1 = UnitFactory.newInstance(c2, Archers.CLASS_UUID);
+        assertTrue(c2.units().addUnit(foreignArchers1, new Point(1, 3)));
         City foreignCity = c2.createCity(new Point(2, 3));
-        Archers foreignArchers2 = UnitFactory.newInstance(Archers.CLASS_UUID);
-        c2.units().addUnit(foreignArchers2, new Point(3, 3));
+        Archers foreignArchers2 = UnitFactory.newInstance(c2, Archers.CLASS_UUID);
+        assertTrue(c2.units().addUnit(foreignArchers2, new Point(3, 3)));
 
         // look for targets
         HasCombatStrengthList targets = AttackAction.getTargetsToAttack(archers);
@@ -184,22 +184,22 @@ public class AttackActionTest {
 
         // our forces
         City city = c1.createCity(new Point(2, 0));
-        Warriors warriors1 = UnitFactory.newInstance(Warriors.CLASS_UUID);
-        c1.units().addUnit(warriors1, new Point(4, 2));
-        Warriors warriors2 = UnitFactory.newInstance(Warriors.CLASS_UUID);
-        c1.units().addUnit(warriors2, new Point(5, 2));
-        Warriors warriors3 = UnitFactory.newInstance(Warriors.CLASS_UUID);
-        c1.units().addUnit(warriors3, new Point(3, 3));
-        Warriors warriors4 = UnitFactory.newInstance(Warriors.CLASS_UUID);
-        c1.units().addUnit(warriors4, new Point(5, 4));
+        Warriors warriors1 = UnitFactory.newInstance(c1, Warriors.CLASS_UUID);
+        assertTrue(c1.units().addUnit(warriors1, new Point(4, 2)));
+        Warriors warriors2 = UnitFactory.newInstance(c1, Warriors.CLASS_UUID);
+        assertTrue(c1.units().addUnit(warriors2, new Point(5, 2)));
+        Warriors warriors3 = UnitFactory.newInstance(c1, Warriors.CLASS_UUID);
+        assertTrue(c1.units().addUnit(warriors3, new Point(3, 3)));
+        Warriors warriors4 = UnitFactory.newInstance(c1, Warriors.CLASS_UUID);
+        assertTrue(c1.units().addUnit(warriors4, new Point(5, 4)));
 
         // foreign forces
         City foreignCity = c2.createCity(new Point(4, 3));
         foreignCity.getCombatStrength().setStrength(30);
-        Warriors foreignWarriors = UnitFactory.newInstance(Warriors.CLASS_UUID);
-        c2.units().addUnit(foreignWarriors, new Point(4, 3));
-        Workers foreignWorkers = UnitFactory.newInstance(Workers.CLASS_UUID);
-        c2.units().addUnit(foreignWorkers, new Point(4, 3));
+        Warriors foreignWarriors = UnitFactory.newInstance(c2, Warriors.CLASS_UUID);
+        assertTrue(c2.units().addUnit(foreignWarriors, new Point(4, 3)));
+        Workers foreignWorkers = UnitFactory.newInstance(c2, Workers.CLASS_UUID);
+        assertTrue(c2.units().addUnit(foreignWorkers, new Point(4, 3)));
 
         // strike 1
         ActionAbstractResult result = AttackAction.attack(warriors1, foreignCity.getLocation());

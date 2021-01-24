@@ -18,12 +18,15 @@ import java.util.UUID;
  */
 public class GreatGeneral extends AbstractUnit {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
-    public static final GreatGeneral STUB = new GreatGeneral();
 
     private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
             .setStrength(0);
 
     private static final GreatGeneralView VIEW = new GreatGeneralView();
+
+    public GreatGeneral(Civilization civilization) {
+        super(civilization);
+    }
 
     @Override
     public UnitCategory getUnitCategory() {

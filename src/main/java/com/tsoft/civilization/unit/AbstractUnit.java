@@ -61,7 +61,9 @@ public abstract class AbstractUnit implements HasCombatStrength, CanBeBuilt {
 
     private final TileService tileService = new TileService();
 
-    protected AbstractUnit() { }
+    protected AbstractUnit(Civilization civilization) {
+        this.civilization = civilization;
+    }
 
     // Initialization on create the object
     public void init() {
@@ -76,13 +78,12 @@ public abstract class AbstractUnit implements HasCombatStrength, CanBeBuilt {
 
     public void move() {
         if (!isMoved) {
-            doMove();
+            aiMove();
         }
     }
 
-    private void doMove() {
-        // TODO do an artificial move
-
+    // TODO do an artificial move
+    private void aiMove() {
         isMoved = true;
     }
 
@@ -153,7 +154,37 @@ public abstract class AbstractUnit implements HasCombatStrength, CanBeBuilt {
         return civilization.units().getUnitsAround(location, radius);
     }
 
+    // Try to move one unit on another - they must be swapped
+    // conditions:
+    // 1) both are the same civilization
+    // 2) both units have movements
+    // 3) they are located near each other
+    // 4) they are the same unit type
     public void moveTo(Point location) {
+        if (!swapTo(location)) {
+            if (getCivilization().units().canBePlaced(this, location)) {
+                doMoveTo(location);
+            }
+        }
+    }
+
+    private boolean swapTo(Point location) {
+        if (getTilesMap().isTilesNearby(this.location, location)) {
+            UnitList other = civilization.units().getUnitsAtLocation(location);
+            AbstractUnit swapUnit = other.findUnitByCategory(getUnitCategory());
+
+            if (swapUnit != null && getCivilization().equals(swapUnit.getCivilization()) && swapUnit.isActionAvailable()) {
+                swapUnit.doMoveTo(getLocation());
+                doMoveTo(location);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // All the checks was made - just do the move
+    private void doMoveTo(Point location) {
         setLocation(location);
 
         AbstractTile tile = getTilesMap().getTile(location);
@@ -173,6 +204,7 @@ public abstract class AbstractUnit implements HasCombatStrength, CanBeBuilt {
 
         // captured unit can't move
         setPassScore(0);
+        setCivilization(capturer.getCivilization());
         capturer.getCivilization().units().addUnit(this, location);
     }
 

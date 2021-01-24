@@ -25,12 +25,15 @@ import java.util.UUID;
  */
 public class Settlers extends AbstractUnit {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
-    public static final Settlers STUB = new Settlers();
 
     private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
             .setStrength(0);
 
     private static final SettlersView VIEW = new SettlersView();
+
+    public Settlers(Civilization civilization) {
+        super(civilization);
+    }
 
     @Override
     public UnitCategory getUnitCategory() {

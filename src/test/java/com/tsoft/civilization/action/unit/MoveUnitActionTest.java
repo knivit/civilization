@@ -27,6 +27,7 @@ import java.util.Set;
 import static com.tsoft.civilization.L10n.L10nCivilization.AMERICA;
 import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MoveUnitActionTest {
     @Test
@@ -41,10 +42,11 @@ public class MoveUnitActionTest {
         MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
+        Settlers settlers = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
+        assertTrue(civilization.units().addUnit(settlers, new Point(1, 1)));
+
         // try out all possible directions - it must be impossible
         for (Dir6 dir : Dir6.staticGetDirs(1)) {
-            Settlers settlers = UnitFactory.newInstance(Settlers.CLASS_UUID);
-            civilization.units().addUnit(settlers, new Point(1, 1));
             UnitRoute route = new UnitRoute(dir);
 
             ArrayList<UnitMoveResult> moveResults = MoveUnitAction.moveByRoute(settlers, route);
@@ -68,8 +70,8 @@ public class MoveUnitActionTest {
 
         // try out all possible directions - it must be OK
         for (Dir6 dir : Dir6.staticGetDirs(1)) {
-            Settlers settlers = UnitFactory.newInstance(Settlers.CLASS_UUID);
-            civilization.units().addUnit(settlers, new Point(1, 1));
+            Settlers settlers = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
+            assertTrue(civilization.units().addUnit(settlers, new Point(1, 1)));
             UnitRoute route = new UnitRoute(dir);
             settlers.setPassScore(1);
 
@@ -93,8 +95,8 @@ public class MoveUnitActionTest {
         Civilization civilization = world.createCivilization(RUSSIA);
 
         // try one complex route - it must be OK
-        Settlers settlers = UnitFactory.newInstance(Settlers.CLASS_UUID);
-        civilization.units().addUnit(settlers, new Point(1, 1));
+        Settlers settlers = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
+        assertTrue(civilization.units().addUnit(settlers, new Point(1, 1)));
         settlers.setPassScore(10);
 
         UnitRoute route = new UnitRoute();
@@ -135,12 +137,12 @@ public class MoveUnitActionTest {
         MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
-        Settlers settlers1 = UnitFactory.newInstance(Settlers.CLASS_UUID);
-        civilization.units().addUnit(settlers1, new Point(1, 1));
+        Settlers settlers1 = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
+        assertTrue(civilization.units().addUnit(settlers1, new Point(1, 1)));
         settlers1.setPassScore(1);
 
-        Settlers settlers2 = UnitFactory.newInstance(Settlers.CLASS_UUID);
-        civilization.units().addUnit(settlers2, new Point(2, 1));
+        Settlers settlers2 = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
+        assertTrue(civilization.units().addUnit(settlers2, new Point(2, 1)));
         settlers2.setPassScore(1);
 
         UnitRoute route = new UnitRoute(new Dir6(1, 0));
@@ -172,12 +174,12 @@ public class MoveUnitActionTest {
         MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
-        Settlers settlers1 = UnitFactory.newInstance(Settlers.CLASS_UUID);
-        civilization.units().addUnit(settlers1, new Point(1, 1));
+        Settlers settlers1 = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
+        assertTrue(civilization.units().addUnit(settlers1, new Point(1, 1)));
         settlers1.setPassScore(1);
 
-        Settlers settlers2 = UnitFactory.newInstance(Settlers.CLASS_UUID);
-        civilization.units().addUnit(settlers2, new Point(2, 1));
+        Settlers settlers2 = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
+        assertTrue(civilization.units().addUnit(settlers2, new Point(2, 1)));
         settlers2.setPassScore(0);
 
         UnitRoute route = new UnitRoute(new Dir6(1, 0));
@@ -209,12 +211,12 @@ public class MoveUnitActionTest {
         MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
-        Settlers settlers1 = UnitFactory.newInstance(Settlers.CLASS_UUID);
-        civilization.units().addUnit(settlers1, new Point(1, 1));
+        Settlers settlers1 = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
+        assertTrue(civilization.units().addUnit(settlers1, new Point(1, 1)));
         settlers1.setPassScore(2);
 
-        Settlers settlers2 = UnitFactory.newInstance(Settlers.CLASS_UUID);
-        civilization.units().addUnit(settlers2, new Point(1, 3));
+        Settlers settlers2 = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
+        assertTrue(civilization.units().addUnit(settlers2, new Point(1, 3)));
         settlers2.setPassScore(1);
 
         UnitRoute route = new UnitRoute(new Dir6(0, 1), new Dir6(0, 1));
@@ -247,12 +249,12 @@ public class MoveUnitActionTest {
         MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
-        Warriors warriors = UnitFactory.newInstance(Warriors.CLASS_UUID);
-        civilization.units().addUnit(warriors, new Point(1, 1));
+        Warriors warriors = UnitFactory.newInstance(civilization, Warriors.CLASS_UUID);
+        assertTrue(civilization.units().addUnit(warriors, new Point(1, 1)));
         warriors.setPassScore(1);
 
-        Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);
-        civilization.units().addUnit(workers, new Point(2, 1));
+        Workers workers = UnitFactory.newInstance(civilization, Workers.CLASS_UUID);
+        assertTrue(civilization.units().addUnit(workers, new Point(2, 1)));
         workers.setPassScore(1);
 
         UnitRoute route = new UnitRoute(new Dir6(1, 0));
@@ -279,8 +281,8 @@ public class MoveUnitActionTest {
         MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
-        Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);
-        civilization.units().addUnit(workers, new Point(1, 1));
+        Workers workers = UnitFactory.newInstance(civilization, Workers.CLASS_UUID);
+        assertTrue(civilization.units().addUnit(workers, new Point(1, 1)));
         workers.setPassScore(1);
 
         City city = civilization.createCity(new Point(2, 1));
@@ -310,10 +312,10 @@ public class MoveUnitActionTest {
         Civilization civilization = world.createCivilization(RUSSIA);
 
         City city = civilization.createCity(new Point(2, 1));
-        GreatArtist artist = UnitFactory.newInstance(GreatArtist.CLASS_UUID);
-        civilization.units().addUnit(artist, city.getLocation());
-        Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);
-        civilization.units().addUnit(workers, new Point(1, 1));
+        GreatArtist artist = UnitFactory.newInstance(civilization, GreatArtist.CLASS_UUID);
+        assertTrue(civilization.units().addUnit(artist, city.getLocation()));
+        Workers workers = UnitFactory.newInstance(civilization, Workers.CLASS_UUID);
+        assertTrue(civilization.units().addUnit(workers, new Point(1, 1)));
 
         ActionAbstractResult result = MoveUnitAction.move(workers, city.getLocation());
 
@@ -345,14 +347,14 @@ public class MoveUnitActionTest {
         Civilization c1 = world.createCivilization(RUSSIA);
         Civilization c2 = world.createCivilization(AMERICA);
 
-        Workers workers1 = UnitFactory.newInstance(Workers.CLASS_UUID);
-        c1.units().addUnit(workers1, new Point(2, 2));
+        Workers workers1 = UnitFactory.newInstance(c1, Workers.CLASS_UUID);
+        assertTrue(c1.units().addUnit(workers1, new Point(2, 2)));
         workers1.setPassScore(2);
 
         // one tile (possible to move in) is occupied by foreign workers
         // it must not be available
-        Workers workers2 = UnitFactory.newInstance(Workers.CLASS_UUID);
-        c2.units().addUnit(workers2, new Point(2, 1));
+        Workers workers2 = UnitFactory.newInstance(c2, Workers.CLASS_UUID);
+        assertTrue(c2.units().addUnit(workers2, new Point(2, 1)));
 
         Set<Point> locationsToMove = MoveUnitAction.getLocationsToMove(workers1);
         assertEquals(10, locationsToMove.size());
@@ -372,8 +374,8 @@ public class MoveUnitActionTest {
         MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
 
-        Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);
-        c1.units().addUnit(workers, new Point(2, 2));
+        Workers workers = UnitFactory.newInstance(c1, Workers.CLASS_UUID);
+        assertTrue(c1.units().addUnit(workers, new Point(2, 2)));
         UnitRoute route = MoveUnitAction.findRoute(workers, new Point(1, 0));
 
         assertEquals(3, route.size());
@@ -393,8 +395,8 @@ public class MoveUnitActionTest {
         MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
 
-        Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);
-        c1.units().addUnit(workers, new Point(2, 2));
+        Workers workers = UnitFactory.newInstance(c1, Workers.CLASS_UUID);
+        assertTrue(c1.units().addUnit(workers, new Point(2, 2)));
 
         // route goes from bottom line to top (map-cyclic test)
         UnitRoute route = MoveUnitAction.findRoute(workers, new Point(1, 0));
@@ -416,8 +418,8 @@ public class MoveUnitActionTest {
         MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
 
-        Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);
-        c1.units().addUnit(workers, new Point(2, 2));
+        Workers workers = UnitFactory.newInstance(c1, Workers.CLASS_UUID);
+        assertTrue(c1.units().addUnit(workers, new Point(2, 2)));
 
         UnitRoute route = MoveUnitAction.findRoute(workers, new Point(1, 0));
 
@@ -438,8 +440,8 @@ public class MoveUnitActionTest {
         MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
 
-        Workers workers = UnitFactory.newInstance(Workers.CLASS_UUID);
-        c1.units().addUnit(workers, new Point(2, 2));
+        Workers workers = UnitFactory.newInstance(c1, Workers.CLASS_UUID);
+        assertTrue(c1.units().addUnit(workers, new Point(2, 2)));
 
         // there is no route here
         UnitRoute route = MoveUnitAction.findRoute(workers, new Point(1, 0));
