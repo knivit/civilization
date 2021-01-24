@@ -29,6 +29,10 @@ public class L10nServer {
         .set("en", "World is full")
         .set("ru", "Мир заполнен");
 
+    public static L10nMap CANT_CREATE_CIVILIZATION = new L10nMap()
+        .set("en", "Can not create a civilization")
+        .set("ru", "Невозможно создать цивилизацию");
+
     public static L10nMap NO_CIVILIZATION_AVAILABLE = new L10nMap()
         .set("en", "No civilization available")
         .set("ru", "Нет доступной цивилизации");

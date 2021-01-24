@@ -16,12 +16,14 @@ import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.world.event.Event;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
+@Slf4j
 public class CivilizationUnitService {
     private final World world;
     private final Civilization civilization;
@@ -53,17 +55,20 @@ public class CivilizationUnitService {
         return units.findByClassUuid(classUuid);
     }
 
-    public void addFirstUnits() {
+    // Returns TRUE on success
+    public boolean addFirstUnits() {
         // find a location for the Settlers
         Point settlersLocation = world.getCivilizationStartLocation(civilization);
         if (settlersLocation == null) {
-            return;
+            log.warn("Can't place Settlers");
+            return false;
         }
 
         // create the Settlers unit
         Settlers settlers = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
         if (!addUnit(settlers, settlersLocation)) {
-            throw new IllegalStateException("Can't place the Settlers");
+            log.warn("Can't place the Settlers");
+            return false;
         }
 
         // try to place Warriors near the Settlers
@@ -74,6 +79,8 @@ public class CivilizationUnitService {
                 break;
             }
         }
+
+        return true;
     }
 
     public AbstractUnit getAny() {
@@ -120,6 +127,7 @@ public class CivilizationUnitService {
         return attacker;
     }
 
+    // This is not a move (or swap), just a check, can be a unit placed here, or not
     public boolean canBePlaced(AbstractUnit unit, Point location) {
         AbstractTile tile = world.getTilesMap().getTile(location);
         if (tileService.getPassCost(unit, tile) == TilePassCostTable.UNPASSABLE) {

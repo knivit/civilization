@@ -5,6 +5,30 @@ public class L10nWorld {
             .set("en", "Invalid location")
             .set("ru", "\u041d\u0435\u0432\u0435\u0440\u043d\u044b\u0435 \u043a\u043e\u043e\u0440\u0434\u0438\u043d\u0430\u0442\u044b");
 
+    public static L10nMap WORLD_CREATED = new L10nMap()
+        .set("en", "World created")
+        .set("ru", "Мир создан");
+
+    public static L10nMap WORLD_CANT_BE_CREATED = new L10nMap()
+        .set("en", "World can not be created")
+        .set("ru", "Мир не может быть создан");
+
+    public static L10nMap INVALID_MAP_SIZE = new L10nMap()
+        .set("en", "Map size must be within [2..1000][2..1000]")
+        .set("ru", "Размер карты должен быть в пределах [2..1000][2..1000]");
+
+    public static L10nMap INVALID_WORLD_NAME = new L10nMap()
+        .set("en", "Invalid world's name")
+        .set("ru", "Неверное название мира");
+
+    public static L10nMap INVALID_CIVILIZATIONS_NUMBER = new L10nMap()
+        .set("en", "Number of civilizations must be within [1..16]")
+        .set("ru", "Количество цивилизаций должно быть в пределах [1..16]");
+
+    public static L10nMap CIVILIZATION_JOINED = new L10nMap()
+        .set("en", "A civilization joined to the world")
+        .set("ru", "Цивилизация присоединилась к миру");
+
     /** Relations */
 
     public static L10nMap RELATIONS_NAME = new L10nMap()

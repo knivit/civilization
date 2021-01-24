@@ -44,6 +44,7 @@ public class MockWorld extends World {
 
     private MockWorld(MapType mapType, int width, int height) {
         super(mapType, width, height);
+        setName(UUID.randomUUID().toString());
     }
 
     public MockTilesMap getMockTilesMap() {

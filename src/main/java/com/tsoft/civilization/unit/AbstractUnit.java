@@ -154,12 +154,6 @@ public abstract class AbstractUnit implements HasCombatStrength, CanBeBuilt {
         return civilization.units().getUnitsAround(location, radius);
     }
 
-    // Try to move one unit on another - they must be swapped
-    // conditions:
-    // 1) both are the same civilization
-    // 2) both units have movements
-    // 3) they are located near each other
-    // 4) they are the same unit type
     public void moveTo(Point location) {
         if (!swapTo(location)) {
             if (getCivilization().units().canBePlaced(this, location)) {
@@ -168,6 +162,12 @@ public abstract class AbstractUnit implements HasCombatStrength, CanBeBuilt {
         }
     }
 
+    // Try to move one unit on another - they must be swapped
+    // conditions:
+    // 1) both are the same civilization
+    // 2) both units have movements
+    // 3) they are located near each other
+    // 4) they are the same unit type
     private boolean swapTo(Point location) {
         if (getTilesMap().isTilesNearby(this.location, location)) {
             UnitList other = civilization.units().getUnitsAtLocation(location);

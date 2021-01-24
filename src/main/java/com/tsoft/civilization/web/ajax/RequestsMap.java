@@ -11,9 +11,9 @@ import com.tsoft.civilization.web.ajax.action.unit.MoveUnitActionRequest;
 import com.tsoft.civilization.web.ajax.action.unit.settlers.BuildCityActionRequest;
 import com.tsoft.civilization.web.ajax.action.unit.workers.RemoveForestActionRequest;
 import com.tsoft.civilization.web.ajax.action.unit.workers.RemoveHillActionRequest;
-import com.tsoft.civilization.web.ajax.action.world.CreateWorld;
+import com.tsoft.civilization.web.ajax.action.world.CreateWorldRequest;
 import com.tsoft.civilization.web.ajax.action.world.GetCreateWorldForm;
-import com.tsoft.civilization.web.ajax.action.world.JoinWorld;
+import com.tsoft.civilization.web.ajax.action.world.JoinWorldRequest;
 import com.tsoft.civilization.web.ajax.action.world.LoadWorld;
 
 import java.util.Collections;
@@ -29,9 +29,9 @@ public class RequestsMap {
 
         // Worlds
         requests.put(GetWorlds.class.getSimpleName(), new GetWorlds());
-        requests.put(CreateWorld.class.getSimpleName(), new CreateWorld());
+        requests.put(CreateWorldRequest.class.getSimpleName(), new CreateWorldRequest());
         requests.put(GetCreateWorldForm.class.getSimpleName(), new GetCreateWorldForm());
-        requests.put(JoinWorld.class.getSimpleName(), new JoinWorld());
+        requests.put(JoinWorldRequest.class.getSimpleName(), new JoinWorldRequest());
         requests.put(LoadWorld.class.getSimpleName(), new LoadWorld());
 
         // Status

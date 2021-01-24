@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GetCivilizationStatusTest {
-    private static AbstractAjaxRequest getCivilizationStatusRequest =
+    private static final AbstractAjaxRequest getCivilizationStatusRequest =
         AbstractAjaxRequest.getInstance(GetCivilizationStatus.class.getSimpleName());
 
     @Test

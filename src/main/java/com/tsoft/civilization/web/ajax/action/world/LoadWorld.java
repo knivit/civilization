@@ -11,6 +11,7 @@ import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.civilization.Civilization;
 
 public class LoadWorld extends AbstractAjaxRequest {
+
     @Override
     public Response getJson(Request request) {
         Civilization myCivilization = getMyCivilization();

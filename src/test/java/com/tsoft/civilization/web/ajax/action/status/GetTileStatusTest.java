@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GetTileStatusTest {
-    private static AbstractAjaxRequest getTileStatusRequest =
+    private static final AbstractAjaxRequest getTileStatusRequest =
         AbstractAjaxRequest.getInstance(GetTileStatus.class.getSimpleName());
 
     @Test

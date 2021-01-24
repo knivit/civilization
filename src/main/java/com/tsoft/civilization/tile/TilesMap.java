@@ -13,6 +13,11 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class TilesMap implements Iterable<AbstractTile> {
+    public static int MIN_WIDTH = 2;
+    public static int MAX_WIDTH = 1000;
+    public static int MIN_HEIGHT = 2;
+    public static int MAX_HEIGHT = 1000;
+
     private final AbstractTile[][] tiles;
     private final MapType mapType;
 

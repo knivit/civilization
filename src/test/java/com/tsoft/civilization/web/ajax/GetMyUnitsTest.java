@@ -13,7 +13,6 @@ import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.state.Worlds;
 import com.tsoft.civilization.civilization.Civilization;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
@@ -21,12 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GetMyUnitsTest {
-    private static AbstractAjaxRequest ajaxRequest;
-
-    @BeforeAll
-    public static void classSetUp() {
-        ajaxRequest = AbstractAjaxRequest.getInstance(GetMyUnits.class.getSimpleName());
-    }
+    private static final AbstractAjaxRequest getMyUnitsRequest =
+        AbstractAjaxRequest.getInstance(GetMyUnits.class.getSimpleName());
 
     @Test
     public void getJSON() {
@@ -41,7 +36,7 @@ public class GetMyUnitsTest {
         Sessions.setActiveCivilization(c1);
         Request request = MockRequest.newInstance();
 
-        Response response = ajaxRequest.getJson(request);
+        Response response = getMyUnitsRequest.getJson(request);
         assertEquals(ResponseCode.OK, response.getResponseCode());
     }
 }
