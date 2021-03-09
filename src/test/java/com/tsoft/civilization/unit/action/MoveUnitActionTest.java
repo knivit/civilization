@@ -1,4 +1,4 @@
-package com.tsoft.civilization.action.unit;
+package com.tsoft.civilization.unit.action;
 
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.action.ActionAbstractResult;
@@ -6,9 +6,6 @@ import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.unit.UnitList;
-import com.tsoft.civilization.unit.action.MoveUnitAction;
-import com.tsoft.civilization.unit.action.MoveUnitActionResults;
-import com.tsoft.civilization.unit.action.UnitMoveResult;
 import com.tsoft.civilization.unit.civil.greatartist.GreatArtist;
 import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.unit.civil.workers.Workers;

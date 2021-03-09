@@ -1,4 +1,4 @@
-package com.tsoft.civilization.action.unit;
+package com.tsoft.civilization.unit.action;
 
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.action.ActionAbstractResult;
@@ -6,10 +6,6 @@ import com.tsoft.civilization.combat.HasCombatStrengthList;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
-import com.tsoft.civilization.unit.action.AttackAction;
-import com.tsoft.civilization.unit.action.AttackActionResults;
-import com.tsoft.civilization.unit.action.CaptureUnitAction;
-import com.tsoft.civilization.unit.action.CaptureUnitActionResults;
 import com.tsoft.civilization.unit.civil.workers.Workers;
 import com.tsoft.civilization.unit.military.archers.Archers;
 import com.tsoft.civilization.unit.military.warriors.Warriors;

@@ -1,10 +1,8 @@
-package com.tsoft.civilization.action.city;
+package com.tsoft.civilization.improvement.city.action;
 
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.improvement.city.action.BuildUnitAction;
-import com.tsoft.civilization.improvement.city.action.CityActionResults;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.unit.UnitList;

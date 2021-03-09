@@ -1,4 +1,4 @@
-package com.tsoft.civilization.action.unit.workers;
+package com.tsoft.civilization.unit.civil.workers.action;
 
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.action.ActionAbstractResult;
@@ -11,9 +11,6 @@ import com.tsoft.civilization.tile.feature.hill.Hill;
 import com.tsoft.civilization.unit.civil.workers.Workers;
 import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.unit.civil.workers.action.RemoveForestAction;
-import com.tsoft.civilization.unit.civil.workers.action.RemoveHillAction;
-import com.tsoft.civilization.unit.civil.workers.action.WorkersActionResults;
 import org.junit.jupiter.api.Test;
 
 import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;

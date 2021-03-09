@@ -1,4 +1,4 @@
-package com.tsoft.civilization.action.unit.settlers;
+package com.tsoft.civilization.unit.civil.settlers.action;
 
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.unit.action.DestroyUnitAction;
