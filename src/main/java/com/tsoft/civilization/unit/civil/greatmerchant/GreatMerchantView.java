@@ -29,10 +29,11 @@ public class GreatMerchantView extends AbstractUnitView<GreatMerchant> {
 
     @Override
     public StringBuilder getHtmlActions(GreatMerchant unit) {
-        return Format.text(
-            "$commonActions" +
-            "<tr id='actions_table_row'>$customsHouseImprovementAction</tr>" +
-            "<tr id='actions_table_row'>$tradeMissionAction</tr>",
+        return Format.text("""
+            $commonActions
+            <tr id='actions_table_row'>$customsHouseImprovementAction</tr>
+            <tr id='actions_table_row'>$tradeMissionAction</tr>
+            """,
 
             "$commonActions", super.getHtmlActions(unit),
             "$customsHouseImprovementAction", CustomsHouseImprovementAction.getHtml(unit),

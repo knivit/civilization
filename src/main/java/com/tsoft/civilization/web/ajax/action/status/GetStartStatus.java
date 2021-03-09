@@ -27,8 +27,8 @@ public class GetStartStatus extends AbstractAjaxRequest {
             </table>
             """,
 
-            images[n],
-            L10nServer.WELCOME
+            "$image", images[n],
+            "$text", L10nServer.WELCOME
         );
 
         return HtmlResponse.ok(value);

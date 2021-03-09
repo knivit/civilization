@@ -3,7 +3,7 @@ package com.tsoft.civilization.unit.military.archers;
 import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.unit.AbstractUnitView;
 
-public class ArchersView extends AbstractUnitView<Archers> {
+public class ArchersView extends AbstractUnitView {
     @Override
     public String getLocalizedName() {
         return L10nUnit.ARCHERS_NAME.getLocalized();

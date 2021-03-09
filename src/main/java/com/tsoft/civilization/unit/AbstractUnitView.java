@@ -27,15 +27,17 @@ public abstract class AbstractUnitView<U extends AbstractUnit> {
         StringBuilder captureUnitAction = CaptureUnitAction.getHtml(unit);
         StringBuilder moveUnitAction = MoveUnitAction.getHtml(unit);
         StringBuilder destroyUnitAction = DestroyUnitAction.getHtml(unit);
+
         if (attackAction == null && captureUnitAction == null && moveUnitAction == null && destroyUnitAction == null) {
             return null;
         }
 
-        return Format.text(
-            "<tr>$attackAction</tr>" +
-            "<tr>$captureUnitAction</tr>" +
-            "<tr>$moveUnitAction</tr>" +
-            "<tr>$destroyUnitAction</tr>",
+        return Format.text("""
+            <tr>$attackAction</tr>
+            <tr>$captureUnitAction</tr>
+            <tr>$moveUnitAction</tr>
+            <tr>$destroyUnitAction</tr>
+            """,
 
             "$attackAction", attackAction,
             "$captureUnitAction", captureUnitAction,
