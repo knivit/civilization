@@ -1,13 +1,11 @@
 package com.tsoft.civilization.unit;
 
+import com.tsoft.civilization.common.AbstractView;
 import com.tsoft.civilization.web.view.JsonBlock;
 
-public abstract class AbstractUnitView {
+public abstract class AbstractUnitView implements AbstractView {
 
-    public abstract String getLocalizedName();
-    public abstract String getLocalizedDescription();
     public abstract String getJsonName();
-    public abstract String getStatusImageSrc();
 
     public JsonBlock getJson(AbstractUnit unit) {
         JsonBlock unitBlock = new JsonBlock();

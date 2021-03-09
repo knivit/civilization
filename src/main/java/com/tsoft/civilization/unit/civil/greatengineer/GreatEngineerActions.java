@@ -1,6 +1,6 @@
 package com.tsoft.civilization.unit.civil.greatengineer;
 
-import com.tsoft.civilization.unit.action.AbstractAction;
+import com.tsoft.civilization.common.AbstractAction;
 import com.tsoft.civilization.unit.action.DefaultUnitActions;
 import com.tsoft.civilization.unit.civil.greatengineer.action.HurryProductionAction;
 import com.tsoft.civilization.unit.civil.greatengineer.action.ManufactureImprovementAction;

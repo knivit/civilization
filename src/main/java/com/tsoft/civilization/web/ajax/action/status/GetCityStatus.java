@@ -6,6 +6,8 @@ import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.L10n.building.L10nBuilding;
 import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.building.*;
+import com.tsoft.civilization.improvement.city.Construction;
+import com.tsoft.civilization.improvement.city.ConstructionList;
 import com.tsoft.civilization.improvement.city.action.BuildBuildingAction;
 import com.tsoft.civilization.improvement.city.action.BuildUnitAction;
 import com.tsoft.civilization.improvement.city.action.BuyBuildingAction;
@@ -47,6 +49,7 @@ public class GetCityStatus extends AbstractAjaxRequest {
             $actions
             $constructionActions
             $buildings
+            $constructionsInProgress
             """,
 
             "$navigationPanel", navigationPanel.getContent(),
@@ -55,17 +58,20 @@ public class GetCityStatus extends AbstractAjaxRequest {
             "$cityCombatInfo", getCityCombatInfo(city),
             "$actions", getActions(city),
             "$constructionActions", getConstructionActions(city),
-            "$buildings", getBuildings(city));
+            "$buildings", getBuildings(city),
+            "$constructionsInProgress", getConstructions(city)
+        );
         return HtmlResponse.ok(value);
     }
 
     private StringBuilder getCityTitle(City city) {
-        return Format.text(
-            "<table id='title_table'>" +
-                "<tr><td>$cityName</td></tr>" +
-                "<tr><td><button onclick=\"server.sendAsyncAjax('ajax/GetCivilizationStatus', { civilization:'$civilization' })\">$civilizationName</button></td></tr>" +
-                "<tr><td><image src='$cityImageSrc'/></td></tr>" +
-            "</table>",
+        return Format.text("""
+            <table id='title_table'>
+                <tr><td>$cityName</td></tr>
+                <tr><td><button onclick="server.sendAsyncAjax('ajax/GetCivilizationStatus', { civilization:'$civilization' })">$civilizationName</button></td></tr>
+                <tr><td><image src='$cityImageSrc'/></td></tr>
+            </table>
+            """,
 
             "$cityName", city.getView().getLocalizedCityName(),
             "$civilization", city.getCivilization().getId(),
@@ -80,15 +86,16 @@ public class GetCityStatus extends AbstractAjaxRequest {
             return null;
         }
 
-        return Format.text(
-            "<table id='info_table'>" +
-                "<tr><th colspan='2'>$features</th></tr>" +
-                "<tr><td>$populationLabel</td><td>$population</td>" +
-                "<tr><td>$productionLabel</td><td>$production</td>" +
-                "<tr><td>$goldLabel</td><td>$gold</td>" +
-                "<tr><td>$foodLabel</td><td>$food</td>" +
-                "<tr><td>$happinessLabel</td><td>$happiness</td>" +
-            "</table>",
+        return Format.text("""
+            <table id='info_table'>
+                <tr><th colspan='2'>$features</th></tr>
+                <tr><td>$populationLabel</td><td>$population</td>
+                <tr><td>$productionLabel</td><td>$production</td>
+                <tr><td>$goldLabel</td><td>$gold</td>
+                <tr><td>$foodLabel</td><td>$food</td>
+                <tr><td>$happinessLabel</td><td>$happiness</td>
+            </table>
+            """,
 
             "$features", L10nCity.BUSINESS_FEATURES,
 
@@ -106,17 +113,18 @@ public class GetCityStatus extends AbstractAjaxRequest {
             return null;
         }
 
-        return Format.text(
-            "<table id='info_table'>" +
-                "<tr><th colspan='2'>$features</th>" +
-                "<tr><td>$meleeAttackStrengthLabel</td><td>$meleeAttackStrength</td>" +
-                "<tr><td>$canConquerCityLabel</td><td>$canConquerCity</td>" +
-                "<tr><td>$attackExperienceLabel</td><td>$attackExperience</td>" +
-                "<tr><td>$defenseExperienceLabel</td><td>$defenseExperience</td>" +
-                "<tr><td>$rangedAttackStrengthLabel</td><td>$rangedAttackStrength</td>" +
-                "<tr><td>$rangedAttackRadiusLabel</td><td>$rangedAttackRadius</td>" +
-                "<tr><td>$strengthLabel</td><td>$strength</td>" +
-            "</table>",
+        return Format.text("""
+            <table id='info_table'>
+                <tr><th colspan='2'>$features</th>
+                <tr><td>$meleeAttackStrengthLabel</td><td>$meleeAttackStrength</td>
+                <tr><td>$canConquerCityLabel</td><td>$canConquerCity</td>
+                <tr><td>$attackExperienceLabel</td><td>$attackExperience</td>
+                <tr><td>$defenseExperienceLabel</td><td>$defenseExperience</td>
+                <tr><td>$rangedAttackStrengthLabel</td><td>$rangedAttackStrength</td>
+                <tr><td>$rangedAttackRadiusLabel</td><td>$rangedAttackRadius</td>
+                <tr><td>$strengthLabel</td><td>$strength</td>
+            </table>
+            """,
 
             "$features", L10nCity.COMBAT_FEATURES,
 
@@ -137,10 +145,12 @@ public class GetCityStatus extends AbstractAjaxRequest {
         }
 
         if (city.isDestroyed()) {
-            return Format.text(
-                "<table id='actions_table'>" +
-                    "<tr><td>$text</td></tr>" +
-                "</table>",
+            return Format.text("""
+                <table id='actions_table'>
+                    <tr><td>$text</td></tr>
+                </table>
+                """,
+
                 "$text", L10nCity.CITY_WAS_CAPTURED
             );
         }
@@ -151,11 +161,12 @@ public class GetCityStatus extends AbstractAjaxRequest {
             return null;
         }
 
-        return Format.text(
-            "<table id='actions_table'>" +
-                "<tr><th colspan='2'>$header</th></tr>" +
-                "$actions" +
-            "</table>",
+        return Format.text("""
+            <table id='actions_table'>
+                <tr><th colspan='2'>$header</th></tr>
+                $actions
+            </table>
+            """,
 
             "$header", L10nAction.AVAILABLE_ACTIONS,
             "$actions", buf
@@ -172,9 +183,10 @@ public class GetCityStatus extends AbstractAjaxRequest {
             return null;
         }
 
-        return Format.text(
-            "$constructUnitActions\n" +
-            "$constructBuildingActions\n",
+        return Format.text("""
+            $constructUnitActions
+            $constructBuildingActions
+            """,
 
             "$constructUnitActions", getUnitConstructionActions(city),
             "$constructBuildingActions", getBuildingConstructionActions(city)
@@ -192,12 +204,13 @@ public class GetCityStatus extends AbstractAjaxRequest {
                 continue;
             }
 
-            buf.append(Format.text(
-                "<tr>" +
-                    "<td><button onclick=\"server.sendAsyncAjax('ajax/GetUnitInfo', { unit:'$unitUuid' })\">$unitName</button></td>" +
-                    "<td>$buyUnitAction</td>" +
-                    "<td>$buildUnitAction</td>" +
-                "</tr>",
+            buf.append(Format.text("""
+                <tr>
+                    <td><button onclick="server.sendAsyncAjax('ajax/GetUnitInfo', { unit:'$unitUuid' })">$unitName</button></td>
+                    <td>$buyUnitAction</td>
+                    <td>$buildUnitAction</td>
+                </tr>
+                """,
 
                 "$unitUuid", unit.getClassUuid(),
                 "$unitName", unit.getView().getLocalizedName(),
@@ -209,11 +222,11 @@ public class GetCityStatus extends AbstractAjaxRequest {
             return null;
         }
 
-        return Format.text(
-            "<table id='actions_table'>" +
-                "$header\n" +
-                "$units\n" +
-            "</table>",
+        return Format.text("""
+            <table id='actions_table'>$header
+            $units
+            </table>
+            """,
 
             "$header", getUnitConstructionHeader(),
             "$units", buf
@@ -294,22 +307,61 @@ public class GetCityStatus extends AbstractAjaxRequest {
 
         StringBuilder buf = new StringBuilder();
         for (AbstractBuilding building : buildings) {
-            buf.append(Format.text(
-                "<tr><td><button onclick=\"server.sendAsyncAjax('ajax/GetBuildingStatus', { building:'$building' })\">$buttonLabel</button></td></tr>",
+            buf.append(Format.text("""
+                <tr><td><button onclick="server.sendAsyncAjax('ajax/GetBuildingStatus', { building:'$building' })">$buttonLabel</button></td></tr>
+                """,
 
                 "$building", building.getId(),
                 "$buttonLabel", building.getView().getLocalizedName()
             ));
         }
 
-        return Format.text(
-            "<table id='actions_table'>" +
-                "<tr><th>$header</th></tr>" +
-                "$buildings" +
-            "</table>",
+        return Format.text("""
+            <table id='actions_table'>
+                <tr><th>$header</th></tr>
+                $buildings
+            </table>
+            """,
 
             "$header", L10nBuilding.BUILDING_LIST,
             "$buildings", buf
+        );
+    }
+
+    private StringBuilder getConstructions(City city) {
+        Civilization myCivilization = getMyCivilization();
+        if (!myCivilization.equals(city.getCivilization())) {
+            return null;
+        }
+
+        ConstructionList constructions = city.getConstructions();
+        if (constructions.isEmpty()) {
+            return Format.text(
+                "<table id='actions_table'><tr><th>$text</th></tr></table>",
+                "$text", L10nBuilding.NO_CONSTRUCTIONS
+            );
+        }
+
+        StringBuilder buf = new StringBuilder();
+        for (Construction construction : constructions) {
+            buf.append(Format.text("""
+                <tr><td><button onclick="server.sendAsyncAjax('ajax/GetConstructionStatus', { construction:'$construction' })">$buttonLabel</button></td></tr>
+                """,
+
+                "$construction", construction.getId(),
+                "$buttonLabel", construction.getView().getLocalizedName()
+            ));
+        }
+
+        return Format.text("""
+            <table id='actions_table'>
+                <tr><th>$header</th></tr>
+                $constructions
+            </table>
+            """,
+
+            "$header", L10nBuilding.CONSTRUCTION_LIST,
+            "$constructions", buf
         );
     }
 }

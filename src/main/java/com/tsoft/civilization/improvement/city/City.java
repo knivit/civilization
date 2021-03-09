@@ -37,6 +37,7 @@ public class City extends AbstractImprovement implements HasCombatStrength {
 
     private CityPopulationService populationService;
     private CityBuildingService buildingService;
+    private CityConstructionService constructionService;
 
     private Supply citySupply;
 
@@ -59,9 +60,10 @@ public class City extends AbstractImprovement implements HasCombatStrength {
         // economics
         citySupply = Supply.EMPTY_SUPPLY;
 
-        // buildings
+        // buildings & construction
         buildingService = new CityBuildingService(this);
         buildingService.addFirstBuilding(isCapital);
+        constructionService = new CityConstructionService(this);
 
         // military
         combatStrength = new CombatStrength(this, getBaseCombatStrength());
@@ -164,37 +166,19 @@ public class City extends AbstractImprovement implements HasCombatStrength {
     }
 
     public boolean canStartConstruction() {
-        return buildingService.canStartConstruction();
+        return constructionService.canStartConstruction();
     }
 
-    public Construction<?> getConstruction() {
-        return buildingService.getConstruction();
+    public ConstructionList getConstructions() {
+        return constructionService.getConstructions();
+    }
+
+    public ConstructionList getBuiltThisYearList() {
+        return constructionService.getBuiltThisYear();
     }
 
     public void startConstruction(CanBeBuilt obj) {
-        buildingService.startConstruction(obj);
-    }
-
-    // Construction of a building or an unit is finished
-    public void constructionDone(Construction<?> construction) {
-        CanBeBuilt obj = construction.getObject();
-
-        if (obj instanceof AbstractBuilding) {
-            AbstractBuilding building = BuildingFactory.newInstance(obj.getClassUuid(), this);
-            addBuilding(building);
-            getWorld().sendEvent(new Event(Event.UPDATE_WORLD, obj, L10nCity.NEW_BUILDING_BUILT_EVENT, building.getView().getLocalizedName()));
-            return;
-        }
-
-        if (obj instanceof AbstractUnit) {
-            AbstractUnit unit = (AbstractUnit)obj;
-            addUnit(unit);
-            getWorld().sendEvent(new Event(Event.UPDATE_WORLD, obj, L10nCity.NEW_UNIT_BUILT_EVENT, unit.getView().getLocalizedName()));
-            return;
-        }
-
-        String objectInfo = (obj == null ? "null" : obj.getClass().getName());
-        throw new IllegalArgumentException("Unknown object is built: " + objectInfo);
+        constructionService.startConstruction(obj);
     }
 
     @Override
@@ -205,6 +189,16 @@ public class City extends AbstractImprovement implements HasCombatStrength {
     @Override
     public boolean acceptTile(AbstractTile tile) {
         return (tile.getTileType() != TileType.SEA) && (tile.getTileType() != TileType.EARTH_ROUGH);
+    }
+
+    public Supply getTilesSupply() {
+        return populationService.getAllCitizensSupply();
+    }
+
+    public void startYear() {
+        populationService.startYear();
+        buildingService.startYear();
+        constructionService.startYear();
     }
 
     @Override
@@ -218,27 +212,21 @@ public class City extends AbstractImprovement implements HasCombatStrength {
         return supply;
     }
 
-    public Supply getTilesSupply() {
-        return populationService.getAllCitizensSupply();
-    }
-
-    public void startYear() {
-        populationService.startYear();
-        buildingService.startYear();
-    }
-
     public void move() {
         Year year = civilization.getYear();
 
-        // income from citizens
+        // population
         populationService.move(year);
 
-        // buildings & construction
+        // buildings
         citySupply = buildingService.move(citySupply);
 
         Supply supply = getSupply();
         citySupply = citySupply.add(supply);
         log.debug("City: Year {}, supply = {}, total supply = {}", year, supply, citySupply);
+
+        // construction
+        citySupply = constructionService.move(citySupply);
 
         // can do actions (attack, buy, build etc)
         passScore = 1;
@@ -247,6 +235,7 @@ public class City extends AbstractImprovement implements HasCombatStrength {
     public void stopYear() {
         populationService.stopYear();
         buildingService.stopYear();
+        constructionService.stopYear();
     }
 
     @Override

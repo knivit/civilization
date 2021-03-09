@@ -15,7 +15,7 @@ public class Main {
 /**
     TODO
 
-  After a click on 'Next Move' show an alert if there are civilizations to do a move
+  After a click on 'Next Turn' show an alert if there are civilizations to do a move
   Clickable events
   Optimize map's redraw (currently - in client on button and on event redraw)
   Add params to L10nMap + NextMoveActionResults (L10nWorld.DECLARE_WAR_EVENT = must be 'A civilization X declared a war to civilization Y'

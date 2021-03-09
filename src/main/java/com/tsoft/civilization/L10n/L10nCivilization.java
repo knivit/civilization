@@ -29,8 +29,8 @@ public class L10nCivilization {
             .set("en", "Available Actions")
             .set("ru", "\u0414\u043e\u0441\u0442\u0443\u043f\u043d\u044b \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044f");
 
-    public static L10nMap NEXT_MOVE = new L10nMap()
-            .set("en", "Next Move")
+    public static L10nMap NEXT_TURN = new L10nMap()
+            .set("en", "Next Turn")
             .set("ru", "\u0421\u043b\u0435\u0434\u0443\u044e\u0449\u0438\u0439 \u0445\u043e\u0434");
 
     public static L10nMap NEXT_MOVE_DESCRIPTION = new L10nMap()
@@ -41,7 +41,7 @@ public class L10nCivilization {
             .set("en", "Moved")
             .set("ru", "\u0425\u043e\u0434 \u0432\u044b\u043f\u043e\u043b\u043d\u0435\u043d");
 
-    public static L10nMap CAN_GO_NEXT = new L10nMap()
+    public static L10nMap CAN_NEXT_TURN = new L10nMap()
             .set("en", "Can go next")
             .set("ru", "\u041c\u043e\u0436\u043d\u043e \u0438\u0434\u0442\u0438 \u0434\u0430\u043b\u044c\u0448\u0435");
 

@@ -1,6 +1,8 @@
 package com.tsoft.civilization.building;
 
 import com.tsoft.civilization.L10n.building.L10nBuilding;
+import com.tsoft.civilization.common.HasId;
+import com.tsoft.civilization.common.HasView;
 import com.tsoft.civilization.improvement.CanBeBuilt;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.base.AbstractTile;
@@ -92,7 +94,7 @@ import java.util.UUID;
  */
 @Slf4j
 @EqualsAndHashCode(of = "id")
-public abstract class AbstractBuilding implements CanBeBuilt {
+public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt {
     private final String id = UUID.randomUUID().toString();
 
     private final City city;
@@ -111,6 +113,7 @@ public abstract class AbstractBuilding implements CanBeBuilt {
 
     public abstract boolean requiresEraAndTechnology(Civilization civilization);
 
+    @Override
     public String getId() {
         return id;
     }

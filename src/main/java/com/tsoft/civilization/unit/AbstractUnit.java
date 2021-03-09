@@ -1,6 +1,8 @@
 package com.tsoft.civilization.unit;
 
 import com.tsoft.civilization.L10n.unit.L10nUnit;
+import com.tsoft.civilization.common.HasId;
+import com.tsoft.civilization.common.HasView;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.combat.skill.AbstractSkill;
@@ -36,7 +38,7 @@ import java.util.*;
  */
 @Slf4j
 @EqualsAndHashCode(of = "id")
-public abstract class AbstractUnit implements HasCombatStrength, CanBeBuilt {
+public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength, CanBeBuilt {
     private String id = UUID.randomUUID().toString();
 
     private Civilization civilization;

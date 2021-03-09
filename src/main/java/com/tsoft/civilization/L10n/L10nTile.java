@@ -26,7 +26,7 @@ public class L10nTile {
             .set("ru", "\u0411\u043e\u043d\u0443\u0441 \u043a \u0437\u0430\u0449\u0438\u0442\u0435, %");
 
     public static L10nMap PRODUCTION_HEADER = new L10nMap()
-            .set("en", "P")
+            .set("en", "PP")
             .set("ru", "\u041f");
 
     public static L10nMap GOLD_HEADER = new L10nMap()

@@ -2,7 +2,7 @@ package com.tsoft.civilization.web.ajax;
 
 import com.tsoft.civilization.web.ajax.action.city.*;
 import com.tsoft.civilization.web.ajax.action.civilization.DeclareWarActionRequest;
-import com.tsoft.civilization.web.ajax.action.civilization.NextMoveActionRequest;
+import com.tsoft.civilization.web.ajax.action.civilization.NextTurnActionRequest;
 import com.tsoft.civilization.web.ajax.action.status.*;
 import com.tsoft.civilization.web.ajax.action.unit.AttackActionRequest;
 import com.tsoft.civilization.web.ajax.action.unit.CaptureUnitActionRequest;
@@ -72,7 +72,7 @@ public class RequestsMap {
 
         // Civilization
         requests.put(DeclareWarActionRequest.class.getSimpleName(), new DeclareWarActionRequest());
-        requests.put(NextMoveActionRequest.class.getSimpleName(), new NextMoveActionRequest());
+        requests.put(NextTurnActionRequest.class.getSimpleName(), new NextTurnActionRequest());
     }
 
     public static AbstractAjaxRequest get(String name) {

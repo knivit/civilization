@@ -1,6 +1,6 @@
 package com.tsoft.civilization.unit.civil.settlers;
 
-import com.tsoft.civilization.unit.action.AbstractAction;
+import com.tsoft.civilization.common.AbstractAction;
 import com.tsoft.civilization.unit.action.DefaultUnitActions;
 import com.tsoft.civilization.unit.civil.settlers.action.BuildCityAction;
 import com.tsoft.civilization.util.Format;

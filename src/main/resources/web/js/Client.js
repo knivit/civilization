@@ -339,7 +339,7 @@ var client = {
 
     /** Civilization Actions */
 
-    nextMoveAction: function(ajaxParams) {
+    nextTurnAction: function(ajaxParams) {
         // clear selections
         drawMap.hideLocationsToMove();
         drawMap.hideLocationsToAttack();
@@ -349,7 +349,7 @@ var client = {
         eventPanel.clear();
 
         server.sendChainOfRequests([
-            [ "ajax/NextMoveActionRequest", { }, client.onUpdateWorldResponse ],
+            [ "ajax/NextTurnActionRequest", { }, client.onUpdateWorldResponse ],
             [ "ajax/GetTileStatus", { col: drawMap.selectedCol, row: drawMap.selectedRow }, client.onStatusResponse ],
             [ "ajax/GetControlPanel", { }, client.onControlPanelResponse ]
         ]);

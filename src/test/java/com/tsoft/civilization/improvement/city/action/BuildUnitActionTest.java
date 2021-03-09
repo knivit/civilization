@@ -13,10 +13,7 @@ import com.tsoft.civilization.world.economic.SupplyMock;
 import org.junit.jupiter.api.Test;
 
 import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BuildUnitActionTest {
     @Test
@@ -44,16 +41,18 @@ public class BuildUnitActionTest {
 
         // Wait till it builds
         Archers archers = UnitFactory.newInstance(civilization, Archers.CLASS_UUID);
-        int neededSteps = archers.getProductionCost() / 3 + 1;
+        int neededSteps = archers.getProductionCost() / 3;
         for (int i = 0; i < neededSteps; i ++) {
             world.move();
 
-            assertNotNull(city.getConstruction().getObject());
+            assertFalse(city.getConstructions().isEmpty());
             assertEquals(0, civilization.units().size());
         }
         world.move();
 
-        assertNull(city.getConstruction());
+        assertTrue(city.getConstructions().isEmpty());
+        assertEquals(1, city.getBuiltThisYearList().size());
+        assertEquals(Archers.CLASS_UUID, city.getBuiltThisYearList().getList().get(0).getObject().getClassUuid());
         assertEquals(1, civilization.units().size());
 
         UnitList list = civilization.units().findByClassUuid(Archers.CLASS_UUID);

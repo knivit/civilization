@@ -2,7 +2,7 @@ package com.tsoft.civilization.web.ajax.action.civilization;
 
 import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.civilization.action.NextMoveAction;
+import com.tsoft.civilization.civilization.action.NextTurnAction;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.web.response.Response;
@@ -11,7 +11,7 @@ import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.civilization.Civilization;
 
-public class NextMoveActionRequest extends AbstractAjaxRequest {
+public class NextTurnActionRequest extends AbstractAjaxRequest {
     @Override
     public Response getJson(Request request) {
         Civilization myCivilization = getMyCivilization();
@@ -21,7 +21,7 @@ public class NextMoveActionRequest extends AbstractAjaxRequest {
 
         myCivilization.move();
 
-        ActionAbstractResult result = NextMoveAction.nextMove(myCivilization.getWorld());
+        ActionAbstractResult result = NextTurnAction.nextTurn(myCivilization.getWorld());
 
         // if there is a wait for others, then send an message to client
         if (result.isFail()) {

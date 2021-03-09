@@ -1,36 +1,51 @@
 package com.tsoft.civilization.improvement.city;
 
+import com.tsoft.civilization.common.AbstractView;
+import com.tsoft.civilization.common.HasId;
+import com.tsoft.civilization.common.HasView;
 import com.tsoft.civilization.improvement.CanBeBuilt;
 
-public class Construction <T extends CanBeBuilt> {
-    // a building or an unit
-    private final T object;
+public class Construction implements HasView, HasId {
 
-    private int productionCost;
+    private final CanBeBuilt object;       // constructing a building, or training a unit, or working on a particular project
+    private final int totalProductionCost; // total production cost
+    private int usedProductionCost;        // used production cost
 
-    public Construction(T object) {
+    public Construction(CanBeBuilt object) {
         this.object = object;
 
-        productionCost = object.getProductionCost();
+        totalProductionCost = object.getProductionCost();
+        usedProductionCost = 0;
     }
 
-    public T getObject() {
+    public CanBeBuilt getObject() {
         return object;
     }
 
-    public int getProductionCost() {
-        return productionCost;
+    @Override
+    public AbstractView getView() {
+        return object.getView();
     }
 
-    public void setProductionCost(int productionCost) {
-        this.productionCost = productionCost;
+    @Override
+    public String getId() {
+        return object.getId();
+    }
+
+    public int getProductionCost() {
+        return Math.max(0, totalProductionCost - usedProductionCost);
+    }
+
+    public void useProductionCost(int cost) {
+        this.usedProductionCost += cost;
     }
 
     @Override
     public String toString() {
         return "Construction{" +
                 "object=" + object +
-                ", productionCost=" + productionCost +
-                '}';
+                ", totalProductionCost=" + totalProductionCost +
+                ", usedProductionCost=" + usedProductionCost +
+        '}';
     }
 }

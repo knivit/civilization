@@ -2,7 +2,7 @@ package com.tsoft.civilization.web.ajax.action.status;
 
 import com.tsoft.civilization.L10n.L10nCivilization;
 import com.tsoft.civilization.L10n.L10nServer;
-import com.tsoft.civilization.civilization.action.NextMoveAction;
+import com.tsoft.civilization.civilization.action.NextTurnAction;
 import com.tsoft.civilization.improvement.city.CityList;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Format;
@@ -49,8 +49,9 @@ public class GetControlPanel extends AbstractAjaxRequest {
 
         StringBuilder controls = new StringBuilder();
         if (!units.isEmpty() || !cities.isEmpty()) {
-            controls.append(Format.text(
-                "<td><button onclick=\"server.sendAsyncAjax('ajax/GetCivilizationStatus', { civilization:'$civilization' })\">$actions</button></td>",
+            controls.append(Format.text("""
+                <td><button onclick="server.sendAsyncAjax('ajax/GetCivilizationStatus', { civilization:'$civilization' })">$actions</button></td>
+                """,
 
                 "$civilization", civilization.getId(),
                 "$actions", L10nCivilization.AVAILABLE_ACTIONS
@@ -59,11 +60,11 @@ public class GetControlPanel extends AbstractAjaxRequest {
 
         return Format.text("""
             <table id='control_table'>
-                <tr>$nextMoveAction $controls</tr>
+                <tr>$controls $nextTurnAction</tr>
             </table>
             """,
 
-            "$nextMoveAction", NextMoveAction.getHtml(civilization),
+            "$nextTurnAction", NextTurnAction.getHtml(civilization),
             "$controls", controls
         );
     }

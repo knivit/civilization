@@ -34,12 +34,10 @@ import java.util.*;
 public class Civilization {
     private final String id = UUID.randomUUID().toString();
 
-    private final CivilizationView VIEW;
+    private final CivilizationView view;
 
     private final L10nMap name;
     private final Year startYear;
-    private boolean isMoved;
-    private boolean isArtificialIntelligence;
 
     private final World world;
 
@@ -64,7 +62,7 @@ public class Civilization {
 
         this.world = world;
         this.name = name;
-        VIEW = new CivilizationView(name);
+        view = new CivilizationView(name);
 
         startYear = world.getYear();
         events = new EventsByYearMap(world);
@@ -105,7 +103,7 @@ public class Civilization {
     }
 
     public CivilizationView getView() {
-        return VIEW;
+        return view;
     }
 
     public World getWorld() {
@@ -118,18 +116,6 @@ public class Civilization {
 
     public boolean isDestroyed() {
         return cities().isDestroyed();
-    }
-
-    public boolean isMoved() {
-        return isMoved;
-    }
-
-    public boolean isArtificialIntelligence() {
-        return isArtificialIntelligence;
-    }
-
-    public void setArtificialIntelligence(boolean artificialIntelligence) {
-        isArtificialIntelligence = artificialIntelligence;
     }
 
     public EventsByYearMap getEvents() {
@@ -245,45 +231,29 @@ public class Civilization {
         return supply;
     }
 
-    private void humanMove() {
-        cityService.move();
-        unitService.move();
-
-        supply = supply.addWithoutPopulation(calcSupply());
-    }
-
-    private void aiMove() {
-        cityService.move();
-        unitService.move();
-
-        supply = supply.addWithoutPopulation(calcSupply());
-    }
-
     public void startYear() {
         unitService.startYear();
         cityService.startYear();
-        isMoved = false;
     }
 
     public void move() {
-        if (isMoved || isDestroyed()) {
+        if (isDestroyed()) {
             return;
         }
 
         addEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.MOVE_START_EVENT, getView().getLocalizedCivilizationName()));
 
-        if (isArtificialIntelligence) {
-            aiMove();
-        } else {
-            humanMove();
-        }
-        isMoved = true;
+        cityService.move();
+        unitService.move();
+
+        supply = supply.addWithoutPopulation(calcSupply());
 
         addEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.MOVE_DONE_EVENT, getView().getLocalizedCivilizationName()));
     }
 
     public void stopYear() {
         unitService.stopYear();
+        cityService.stopYear();
     }
 
     public void giftReceived(Civilization sender, Supply receivedSupply) {

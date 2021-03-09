@@ -38,6 +38,9 @@ public class World {
 
     private final TileService tileService = new TileService();
 
+    // "move" can be a long operation
+    private volatile boolean nextTurnInProgress;
+
     public World(MapType mapType, int width, int height) {
         year = new Year(-3000);
         VIEW = new WorldView(this);
@@ -222,20 +225,23 @@ public class World {
         return civilizations.getCityById(cityId);
     }
 
-    public CivilizationList getNotMovedHumanCivilizations() {
-        CivilizationList result = new CivilizationList();
-        for (Civilization civilization : civilizations) {
-            if (!civilization.isMoved() && !civilization.isArtificialIntelligence()) {
-                result.add(civilization);
-            }
-        }
-        return result;
+    public boolean nextTurnInProgress() {
+        return nextTurnInProgress;
     }
 
     public void move() {
-        startYear();
-        moveCivilizations();
-        stopYear();
+        if (nextTurnInProgress) {
+            return;
+        }
+
+        nextTurnInProgress = true;
+        try {
+            startYear();
+            moveCivilizations();
+            stopYear();
+        } finally {
+            nextTurnInProgress = false;
+        }
     }
 
     // Start a new year

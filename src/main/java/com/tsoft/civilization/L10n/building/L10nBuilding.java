@@ -31,6 +31,10 @@ public class L10nBuilding {
             .set("en", "No Buildings")
             .set("ru", "\u0417\u0434\u0430\u043d\u0438\u0439 \u043d\u0435\u0442");
 
+    public static L10nMap NO_CONSTRUCTIONS = new L10nMap()
+        .set("en", "No Constructions")
+        .set("ru", "\u041d\u0435\u0442 \u0441\u0442\u0440\u043e\u0438\u0442\u0435\u043b\u044c\u0441\u0442\u0432\u0430");
+
     public static L10nMap BUILDINGS_TO_CONSTRUCT = new L10nMap()
             .set("en", "Buildings To Construct")
             .set("ru", "\u0417\u0434\u0430\u043d\u0438\u044f \u0434\u043b\u044f \u043f\u043e\u0441\u0442\u0440\u043e\u0439\u043a\u0438");
@@ -58,6 +62,10 @@ public class L10nBuilding {
     public static L10nMap BUILDING_LIST = new L10nMap()
             .set("en", "Buildings in the City")
             .set("ru", "\u0417\u0434\u0430\u043d\u0438\u044f \u0433\u043e\u0440\u043e\u0434\u0430");
+
+    public static L10nMap CONSTRUCTION_LIST = new L10nMap()
+        .set("en", "Construction in progress")
+        .set("ru", "\u0421\u0442\u0440\u043e\u0438\u0442\u0435\u043b\u044c\u0441\u0442\u0432\u043e");
 
     public static L10nMap NAME = new L10nMap()
             .set("en", "Name")

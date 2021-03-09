@@ -1,23 +1,7 @@
 package com.tsoft.civilization.building;
 
-import com.tsoft.civilization.improvement.city.action.DestroyBuildingAction;
-import com.tsoft.civilization.util.Format;
+import com.tsoft.civilization.common.AbstractView;
 
-public abstract class AbstractBuildingView {
-    public abstract String getLocalizedName();
-    public abstract String getLocalizedDescription();
-    public abstract String getStatusImageSrc();
+public abstract class AbstractBuildingView implements AbstractView {
 
-    public StringBuilder getHtmlActions(AbstractBuilding building) {
-        StringBuilder destroyBuildingAction = DestroyBuildingAction.getHtml(building);
-        if (destroyBuildingAction == null) {
-            return null;
-        }
-
-        return Format.text(
-            "<tr>$destroyBuildingAction</tr>",
-
-            "$destroyBuildingAction", destroyBuildingAction
-        );
-    }
 }

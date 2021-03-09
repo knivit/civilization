@@ -125,6 +125,7 @@ public class CityPopulationService {
 
     public Supply getAllCitizensSupply() {
         Supply supply = Supply.EMPTY_SUPPLY;
+
         for (Citizen citizen : citizens) {
             supply = supply.add(citizen.getSupply());
         }
