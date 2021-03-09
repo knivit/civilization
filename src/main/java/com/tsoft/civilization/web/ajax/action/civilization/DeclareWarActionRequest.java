@@ -29,7 +29,7 @@ public class DeclareWarActionRequest extends AbstractAjaxRequest {
         if (result.isFail()) {
             JsonBlock response = new JsonBlock();
             response.addParam("message", result.getLocalized());
-            return new JsonResponse(ResponseCode.ACCEPTED, response.getText());
+            return new JsonResponse(ResponseCode.ACCEPTED, response);
         }
 
         // nothing to return

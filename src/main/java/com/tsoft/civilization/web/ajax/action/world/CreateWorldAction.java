@@ -4,6 +4,7 @@ import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.TilesMap;
+import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.state.Worlds;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.world.generator.Climate;
@@ -64,6 +65,7 @@ public class CreateWorldAction {
             return CreateWorldActionResults.CANT_CREATE_CIVILIZATION;
         }
 
+        Sessions.setActiveCivilization(civilization);
         return CreateWorldActionResults.CREATED;
     }
 }

@@ -20,9 +20,12 @@ public class JoinWorldRequest extends AbstractAjaxRequest {
 
             JsonBlock response = new JsonBlock();
             response.addParam("message", result.getLocalized());
-            return new JsonResponse(ResponseCode.ACCEPTED, response.getText());
+            return new JsonResponse(ResponseCode.ACCEPTED, response);
         }
 
+        JsonBlock activeLocation = new JsonBlock();
+        activeLocation.addParam("col", 0);
+        activeLocation.addParam("row", 0);
         return new JsonResponse(ResponseCode.OK, "");
     }
 }

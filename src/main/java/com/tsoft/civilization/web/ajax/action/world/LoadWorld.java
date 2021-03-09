@@ -27,6 +27,6 @@ public class LoadWorld extends AbstractAjaxRequest {
         response.addParam("selectedCol", startPoint.getX());
         response.addParam("selectedRow", startPoint.getY());
 
-        return new JsonResponse(ResponseCode.OK, response.getText());
+        return new JsonResponse(ResponseCode.OK, response);
     }
 }

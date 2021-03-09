@@ -11,10 +11,7 @@ import com.tsoft.civilization.web.ajax.action.unit.MoveUnitActionRequest;
 import com.tsoft.civilization.web.ajax.action.unit.settlers.BuildCityActionRequest;
 import com.tsoft.civilization.web.ajax.action.unit.workers.RemoveForestActionRequest;
 import com.tsoft.civilization.web.ajax.action.unit.workers.RemoveHillActionRequest;
-import com.tsoft.civilization.web.ajax.action.world.CreateWorldRequest;
-import com.tsoft.civilization.web.ajax.action.world.GetCreateWorldForm;
-import com.tsoft.civilization.web.ajax.action.world.JoinWorldRequest;
-import com.tsoft.civilization.web.ajax.action.world.LoadWorld;
+import com.tsoft.civilization.web.ajax.action.world.*;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -28,7 +25,7 @@ public class RequestsMap {
         REQUESTS = Collections.unmodifiableMap(requests);
 
         // Worlds
-        requests.put(GetWorlds.class.getSimpleName(), new GetWorlds());
+        requests.put(GetWorldsRequest.class.getSimpleName(), new GetWorldsRequest());
         requests.put(CreateWorldRequest.class.getSimpleName(), new CreateWorldRequest());
         requests.put(GetCreateWorldForm.class.getSimpleName(), new GetCreateWorldForm());
         requests.put(JoinWorldRequest.class.getSimpleName(), new JoinWorldRequest());

@@ -91,13 +91,13 @@ public class ServerClient {
     }
 
     public boolean sendResponse(Response response) {
-        StringBuilder buf = Format.text(
-            "HTTP/1.1 $errorCode\r\n" +
-            "Content-Type: $contentType\r\n" +
-            "Content-Length: $contentLength\r\n" +
-            "$additionalHeaders" +
-            "Connection: keep-alive\r\n" +
-             "\r\n",
+        StringBuilder buf = Format.text("""
+            HTTP/1.1 $errorCode\r
+            Content-Type: $contentType\r
+            Content-Length: $contentLength\r
+            $additionalHeadersConnection: keep-alive\r
+            \r
+            """,
 
             "$errorCode", response.getResponseCode(),
             "$contentType", response.getContentType(),
@@ -108,6 +108,7 @@ public class ServerClient {
         if (sendText(buf.toString())) {
             return sendBytes(response.getContent());
         }
+
         return false;
     }
 

@@ -103,6 +103,12 @@ var drawMap = {
     // On browser's window resize event
     redraw: function() {
         this.drawTilesMap();
+
+        if (window["startCol"] != undefined && window["startRow"] != undefined) {
+            this.scrollTo(window["startCol"], window["startRow"]);
+            window["startCol"] = undefined;
+            window["startRow"] = undefined;
+        }
     },
 
     toggleLocationsToMove: function(locations) {

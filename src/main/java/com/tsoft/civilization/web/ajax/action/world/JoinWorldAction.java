@@ -1,11 +1,8 @@
 package com.tsoft.civilization.web.ajax.action.world;
 
 import com.tsoft.civilization.L10n.L10nMap;
-import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.web.response.Response;
-import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.state.Worlds;
 import com.tsoft.civilization.world.World;
 

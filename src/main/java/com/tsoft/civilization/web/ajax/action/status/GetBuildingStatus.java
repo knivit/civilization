@@ -15,6 +15,7 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.economic.Supply;
 
 public class GetBuildingStatus extends AbstractAjaxRequest {
+
     @Override
     public Response getJson(Request request) {
         Civilization myCivilization = getMyCivilization();
@@ -29,11 +30,12 @@ public class GetBuildingStatus extends AbstractAjaxRequest {
             return Response.newErrorInstance(L10nBuilding.BUILDING_NOT_FOUND);
         }
 
-        StringBuilder value = Format.text(
-            "$navigationPanel\n" +
-            "$buildingTitle\n" +
-            "$buildingInfo\n" +
-            "$actions\n",
+        StringBuilder value = Format.text("""
+            $navigationPanel
+            $buildingTitle
+            $buildingInfo
+            $actions
+            """,
 
             "$navigationPanel", getNavigationPanel(),
             "$buildingTitle", getBuildingTitle(building),

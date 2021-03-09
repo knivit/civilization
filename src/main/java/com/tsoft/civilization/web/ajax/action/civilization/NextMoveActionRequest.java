@@ -27,11 +27,11 @@ public class NextMoveActionRequest extends AbstractAjaxRequest {
         if (result.isFail()) {
             JsonBlock response = new JsonBlock();
             response.addParam("message", result.getLocalized());
-            return new JsonResponse(ResponseCode.ACCEPTED, response.getText());
+            return new JsonResponse(ResponseCode.ACCEPTED, response);
         }
 
         // return the map
         JsonBlock response = myCivilization.getWorld().getView().getJSON();
-        return new JsonResponse(ResponseCode.OK, response.getText());
+        return new JsonResponse(ResponseCode.OK, response);
     }
 }

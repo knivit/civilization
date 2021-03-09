@@ -10,7 +10,7 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationView;
 
 public class WorldView {
-    private World world;
+    private final World world;
 
     public WorldView(World world) {
         this.world = world;

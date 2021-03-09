@@ -52,6 +52,10 @@ var client = {
 
     // Callback to start a game after creation (or joining) to a World
     onResponseLoadGamePage: function(response) {
+        var json = JSON.parse(response || "{}");
+        window["startCol"] = json.col || 0;
+        window["startRow"] = json.row || 0;
+
         window.location.href = "GamePage.html";
     },
 
@@ -107,8 +111,8 @@ var client = {
     // Start Pages
 
     // List of existing Worlds (to join or to create a new world)
-    getWorlds: function() {
-        server.sendAsyncAjax('ajax/GetWorlds', { }, client.onGetWorldsResponse);
+    onGetWorldsRequest: function() {
+        server.sendAsyncAjax('ajax/GetWorldsRequest', { }, client.onGetWorldsResponse);
     },
 
     // Get a form to create a new world
@@ -116,7 +120,7 @@ var client = {
         server.sendAsyncAjax('ajax/GetCreateWorldForm', { }, client.onGetWorldsResponse);
     },
 
-    createWorld: function() {
+    onCreateWorldRequest: function() {
         var worldName = document.getElementById('worldName').value;
         var worldType = document.getElementById('worldType').value;
         var mapWidth = document.getElementById('mapWidth').value;
@@ -125,7 +129,7 @@ var client = {
         var maxNumberOfCivilizations = document.getElementById('maxNumberOfCivilizations').value;
         var language = document.getElementById('language').value;
 
-        server.sendAsyncAjax('ajax/CreateWorld',
+        server.sendAsyncAjax('ajax/CreateWorldRequest',
            { "worldName": worldName,
              "worldType": worldType,
              "mapWidth": mapWidth,
@@ -136,8 +140,8 @@ var client = {
            }, client.onResponseLoadGamePage);
     },
 
-    joinWorld: function(ajaxParams) {
-        server.sendAsyncAjax('ajax/JoinWorld', { world: ajaxParams.world }, client.onResponseLoadGamePage);
+    onJoinWorldRequest: function(ajaxParams) {
+        server.sendAsyncAjax('ajax/JoinWorldRequest', { world: ajaxParams.world }, client.onResponseLoadGamePage);
     },
 
     loadWorld: function() {

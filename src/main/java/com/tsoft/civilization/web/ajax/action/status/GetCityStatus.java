@@ -38,14 +38,15 @@ public class GetCityStatus extends AbstractAjaxRequest {
             return Response.newErrorInstance(L10nServer.CITY_NOT_FOUND);
         }
 
-        StringBuilder value = Format.text(
-            "$navigationPanel\n" +
-            "$cityTitle\n" +
-            "$cityBusinessInfo\n" +
-            "$cityCombatInfo\n" +
-            "$actions\n" +
-            "$constructionActions\n" +
-            "$buildings\n",
+        StringBuilder value = Format.text("""
+            $navigationPanel
+            $cityTitle
+            $cityBusinessInfo
+            $cityCombatInfo
+            $actions
+            $constructionActions
+            $buildings
+            """,
 
             "$navigationPanel", getNavigationPanel(),
             "$cityTitle", getCityTitle(city),

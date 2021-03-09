@@ -5,7 +5,7 @@ import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.L10n.L10nWorld;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
-import com.tsoft.civilization.web.response.JsonResponse;
+import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
@@ -15,6 +15,7 @@ import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.civilization.CivilizationList;
 
 public class GetCivilizations extends AbstractAjaxRequest {
+
     @Override
     public Response getJson(Request request) {
         Civilization myCivilization = getMyCivilization();
@@ -22,15 +23,16 @@ public class GetCivilizations extends AbstractAjaxRequest {
             return Response.newErrorInstance(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
-        StringBuilder value = Format.text(
-            "$navigationPanel\n" +
-            "$civilizations\n",
+        StringBuilder value = Format.text("""
+            $navigationPanel
+            $civilizations
+            """,
 
             "$navigationPanel", getNavigationPanel(),
             "$civilizations", getCivilizations(myCivilization.getWorld())
         );
 
-        return new JsonResponse(ResponseCode.OK, value.toString());
+        return new HtmlResponse(ResponseCode.OK, value.toString());
     }
 
     private StringBuilder getCivilizations(World world) {

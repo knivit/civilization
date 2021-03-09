@@ -3,7 +3,7 @@ package com.tsoft.civilization.action;
 import com.tsoft.civilization.L10n.L10nMap;
 
 public abstract class ActionAbstractResult {
-    private L10nMap message;
+    private final L10nMap message;
 
     public abstract boolean isSuccess();
 

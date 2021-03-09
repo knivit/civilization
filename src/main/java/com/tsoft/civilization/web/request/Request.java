@@ -42,6 +42,11 @@ public class Request {
         return params.get(paramName);
     }
 
+    public String get(String paramName, String defaultValue) {
+        String value = params.get(paramName);
+        return (value == null || value.isBlank()) ? defaultValue : value;
+    }
+
     public String getHeader(String headerName) {
         return headers.get(headerName);
     }

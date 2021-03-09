@@ -67,7 +67,7 @@ public class CivilizationUnitService {
         // create the Settlers unit
         Settlers settlers = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
         if (!addUnit(settlers, settlersLocation)) {
-            log.warn("Can't place the Settlers");
+            log.warn("Can't place Settlers");
             return false;
         }
 
