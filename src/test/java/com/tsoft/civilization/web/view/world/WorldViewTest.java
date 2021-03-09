@@ -38,7 +38,7 @@ public class WorldViewTest {
         Settlers settlers = UnitFactory.newInstance(c1, Settlers.CLASS_UUID);
         assertTrue(c1.units().addUnit(settlers, new Point(1, 0)));
 
-        JsonBlock worldBlock = world.getView().getJSON();
+        JsonBlock worldBlock = world.getView().getJson();
         JsonNode jsonObj = new ObjectMapper().readTree(worldBlock.getText());
         assertNotNull(jsonObj);
         assertEquals(3 * 2, jsonObj.size());

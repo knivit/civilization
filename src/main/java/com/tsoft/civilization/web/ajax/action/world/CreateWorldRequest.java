@@ -54,6 +54,6 @@ public class CreateWorldRequest extends AbstractAjaxRequest {
         JsonBlock activeLocation = new JsonBlock();
         activeLocation.addParam("col", (settlersLocation == null) ? 0 : settlersLocation.getX());
         activeLocation.addParam("row", (settlersLocation == null) ? 0 : settlersLocation.getY());
-        return new JsonResponse(ResponseCode.OK, activeLocation);
+        return JsonResponse.ok(activeLocation);
     }
 }

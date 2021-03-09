@@ -21,7 +21,7 @@ public class GetMyCitiesTest {
         AbstractAjaxRequest.getInstance(GetMyCities.class.getSimpleName());
 
     @Test
-    public void getJSON() {
+    public void getJson() {
         MockWorld world = MockWorld.newSimpleWorld();
         Civilization c1 = world.createCivilization(RUSSIA);
         City city1 = c1.createCity(new Point(2, 0));

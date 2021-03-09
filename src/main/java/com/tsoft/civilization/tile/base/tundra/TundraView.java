@@ -15,7 +15,7 @@ public class TundraView extends AbstractTileView {
     }
 
     @Override
-    public String getJSONName() {
+    public String getJsonName() {
         return "t";
     }
 

@@ -27,13 +27,13 @@ public class CivilizationView {
         return name.getLocalized();
     }
 
-    public String getJSONName() {
+    public String getJsonName() {
         return name.getEnglish();
     }
 
-    public JsonBlock getJSON(Civilization civilization) {
+    public JsonBlock getJson(Civilization civilization) {
         JsonBlock civBlock = new JsonBlock();
-        civBlock.addParam("name", civilization.getView().getJSONName());
+        civBlock.addParam("name", civilization.getView().getJsonName());
 
         return civBlock;
     }

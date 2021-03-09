@@ -15,7 +15,7 @@ public class MountainView extends AbstractFeatureView {
     }
 
     @Override
-    public String getJSONName() {
+    public String getJsonName() {
         return "M";
     }
 

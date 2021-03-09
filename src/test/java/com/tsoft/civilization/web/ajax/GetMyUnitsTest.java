@@ -24,7 +24,7 @@ public class GetMyUnitsTest {
         AbstractAjaxRequest.getInstance(GetMyUnits.class.getSimpleName());
 
     @Test
-    public void getJSON() {
+    public void getJson() {
         MockWorld world = MockWorld.newSimpleWorld();
         Civilization c1 = world.createCivilization(RUSSIA);
         Archers archers = UnitFactory.newInstance(c1, Archers.CLASS_UUID);

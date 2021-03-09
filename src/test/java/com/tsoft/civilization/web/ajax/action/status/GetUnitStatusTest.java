@@ -22,7 +22,7 @@ public class GetUnitStatusTest {
         AbstractAjaxRequest.getInstance(GetUnitStatus.class.getSimpleName());
 
     @Test
-    public void getJSONForMyUnit() {
+    public void getJsonForMyUnit() {
         MockWorld world = MockWorld.newSimpleWorld();
         Worlds.add(world);
 

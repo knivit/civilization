@@ -15,7 +15,7 @@ public class HillView extends AbstractFeatureView {
     }
 
     @Override
-    public String getJSONName() {
+    public String getJsonName() {
         return "h";
     }
 

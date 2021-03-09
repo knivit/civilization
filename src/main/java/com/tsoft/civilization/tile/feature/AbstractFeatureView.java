@@ -5,12 +5,12 @@ import com.tsoft.civilization.web.view.JsonBlock;
 public abstract class AbstractFeatureView {
     public abstract String getLocalizedName();
     public abstract String getLocalizedDescription();
-    public abstract String getJSONName();
+    public abstract String getJsonName();
     public abstract String getStatusImageSrc();
 
-    public JsonBlock getJSON(TerrainFeature feature) {
+    public JsonBlock getJson(TerrainFeature feature) {
         JsonBlock tileBlock = new JsonBlock();
-        tileBlock.addParam("name", feature.getView().getJSONName());
+        tileBlock.addParam("name", feature.getView().getJsonName());
         return tileBlock;
     }
 }

@@ -37,12 +37,12 @@ public class CityView extends AbstractImprovementView {
         return name.getLocalized();
     }
 
-    public JsonBlock getJSON(City city) {
+    public JsonBlock getJson(City city) {
         JsonBlock cityBlock = new JsonBlock();
         cityBlock.addParam("col", city.getLocation().getX());
         cityBlock.addParam("row", city.getLocation().getY());
         cityBlock.addParam("name", city.getView().getLocalizedCityName());
-        cityBlock.addParam("civilization", city.getCivilization().getView().getJSONName());
+        cityBlock.addParam("civilization", city.getCivilization().getView().getJsonName());
         if (city.isCapital()) {
             cityBlock.addParam("isCapital", true);
         }

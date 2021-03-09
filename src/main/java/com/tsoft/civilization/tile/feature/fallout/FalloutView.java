@@ -15,7 +15,7 @@ public class FalloutView extends AbstractFeatureView {
     }
 
     @Override
-    public String getJSONName() {
+    public String getJsonName() {
         return "F";
     }
 

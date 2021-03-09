@@ -15,7 +15,7 @@ public class FloodPlainView extends AbstractFeatureView {
     }
 
     @Override
-    public String getJSONName() {
+    public String getJsonName() {
         return "n";
     }
 

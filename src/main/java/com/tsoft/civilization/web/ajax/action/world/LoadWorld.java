@@ -20,13 +20,13 @@ public class LoadWorld extends AbstractAjaxRequest {
         }
 
         // map
-        JsonBlock response = myCivilization.getWorld().getView().getJSON();
+        JsonBlock response = myCivilization.getWorld().getView().getJson();
 
         // starting point
         Point startPoint = myCivilization.getStartPoint();
         response.addParam("selectedCol", startPoint.getX());
         response.addParam("selectedRow", startPoint.getY());
 
-        return new JsonResponse(ResponseCode.OK, response);
+        return JsonResponse.ok(response);
     }
 }

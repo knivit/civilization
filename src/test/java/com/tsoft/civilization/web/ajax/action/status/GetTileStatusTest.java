@@ -25,7 +25,7 @@ public class GetTileStatusTest {
         AbstractAjaxRequest.getInstance(GetTileStatus.class.getSimpleName());
 
     @Test
-    public void getJSONForMyCityAndUnit() {
+    public void getJsonForMyCityAndUnit() {
         MockWorld world = MockWorld.newWorldWithFeatures();
         Civilization c1 = world.createCivilization(RUSSIA);
         City city1 = c1.createCity(new Point(2, 0));
@@ -41,7 +41,7 @@ public class GetTileStatusTest {
     }
 
     @Test
-    public void getJSONForForeignCityAndUnit() {
+    public void getJsonForForeignCityAndUnit() {
         MockWorld world = MockWorld.newWorldWithFeatures();
         Civilization c1 = world.createCivilization(RUSSIA);
         Civilization c2 = world.createCivilization(AMERICA);

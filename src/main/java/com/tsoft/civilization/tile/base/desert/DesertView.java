@@ -15,7 +15,7 @@ public class DesertView extends AbstractTileView {
     }
 
     @Override
-    public String getJSONName() {
+    public String getJsonName() {
         return "d";
     }
 

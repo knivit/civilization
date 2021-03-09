@@ -15,7 +15,7 @@ public class OceanView extends AbstractTileView {
     }
 
     @Override
-    public String getJSONName() {
+    public String getJsonName() {
         return ".";
     }
 

@@ -18,7 +18,7 @@ public abstract class AbstractUnitView<U extends AbstractUnit> {
         unitBlock.addParam("col", unit.getLocation().getX());
         unitBlock.addParam("row", unit.getLocation().getY());
         unitBlock.addParam("name", unit.getView().getJsonName());
-        unitBlock.addParam("civ", unit.getCivilization().getView().getJSONName());
+        unitBlock.addParam("civ", unit.getCivilization().getView().getJsonName());
         return unitBlock;
     }
 

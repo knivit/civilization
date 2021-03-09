@@ -23,7 +23,7 @@ public class GetBuildingStatusTest {
         AbstractAjaxRequest.getInstance(GetBuildingStatus.class.getSimpleName());
 
     @Test
-    public void getJSONForMyCityBuilding() {
+    public void getJsonForMyCityBuilding() {
         MockWorld world = MockWorld.newSimpleWorld();
         Worlds.add(world);
 
@@ -38,7 +38,7 @@ public class GetBuildingStatusTest {
     }
 
     @Test
-    public void getJSONForForeignCityBuilding() {
+    public void getJsonForForeignCityBuilding() {
         MockWorld world = MockWorld.newSimpleWorld();
         Worlds.add(world);
 

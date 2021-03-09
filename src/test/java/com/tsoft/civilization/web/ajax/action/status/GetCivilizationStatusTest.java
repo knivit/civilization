@@ -26,7 +26,7 @@ public class GetCivilizationStatusTest {
         AbstractAjaxRequest.getInstance(GetCivilizationStatus.class.getSimpleName());
 
     @Test
-    public void getJSONForMyCivilization() {
+    public void getJsonForMyCivilization() {
         MockWorld world = MockWorld.newSimpleWorld();
 
         Civilization c1 = world.createCivilization(RUSSIA);
@@ -45,7 +45,7 @@ public class GetCivilizationStatusTest {
     }
 
     @Test
-    public void getJSONForForeignCivilization() {
+    public void getJsonForForeignCivilization() {
         MockWorld world = MockWorld.newSimpleWorld();
 
         Civilization c1 = world.createCivilization(RUSSIA);

@@ -102,28 +102,30 @@ public class GetUnitStatus extends AbstractAjaxRequest {
 
         // nothing to do with a destroyed unit
         if (unit.isDestroyed()) {
-            return Format.text(
-                "<table id='actions_table'>" +
-                    "<tr><td>$destroyed</td></tr>" +
-                "</table>",
+            return Format.text("""
+                <table id='actions_table'>
+                    <tr><td>$destroyed</td></tr>
+                </table>
+                """,
 
                 "$destroyed", L10nUnit.UNIT_WAS_DESTROYED
             );
         }
 
-        StringBuilder buf = unit.getView().getHtmlActions(unit);
-        if (buf == null) {
+        StringBuilder actions = unit.getView().getHtmlActions(unit);
+        if (actions == null) {
             return null;
         }
 
-        return Format.text(
-            "<table id='actions_table'>" +
-                "<tr><th colspan='2'>$actions</th></tr>" +
-                "$unitActions" +
-            "</table",
+        return Format.text("""
+            <table id='actions_table'>
+                <tr><th colspan='2'>$actions</th></tr>
+                $unitActions
+            </table
+            """,
 
             "$actions", L10nAction.AVAILABLE_ACTIONS,
-            "$unitActions", buf
+            "$unitActions", actions
         );
     }
 }

@@ -53,7 +53,7 @@ public class Event {
         return (flags & UPDATE_STATUS_PANEL) != 0;
     }
 
-    public JsonBlock getJSON() {
+    public JsonBlock getJson() {
         JsonBlock block = new JsonBlock();
         block.addParam("description", getLocalized());
         block.addParam("serverTime", DATE_TIME_FORMATTER.format(serverEventTime));

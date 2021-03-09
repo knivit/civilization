@@ -15,7 +15,7 @@ public class GrasslandView extends AbstractTileView {
     }
 
     @Override
-    public String getJSONName() {
+    public String getJsonName() {
         return "g";
     }
 

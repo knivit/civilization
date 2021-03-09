@@ -253,6 +253,14 @@ var client = {
 
     /** Workers Actions */
 
+    buildFarmAction: function(ajaxParams) {
+        server.sendChainOfRequests([
+            [ "ajax/BuildFarmActionRequest", { workers: ajaxParams.workers }, client.onUpdateWorldResponse ],
+            [ "ajax/GetTileStatus", { col: drawMap.selectedCol, row: drawMap.selectedRow }, client.onStatusResponse ],
+            [ "ajax/GetControlPanel", { }, client.onControlPanelResponse ]
+        ]);
+    },
+
     removeForestAction: function(ajaxParams) {
         server.sendChainOfRequests([
             [ "ajax/RemoveForestActionRequest", { workers: ajaxParams.workers }, client.onUpdateWorldResponse ],

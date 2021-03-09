@@ -16,7 +16,7 @@ public class WorldView {
         this.world = world;
     }
 
-    public JsonBlock getJSON() {
+    public JsonBlock getJson() {
         JsonBlock worldBlock = new JsonBlock();
 
         // map definition
@@ -40,7 +40,7 @@ public class WorldView {
         worldBlock.startArray(("civilizations"));
         for (Civilization civilization : world.getCivilizations()) {
             CivilizationView civilizationView = civilization.getView();
-            worldBlock.addElement(civilizationView.getJSON(civilization).getText());
+            worldBlock.addElement(civilizationView.getJson(civilization).getText());
         }
         worldBlock.stopArray();
 
@@ -63,7 +63,7 @@ public class WorldView {
         for (Civilization civilization : world.getCivilizations()) {
             civilization.cities().applyToAll(city -> {
                 CityView cityView = city.getView();
-                worldBlock.addElement(cityView.getJSON(city).getText());
+                worldBlock.addElement(cityView.getJson(city).getText());
             });
         }
         worldBlock.stopArray();

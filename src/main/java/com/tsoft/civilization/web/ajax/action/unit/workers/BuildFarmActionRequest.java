@@ -32,7 +32,7 @@ public class BuildFarmActionRequest extends AbstractAjaxRequest {
         }
 
         // return the map
-        JsonBlock response = myCivilization.getWorld().getView().getJSON();
-        return new JsonResponse(ResponseCode.OK, response);
+        JsonBlock response = myCivilization.getWorld().getView().getJson();
+        return JsonResponse.ok(response);
     }
 }

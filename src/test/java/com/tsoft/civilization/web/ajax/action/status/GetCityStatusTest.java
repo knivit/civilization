@@ -26,7 +26,7 @@ public class GetCityStatusTest {
         AbstractAjaxRequest.getInstance(GetCityStatus.class.getSimpleName());
 
     @Test
-    public void getJSONForMyCity() {
+    public void getJsonForMyCity() {
         MockWorld world = MockWorld.newSimpleWorld();
         Civilization c1 = world.createCivilization(RUSSIA);
         City city1 = c1.createCity(new Point(2, 0));
@@ -45,7 +45,7 @@ public class GetCityStatusTest {
     }
 
     @Test
-    public void getJSONForMyDestroyedCity() {
+    public void getJsonForMyDestroyedCity() {
         MockWorld world = MockWorld.newSimpleWorld();
         Civilization c1 = world.createCivilization(RUSSIA);
         City city1 = c1.createCity(new Point(2, 0));
@@ -60,7 +60,7 @@ public class GetCityStatusTest {
     }
 
     @Test
-    public void getJSONForForeignCity() {
+    public void getJsonForForeignCity() {
         MockWorld world = MockWorld.newSimpleWorld();
         Civilization c1 = world.createCivilization(RUSSIA);
         City city1 = c1.createCity(new Point(2, 0));

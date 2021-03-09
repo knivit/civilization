@@ -15,7 +15,7 @@ public class OasisView extends AbstractFeatureView {
     }
 
     @Override
-    public String getJSONName() {
+    public String getJsonName() {
         return "o";
     }
 

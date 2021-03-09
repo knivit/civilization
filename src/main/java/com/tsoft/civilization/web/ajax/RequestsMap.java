@@ -9,6 +9,7 @@ import com.tsoft.civilization.web.ajax.action.unit.CaptureUnitActionRequest;
 import com.tsoft.civilization.web.ajax.action.unit.DestroyUnitActionRequest;
 import com.tsoft.civilization.web.ajax.action.unit.MoveUnitActionRequest;
 import com.tsoft.civilization.web.ajax.action.unit.settlers.BuildCityActionRequest;
+import com.tsoft.civilization.web.ajax.action.unit.workers.BuildFarmActionRequest;
 import com.tsoft.civilization.web.ajax.action.unit.workers.RemoveForestActionRequest;
 import com.tsoft.civilization.web.ajax.action.unit.workers.RemoveHillActionRequest;
 import com.tsoft.civilization.web.ajax.action.world.*;
@@ -60,6 +61,7 @@ public class RequestsMap {
         // Workers
         requests.put(RemoveForestActionRequest.class.getSimpleName(), new RemoveForestActionRequest());
         requests.put(RemoveHillActionRequest.class.getSimpleName(), new RemoveHillActionRequest());
+        requests.put(BuildFarmActionRequest.class.getSimpleName(), new BuildFarmActionRequest());
 
         // City
         requests.put(BuyUnitActionRequest.class.getSimpleName(), new BuyUnitActionRequest());

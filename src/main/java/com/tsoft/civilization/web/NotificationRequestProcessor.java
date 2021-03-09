@@ -115,7 +115,7 @@ public class NotificationRequestProcessor {
     }
 
     private static boolean sendInformationEvent(Client client, Event event, int lastEventId) {
-        String data = event.getJSON().getText();
+        String data = event.getJson().getText();
 
         // 'id' field must go in the end so a browser will update it after the data was received
         StringBuilder msg = Format.text(
@@ -135,7 +135,7 @@ public class NotificationRequestProcessor {
             "event: updateWorld\n" +
             "data: $data\n\n",
 
-            "$data", world.getView().getJSON().getText()
+            "$data", world.getView().getJson().getText()
         );
 
         return client.sendText(msg.toString());
