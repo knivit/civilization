@@ -5,7 +5,6 @@ import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.web.response.Response;
-import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 
 public class GetCreateWorldForm extends AbstractAjaxRequest {
@@ -67,6 +66,6 @@ public class GetCreateWorldForm extends AbstractAjaxRequest {
             "$createWorldButton", createWorldButton
         );
 
-        return new HtmlResponse(ResponseCode.OK, value.toString());
+        return HtmlResponse.ok(value);
     }
 }

@@ -9,11 +9,12 @@ import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.web.response.Response;
-import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
 
 public class GetMyUnits extends AbstractAjaxRequest {
+
+    private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
     private final UnitListService unitListService = new UnitListService();
 
     @Override
@@ -23,23 +24,25 @@ public class GetMyUnits extends AbstractAjaxRequest {
             return Response.newErrorInstance(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
-        StringBuilder value = Format.text(
-            "$navigationPanel\n" +
-            "$civilizationInfo\n" +
-            "$unitsInfo\n",
+        StringBuilder value = Format.text("""
+            $navigationPanel
+            $civilizationInfo
+            $unitsInfo
+            """,
 
-            "$navigationPanel", getNavigationPanel(),
+            "$navigationPanel", navigationPanel.getContent(),
             "$civilizationInfo", getCivilizationInfo(civilization),
             "$unitsInfo", getUnitsInfo(civilization));
-        return new HtmlResponse(ResponseCode.OK, value.toString());
+        return HtmlResponse.ok(value);
     }
 
     private StringBuilder getCivilizationInfo(Civilization civilization) {
-        return Format.text(
-            "<table id='title_table'>" +
-                "<tr><td>$civilizationName</td></tr>" +
-                "<tr><td><img src='$civilizationImage'/></td></tr>" +
-            "</table>",
+        return Format.text("""
+            <table id='title_table'>
+                <tr><td>$civilizationName</td></tr>
+                <tr><td><img src='$civilizationImage'/></td></tr>
+            </table>
+            """,
 
             "$civilizationName", civilization.getView().getLocalizedCivilizationName(),
             "$civilizationImage", civilization.getView().getStatusImageSrc()
@@ -60,14 +63,15 @@ public class GetMyUnits extends AbstractAjaxRequest {
 
         StringBuilder buf = new StringBuilder();
         for (AbstractUnit unit : units) {
-            buf.append(Format.text(
-                "<tr>" +
-                    "<td><button onclick=\"client.getUnitStatus({ col:'$unitCol', row:'$unitRow', unit:'$unit' })\">$unitName</button></td>" +
-                    "<td>$passScore</td>" +
-                    "<td>$meleeAttackStrength</td>" +
-                    "<td>$rangedAttackStrength</td>" +
-                    "<td>$strength</td>" +
-                "</tr>",
+            buf.append(Format.text("""
+                <tr>
+                    <td><button onclick="client.getUnitStatus({ col:'$unitCol', row:'$unitRow', unit:'$unit' })">$unitName</button></td>
+                    <td>$passScore</td>
+                    <td>$meleeAttackStrength</td>
+                    <td>$rangedAttackStrength</td>
+                    <td>$strength</td>
+                </tr>
+                """,
 
                 "$passScore", unit.getPassScore(),
                 "$meleeAttackStrength", unit.getCombatStrength().getMeleeAttackStrength(),
@@ -80,23 +84,24 @@ public class GetMyUnits extends AbstractAjaxRequest {
             ));
         }
 
-        return Format.text(
-            "<table id='actions_table'>" +
-                "<tr>" +
-                    "<th>$name</th>" +
-                    "<th>$passScoreHeader</th>" +
-                    "<th>$meleeAttackStrengthHeader</th>" +
-                    "<th>$rangedAttackStrengthHeader</th>" +
-                    "<th>$strengthHeader</th>" +
-                "</tr>" +
-                "$units" +
-            "</table>" +
-            "<table id='legend_table'>" +
-                "<tr><td>$passScoreHeader</td><td>$passScoreLegend</td></tr>" +
-                "<tr><td>$meleeAttackStrengthHeader</td><td>$meleeAttackStrengthLegend</td></tr>" +
-                "<tr><td>$rangedAttackStrengthHeader</td><td>$rangedAttackStrengthLegend</td></tr>" +
-                "<tr><td>$strengthHeader</td><td>$strengthLegend</td></tr>" +
-            "</table>",
+        return Format.text("""
+            <table id='actions_table'>
+                <tr>
+                    <th>$name</th>
+                    <th>$passScoreHeader</th>
+                    <th>$meleeAttackStrengthHeader</th>
+                    <th>$rangedAttackStrengthHeader</th>
+                    <th>$strengthHeader</th>
+                </tr>
+                $units
+            </table>
+            <table id='legend_table'>
+                <tr><td>$passScoreHeader</td><td>$passScoreLegend</td></tr>
+                <tr><td>$meleeAttackStrengthHeader</td><td>$meleeAttackStrengthLegend</td></tr>
+                <tr><td>$rangedAttackStrengthHeader</td><td>$rangedAttackStrengthLegend</td></tr>
+                <tr><td>$strengthHeader</td><td>$strengthLegend</td></tr>
+            </table>
+            """,
 
             "$passScoreHeader", L10nUnit.PASS_SCORE_HEADER,
             "$meleeAttackStrengthHeader", L10nUnit.MELEE_ATTACK_STRENGTH_HEADER,

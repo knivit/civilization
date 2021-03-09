@@ -9,7 +9,6 @@ import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.Response;
-import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.event.Event;
 import com.tsoft.civilization.world.event.EventList;
@@ -17,6 +16,8 @@ import com.tsoft.civilization.world.event.EventList;
 import static com.tsoft.civilization.L10n.L10nServer.INVALID_REQUEST;
 
 public class GetEvents extends AbstractAjaxRequest {
+
+    private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
 
     @Override
     public Response getJson(Request request) {
@@ -36,15 +37,16 @@ public class GetEvents extends AbstractAjaxRequest {
         }
         Year year = civilization.getWorld().getYears().get(stepNo);
 
-        StringBuilder value = Format.text(
-            "$navigationPanel\n" +
-            "$eventsNavigation\n" +
-            "$events\n",
+        StringBuilder value = Format.text("""
+            $navigationPanel
+            $eventsNavigation
+            $events
+            """,
 
-            "$navigationPanel", getNavigationPanel(),
+            "$navigationPanel", navigationPanel.getContent(),
             "$eventsNavigation", getEventsNavigation(civilization, year, stepNo),
             "$events", getEvents(civilization, year));
-        return new HtmlResponse(ResponseCode.OK, value.toString());
+        return HtmlResponse.ok(value);
     }
 
     private StringBuilder getEventsNavigation(Civilization civilization, Year year, int stepNo) {
@@ -68,14 +70,15 @@ public class GetEvents extends AbstractAjaxRequest {
             );
         }
 
-        return Format.text(
-            "<table id='paging_panel'>" +
-                "<tr>" +
-                    "<td>$priorButton</td>" +
-                    "<td>$year</td>" +
-                    "<td>$nextButton</td>" +
-                "</tr>" +
-            "</table>",
+        return Format.text("""
+            <table id='paging_panel'>
+                <tr>
+                    <td>$priorButton</td>
+                    <td>$year</td>
+                    <td>$nextButton</td>
+                </tr>
+            </table>
+            """,
 
             "$priorButton", priorButton,
             "$year", year.getYearLocalized(),
@@ -99,11 +102,12 @@ public class GetEvents extends AbstractAjaxRequest {
             ));
         }
 
-        return Format.text(
-            "<table id='actions_table'>" +
-                "<tr><th>$header</th></tr>" +
-                "$events" +
-            "</table>",
+        return Format.text("""
+            <table id='actions_table'>
+                <tr><th>$header</th></tr>
+                $events
+            </table>
+            """,
 
             "$header", L10nEvent.EVENT_TABLE_HEADER,
             "$events", buf

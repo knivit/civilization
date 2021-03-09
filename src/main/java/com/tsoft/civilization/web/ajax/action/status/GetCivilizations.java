@@ -7,7 +7,6 @@ import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.web.response.Response;
-import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationsRelations;
@@ -15,6 +14,8 @@ import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.civilization.CivilizationList;
 
 public class GetCivilizations extends AbstractAjaxRequest {
+
+    private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
 
     @Override
     public Response getJson(Request request) {
@@ -28,11 +29,11 @@ public class GetCivilizations extends AbstractAjaxRequest {
             $civilizations
             """,
 
-            "$navigationPanel", getNavigationPanel(),
+            "$navigationPanel", navigationPanel.getContent(),
             "$civilizations", getCivilizations(myCivilization.getWorld())
         );
 
-        return new HtmlResponse(ResponseCode.OK, value.toString());
+        return HtmlResponse.ok(value);
     }
 
     private StringBuilder getCivilizations(World world) {

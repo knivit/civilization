@@ -17,11 +17,12 @@ import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.web.response.Response;
-import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
 
 public class GetCivilizationStatus extends AbstractAjaxRequest {
+
+    private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
     private final CityListService cityListService = new CityListService();
     private final UnitListService unitListService = new UnitListService();
 
@@ -39,22 +40,23 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
             return Response.newErrorInstance(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
-        StringBuilder value = Format.text(
-            "$navigationPanel\n" +
-            "$civilizationTitle\n" +
-            "$civilizationInfo\n" +
-            "$actions\n" +
-            "$units\n" +
-            "$cities\n",
+        StringBuilder value = Format.text("""
+            $navigationPanel
+            $civilizationTitle
+            $civilizationInfo
+            $actions
+            $units
+            $cities
+            """,
 
-            "$navigationPanel", getNavigationPanel(),
+            "$navigationPanel", navigationPanel.getContent(),
             "$civilizationTitle", getCivilizationTitle(civilization),
             "$civilizationInfo", getCivilizationInfo(civilization),
             "$actions", getActions(myCivilization, civilization),
             "$units", getUnitsWithAvailableActions(myCivilization, civilization),
             "$cities", getCitiesWithAvailableActions(myCivilization, civilization));
 
-        return new HtmlResponse(ResponseCode.OK, value.toString());
+        return HtmlResponse.ok(value);
     }
 
     private StringBuilder getCivilizationTitle(Civilization civilization) {
@@ -70,18 +72,19 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
     }
 
     private StringBuilder getCivilizationInfo(Civilization civilization) {
-        return Format.text(
-            "<table id='info_table'>" +
-                "<tr><th colspan='2'>$features</th></tr>" +
-                "<tr><td>$populationLabel</td><td>$population</td>" +
-                "<tr><td>$productionLabel</td><td>$production</td>" +
-                "<tr><td>$goldLabel</td><td>$gold</td>" +
-                "<tr><td>$foodLabel</td><td>$food</td>" +
-                "<tr><td>$happinessLabel</td><td>$happiness</td>" +
-                "<tr><td>$militaryUnitsLabel</td><td>$militaryUnits</td>" +
-                "<tr><td>$civilUnitsLabel</td><td>$civilUnits</td>" +
-                "<tr><td>$citiesLabel</td><td>$cities</td>" +
-            "</table>",
+        return Format.text("""
+            <table id='info_table'>
+                <tr><th colspan='2'>$features</th></tr>
+                <tr><td>$populationLabel</td><td>$population</td>
+                <tr><td>$productionLabel</td><td>$production</td>
+                <tr><td>$goldLabel</td><td>$gold</td>
+                <tr><td>$foodLabel</td><td>$food</td>
+                <tr><td>$happinessLabel</td><td>$happiness</td>
+                <tr><td>$militaryUnitsLabel</td><td>$militaryUnits</td>
+                <tr><td>$civilUnitsLabel</td><td>$civilUnits</td>
+                <tr><td>$citiesLabel</td><td>$cities</td>
+            </table>
+            """,
 
             "$features", L10nCivilization.FEATURES,
 
@@ -113,11 +116,12 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
             return null;
         }
 
-        return Format.text(
-            "<table id='actions_table'><tr>" +
-                "<tr><th colspan='2'>$actions</th></tr>" +
-                "<tr>$declareWarAction</tr>" +
-            "</table>",
+        return Format.text("""
+            <table id='actions_table'><tr>
+                <tr><th colspan='2'>$actions</th></tr>
+                <tr>$declareWarAction</tr>
+            </table>
+            """,
 
             "$actions", L10nAction.AVAILABLE_ACTIONS,
             "$declareWarAction", DeclareWarAction.getHtml(myCivilization, otherCivilization)
@@ -152,11 +156,12 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
             ));
         }
 
-        return Format.text(
-            "<table id='actions_table'>" +
-                "<tr><th>$availableUnits</th><th>$passScore</th></tr>" +
-                "$units" +
-            "</table>",
+        return Format.text("""
+            <table id='actions_table'>
+                <tr><th>$availableUnits</th><th>$passScore</th></tr>
+                $units
+            </table>
+            """,
 
             "$availableUnits", L10nCivilization.AVAILABLE_UNITS,
             "$passScore", L10nUnit.PASS_SCORE,
@@ -192,11 +197,12 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
             ));
         }
 
-        return Format.text(
-            "<table id='actions_table'>" +
-                "<tr><th>$availableCities</th><th>$citizens</th></tr>" +
-                "$cities" +
-            "</table>",
+        return Format.text("""
+            <table id='actions_table'>
+                <tr><th>$availableCities</th><th>$citizens</th></tr>
+                $cities
+            </table>
+            """,
 
             "$citizens", L10nCity.CITIZEN,
             "$availableCities", L10nCivilization.AVAILABLE_CITIES,

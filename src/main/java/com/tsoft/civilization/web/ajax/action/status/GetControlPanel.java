@@ -9,11 +9,11 @@ import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.web.response.Response;
-import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
 
 public class GetControlPanel extends AbstractAjaxRequest {
+
     @Override
     public Response getJson(Request request) {
         Civilization civilization = getMyCivilization();
@@ -21,20 +21,22 @@ public class GetControlPanel extends AbstractAjaxRequest {
             return Response.newErrorInstance(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
-        StringBuilder value = Format.text(
-            "$civilizationInfo\n" +
-            "$controls\n",
+        StringBuilder value = Format.text("""
+            $civilizationInfo
+            $controls
+            """,
 
             "$civilizationInfo", getCivilizationInfo(civilization),
             "$controls", getControls(civilization));
-        return new HtmlResponse(ResponseCode.OK, value.toString());
+        return HtmlResponse.ok(value);
     }
 
     private StringBuilder getCivilizationInfo(Civilization civilization) {
-        return Format.text(
-            "<table id='control_table'><tr>" +
-                "<td>$name, $year</td>" +
-            "</tr></table>",
+        return Format.text("""
+            <table id='control_table'>
+                <tr><td>$name, $year</td></tr>
+            </table>
+            """,
 
             "$name", civilization.getView().getLocalizedCivilizationName(),
             "$year", civilization.getWorld().getYear().getYearLocalized()
@@ -55,10 +57,11 @@ public class GetControlPanel extends AbstractAjaxRequest {
             ));
         }
 
-        return Format.text(
-            "<table id='control_table'>" +
-                "<tr>$nextMoveAction $controls</tr>" +
-            "</table>",
+        return Format.text("""
+            <table id='control_table'>
+                <tr>$nextMoveAction $controls</tr>
+            </table>
+            """,
 
             "$nextMoveAction", NextMoveAction.getHtml(civilization),
             "$controls", controls

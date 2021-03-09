@@ -1,6 +1,6 @@
 package com.tsoft.civilization;
 
-import com.tsoft.civilization.web.GameServer;
+import com.tsoft.civilization.web.Server;
 
 import static com.tsoft.civilization.SystemProperties.SERVER_PORT;
 
@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) throws Throwable {
         new SystemProperties().init();
 
-        GameServer server = new GameServer(System.getProperty(SERVER_PORT, "9090"));
+        Server server = new Server(System.getProperty(SERVER_PORT, "9090"));
         server.start();
     }
 

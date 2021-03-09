@@ -19,11 +19,11 @@ import com.tsoft.civilization.tile.feature.TerrainFeature;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.response.Response;
-import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.civilization.Civilization;
 
 public class GetTileStatus extends AbstractAjaxRequest {
 
+    private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
     private static final TileService tileService = new TileService();
 
     @Override
@@ -40,19 +40,20 @@ public class GetTileStatus extends AbstractAjaxRequest {
 
         AbstractTile tile = myCivilization.getTilesMap().getTile(location);
 
-        StringBuilder value = Format.text(
-            "$navigationPanel\n" +
-            "$tileTitle\n" +
-            "$tileInfo\n" +
-            "$cityInfo\n" +
-            "$units\n",
+        StringBuilder value = Format.text("""
+            $navigationPanel
+            $tileTitle
+            $tileInfo
+            $cityInfo
+            $units
+            """,
 
-            "$navigationPanel", getNavigationPanel(),
+            "$navigationPanel", navigationPanel.getContent(),
             "$tileTitle", getTileTitle(myCivilization.getWorld(), tile),
             "$tileInfo", getTileInfo(tile),
             "$cityInfo", getCityInfo(myCivilization.getWorld(), tile),
             "$units", getUnitsInfo(tile.getLocation(), myCivilization.getWorld()));
-        return new HtmlResponse(ResponseCode.OK, value.toString());
+        return HtmlResponse.ok(value);
     }
 
     private StringBuilder getUnitsInfo(Point location, World world) {
@@ -71,11 +72,12 @@ public class GetTileStatus extends AbstractAjaxRequest {
             }
         }
 
-        return Format.text(
-            "<table id='actions_table'>" +
-                "<tr><th colspan='2'>$header</th></tr>" +
-                "$units" +
-            "</table>",
+        return Format.text("""
+            <table id='actions_table'>
+                <tr><th colspan='2'>$header</th></tr>
+                $units
+            </table>
+            """,
 
             "$header", L10nUnit.UNITS_ON_TILE,
             "$units", buf
@@ -125,11 +127,12 @@ public class GetTileStatus extends AbstractAjaxRequest {
             buf = getForeignCityInfo(city);
         }
 
-        return Format.text(
-            "<table id='actions_table'>" +
-                "<tr><th colspan='2'>$header</th></tr>" +
-                "$city" +
-            "</table>",
+        return Format.text("""
+            <table id='actions_table'>
+                <tr><th colspan='2'>$header</th></tr>
+                $city
+            </table>
+            """,
 
             "$header", L10nCity.CITY_ON_TILE,
             "$city", buf
@@ -196,19 +199,20 @@ public class GetTileStatus extends AbstractAjaxRequest {
         TerrainFeature feature1 = (tile.getTerrainFeatures().size() > 0 ? tile.getTerrainFeatures().get(0) : null);
         TerrainFeature feature2 = (tile.getTerrainFeatures().size() > 1 ? tile.getTerrainFeatures().get(1) : null);
 
-        return Format.text(
-            "<table id='info_table'>" +
-                "<tr><th></th><th>$productionLabel</th><th>$goldLabel</th><th>$foodLabel</th></tr>" +
-                "<tr>" +
-                    "<td><button onclick=\"server.sendAsyncAjax('ajax/GetTileInfo', { col:'$col', row:'$row' })\">$tileName</button></td>" +
-                    "<td>$production</td>" +
-                    "<td>$gold</td>" +
-                    "<td>$food</td>" +
-                "</tr>" +
-                "$feature1\n" +
-                "$feature2\n" +
-                "$total\n" +
-            "</table>",
+        return Format.text("""
+            <table id='info_table'>
+                <tr><th></th><th>$productionLabel</th><th>$goldLabel</th><th>$foodLabel</th></tr>
+                <tr>
+                    <td><button onclick="server.sendAsyncAjax('ajax/GetTileInfo', { col:'$col', row:'$row' })">$tileName</button></td>
+                    <td>$production</td>
+                    <td>$gold</td>
+                    <td>$food</td>
+                </tr>
+                $feature1
+                $feature2
+                $total
+            </table>
+            """,
 
             "$productionLabel", L10nTile.PRODUCTION,
             "$goldLabel", L10nTile.GOLD,
@@ -232,13 +236,14 @@ public class GetTileStatus extends AbstractAjaxRequest {
         }
 
         Supply featureSupply = feature.getSupply();
-        return Format.text(
-            "<tr>" +
-                "<td><button onclick=\"server.sendAsyncAjax('ajax/GetFeatureInfo', { feature:'$feature' })\">$featureName</button></td>" +
-                "<td>$production</td>" +
-                "<td>$gold</td>" +
-                "<td>$food</td>" +
-            "</tr>",
+        return Format.text("""
+            <tr>
+                <td><button onclick="server.sendAsyncAjax('ajax/GetFeatureInfo', { feature:'$feature' })">$featureName</button></td>
+                <td>$production</td>
+                <td>$gold</td>
+                <td>$food</td>
+            </tr>
+            """,
 
            "$feature", feature.getClassUuid(),
            "$featureName", feature.getView().getLocalizedName(),
@@ -254,13 +259,14 @@ public class GetTileStatus extends AbstractAjaxRequest {
         }
 
         Supply supply = tileService.getSupply(tile);
-        return Format.text(
-            "<tr>" +
-                "<td>$totalLabel</td>" +
-                "<td>$production</td>" +
-                "<td>$gold</td>" +
-                "<td>$food</td>" +
-            "</tr>",
+        return Format.text("""
+            <tr>
+                <td>$totalLabel</td>
+                <td>$production</td>
+                <td>$gold</td>
+                <td>$food</td>
+            </tr>
+            """,
 
             "$totalLabel", L10nTile.TOTAL,
             "$production", supply.getProduction(),

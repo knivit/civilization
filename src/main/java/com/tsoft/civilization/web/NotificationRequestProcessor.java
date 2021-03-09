@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 public class NotificationRequestProcessor {
     private NotificationRequestProcessor() { }
 
-    public static void processRequest(ServerClient client) {
+    public static void processRequest(Client client) {
         ClientSession session = Sessions.getCurrent();
         if (Sessions.getCurrent() == null) {
             // Sending HTTP 400 will stop other requests from EventSource
@@ -114,7 +114,7 @@ public class NotificationRequestProcessor {
         }
     }
 
-    private static boolean sendInformationEvent(ServerClient client, Event event, int lastEventId) {
+    private static boolean sendInformationEvent(Client client, Event event, int lastEventId) {
         String data = event.getJSON().getText();
 
         // 'id' field must go in the end so a browser will update it after the data was received
@@ -130,7 +130,7 @@ public class NotificationRequestProcessor {
         return client.sendText(msg.toString());
     }
 
-    private static boolean sendUpdateWorldEvent(ServerClient client, World world) {
+    private static boolean sendUpdateWorldEvent(Client client, World world) {
         StringBuilder msg = Format.text(
             "event: updateWorld\n" +
             "data: $data\n\n",
@@ -141,7 +141,7 @@ public class NotificationRequestProcessor {
         return client.sendText(msg.toString());
     }
 
-    private static boolean sendUpdateControlPanelEvent(ServerClient client) {
+    private static boolean sendUpdateControlPanelEvent(Client client) {
         StringBuilder msg = Format.text(
             "event: updateControlPanel\n" +
             "data: \n\n"
@@ -151,7 +151,7 @@ public class NotificationRequestProcessor {
     }
 
 
-    private static boolean sendUpdateStatusPanelEvent(ServerClient client) {
+    private static boolean sendUpdateStatusPanelEvent(Client client) {
         return true;
     }
 }

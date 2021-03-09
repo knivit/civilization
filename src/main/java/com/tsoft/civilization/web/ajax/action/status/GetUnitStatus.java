@@ -8,11 +8,13 @@ import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.web.response.Response;
-import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
 
 public class GetUnitStatus extends AbstractAjaxRequest {
+
+    private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
+
     @Override
     public Response getJson(Request request) {
         Civilization myCivilization = getMyCivilization();
@@ -26,27 +28,29 @@ public class GetUnitStatus extends AbstractAjaxRequest {
             return Response.newErrorInstance(L10nUnit.UNIT_NOT_FOUND);
         }
 
-        StringBuilder value = Format.text(
-            "$navigationPanel\n" +
-            "$unitTitle\n" +
-            "$unitInfo\n" +
-            "$actions\n",
+        StringBuilder value = Format.text("""
+            $navigationPanel
+            $unitTitle
+            $unitInfo
+            $actions
+            """,
 
-            "$navigationPanel", getNavigationPanel(),
+            "$navigationPanel", navigationPanel.getContent(),
             "$unitTitle", getUnitTitle(unit),
             "$unitInfo", getUnitInfo(unit),
             "$actions", getActions(unit));
-        return new HtmlResponse(ResponseCode.OK, value.toString());
+        return HtmlResponse.ok(value);
     }
 
     private StringBuilder getUnitTitle(AbstractUnit unit) {
-        return Format.text(
-            "<table id='title_table'>" +
-                "<tr><td>$unitName</td></tr>" +
-                "<tr><td><button onclick=\"server.sendAsyncAjax('ajax/GetCivilizationStatus', { civilization:'$civilization' })\">$civilizationName</button></td></tr>" +
-                "<tr><td><img src='$unitImageSrc'/></td></tr>" +
-                "<tr><td>$unitDescription</td></tr>" +
-            "</table>",
+        return Format.text("""
+            <table id='title_table'>
+                <tr><td>$unitName</td></tr>
+                <tr><td><button onclick="server.sendAsyncAjax('ajax/GetCivilizationStatus', { civilization:'$civilization' })">$civilizationName</button></td></tr>
+                <tr><td><img src='$unitImageSrc'/></td></tr>
+                <tr><td>$unitDescription</td></tr>
+            </table>
+            """,
 
             "$unitName", unit.getView().getLocalizedName(),
             "$civilization", unit.getCivilization().getId(),
@@ -62,17 +66,18 @@ public class GetUnitStatus extends AbstractAjaxRequest {
             return null;
         }
 
-        return Format.text(
-            "<table id='info_table'>" +
-                "<tr><th colspan='2'>$features</th>" +
-                "<tr><td>$meleeAttackStrengthLabel</td><td>$meleeAttackStrength</td>" +
-                "<tr><td>$canConquerCityLabel</td><td>$canConquerCity</td>" +
-                "<tr><td>$attackExperienceLabel</td><td>$attackExperience</td>" +
-                "<tr><td>$defenseExperienceLabel</td><td>$defenseExperience</td>" +
-                "<tr><td>$rangedAttackStrengthLabel</td><td>$rangedAttackStrength</td>" +
-                "<tr><td>$rangedAttackRadiusLabel</td><td>$rangedAttackRadius</td>" +
-                "<tr><td>$strengthLabel</td><td>$strength</td>" +
-            "</table>",
+        return Format.text("""
+            <table id='info_table'>
+                <tr><th colspan='2'>$features</th>
+                <tr><td>$meleeAttackStrengthLabel</td><td>$meleeAttackStrength</td>
+                <tr><td>$canConquerCityLabel</td><td>$canConquerCity</td>
+                <tr><td>$attackExperienceLabel</td><td>$attackExperience</td>
+                <tr><td>$defenseExperienceLabel</td><td>$defenseExperience</td>
+                <tr><td>$rangedAttackStrengthLabel</td><td>$rangedAttackStrength</td>
+                <tr><td>$rangedAttackRadiusLabel</td><td>$rangedAttackRadius</td>
+                <tr><td>$strengthLabel</td><td>$strength</td>
+            </table>
+            """,
 
             "$features", L10nUnit.FEATURES,
 

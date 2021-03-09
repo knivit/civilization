@@ -19,7 +19,7 @@ public class ClientServiceThread implements Runnable {
         Instant tick = Instant.now();
         try {
             try {
-                ServerClient client = new ServerClient();
+                Client client = new Client();
                 client.readRequest(socket);
                 client.processRequest();
             } catch (Throwable ex) {

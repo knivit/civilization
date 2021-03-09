@@ -9,12 +9,13 @@ import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.web.response.Response;
-import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.economic.Supply;
 
 public class GetBuildingStatus extends AbstractAjaxRequest {
+
+    private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
 
     @Override
     public Response getJson(Request request) {
@@ -37,11 +38,11 @@ public class GetBuildingStatus extends AbstractAjaxRequest {
             $actions
             """,
 
-            "$navigationPanel", getNavigationPanel(),
+            "$navigationPanel", navigationPanel.getContent(),
             "$buildingTitle", getBuildingTitle(building),
             "$buildingInfo", getBuildingInfo(building),
             "$actions", getActions(building));
-        return new HtmlResponse(ResponseCode.OK, value.toString());
+        return HtmlResponse.ok(value);
     }
 
     private StringBuilder getBuildingTitle(AbstractBuilding building) {

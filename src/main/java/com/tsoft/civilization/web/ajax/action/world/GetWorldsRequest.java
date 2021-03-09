@@ -5,7 +5,6 @@ import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.web.response.Response;
-import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.web.state.Worlds;
 import com.tsoft.civilization.world.World;
@@ -15,8 +14,7 @@ public class GetWorldsRequest extends AbstractAjaxRequest {
 
     @Override
     public Response getJson(Request request) {
-        StringBuilder value = Format.text(
-            """
+        StringBuilder value = Format.text("""
             $existingWorlds
             $createNewWorld
             """,
@@ -25,7 +23,7 @@ public class GetWorldsRequest extends AbstractAjaxRequest {
             "$createNewWorld", getCreateWorldRequest()
         );
 
-        return new HtmlResponse(ResponseCode.OK, value.toString());
+        return HtmlResponse.ok(value);
     }
 
     private StringBuilder getExistingWorlds() {

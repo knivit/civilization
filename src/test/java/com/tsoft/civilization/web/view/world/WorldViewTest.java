@@ -41,7 +41,7 @@ public class WorldViewTest {
         JsonBlock worldBlock = world.getView().getJSON();
         JsonNode jsonObj = new ObjectMapper().readTree(worldBlock.getText());
         assertNotNull(jsonObj);
-        assertEquals(6, jsonObj.size());
+        assertEquals(3 * 2, jsonObj.size());
         assertEquals(3, jsonObj.get("width").asInt());
         assertEquals(2, jsonObj.get("height").asInt());
 

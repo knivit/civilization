@@ -15,7 +15,7 @@ import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
-public class ServerClient {
+public class Client {
     private final RequestReader requestReader = new RequestReader();
 
     private OutputStream outputStream;

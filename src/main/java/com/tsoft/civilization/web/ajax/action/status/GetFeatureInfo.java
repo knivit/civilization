@@ -9,10 +9,12 @@ import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.tile.feature.TerrainFeature;
 import com.tsoft.civilization.web.response.Response;
-import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.tile.feature.AbstractFeatureView;
 
 public class GetFeatureInfo extends AbstractAjaxRequest {
+
+    private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
+
     @Override
     public Response getJson(Request request) {
         String featureClassUuid = request.get("feature");
@@ -21,25 +23,27 @@ public class GetFeatureInfo extends AbstractAjaxRequest {
             return Response.newErrorInstance(L10nFeature.FEATURE_NOT_FOUND);
         }
 
-        StringBuilder value = Format.text(
-            "$navigationPanel\n" +
-            "$featureInfo\n" +
-            "$supplyInfo\n",
+        StringBuilder value = Format.text("""
+            $navigationPanel
+            $featureInfo
+            $supplyInfo
+            """,
 
-            "$navigationPanel", getNavigationPanel(),
+            "$navigationPanel", navigationPanel.getContent(),
             "$featureInfo", getFeatureInfo(feature),
             "$supplyInfo", getFeatureSupplyInfo(feature));
-        return new HtmlResponse(ResponseCode.OK, value.toString());
+        return HtmlResponse.ok(value);
     }
 
     private StringBuilder getFeatureInfo(TerrainFeature feature) {
         AbstractFeatureView view = feature.getView();
-        return Format.text(
-            "<table id='title_table'>" +
-                "<tr><td>$name</td></tr>" +
-                "<tr><td><img src='$image'/></td></tr>" +
-                "<tr><td>$description</td></tr>" +
-            "</table>",
+        return Format.text("""
+            <table id='title_table'>
+                <tr><td>$name</td></tr>
+                <tr><td><img src='$image'/></td></tr>
+                <tr><td>$description</td></tr>
+            </table>
+            """,
 
             "$name", view.getLocalizedName(),
             "$image", view.getStatusImageSrc(),
@@ -49,13 +53,14 @@ public class GetFeatureInfo extends AbstractAjaxRequest {
 
     private StringBuilder getFeatureSupplyInfo(TerrainFeature feature) {
         Supply featureSupply = feature.getSupply();
-        return Format.text(
-            "<table id='info_table'>" +
-                "<tr><th colspan='2'>$features</th></tr>" +
-                "<tr><td>$productionLabel</td><td>$production</td></tr>" +
-                "<tr><td>$goldLabel</td><td>$gold</td></tr>" +
-                "<tr><td>$foodLabel</td><td>$food</td></tr>" +
-            "</table>",
+        return Format.text("""
+            <table id='info_table'>
+                <tr><th colspan='2'>$features</th></tr>
+                <tr><td>$productionLabel</td><td>$production</td></tr>
+                <tr><td>$goldLabel</td><td>$gold</td></tr>
+                <tr><td>$foodLabel</td><td>$food</td></tr>
+            </table>
+            """,
 
             "$features", L10nFeature.FEATURES,
 

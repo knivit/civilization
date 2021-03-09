@@ -8,7 +8,7 @@ import com.tsoft.civilization.web.response.ResponseCode;
 public class GetRequestProcessor {
     private GetRequestProcessor() { }
 
-    public static void processRequest(ServerClient client) {
+    public static void processRequest(Client client) {
         String fileName = client.getRequest().getRequestUrl();
 
         // On first request create new client's session

@@ -35,13 +35,16 @@ var client = {
         if (!client.worldUpdateInProgress) {
             client.worldUpdateInProgress = true;
 
-            var world = JSON.parse(response);
-            tilesMap.update(world.tiles);
-            unitsMap.update(world.units);
-            citiesMap.update(world.cities);
+            try {
+                var world = JSON.parse(response);
+                tilesMap.update(world.tiles);
+                unitsMap.update(world.units);
+                citiesMap.update(world.cities);
 
-            redraw();
-            client.worldUpdateInProgress = false;
+                redraw();
+            } finally {
+                client.worldUpdateInProgress = false;
+            }
         }
     },
 

@@ -18,11 +18,12 @@ import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.web.response.Response;
-import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
 
 public class GetCityStatus extends AbstractAjaxRequest {
+
+    private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
     private final BuildingListService buildingListService = new BuildingListService();
 
     @Override
@@ -48,14 +49,14 @@ public class GetCityStatus extends AbstractAjaxRequest {
             $buildings
             """,
 
-            "$navigationPanel", getNavigationPanel(),
+            "$navigationPanel", navigationPanel.getContent(),
             "$cityTitle", getCityTitle(city),
             "$cityBusinessInfo", getCityBusinessInfo(city),
             "$cityCombatInfo", getCityCombatInfo(city),
             "$actions", getActions(city),
             "$constructionActions", getConstructionActions(city),
             "$buildings", getBuildings(city));
-        return new HtmlResponse(ResponseCode.OK, value.toString());
+        return HtmlResponse.ok(value);
     }
 
     private StringBuilder getCityTitle(City city) {

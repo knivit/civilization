@@ -2,6 +2,7 @@ package com.tsoft.civilization.web;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
@@ -12,16 +13,16 @@ import java.net.SocketException;
 import java.util.Enumeration;
 
 @Slf4j
-public class GameServer {
-    private int port;
+public class Server {
+    private final int port;
 
-    public GameServer(String port) throws Throwable {
+    public Server(String port) throws SocketException {
         this.port = Integer.parseInt(port);
 
         listNetworkInterfaces();
     }
 
-    public void start() throws Throwable {
+    public void start() throws IOException {
         // Start listening sockets
         ServerSocket ss = new ServerSocket(port);
 
@@ -37,6 +38,7 @@ public class GameServer {
 
     private void listNetworkInterfaces() throws SocketException {
         Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+
         while (interfaces.hasMoreElements()) {
             NetworkInterface ni = interfaces.nextElement();
 
@@ -45,13 +47,13 @@ public class GameServer {
             }
 
             for (InterfaceAddress addr : ni.getInterfaceAddresses()) {
-                InetAddress inet_addr = addr.getAddress();
+                InetAddress inetAddr = addr.getAddress();
 
-                if (!(inet_addr instanceof Inet4Address)) {
+                if (!(inetAddr instanceof Inet4Address)) {
                     continue;
                 }
 
-                log.info("Found address '{}': {}", ni.getName(), inet_addr.getHostAddress());
+                log.info("Found address '{}': {}", ni.getName(), inetAddr.getHostAddress());
             }
         }
     }
