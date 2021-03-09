@@ -51,12 +51,10 @@ public abstract class AbstractUnit implements HasCombatStrength, CanBeBuilt {
     public abstract UnitCategory getUnitCategory();
     public abstract void initPassScore();
     public abstract int getGoldCost();
-    public abstract AbstractUnitView getView();
     public abstract String getClassUuid();
 
-    // Method of a unit from the catalog (they don't have civilization etc)
+    public abstract AbstractUnitView getView();
     public abstract boolean checkEraAndTechnology(Civilization civilization);
-
     protected abstract CombatStrength getBaseCombatStrength();
 
     private final TileService tileService = new TileService();

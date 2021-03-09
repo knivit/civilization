@@ -4,6 +4,7 @@ import com.tsoft.civilization.L10n.L10nAction;
 import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.unit.AbstractUnit;
+import com.tsoft.civilization.unit.UnitActions;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.HtmlResponse;
@@ -13,6 +14,7 @@ import com.tsoft.civilization.civilization.Civilization;
 
 public class GetUnitStatus extends AbstractAjaxRequest {
 
+    private final UnitActions unitActions = new UnitActions();
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
 
     @Override
@@ -112,7 +114,7 @@ public class GetUnitStatus extends AbstractAjaxRequest {
             );
         }
 
-        StringBuilder actions = unit.getView().getHtmlActions(unit);
+        StringBuilder actions = unitActions.getHtmlActions(unit);
         if (actions == null) {
             return null;
         }

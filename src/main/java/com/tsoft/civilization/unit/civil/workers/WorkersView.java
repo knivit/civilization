@@ -2,10 +2,6 @@ package com.tsoft.civilization.unit.civil.workers;
 
 import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.unit.AbstractUnitView;
-import com.tsoft.civilization.unit.civil.workers.action.BuildFarmAction;
-import com.tsoft.civilization.unit.civil.workers.action.RemoveForestAction;
-import com.tsoft.civilization.unit.civil.workers.action.RemoveHillAction;
-import com.tsoft.civilization.util.Format;
 
 /**
  * The Worker is vital for a civilization - absolutely the most important civilian unit in the game.
@@ -29,7 +25,7 @@ import com.tsoft.civilization.util.Format;
  *
  * Once a player researches Industrialization, all of his or her Workers change in appearance, looking more like stereotypical factory workers.
  */
-public class WorkersView extends AbstractUnitView<Workers> {
+public class WorkersView extends AbstractUnitView {
     @Override
     public String getLocalizedName() {
         return L10nUnit.WORKERS_NAME.getLocalized();
@@ -48,20 +44,5 @@ public class WorkersView extends AbstractUnitView<Workers> {
     @Override
     public String getStatusImageSrc() {
         return "images/status/units/workers.png";
-    }
-
-    @Override
-    public StringBuilder getHtmlActions(Workers unit) {
-        return Format.text(
-            "$commonActions" +
-            "<tr id='actions_table_row'>$buildFarmAction</tr>",
-            "<tr id='actions_table_row'>$removeForestAction</tr>" +
-            "<tr id='actions_table_row'>$removeHillAction</tr>",
-
-            "$commonActions", super.getHtmlActions(unit),
-            "$buildFarmAction", BuildFarmAction.getHtml(unit),
-            "$removeForestAction", RemoveForestAction.getHtml(unit),
-            "$removeHillAction", RemoveHillAction.getHtml(unit)
-        );
     }
 }
