@@ -1,5 +1,6 @@
 package com.tsoft.civilization.web;
 
+import com.tsoft.civilization.web.request.Request;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.Socket;
@@ -20,8 +21,8 @@ public class ClientServiceThread implements Runnable {
         try {
             try {
                 Client client = new Client();
-                client.readRequest(socket);
-                client.processRequest();
+                Request request = client.readRequest(socket);
+                client.processRequest(request);
             } catch (Throwable ex) {
                 log.error("Error during a request processing", ex);
             } finally {

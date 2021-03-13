@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
@@ -20,9 +19,7 @@ public class Client {
 
     private OutputStream outputStream;
 
-    private Request request;
-
-    public void readRequest(Socket socket) throws IOException {
+    public Request readRequest(Socket socket) throws IOException {
         // Get the client's address
         InetSocketAddress clientAddress = (InetSocketAddress)socket.getRemoteSocketAddress();
         String clientIp = clientAddress.getAddress().toString();
@@ -35,53 +32,62 @@ public class Client {
         outputStream = socket.getOutputStream();
 
         // Create a Request
-        request = requestReader.readRequest(clientIp, clientPort, inputStream);
+        Request request = requestReader.readRequest(clientIp, clientPort, inputStream);
 
         // Set properties as a client is needed
         if ("keep-alive".equals(request.getHeader("Connection"))) {
             socket.setKeepAlive(true);
         }
+
+        return request;
     }
 
-    public void processRequest() {
+    public void processRequest(Request request) {
         log.info("Started to serve {}", request);
 
         if (request.getRequestType() == null) {
+            log.info("Invalid request {}", request);
             return;
         }
+
+        Sessions.setCurrent(request.getSessionId());
 
         switch (request.getRequestType()) {
             case GET -> {
                 if ("GetNotifications".equals(request.getRequestUrl())) {
-                    Sessions.setCurrent(request.getSessionId());
-                    NotificationRequestProcessor.processRequest(this);
+                    if (!Sessions.setCurrent(request.getSessionId())) {
+                        log.info("Invalid request {}", request);
+                        return;
+                    }
+
+                    NotificationRequestProcessor.processRequest(this, request);
                 } else {
-                    GetRequestProcessor.processRequest(this);
+                    Response response = GetRequestProcessor.processRequest(request);
+                    sendResponse(response);
                 }
             }
+
             case POST -> {
-                Sessions.setCurrent(request.getSessionId());
+                if (!Sessions.setCurrent(request.getSessionId())) {
+                    log.info("Invalid request {}", request);
+                    return;
+                }
+
                 Response response = PostRequestProcessor.processRequest(request);
                 sendResponse(response);
             }
-            default -> log.info("Unknown request type {}", request.getRequestType());
+
+            default -> log.info("Invalid request type {}", request.getRequestType());
         }
     }
 
-    public Request getRequest() {
-        return request;
-    }
-
-    public boolean sendBytes(byte[] bytes) {
+    private boolean sendBytes(byte[] bytes) {
         try {
             outputStream.write(bytes);
             outputStream.flush();
             return true;
-        } catch (SocketException se) {
-            // java.net.SocketException: Broken pipe - client disconnected
-            return false;
         } catch (IOException ex) {
-            log.error("An error occurred during sending a response. Request: {}", request.getParamsAsString(), ex);
+            log.warn("An error occurred during sending a response", ex);
         }
         return false;
     }
@@ -90,7 +96,7 @@ public class Client {
         return sendBytes(text.getBytes(StandardCharsets.UTF_8));
     }
 
-    public boolean sendResponse(Response response) {
+    private void sendResponse(Response response) {
         StringBuilder buf = Format.text("""
             HTTP/1.1 $errorCode\r
             Content-Type: $contentType\r
@@ -106,13 +112,11 @@ public class Client {
         );
 
         if (sendText(buf.toString())) {
-            return sendBytes(response.getContent());
+            sendBytes(response.getContent());
         }
-
-        return false;
     }
 
-    /** Send a error to the client */
+    /** Send a error */
     public void sendError(L10n messages) {
         sendResponse(Response.newErrorInstance(messages));
     }

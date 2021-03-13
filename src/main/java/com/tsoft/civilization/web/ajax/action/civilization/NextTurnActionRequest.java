@@ -15,15 +15,16 @@ public class NextTurnActionRequest extends AbstractAjaxRequest {
     @Override
     public Response getJson(Request request) {
         Civilization myCivilization = getMyCivilization();
-        if (myCivilization == null || myCivilization.isDestroyed()) {
+        if (myCivilization == null) {
             return Response.newErrorInstance(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
-        myCivilization.move();
-
+        открыть два браузера и начать двумя цивилизациями (вторая - джойн)
+            сделать next turn одной цивилизации - должно появиться сообщение "Ход сделан, ждем цивилизации: "Б""
+        сделать next turn второй цивилизацией
+            юнит тесты на это
         ActionAbstractResult result = NextTurnAction.nextTurn(myCivilization.getWorld());
 
-        // if there is a wait for others, then send an message to client
         if (result.isFail()) {
             JsonBlock response = new JsonBlock();
             response.addParam("message", result.getLocalized());

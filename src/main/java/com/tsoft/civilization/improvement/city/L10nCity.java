@@ -204,12 +204,19 @@ public class L10nCity {
             .put("en", "Washington")
             .put("ru", "Вашингтон");
 
+    public static final L10n TOKYO = new L10n()
+        .put("en", "Tokyo")
+        .put("ru", "Токио");
+
     public static L10nMap<L10n, L10nList> CITIES = new L10nMap<L10n, L10nList>()
             .put(L10nCivilization.RUSSIA, new L10nList()
-                    .add(L10nCity.MOSCOW)
-                    .add(L10nCity.SAINT_PETERSBURG)
+                .add(L10nCity.MOSCOW)
+                .add(L10nCity.SAINT_PETERSBURG)
             )
             .put(L10nCivilization.AMERICA, new L10nList()
-                    .add(L10nCity.WASHINGTON)
+                .add(L10nCity.WASHINGTON)
+            )
+            .put(L10nCivilization.JAPAN, new L10nList()
+                .add(L10nCity.TOKYO)
             );
 }

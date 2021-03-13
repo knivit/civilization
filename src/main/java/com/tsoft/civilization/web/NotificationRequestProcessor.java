@@ -2,6 +2,7 @@ package com.tsoft.civilization.web;
 
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.NumberUtil;
+import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.civilization.Civilization;
@@ -14,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 public class NotificationRequestProcessor {
     private NotificationRequestProcessor() { }
 
-    public static void processRequest(Client client) {
+    public static void processRequest(Client client, Request request) {
         ClientSession session = Sessions.getCurrent();
         if (Sessions.getCurrent() == null) {
             // Sending HTTP 400 will stop other requests from EventSource
@@ -43,7 +44,7 @@ public class NotificationRequestProcessor {
         }
 
         // Change the name of this thread
-        Thread.currentThread().setName("Notifications for " + client.getRequest().toString());
+        Thread.currentThread().setName("Notifications for " + request.toString());
 
         boolean needWorldUpdate = false;
         boolean needControlPanelUpdate = false;
@@ -51,8 +52,8 @@ public class NotificationRequestProcessor {
 
         World world = myCivilization.getWorld();
 
-        int lastEventId = NumberUtil.parseInt(client.getRequest().getHeader("Last-Event-ID"), -1);
-        log.debug("Notifications for {} are started from {}",  client.getRequest(), lastEventId);
+        int lastEventId = NumberUtil.parseInt(request.getHeader("Last-Event-ID"), -1);
+        log.debug("Notifications for {} are started from {}",  request, lastEventId);
 
         while (true) {
             // Waiting for events
@@ -148,7 +149,6 @@ public class NotificationRequestProcessor {
 
         return client.sendText(msg.toString());
     }
-
 
     private static boolean sendUpdateStatusPanelEvent(Client client) {
         return true;

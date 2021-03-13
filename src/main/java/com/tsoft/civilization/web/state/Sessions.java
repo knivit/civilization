@@ -21,10 +21,15 @@ public class Sessions {
         return session;
     }
 
-    public static void setCurrent(String sessionId) {
+    public static boolean setCurrent(String sessionId) {
         if (sessionId != null) {
-            currentSession.set(sessions.get(sessionId));
+            ClientSession clientSession = sessions.get(sessionId);
+            if (clientSession != null) {
+                currentSession.set(clientSession);
+                return true;
+            }
         }
+        return false;
     }
 
     public static ClientSession getCurrent() {
