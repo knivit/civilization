@@ -18,8 +18,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static com.tsoft.civilization.L10n.L10nCivilization.AMERICA;
-import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
+import static com.tsoft.civilization.civilization.L10nCivilization.AMERICA;
+import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
 import static com.tsoft.civilization.unit.action.AttackAction.ATTACKED;
 import static com.tsoft.civilization.unit.action.AttackAction.TARGET_DESTROYED;
 import static com.tsoft.civilization.unit.action.CaptureUnitAction.FOREIGN_UNIT_CAPTURED;

@@ -1,7 +1,9 @@
 package com.tsoft.civilization.civilization.action;
 
-import com.tsoft.civilization.L10n.L10nCivilization;
+import com.tsoft.civilization.civilization.L10nCivilization;
 import com.tsoft.civilization.action.ActionAbstractResult;
+import com.tsoft.civilization.action.ActionFailureResult;
+import com.tsoft.civilization.action.ActionSuccessResult;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.World;
@@ -13,6 +15,10 @@ import java.util.UUID;
 public class NextTurnAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
+    public static final ActionSuccessResult CAN_NEXT_TURN = new ActionSuccessResult(L10nCivilization.CAN_NEXT_TURN);
+
+    public static final ActionFailureResult AWAITING_OTHERS_TO_MOVE = new ActionFailureResult(L10nCivilization.AWAITING_OTHERS_TO_MOVE);
+
     public static ActionAbstractResult nextTurn(World world) {
         ActionAbstractResult result = canNextTurn(world);
         log.debug("{}", result);
@@ -23,15 +29,15 @@ public class NextTurnAction {
 
         world.move();
 
-        return NextTurnActionResults.CAN_NEXT_TURN;
+        return CAN_NEXT_TURN;
     }
 
     private static ActionAbstractResult canNextTurn(World world) {
         if (world.nextTurnInProgress()) {
-            return NextTurnActionResults.AWAITING_OTHERS_TO_MOVE;
+            return AWAITING_OTHERS_TO_MOVE;
         }
 
-        return NextTurnActionResults.CAN_NEXT_TURN;
+        return CAN_NEXT_TURN;
     }
 
     private static String getClientJSCode() {

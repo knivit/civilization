@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web.response;
 
-import com.tsoft.civilization.L10n.L10nMap;
+import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.view.JsonBlock;
@@ -12,7 +12,7 @@ public class Response {
 
     private final StringBuilder additionalHeaders = new StringBuilder();
 
-    public static Response newErrorInstance(L10nMap messages) {
+    public static Response newErrorInstance(L10n messages) {
         String enText = messages.getEnglish();
 
         ClientSession session = Sessions.getCurrent();

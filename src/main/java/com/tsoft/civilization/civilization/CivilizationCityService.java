@@ -1,9 +1,9 @@
 package com.tsoft.civilization.civilization;
 
-import com.tsoft.civilization.L10n.L10nChainedArrayList;
-import com.tsoft.civilization.L10n.L10nCity;
-import com.tsoft.civilization.L10n.L10nMap;
-import com.tsoft.civilization.L10n.L10nWorld;
+import com.tsoft.civilization.L10n.L10nList;
+import com.tsoft.civilization.improvement.city.L10nCity;
+import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.world.L10nWorld;
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.improvement.city.City;
@@ -65,9 +65,9 @@ public class CivilizationCityService {
         return cities.getBuildingById(buildingId);
     }
 
-    public L10nMap findCityName() {
-        L10nMap civilizationName = civilization.getView().getName();
-        L10nChainedArrayList<L10nMap> names = L10nCity.CITIES.get(civilizationName);
+    public L10n findCityName() {
+        L10n civilizationName = civilization.getView().getName();
+        L10nList names = L10nCity.CITIES.get(civilizationName);
         int index = size() % names.size();
         return names.get(index);
     }

@@ -149,7 +149,7 @@ var client = {
 
     loadWorld: function() {
         server.sendChainOfRequests([
-            [ "ajax/LoadWorld", { }, client.onLoadWorldResponse ],
+            [ "ajax/LoadWorldRequest", { }, client.onLoadWorldResponse ],
             [ "ajax/GetStartStatus", { }, client.onStatusResponse ],
             [ "ajax/GetControlPanel", { }, client.onControlPanelResponse ]
         ]);

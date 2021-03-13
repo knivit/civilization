@@ -1,18 +1,17 @@
 package com.tsoft.civilization.civilization;
 
-import com.tsoft.civilization.L10n.L10nCivilization;
-import com.tsoft.civilization.L10n.L10nMap;
+import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.common.AbstractView;
 import com.tsoft.civilization.web.view.JsonBlock;
 
 public class CivilizationView implements AbstractView {
-    private L10nMap name;
+    private L10n name;
 
-    public CivilizationView(L10nMap name) {
+    public CivilizationView(L10n name) {
         this.name = name;
     }
 
-    public L10nMap getName() {
+    public L10n getName() {
         return name;
     }
 

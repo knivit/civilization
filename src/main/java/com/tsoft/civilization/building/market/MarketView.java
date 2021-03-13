@@ -1,6 +1,5 @@
 package com.tsoft.civilization.building.market;
 
-import com.tsoft.civilization.L10n.building.L10nMarket;
 import com.tsoft.civilization.building.AbstractBuildingView;
 
 public class MarketView extends AbstractBuildingView {

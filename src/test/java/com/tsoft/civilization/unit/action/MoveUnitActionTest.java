@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Set;
 
-import static com.tsoft.civilization.L10n.L10nCivilization.AMERICA;
-import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
+import static com.tsoft.civilization.civilization.L10nCivilization.AMERICA;
+import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
 import static com.tsoft.civilization.unit.action.MoveUnitAction.NO_LOCATIONS_TO_MOVE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

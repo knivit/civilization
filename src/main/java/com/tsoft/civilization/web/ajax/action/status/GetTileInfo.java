@@ -1,8 +1,8 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
-import com.tsoft.civilization.L10n.L10nServer;
-import com.tsoft.civilization.L10n.L10nTile;
-import com.tsoft.civilization.L10n.L10nWorld;
+import com.tsoft.civilization.web.L10nServer;
+import com.tsoft.civilization.tile.L10nTile;
+import com.tsoft.civilization.world.L10nWorld;
 import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.base.TilePassCostTable;
 import com.tsoft.civilization.unit.UnitList;

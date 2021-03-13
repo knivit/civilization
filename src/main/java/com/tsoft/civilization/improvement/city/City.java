@@ -1,7 +1,6 @@
 package com.tsoft.civilization.improvement.city;
 
-import com.tsoft.civilization.L10n.L10nCity;
-import com.tsoft.civilization.L10n.L10nMap;
+import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.building.*;
 import com.tsoft.civilization.building.palace.Palace;
 import com.tsoft.civilization.combat.CombatStrength;
@@ -14,7 +13,6 @@ import com.tsoft.civilization.tile.base.TileType;
 import com.tsoft.civilization.unit.*;
 import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.world.economic.*;
-import com.tsoft.civilization.world.event.Event;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +46,7 @@ public class City extends AbstractImprovement implements HasCombatStrength {
         super(civilization, location);
     }
 
-    public void init(L10nMap cityName, boolean isCapital) {
+    public void init(L10n cityName, boolean isCapital) {
         // area
         locations.add(location);
         locations.addAll(getTilesMap().getLocationsAround(location, 1));
@@ -72,7 +70,7 @@ public class City extends AbstractImprovement implements HasCombatStrength {
         VIEW = new CityView(cityName);
     }
 
-    public L10nMap getName() {
+    public L10n getName() {
         return VIEW.getName();
     }
 

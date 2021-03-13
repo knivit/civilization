@@ -1,6 +1,6 @@
 package com.tsoft.civilization.improvement.farm;
 
-import com.tsoft.civilization.L10n.L10nImprovement;
+import com.tsoft.civilization.improvement.L10nImprovement;
 import com.tsoft.civilization.improvement.AbstractImprovementView;
 
 public class FarmView extends AbstractImprovementView {

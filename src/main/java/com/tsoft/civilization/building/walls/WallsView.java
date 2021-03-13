@@ -1,6 +1,5 @@
 package com.tsoft.civilization.building.walls;
 
-import com.tsoft.civilization.L10n.building.L10nWalls;
 import com.tsoft.civilization.building.AbstractBuildingView;
 
 public class WallsView extends AbstractBuildingView {

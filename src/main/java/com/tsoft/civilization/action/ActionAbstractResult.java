@@ -1,13 +1,13 @@
 package com.tsoft.civilization.action;
 
-import com.tsoft.civilization.L10n.L10nMap;
+import com.tsoft.civilization.L10n.L10n;
 
 public abstract class ActionAbstractResult {
-    private final L10nMap message;
+    private final L10n message;
 
     public abstract boolean isSuccess();
 
-    public ActionAbstractResult(L10nMap message) {
+    public ActionAbstractResult(L10n message) {
         this.message = message;
     }
 

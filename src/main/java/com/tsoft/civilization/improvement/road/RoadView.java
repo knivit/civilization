@@ -1,6 +1,6 @@
 package com.tsoft.civilization.improvement.road;
 
-import com.tsoft.civilization.L10n.L10nImprovement;
+import com.tsoft.civilization.improvement.L10nImprovement;
 import com.tsoft.civilization.improvement.AbstractImprovementView;
 
 public class RoadView extends AbstractImprovementView {

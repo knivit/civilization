@@ -6,7 +6,6 @@ import com.tsoft.civilization.tile.base.ocean.Ocean;
 import com.tsoft.civilization.tile.base.plain.Plain;
 import com.tsoft.civilization.tile.base.snow.Snow;
 import com.tsoft.civilization.tile.base.tundra.Tundra;
-import com.tsoft.civilization.tile.feature.*;
 import com.tsoft.civilization.tile.feature.coast.Coast;
 import com.tsoft.civilization.tile.feature.forest.Forest;
 import com.tsoft.civilization.tile.feature.hill.Hill;
@@ -25,10 +24,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-/*
+/**
  * One big continent, small ocean (80% earth, 20% ocean)
 */
 public class OneContinentWorldGenerator implements WorldGenerator {
+
+    private static final WorldGeneratorHelper helper = new WorldGeneratorHelper();
+
     private TilesMap tilesMap;
     private Climate climate;
 
@@ -65,8 +67,8 @@ public class OneContinentWorldGenerator implements WorldGenerator {
     }
 
     private static class TP {
-        private String[] tileClasses;
-        private int probabilityPercent;
+        private final String[] tileClasses;
+        private final int probabilityPercent;
 
         TP(int probabilityPercent, String ... tileClasses) {
             this.probabilityPercent = probabilityPercent;
@@ -156,7 +158,7 @@ public class OneContinentWorldGenerator implements WorldGenerator {
         // changing
         if (tps.length == 1) {
             for (Point point : points) {
-                addTileWithFeatures(point, tps[0].tileClasses);
+                helper.addTileWithFeatures(tilesMap, point, tps[0].tileClasses);
             }
         } else {
             for (Point point : points) {
@@ -164,25 +166,11 @@ public class OneContinentWorldGenerator implements WorldGenerator {
                 for (TP tp : tps) {
                     random -= tp.probabilityPercent;
                     if (random < 0) {
-                        addTileWithFeatures(point, tp.tileClasses);
+                        helper.addTileWithFeatures(tilesMap, point, tp.tileClasses);
                         break;
                     }
                 }
             }
-        }
-    }
-
-    private void addTileWithFeatures(Point location, String[] classes) {
-        assert (classes.length > 0) : "Length must be more than 0";
-
-        // First goes a tile
-        AbstractTile tile = AbstractTile.newInstance(classes[0]);
-        assert (tile != null) : "Invalid tile " + classes[0];
-        tilesMap.setTile(location, tile);
-
-        // Next may be features
-        for (int i = 1; i < classes.length; i ++) {
-            TerrainFeature feature = TerrainFeature.newInstance(classes[i], tile);
         }
     }
 

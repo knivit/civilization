@@ -4,7 +4,8 @@ import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.civilization.Civilization;
 import org.junit.jupiter.api.Test;
 
-import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
+import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
+import static com.tsoft.civilization.civilization.action.NextTurnAction.CAN_NEXT_TURN;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class NextTurnActionTest {
@@ -14,6 +15,6 @@ public class NextTurnActionTest {
         MockWorld world = MockWorld.newSimpleWorld();
         Civilization civilization = world.createCivilization(RUSSIA);
 
-        assertEquals(NextTurnActionResults.CAN_NEXT_TURN, NextTurnAction.nextTurn(world));
+        assertEquals(CAN_NEXT_TURN, NextTurnAction.nextTurn(world));
     }
 }

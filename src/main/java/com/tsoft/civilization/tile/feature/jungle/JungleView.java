@@ -1,6 +1,6 @@
 package com.tsoft.civilization.tile.feature.jungle;
 
-import com.tsoft.civilization.L10n.L10nFeature;
+import com.tsoft.civilization.tile.feature.L10nFeature;
 import com.tsoft.civilization.tile.feature.AbstractFeatureView;
 
 public class JungleView extends AbstractFeatureView {

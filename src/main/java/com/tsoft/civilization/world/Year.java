@@ -1,7 +1,6 @@
 package com.tsoft.civilization.world;
 
-import com.tsoft.civilization.L10n.L10nMap;
-import com.tsoft.civilization.L10n.L10nWorld;
+import com.tsoft.civilization.L10n.L10n;
 
 // immutable
 public class Year {
@@ -74,7 +73,7 @@ public class Year {
         return Math.abs(value) + " A.C";
     }
 
-    public L10nMap getEraLocalized() {
+    public L10n getEraLocalized() {
         if (value <= ANCIENT_ERA) return L10nWorld.ANCIENT_ERA;
         if (value <= CLASSICAL_ERA) return L10nWorld.CLASSICAL_ERA;
         if (value <= MEDIEVAL_ERA) return L10nWorld.MEDIEVAL_ERA;

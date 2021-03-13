@@ -1,6 +1,6 @@
 package com.tsoft.civilization.world.event;
 
-import com.tsoft.civilization.L10n.L10nMap;
+import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.web.view.JsonBlock;
 
 import java.time.Instant;
@@ -20,11 +20,11 @@ public class Event {
     private Object obj;
 
     private Instant serverEventTime;
-    private L10nMap description;
+    private L10n description;
     private Object[] args;
     private int flags;
 
-    public Event(int flags, Object obj, L10nMap description, Object ... args) {
+    public Event(int flags, Object obj, L10n description, Object ... args) {
         this.flags = flags;
         this.obj = obj;
         this.description = description;

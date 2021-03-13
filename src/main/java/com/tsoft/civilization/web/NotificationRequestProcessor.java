@@ -1,6 +1,5 @@
 package com.tsoft.civilization.web;
 
-import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.NumberUtil;
 import com.tsoft.civilization.web.state.ClientSession;

@@ -1,8 +1,8 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
-import com.tsoft.civilization.L10n.L10nCivilization;
-import com.tsoft.civilization.L10n.L10nServer;
-import com.tsoft.civilization.L10n.L10nWorld;
+import com.tsoft.civilization.civilization.L10nCivilization;
+import com.tsoft.civilization.web.L10nServer;
+import com.tsoft.civilization.world.L10nWorld;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.HtmlResponse;
@@ -45,13 +45,17 @@ public class GetCivilizations extends AbstractAjaxRequest {
         StringBuilder buf = new StringBuilder();
         for (Civilization civilization : civilizations) {
             CivilizationsRelations relations = world.getCivilizationsRelations(myCivilization, civilization);
+            if (relations == null) {
+                continue;
+            }
 
-            buf.append(Format.text(
-                "<tr>" +
-                    "<td><image src='$imageSrc'/></td>" +
-                    "<td><button onclick=\"server.sendAsyncAjax('ajax/GetCivilizationStatus', { civilization:'$civilizationId' })\">$civilizationName</button></td>" +
-                    "<td>$relations</td>" +
-                "</tr>",
+            buf.append(Format.text("""
+                <tr>
+                    <td><image src='$imageSrc'/></td>
+                    <td><button onclick="server.sendAsyncAjax('ajax/GetCivilizationStatus', { civilization:'$civilizationId' })">$civilizationName</button></td>
+                    <td>$relations</td>
+                </tr>
+                """,
 
                 "$imageSrc", civilization.getView().getStatusImageSrc(),
                 "$civilizationId", civilization.getId(),

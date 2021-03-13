@@ -1,6 +1,6 @@
 package com.tsoft.civilization.unit.civil.citizen.view;
 
-import com.tsoft.civilization.L10n.L10nCitizen;
+import com.tsoft.civilization.unit.civil.citizen.L10nCitizen;
 import com.tsoft.civilization.unit.civil.citizen.CitizenView;
 
 public class MusicianView extends CitizenView {

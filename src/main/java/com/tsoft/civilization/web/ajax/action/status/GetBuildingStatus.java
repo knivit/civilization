@@ -1,9 +1,8 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
-import com.tsoft.civilization.L10n.L10nAction;
-import com.tsoft.civilization.L10n.L10nCity;
-import com.tsoft.civilization.L10n.L10nServer;
-import com.tsoft.civilization.L10n.building.L10nBuilding;
+import com.tsoft.civilization.improvement.city.L10nCity;
+import com.tsoft.civilization.web.L10nServer;
+import com.tsoft.civilization.building.L10nBuilding;
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.BuildingActions;
 import com.tsoft.civilization.util.Format;
@@ -123,7 +122,7 @@ public class GetBuildingStatus extends AbstractAjaxRequest {
             </table
             """,
 
-            "$actions", L10nAction.AVAILABLE_ACTIONS,
+            "$actions", L10nStatus.AVAILABLE_ACTIONS,
             "$buildingActions", actions
         );
     }

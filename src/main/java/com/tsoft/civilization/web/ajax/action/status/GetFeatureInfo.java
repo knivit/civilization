@@ -1,7 +1,7 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
-import com.tsoft.civilization.L10n.*;
 import com.tsoft.civilization.tile.feature.FeatureCatalog;
+import com.tsoft.civilization.tile.feature.L10nFeature;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;

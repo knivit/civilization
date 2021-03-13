@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web.ajax.action.world;
 
-import com.tsoft.civilization.L10n.L10nWorld;
+import com.tsoft.civilization.world.L10nWorld;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.HtmlResponse;

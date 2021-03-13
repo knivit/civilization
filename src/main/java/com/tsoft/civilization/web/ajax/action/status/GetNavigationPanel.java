@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
-import com.tsoft.civilization.L10n.L10nClient;
+import com.tsoft.civilization.web.L10nClient;
 import com.tsoft.civilization.util.Format;
 
 public class GetNavigationPanel {

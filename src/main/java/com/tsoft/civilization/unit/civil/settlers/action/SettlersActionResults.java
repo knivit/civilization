@@ -1,7 +1,7 @@
 package com.tsoft.civilization.unit.civil.settlers.action;
 
-import com.tsoft.civilization.L10n.unit.L10nSettlers;
-import com.tsoft.civilization.L10n.unit.L10nUnit;
+import com.tsoft.civilization.unit.civil.settlers.L10nSettlers;
+import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.action.ActionFailureResult;
 import com.tsoft.civilization.action.ActionSuccessResult;
 

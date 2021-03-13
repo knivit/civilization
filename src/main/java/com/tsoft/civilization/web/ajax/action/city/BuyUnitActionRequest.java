@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web.ajax.action.city;
 
-import com.tsoft.civilization.L10n.L10nServer;
+import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.improvement.city.action.BuyUnitAction;
 import com.tsoft.civilization.improvement.city.City;

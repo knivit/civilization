@@ -1,8 +1,8 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
-import com.tsoft.civilization.L10n.L10nCity;
-import com.tsoft.civilization.L10n.L10nServer;
-import com.tsoft.civilization.L10n.L10nTile;
+import com.tsoft.civilization.improvement.city.L10nCity;
+import com.tsoft.civilization.web.L10nServer;
+import com.tsoft.civilization.tile.L10nTile;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityList;
 import com.tsoft.civilization.improvement.city.CityListService;

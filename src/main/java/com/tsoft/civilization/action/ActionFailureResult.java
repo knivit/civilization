@@ -1,9 +1,9 @@
 package com.tsoft.civilization.action;
 
-import com.tsoft.civilization.L10n.L10nMap;
+import com.tsoft.civilization.L10n.L10n;
 
 public class ActionFailureResult extends ActionAbstractResult {
-    public ActionFailureResult(L10nMap message) {
+    public ActionFailureResult(L10n message) {
         super(message);
     }
 

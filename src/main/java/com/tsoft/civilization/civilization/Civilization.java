@@ -1,9 +1,8 @@
 package com.tsoft.civilization.civilization;
 
-import com.tsoft.civilization.L10n.L10nCity;
-import com.tsoft.civilization.L10n.L10nCivilization;
-import com.tsoft.civilization.L10n.L10nMap;
-import com.tsoft.civilization.L10n.L10nWorld;
+import com.tsoft.civilization.improvement.city.L10nCity;
+import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.world.L10nWorld;
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.BuildingFactory;
 import com.tsoft.civilization.combat.HasCombatStrength;
@@ -36,7 +35,7 @@ public class Civilization {
 
     private final CivilizationView view;
 
-    private final L10nMap name;
+    private final L10n name;
     private final Year startYear;
 
     private final World world;
@@ -56,8 +55,8 @@ public class Civilization {
     // true when any event that needs score to be calculated was generated
     private final EventsByYearMap events;
 
-    public Civilization(World world, L10nMap name) {
-        Objects.requireNonNull(world, "world can't be null");
+    public Civilization(World world, L10n name) {
+        Objects.requireNonNull(world, "World can't be null");
         Objects.requireNonNull(name, "Civilization name can't be null");
 
         this.world = world;
@@ -78,7 +77,7 @@ public class Civilization {
         return id;
     }
 
-    public L10nMap getName() {
+    public L10n getName() {
         return name;
     }
 
@@ -204,7 +203,7 @@ public class Civilization {
     }
 
     public City createCity(Point location) {
-        L10nMap cityName = cityService.findCityName();
+        L10n cityName = cityService.findCityName();
         boolean isCapital = cityService.size() == 0;
         City city = ImprovementFactory.newInstance(City.CLASS_UUID, this, location);
         city.init(cityName, isCapital);

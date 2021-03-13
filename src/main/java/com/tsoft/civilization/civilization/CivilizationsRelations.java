@@ -1,7 +1,7 @@
 package com.tsoft.civilization.civilization;
 
-import com.tsoft.civilization.L10n.L10nMap;
-import com.tsoft.civilization.L10n.L10nWorld;
+import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.world.L10nWorld;
 
 public class CivilizationsRelations {
     public static final int WAR_STATE = -50;
@@ -35,7 +35,7 @@ public class CivilizationsRelations {
         return WAR.equals(this);
     }
 
-    public L10nMap getDescription() {
+    public L10n getDescription() {
         if (state == WAR_STATE) return L10nWorld.WAR_RELATIONS_DESCRIPTION;
         if (state < NEUTRAL.state) return L10nWorld.BAD_RELATIONS_DESCRIPTION;
         if (state == NEUTRAL.state) return L10nWorld.NEUTRAL_RELATIONS_DESCRIPTION;
@@ -50,9 +50,7 @@ public class CivilizationsRelations {
 
         CivilizationsRelations that = (CivilizationsRelations) o;
 
-        if (state != that.state) return false;
-
-        return true;
+        return state == that.state;
     }
 
     @Override
@@ -62,10 +60,8 @@ public class CivilizationsRelations {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("CivilizationsRelations");
-        sb.append("{state=").append(state);
-        sb.append('}');
-        return sb.toString();
+        return "CivilizationsRelations" +
+            "{state=" + state +
+            '}';
     }
 }

@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web.ajax.action.unit;
 
-import com.tsoft.civilization.L10n.L10nServer;
+import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.unit.action.CaptureUnitAction;
 import com.tsoft.civilization.unit.AbstractUnit;

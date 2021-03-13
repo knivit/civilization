@@ -1,7 +1,9 @@
 package com.tsoft.civilization.civilization.action;
 
-import com.tsoft.civilization.L10n.L10nCivilization;
+import com.tsoft.civilization.civilization.L10nCivilization;
 import com.tsoft.civilization.action.ActionAbstractResult;
+import com.tsoft.civilization.action.ActionFailureResult;
+import com.tsoft.civilization.action.ActionSuccessResult;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationsRelations;
@@ -14,6 +16,11 @@ import java.util.UUID;
 public class DeclareWarAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
+    public static final ActionSuccessResult CAN_DECLARE_WAR = new ActionSuccessResult(L10nCivilization.CAN_DECLARE_WAR);
+
+    public static final ActionFailureResult WRONG_CIVILIZATION = new ActionFailureResult(L10nCivilization.WRONG_CIVILIZATION);
+    public static final ActionFailureResult ALREADY_WAR = new ActionFailureResult(L10nCivilization.ALREADY_WAR);
+
     public static ActionAbstractResult declareWar(Civilization myCivilization, Civilization otherCivilization) {
         ActionAbstractResult result = canDeclareWar(myCivilization, otherCivilization);
         log.debug("{}", result);
@@ -24,21 +31,26 @@ public class DeclareWarAction {
 
         World world = myCivilization.getWorld();
         world.setCivilizationsRelations(myCivilization, otherCivilization, CivilizationsRelations.WAR);
-        return DeclareWarActionResults.CAN_DECLARE_WAR;
+        return CAN_DECLARE_WAR;
     }
 
     private static ActionAbstractResult canDeclareWar(Civilization myCivilization, Civilization otherCivilization) {
-        if (otherCivilization == null || otherCivilization.equals(myCivilization)) {
-            return DeclareWarActionResults.WRONG_CIVILIZATION;
+        if (myCivilization == null || otherCivilization == null || otherCivilization.equals(myCivilization)) {
+            return WRONG_CIVILIZATION;
         }
 
         World world = myCivilization.getWorld();
         CivilizationsRelations relations = world.getCivilizationsRelations(myCivilization, otherCivilization);
-        if (relations.isWar()) {
-            return DeclareWarActionResults.ALREADY_WAR;
+
+        if (relations == null) {
+            return WRONG_CIVILIZATION;
         }
 
-        return DeclareWarActionResults.CAN_DECLARE_WAR;
+        if (relations.isWar()) {
+            return ALREADY_WAR;
+        }
+
+        return CAN_DECLARE_WAR;
     }
 
     private static String getClientJSCode(Civilization civilization) {
@@ -59,8 +71,9 @@ public class DeclareWarAction {
             return null;
         }
 
-        return Format.text(
-            "<td><button onclick=\"$buttonOnClick\">$buttonLabel</button></td><td>$actionDescription</td>",
+        return Format.text("""
+            <td><button onclick="$buttonOnClick">$buttonLabel</button></td><td>$actionDescription</td>
+            """,
 
             "$buttonOnClick", getClientJSCode(otherCivilization),
             "$buttonLabel", getLocalizedName(),

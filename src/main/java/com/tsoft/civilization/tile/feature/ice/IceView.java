@@ -1,6 +1,6 @@
 package com.tsoft.civilization.tile.feature.ice;
 
-import com.tsoft.civilization.L10n.L10nTile;
+import com.tsoft.civilization.tile.L10nTile;
 import com.tsoft.civilization.tile.feature.AbstractFeatureView;
 
 public class IceView extends AbstractFeatureView {

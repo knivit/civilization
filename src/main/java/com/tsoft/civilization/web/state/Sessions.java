@@ -32,6 +32,7 @@ public class Sessions {
     }
 
     public static void setActiveCivilization(Civilization civilization) {
-        getCurrent().setActiveCivilization(civilization);
+        ClientSession session = getCurrent();
+        session.setActiveCivilization(civilization);
     }
 }

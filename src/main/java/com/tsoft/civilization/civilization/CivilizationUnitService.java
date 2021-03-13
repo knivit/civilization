@@ -1,7 +1,6 @@
 package com.tsoft.civilization.civilization;
 
-import com.tsoft.civilization.L10n.L10nCivilization;
-import com.tsoft.civilization.L10n.unit.L10nUnit;
+import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.TileService;

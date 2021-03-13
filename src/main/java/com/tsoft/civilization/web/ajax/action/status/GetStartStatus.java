@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
-import com.tsoft.civilization.L10n.L10nServer;
+import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.HtmlResponse;

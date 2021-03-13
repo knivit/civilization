@@ -12,7 +12,7 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.economic.SupplyMock;
 import org.junit.jupiter.api.Test;
 
-import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
+import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BuildUnitActionTest {

@@ -1,8 +1,8 @@
 package com.tsoft.civilization.unit.civil.workers.action;
 
-import com.tsoft.civilization.L10n.L10nImprovement;
-import com.tsoft.civilization.L10n.unit.L10nUnit;
-import com.tsoft.civilization.L10n.unit.L10nWorkers;
+import com.tsoft.civilization.improvement.L10nImprovement;
+import com.tsoft.civilization.unit.L10nUnit;
+import com.tsoft.civilization.unit.civil.workers.L10nWorkers;
 import com.tsoft.civilization.action.ActionFailureResult;
 import com.tsoft.civilization.action.ActionSuccessResult;
 

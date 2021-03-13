@@ -25,12 +25,16 @@ public class RequestsMap {
         Map<String, AbstractAjaxRequest> requests = new HashMap<>();
         REQUESTS = Collections.unmodifiableMap(requests);
 
-        // Worlds
-        requests.put(GetWorldsRequest.class.getSimpleName(), new GetWorldsRequest());
-        requests.put(CreateWorldRequest.class.getSimpleName(), new CreateWorldRequest());
-        requests.put(GetCreateWorldForm.class.getSimpleName(), new GetCreateWorldForm());
-        requests.put(JoinWorldRequest.class.getSimpleName(), new JoinWorldRequest());
-        requests.put(LoadWorld.class.getSimpleName(), new LoadWorld());
+        // City
+        requests.put(BuildBuildingActionRequest.class.getSimpleName(), new BuildBuildingActionRequest());
+        requests.put(BuildUnitActionRequest.class.getSimpleName(), new BuildUnitActionRequest());
+        requests.put(BuyBuildingActionRequest.class.getSimpleName(), new BuyBuildingActionRequest());
+        requests.put(BuyUnitActionRequest.class.getSimpleName(), new BuyUnitActionRequest());
+        requests.put(DestroyBuildingActionRequest.class.getSimpleName(), new DestroyBuildingActionRequest());
+
+        // Civilization
+        requests.put(DeclareWarActionRequest.class.getSimpleName(), new DeclareWarActionRequest());
+        requests.put(NextTurnActionRequest.class.getSimpleName(), new NextTurnActionRequest());
 
         // Status
         requests.put(GetStartStatus.class.getSimpleName(), new GetStartStatus());
@@ -47,32 +51,26 @@ public class RequestsMap {
         requests.put(GetBuildingStatus.class.getSimpleName(), new GetBuildingStatus());
         requests.put(GetControlPanel.class.getSimpleName(), new GetControlPanel());
 
-        // Actions
-
         // Unit's Common
         requests.put(AttackActionRequest.class.getSimpleName(), new AttackActionRequest());
-        requests.put(MoveUnitActionRequest.class.getSimpleName(), new MoveUnitActionRequest());
         requests.put(CaptureUnitActionRequest.class.getSimpleName(), new CaptureUnitActionRequest());
         requests.put(DestroyUnitActionRequest.class.getSimpleName(), new DestroyUnitActionRequest());
+        requests.put(MoveUnitActionRequest.class.getSimpleName(), new MoveUnitActionRequest());
 
         // Settlers
         requests.put(BuildCityActionRequest.class.getSimpleName(), new BuildCityActionRequest());
 
         // Workers
+        requests.put(BuildFarmActionRequest.class.getSimpleName(), new BuildFarmActionRequest());
         requests.put(RemoveForestActionRequest.class.getSimpleName(), new RemoveForestActionRequest());
         requests.put(RemoveHillActionRequest.class.getSimpleName(), new RemoveHillActionRequest());
-        requests.put(BuildFarmActionRequest.class.getSimpleName(), new BuildFarmActionRequest());
 
-        // City
-        requests.put(BuyUnitActionRequest.class.getSimpleName(), new BuyUnitActionRequest());
-        requests.put(BuyBuildingActionRequest.class.getSimpleName(), new BuyBuildingActionRequest());
-        requests.put(BuildUnitActionRequest.class.getSimpleName(), new BuildUnitActionRequest());
-        requests.put(BuildBuildingActionRequest.class.getSimpleName(), new BuildBuildingActionRequest());
-        requests.put(DestroyBuildingActionRequest.class.getSimpleName(), new DestroyBuildingActionRequest());
-
-        // Civilization
-        requests.put(DeclareWarActionRequest.class.getSimpleName(), new DeclareWarActionRequest());
-        requests.put(NextTurnActionRequest.class.getSimpleName(), new NextTurnActionRequest());
+        // Worlds
+        requests.put(GetWorldsRequest.class.getSimpleName(), new GetWorldsRequest());
+        requests.put(CreateWorldRequest.class.getSimpleName(), new CreateWorldRequest());
+        requests.put(GetCreateWorldForm.class.getSimpleName(), new GetCreateWorldForm());
+        requests.put(JoinWorldRequest.class.getSimpleName(), new JoinWorldRequest());
+        requests.put(LoadWorldRequest.class.getSimpleName(), new LoadWorldRequest());
     }
 
     public static AbstractAjaxRequest get(String name) {

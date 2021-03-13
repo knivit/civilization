@@ -1,7 +1,7 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
-import com.tsoft.civilization.L10n.L10nCivilization;
-import com.tsoft.civilization.L10n.L10nServer;
+import com.tsoft.civilization.civilization.L10nCivilization;
+import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.civilization.action.NextTurnAction;
 import com.tsoft.civilization.improvement.city.CityList;
 import com.tsoft.civilization.unit.UnitList;

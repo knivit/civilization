@@ -1,6 +1,6 @@
 package com.tsoft.civilization.unit.civil.settlers.action;
 
-import com.tsoft.civilization.L10n.unit.L10nSettlers;
+import com.tsoft.civilization.unit.civil.settlers.L10nSettlers;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.base.AbstractTile;

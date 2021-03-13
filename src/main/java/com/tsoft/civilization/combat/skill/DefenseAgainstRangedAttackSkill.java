@@ -1,6 +1,6 @@
 package com.tsoft.civilization.combat.skill;
 
-import com.tsoft.civilization.L10n.L10nMap;
+import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.unit.UnitCategory;
 
@@ -21,7 +21,7 @@ public class DefenseAgainstRangedAttackSkill extends AbstractSkill {
     }
 
     @Override
-    public L10nMap getLocalizedName() {
+    public L10n getLocalizedName() {
         return null;
     }
 }

@@ -1,6 +1,5 @@
 package com.tsoft.civilization.improvement.city;
 
-import com.tsoft.civilization.L10n.L10nCity;
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.BuildingFactory;
 import com.tsoft.civilization.improvement.CanBeBuilt;

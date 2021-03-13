@@ -1,6 +1,6 @@
 package com.tsoft.civilization.unit.civil.greatgeneral;
 
-import com.tsoft.civilization.L10n.unit.L10nUnit;
+import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.unit.AbstractUnitView;
 
 public class GreatGeneralView extends AbstractUnitView {

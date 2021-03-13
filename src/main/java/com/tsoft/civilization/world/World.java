@@ -1,7 +1,6 @@
 package com.tsoft.civilization.world;
 
-import com.tsoft.civilization.L10n.L10nMap;
-import com.tsoft.civilization.L10n.L10nWorld;
+import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationsRelations;
 import com.tsoft.civilization.improvement.city.City;
@@ -24,10 +23,10 @@ public class World {
 
     private Year year;
     private TilesMap tilesMap;
-    private final WorldView VIEW;
+    private final WorldView view;
 
     // Filled on World creation
-    private String name;
+    private final String name;
     private int maxNumberOfCivilizations;
 
     // use ArrayList as almost always we need to iterate through it
@@ -41,9 +40,10 @@ public class World {
     // "move" can be a long operation
     private volatile boolean nextTurnInProgress;
 
-    public World(MapType mapType, int width, int height) {
+    public World(String name, MapType mapType, int width, int height) {
+        this.name = name;
         year = new Year(-3000);
-        VIEW = new WorldView(this);
+        view = new WorldView(this);
         tilesMap = new TilesMap(mapType, width, height);
     }
 
@@ -69,7 +69,12 @@ public class World {
         civilizations.forEach(e -> e.addEvent(event));
     }
 
-    public Civilization createCivilization(L10nMap civilizationName) {
+    // Returns NULL when a civilization can not be created (it is already exists etc)
+    public Civilization createCivilization(L10n civilizationName) {
+        if (civilizations.getCivilizationByName(civilizationName) != null) {
+            return null;
+        }
+
         Civilization civilization = new Civilization(this, civilizationName);
 
         // set NEUTRAL state for this civilization with others
@@ -90,6 +95,7 @@ public class World {
         return civilization;
     }
 
+    // Returns NULL when relations can not be found
     public CivilizationsRelations getCivilizationsRelations(Civilization c1, Civilization c2) {
         if (c1.equals(c2)) {
             return null;
@@ -114,8 +120,16 @@ public class World {
     }
 
     public boolean isWar(Civilization c1, Civilization c2) {
-        if (c1 == null || c2 == null || c1.equals(c2)) return false;
-        return getCivilizationsRelations(c1, c2).isWar();
+        if (c1 == null || c2 == null || c1.equals(c2)) {
+            return false;
+        }
+
+        CivilizationsRelations relations = getCivilizationsRelations(c1, c2);
+        if (relations == null) {
+            return false;
+        }
+
+        return relations.isWar();
     }
 
     // Find a location to place a Settlers
@@ -194,15 +208,11 @@ public class World {
     }
 
     public WorldView getView() {
-        return VIEW;
+        return view;
     }
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getMaxNumberOfCivilizations() {

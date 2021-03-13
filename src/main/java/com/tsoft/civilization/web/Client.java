@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web;
 
-import com.tsoft.civilization.L10n.L10nMap;
+import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.RequestReader;
 import com.tsoft.civilization.web.state.Sessions;
@@ -113,7 +113,7 @@ public class Client {
     }
 
     /** Send a error to the client */
-    public void sendError(L10nMap messages) {
+    public void sendError(L10n messages) {
         sendResponse(Response.newErrorInstance(messages));
     }
 }

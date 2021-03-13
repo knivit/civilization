@@ -1,5 +1,6 @@
 package com.tsoft.civilization.civilization;
 
+import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityList;
 import com.tsoft.civilization.unit.AbstractUnit;
@@ -54,6 +55,10 @@ public class CivilizationList implements Iterable<Civilization> {
 
     public Civilization getCivilizationById(String civilizationId) {
         return findAny(e -> e.getId().equals(civilizationId));
+    }
+
+    public Civilization getCivilizationByName(L10n name) {
+        return findAny(e -> e.getName().equals(name));
     }
 
     public Civilization getCivilizationOnTile(Point location) {

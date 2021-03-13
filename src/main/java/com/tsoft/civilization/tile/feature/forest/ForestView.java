@@ -1,6 +1,6 @@
 package com.tsoft.civilization.tile.feature.forest;
 
-import com.tsoft.civilization.L10n.L10nFeature;
+import com.tsoft.civilization.tile.feature.L10nFeature;
 import com.tsoft.civilization.tile.feature.AbstractFeatureView;
 
 public class ForestView extends AbstractFeatureView {

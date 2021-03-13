@@ -1,17 +1,17 @@
 package com.tsoft.civilization.web.render.civilization;
 
-import com.tsoft.civilization.L10n.L10nMap;
+import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.civilization.Civilization;
 
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.tsoft.civilization.L10n.L10nCivilization.*;
+import static com.tsoft.civilization.civilization.L10nCivilization.*;
 
 public class CivilizationRender {
 
-    private static final Map<L10nMap, Color> COLORS = new HashMap<>();
+    private static final Map<L10n, Color> COLORS = new HashMap<>();
 
     static {
         COLORS.put(RUSSIA, Color.YELLOW);

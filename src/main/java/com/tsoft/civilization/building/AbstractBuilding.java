@@ -1,6 +1,5 @@
 package com.tsoft.civilization.building;
 
-import com.tsoft.civilization.L10n.building.L10nBuilding;
 import com.tsoft.civilization.common.HasId;
 import com.tsoft.civilization.common.HasView;
 import com.tsoft.civilization.improvement.CanBeBuilt;

@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web.ajax.action.world;
 
-import com.tsoft.civilization.L10n.L10nWorld;
+import com.tsoft.civilization.world.L10nWorld;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.HtmlResponse;
@@ -44,8 +44,9 @@ public class GetWorldsRequest extends AbstractAjaxRequest {
             int slotsAvailable = world.getMaxNumberOfCivilizations() - world.getCivilizations().size();
             StringBuilder joinButton = null;
             if (slotsAvailable > 0) {
-                joinButton = Format.text(
-                    "<button onclick=\"$joinWorldRequest({ world:'$world' })\">$join</button>",
+                joinButton = Format.text("""
+                    <button onclick="$joinWorldRequest({ world:'$world' })">$join</button>
+                    """,
 
                     "$joinWorldRequest", JOIN_WORLD_REQUEST,
                     "$world", world.getId(),
@@ -53,23 +54,25 @@ public class GetWorldsRequest extends AbstractAjaxRequest {
                 );
             }
 
-            StringBuilder spectatorButton = Format.text(
-                "<button onclick=\"client.spectatorWorld({ world:'$world' })\">$spectator</button>",
+            StringBuilder spectatorButton = Format.text("""
+                <button onclick="client.spectatorWorld({ world:'$world' })">$spectator</button>
+                """,
 
                 "$world", world.getId(),
                 "$spectator", L10nWorld.SPECTATOR_WORLD_BUTTON
             );
 
-            worlds.append(Format.text(
-                "<tr>" +
-                    "<td>$worldName</td>" +
-                    "<td>$era</td>" +
-                    "<td>$year</td>" +
-                    "<td>$numberOfCivilizations</td>" +
-                    "<td>$slotsAvailable</td>" +
-                    "<td>$joinButton</td>" +
-                    "<td>$spectatorButton</td>" +
-                "</tr>",
+            worlds.append(Format.text("""
+                <tr>
+                    <td>$worldName</td>
+                    <td>$era</td>
+                    <td>$year</td>
+                    <td>$numberOfCivilizations</td>
+                    <td>$slotsAvailable</td>
+                    <td>$joinButton</td>
+                    <td>$spectatorButton</td>
+                </tr>
+                """,
 
                 "$worldName", world.getName(),
                 "$era", world.getYear().getEraLocalized(),
@@ -82,20 +85,22 @@ public class GetWorldsRequest extends AbstractAjaxRequest {
             ));
         }
 
-        return Format.text(
-            "<table id='actions_table'>" +
-                "$worlds" +
-            "</table>",
+        return Format.text("""
+            <table id='actions_table'>
+                $worlds
+            </table>
+            """,
 
             "$worlds", worlds
         );
     }
 
     private StringBuilder getCreateWorldRequest() {
-        return Format.text(
-            "<table id='actions_table'>" +
-                "<tr><button onclick=\"client.getCreateWorldForm()\">$createWorldRequest</button></tr>" +
-            "</table>",
+        return Format.text("""
+            <table id='actions_table'>
+                <tr><button onclick="client.getCreateWorldForm()">$createWorldRequest</button></tr>
+            </table>
+            """,
 
             "$createWorldRequest", L10nWorld.CREATE_NEW_WORLD_BUTTON
         );

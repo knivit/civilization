@@ -15,7 +15,7 @@ import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.civilization.Civilization;
 import org.junit.jupiter.api.Test;
 
-import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
+import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class WorldViewTest {

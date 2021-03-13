@@ -6,6 +6,8 @@ import com.tsoft.civilization.world.World;
 import java.util.Date;
 import java.util.UUID;
 
+import static com.tsoft.civilization.L10n.L10n.DEFAULT_LANGUAGE;
+
 public class ClientSession {
     // Client-server data
     private final String sessionId;
@@ -35,7 +37,7 @@ public class ClientSession {
     }
 
     public void setLanguage(String language) {
-        this.language = language;
+        this.language = (language == null) ? DEFAULT_LANGUAGE : language;
     }
 
     public Civilization getCivilization() {

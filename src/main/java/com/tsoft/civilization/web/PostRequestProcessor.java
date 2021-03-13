@@ -1,6 +1,5 @@
 package com.tsoft.civilization.web;
 
-import com.tsoft.civilization.L10n.L10nServer;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.Response;
@@ -30,6 +29,8 @@ public class PostRequestProcessor {
         if (Sessions.getCurrent() == null) {
             return Response.newErrorInstance(L10nServer.INVALID_SESSION);
         }
+
+        Sessions.getCurrent().setLanguage(request.get("language"));
 
         return ajaxRequest.getJson(request);
     }

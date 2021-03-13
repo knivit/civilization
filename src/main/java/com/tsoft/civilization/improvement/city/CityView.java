@@ -1,20 +1,19 @@
 package com.tsoft.civilization.improvement.city;
 
-import com.tsoft.civilization.L10n.L10nCity;
-import com.tsoft.civilization.L10n.L10nMap;
+import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.unit.action.AttackAction;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.improvement.AbstractImprovementView;
 
 public class CityView extends AbstractImprovementView {
-    private final L10nMap name;
+    private final L10n name;
 
-    public CityView(L10nMap name) {
+    public CityView(L10n name) {
         this.name = name;
     }
 
-    public L10nMap getName() {
+    public L10n getName() {
         return name;
     }
 

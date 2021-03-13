@@ -1,6 +1,5 @@
 package com.tsoft.civilization.unit;
 
-import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.common.HasId;
 import com.tsoft.civilization.common.HasView;
 import com.tsoft.civilization.combat.CombatStrength;

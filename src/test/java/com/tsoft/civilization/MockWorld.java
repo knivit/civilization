@@ -43,8 +43,8 @@ public class MockWorld extends World {
     }
 
     private MockWorld(MapType mapType, int width, int height) {
-        super(mapType, width, height);
-        setName(UUID.randomUUID().toString());
+        super(UUID.randomUUID().toString(), mapType, width, height);
+        setMaxNumberOfCivilizations(8);
     }
 
     public MockTilesMap getMockTilesMap() {

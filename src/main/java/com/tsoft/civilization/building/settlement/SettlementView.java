@@ -1,6 +1,5 @@
 package com.tsoft.civilization.building.settlement;
 
-import com.tsoft.civilization.L10n.building.L10nSettlement;
 import com.tsoft.civilization.building.AbstractBuildingView;
 
 public class SettlementView extends AbstractBuildingView {

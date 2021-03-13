@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web.ajax.action.world;
 
-import com.tsoft.civilization.L10n.L10nServer;
+import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.unit.UnitList;
@@ -12,8 +12,8 @@ import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
-import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.view.JsonBlock;
+import com.tsoft.civilization.world.action.CreateWorldAction;
 
 import java.util.UUID;
 
@@ -33,8 +33,6 @@ public class CreateWorldRequest extends AbstractAjaxRequest {
         ActionAbstractResult result = CreateWorldAction.create(req);
 
         if (result.isFail()) {
-            Sessions.getCurrent().setLanguage(request.get("language"));
-
             JsonBlock response = new JsonBlock();
             response.addParam("message", result.getLocalized());
             return new JsonResponse(ResponseCode.ACCEPTED, response);

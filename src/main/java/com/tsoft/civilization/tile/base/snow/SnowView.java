@@ -1,6 +1,6 @@
 package com.tsoft.civilization.tile.base.snow;
 
-import com.tsoft.civilization.L10n.L10nTile;
+import com.tsoft.civilization.tile.L10nTile;
 import com.tsoft.civilization.tile.base.AbstractTileView;
 
 public class SnowView extends AbstractTileView {
