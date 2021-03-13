@@ -1,11 +1,12 @@
 package com.tsoft.civilization.unit.civil.greatscientist.action;
 
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.unit.action.MoveUnitActionResults;
 import com.tsoft.civilization.unit.civil.greatscientist.GreatScientist;
 import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;
+
+import static com.tsoft.civilization.unit.action.MoveUnitAction.INVALID_LOCATION;
 
 // The Learn New Technology ability is probably one of the most powerful
 // abilities that you can get. It will pretty much instantly research a new
@@ -16,11 +17,11 @@ public class LearnNewTechnologyAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     public static ActionAbstractResult learnNewTechnology(GreatScientist unit) {
-        return MoveUnitActionResults.INVALID_LOCATION;
+        return INVALID_LOCATION;
     }
 
     private static ActionAbstractResult canLearnNewTechnology(GreatScientist unit) {
-        return MoveUnitActionResults.INVALID_LOCATION;
+        return INVALID_LOCATION;
     }
 
     private static String getClientJSCode(GreatScientist unit) {

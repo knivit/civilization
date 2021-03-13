@@ -1,11 +1,12 @@
 package com.tsoft.civilization.unit.civil.greatscientist.action;
 
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.unit.action.MoveUnitActionResults;
 import com.tsoft.civilization.unit.civil.greatscientist.GreatScientist;
 import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;
+
+import static com.tsoft.civilization.unit.action.MoveUnitAction.INVALID_LOCATION;
 
 // The Academy is an improvement that will boost the amount of science that is
 // generated. When an academy tile is worked, it will generate 5 science points
@@ -16,11 +17,11 @@ public class AcademyImprovementAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     public static ActionAbstractResult buildAcademyImprovement(GreatScientist unit) {
-        return MoveUnitActionResults.INVALID_LOCATION;
+        return INVALID_LOCATION;
     }
 
     private static ActionAbstractResult canBuildAcademyImprovement(GreatScientist unit) {
-        return MoveUnitActionResults.INVALID_LOCATION;
+        return INVALID_LOCATION;
     }
 
     private static String getClientJSCode(GreatScientist unit) {

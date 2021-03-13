@@ -2,6 +2,8 @@ package com.tsoft.civilization.unit.action;
 
 import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.action.ActionAbstractResult;
+import com.tsoft.civilization.action.ActionFailureResult;
+import com.tsoft.civilization.action.ActionSuccessResult;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityList;
 import com.tsoft.civilization.tile.TileService;
@@ -29,11 +31,18 @@ import java.util.UUID;
 public class MoveUnitAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
+    public static final ActionSuccessResult UNIT_MOVED = new ActionSuccessResult(L10nUnit.UNIT_MOVED);
+    public static final ActionSuccessResult CAN_MOVE = new ActionSuccessResult(L10nUnit.CAN_MOVE);
+
+    public static final ActionFailureResult UNIT_NOT_FOUND = new ActionFailureResult(L10nUnit.UNIT_NOT_FOUND);
+    public static final ActionFailureResult INVALID_LOCATION = new ActionFailureResult(L10nUnit.INVALID_LOCATION);
+    public static final ActionFailureResult NO_LOCATIONS_TO_MOVE = new ActionFailureResult(L10nUnit.NO_LOCATIONS_TO_MOVE);
+
     private static final TileService tileService = new TileService();
 
     public static ActionAbstractResult move(AbstractUnit unit, Point location) {
         if (location == null) {
-            return MoveUnitActionResults.INVALID_LOCATION;
+            return INVALID_LOCATION;
         }
 
         ActionAbstractResult result = canMove(unit);
@@ -45,24 +54,24 @@ public class MoveUnitAction {
         ArrayList<UnitMoveResult> results = moveByRoute(unit, route);
         for (UnitMoveResult moveResult : results) {
             if (moveResult.isFailed()) {
-                return MoveUnitActionResults.INVALID_LOCATION;
+                return INVALID_LOCATION;
             }
         }
 
-        return MoveUnitActionResults.UNIT_MOVED;
+        return UNIT_MOVED;
     }
 
     public static ActionAbstractResult canMove(AbstractUnit unit) {
         if (unit == null || unit.isDestroyed() || unit.getLocation() == null) {
-            return MoveUnitActionResults.UNIT_NOT_FOUND;
+            return UNIT_NOT_FOUND;
         }
 
         Set<Point> locations = getLocationsToMove(unit);
         if (locations.size() == 0) {
-            return MoveUnitActionResults.NO_LOCATIONS_TO_MOVE;
+            return NO_LOCATIONS_TO_MOVE;
         }
 
-        return MoveUnitActionResults.CAN_MOVE;
+        return CAN_MOVE;
     }
 
     // Move the unit along the given route
@@ -472,8 +481,9 @@ public class MoveUnitAction {
             return null;
         }
 
-        return Format.text(
-            "<td><button onclick=\"$buttonOnClick\">$buttonLabel</button></td><td>$actionDescription</td>",
+        return Format.text("""
+            <td><button onclick="$buttonOnClick">$buttonLabel</button></td><td>$actionDescription</td>
+            """,
 
             "$buttonOnClick", getClientJSCode(unit),
             "$buttonLabel", getLocalizedName(),

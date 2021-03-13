@@ -1,7 +1,10 @@
 package com.tsoft.civilization.unit.action;
 
+import com.tsoft.civilization.L10n.L10nWorld;
 import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.action.ActionAbstractResult;
+import com.tsoft.civilization.action.ActionFailureResult;
+import com.tsoft.civilization.action.ActionSuccessResult;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Format;
@@ -15,6 +18,14 @@ import java.util.UUID;
 public class CaptureUnitAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
+    public static final ActionSuccessResult CAN_CAPTURE = new ActionSuccessResult(L10nUnit.CAN_CAPTURE);
+    public static final ActionSuccessResult FOREIGN_UNIT_CAPTURED = new ActionSuccessResult(L10nUnit.FOREIGN_UNIT_CAPTURED);
+
+    public static final ActionFailureResult NO_LOCATIONS_TO_CAPTURE = new ActionFailureResult(L10nUnit.NO_LOCATIONS_TO_CAPTURE);
+    public static final ActionFailureResult NOTHING_TO_CAPTURE = new ActionFailureResult(L10nUnit.NOTHING_TO_CAPTURE);
+    public static final ActionFailureResult ATTACKER_NOT_FOUND = new ActionFailureResult(L10nUnit.UNIT_NOT_FOUND);
+    public static final ActionFailureResult INVALID_LOCATION = new ActionFailureResult(L10nWorld.INVALID_LOCATION);
+
     public static ActionAbstractResult capture(AbstractUnit attacker, Point location) {
         ActionAbstractResult result = canCapture(attacker);
         if (result.isFail()) {
@@ -22,17 +33,17 @@ public class CaptureUnitAction {
         }
 
         if (location == null) {
-            return CaptureUnitActionResults.INVALID_LOCATION;
+            return INVALID_LOCATION;
         }
 
         Collection<Point> locations = getLocationsToCapture(attacker);
         if (!locations.contains(location)) {
-            return CaptureUnitActionResults.NOTHING_TO_CAPTURE;
+            return NOTHING_TO_CAPTURE;
         }
 
         AbstractUnit foreignUnit = getTargetToCaptureAtLocation(attacker, location);
         if (foreignUnit == null) {
-            return CaptureUnitActionResults.NO_LOCATIONS_TO_CAPTURE;
+            return NO_LOCATIONS_TO_CAPTURE;
         }
 
         // move unit
@@ -41,20 +52,20 @@ public class CaptureUnitAction {
         // capture foreign unit
         foreignUnit.capturedBy(attacker);
 
-        return CaptureUnitActionResults.FOREIGN_UNIT_CAPTURED;
+        return FOREIGN_UNIT_CAPTURED;
     }
 
     public static ActionAbstractResult canCapture(AbstractUnit attacker) {
         if (attacker == null || attacker.isDestroyed()) {
-            return CaptureUnitActionResults.ATTACKER_NOT_FOUND;
+            return ATTACKER_NOT_FOUND;
         }
 
         Collection<Point> locations = getLocationsToCapture(attacker);
         if (locations.isEmpty()) {
-            return CaptureUnitActionResults.NO_LOCATIONS_TO_CAPTURE;
+            return NO_LOCATIONS_TO_CAPTURE;
         }
 
-        return CaptureUnitActionResults.CAN_CAPTURE;
+        return CAN_CAPTURE;
     }
 
     private static UnitList getTargetsToCapture(AbstractUnit capturer) {
@@ -126,8 +137,9 @@ public class CaptureUnitAction {
             return null;
         }
 
-        return Format.text(
-            "<td><button onclick=\"$buttonOnClick\">$buttonLabel</button></td><td>$actionDescription</td>",
+        return Format.text("""
+            <td><button onclick="$buttonOnClick">$buttonLabel</button></td><td>$actionDescription</td>
+            """,
 
             "$buttonOnClick", getClientJSCode(attacker),
             "$buttonLabel", getLocalizedName(),

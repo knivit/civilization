@@ -23,6 +23,7 @@ import java.util.Set;
 
 import static com.tsoft.civilization.L10n.L10nCivilization.AMERICA;
 import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
+import static com.tsoft.civilization.unit.action.MoveUnitAction.NO_LOCATIONS_TO_MOVE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -316,7 +317,7 @@ public class MoveUnitActionTest {
 
         ActionAbstractResult result = MoveUnitAction.move(workers, city.getLocation());
 
-        assertEquals(MoveUnitActionResults.NO_LOCATIONS_TO_MOVE, result);
+        assertEquals(NO_LOCATIONS_TO_MOVE, result);
         assertEquals(city.getLocation(), artist.getLocation());
         assertEquals(new Point(1, 1), workers.getLocation());
         assertEquals(2, artist.getPassScore());

@@ -19,7 +19,7 @@ public enum UnitMoveResult {
 
     CHECK_FAILED(false);
 
-    private boolean isSuccess;
+    private final boolean isSuccess;
 
     UnitMoveResult(boolean isSuccess) {
         this.isSuccess = isSuccess;

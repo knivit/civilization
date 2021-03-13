@@ -2,7 +2,6 @@ package com.tsoft.civilization.unit.civil.settlers.action;
 
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.unit.action.DestroyUnitAction;
-import com.tsoft.civilization.unit.action.DestroyUnitResults;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.unit.civil.settlers.Settlers;
@@ -12,6 +11,8 @@ import com.tsoft.civilization.civilization.Civilization;
 import org.junit.jupiter.api.Test;
 
 import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
+import static com.tsoft.civilization.unit.action.DestroyUnitAction.LAST_SETTLERS_CANT_BE_DESTROYED;
+import static com.tsoft.civilization.unit.action.DestroyUnitAction.UNIT_NOT_FOUND;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -31,7 +32,7 @@ public class DestroyUnitActionTest {
         // The only settlers can't be destroyed
         Settlers settlers1 = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
         assertTrue(civilization.units().addUnit(settlers1, new Point(1, 1)));
-        assertEquals(DestroyUnitResults.LAST_SETTLERS_CANT_BE_DESTOYED, DestroyUnitAction.destroyUnit(settlers1));
+        assertEquals(LAST_SETTLERS_CANT_BE_DESTROYED, DestroyUnitAction.destroyUnit(settlers1));
 
         // Add another settlers
         Settlers settlers2 = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
@@ -39,9 +40,9 @@ public class DestroyUnitActionTest {
 
         // Destroy the first ones
         assertTrue(DestroyUnitAction.destroyUnit(settlers1).isSuccess());
-        assertEquals(DestroyUnitResults.UNIT_NOT_FOUND, DestroyUnitAction.destroyUnit(settlers1));
+        assertEquals(UNIT_NOT_FOUND, DestroyUnitAction.destroyUnit(settlers1));
 
         // The only settlers can't be destroyed
-        assertEquals(DestroyUnitResults.LAST_SETTLERS_CANT_BE_DESTOYED, DestroyUnitAction.destroyUnit(settlers2));
+        assertEquals(LAST_SETTLERS_CANT_BE_DESTROYED, DestroyUnitAction.destroyUnit(settlers2));
     }
 }

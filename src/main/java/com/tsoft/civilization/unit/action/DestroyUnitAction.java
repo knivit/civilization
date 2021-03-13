@@ -2,6 +2,8 @@ package com.tsoft.civilization.unit.action;
 
 import com.tsoft.civilization.L10n.unit.L10nUnit;
 import com.tsoft.civilization.action.ActionAbstractResult;
+import com.tsoft.civilization.action.ActionFailureResult;
+import com.tsoft.civilization.action.ActionSuccessResult;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.util.Format;
@@ -11,6 +13,13 @@ import java.util.UUID;
 public class DestroyUnitAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
+    public static final ActionSuccessResult UNIT_DESTROYED = new ActionSuccessResult(L10nUnit.UNIT_DESTROYED);
+    public static final ActionSuccessResult CAN_DESTROY_UNIT = new ActionSuccessResult(L10nUnit.CAN_DESTROY_UNIT);
+
+    public static final ActionFailureResult UNIT_NOT_FOUND = new ActionFailureResult(L10nUnit.UNIT_NOT_FOUND);
+    public static final ActionFailureResult NO_PASS_SCORE = new ActionFailureResult(L10nUnit.NO_PASS_SCORE);
+    public static final ActionFailureResult LAST_SETTLERS_CANT_BE_DESTROYED = new ActionFailureResult(L10nUnit.LAST_SETTLERS_CANT_BE_DESTROYED);
+
     public static ActionAbstractResult destroyUnit(AbstractUnit unit) {
         ActionAbstractResult result = canDestroyUnit(unit);
         if (result.isFail()) {
@@ -19,23 +28,23 @@ public class DestroyUnitAction {
 
         unit.destroyedBy(null, false);
 
-        return DestroyUnitResults.UNIT_DESTROYED;
+        return UNIT_DESTROYED;
     }
 
     private static ActionAbstractResult canDestroyUnit(AbstractUnit unit) {
         if (unit == null || unit.isDestroyed()) {
-            return DestroyUnitResults.UNIT_NOT_FOUND;
+            return UNIT_NOT_FOUND;
         }
 
         if (unit.getPassScore() <= 0) {
-            return DestroyUnitResults.NO_PASS_SCORE;
+            return NO_PASS_SCORE;
         }
 
         if (unit instanceof Settlers && unit.getCivilization().units().size() == 1) {
-            return DestroyUnitResults.LAST_SETTLERS_CANT_BE_DESTOYED;
+            return LAST_SETTLERS_CANT_BE_DESTROYED;
         }
 
-        return DestroyUnitResults.CAN_DESTROY_UNIT;
+        return CAN_DESTROY_UNIT;
     }
 
     private static String getClientJSCode(AbstractUnit unit) {
@@ -55,8 +64,9 @@ public class DestroyUnitAction {
             return null;
         }
 
-        return Format.text(
-            "<td><button onclick=\"$buttonOnClick\">$buttonLabel</button></td><td>$actionDescription</td>",
+        return Format.text("""
+            <td><button onclick="$buttonOnClick">$buttonLabel</button></td><td>$actionDescription</td>
+            """,
 
             "$buttonOnClick", getClientJSCode(unit),
             "$buttonLabel", getLocalizedName(),

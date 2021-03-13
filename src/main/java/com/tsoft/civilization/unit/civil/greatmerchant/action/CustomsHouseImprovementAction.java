@@ -1,11 +1,12 @@
 package com.tsoft.civilization.unit.civil.greatmerchant.action;
 
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.unit.action.MoveUnitActionResults;
 import com.tsoft.civilization.unit.civil.greatmerchant.GreatMerchant;
 import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;
+
+import static com.tsoft.civilization.unit.action.MoveUnitAction.INVALID_LOCATION;
 
 // The Great Merchant can build the Customs House, which will generate 4 gold per
 // turn when it is worked. That makes it very useful for a city that is based off
@@ -15,11 +16,11 @@ public class CustomsHouseImprovementAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     public static ActionAbstractResult buildCustomsHouseImprovement(GreatMerchant unit) {
-        return MoveUnitActionResults.INVALID_LOCATION;
+        return INVALID_LOCATION;
     }
 
     private static ActionAbstractResult canBuildCustomsHouseImprovement(GreatMerchant unit) {
-        return MoveUnitActionResults.INVALID_LOCATION;
+        return INVALID_LOCATION;
     }
 
     private static String getClientJSCode(GreatMerchant unit) {

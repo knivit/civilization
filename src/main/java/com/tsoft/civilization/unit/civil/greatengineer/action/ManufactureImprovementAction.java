@@ -1,11 +1,12 @@
 package com.tsoft.civilization.unit.civil.greatengineer.action;
 
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.unit.action.MoveUnitActionResults;
 import com.tsoft.civilization.unit.civil.greatengineer.GreatEngineer;
 import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;
+
+import static com.tsoft.civilization.unit.action.MoveUnitAction.INVALID_LOCATION;
 
 // The Great Engineer can be used to build a Manufacture tile, which is basically
 // a tile improvement that generates 3 production hammers when it is worked,
@@ -14,11 +15,11 @@ public class ManufactureImprovementAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     public static ActionAbstractResult buildManufactureImprovement(GreatEngineer unit) {
-        return MoveUnitActionResults.INVALID_LOCATION;
+        return INVALID_LOCATION;
     }
 
     private static ActionAbstractResult canBuildManufactureImprovement(GreatEngineer unit) {
-        return MoveUnitActionResults.INVALID_LOCATION;
+        return INVALID_LOCATION;
     }
 
     private static String getClientJSCode(GreatEngineer unit) {
@@ -38,8 +39,9 @@ public class ManufactureImprovementAction {
             return null;
         }
 
-        return Format.text(
-            "<td><button onclick=\"$buttonOnClick\">$buttonLabel</button></td><td>$actionDescription</td>",
+        return Format.text("""
+            <td><button onclick="$buttonOnClick">$buttonLabel</button></td><td>$actionDescription</td>
+            """,
 
             "$buttonOnClick", getClientJSCode(unit),
             "$buttonLabel", getLocalizedName(),

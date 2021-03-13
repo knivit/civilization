@@ -20,6 +20,9 @@ import java.util.List;
 
 import static com.tsoft.civilization.L10n.L10nCivilization.AMERICA;
 import static com.tsoft.civilization.L10n.L10nCivilization.RUSSIA;
+import static com.tsoft.civilization.unit.action.AttackAction.ATTACKED;
+import static com.tsoft.civilization.unit.action.AttackAction.TARGET_DESTROYED;
+import static com.tsoft.civilization.unit.action.CaptureUnitAction.FOREIGN_UNIT_CAPTURED;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -64,7 +67,7 @@ public class AttackActionTest {
         assertEquals(foreignWorkers, CaptureUnitAction.getTargetToCaptureAtLocation(warriors, locations.get(0)));
 
         // capture the foreign workers and move on it's tile
-        assertEquals(CaptureUnitActionResults.FOREIGN_UNIT_CAPTURED, CaptureUnitAction.capture(warriors, foreignWorkers.getLocation()));
+        assertEquals(FOREIGN_UNIT_CAPTURED, CaptureUnitAction.capture(warriors, foreignWorkers.getLocation()));
         assertEquals(new Point(1, 1), warriors.getLocation());
         assertEquals(foreignWorkers.getLocation(), warriors.getLocation());
         assertEquals(warriors.getCivilization(), foreignWorkers.getCivilization());
@@ -76,7 +79,7 @@ public class AttackActionTest {
         assertTrue(targets.contains(foreignWarriors2));
 
         // attack one of them
-        assertEquals(AttackActionResults.ATTACKED, AttackAction.attack(warriors, foreignWarriors2.getLocation()));
+        assertEquals(ATTACKED, AttackAction.attack(warriors, foreignWarriors2.getLocation()));
     }
 
     // Scenario:
@@ -128,12 +131,12 @@ public class AttackActionTest {
         assertEquals(foreignWorkers, CaptureUnitAction.getTargetToCaptureAtLocation(archers, locations.get(0)));
 
         // capture the foreign workers
-        assertEquals(CaptureUnitActionResults.FOREIGN_UNIT_CAPTURED, CaptureUnitAction.capture(archers, foreignWorkers.getLocation()));
+        assertEquals(FOREIGN_UNIT_CAPTURED, CaptureUnitAction.capture(archers, foreignWorkers.getLocation()));
         assertEquals(foreignWorkers.getLocation(), archers.getLocation());
         assertEquals(archers.getCivilization(), foreignWorkers.getCivilization());
 
         // attack one of foreign warriors
-        assertEquals(AttackActionResults.ATTACKED, AttackAction.attack(archers, foreignWarriors2.getLocation()));
+        assertEquals(ATTACKED, AttackAction.attack(archers, foreignWarriors2.getLocation()));
         assertEquals(0, archers.getPassScore());
         assertEquals(7, foreignWarriors2.getCombatStrength().getStrength());
 
@@ -141,20 +144,20 @@ public class AttackActionTest {
         world.move();
 
         // attack the foreign warriors again
-        assertEquals(AttackActionResults.TARGET_DESTROYED, AttackAction.attack(archers, foreignWarriors2.getLocation()));
+        assertEquals(TARGET_DESTROYED, AttackAction.attack(archers, foreignWarriors2.getLocation()));
         assertEquals(0, archers.getPassScore());
 
         // next step
         world.move();
 
         // attack the second line - archers
-        assertEquals(AttackActionResults.ATTACKED, AttackAction.attack(archers, foreignArchers1.getLocation()));
+        assertEquals(ATTACKED, AttackAction.attack(archers, foreignArchers1.getLocation()));
 
         // next step
         world.move();
 
         // attack the second line - foreign city
-        assertEquals(AttackActionResults.ATTACKED, AttackAction.attack(archers, foreignCity.getLocation()));
+        assertEquals(ATTACKED, AttackAction.attack(archers, foreignCity.getLocation()));
     }
 
     // Scenario:
@@ -200,7 +203,7 @@ public class AttackActionTest {
         // strike 1
         ActionAbstractResult result = AttackAction.attack(warriors1, foreignCity.getLocation());
 
-        assertEquals(AttackActionResults.ATTACKED, result);
+        assertEquals(ATTACKED, result);
         assertEquals(0, warriors1.getPassScore());
         assertEquals(1, c1.cities().size());
         assertEquals(1, c2.cities().size());
@@ -213,7 +216,7 @@ public class AttackActionTest {
         // strike 2
         result = AttackAction.attack(warriors2, foreignCity.getLocation());
 
-        assertEquals(AttackActionResults.ATTACKED, result);
+        assertEquals(ATTACKED, result);
         assertEquals(0, warriors2.getPassScore());
         assertEquals(1, c1.cities().size());
         assertEquals(1, c2.cities().size());
@@ -226,7 +229,7 @@ public class AttackActionTest {
         // strike 3
         result = AttackAction.attack(warriors3, foreignCity.getLocation());
 
-        assertEquals(AttackActionResults.ATTACKED, result);
+        assertEquals(ATTACKED, result);
         assertEquals(0, warriors3.getPassScore());
         assertEquals(1, c1.cities().size());
         assertEquals(1, c2.cities().size());
@@ -239,7 +242,7 @@ public class AttackActionTest {
         // strike 4
         result = AttackAction.attack(warriors4, foreignCity.getLocation());
 
-        assertEquals(AttackActionResults.TARGET_DESTROYED, result);
+        assertEquals(TARGET_DESTROYED, result);
         assertEquals(0, warriors4.getPassScore());
         assertEquals(2, c1.cities().size());
         assertEquals(0, c2.cities().size());
