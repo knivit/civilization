@@ -60,15 +60,16 @@ public class GetCivilizations extends AbstractAjaxRequest {
                 "$imageSrc", civilization.getView().getStatusImageSrc(),
                 "$civilizationId", civilization.getId(),
                 "$civilizationName", civilization.getView().getLocalizedCivilizationName(),
-                "$relations", (relations == null ? "" : relations.getDescription().toString())
+                "$relations", relations.getDescription().toString()
             ));
         }
 
-        return Format.text(
-            "<table id='actions_table'>" +
-                "<tr><th colspan='2'>$name</th><th>$relations</th></tr>" +
-                "$civilizations" +
-            "</table>",
+        return Format.text("""
+            <table id='actions_table'>
+                <tr><th colspan='2'>$name</th><th>$relations</th></tr>
+                $civilizations
+            </table>
+            """,
 
             "$name", L10nCivilization.CIVILIZATION_NAME,
             "$relations", L10nWorld.RELATIONS_NAME,

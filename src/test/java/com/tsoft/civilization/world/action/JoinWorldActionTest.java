@@ -23,7 +23,11 @@ public class JoinWorldActionTest {
         MockWorld world = MockWorld.newSimpleWorld();
         world.setMaxNumberOfCivilizations(1);
 
-        assertThat(JoinWorldAction.join(world.getId()))
+        JoinWorldAction.Request request = JoinWorldAction.Request.builder()
+            .worldId(world.getId())
+            .build();
+
+        assertThat(JoinWorldAction.join(request))
             .isEqualTo(JOINED);
 
         assertThat(Sessions.getCurrent())
@@ -34,7 +38,11 @@ public class JoinWorldActionTest {
 
     @Test
     public void world_not_found() {
-        assertThat(JoinWorldAction.join("<<<invalid_world_id>>>"))
+        JoinWorldAction.Request request = JoinWorldAction.Request.builder()
+            .worldId("<<<invalid_world_id>>>")
+            .build();
+
+        assertThat(JoinWorldAction.join(request))
             .isEqualTo(WORLD_NOT_FOUND);
     }
 
@@ -43,10 +51,14 @@ public class JoinWorldActionTest {
         MockWorld world = MockWorld.newSimpleWorld();
         world.setMaxNumberOfCivilizations(1);
 
-        assertThat(JoinWorldAction.join(world.getId()))
+        JoinWorldAction.Request request = JoinWorldAction.Request.builder()
+            .worldId(world.getId())
+            .build();
+
+        assertThat(JoinWorldAction.join(request))
             .isEqualTo(JOINED);
 
-        assertThat(JoinWorldAction.join(world.getId()))
+        assertThat(JoinWorldAction.join(request))
             .isEqualTo(WORLD_IS_FULL);
     }
 }

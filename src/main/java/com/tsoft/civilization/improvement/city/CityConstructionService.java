@@ -35,53 +35,71 @@ public class CityConstructionService {
         constructions.add(new Construction(object));
     }
 
-    public void startYear() {
-        builtThisYear = new ConstructionList();
+    public Supply getSupply(int approvedProduction) {
+        return calcSupply(approvedProduction, false);
     }
 
-    // Buildings and units construction
-    public Supply move(Supply citySupply) {
-        if (constructions.isEmpty()) {
-            log.debug("No construction is in progress");
-            return citySupply;
-        }
+    private Supply doConstruction(int approvedProduction) {
+        return calcSupply(approvedProduction, true);
+    }
 
-        int cityProduction = citySupply.getProduction();
-        if (cityProduction <= 0) {
-            log.debug("The city has production <= 0, any construction is postponed");
-            return citySupply;
-        }
+    private Supply calcSupply(int approvedProduction, boolean doConstruction) {
+        Supply supply = Supply.EMPTY_SUPPLY;
 
-        log.debug("City production = {} to be used on constructions", cityProduction);
         for (Construction construction : constructions) {
             int cost = construction.getProductionCost();
             if (cost <= 0) {
                 continue;
             }
 
-            int useProduction = Math.min(cost, cityProduction);
-            construction.useProductionCost(useProduction);
-            cityProduction -= useProduction;
+            int useProduction = Math.min(cost, approvedProduction);
+            if (doConstruction) {
+                construction.useProductionCost(useProduction);
+            }
+            approvedProduction -= useProduction;
 
             Supply constructionExpenses = Supply.builder().production(-useProduction).build();
-            citySupply = citySupply.add(constructionExpenses);
-            log.debug("Production = {} used on {}", useProduction, construction);
+            supply = supply.add(constructionExpenses);
 
-            if (cityProduction <= 0) {
+            if (approvedProduction <= 0) {
                 break;
             }
         }
 
-        createBuiltList();
+        return supply;
+    }
 
-        return citySupply;
+    public void startYear() {
+        builtThisYear = new ConstructionList();
+    }
+
+    // Buildings and units construction
+    public Supply stopYear(Supply supply) {
+        if (constructions.isEmpty()) {
+            log.debug("No construction is in progress");
+        }
+
+        int approvedProduction = supply.getProduction();
+
+        if (approvedProduction <= 0) {
+            log.debug("The production = {} is less or equal 0, any construction is postponed", approvedProduction);
+        }
+
+        Supply constructionExpenses = doConstruction(approvedProduction);
+        log.debug("Construction expenses = {}", constructionExpenses);
+
+        createBuiltThisYearList();
+
+        createNextYearConstructionList();
+
+        return constructionExpenses;
     }
 
     public ConstructionList getBuiltThisYear() {
         return builtThisYear.unmodifiableList();
     }
 
-    private void createBuiltList() {
+    private void createBuiltThisYearList() {
         builtThisYear = new ConstructionList(
             constructions.stream()
                 .filter(c -> c.getProductionCost() == 0)
@@ -89,7 +107,7 @@ public class CityConstructionService {
                 .collect(Collectors.toList()));
     }
 
-    public void stopYear() {
+    private void createNextYearConstructionList() {
         constructions = new ConstructionList(
             constructions.stream()
                 .filter(c -> c.getProductionCost() > 0)

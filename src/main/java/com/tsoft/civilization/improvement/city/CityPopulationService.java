@@ -6,7 +6,6 @@ import com.tsoft.civilization.unit.civil.citizen.Citizen;
 import com.tsoft.civilization.unit.civil.citizen.CitizenList;
 import com.tsoft.civilization.unit.civil.citizen.CitizenPlacementTable;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.world.economic.SupplyService;
 import com.tsoft.civilization.world.event.Event;
@@ -29,8 +28,6 @@ public class CityPopulationService {
     private final City city;
 
     private final CitizenList citizens = new CitizenList();
-
-    private final Map<Year, Supply> supplyHistory = new HashMap<>();
 
     private CitySupplyStrategy supplyStrategy = CitySupplyStrategy.MAX_FOOD;
     private final SupplyService supplyService = new SupplyService();
@@ -142,9 +139,8 @@ public class CityPopulationService {
     }
 
     // Citizen's birth, death, happiness
-    public void move(Year year) {
+    public Supply stopYear() {
         Supply supply = calcSupply();
-        supplyHistory.put(year, supply);
 
         updateState(supply);
 
@@ -153,10 +149,8 @@ public class CityPopulationService {
         } else {
             death();
         }
-    }
 
-    public void stopYear() {
-
+        return Supply.builder().population(getCitizenCount()).build();
     }
 
     public boolean starvation() {

@@ -3,9 +3,9 @@ package com.tsoft.civilization.world;
 import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationsRelations;
+import com.tsoft.civilization.civilization.MoveState;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityList;
-import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.unit.AbstractUnit;
@@ -22,7 +22,7 @@ public class World {
     private final String id = UUID.randomUUID().toString();
 
     private Year year;
-    private TilesMap tilesMap;
+    private final TilesMap tilesMap;
     private final WorldView view;
 
     // Filled on World creation
@@ -37,14 +37,11 @@ public class World {
 
     private final TileService tileService = new TileService();
 
-    // "move" can be a long operation
-    private volatile boolean nextTurnInProgress;
-
-    public World(String name, MapType mapType, int width, int height) {
+    public World(String name, TilesMap tilesMap) {
         this.name = name;
         year = new Year(-3000);
         view = new WorldView(this);
-        tilesMap = new TilesMap(mapType, width, height);
+        this.tilesMap = tilesMap;
     }
 
     public String getId() {
@@ -57,10 +54,6 @@ public class World {
 
     public TilesMap getTilesMap() {
         return tilesMap;
-    }
-
-    public void setTilesMap(TilesMap tilesMap) {
-        this.tilesMap = tilesMap;
     }
 
     // Send an event to all civilizations
@@ -85,7 +78,11 @@ public class World {
             }
         }
 
+        civilization.setAi(true);
+
         civilizations.add(civilization);
+
+        civilization.startYear();
 
         // send an event to civilizations about the new one
         // clients need to update their maps to see the new civilization (settlers and warriors)
@@ -235,27 +232,33 @@ public class World {
         return civilizations.getCityById(cityId);
     }
 
-    public boolean nextTurnInProgress() {
-        return nextTurnInProgress;
+    public List<Year> getYears() {
+        return years;
     }
 
-    public void move() {
-        if (nextTurnInProgress) {
-            return;
-        }
-
-        nextTurnInProgress = true;
-        try {
-            startYear();
-            moveCivilizations();
-            stopYear();
-        } finally {
-            nextTurnInProgress = false;
-        }
-    }
+    /**
+     *
+     * Движение мира
+     *
+     * 1. Создается мир (пустой, без цивилизаций, в стартовый год)
+     * 2. Присоединяются игроки (управляемые человеком или AI) и создаются их цивилизации (JoinWorldAction)
+     * 3. Все человеческие цивилизации ходят
+     *    - игроки делают ходы
+     *    - игроки нажимают "Next Turn" - цивилизация переводится в состояние "DONE" (NextTurnAction)
+     *    - цивилизация вызывает метод World.onCivilizationMoved()
+     *    - когда все человеческие цивилизации перешли в "DONE", переход к 4)
+     * 4. Год завершается
+     *    - все AI-цивилизации по очереди делают ходы
+     *    - все (управляемые человеком или AI) цивилизации строятся, популяция меняется, рассчитывается supply etc
+     * 5. Стартует новый год
+     *    - меняется ландшафт (глубина океанов etc)
+     *    - цивилизации переводятся в состояние "IN PROGRESS"
+     *    - каждая цивилизация подготавливает свое состояние к началу нового года
+     * 6. Переход к 3)
+    */
 
     // Start a new year
-    private void startYear() {
+    public void startYear() {
         years.add(year);
         tilesMap.startYear();
         civilizations.forEach(Civilization::startYear);
@@ -264,19 +267,32 @@ public class World {
         sendEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.NEW_YEAR_START_EVENT, year.getValue()));
     }
 
-    private void moveCivilizations() {
-        civilizations.forEach(Civilization::move);
+    public void onCivilizationMoved(Civilization civilization) {
+        if (civilization.isAi()) {
+            return;
+        }
+
+        Optional<Civilization> humanNotMoved = civilizations.stream()
+            .filter(c -> !c.isAi())
+            .filter(c -> MoveState.DONE != c.getMoveState())
+            .findAny();
+
+        if (humanNotMoved.isEmpty()) {
+            stopYear();
+
+            // Start a new year !
+            startYear();
+        }
     }
 
-    private void stopYear() {
-        civilizations.forEach(Civilization::stopYear);
+    public void stopYear() {
+        // Move AI civilizations
+        civilizations.stream()
+            .filter(Civilization::isAi)
+            .forEach(Civilization::stopYear);
 
         sendEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.NEW_YEAR_COMPLETE_EVENT, year.getValue()));
 
         year = year.nextYear();
-    }
-
-    public List<Year> getYears() {
-        return years;
     }
 }

@@ -10,6 +10,7 @@ import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.state.Worlds;
 import com.tsoft.civilization.world.L10nWorld;
 import com.tsoft.civilization.world.World;
+import lombok.Builder;
 
 import java.util.List;
 import java.util.UUID;
@@ -28,8 +29,15 @@ public class JoinWorldAction {
     public static final ActionFailureResult WORLD_IS_FULL = new ActionFailureResult(L10nServer.WORLD_IS_FULL);
     public static final ActionFailureResult NO_CIVILIZATION_AVAILABLE = new ActionFailureResult(L10nServer.NO_CIVILIZATION_AVAILABLE);
 
-    public static ActionAbstractResult join(String worldId) {
-        World world = Worlds.getWorld(worldId);
+    @Builder
+    public static class Request {
+        final String worldId;
+        final String name;
+        final boolean ai;
+    }
+
+    public static ActionAbstractResult join(Request request) {
+        World world = Worlds.getWorld(request.worldId);
         if (world == null) {
             return WORLD_NOT_FOUND;
         }
@@ -47,8 +55,13 @@ public class JoinWorldAction {
             return NO_CIVILIZATION_AVAILABLE;
         }
 
-        int random = ThreadLocalRandom.current().nextInt(notUsed.size());
-        Civilization civilization = world.createCivilization(notUsed.get(random));
+        L10n name = findName(request.name, notUsed);
+        if (name == null) {
+            return NO_CIVILIZATION_AVAILABLE;
+        }
+
+        Civilization civilization = world.createCivilization(name);
+        civilization.setAi(request.ai);
 
         if (!civilization.units().addFirstUnits()) {
             return CANT_CREATE_CIVILIZATION;
@@ -56,5 +69,17 @@ public class JoinWorldAction {
 
         Sessions.setActiveCivilization(civilization);
         return JOINED;
+    }
+
+    private static L10n findName(String name, List<L10n> notUsed) {
+        if (name == null) {
+            int random = ThreadLocalRandom.current().nextInt(notUsed.size());
+            return notUsed.get(random);
+        }
+
+        return notUsed.stream()
+            .filter(n -> name.equalsIgnoreCase(n.getLocalized()))
+            .findAny()
+            .orElse(null);
     }
 }

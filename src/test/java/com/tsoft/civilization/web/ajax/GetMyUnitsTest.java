@@ -11,7 +11,6 @@ import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.state.Sessions;
-import com.tsoft.civilization.web.state.Worlds;
 import com.tsoft.civilization.civilization.Civilization;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +31,6 @@ public class GetMyUnitsTest {
         Workers workers = UnitFactory.newInstance(c1, Workers.CLASS_UUID);
         assertTrue(c1.units().addUnit(workers, new Point(2, 0)));
 
-        Worlds.add(world);
         Sessions.setActiveCivilization(c1);
         Request request = MockRequest.newInstance();
 

@@ -11,7 +11,6 @@ import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.state.Sessions;
-import com.tsoft.civilization.web.state.Worlds;
 import org.junit.jupiter.api.Test;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
@@ -24,7 +23,6 @@ public class GetUnitStatusTest {
     @Test
     public void getJsonForMyUnit() {
         MockWorld world = MockWorld.newSimpleWorld();
-        Worlds.add(world);
 
         Civilization c1 = world.createCivilization(RUSSIA);
         Warriors warriors = UnitFactory.newInstance(c1, Warriors.CLASS_UUID);

@@ -52,8 +52,9 @@ public class GetEvents extends AbstractAjaxRequest {
     private StringBuilder getEventsNavigation(Civilization civilization, Year year, int stepNo) {
         StringBuilder priorButton = null;
         if ((stepNo - 1) >= civilization.getStartYear().getStepNo()) {
-            priorButton = Format.text(
-                "<button onclick=\"client.getEvents({ year:'$year' })\">$priorButton</button>",
+            priorButton = Format.text("""
+                <button onclick="client.getEvents({ year:'$year' })">$priorButton</button>
+                """,
 
                 "$year", (stepNo - 1),
                 "$priorButton", L10nEvent.PRIOR_YEAR_BUTTON
@@ -62,8 +63,9 @@ public class GetEvents extends AbstractAjaxRequest {
 
         StringBuilder nextButton = null;
         if ((stepNo + 1) <= civilization.getYear().getStepNo()) {
-            nextButton = Format.text(
-                "<button onclick=\"client.getEvents({ year:'$year' })\">$nextButton</button>",
+            nextButton = Format.text("""
+                <button onclick="client.getEvents({ year:'$year' })">$nextButton</button>
+                """,
 
                 "$year", (stepNo + 1),
                 "$nextButton", L10nEvent.NEXT_YEAR_BUTTON

@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BuyUnitActionTest {
     @Test
-    public void failToBuyUnitNoTechnology() {
+    public void fail_to_buy_unit_no_technology() {
         MockWorld world = MockWorld.newSimpleWorld();
         Civilization civilization = world.createCivilization(RUSSIA);
         City city = civilization.createCity(new Point(2, 0));
@@ -25,7 +25,7 @@ public class BuyUnitActionTest {
     }
 
     @Test
-    public void buyUnit() {
+    public void buy_unit() {
         MockWorld world = MockWorld.newSimpleWorld();
         Civilization civilization = world.createCivilization(RUSSIA);
         civilization.addTechnology(Technology.ARCHERY);

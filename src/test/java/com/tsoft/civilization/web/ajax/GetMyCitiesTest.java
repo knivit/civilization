@@ -9,7 +9,6 @@ import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.state.Sessions;
-import com.tsoft.civilization.web.state.Worlds;
 import com.tsoft.civilization.civilization.Civilization;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +25,6 @@ public class GetMyCitiesTest {
         Civilization c1 = world.createCivilization(RUSSIA);
         City city1 = c1.createCity(new Point(2, 0));
 
-        Worlds.add(world);
         Sessions.setActiveCivilization(c1);
         Request request = MockRequest.newInstance();
 

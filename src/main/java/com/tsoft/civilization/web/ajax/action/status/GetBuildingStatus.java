@@ -73,7 +73,7 @@ public class GetBuildingStatus extends AbstractAjaxRequest {
             return null;
         }
 
-        Supply supply = building.getSupply(building.getCity());
+        Supply supply = building.getSupply();
         return Format.text("""
             <table id='info_table'>
                 <tr><td>$productionLabel</td><td>$production</td>

@@ -24,7 +24,7 @@ public class Settlement extends AbstractBuilding {
     }
 
     @Override
-    public Supply getSupply(City city) {
+    public Supply getSupply() {
         return Supply.builder().production(1).gold(1).culture(1).build();
     }
 

@@ -59,11 +59,12 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
     }
 
     private StringBuilder getCivilizationTitle(Civilization civilization) {
-        return Format.text(
-            "<table id='title_table'>" +
-                "<tr><td>$name</td></tr>" +
-                "<tr><td><img src='$imageSrc'/></td></tr>" +
-            "</table>",
+        return Format.text("""
+            <table id='title_table'>
+                <tr><td>$name</td></tr>
+                <tr><td><img src='$imageSrc'/></td></tr>
+            </table>
+            """,
 
             "$name", civilization.getView().getLocalizedCivilizationName(),
             "$imageSrc", civilization.getView().getStatusImageSrc()
@@ -141,11 +142,12 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
 
         StringBuilder unitBuf = new StringBuilder();
         for (AbstractUnit unit : units) {
-            unitBuf.append(Format.text(
-                "<tr>" +
-                    "<td><button onclick=\"client.getUnitStatus({ col:'$unitCol', row:'$unitRow', unit:'$unit' })\">$unitName</button></td>" +
-                    "<td>$passScore</td>" +
-                "</tr>",
+            unitBuf.append(Format.text("""
+                <tr>
+                    <td><button onclick="client.getUnitStatus({ col:'$unitCol', row:'$unitRow', unit:'$unit' })">$unitName</button></td>
+                    <td>$passScore</td>
+                </tr>
+                """,
 
                 "$passScore", unit.getPassScore(),
                 "$unitCol", unit.getLocation().getX(),
@@ -182,11 +184,12 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
 
         StringBuilder citiesBuf = new StringBuilder();
         for (City city : cities) {
-            citiesBuf.append(Format.text(
-                "<tr>" +
-                    "<td><button onclick=\"client.getCityStatus({ col:'$cityCol', row:'$cityRow', city:'$city' })\">$cityName</button></td>" +
-                    "<td>$citizenCount</td>" +
-                "</tr>",
+            citiesBuf.append(Format.text("""
+                <tr>
+                    <td><button onclick="client.getCityStatus({ col:'$cityCol', row:'$cityRow', city:'$city' })">$cityName</button></td>
+                    <td>$citizenCount</td>
+                </tr>
+                """,
 
                 "$citizenCount", city.getCitizenCount(),
                 "$cityCol", city.getLocation().getX(),

@@ -4,9 +4,9 @@ import com.tsoft.civilization.civilization.L10nCivilization;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.action.ActionFailureResult;
 import com.tsoft.civilization.action.ActionSuccessResult;
+import com.tsoft.civilization.civilization.MoveState;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.world.World;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.UUID;
@@ -15,29 +15,29 @@ import java.util.UUID;
 public class NextTurnAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    public static final ActionSuccessResult CAN_NEXT_TURN = new ActionSuccessResult(L10nCivilization.CAN_NEXT_TURN);
+    public static final ActionSuccessResult MOVE_DONE = new ActionSuccessResult(L10nCivilization.MOVE_DONE);
+    public static final ActionSuccessResult NEXT_TURN = new ActionSuccessResult(L10nCivilization.NEXT_TURN);
 
-    public static final ActionFailureResult AWAITING_OTHERS_TO_MOVE = new ActionFailureResult(L10nCivilization.AWAITING_OTHERS_TO_MOVE);
+    public static final ActionFailureResult NO_ACTIONS_AVAILABLE = new ActionFailureResult(L10nCivilization.NO_ACTIONS_AVAILABLE);
 
-    public static ActionAbstractResult nextTurn(World world) {
-        ActionAbstractResult result = canNextTurn(world);
+    public static ActionAbstractResult nextTurn(Civilization civilization) {
+        ActionAbstractResult result = canNextTurn(civilization);
         log.debug("{}", result);
 
         if (result.isFail()) {
             return result;
         }
 
-        world.move();
-
-        return CAN_NEXT_TURN;
+        civilization.stopYear();
+        return MOVE_DONE;
     }
 
-    private static ActionAbstractResult canNextTurn(World world) {
-        if (world.nextTurnInProgress()) {
-            return AWAITING_OTHERS_TO_MOVE;
+    private static ActionAbstractResult canNextTurn(Civilization civilization) {
+        if (civilization.getMoveState() == MoveState.DONE) {
+            return NO_ACTIONS_AVAILABLE;
         }
 
-        return CAN_NEXT_TURN;
+        return NEXT_TURN;
     }
 
     private static String getClientJSCode() {
@@ -53,7 +53,7 @@ public class NextTurnAction {
     }
 
     public static StringBuilder getHtml(Civilization civilization) {
-        if (canNextTurn(civilization.getWorld()).isFail()) {
+        if (canNextTurn(civilization).isFail()) {
             return null;
         }
 

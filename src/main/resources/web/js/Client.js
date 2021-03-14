@@ -140,7 +140,7 @@ var client = {
              "climate": climate,
              "maxNumberOfCivilizations": maxNumberOfCivilizations,
              "language": language
-           }, client.onResponseLoadGamePage);
+           }, client.onGetWorldsResponse);
     },
 
     onJoinWorldRequest: function(ajaxParams) {

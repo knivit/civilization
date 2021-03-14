@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
 import static com.tsoft.civilization.unit.action.DestroyUnitAction.LAST_SETTLERS_CANT_BE_DESTROYED;
 import static com.tsoft.civilization.unit.action.DestroyUnitAction.UNIT_NOT_FOUND;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DestroyUnitActionTest {
@@ -32,7 +32,7 @@ public class DestroyUnitActionTest {
         // The only settlers can't be destroyed
         Settlers settlers1 = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
         assertTrue(civilization.units().addUnit(settlers1, new Point(1, 1)));
-        assertEquals(LAST_SETTLERS_CANT_BE_DESTROYED, DestroyUnitAction.destroyUnit(settlers1));
+        assertThat(DestroyUnitAction.destroyUnit(settlers1)).isEqualTo(LAST_SETTLERS_CANT_BE_DESTROYED);
 
         // Add another settlers
         Settlers settlers2 = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
@@ -40,9 +40,9 @@ public class DestroyUnitActionTest {
 
         // Destroy the first ones
         assertTrue(DestroyUnitAction.destroyUnit(settlers1).isSuccess());
-        assertEquals(UNIT_NOT_FOUND, DestroyUnitAction.destroyUnit(settlers1));
+        assertThat(DestroyUnitAction.destroyUnit(settlers1)).isEqualTo(UNIT_NOT_FOUND);
 
         // The only settlers can't be destroyed
-        assertEquals(LAST_SETTLERS_CANT_BE_DESTROYED, DestroyUnitAction.destroyUnit(settlers2));
+        assertThat(DestroyUnitAction.destroyUnit(settlers2)).isEqualTo(LAST_SETTLERS_CANT_BE_DESTROYED);
     }
 }

@@ -59,7 +59,7 @@ public class Granary extends AbstractBuilding {
      * Each source of Wheat Bananas and Deer worked by this City produce +1 Food.
      */
     @Override
-    public Supply getSupply(City city) {
+    public Supply getSupply() {
         int food = 2;
         for (Point location : getCity().getCitizenLocations()) {
             AbstractTile tile = getTile(location);

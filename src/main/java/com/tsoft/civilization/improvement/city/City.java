@@ -11,7 +11,6 @@ import com.tsoft.civilization.improvement.CanBeBuilt;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.base.TileType;
 import com.tsoft.civilization.unit.*;
-import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.world.economic.*;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
@@ -26,12 +25,12 @@ public class City extends AbstractImprovement implements HasCombatStrength {
     private final Set<Point> locations = new HashSet<>();
 
     private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
-            .setTargetBackFireStrength(5)
-            .setStrength(50)
-            .setRangedAttackStrength(10)
-            .setRangedAttackRadius(2);
+        .setTargetBackFireStrength(5)
+        .setStrength(50)
+        .setRangedAttackStrength(10)
+        .setRangedAttackRadius(2);
 
-    private CityView VIEW;
+    private CityView view;
 
     private CityPopulationService populationService;
     private CityBuildingService buildingService;
@@ -67,11 +66,11 @@ public class City extends AbstractImprovement implements HasCombatStrength {
         combatStrength = new CombatStrength(this, getBaseCombatStrength());
 
         // media
-        VIEW = new CityView(cityName);
+        view = new CityView(cityName);
     }
 
     public L10n getName() {
-        return VIEW.getName();
+        return view.getName();
     }
 
     @Override
@@ -86,7 +85,7 @@ public class City extends AbstractImprovement implements HasCombatStrength {
 
     @Override
     public CityView getView() {
-        return VIEW;
+        return view;
     }
 
     public int getPassScore() {
@@ -189,53 +188,6 @@ public class City extends AbstractImprovement implements HasCombatStrength {
         return (tile.getTileType() != TileType.SEA) && (tile.getTileType() != TileType.EARTH_ROUGH);
     }
 
-    public Supply getTilesSupply() {
-        return populationService.getAllCitizensSupply();
-    }
-
-    public void startYear() {
-        populationService.startYear();
-        buildingService.startYear();
-        constructionService.startYear();
-    }
-
-    @Override
-    public Supply getSupply() {
-        Supply supply = Supply.builder().population(getCitizenCount()).build();
-
-        supply = supply
-            .add(populationService.calcSupply())
-            .add(buildingService.getSupply());
-
-        return supply;
-    }
-
-    public void move() {
-        Year year = civilization.getYear();
-
-        // population
-        populationService.move(year);
-
-        // buildings
-        citySupply = buildingService.move(citySupply);
-
-        Supply supply = getSupply();
-        citySupply = citySupply.add(supply);
-        log.debug("City: Year {}, supply = {}, total supply = {}", year, supply, citySupply);
-
-        // construction
-        citySupply = constructionService.move(citySupply);
-
-        // can do actions (attack, buy, build etc)
-        passScore = 1;
-    }
-
-    public void stopYear() {
-        populationService.stopYear();
-        buildingService.stopYear();
-        constructionService.stopYear();
-    }
-
     @Override
     public void setPassScore(int passScore) {
         this.passScore = passScore;
@@ -293,6 +245,51 @@ public class City extends AbstractImprovement implements HasCombatStrength {
 
     public boolean canPlaceBuilding(AbstractBuilding building) {
         return findBuildingByClassUuid(building.getClassUuid()) == null;
+    }
+
+
+    public Supply getTilesSupply() {
+        return populationService.getAllCitizensSupply();
+    }
+
+    @Override
+    public Supply getSupply() {
+        Supply supply = Supply.builder().population(getCitizenCount()).build();
+
+        supply = supply
+            .add(populationService.calcSupply())
+            .add(buildingService.getSupply())
+            .add(constructionService.getSupply(supply.getProduction()));
+
+        return supply;
+    }
+
+    public void startYear() {
+        populationService.startYear();
+        buildingService.startYear();
+        constructionService.startYear();
+
+        // can do actions (attack, buy, build etc)
+        passScore = 1;
+    }
+
+    public void stopYear() {
+        Supply supply = Supply.EMPTY_SUPPLY;
+
+        // population
+        Supply populationSupply = populationService.stopYear();
+        supply = supply.add(populationSupply);
+
+        // buildings
+        Supply buildingSupply = buildingService.stopYear();
+        supply = supply.add(buildingSupply);
+
+        // construction
+        Supply constructionSupply = constructionService.stopYear(supply);
+        supply = supply.add(constructionSupply);
+
+        citySupply = citySupply.add(supply);
+        log.debug("City: Year {}, supply = {}, total supply = {}", getWorld().getYear(), supply, citySupply);
     }
 
     @Override

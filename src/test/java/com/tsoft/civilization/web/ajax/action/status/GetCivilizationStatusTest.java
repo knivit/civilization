@@ -12,7 +12,6 @@ import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.state.Sessions;
-import com.tsoft.civilization.web.state.Worlds;
 import com.tsoft.civilization.civilization.Civilization;
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +35,6 @@ public class GetCivilizationStatusTest {
         assertTrue(c1.units().addUnit(warriors, new Point(2, 1)));
         City city1 = c1.createCity(new Point(2, 2));
 
-        Worlds.add(world);
         Sessions.setActiveCivilization(c1);
         Request request = MockRequest.newInstance("civilization", c1.getId());
 
@@ -57,7 +55,6 @@ public class GetCivilizationStatusTest {
         assertTrue(c2.units().addUnit(warriors, new Point(2, 1)));
         City city1 = c2.createCity(new Point(2, 2));
 
-        Worlds.add(world);
         Sessions.setActiveCivilization(c1);
         Request mockRequest = MockRequest.newInstance("civilization", c1.getId());
 

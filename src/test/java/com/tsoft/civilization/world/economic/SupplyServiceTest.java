@@ -10,7 +10,7 @@ public class SupplyServiceTest {
     private final SupplyService supplyService = new SupplyService();
 
     @Test
-    public void compareMaxFoodStrategy() {
+    public void maxFoodStrategy() {
         Supply a = Supply.builder().food(-1).build();
         Supply b = Supply.builder().food(0).build();
         assertEquals(-1, supplyService.compare(CitySupplyStrategy.MAX_FOOD, a, b));

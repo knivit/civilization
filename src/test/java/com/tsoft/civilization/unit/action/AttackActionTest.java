@@ -30,12 +30,12 @@ public class AttackActionTest {
     @Test
     public void targetsForMeleeAttackAndCapture() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
-                " |0 1 2 3 ",
-                "-+--------",
-                "0|. g g . ",
-                "1| . g g .",
-                "2|. . g . ",
-                "3| . . . .");
+            " |0 1 2 3 ",
+            "-+--------",
+            "0|. g g . ",
+            "1| . g g .",
+            "2|. . g . ",
+            "3| . . . .");
         MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
         Civilization c2 = world.createCivilization(AMERICA);
@@ -87,12 +87,12 @@ public class AttackActionTest {
     @Test
     public void targetsForRangedAttackAndCapture() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES, 2,
-                " |0 1 2 3 4 5 6 ", " |0 1 2 3 4 5 6 ",
-                "-+--------------", "-+--------------",
-                "0|. . g g . . . ", "0|. . M M . . . ",
-                "1| . . g g . . .", "1| . . . j . . .",
-                "2|. . g . g . . ", "2|. . f . . . . ",
-                "3| . g g g . . .", "3| . . . h . . .");
+            " |0 1 2 3 4 5 6 ", " |0 1 2 3 4 5 6 ",
+            "-+--------------", "-+--------------",
+            "0|. . g g . . . ", "0|. . M M . . . ",
+            "1| . . g g . . .", "1| . . . j . . .",
+            "2|. . g . g . . ", "2|. . f . . . . ",
+            "3| . g g g . . .", "3| . . . h . . .");
         MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
         Civilization c2 = world.createCivilization(AMERICA);
@@ -168,14 +168,14 @@ public class AttackActionTest {
     @Test
     public void warriorsConquerForeignCity() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
-                " |0 1 2 3 4 5 6 ",
-                "-+--------------",
-                "0|. . g . . . . ",
-                "1| . . g . . . .",
-                "2|. . . g g g . ",
-                "3| . . . g g g .",
-                "4|. . . . . g . ",
-                "5| . . . . . . .");
+            " |0 1 2 3 4 5 6 ",
+            "-+--------------",
+            "0|. . g . . . . ",
+            "1| . . g . . . .",
+            "2|. . . g g g . ",
+            "3| . . . g g g .",
+            "4|. . . . . g . ",
+            "5| . . . . . . .");
         MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
         Civilization c2 = world.createCivilization(AMERICA);

@@ -201,12 +201,7 @@ public class CivilizationUnitService {
         units.stream().forEach(AbstractUnit::startYear);
     }
 
-    public void move() {
-        units.stream().forEach(AbstractUnit::move);
-    }
-
     public void stopYear() {
         units.stream().forEach(AbstractUnit::stopYear);
     }
-
 }

@@ -10,44 +10,47 @@ import java.util.UUID;
 
 public class MockWorld extends World {
 
+    public static final MockTilesMap SIMPLE_TILES_MAP = new MockTilesMap(MapType.SIX_TILES,
+        " |0 1 2 3 ",
+        "-+--------",
+        "0|. . g . ",
+        "1| . p g .",
+        "2|. . g . ",
+        "3| . . . .");
+
+    public static final MockTilesMap TILES_MAP_WITH_FEATURES = new MockTilesMap(MapType.SIX_TILES, 3,
+        " |0 1 2 3 ", " |0 1 2 3 ", " |0 1 2 3 ",
+        "-+--------", "-+--------", "-+--------",
+        "0|. . g . ", "0|. . h . ", "0|. . f . ",
+        "1| . g g .", "1| . M f .", "1| . . . .",
+        "2|. . g . ", "2|. . h . ", "2|. . . . ",
+        "3| . . . .", "3| . . . .", "3| . . . .");
+
     public static MockWorld newSimpleWorld() {
-        MockTilesMap simpleMap = new MockTilesMap(MapType.SIX_TILES,
-            " |0 1 2 3 ",
-            "-+--------",
-            "0|. . g . ",
-            "1| . p g .",
-            "2|. . g . ",
-            "3| . . . .");
-        return MockWorld.of(simpleMap);
+        return MockWorld.of(SIMPLE_TILES_MAP);
     }
 
     public static MockWorld newWorldWithFeatures() {
-        MockTilesMap simpleMap = new MockTilesMap(MapType.SIX_TILES, 3,
-            " |0 1 2 3 ", " |0 1 2 3 ", " |0 1 2 3 ",
-            "-+--------", "-+--------", "-+--------",
-            "0|. . g . ", "0|. . h . ", "0|. . f . ",
-            "1| . g g .", "1| . M f .", "1| . . . .",
-            "2|. . g . ", "2|. . h . ", "2|. . . . ",
-            "3| . . . .", "3| . . . .", "3| . . . .");
-        return MockWorld.of(simpleMap);
+        return MockWorld.of(TILES_MAP_WITH_FEATURES);
     }
 
     public static MockWorld of(MockTilesMap mockTilesMap) {
-        MockWorld world = new MockWorld(mockTilesMap.getMapType(), mockTilesMap.getWidth(), mockTilesMap.getHeight());
+        MockWorld world = new MockWorld(mockTilesMap);
 
+        Worlds.clearAll();
         Worlds.add(world);
         Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
-        world.setTilesMap(mockTilesMap);
 
         return world;
     }
 
-    private MockWorld(MapType mapType, int width, int height) {
-        super(UUID.randomUUID().toString(), mapType, width, height);
+    private MockWorld(MockTilesMap mockTilesMap) {
+        super(UUID.randomUUID().toString(), mockTilesMap);
         setMaxNumberOfCivilizations(8);
+        startYear();
     }
 
-    public MockTilesMap getMockTilesMap() {
-        return (MockTilesMap)getTilesMap();
+    public void move() {
+        stopYear();
     }
 }

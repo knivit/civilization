@@ -20,16 +20,16 @@ public class TilesMapTest {
     @Test
     public void getTilesAround1() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
-                " |0 1 2 3 4 5 6 7 ",
-                "-+----------------",
-                "0|. . . . . . . . ",
-                "1| . . . . . . . .",
-                "2|. . . . . . . . ",
-                "3| . . . . . . . .",
-                "4|. . . . . . . . ",
-                "5| . . . . . . . .",
-                "6|. . . . . . . . ",
-                "7| . . . . . . . .");
+            " |0 1 2 3 4 5 6 7 ",
+            "-+----------------",
+            "0|. . . . . . . . ",
+            "1| . . . . . . . .",
+            "2|. . . . . . . . ",
+            "3| . . . . . . . .",
+            "4|. . . . . . . . ",
+            "5| . . . . . . . .",
+            "6|. . . . . . . . ",
+            "7| . . . . . . . .");
 
         // round 1
         List<Point> locations = map.getLocationsAround(new Point(3, 3), 1);
@@ -46,16 +46,16 @@ public class TilesMapTest {
     @Test
     public void getTilesAround2() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
-                " |0 1 2 3 4 5 6 7 ",
-                "-+----------------",
-                "0|. . . . . . . . ",
-                "1| . . . . . . . .",
-                "2|. . . . . . . . ",
-                "3| . . . . . . . .",
-                "4|. . . . . . . . ",
-                "5| . . . . . . . .",
-                "6|. . . . . . . . ",
-                "7| . . . . . . . .");
+            " |0 1 2 3 4 5 6 7 ",
+            "-+----------------",
+            "0|. . . . . . . . ",
+            "1| . . . . . . . .",
+            "2|. . . . . . . . ",
+            "3| . . . . . . . .",
+            "4|. . . . . . . . ",
+            "5| . . . . . . . .",
+            "6|. . . . . . . . ",
+            "7| . . . . . . . .");
 
         // round 2
         List<Point> locations = map.getLocationsAround(new Point(3, 3), 2);
@@ -88,16 +88,16 @@ public class TilesMapTest {
     @Test
     public void getTilesAround3() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
-                " |0 1 2 3 4 5 6 7 ",
-                "-+----------------",
-                "0|. . . . . . . . ",
-                "1| . . . . . . . .",
-                "2|. . . . . . . . ",
-                "3| . . . . . . . .",
-                "4|. . . . . . . . ",
-                "5| . . . . . . . .",
-                "6|. . . . . . . . ",
-                "7| . . . . . . . .");
+            " |0 1 2 3 4 5 6 7 ",
+            "-+----------------",
+            "0|. . . . . . . . ",
+            "1| . . . . . . . .",
+            "2|. . . . . . . . ",
+            "3| . . . . . . . .",
+            "4|. . . . . . . . ",
+            "5| . . . . . . . .",
+            "6|. . . . . . . . ",
+            "7| . . . . . . . .");
 
         // round 3
         List<Point> locations = map.getLocationsAround(new Point(3, 3), 3);
@@ -149,8 +149,7 @@ public class TilesMapTest {
 
     @Test
     public void testIterator() {
-        MockWorld world = MockWorld.newSimpleWorld();
-        TilesMap map = world.getMockTilesMap();
+        TilesMap map = MockWorld.SIMPLE_TILES_MAP;
 
         Iterator<AbstractTile> tiles = map.iterator();
         for (int y = 0; y < map.getHeight(); y ++) {
@@ -164,8 +163,7 @@ public class TilesMapTest {
 
     @Test
     public void testParallelIterators() throws InterruptedException {
-        MockWorld world = MockWorld.newSimpleWorld();
-        TilesMap map = world.getMockTilesMap();
+        TilesMap map = MockWorld.SIMPLE_TILES_MAP;
 
         ExecutorService executors = Executors.newFixedThreadPool(16);
         executors.submit(() -> {
@@ -181,8 +179,7 @@ public class TilesMapTest {
     public void testStream() {
         AtomicInteger n = new AtomicInteger(0);
 
-        MockWorld world = MockWorld.newSimpleWorld();
-        TilesMap map = world.getMockTilesMap();
+        TilesMap map = MockWorld.SIMPLE_TILES_MAP;
 
         map.tiles().forEach(e -> n.incrementAndGet());
         assertEquals(map.getWidth() * map.getHeight(), n.get());

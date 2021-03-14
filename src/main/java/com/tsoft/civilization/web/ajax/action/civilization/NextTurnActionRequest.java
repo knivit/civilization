@@ -19,11 +19,7 @@ public class NextTurnActionRequest extends AbstractAjaxRequest {
             return Response.newErrorInstance(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
-        открыть два браузера и начать двумя цивилизациями (вторая - джойн)
-            сделать next turn одной цивилизации - должно появиться сообщение "Ход сделан, ждем цивилизации: "Б""
-        сделать next turn второй цивилизацией
-            юнит тесты на это
-        ActionAbstractResult result = NextTurnAction.nextTurn(myCivilization.getWorld());
+        ActionAbstractResult result = NextTurnAction.nextTurn(myCivilization);
 
         if (result.isFail()) {
             JsonBlock response = new JsonBlock();

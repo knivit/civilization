@@ -18,7 +18,13 @@ public class JoinWorldRequest extends AbstractAjaxRequest {
 
     @Override
     public Response getJson(Request request) {
-        ActionAbstractResult result = JoinWorldAction.join(request.get("world"));
+        JoinWorldAction.Request req = JoinWorldAction.Request.builder()
+            .worldId(request.get("world"))
+            .name(request.get("name"))
+            .ai(Boolean.getBoolean(request.get("ai", "false")))
+            .build();
+
+        ActionAbstractResult result = JoinWorldAction.join(req);
 
         if (result.isFail()) {
             JsonBlock response = new JsonBlock();

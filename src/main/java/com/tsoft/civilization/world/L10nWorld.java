@@ -23,7 +23,11 @@ public class L10nWorld {
         .put("en", "Invalid world's name")
         .put("ru", "Неверное название мира");
 
-    public static final L10n INVALID_CIVILIZATIONS_NUMBER = new L10n()
+    public static final L10n CANT_CREATE_WORLD = new L10n()
+        .put("en", "Can not create a world")
+        .put("ru", "Невозможно создать новый мир");
+
+    public static final L10n INVALID_MAX_NUMBER_OF_CIVILIZATIONS = new L10n()
         .put("en", "Number of civilizations must be within [1..16]")
         .put("ru", "Количество цивилизаций должно быть в пределах [1..16]");
 

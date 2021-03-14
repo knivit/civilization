@@ -139,8 +139,8 @@ public class CivilizationCityService {
         cities.forEach(City::startYear);
     }
 
-    public void move() {
-        cities.forEach(City::move);
+    public void stopYear() {
+        cities.forEach(City::stopYear);
     }
 
     public Supply getSupply() {
@@ -150,9 +150,5 @@ public class CivilizationCityService {
             supply = supply.add(city.getSupply());
         }
         return supply;
-    }
-
-    public void stopYear() {
-        cities.forEach(City::stopYear);
     }
 }

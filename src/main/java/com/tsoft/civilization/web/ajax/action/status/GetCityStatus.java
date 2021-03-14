@@ -244,12 +244,13 @@ public class GetCityStatus extends AbstractAjaxRequest {
                 continue;
             }
 
-            buf.append(Format.text(
-                "<tr>" +
-                    "<td><button onclick=\"server.sendAsyncAjax('ajax/GetBuildingInfo', { building:'$buildingUuid' })\">$buildingName</button></td>" +
-                    "<td>$buyBuildingAction</td>" +
-                    "<td>$buildBuildingAction</td>" +
-                "</tr>",
+            buf.append(Format.text("""
+                <tr>
+                    <td><button onclick="server.sendAsyncAjax('ajax/GetBuildingInfo', { building:'$buildingUuid' })">$buildingName</button></td>
+                    <td>$buyBuildingAction</td>
+                    <td>$buildBuildingAction</td>
+                </tr>
+                """,
 
                 "$buildingUuid", building.getClassUuid(),
                 "$buildingName", building.getView().getLocalizedName(),
@@ -261,11 +262,12 @@ public class GetCityStatus extends AbstractAjaxRequest {
             return null;
         }
 
-        return Format.text(
-            "<table id='actions_table'>" +
-                "$header\n" +
-                "$buildings" +
-            "</table>",
+        return Format.text("""
+            <table id='actions_table'>
+                $header
+                $buildings
+            </table>
+            """,
 
             "$header", getBuildingConstructionHeader(),
             "$buildings", buf

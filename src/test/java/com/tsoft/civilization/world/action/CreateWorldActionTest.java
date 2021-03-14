@@ -1,6 +1,5 @@
 package com.tsoft.civilization.world.action;
 
-import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.state.Sessions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,11 +27,6 @@ public class CreateWorldActionTest {
 
         assertThat(CreateWorldAction.create(request))
             .isEqualTo(CREATED);
-
-        assertThat(Sessions.getCurrent())
-            .isNotNull()
-            .extracting(ClientSession::getCivilization)
-            .isNotNull();
     }
 
     @Test
@@ -54,6 +48,6 @@ public class CreateWorldActionTest {
             .build();
 
         assertThat(CreateWorldAction.create(request))
-            .isEqualTo(INVALID_CIVILIZATIONS_NUMBER);
+            .isEqualTo(INVALID_MAX_NUMBER_OF_CIVILIZATIONS);
     }
 }

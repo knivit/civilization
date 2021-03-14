@@ -57,7 +57,7 @@ public class CityBuildingService {
     public Supply getSupply() {
         Supply supply = Supply.EMPTY_SUPPLY;
         for (AbstractBuilding building : buildings) {
-            supply = supply.add(building.getSupply(city));
+            supply = supply.add(building.getSupply());
         }
         return supply;
     }
@@ -66,11 +66,7 @@ public class CityBuildingService {
         destroyedBuildings = new BuildingList();
     }
 
-    public Supply move(Supply citySupply) {
-        return citySupply;
-    }
-
-    public void stopYear() {
-
+    public Supply stopYear() {
+        return getSupply();
     }
 }

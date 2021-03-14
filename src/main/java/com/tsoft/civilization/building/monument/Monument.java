@@ -71,7 +71,7 @@ public class Monument extends AbstractBuilding {
      * and the civilization's acquisition of Social Policies.
      */
     @Override
-    public Supply getSupply(City city) {
+    public Supply getSupply() {
         return Supply.builder().gold(-1).culture(2).build();
     }
 

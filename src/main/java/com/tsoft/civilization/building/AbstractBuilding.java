@@ -100,7 +100,7 @@ public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt {
     private boolean isDestroyed;
 
     public abstract BuildingType getBuildingType();
-    public abstract Supply getSupply(City city);
+    public abstract Supply getSupply();
     public abstract int getGoldCost();
     public abstract int getStrength();
     public abstract AbstractBuildingView getView();

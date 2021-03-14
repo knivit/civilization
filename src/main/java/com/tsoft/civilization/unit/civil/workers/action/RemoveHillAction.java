@@ -1,5 +1,7 @@
 package com.tsoft.civilization.unit.civil.workers.action;
 
+import com.tsoft.civilization.action.ActionFailureResult;
+import com.tsoft.civilization.action.ActionSuccessResult;
 import com.tsoft.civilization.unit.civil.workers.L10nWorkers;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.technology.Technology;
@@ -13,6 +15,12 @@ import java.util.UUID;
 public class RemoveHillAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
+    public static final ActionSuccessResult CAN_REMOVE_HILL = new ActionSuccessResult(L10nWorkers.CAN_REMOVE_HILL);
+    public static final ActionSuccessResult HILL_IS_REMOVED = new ActionSuccessResult(L10nWorkers.HILL_IS_REMOVED);
+    public static final ActionSuccessResult REMOVING_HILL = new ActionSuccessResult(L10nWorkers.REMOVING_HILL);
+
+    public static final ActionFailureResult FAIL_NO_HILL_HERE = new ActionFailureResult(L10nWorkers.FAIL_NO_HILL_HERE);
+
     public static ActionAbstractResult removeHill(Workers workers) {
         ActionAbstractResult result = canRemoveHill(workers);
         if (result.isFail()) {
@@ -22,11 +30,11 @@ public class RemoveHillAction {
         AbstractTile tile = workers.getTile();
         Hill hill = tile.getFeature(Hill.class);
         if (hill == null) {
-            return WorkersActionResults.FAIL_NO_HILL_HERE;
+            return FAIL_NO_HILL_HERE;
         }
 
         hill.addStrength(-1);
-        return hill.isRemoved() ? WorkersActionResults.HILL_IS_REMOVED : WorkersActionResults.REMOVING_HILL;
+        return hill.isRemoved() ? HILL_IS_REMOVED : REMOVING_HILL;
     }
 
     private static ActionAbstractResult canRemoveHill(Workers workers) {
@@ -36,7 +44,7 @@ public class RemoveHillAction {
 
         AbstractTile tile = workers.getTile();
         if (!tile.hasFeature(Hill.class)) {
-            return WorkersActionResults.FAIL_NO_HILL_HERE;
+            return FAIL_NO_HILL_HERE;
         }
 
         if (!workers.getCivilization().isResearched(Technology.MINING)) {
@@ -48,7 +56,7 @@ public class RemoveHillAction {
             return WorkersActionResults.FAIL_FOREST_MUST_BE_REMOVED_FIRST;
         }
 
-        return WorkersActionResults.CAN_REMOVE_HILL;
+        return CAN_REMOVE_HILL;
     }
 
     private static String getClientJSCode(Workers workers) {
@@ -68,8 +76,9 @@ public class RemoveHillAction {
             return null;
         }
 
-        return Format.text(
-            "<td><button onclick=\"$buttonOnClick\">$buttonLabel</button></td><td>$actionDescription</td>",
+        return Format.text("""
+            <td><button onclick="$buttonOnClick">$buttonLabel</button></td><td>$actionDescription</td>
+            """,
 
             "$buttonOnClick", getClientJSCode(workers),
             "$buttonLabel", getLocalizedName(),

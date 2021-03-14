@@ -24,6 +24,7 @@ import com.tsoft.civilization.world.event.Event;
 import com.tsoft.civilization.world.event.EventsByYearMap;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -54,6 +55,13 @@ public class Civilization {
 
     // true when any event that needs score to be calculated was generated
     private final EventsByYearMap events;
+
+    @Getter
+    @Setter
+    private boolean isAi;
+
+    @Getter
+    private volatile MoveState moveState;
 
     public Civilization(World world, L10n name) {
         Objects.requireNonNull(world, "World can't be null");
@@ -218,6 +226,11 @@ public class Civilization {
         cityService.captureCity(city, destroyer, false);
     }
 
+    public void giftReceived(Civilization sender, Supply receivedSupply) {
+        supply = supply.add(receivedSupply);
+        addEvent(new Event(Event.INFORMATION, this, L10nCivilization.GIFT_RECEIVED, receivedSupply.toString(), sender.getView().getLocalizedName()));
+    }
+
     public Supply calcSupply() {
         Supply supply = Supply.EMPTY_SUPPLY;
 
@@ -231,33 +244,32 @@ public class Civilization {
     }
 
     public void startYear() {
-        unitService.startYear();
-        cityService.startYear();
-    }
-
-    public void move() {
         if (isDestroyed()) {
             return;
         }
 
         addEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.MOVE_START_EVENT, getView().getLocalizedCivilizationName()));
 
-        cityService.move();
-        unitService.move();
+        unitService.startYear();
+        cityService.startYear();
+        territoryService.startYear();
+
+        moveState = MoveState.IN_PROGRESS;
+    }
+
+    public void stopYear() {
+        // Update state as soon as possible to prevent stopping twice
+        moveState = MoveState.DONE;
+
+        cityService.stopYear();
+        unitService.stopYear();
+        territoryService.stopYear();
 
         supply = supply.addWithoutPopulation(calcSupply());
 
         addEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.MOVE_DONE_EVENT, getView().getLocalizedCivilizationName()));
-    }
 
-    public void stopYear() {
-        unitService.stopYear();
-        cityService.stopYear();
-    }
-
-    public void giftReceived(Civilization sender, Supply receivedSupply) {
-        supply = supply.add(receivedSupply);
-        addEvent(new Event(Event.INFORMATION, this, L10nCivilization.GIFT_RECEIVED, receivedSupply.toString(), sender.getView().getLocalizedName()));
+        world.onCivilizationMoved(this);
     }
 
     @Override

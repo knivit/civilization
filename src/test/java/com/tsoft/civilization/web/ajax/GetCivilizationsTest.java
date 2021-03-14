@@ -8,7 +8,6 @@ import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.state.Sessions;
-import com.tsoft.civilization.web.state.Worlds;
 import com.tsoft.civilization.civilization.Civilization;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +25,6 @@ public class GetCivilizationsTest {
         Civilization c1 = world.createCivilization(RUSSIA);
         Civilization c2 = world.createCivilization(AMERICA);
 
-        Worlds.add(world);
         Sessions.setActiveCivilization(c1);
         Request request = MockRequest.newInstance();
 

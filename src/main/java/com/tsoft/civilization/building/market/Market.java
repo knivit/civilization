@@ -73,8 +73,8 @@ public class Market extends AbstractBuilding {
      * The Market significantly increases a city's output of gold.
      */
     @Override
-    public Supply getSupply(City city) {
-        Supply tileScore = city.getTilesSupply();
+    public Supply getSupply() {
+        Supply tileScore = getCity().getTilesSupply();
         int gold = tileScore.getGold();
         if (gold > 0) {
             gold = (int) Math.round(gold * 0.25);

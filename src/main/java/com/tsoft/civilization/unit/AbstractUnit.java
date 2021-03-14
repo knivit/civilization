@@ -75,19 +75,15 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
         isMoved = false;
     }
 
-    public void move() {
-        if (!isMoved) {
-            aiMove();
-        }
-    }
-
     // TODO do an artificial move
     private void aiMove() {
         isMoved = true;
     }
 
     public void stopYear() {
-
+        if (!isMoved) {
+            aiMove();
+        }
     }
 
     @Override
