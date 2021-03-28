@@ -35,7 +35,7 @@ public class GetCityStatusTest {
         Warriors foreignWarriors = UnitFactory.newInstance(c2, Warriors.CLASS_UUID);
         assertTrue(c2.units().addUnit(foreignWarriors, new Point(2, 1)));
 
-        Sessions.setActiveCivilization(c1);
+        Sessions.getCurrent().setActiveCivilization(c1);
         Request request = MockRequest.newInstance("city", city1.getId());
 
         Response response = getCityStatusRequest.getJson(request);
@@ -49,7 +49,7 @@ public class GetCityStatusTest {
         City city1 = c1.createCity(new Point(2, 0));
         city1.getCombatStrength().setDestroyed(true);
 
-        Sessions.setActiveCivilization(c1);
+        Sessions.getCurrent().setActiveCivilization(c1);
         Request request = MockRequest.newInstance("city", city1.getId());
 
         Response response = getCityStatusRequest.getJson(request);
@@ -65,7 +65,7 @@ public class GetCityStatusTest {
         Civilization c2 = world.createCivilization(AMERICA);
         City city2 = c2.createCity(new Point(2, 2));
 
-        Sessions.setActiveCivilization(c1);
+        Sessions.getCurrent().setActiveCivilization(c1);
         Request mockRequest = MockRequest.newInstance("city", city2.getId());
 
         Response response = getCityStatusRequest.getJson(mockRequest);

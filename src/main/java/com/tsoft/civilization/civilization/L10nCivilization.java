@@ -3,155 +3,146 @@ package com.tsoft.civilization.civilization;
 import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.L10n.L10nList;
 
+import static com.tsoft.civilization.L10n.L10nLanguage.EN;
+import static com.tsoft.civilization.L10n.L10nLanguage.RU;
+
 public class L10nCivilization {
     public static final L10n CIVILIZATION_NAME = new L10n()
-            .put("en", "Civilization")
-            .put("ru", "Цивилизация");
+        .put(EN, "Civilization")
+        .put(RU, "Цивилизация");
 
     /** Web */
 
     public static final L10n FEATURES = new L10n()
-            .put("en", "Features")
-            .put("ru", "Характеристики");
+        .put(EN, "Features")
+        .put(RU, "Характеристики");
 
     public static final L10n AVAILABLE_UNITS = new L10n()
-            .put("en", "Available Units")
-            .put("ru", "Доступные юниты");
+        .put(EN, "Available Units")
+        .put(RU, "Доступные юниты");
 
     public static final L10n AVAILABLE_CITIES = new L10n()
-            .put("en", "Available Cities")
-            .put("ru", "Доступные города");
+        .put(EN, "Available Cities")
+        .put(RU, "Доступные города");
 
     public static final L10n CITIES_COUNT = new L10n()
-            .put("en", "Number of cities")
-            .put("ru", "Количество городов");
+        .put(EN, "Number of cities")
+        .put(RU, "Количество городов");
 
     /** Actions */
 
     public static final L10n AVAILABLE_ACTIONS = new L10n()
-            .put("en", "Available actions")
-            .put("ru", "Доступны действия");
+        .put(EN, "Available actions")
+        .put(RU, "Доступны действия");
 
     public static final L10n NEXT_TURN = new L10n()
-            .put("en", "Next Turn")
-            .put("ru", "Следующий ход");
+        .put(EN, "Next Turn")
+        .put(RU, "Следующий ход");
 
     public static final L10n NEXT_MOVE_DESCRIPTION = new L10n()
-            .put("en", "Allow other civilizations take their actions")
-            .put("ru", "Позволяет другим цивилизациям выполнить действия");
+        .put(EN, "Allow other civilizations take their actions")
+        .put(RU, "Позволяет другим цивилизациям выполнить действия");
 
     public static final L10n MOVE_DONE = new L10n()
-            .put("en", "Move done")
-            .put("ru", "Ход выполнен");
+        .put(EN, "Move done")
+        .put(RU, "Ход выполнен");
 
     public static final L10n NO_ACTIONS_AVAILABLE = new L10n()
-        .put("en", "Not actions available")
-        .put("ru", "Нет доступных действий");
-
-    public static final L10n AWAITING_OTHERS_TO_MOVE = new L10n()
-            .put("en", "Awaiting other civilizations to move")
-            .put("ru", "Ожидание хода других цивилизаций");
+        .put(EN, "Not actions available")
+        .put(RU, "Нет доступных действий");
 
     public static final L10n CAN_DECLARE_WAR = new L10n()
-            .put("en", "Can declare a war")
-            .put("ru", "Можно объявить войну");
+        .put(EN, "Can declare a war")
+        .put(RU, "Можно объявить войну");
 
     public static final L10n DECLARE_WAR_NAME = new L10n()
-            .put("en", "War")
-            .put("ru", "Война");
+        .put(EN, "War")
+        .put(RU, "Война");
 
     public static final L10n CONFIRM_DECLARE_WAR = new L10n()
-            .put("en", "Do you want to declare a war ?")
-            .put("ru", "Вы хотите объявить войну ?");
+        .put(EN, "Do you want to declare a war ?")
+        .put(RU, "Вы хотите объявить войну ?");
 
     public static final L10n ALREADY_WAR = new L10n()
-            .put("en", "There is already a war")
-            .put("ru", "Война уже объявлена");
+        .put(EN, "There is already a war")
+        .put(RU, "Война уже объявлена");
 
     public static final L10n DECLARE_WAR_DESCRIPTION = new L10n()
-            .put("en", "Declare a war to this civilization")
-            .put("ru", "Объявить войну этой цивилизации");
+        .put(EN, "Declare a war to this civilization")
+        .put(RU, "Объявить войну этой цивилизации");
 
     public static final L10n WRONG_CIVILIZATION = new L10n()
-            .put("en", "Wrong civilization")
-            .put("ru", "Неверная цивилизация");
+        .put(EN, "Wrong civilization")
+        .put(RU, "Неверная цивилизация");
 
     public static final L10n WRONG_ERA_OR_TECHNOLOGY = new L10n()
-            .put("en", "Wrong Era or insufficient civilization's technology level")
-            .put("ru", "Неверная эра или уровень развития цивилизации недостаточен");
+        .put(EN, "Wrong Era or insufficient civilization's technology level")
+        .put(RU, "Неверная эра или уровень развития цивилизации недостаточен");
 
     public static final L10n NOT_ENOUGH_MONEY = new L10n()
-            .put("en", "Not enough money")
-            .put("ru", "Недостаточно денег");
+        .put(EN, "Not enough money")
+        .put(RU, "Недостаточно денег");
 
     /** Statistic */
 
     public static final L10n POPULATION = new L10n()
-            .put("en", "Population")
-            .put("ru", "Население");
+        .put(EN, "Population")
+        .put(RU, "Население");
 
     public static final L10n MILITARY_UNITS_COUNT = new L10n()
-            .put("en", "Military Units")
-            .put("ru", "Военные юниты");
+        .put(EN, "Military Units")
+        .put(RU, "Военные юниты");
 
     public static final L10n CIVIL_UNITS_COUNT = new L10n()
-            .put("en", "Civil Units")
-            .put("ru", "Количество гражданских юнитов");
+        .put(EN, "Civil Units")
+        .put(RU, "Количество гражданских юнитов");
 
     public static final L10n PRODUCTION = new L10n()
-            .put("en", "Production")
-            .put("ru", "Производство");
+        .put(EN, "Production")
+        .put(RU, "Производство");
 
     public static final L10n GOLD = new L10n()
-            .put("en", "Gold")
-            .put("ru", "Золото");
+        .put(EN, "Gold")
+        .put(RU, "Золото");
 
     public static final L10n FOOD = new L10n()
-            .put("en", "Food")
-            .put("ru", "Пища");
+        .put(EN, "Food")
+        .put(RU, "Пища");
 
     public static final L10n HAPPINESS = new L10n()
-            .put("en", "Happiness")
-            .put("ru", "Настроение");
+        .put(EN, "Happiness")
+        .put(RU, "Настроение");
 
     /** Economic */
 
-    public static final L10n UNIT_KEEPING_EXPENSES = new L10n()
-            .put("en", "Units keeping expenses")
-            .put("ru", "Затраты на содержание юнитов");
-
     public static final L10n BUY_UNIT_EVENT = new L10n()
-            .put("en", "A unit was bought")
-            .put("ru", "Юнит был куплен");
+        .put(EN, "A unit was bought")
+        .put(RU, "Юнит был куплен");
 
     public static final L10n BUY_BUILDING_EVENT = new L10n()
-            .put("en", "A building %s was bought")
-            .put("ru", "Куплено здание %s");
-
-    public static final L10n ACCUMULATION_SUPPLY = new L10n()
-            .put("en", "Accumulated supply")
-            .put("ru", "Накопления");
+        .put(EN, "A building %s was bought")
+        .put(RU, "Куплено здание %s");
 
     public static final L10n GIFT_RECEIVED = new L10n()
-        .put("en", "A gift %s received from %s")
-        .put("ru", "Получен подарок %s от %s");
+        .put(EN, "A gift %s received from %s")
+        .put(RU, "Получен подарок %s от %s");
 
     /** Civilizations */
 
     public static final L10n RUSSIA = new L10n()
-            .put("en", "Russia")
-            .put("ru", "Россия");
+        .put(EN, "Russia")
+        .put(RU, "Россия");
 
     public static final L10n AMERICA = new L10n()
-            .put("en", "America")
-            .put("ru", "Америка");
+        .put(EN, "America")
+        .put(RU, "Америка");
 
     public static final L10n JAPAN = new L10n()
-            .put("en", "Japan")
-            .put("ru", "Япония");
+        .put(EN, "Japan")
+        .put(RU, "Япония");
 
     public static final L10nList CIVILIZATIONS = new L10nList()
-            .add(L10nCivilization.RUSSIA)
-            .add(L10nCivilization.AMERICA)
-            .add(L10nCivilization.JAPAN);
+        .add(L10nCivilization.RUSSIA)
+        .add(L10nCivilization.AMERICA)
+        .add(L10nCivilization.JAPAN);
 }

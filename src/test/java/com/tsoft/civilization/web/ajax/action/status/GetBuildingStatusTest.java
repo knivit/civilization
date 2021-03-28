@@ -28,7 +28,7 @@ public class GetBuildingStatusTest {
         Civilization c1 = world.createCivilization(RUSSIA);
         City city1 = c1.createCity(new Point(2, 0));
 
-        Sessions.setActiveCivilization(c1);
+        Sessions.getCurrent().setActiveCivilization(c1);
         Request request = MockRequest.newInstance("building", city1.getBuildings().findByClassUuid(Palace.CLASS_UUID).getId());
 
         Response response = getBuildingStatusRequest.getJson(request);
@@ -43,7 +43,7 @@ public class GetBuildingStatusTest {
         Civilization c2 = world.createCivilization(AMERICA);
         City city2 = c2.createCity(new Point(2, 0));
 
-        Sessions.setActiveCivilization(c1);
+        Sessions.getCurrent().setActiveCivilization(c1);
         Request request = MockRequest.newInstance("building", city2.getBuildings().findByClassUuid(Palace.CLASS_UUID).getId());
 
         Response response = getBuildingStatusRequest.getJson(request);

@@ -25,7 +25,7 @@ public class GetCivilizationsTest {
         Civilization c1 = world.createCivilization(RUSSIA);
         Civilization c2 = world.createCivilization(AMERICA);
 
-        Sessions.setActiveCivilization(c1);
+        Sessions.getCurrent().setActiveCivilization(c1);
         Request request = MockRequest.newInstance();
 
         Response response = getCivilizationsRequest.getJson(request);

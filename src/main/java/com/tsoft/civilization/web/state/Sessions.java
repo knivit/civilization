@@ -1,7 +1,5 @@
 package com.tsoft.civilization.web.state;
 
-import com.tsoft.civilization.civilization.Civilization;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,10 +32,5 @@ public class Sessions {
 
     public static ClientSession getCurrent() {
         return currentSession.get();
-    }
-
-    public static void setActiveCivilization(Civilization civilization) {
-        ClientSession session = getCurrent();
-        session.setActiveCivilization(civilization);
     }
 }

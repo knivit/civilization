@@ -1,5 +1,6 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
+import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.world.L10nEvent;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.util.Format;
@@ -23,13 +24,13 @@ public class GetEvents extends AbstractAjaxRequest {
     public Response getJson(Request request) {
         Civilization civilization = getMyCivilization();
         if (civilization == null) {
-            return Response.newErrorInstance(L10nServer.CIVILIZATION_NOT_FOUND);
+            return JsonResponse.badRequest(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
         // Get the year's index in World.years list
         int stepNo = NumberUtil.parseInt(request.get("year"), -1);
         if (stepNo == -1) {
-            return Response.newErrorInstance(INVALID_REQUEST);
+            return JsonResponse.badRequest(INVALID_REQUEST);
         }
 
         if (stepNo > civilization.getYear().getStepNo()) {

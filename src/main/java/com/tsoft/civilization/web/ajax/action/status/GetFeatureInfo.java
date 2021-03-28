@@ -6,6 +6,7 @@ import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.web.response.HtmlResponse;
+import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.tile.feature.TerrainFeature;
 import com.tsoft.civilization.web.response.Response;
@@ -20,7 +21,7 @@ public class GetFeatureInfo extends AbstractAjaxRequest {
         String featureClassUuid = request.get("feature");
         TerrainFeature feature = FeatureCatalog.findByClassUuid(featureClassUuid);
         if (feature == null) {
-            return Response.newErrorInstance(L10nFeature.FEATURE_NOT_FOUND);
+            return JsonResponse.badRequest(L10nFeature.FEATURE_NOT_FOUND);
         }
 
         StringBuilder value = Format.text("""

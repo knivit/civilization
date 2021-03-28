@@ -1,20 +1,11 @@
 package com.tsoft.civilization.world.action;
 
-import com.tsoft.civilization.web.state.Sessions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.UUID;
 
 import static com.tsoft.civilization.world.action.CreateWorldAction.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CreateWorldActionTest {
-
-    @BeforeEach
-    public void before() {
-        Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
-    }
 
     @Test
     public void created() {

@@ -25,11 +25,15 @@ public class TilesMap implements Iterable<AbstractTile> {
     private final int height;
 
     public TilesMap(MapType mapType, int width, int height) {
-        assert (width >= 2 && width <= 1000) : "Width = " + width + " is not in range [2..1000]";
-        assert (height >= 2 && height <= 1000) : "Height = " + height + " is not in range [2..1000]";
         if (mapType == MapType.SIX_TILES) {
-            assert ((height % 2) == 0) : "For 'Six Tiles' map the number of rows must be even";
+            // For 'Six Tiles' map the number of rows must be even
+            if ((height % 2) != 0) {
+                height ++;
+            }
         }
+
+        assert (width >= MIN_WIDTH && width <= MAX_WIDTH) : "Width = " + width + " is not in range [2..1000]";
+        assert (height >= MIN_HEIGHT && height <= MAX_HEIGHT) : "Height = " + height + " is not in range [2..1000]";
 
         this.mapType = mapType;
         this.width = width;
@@ -50,8 +54,8 @@ public class TilesMap implements Iterable<AbstractTile> {
     }
 
     public AbstractTile getTile(int x, int y) {
-        assert (x >= 0 && x < getWidth()) : "x = " + x + " is not in range [0.." + (getWidth() - 1) + "]";
-        assert (y >= 0 && y < getHeight()) : "y = " + y + " is not in range [0.." + (getHeight() - 1) + "]";
+        assert (x >= 0 && x < getWidth()) : "x = " + x + " is not in range [0.." + (width - 1) + "]";
+        assert (y >= 0 && y < getHeight()) : "y = " + y + " is not in range [0.." + (height - 1) + "]";
 
         return tiles[x][y];
     }
@@ -61,8 +65,8 @@ public class TilesMap implements Iterable<AbstractTile> {
     }
 
     public void setTile(Point location, AbstractTile tile) {
-        assert (location.getX() >= 0 && location.getX() < getWidth()) : "Location = " + location + " is not in range [0.." + (getWidth() - 1) + "][0.." + (getHeight() - 1) + "]";
-        assert (location.getY() >= 0 && location.getY() < getHeight()) : "Location = " + location + " is not in range [0.." + (getWidth() - 1) + "][0.." + (getHeight() - 1) + "]";
+        assert (location.getX() >= 0 && location.getX() < getWidth()) : "Location = " + location + " is not in range [0.." + (width - 1) + "][0.." + (width - 1) + "]";
+        assert (location.getY() >= 0 && location.getY() < getHeight()) : "Location = " + location + " is not in range [0.." + (height - 1) + "][0.." + (height - 1) + "]";
         assert (tile != null) : "Tile must be not null";
 
         tiles[location.getX()][location.getY()] = tile;

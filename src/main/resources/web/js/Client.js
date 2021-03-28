@@ -108,10 +108,21 @@ var client = {
 
     // Events for a year
     getEvents: function(ajaxParams) {
-        server.sendAsyncAjax('ajax/GetEvents', { year: ajaxParams.year }, client.onStatusResponse);
+        server.sendAsyncAjax('ajax/GetEvents', { "year": ajaxParams.year }, client.onStatusResponse);
     },
 
     // Start Pages
+
+    // Select language
+    onSelectLanguageRequest: function() {
+        var language = document.getElementById('language').value;
+
+        // The selector is on the GetWorldsRequest page, so reload it to change interface
+        server.sendChainOfRequests([
+            [ "ajax/SelectLanguageRequest", { "language": language }, client.onEmptyResponse ],
+            [ "ajax/GetWorldsRequest", { }, client.onGetWorldsRequest ]
+        ]);
+    },
 
     // List of existing Worlds (to join or to create a new world)
     onGetWorldsRequest: function() {
@@ -130,7 +141,6 @@ var client = {
         var mapHeight = document.getElementById('mapHeight').value;
         var climate = document.getElementById('climate').value;
         var maxNumberOfCivilizations = document.getElementById('maxNumberOfCivilizations').value;
-        var language = document.getElementById('language').value;
 
         server.sendAsyncAjax('ajax/CreateWorldRequest',
            { "worldName": worldName,
@@ -138,13 +148,17 @@ var client = {
              "mapWidth": mapWidth,
              "mapHeight": mapHeight,
              "climate": climate,
-             "maxNumberOfCivilizations": maxNumberOfCivilizations,
-             "language": language
+             "maxNumberOfCivilizations": maxNumberOfCivilizations
            }, client.onGetWorldsResponse);
     },
 
     onJoinWorldRequest: function(ajaxParams) {
-        server.sendAsyncAjax('ajax/JoinWorldRequest', { world: ajaxParams.world }, client.onResponseLoadGamePage);
+        var civilization = document.getElementById('civilization').value;
+
+        server.sendAsyncAjax('ajax/JoinWorldRequest',
+            { "world": ajaxParams.world,
+              "civilization": civilization
+            }, client.onResponseLoadGamePage);
     },
 
     loadWorld: function() {

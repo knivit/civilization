@@ -9,7 +9,6 @@ import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.web.response.Response;
-import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.world.action.JoinWorldAction;
@@ -20,21 +19,19 @@ public class JoinWorldRequest extends AbstractAjaxRequest {
     public Response getJson(Request request) {
         JoinWorldAction.Request req = JoinWorldAction.Request.builder()
             .worldId(request.get("world"))
-            .name(request.get("name"))
+            .civilization(request.get("civilization"))
             .ai(Boolean.getBoolean(request.get("ai", "false")))
             .build();
 
         ActionAbstractResult result = JoinWorldAction.join(req);
 
         if (result.isFail()) {
-            JsonBlock response = new JsonBlock();
-            response.addParam("message", result.getLocalized());
-            return new JsonResponse(ResponseCode.ACCEPTED, response);
+            return JsonResponse.accepted(result.getMessage());
         }
 
         Civilization myCivilization = getMyCivilization();
         if (myCivilization == null) {
-            return Response.newErrorInstance(L10nServer.CIVILIZATION_NOT_FOUND);
+            return JsonResponse.badRequest(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
         Point settlersLocation = null;

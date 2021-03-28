@@ -31,7 +31,7 @@ public class GetMyUnitsTest {
         Workers workers = UnitFactory.newInstance(c1, Workers.CLASS_UUID);
         assertTrue(c1.units().addUnit(workers, new Point(2, 0)));
 
-        Sessions.setActiveCivilization(c1);
+        Sessions.getCurrent().setActiveCivilization(c1);
         Request request = MockRequest.newInstance();
 
         Response response = getMyUnitsRequest.getJson(request);

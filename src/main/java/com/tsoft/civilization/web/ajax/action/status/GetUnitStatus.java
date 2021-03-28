@@ -7,6 +7,7 @@ import com.tsoft.civilization.unit.UnitActions;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.HtmlResponse;
+import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
@@ -20,13 +21,13 @@ public class GetUnitStatus extends AbstractAjaxRequest {
     public Response getJson(Request request) {
         Civilization myCivilization = getMyCivilization();
         if (myCivilization == null) {
-            return Response.newErrorInstance(L10nServer.CIVILIZATION_NOT_FOUND);
+            return JsonResponse.badRequest(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
         String unitId = request.get("unit");
         AbstractUnit unit = myCivilization.getWorld().getUnitById(unitId);
         if (unit == null) {
-            return Response.newErrorInstance(L10nUnit.UNIT_NOT_FOUND);
+            return JsonResponse.badRequest(L10nUnit.UNIT_NOT_FOUND);
         }
 
         StringBuilder value = Format.text("""

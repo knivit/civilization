@@ -30,27 +30,43 @@ public class GetCreateWorldForm extends AbstractAjaxRequest {
 
         StringBuilder value = Format.text("""
             <table id='actions_table'>
-                <tr><td>$worldName</td><td><input id='worldName' type='text' placeholder='My World' /></td></tr>
-                <tr><td>$worldType</td><td>
-                    <select id='worldType'>
+                <tr>
+                    <td>$worldName</td>
+                    <td><input id='worldName' type='text' placeholder='My World' /></td>
+                </tr>
+                <tr>
+                    <td>$worldType</td>
+                    <td><select id='worldType'>
                         <option value='0'>Earth</option>
                         <option selected value='1'>One big continent</option>
-                    </select></td></tr>
-                <tr><td>$mapWidth</td><td><input id='mapWidth' type='text' placeholder='20' /></td></tr>
-                <tr><td>$mapHeight</td><td><input id='mapHeight' type='text' placeholder='20' /></td></tr>
-                <tr><td>$climate</td><td>
-                    <select id='climate'>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>$mapWidth</td>
+                    <td><input id='mapWidth' type='text' placeholder='20' /></td>
+                </tr>
+                <tr>
+                    <td>$mapHeight</td>
+                    <td><input id='mapHeight' type='text' placeholder='20' /></td>
+                </tr>
+                <tr>
+                    <td>$climate</td>
+                    <td><select id='climate'>
                         <option value='0'>Cold</option>
                         <option selected value='1'>Normal</option>
                         <option value='2'>Hot</option>
-                    </select></td></tr>
-                <tr><td>$maxNumberOfCivilizations</td><td><input id='maxNumberOfCivilizations' type='text' placeholder='4' /></td></tr>
-                <tr><td>$language</td><td>
-                    <select id='language'>
-                        <option selected value='en'>English</option>
-                        <option value='ru'>Russian</option>
-                    </select></td></tr>
-                <tr><td>$backButton</td><td>$createWorldButton</td></tr>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>$maxNumberOfCivilizations</td>
+                    <td><input id='maxNumberOfCivilizations' type='text' placeholder='4' /></td>
+                </tr>
+                <tr>
+                    <td>$backButton</td>
+                    <td>$createWorldButton</td>
+                </tr>
             </table>
             """,
 
@@ -60,7 +76,6 @@ public class GetCreateWorldForm extends AbstractAjaxRequest {
             "$mapHeight", L10nWorld.INPUT_MAP_HEIGHT,
             "$climate", L10nWorld.INPUT_CLIMATE,
             "$maxNumberOfCivilizations", L10nWorld.INPUT_MAX_NUMBER_OF_CIVILIZATIONS,
-            "$language", L10nWorld.INPUT_LANGUAGE,
 
             "$backButton", backButton,
             "$createWorldButton", createWorldButton

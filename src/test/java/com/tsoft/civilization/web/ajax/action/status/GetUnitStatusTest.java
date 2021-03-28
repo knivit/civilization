@@ -28,7 +28,7 @@ public class GetUnitStatusTest {
         Warriors warriors = UnitFactory.newInstance(c1, Warriors.CLASS_UUID);
         assertTrue(c1.units().addUnit(warriors, new Point(2, 0)));
 
-        Sessions.setActiveCivilization(c1);
+        Sessions.getCurrent().setActiveCivilization(c1);
         Request request = MockRequest.newInstance("unit", warriors.getId());
 
         Response response = getUnitStatusRequest.getJson(request);

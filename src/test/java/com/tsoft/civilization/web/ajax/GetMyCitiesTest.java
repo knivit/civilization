@@ -25,7 +25,7 @@ public class GetMyCitiesTest {
         Civilization c1 = world.createCivilization(RUSSIA);
         City city1 = c1.createCity(new Point(2, 0));
 
-        Sessions.setActiveCivilization(c1);
+        Sessions.getCurrent().setActiveCivilization(c1);
         Request request = MockRequest.newInstance();
 
         Response response = getMyCitiesRequest.getJson(request);

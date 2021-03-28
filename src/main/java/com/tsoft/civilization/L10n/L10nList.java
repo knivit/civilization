@@ -1,10 +1,11 @@
 package com.tsoft.civilization.L10n;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class L10nList {
+public class L10nList implements Iterable<L10n> {
 
     private final List<L10n> list = new ArrayList<>();
 
@@ -23,5 +24,10 @@ public class L10nList {
 
     public Stream<L10n> stream() {
         return list.stream();
+    }
+
+    @Override
+    public Iterator<L10n> iterator() {
+        return list.iterator();
     }
 }

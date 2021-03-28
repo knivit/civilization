@@ -1,0 +1,34 @@
+#GetWorldsRequest_table {
+    table-layout: fixed;
+    width: 100%;
+    display: table;
+    margin-top: 4px;
+    margin-bottom: 2px;
+    border-collapse: collapse;
+}
+
+#GetWorldsRequest_table th {
+    width: 100%;
+    background-color: #b0b8de;
+    text-align: center;
+    border: 1px solid green;
+}
+
+#GetWorldsRequest_table td {
+    border: 1px solid green;
+    padding: 2px 4px 2px 4px;
+    text-align: left;
+}
+
+#GetWorldsRequest_table button {
+    width:80%;
+}
+
+#GetWorldsRequest_action_table {
+    table-layout: fixed;
+    width: 100%;
+    display: table;
+    margin-top: 4px;
+    margin-bottom: 2px;
+    border-collapse: collapse;
+}

@@ -18,6 +18,7 @@ import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.HtmlResponse;
+import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
@@ -31,13 +32,13 @@ public class GetCityStatus extends AbstractAjaxRequest {
     public Response getJson(Request request) {
         Civilization myCivilization = getMyCivilization();
         if (myCivilization == null) {
-            return Response.newErrorInstance(L10nServer.CIVILIZATION_NOT_FOUND);
+            return JsonResponse.badRequest(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
         String cityId = request.get("city");
         City city = myCivilization.getWorld().getCityById(cityId);
         if (city == null) {
-            return Response.newErrorInstance(L10nServer.CITY_NOT_FOUND);
+            return JsonResponse.badRequest(L10nServer.CITY_NOT_FOUND);
         }
 
         StringBuilder value = Format.text("""

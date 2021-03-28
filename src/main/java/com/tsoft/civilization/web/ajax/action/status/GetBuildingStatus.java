@@ -8,6 +8,7 @@ import com.tsoft.civilization.building.BuildingActions;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.HtmlResponse;
+import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
@@ -22,14 +23,14 @@ public class GetBuildingStatus extends AbstractAjaxRequest {
     public Response getJson(Request request) {
         Civilization myCivilization = getMyCivilization();
         if (myCivilization == null) {
-            return Response.newErrorInstance(L10nServer.CIVILIZATION_NOT_FOUND);
+            return JsonResponse.badRequest(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
         // See buildings only for my civilization
         String buildingId = request.get("building");
         AbstractBuilding building = myCivilization.cities().getBuildingById(buildingId);
         if (building == null) {
-            return Response.newErrorInstance(L10nBuilding.BUILDING_NOT_FOUND);
+            return JsonResponse.badRequest(L10nBuilding.BUILDING_NOT_FOUND);
         }
 
         StringBuilder value = Format.text("""

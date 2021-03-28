@@ -18,7 +18,9 @@ public class WorldGeneratorService {
     };
 
     public static WorldGenerator getGenerator(int index)  {
-        assert (index >= 0 && index < generators.length) : "Invalid generator's index = " + index + ", must be [0.." + (generators.length - 1) + "]";
+        if (index < 0 || index >= generators.length) {
+            throw new IllegalArgumentException("Invalid generator's index = " + index + ", must be [0.." + (generators.length - 1) + "]");
+        }
 
         return generators[index];
     }

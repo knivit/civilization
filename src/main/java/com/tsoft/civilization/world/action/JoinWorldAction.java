@@ -32,7 +32,7 @@ public class JoinWorldAction {
     @Builder
     public static class Request {
         final String worldId;
-        final String name;
+        final String civilization;
         final boolean ai;
     }
 
@@ -55,7 +55,7 @@ public class JoinWorldAction {
             return NO_CIVILIZATION_AVAILABLE;
         }
 
-        L10n name = findName(request.name, notUsed);
+        L10n name = findName(request.civilization, notUsed);
         if (name == null) {
             return NO_CIVILIZATION_AVAILABLE;
         }
@@ -67,18 +67,18 @@ public class JoinWorldAction {
             return CANT_CREATE_CIVILIZATION;
         }
 
-        Sessions.setActiveCivilization(civilization);
+        Sessions.getCurrent().setActiveCivilization(civilization);
         return JOINED;
     }
 
-    private static L10n findName(String name, List<L10n> notUsed) {
-        if (name == null) {
+    private static L10n findName(String preferredCivilizationName, List<L10n> notUsed) {
+        if (preferredCivilizationName == null) {
             int random = ThreadLocalRandom.current().nextInt(notUsed.size());
             return notUsed.get(random);
         }
 
         return notUsed.stream()
-            .filter(n -> name.equalsIgnoreCase(n.getLocalized()))
+            .filter(n -> preferredCivilizationName.equalsIgnoreCase(n.getLocalized()))
             .findAny()
             .orElse(null);
     }

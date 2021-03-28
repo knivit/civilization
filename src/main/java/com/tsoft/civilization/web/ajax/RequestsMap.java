@@ -13,11 +13,13 @@ import com.tsoft.civilization.web.ajax.action.unit.workers.BuildFarmActionReques
 import com.tsoft.civilization.web.ajax.action.unit.workers.RemoveForestActionRequest;
 import com.tsoft.civilization.web.ajax.action.unit.workers.RemoveHillActionRequest;
 import com.tsoft.civilization.web.ajax.action.world.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public class RequestsMap {
     private static final Map<String, AbstractAjaxRequest> REQUESTS;
 
@@ -66,6 +68,7 @@ public class RequestsMap {
         requests.put(RemoveHillActionRequest.class.getSimpleName(), new RemoveHillActionRequest());
 
         // Worlds
+        requests.put(SelectLanguageRequest.class.getSimpleName(), new SelectLanguageRequest());
         requests.put(GetWorldsRequest.class.getSimpleName(), new GetWorldsRequest());
         requests.put(CreateWorldRequest.class.getSimpleName(), new CreateWorldRequest());
         requests.put(GetCreateWorldForm.class.getSimpleName(), new GetCreateWorldForm());
@@ -73,7 +76,13 @@ public class RequestsMap {
         requests.put(LoadWorldRequest.class.getSimpleName(), new LoadWorldRequest());
     }
 
+    /** Returns NULL for unknown requests */
     public static AbstractAjaxRequest get(String name) {
-        return REQUESTS.get(name);
+        AbstractAjaxRequest request = REQUESTS.get(name);
+
+        if (request == null) {
+            log.info("Request {} not found", name);
+        }
+        return request;
     }
 }

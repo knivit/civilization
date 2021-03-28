@@ -3,6 +3,7 @@ package com.tsoft.civilization.web.ajax.action.status;
 import com.tsoft.civilization.improvement.city.L10nCity;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.tile.L10nTile;
+import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.world.L10nWorld;
 import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.improvement.city.City;
@@ -30,12 +31,12 @@ public class GetTileStatus extends AbstractAjaxRequest {
     public Response getJson(Request request) {
         Civilization myCivilization = getMyCivilization();
         if (myCivilization == null) {
-            return Response.newErrorInstance(L10nServer.CIVILIZATION_NOT_FOUND);
+            return JsonResponse.badRequest(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
         Point location = myCivilization.getTilesMap().getLocation(request.get("col"), request.get("row"));
         if (location == null) {
-            return Response.newErrorInstance(L10nWorld.INVALID_LOCATION);
+            return JsonResponse.badRequest(L10nWorld.INVALID_LOCATION);
         }
 
         AbstractTile tile = myCivilization.getTilesMap().getTile(location);

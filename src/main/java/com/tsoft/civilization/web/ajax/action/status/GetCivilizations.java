@@ -2,6 +2,7 @@ package com.tsoft.civilization.web.ajax.action.status;
 
 import com.tsoft.civilization.civilization.L10nCivilization;
 import com.tsoft.civilization.web.L10nServer;
+import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.world.L10nWorld;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
@@ -21,7 +22,7 @@ public class GetCivilizations extends AbstractAjaxRequest {
     public Response getJson(Request request) {
         Civilization myCivilization = getMyCivilization();
         if (myCivilization == null) {
-            return Response.newErrorInstance(L10nServer.CIVILIZATION_NOT_FOUND);
+            return JsonResponse.badRequest(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
         StringBuilder value = Format.text("""
@@ -45,9 +46,6 @@ public class GetCivilizations extends AbstractAjaxRequest {
         StringBuilder buf = new StringBuilder();
         for (Civilization civilization : civilizations) {
             CivilizationsRelations relations = world.getCivilizationsRelations(myCivilization, civilization);
-            if (relations == null) {
-                continue;
-            }
 
             buf.append(Format.text("""
                 <tr>
@@ -60,7 +58,7 @@ public class GetCivilizations extends AbstractAjaxRequest {
                 "$imageSrc", civilization.getView().getStatusImageSrc(),
                 "$civilizationId", civilization.getId(),
                 "$civilizationName", civilization.getView().getLocalizedCivilizationName(),
-                "$relations", relations.getDescription().toString()
+                "$relations", (relations == null) ? "" : relations.getDescription().toString()
             ));
         }
 

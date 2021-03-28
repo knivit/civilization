@@ -3,6 +3,7 @@ package com.tsoft.civilization.web;
 import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.RequestReader;
+import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.Response;
@@ -49,8 +50,6 @@ public class Client {
             log.info("Invalid request {}", request);
             return;
         }
-
-        Sessions.setCurrent(request.getSessionId());
 
         switch (request.getRequestType()) {
             case GET -> {
@@ -116,8 +115,8 @@ public class Client {
         }
     }
 
-    /** Send a error */
+    /** Send a error message */
     public void sendError(L10n messages) {
-        sendResponse(Response.newErrorInstance(messages));
+        sendResponse(JsonResponse.badRequest(messages));
     }
 }

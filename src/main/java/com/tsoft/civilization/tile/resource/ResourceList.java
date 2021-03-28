@@ -7,6 +7,7 @@ import com.tsoft.civilization.tile.feature.TerrainFeature;
 import com.tsoft.civilization.world.generator.Climate;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.util.Point;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -15,12 +16,12 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
 public class ResourceList {
+
+    @Getter
     private static class ResourceInfo {
-        private Class<? extends AbstractResource> resourceClass;
-
-        private int count;
-
-        private ResourceType resourceType;
+        private final Class<? extends AbstractResource> resourceClass;
+        private final int count;
+        private final ResourceType resourceType;
 
         public ResourceInfo(Class<? extends AbstractResource> resourceClass, int count) {
             this.resourceClass = resourceClass;
@@ -29,25 +30,12 @@ public class ResourceList {
             AbstractResource resource = AbstractResource.newInstance(resourceClass);
             resourceType = resource.getResourceType();
         }
-
-        public Class<? extends AbstractResource> getResourceClass() {
-            return resourceClass;
-        }
-
-        public int getCount() {
-            return count;
-        }
-
-        public ResourceType getResourceType() {
-            return resourceType;
-        }
     }
 
-    private ArrayList<ResourceInfo> resourceInfoList = new ArrayList<>();
+    private final TilesMap tilesMap;
+    private final Climate climate;
 
-    private TilesMap tilesMap;
-
-    private Climate climate;
+    private final ArrayList<ResourceInfo> resourceInfoList = new ArrayList<>();
 
     public ResourceList(TilesMap tilesMap, Climate climate) {
         this.tilesMap = tilesMap;
@@ -56,7 +44,6 @@ public class ResourceList {
 
     public void addToMap() {
         buildResourceList();
-
         addResourcesToMap();
     }
 
@@ -118,7 +105,7 @@ public class ResourceList {
                 }
             }
 
-            log.info("Added {} resources of {} type", count, resourceInfo.getResourceClass().getName());
+            log.debug("Added {} resources of {} type", count, resourceInfo.getResourceClass().getName());
         }
     }
 }

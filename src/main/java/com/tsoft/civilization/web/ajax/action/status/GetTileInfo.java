@@ -2,6 +2,7 @@ package com.tsoft.civilization.web.ajax.action.status;
 
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.tile.L10nTile;
+import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.world.L10nWorld;
 import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.base.TilePassCostTable;
@@ -27,12 +28,12 @@ public class GetTileInfo extends AbstractAjaxRequest {
     public Response getJson(Request request) {
         Civilization civilization = getMyCivilization();
         if (civilization == null) {
-            return Response.newErrorInstance(L10nServer.CIVILIZATION_NOT_FOUND);
+            return JsonResponse.badRequest(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
         Point location = civilization.getTilesMap().getLocation(request.get("col"), request.get("row"));
         if (location == null) {
-            return Response.newErrorInstance(L10nWorld.INVALID_LOCATION);
+            return JsonResponse.badRequest(L10nWorld.INVALID_LOCATION);
         }
 
         AbstractTile tile = civilization.getTilesMap().getTile(location);

@@ -31,7 +31,7 @@ public class GetTileStatusTest {
         Workers workers1 = UnitFactory.newInstance(c1, Workers.CLASS_UUID);
         assertTrue(c1.units().addUnit(workers1, city1.getLocation()));
 
-        Sessions.setActiveCivilization(c1);
+        Sessions.getCurrent().setActiveCivilization(c1);
         Request request = MockRequest.newInstance("col", "2", "row", "0");
 
         Response response = getTileStatusRequest.getJson(request);
@@ -47,7 +47,7 @@ public class GetTileStatusTest {
         Workers workers1 = UnitFactory.newInstance(c1, Workers.CLASS_UUID);
         assertTrue(c1.units().addUnit(workers1, city1.getLocation()));
 
-        Sessions.setActiveCivilization(c2);
+        Sessions.getCurrent().setActiveCivilization(c2);
         Request request = MockRequest.newInstance("col", "2", "row", "0");
 
         Response response = getTileStatusRequest.getJson(request);

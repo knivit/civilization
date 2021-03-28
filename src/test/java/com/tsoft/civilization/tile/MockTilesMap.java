@@ -53,7 +53,6 @@ public class MockTilesMap extends TilesMap {
     }
 
     private final Map<Character, String> asciiTileClasses = new HashMap<>();
-    private final Map<String, Character> tilesAscii = new HashMap<>();
 
     /** To use with one layer (i.e. tiles only, without features) */
     public MockTilesMap(MapType mapType, String ... asciiLines) {
@@ -74,7 +73,6 @@ public class MockTilesMap extends TilesMap {
         for (Character ch : tileCodes.keySet()) {
             String tileClass = tileCodes.get(ch);
             asciiTileClasses.put(ch, tileClass);
-            tilesAscii.put(tileClass, ch);
         }
     }
 

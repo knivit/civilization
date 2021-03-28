@@ -1,26 +1,11 @@
 package com.tsoft.civilization.web.response;
 
-import com.tsoft.civilization.L10n.L10n;
-import com.tsoft.civilization.web.state.ClientSession;
-import com.tsoft.civilization.web.state.Sessions;
-import com.tsoft.civilization.web.view.JsonBlock;
-
 public class Response {
     private final String responseCode;
     private final String contentType;
     private final AbstractResponseContent content;
 
     private final StringBuilder additionalHeaders = new StringBuilder();
-
-    public static Response newErrorInstance(L10n messages) {
-        String enText = messages.getEnglish();
-
-        ClientSession session = Sessions.getCurrent();
-        JsonBlock block = new JsonBlock();
-        block.addParam("error", session == null ? enText : messages.getLocalized());
-
-        return new Response(ResponseCode.BAD_REQUEST, block.getText(), ContentType.APPLICATION_JSON);
-    }
 
     public Response(String responseCode, String value, String contentType) {
         this.responseCode = responseCode;

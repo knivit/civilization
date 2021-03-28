@@ -35,7 +35,7 @@ public class GetCivilizationStatusTest {
         assertTrue(c1.units().addUnit(warriors, new Point(2, 1)));
         City city1 = c1.createCity(new Point(2, 2));
 
-        Sessions.setActiveCivilization(c1);
+        Sessions.getCurrent().setActiveCivilization(c1);
         Request request = MockRequest.newInstance("civilization", c1.getId());
 
         Response response = getCivilizationStatusRequest.getJson(request);
@@ -55,7 +55,7 @@ public class GetCivilizationStatusTest {
         assertTrue(c2.units().addUnit(warriors, new Point(2, 1)));
         City city1 = c2.createCity(new Point(2, 2));
 
-        Sessions.setActiveCivilization(c1);
+        Sessions.getCurrent().setActiveCivilization(c1);
         Request mockRequest = MockRequest.newInstance("civilization", c1.getId());
 
         Response response = getCivilizationStatusRequest.getJson(mockRequest);

@@ -36,8 +36,9 @@ public class ClientSession {
         return language;
     }
 
-    public void setLanguage(String language) {
+    public ClientSession setLanguage(String language) {
         this.language = (language == null) ? DEFAULT_LANGUAGE : language;
+        return this;
     }
 
     public Civilization getCivilization() {
@@ -51,7 +52,7 @@ public class ClientSession {
         return null;
     }
 
-    public void setActiveCivilization(Civilization civilization) {
+    public ClientSession setActiveCivilization(Civilization civilization) {
         if (civilization == null) {
             civilizationId = null;
             worldId = null;
@@ -59,6 +60,7 @@ public class ClientSession {
             civilizationId = civilization.getId();
             worldId = civilization.getWorld().getId();
         }
+        return this;
     }
 
     @Override

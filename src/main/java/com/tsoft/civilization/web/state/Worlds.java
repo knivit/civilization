@@ -16,7 +16,7 @@ public class Worlds {
 
     public static synchronized boolean add(World world) {
         if (worlds.size() >= MAX_WORLDS_COUNT) {
-            log.info("All available Worlds are created, max size = {}", MAX_WORLDS_COUNT);
+            log.info("All available worlds are created, max size = {}", MAX_WORLDS_COUNT);
             return false;
         }
 

@@ -2,176 +2,171 @@ package com.tsoft.civilization.world;
 
 import com.tsoft.civilization.L10n.L10n;
 
+import static com.tsoft.civilization.L10n.L10nLanguage.EN;
+import static com.tsoft.civilization.L10n.L10nLanguage.RU;
+
 public class L10nWorld {
     public static final L10n INVALID_LOCATION = new L10n()
-            .put("en", "Invalid location")
-            .put("ru", "Неверные координаты");
+        .put(EN, "Invalid location")
+        .put(RU, "Неверные координаты");
 
     public static final L10n WORLD_CREATED = new L10n()
-        .put("en", "World created")
-        .put("ru", "Мир создан");
-
-    public static final L10n WORLD_CANT_BE_CREATED = new L10n()
-        .put("en", "World can not be created")
-        .put("ru", "Мир не может быть создан");
+        .put(EN, "World created")
+        .put(RU, "Мир создан");
 
     public static final L10n INVALID_MAP_SIZE = new L10n()
-        .put("en", "Map size must be within [2..1000][2..1000]")
-        .put("ru", "Размер карты должен быть в пределах [2..1000][2..1000]");
+        .put(EN, "Map size must be within [2..1000][2..1000]")
+        .put(RU, "Размер карты должен быть в пределах [2..1000][2..1000]");
 
     public static final L10n INVALID_WORLD_NAME = new L10n()
-        .put("en", "Invalid world's name")
-        .put("ru", "Неверное название мира");
+        .put(EN, "Invalid world's name")
+        .put(RU, "Неверное название мира");
 
     public static final L10n CANT_CREATE_WORLD = new L10n()
-        .put("en", "Can not create a world")
-        .put("ru", "Невозможно создать новый мир");
+        .put(EN, "Can not create a world")
+        .put(RU, "Невозможно создать новый мир");
 
     public static final L10n INVALID_MAX_NUMBER_OF_CIVILIZATIONS = new L10n()
-        .put("en", "Number of civilizations must be within [1..16]")
-        .put("ru", "Количество цивилизаций должно быть в пределах [1..16]");
+        .put(EN, "Number of civilizations must be within [1..16]")
+        .put(RU, "Количество цивилизаций должно быть в пределах [1..16]");
 
     public static final L10n CIVILIZATION_JOINED = new L10n()
-        .put("en", "A civilization joined to the world")
-        .put("ru", "Цивилизация присоединилась к миру");
+        .put(EN, "A civilization joined to the world")
+        .put(RU, "Цивилизация присоединилась к миру");
 
     /** Relations */
 
     public static final L10n RELATIONS_NAME = new L10n()
-            .put("en", "Relations")
-            .put("ru", "Отношения");
+        .put(EN, "Relations")
+        .put(RU, "Отношения");
 
     public static final L10n WAR_RELATIONS_DESCRIPTION = new L10n()
-            .put("en", "War")
-            .put("ru", "Война");
+        .put(EN, "War")
+        .put(RU, "Война");
 
     public static final L10n BAD_RELATIONS_DESCRIPTION = new L10n()
-            .put("en", "Bad")
-            .put("ru", "Плохие");
+        .put(EN, "Bad")
+        .put(RU, "Плохие");
 
     public static final L10n NEUTRAL_RELATIONS_DESCRIPTION = new L10n()
-            .put("en", "Neutral")
-            .put("ru", "Нейтральные");
+        .put(EN, "Neutral")
+        .put(RU, "Нейтральные");
 
     public static final L10n GOOD_RELATIONS_DESCRIPTION = new L10n()
-            .put("en", "Good")
-            .put("ru", "Хорошие");
+        .put(EN, "Good")
+        .put(RU, "Хорошие");
 
     public static final L10n FRIENDS_RELATIONS_DESCRIPTION = new L10n()
-            .put("en", "Friends")
-            .put("ru", "Друзья");
+        .put(EN, "Friends")
+        .put(RU, "Друзья");
 
     /** Era */
 
     public static final L10n ANCIENT_ERA = new L10n()
-            .put("en", "Ancient")
-            .put("ru", "Древняя");
+        .put(EN, "Ancient")
+        .put(RU, "Древняя");
 
     public static final L10n CLASSICAL_ERA = new L10n()
-            .put("en", "Classical")
-            .put("ru", "Классическая");
+        .put(EN, "Classical")
+        .put(RU, "Классическая");
 
     public static final L10n MEDIEVAL_ERA = new L10n()
-            .put("en", "Medieval")
-            .put("ru", "Средневековая");
+        .put(EN, "Medieval")
+        .put(RU, "Средневековая");
 
     public static final L10n RENAISSANCE_ERA = new L10n()
-            .put("en", "Renaissance")
-            .put("ru", "Ренессанс");
+        .put(EN, "Renaissance")
+        .put(RU, "Ренессанс");
 
     public static final L10n INDUSTRIAL_ERA = new L10n()
-            .put("en", "Industrial")
-            .put("ru", "Промышленная");
+        .put(EN, "Industrial")
+        .put(RU, "Промышленная");
 
     public static final L10n MODERN_ERA = new L10n()
-            .put("en", "Modern")
-            .put("ru", "Современная");
+        .put(EN, "Modern")
+        .put(RU, "Современная");
 
     public static final L10n ATOMIC_ERA = new L10n()
-            .put("en", "Atomic")
-            .put("ru", "Атомная");
+        .put(EN, "Atomic")
+        .put(RU, "Атомная");
 
     public static final L10n INFORMATION_ERA = new L10n()
-            .put("en", "Information")
-            .put("ru", "Информационная");
+        .put(EN, "Information")
+        .put(RU, "Информационная");
 
     /** Web */
 
     public static final L10n JOIN_WORLD_BUTTON = new L10n()
-            .put("en", "Join to Play")
-            .put("ru", "Зайти и играть");
+        .put(EN, "Join to Play")
+        .put(RU, "Зайти и играть");
 
     public static final L10n SPECTATOR_WORLD_BUTTON = new L10n()
-            .put("en", "Join as a Spectator")
-            .put("ru", "Зайти и смотреть");
+        .put(EN, "Join as a Spectator")
+        .put(RU, "Зайти и смотреть");
 
     public static final L10n CREATE_NEW_WORLD_BUTTON = new L10n()
-            .put("en", "Create New World")
-            .put("ru", "Создать новый мир");
+        .put(EN, "Create New World")
+        .put(RU, "Создать новый мир");
 
     public static final L10n INPUT_WORLD_NAME = new L10n()
-            .put("en", "World Name")
-            .put("ru", "Название мира");
+        .put(EN, "World Name")
+        .put(RU, "Название мира");
 
     public static final L10n INPUT_WORLD_TYPE = new L10n()
-            .put("en", "World Type")
-            .put("ru", "Тип мира");
+        .put(EN, "World Type")
+        .put(RU, "Тип мира");
 
     public static final L10n INPUT_MAP_WIDTH = new L10n()
-            .put("en", "Map Width")
-            .put("ru", "Ширина карты");
+        .put(EN, "Map Width")
+        .put(RU, "Ширина карты");
 
     public static final L10n INPUT_MAX_NUMBER_OF_CIVILIZATIONS = new L10n()
-            .put("en", "Max number of Civilizations")
-            .put("ru", "Макс. кол-во цивилизаций");
+        .put(EN, "Max number of Civilizations")
+        .put(RU, "Макс. кол-во цивилизаций");
 
     public static final L10n INPUT_MAP_HEIGHT = new L10n()
-            .put("en", "Map Height")
-            .put("ru", "Высота карты");
+        .put(EN, "Map Height")
+        .put(RU, "Высота карты");
 
     public static final L10n INPUT_CLIMATE = new L10n()
-            .put("en", "Climate")
-            .put("ru", "Климат");
-
-    public static final L10n INPUT_LANGUAGE = new L10n()
-            .put("en", "Language")
-            .put("ru", "Язык");
+        .put(EN, "Climate")
+        .put(RU, "Климат");
 
     public static final L10n BACK_BUTTON = new L10n()
-            .put("en", "Back to the World List")
-            .put("ru", "Назад к списку миров");
+        .put(EN, "Back to the World List")
+        .put(RU, "Назад к списку миров");
 
     /** Events */
 
     public static final L10n DECLARE_WAR_EVENT = new L10n()
-            .put("en", "A war has been declared between %s and %s !")
-            .put("ru", "Была объявлена война between %s and %s !");
+        .put(EN, "A war has been declared between %s and %s !")
+        .put(RU, "Была объявлена война between %s and %s !");
 
     public static final L10n DECLARE_FRIENDS_EVENT = new L10n()
-            .put("en", "A war has stopped between %s and %s !")
-            .put("ru", "Война прекращена between %s and %s !");
+        .put(EN, "A war has stopped between %s and %s !")
+        .put(RU, "Война прекращена between %s and %s !");
 
     public static final L10n NEW_CIVILIZATION_EVENT = new L10n()
-            .put("en", "A new Civilization %s has been founded on %s")
-            .put("ru", "Была основана %s новая цивилизация %s");
+        .put(EN, "A new Civilization %s has been founded on %s")
+        .put(RU, "Была основана %s новая цивилизация %s");
 
     public static final L10n DESTROY_CIVILIZATION_EVENT = new L10n()
-        .put("en", "Civilization %s has been destroyed")
-        .put("ru", "Цивилизация %s уничтожена");
+        .put(EN, "Civilization %s has been destroyed")
+        .put(RU, "Цивилизация %s уничтожена");
 
     public static final L10n MOVE_START_EVENT = new L10n()
-        .put("en", "Civilization %s move begins")
-        .put("ru", "Цивилизация %s начинает свой ход");
+        .put(EN, "Civilization %s move begins")
+        .put(RU, "Цивилизация %s начинает свой ход");
 
     public static final L10n MOVE_DONE_EVENT = new L10n()
-            .put("en", "Civilization %s has made its move")
-            .put("ru", "Цивилизация %s сделала ход");
+        .put(EN, "Civilization %s has made its move")
+        .put(RU, "Цивилизация %s сделала ход");
 
     public static final L10n NEW_YEAR_START_EVENT = new L10n()
-        .put("en", "Started a new Year %d !")
-        .put("ru", "Начался новый год %d !");
+        .put(EN, "Started a new Year %d !")
+        .put(RU, "Начался новый год %d !");
 
     public static final L10n NEW_YEAR_COMPLETE_EVENT = new L10n()
-            .put("en", "All civilizations has moved into new Year %d")
-            .put("ru", "Все цивилизации вошли в Новый Год %d");
+        .put(EN, "All civilizations has moved into new Year %d")
+        .put(RU, "Все цивилизации вошли в Новый Год %d");
 }

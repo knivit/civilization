@@ -8,28 +8,26 @@ import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
-import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.civilization.Civilization;
 
 public class DeclareWarActionRequest extends AbstractAjaxRequest {
+
     @Override
     public Response getJson(Request request) {
         Civilization myCivilization = getMyCivilization();
         if (myCivilization == null) {
-            return Response.newErrorInstance(L10nServer.CIVILIZATION_NOT_FOUND);
+            return JsonResponse.badRequest(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
         String otherCivilizationId = request.get("otherCivilization");
         Civilization otherCivilization = myCivilization.getWorld().getCivilizationById(otherCivilizationId);
         if (otherCivilization == null) {
-            return Response.newErrorInstance(L10nServer.CIVILIZATION_NOT_FOUND);
+            return JsonResponse.badRequest(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
         ActionAbstractResult result = DeclareWarAction.declareWar(myCivilization, otherCivilization);
         if (result.isFail()) {
-            JsonBlock response = new JsonBlock();
-            response.addParam("message", result.getLocalized());
-            return new JsonResponse(ResponseCode.ACCEPTED, response);
+            return JsonResponse.accepted(result.getMessage());
         }
 
         // nothing to return
