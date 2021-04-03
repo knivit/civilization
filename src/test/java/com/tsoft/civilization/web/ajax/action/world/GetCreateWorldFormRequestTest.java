@@ -7,26 +7,17 @@ import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
 import org.junit.jupiter.api.Test;
 
-import java.util.UUID;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CreateWorldRequestTest {
+public class GetCreateWorldFormRequestTest {
 
     @Test
     public void getJson() {
-        Request request = MockRequest.newInstance(
-            "worldName", UUID.randomUUID().toString(),
-            "mapWidth", "10",
-            "mapHeight", "4",
-            "worldType", "0",
-            "climate", "0",
-            "maxNumberOfCivilizations", "2"
-        );
+        Request request = MockRequest.newInstance();
 
-        CreateWorldRequest createWorldRequest = new CreateWorldRequest();
-        Response response = createWorldRequest.getJson(request);
+        GetCreateWorldFormRequest getCreateWorldFormRequest = new GetCreateWorldFormRequest();
 
+        Response response = getCreateWorldFormRequest.getJson(request);
         assertThat(response)
             .isNotNull()
             .returns(ResponseCode.OK, Response::getResponseCode)

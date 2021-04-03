@@ -23,12 +23,12 @@ public class CivilizationScoreTest {
     @Test
     public void noCitiesScore() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
-                " |0 1 2 ",
-                "-+------",
-                "0|. . . ",
-                "1| . g .",
-                "2|. . . ",
-                "3| . . .");
+            " |0 1 2 ",
+            "-+------",
+            "0|. . . ",
+            "1| . g .",
+            "2|. . . ",
+            "3| . . .");
 
         MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
@@ -40,12 +40,12 @@ public class CivilizationScoreTest {
     @Test
     public void oneCityOneTileScore() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
-                " |0 1 2 ",
-                "-+------",
-                "0|. . . ",
-                "1| . g .",
-                "2|. . . ",
-                "3| . . .");
+            " |0 1 2 ",
+            "-+------",
+            "0|. . . ",
+            "1| . g .",
+            "2|. . . ",
+            "3| . . .");
 
         MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
@@ -118,12 +118,12 @@ public class CivilizationScoreTest {
     @Test
     public void maxSupplyStrategies() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES, 2,
-                " |0 1 2 ", " |0 1 2 ",
-                "-+------", "-+------",
-                "0|. g . ", "0|. h . ",
-                "1| g g .", "1| m f .",
-                "2|. g . ", "2|. n . ",
-                "3| . . .", "3| . . .");
+            " |0 1 2 ", " |0 1 2 ",
+            "-+------", "-+------",
+            "0|. g . ", "0|. h . ",
+            "1| g g .", "1| m f .",
+            "2|. g . ", "2|. n . ",
+            "3| . . .", "3| . . .");
 
         MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);

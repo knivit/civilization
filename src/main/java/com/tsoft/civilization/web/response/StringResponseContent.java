@@ -1,11 +1,9 @@
 package com.tsoft.civilization.web.response;
 
-import com.tsoft.civilization.web.response.AbstractResponseContent;
-
 import java.nio.charset.StandardCharsets;
 
 public class StringResponseContent extends AbstractResponseContent {
-    private byte[] content;
+    private final byte[] content;
 
     public StringResponseContent(String value) {
         content = value.getBytes(StandardCharsets.UTF_8);

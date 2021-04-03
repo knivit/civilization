@@ -1,5 +1,8 @@
 package com.tsoft.civilization;
 
+import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.civilization.PlayerType;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.web.state.Sessions;
@@ -7,6 +10,8 @@ import com.tsoft.civilization.web.state.Worlds;
 import com.tsoft.civilization.world.World;
 
 import java.util.UUID;
+
+import static com.tsoft.civilization.civilization.L10nCivilization.CIVILIZATIONS;
 
 public class MockWorld extends World {
 
@@ -39,6 +44,7 @@ public class MockWorld extends World {
 
         Worlds.clearAll();
         Worlds.add(world);
+
         Sessions.findOrCreateNewAndSetAsCurrent(UUID.randomUUID().toString(), "localhost", "Unit Test");
 
         return world;
@@ -46,8 +52,12 @@ public class MockWorld extends World {
 
     private MockWorld(MockTilesMap mockTilesMap) {
         super(UUID.randomUUID().toString(), mockTilesMap);
-        setMaxNumberOfCivilizations(8);
+        setMaxNumberOfCivilizations(CIVILIZATIONS.size());
         startYear();
+    }
+
+    public Civilization createCivilization(L10n civilizationName) {
+        return super.createCivilization(PlayerType.BOT, civilizationName);
     }
 
     public void move() {

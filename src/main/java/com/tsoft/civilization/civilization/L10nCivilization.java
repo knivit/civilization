@@ -129,6 +129,10 @@ public class L10nCivilization {
 
     /** Civilizations */
 
+    public static final L10n RANDOM = new L10n()
+        .put(EN, "Random")
+        .put(RU, "Случайная");
+
     public static final L10n RUSSIA = new L10n()
         .put(EN, "Russia")
         .put(RU, "Россия");
@@ -138,7 +142,7 @@ public class L10nCivilization {
         .put(RU, "Америка");
 
     public static final L10n JAPAN = new L10n()
-        .put(EN, "Japan")
+        .put(EN, "Japanese")
         .put(RU, "Япония");
 
     public static final L10nList CIVILIZATIONS = new L10nList()

@@ -71,7 +71,7 @@ public class RequestsMap {
         requests.put(SelectLanguageRequest.class.getSimpleName(), new SelectLanguageRequest());
         requests.put(GetWorldsRequest.class.getSimpleName(), new GetWorldsRequest());
         requests.put(CreateWorldRequest.class.getSimpleName(), new CreateWorldRequest());
-        requests.put(GetCreateWorldForm.class.getSimpleName(), new GetCreateWorldForm());
+        requests.put(GetCreateWorldFormRequest.class.getSimpleName(), new GetCreateWorldFormRequest());
         requests.put(JoinWorldRequest.class.getSimpleName(), new JoinWorldRequest());
         requests.put(LoadWorldRequest.class.getSimpleName(), new LoadWorldRequest());
     }

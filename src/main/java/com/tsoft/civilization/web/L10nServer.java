@@ -31,6 +31,10 @@ public class L10nServer {
         .put("en", "World is full")
         .put("ru", "Мир заполнен");
 
+    public static final L10n PLAYER_TYPE_MUST_BE_HUMAN_OR_BOT = new L10n()
+        .put("en", "Player should be a human or a bot")
+        .put("ru", "Игрок должен быть человеком или ботом");
+
     public static final L10n CANT_CREATE_CIVILIZATION = new L10n()
         .put("en", "Can not create a civilization")
         .put("ru", "Невозможно создать цивилизацию");

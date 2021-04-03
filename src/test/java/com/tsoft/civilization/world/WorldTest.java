@@ -12,7 +12,7 @@ public class WorldTest {
 
     @Test
     public void can_not_create_one_civilization_twice() {
-        World world = MockWorld.newSimpleWorld();
+        MockWorld world = MockWorld.newSimpleWorld();
 
         assertThat(world.createCivilization(RUSSIA))
             .isNotNull()
@@ -24,7 +24,7 @@ public class WorldTest {
 
     @Test
     public void create_two_civilizations() {
-        World world = MockWorld.newSimpleWorld();
+        MockWorld world = MockWorld.newSimpleWorld();
 
         assertThat(world.createCivilization(RUSSIA))
             .isNotNull()

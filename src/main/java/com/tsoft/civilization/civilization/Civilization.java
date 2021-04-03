@@ -24,21 +24,16 @@ import com.tsoft.civilization.world.event.Event;
 import com.tsoft.civilization.world.event.EventsByYearMap;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 
 @Slf4j
 @EqualsAndHashCode(of = "id")
-public class Civilization {
+public abstract class Civilization {
     private final String id = UUID.randomUUID().toString();
 
-    private final CivilizationView view;
-
-    private final L10n name;
     private final Year startYear;
-
     private final World world;
 
     private final CivilizationUnitService unitService;
@@ -57,19 +52,17 @@ public class Civilization {
     private final EventsByYearMap events;
 
     @Getter
-    @Setter
-    private boolean isAi;
+    private final PlayerType playerType;
 
     @Getter
     private volatile MoveState moveState;
 
-    public Civilization(World world, L10n name) {
-        Objects.requireNonNull(world, "World can't be null");
-        Objects.requireNonNull(name, "Civilization name can't be null");
+    public Civilization(World world, PlayerType playerType) {
+        Objects.requireNonNull(world, "world can't be null");
+        Objects.requireNonNull(playerType, "playerType can't be null");
 
         this.world = world;
-        this.name = name;
-        view = new CivilizationView(name);
+        this.playerType = playerType;
 
         startYear = world.getYear();
         events = new EventsByYearMap(world);
@@ -85,8 +78,10 @@ public class Civilization {
         return id;
     }
 
+    public abstract CivilizationView getView();
+
     public L10n getName() {
-        return name;
+        return getView().getName();
     }
 
     public CivilizationUnitService units() {
@@ -107,10 +102,6 @@ public class Civilization {
 
     public Year getYear() {
         return world.getYear();
-    }
-
-    public CivilizationView getView() {
-        return view;
     }
 
     public World getWorld() {
@@ -275,7 +266,7 @@ public class Civilization {
     @Override
     public String toString() {
         return "Civilization{" +
-                "name='" + name + '\'' +
+                "name='" + getName() + '\'' +
             '}';
     }
 }

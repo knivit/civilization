@@ -7,7 +7,7 @@ import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 
-public class GetCreateWorldForm extends AbstractAjaxRequest {
+public class GetCreateWorldFormRequest extends AbstractAjaxRequest {
 
     private static final String GET_WORLDS_REQUEST = "client.on" + GetWorldsRequest.class.getSimpleName();
     private static final String CREATE_WORLD_REQUEST = "client.on" + CreateWorldRequest.class.getSimpleName();

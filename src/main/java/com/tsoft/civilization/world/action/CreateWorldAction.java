@@ -15,6 +15,8 @@ import lombok.Builder;
 
 import java.util.UUID;
 
+import static com.tsoft.civilization.civilization.L10nCivilization.CIVILIZATIONS;
+
 public class CreateWorldAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
@@ -52,7 +54,7 @@ public class CreateWorldAction {
         // create a world
         TilesMap tilesMap = new TilesMap(MapType.SIX_TILES, request.mapWidth, request.mapHeight);
         World world = new World(request.worldName, tilesMap);
-        world.setMaxNumberOfCivilizations(request.maxNumberOfCivilizations);
+        world.setMaxNumberOfCivilizations(Math.min(CIVILIZATIONS.size(), request.maxNumberOfCivilizations));
 
         // generate landscape
         WorldGenerator generator = WorldGeneratorService.getGenerator(request.worldType);

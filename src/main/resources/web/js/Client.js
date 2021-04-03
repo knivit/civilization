@@ -130,8 +130,8 @@ var client = {
     },
 
     // Get a form to create a new world
-    getCreateWorldForm: function() {
-        server.sendAsyncAjax('ajax/GetCreateWorldForm', { }, client.onGetWorldsResponse);
+    onGetCreateWorldFormRequest: function() {
+        server.sendAsyncAjax('ajax/GetCreateWorldFormRequest', { }, client.onGetWorldsResponse);
     },
 
     onCreateWorldRequest: function() {
@@ -153,12 +153,13 @@ var client = {
     },
 
     onJoinWorldRequest: function(ajaxParams) {
-        var civilization = document.getElementById('civilization').value;
+        var civilization = document.getElementById(ajaxParams.civilizationSelector).value;
 
         server.sendAsyncAjax('ajax/JoinWorldRequest',
             { "world": ajaxParams.world,
-              "civilization": civilization
-            }, client.onResponseLoadGamePage);
+              "civilization": civilization,
+              "playerType": ajaxParams.playerType
+            }, (ajaxParams.playerType === 'HUMAN') ? client.onResponseLoadGamePage : client.onGetWorldsResponse);
     },
 
     loadWorld: function() {

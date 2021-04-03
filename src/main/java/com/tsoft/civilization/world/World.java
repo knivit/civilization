@@ -1,9 +1,7 @@
 package com.tsoft.civilization.world;
 
 import com.tsoft.civilization.L10n.L10n;
-import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.civilization.CivilizationsRelations;
-import com.tsoft.civilization.civilization.MoveState;
+import com.tsoft.civilization.civilization.*;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityList;
 import com.tsoft.civilization.tile.TileService;
@@ -12,7 +10,6 @@ import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Pair;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.civilization.CivilizationList;
 import com.tsoft.civilization.world.event.Event;
 
 import java.util.*;
@@ -63,12 +60,12 @@ public class World {
     }
 
     // Returns NULL when a civilization can not be created (it is already exists etc)
-    public Civilization createCivilization(L10n civilizationName) {
+    public Civilization createCivilization(PlayerType playerType, L10n civilizationName) {
         if (civilizations.getCivilizationByName(civilizationName) != null) {
             return null;
         }
 
-        Civilization civilization = new Civilization(this, civilizationName);
+        Civilization civilization = CivilizationFactory.newInstance(civilizationName, this, playerType);
 
         // set NEUTRAL state for this civilization with others
         for (Civilization otherCivilization : civilizations) {
@@ -77,8 +74,6 @@ public class World {
                 relations.put(key, CivilizationsRelations.NEUTRAL);
             }
         }
-
-        civilization.setAi(true);
 
         civilizations.add(civilization);
 
@@ -268,12 +263,12 @@ public class World {
     }
 
     public void onCivilizationMoved(Civilization civilization) {
-        if (civilization.isAi()) {
+        if (!PlayerType.HUMAN.equals(civilization.getPlayerType())) {
             return;
         }
 
         Optional<Civilization> humanNotMoved = civilizations.stream()
-            .filter(c -> !c.isAi())
+            .filter(c -> PlayerType.HUMAN.equals(c.getPlayerType()))
             .filter(c -> MoveState.DONE != c.getMoveState())
             .findAny();
 
@@ -288,7 +283,7 @@ public class World {
     public void stopYear() {
         // Move AI civilizations
         civilizations.stream()
-            .filter(Civilization::isAi)
+            .filter(c -> PlayerType.BOT.equals(c.getPlayerType()))
             .forEach(Civilization::stopYear);
 
         sendEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.NEW_YEAR_COMPLETE_EVENT, year.getValue()));

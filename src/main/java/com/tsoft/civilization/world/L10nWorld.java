@@ -6,6 +6,7 @@ import static com.tsoft.civilization.L10n.L10nLanguage.EN;
 import static com.tsoft.civilization.L10n.L10nLanguage.RU;
 
 public class L10nWorld {
+
     public static final L10n INVALID_LOCATION = new L10n()
         .put(EN, "Invalid location")
         .put(RU, "Неверные координаты");
@@ -96,9 +97,37 @@ public class L10nWorld {
 
     /** Web */
 
+    public static final L10n WORLD_HEADER = new L10n()
+        .put(EN, "World")
+        .put(RU, "Мир");
+
+    public static final L10n ERA_HEADER = new L10n()
+        .put(EN, "Era")
+        .put(RU, "Эра");
+
+    public static final L10n YEAR_HEADER = new L10n()
+        .put(EN, "Year")
+        .put(RU, "Год");
+
+    public static final L10n NUM_OF_CIVILIZATIONS_HEADER = new L10n()
+        .put(EN, "Num of Civilizations")
+        .put(RU, "Кол-во цивилизаций");
+
+    public static final L10n SLOTS_AVAILABLE_HEADER = new L10n()
+        .put(EN, "Slots Available")
+        .put(RU, "Доступно мест");
+
+    public static final L10n ACTION_HEADER = new L10n()
+        .put(EN, "Action")
+        .put(RU, "Действие");
+
+    public static final L10n ADD_BOT_BUTTON = new L10n()
+        .put(EN, "Add Bot")
+        .put(RU, "Добавить бота");
+
     public static final L10n JOIN_WORLD_BUTTON = new L10n()
         .put(EN, "Join to Play")
-        .put(RU, "Зайти и играть");
+        .put(RU, "Присоединиться к игре");
 
     public static final L10n SPECTATOR_WORLD_BUTTON = new L10n()
         .put(EN, "Join as a Spectator")
