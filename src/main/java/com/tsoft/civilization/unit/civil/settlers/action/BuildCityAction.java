@@ -8,6 +8,7 @@ import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -64,10 +65,6 @@ public class BuildCityAction {
         return SettlersActionResults.CAN_BUILD_CITY;
     }
 
-    private static String getClientJSCode(Settlers settlers) {
-        return String.format("client.buildCityAction({ settlers:'%1$s' })", settlers.getId());
-    }
-
     private static String getLocalizedName() {
         return L10nSettlers.BUILD_CITY_NAME.getLocalized();
     }
@@ -81,10 +78,12 @@ public class BuildCityAction {
             return null;
         }
 
-        return Format.text(
-            "<td><button onclick=\"$buttonOnClick\">$buttonLabel</button></td><td>$actionDescription</td>",
+        return Format.text("""
+            <td><button onclick="$buttonOnClick">$buttonLabel</button></td>
+            <td>$actionDescription</td>
+            """,
 
-            "$buttonOnClick", getClientJSCode(settlers),
+            "$buttonOnClick", ClientAjaxRequest.buildCityAction(settlers),
             "$buttonLabel", getLocalizedName(),
             "$actionDescription", getLocalizedDescription()
         );

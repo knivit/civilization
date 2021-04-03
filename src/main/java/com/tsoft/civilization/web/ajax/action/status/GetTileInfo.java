@@ -2,6 +2,7 @@ package com.tsoft.civilization.web.ajax.action.status;
 
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.tile.L10nTile;
+import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.world.L10nWorld;
 import com.tsoft.civilization.tile.TileService;
@@ -23,6 +24,13 @@ public class GetTileInfo extends AbstractAjaxRequest {
 
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
     private static final TileService tileService = new TileService();
+
+    public static StringBuilder getAjax(AbstractTile tile) {
+        return Format.text("server.sendAsyncAjax('ajax/GetTileInfo', { col:'$col', row:'$row' })",
+            "$col", tile.getLocation().getX(),
+            "$row", tile.getLocation().getY()
+        );
+    }
 
     @Override
     public Response getJson(Request request) {
@@ -102,15 +110,14 @@ public class GetTileInfo extends AbstractAjaxRequest {
         UnitList units = civilization.units().getUnits();
         for (AbstractUnit unit : units) {
             int passCost = tileService.getPassCost(unit, tile);
-            buf.append(Format.text(
-                "<tr>" +
-                    "<td><button onclick=\"client.getUnitStatus({ col:'$unitCol', row:'$unitRow', unit:'$unit' })\">$unitName</button></td>" +
-                    "<td>$passCost</td>" +
-                "</tr>",
+            buf.append(Format.text("""
+                <tr>
+                    <td><button onclick="$getUnitStatus">$unitName</button></td>
+                    <td>$passCost</td>
+                </tr>
+                """,
 
-                "$unitCol", unit.getLocation().getX(),
-                "$unitRow", unit.getLocation().getY(),
-                "$unit", unit.getId(),
+                "$getUnitStatus", ClientAjaxRequest.getUnitStatus(unit),
                 "$unitName", unit.getView().getLocalizedName(),
                 "$passCost", (passCost == TilePassCostTable.UNPASSABLE ? L10nTile.TILE_IS_UNPASSABLE : passCost)
             ));

@@ -20,6 +20,12 @@ public class GetEvents extends AbstractAjaxRequest {
 
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
 
+    public static StringBuilder getAjax(int year) {
+        return Format.text("server.sendAsyncAjax('ajax/GetEvents', { year:'$year' })",
+            "$year", year
+        );
+    }
+
     @Override
     public Response getJson(Request request) {
         Civilization civilization = getMyCivilization();
@@ -47,6 +53,7 @@ public class GetEvents extends AbstractAjaxRequest {
             "$navigationPanel", navigationPanel.getContent(),
             "$eventsNavigation", getEventsNavigation(civilization, year, stepNo),
             "$events", getEvents(civilization, year));
+
         return HtmlResponse.ok(value);
     }
 

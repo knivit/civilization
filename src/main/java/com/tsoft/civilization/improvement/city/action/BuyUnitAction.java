@@ -7,6 +7,7 @@ import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.util.Format;
+import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.UUID;
@@ -52,10 +53,6 @@ public class BuyUnitAction {
         return CityActionResults.CAN_BUY_UNIT;
     }
 
-    private static String getClientJSCode(City city, String unitClassUuid) {
-        return String.format("client.buyUnitAction({ city:'%1$s', unitUuid:'%2$s' })", city.getId(), unitClassUuid);
-    }
-
     private static String getLocalizedName() {
         return L10nUnit.BUY.getLocalized();
     }
@@ -69,10 +66,11 @@ public class BuyUnitAction {
             return null;
         }
 
-        return Format.text(
-            "<button onclick=\"$buttonOnClick\">$buttonLabel: $buyCost $gold</button>",
+        return Format.text("""
+            <button onclick="$buttonOnClick">$buttonLabel: $buyCost $gold</button>
+            """,
 
-            "$buttonOnClick", getClientJSCode(city, unitClassUuid),
+            "$buttonOnClick", ClientAjaxRequest.buyBuildingAction(city, unitClassUuid),
             "$buttonLabel", getLocalizedName(),
             "$buyCost", city.getUnitBuyCost(unitClassUuid),
             "$gold", L10nCity.GOLD

@@ -51,10 +51,10 @@ public class GetControlPanel extends AbstractAjaxRequest {
         StringBuilder controls = new StringBuilder();
         if (!units.isEmpty() || !cities.isEmpty()) {
             controls.append(Format.text("""
-                <td><button onclick="server.sendAsyncAjax('ajax/GetCivilizationStatus', { civilization:'$civilization' })">$actions</button></td>
+                <td><button onclick="$getCivilizationStatus">$actions</button></td>
                 """,
 
-                "$civilization", civilization.getId(),
+                "$getCivilizationStatus", GetCivilizationStatus.getAjax(civilization),
                 "$actions", L10nCivilization.AVAILABLE_ACTIONS
             ));
         }

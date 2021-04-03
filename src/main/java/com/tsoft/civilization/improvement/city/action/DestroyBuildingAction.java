@@ -35,6 +35,7 @@ public class DestroyBuildingAction {
         return CityActionResults.CAN_DESTROY_BUILDING;
     }
 
+    перенести в ClientAjaxRequest
     private static String getClientJSCode(AbstractBuilding building) {
         return String.format("client.destroyBuildingAction({ building:'%1$s' })", building.getId());
     }

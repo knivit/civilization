@@ -7,6 +7,7 @@ import com.tsoft.civilization.action.ActionSuccessResult;
 import com.tsoft.civilization.civilization.MoveState;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.UUID;
@@ -40,10 +41,6 @@ public class NextTurnAction {
         return NEXT_TURN;
     }
 
-    private static String getClientJSCode() {
-        return "client.nextTurnAction()";
-    }
-
     private static String getLocalizedName() {
         return L10nCivilization.NEXT_TURN.getLocalized();
     }
@@ -61,7 +58,7 @@ public class NextTurnAction {
             <td><button onclick="$buttonOnClick">$buttonLabel</button></td>
             """,
 
-            "$buttonOnClick", getClientJSCode(),
+            "$buttonOnClick", ClientAjaxRequest.nextTurnAction(),
             "$buttonLabel", getLocalizedName());
     }
 }

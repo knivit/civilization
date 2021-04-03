@@ -6,19 +6,24 @@ import com.tsoft.civilization.util.Format;
 public class GetNavigationPanel {
 
     public StringBuilder getContent() {
-        return Format.text(
-            "<table id='navigation_panel'><tr>" +
-                "<td><button onclick=\"server.sendAsyncAjax('ajax/GetCivilizations')\">$civilizationsButton</button></td>" +
-                "<td><button onclick=\"server.sendAsyncAjax('ajax/GetMyCities')\">$citiesButton</button></td>" +
-                "<td><button onclick=\"server.sendAsyncAjax('ajax/GetMyUnits')\">$unitsButton</button></td>" +
+        return Format.text("""
+            <table id='navigation_panel'><tr> +
+                <td><button onclick="$getCivilizations">$civilizationsButton</button></td>
+                <td><button onclick="$getMyCities">$citiesButton</button></td>
+                <td><button onclick="$getMyUnits">$unitsButton</button></td>
 
                 // use year:10 000 to show last events first
-                "<td><button onclick=\"server.sendAsyncAjax('ajax/GetEvents', { year:'10000' })\">$showEventsButton</button></td>" +
-            "</tr></table>",
+                <td><button onclick="$getEvents">$showEventsButton</button></td>
+            </tr></table>
+            """,
 
+            "$getCivilizations", GetCivilizations.getAjax(),
             "$civilizationsButton", L10nClient.CIVILIZATIONS_BUTTON,
+            "$getMyCities", GetMyCities.getAjax(),
             "$citiesButton", L10nClient.MY_CITIES_BUTTON,
+            "$getMyUnits", GetMyUnits.getAjax(),
             "$unitsButton", L10nClient.MY_UNITS_BUTTON,
+            "$getEvents", GetEvents.getAjax(10000),
             "$showEventsButton", L10nClient.SHOW_EVENTS_BUTTON
         );
     }

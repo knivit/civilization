@@ -3,6 +3,7 @@ package com.tsoft.civilization.web.ajax.action.status;
 import com.tsoft.civilization.improvement.city.L10nCity;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.tile.L10nTile;
+import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.world.L10nWorld;
 import com.tsoft.civilization.unit.L10nUnit;
@@ -86,30 +87,30 @@ public class GetTileStatus extends AbstractAjaxRequest {
     }
 
     private StringBuilder getMyUnitInfo(AbstractUnit unit) {
-        return Format.text(
-            "<tr>" +
-                "<td><button onclick=\"client.getUnitStatus({ col:'$unitCol', row:'$unitRow', unit:'$unit' })\">$unitName</button></td>" +
-                "<td><button onclick=\"server.sendAsyncAjax('ajax/GetCivilizationStatus', { civilization:'$civilization' })\">$civilizationName</button></td>" +
-            "</tr>",
+        return Format.text("""
+            <tr>
+                <td><button onclick="$getUnitStatus">$unitName</button></td>
+                <td><button onclick="$getCivilizationStatus">$civilizationName</button></td>
+            </tr>
+            """,
 
-            "$unitCol", unit.getLocation().getX(),
-            "$unitRow", unit.getLocation().getY(),
-            "$unit", unit.getId(),
+            "$getUnitStatus", ClientAjaxRequest.getUnitStatus(unit),
             "$unitName", unit.getView().getLocalizedName(),
-            "$civilization", unit.getCivilization().getId(),
+            "$getCivilizationStatus", GetCivilizationStatus.getAjax(unit.getCivilization()),
             "$civilizationName", unit.getCivilization().getView().getLocalizedCivilizationName()
         );
     }
 
     private StringBuilder getForeignUnitInfo(AbstractUnit unit) {
-        return Format.text(
-            "<tr>" +
-                "<td>$unitName</td>" +
-                "<td><button onclick=\"server.sendAsyncAjax('ajax/GetCivilizationStatus', { civilization:'$civilization' })\">$civilizationName</button></td>" +
-            "</tr>",
+        return Format.text("""
+            <tr>
+                <td>$unitName</td>
+                <td><button onclick="$getCivilizationStatus">$civilizationName</button></td>
+            </tr>
+            """,
 
             "$unitName", unit.getView().getLocalizedName(),
-            "$civilization", unit.getCivilization().getId(),
+            "$getCivilizationStatus", GetCivilizationStatus.getAjax(unit.getCivilization()),
             "$civilizationName", unit.getCivilization().getView().getLocalizedCivilizationName()
         );
     }
@@ -141,30 +142,30 @@ public class GetTileStatus extends AbstractAjaxRequest {
     }
 
     private StringBuilder getMyCityInfo(City city) {
-        return Format.text(
-            "<tr>" +
-                "<td><button onclick=\"client.getCityStatus({ col:'$cityCol', row:'$cityRow', city:'$city' })\">$cityName</button></td>" +
-                "<td><button onclick=\"server.sendAsyncAjax('ajax/GetCivilizationStatus', { civilization:'$civilization' })\">$civilizationName</button></td>" +
-            "</tr>",
+        return Format.text("""
+            <tr>
+                <td><button onclick="$getCityStatus">$cityName</button></td>
+                <td><button onclick="$getCivilizationStatus">$civilizationName</button></td>
+            </tr>
+            """,
 
-            "$city", city.getId(),
-            "$cityCol", city.getLocation().getX(),
-            "$cityRow", city.getLocation().getY(),
+            "$getCityStatus", ClientAjaxRequest.getCityStatus(city),
             "$cityName", city.getView().getLocalizedCityName(),
-            "$civilization", city.getCivilization().getId(),
+            "$getCivilizationStatus", GetCivilizationStatus.getAjax(city.getCivilization()),
             "$civilizationName", city.getCivilization().getView().getLocalizedCivilizationName()
         );
     }
 
     private StringBuilder getForeignCityInfo(City city) {
-        return Format.text(
-            "<tr>" +
-                "<td>$cityName</td>" +
-                "<td><button onclick=\"server.sendAsyncAjax('ajax/GetCivilizationStatus', { civilization:'$civilization' })\">$civilizationName</button></td>" +
-            "</tr>",
+        return Format.text("""
+            <tr>
+                <td>$cityName</td>
+                <td><button onclick="$getCivilizationStatus">$civilizationName</button></td>
+            </tr>
+            """,
 
             "$cityName", city.getView().getLocalizedCityName(),
-            "$civilization", city.getCivilization().getId(),
+            "$getCivilizationStatus", GetCivilizationStatus.getAjax(city.getCivilization()),
             "$civilizationName", city.getCivilization().getView().getLocalizedCivilizationName()
         );
     }
@@ -175,13 +176,14 @@ public class GetTileStatus extends AbstractAjaxRequest {
             return null;
         }
 
-        return Format.text(
-            "<table id='title_table'>" +
-                "<tr><td><button onclick=\"server.sendAsyncAjax('ajax/GetCivilizationStatus', { civilization:'$civilization' })\">$civilizationName</button></td></tr>" +
-                "<tr><td><img src='$civilizationImage'/></td></tr>" +
-            "</table>",
+        return Format.text("""
+            <table id='title_table'>
+                <tr><td><button onclick="$getCivilizationStatus">$civilizationName</button></td></tr>
+                <tr><td><img src='$civilizationImage'/></td></tr>
+            </table>
+            """,
 
-            "$civilization", civilization.getId(),
+            "$getCivilizationStatus", GetCivilizationStatus.getAjax(civilization),
             "$civilizationName", civilization.getView().getLocalizedCivilizationName(),
             "$civilizationImage", civilization.getView().getStatusImageSrc()
         );
@@ -204,7 +206,7 @@ public class GetTileStatus extends AbstractAjaxRequest {
             <table id='info_table'>
                 <tr><th></th><th>$productionLabel</th><th>$goldLabel</th><th>$foodLabel</th></tr>
                 <tr>
-                    <td><button onclick="server.sendAsyncAjax('ajax/GetTileInfo', { col:'$col', row:'$row' })">$tileName</button></td>
+                    <td><button onclick="$getTileInfo">$tileName</button></td>
                     <td>$production</td>
                     <td>$gold</td>
                     <td>$food</td>
@@ -218,8 +220,7 @@ public class GetTileStatus extends AbstractAjaxRequest {
             "$productionLabel", L10nTile.PRODUCTION,
             "$goldLabel", L10nTile.GOLD,
             "$foodLabel", L10nTile.FOOD,
-            "$col", tile.getLocation().getX(),
-            "$row", tile.getLocation().getY(),
+            "$getTileInfo", GetTileInfo.getAjax(tile),
             "$tileName", tile.getView().getLocalizedName(),
             "$production", tile.getBaseSupply().getProduction(),
             "$gold", tile.getBaseSupply().getGold(),
@@ -239,14 +240,14 @@ public class GetTileStatus extends AbstractAjaxRequest {
         Supply featureSupply = feature.getSupply();
         return Format.text("""
             <tr>
-                <td><button onclick="server.sendAsyncAjax('ajax/GetFeatureInfo', { feature:'$feature' })">$featureName</button></td>
+                <td><button onclick="$getFeatureInfo">$featureName</button></td>
                 <td>$production</td>
                 <td>$gold</td>
                 <td>$food</td>
             </tr>
             """,
 
-           "$feature", feature.getClassUuid(),
+           "$getFeatureInfo", GetFeatureInfo.getAjax(feature),
            "$featureName", feature.getView().getLocalizedName(),
            "$production", featureSupply.getProduction(),
            "$gold", featureSupply.getGold(),

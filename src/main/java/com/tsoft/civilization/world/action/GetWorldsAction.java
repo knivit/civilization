@@ -120,57 +120,16 @@ public class GetWorldsAction {
 
             int slotsAvailable = world.getMaxNumberOfCivilizations() - world.getCivilizations().size();
             if (slotsAvailable > 0) {
+                // add a human
+                actions.append(addPlayer(civilizations, world, PlayerType.HUMAN, L10nWorld.JOIN_WORLD_BUTTON));
+
                 // add bots for all slots (we can just view the game as a spectator)
                 for (int i = 0; i < slotsAvailable; i ++) {
-                    String civilizationSelector = UUID.randomUUID().toString();
-                    actions.append(Format.text("""
-                        <tr>
-                            <td><select id='$civilizationSelector'>$civilizations</select></td>
-                            <td><button onclick="$joinWorldRequest({ world:'$world', civilizationSelector:'$civilizationSelector', playerType:'$playerType' })">$addBot</button></td>
-                        </tr>
-                        """,
-
-                        "$civilizations", civilizations,
-                        "$civilizationSelector", civilizationSelector,
-                        "$joinWorldRequest", JOIN_WORLD_REQUEST,
-                        "$world", world.getId(),
-                        "$playerType", PlayerType.BOT,
-                        "$addBot", ADD_BOT_BUTTON
-                    ));
+                    actions.append(addPlayer(civilizations, world, PlayerType.BOT, L10nWorld.ADD_BOT_BUTTON));
                 }
-
-                String civilizationSelector = UUID.randomUUID().toString();
-                actions.append(Format.text("""
-                    <tr>
-                        <td><select id='$civilizationSelector'>$civilizations</select></td>
-                        <td><button onclick="$joinWorldRequest({ world:'$world', civilizationSelector:'$civilizationSelector', playerType:'$playerType' })">$join</button></td>
-                    </tr>
-                    """,
-
-                    "$civilizations", civilizations,
-                    "$civilizationSelector", civilizationSelector,
-                    "$joinWorldRequest", JOIN_WORLD_REQUEST,
-                    "$world", world.getId(),
-                    "$playerType", PlayerType.HUMAN,
-                    "$join", L10nWorld.JOIN_WORLD_BUTTON
-                ));
             }
 
-            String civilizationSelector = UUID.randomUUID().toString();
-            actions.append(Format.text("""
-                <tr>
-                    <td><select id='$civilizationSelector'>$civilizations</select></td>
-                    <td><button onclick="$joinWorldRequest({ world:'$world', civilizationSelector:'$civilizationSelector', playerType:'$playerType' })">$spectator</button></td>
-                </tr>
-                """,
-
-                "$civilizations", civilizations,
-                "$civilizationSelector", civilizationSelector,
-                "$joinWorldRequest", JOIN_WORLD_REQUEST,
-                "$world", world.getId(),
-                "$playerType", PlayerType.SPECTATOR,
-                "$spectator", L10nWorld.SPECTATOR_WORLD_BUTTON
-            ));
+            actions.append(addPlayer(civilizations, world, PlayerType.SPECTATOR, L10nWorld.SPECTATOR_WORLD_BUTTON));
 
             worlds.append(Format.text("""
                 <tr>
@@ -207,6 +166,25 @@ public class GetWorldsAction {
             """,
 
             "$worlds", worlds
+        );
+    }
+
+    private static StringBuilder addPlayer(StringBuilder civilizations, World world, PlayerType playerType, L10n joinButtonMessage) {
+        String civilizationSelector = UUID.randomUUID().toString();
+
+        return Format.text("""
+                    <tr>
+                        <td><select id='$civilizationSelector'>$civilizations</select></td>
+                        <td><button onclick="$joinWorldRequest({ world:'$world', civilizationSelector:'$civilizationSelector', playerType:'$playerType' })">$join</button></td>
+                    </tr>
+                    """,
+
+            "$civilizations", civilizations,
+            "$civilizationSelector", civilizationSelector,
+            "$joinWorldRequest", JOIN_WORLD_REQUEST,
+            "$world", world.getId(),
+            "$playerType", playerType,
+            "$join", joinButtonMessage
         );
     }
 

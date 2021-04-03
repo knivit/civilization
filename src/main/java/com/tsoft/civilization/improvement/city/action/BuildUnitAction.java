@@ -7,6 +7,7 @@ import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.util.Format;
+import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 
 import java.util.UUID;
 
@@ -50,10 +51,6 @@ public class BuildUnitAction {
         return CityActionResults.CAN_START_CONSTRUCTION;
     }
 
-    private static String getClientJSCode(City city, String unitClassUuid) {
-        return String.format("client.buildUnitAction({ city:'%1$s', unitUuid:'%2$s' })", city.getId(), unitClassUuid);
-    }
-
     private static String getLocalizedName() {
         return L10nUnit.BUILD.getLocalized();
     }
@@ -67,10 +64,11 @@ public class BuildUnitAction {
             return null;
         }
 
-        return Format.text(
-            "<button onclick=\"$buttonOnClick\">$buttonLabel: $productionCost $production</button>",
+        return Format.text("""
+            <button onclick="$buttonOnClick">$buttonLabel: $productionCost $production</button>
+            """,
 
-            "$buttonOnClick", getClientJSCode(city, unitClassUuid),
+            "$buttonOnClick", ClientAjaxRequest.buildUnitAction(city, unitClassUuid),
             "$buttonLabel", getLocalizedName(),
             "$productionCost", city.getUnitProductionCost(unitClassUuid),
             "$production", L10nCity.PRODUCTION

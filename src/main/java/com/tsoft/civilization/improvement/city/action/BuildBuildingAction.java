@@ -7,6 +7,7 @@ import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.BuildingCatalog;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.util.Format;
+import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.UUID;
@@ -52,10 +53,6 @@ public class BuildBuildingAction {
         return CityActionResults.CAN_START_CONSTRUCTION;
     }
 
-    private static String getClientJSCode(City city, String buildingClassUuid) {
-        return String.format("client.buildBuildingAction({ city:'%1$s', buildingUuid:'%2$s' })", city.getId(), buildingClassUuid);
-    }
-
     private static String getLocalizedName() {
         return L10nBuilding.BUILD.getLocalized();
     }
@@ -70,10 +67,11 @@ public class BuildBuildingAction {
             return null;
         }
 
-        return Format.text(
-            "<button onclick=\"$buttonOnClick\">$buttonLabel: $productionCost $production</button>",
+        return Format.text("""
+            <button onclick="$buttonOnClick">$buttonLabel: $productionCost $production</button>
+            """,
 
-            "$buttonOnClick", getClientJSCode(city, buildingClassUuid),
+            "$buttonOnClick", ClientAjaxRequest.buildBuildingAction(city, buildingClassUuid),
             "$buttonLabel", getLocalizedName(),
             "$productionCost", city.getBuildingProductionCost(buildingClassUuid),
             "$production", L10nCity.PRODUCTION

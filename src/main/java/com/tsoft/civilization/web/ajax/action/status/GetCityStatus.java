@@ -1,9 +1,9 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
 import com.tsoft.civilization.improvement.city.L10nCity;
+import com.tsoft.civilization.unit.*;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.building.L10nBuilding;
-import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.building.*;
 import com.tsoft.civilization.improvement.city.Construction;
 import com.tsoft.civilization.improvement.city.ConstructionList;
@@ -12,9 +12,6 @@ import com.tsoft.civilization.improvement.city.action.BuildUnitAction;
 import com.tsoft.civilization.improvement.city.action.BuyBuildingAction;
 import com.tsoft.civilization.improvement.city.action.BuyUnitAction;
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.UnitFactory;
-import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.HtmlResponse;
@@ -26,6 +23,7 @@ import com.tsoft.civilization.civilization.Civilization;
 public class GetCityStatus extends AbstractAjaxRequest {
 
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
+    private final UnitListService unitListService = new UnitListService();
     private final BuildingListService buildingListService = new BuildingListService();
 
     @Override
@@ -68,13 +66,13 @@ public class GetCityStatus extends AbstractAjaxRequest {
         return Format.text("""
             <table id='title_table'>
                 <tr><td>$cityName</td></tr>
-                <tr><td><button onclick="server.sendAsyncAjax('ajax/GetCivilizationStatus', { civilization:'$civilization' })">$civilizationName</button></td></tr>
+                <tr><td><button onclick="$getCivilizationStatus">$civilizationName</button></td></tr>
                 <tr><td><image src='$cityImageSrc'/></td></tr>
             </table>
             """,
 
             "$cityName", city.getView().getLocalizedCityName(),
-            "$civilization", city.getCivilization().getId(),
+            "$getCivilizationStatus", GetCivilizationStatus.getAjax(city.getCivilization()),
             "$civilizationName", city.getCivilization().getView().getLocalizedCivilizationName(),
             "$cityImageSrc", city.getView().getStatusImageSrc()
         );
@@ -196,7 +194,7 @@ public class GetCityStatus extends AbstractAjaxRequest {
     private StringBuilder getUnitConstructionActions(City city) {
         StringBuilder buf = new StringBuilder();
         UnitList units = UnitFactory.getAvailableUnits(city.getCivilization());
-        for (AbstractUnit unit : units) {
+        for (AbstractUnit unit : unitListService.sortByName(units)) {
             StringBuilder buyUnitAction = BuildUnitAction.getHtml(city, unit.getClassUuid());
             StringBuilder buildUnitAction = BuyUnitAction.getHtml(city, unit.getClassUuid());
 
@@ -237,7 +235,7 @@ public class GetCityStatus extends AbstractAjaxRequest {
         StringBuilder buf = new StringBuilder();
 
         BuildingList buildings = BuildingCatalog.values();
-        for (AbstractBuilding building : buildings) {
+        for (AbstractBuilding building : buildingListService.sortByName(buildings)) {
             StringBuilder buyBuildingAction = BuildBuildingAction.getHtml(city, building.getClassUuid());
             StringBuilder buildBuildingAction = BuyBuildingAction.getHtml(city, building.getClassUuid());
 
@@ -304,16 +302,13 @@ public class GetCityStatus extends AbstractAjaxRequest {
             );
         }
 
-        // sort the buildings by name
-        buildings = buildingListService.sortByName(buildings);
-
         StringBuilder buf = new StringBuilder();
-        for (AbstractBuilding building : buildings) {
+        for (AbstractBuilding building : buildingListService.sortByName(buildings)) {
             buf.append(Format.text("""
-                <tr><td><button onclick="server.sendAsyncAjax('ajax/GetBuildingStatus', { building:'$building' })">$buttonLabel</button></td></tr>
+                <tr><td><button onclick="$getBuildingStatus">$buttonLabel</button></td></tr>
                 """,
 
-                "$building", building.getId(),
+                "$getBuildingStatus", GetBuildingStatus.getAjax(building),
                 "$buttonLabel", building.getView().getLocalizedName()
             ));
         }

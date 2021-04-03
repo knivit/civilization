@@ -6,6 +6,7 @@ import com.tsoft.civilization.building.L10nBuilding;
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.BuildingActions;
 import com.tsoft.civilization.util.Format;
+import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.web.response.JsonResponse;
@@ -18,6 +19,12 @@ public class GetBuildingStatus extends AbstractAjaxRequest {
 
     private final BuildingActions buildingActions = new BuildingActions();
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
+
+    public static StringBuilder getAjax(AbstractBuilding building) {
+        return Format.text("server.sendAsyncAjax('ajax/GetBuildingStatus', { building:'$building' })",
+            "$building", building.getId()
+        );
+    }
 
     @Override
     public Response getJson(Request request) {
@@ -51,18 +58,16 @@ public class GetBuildingStatus extends AbstractAjaxRequest {
         return Format.text("""
             <table id='title_table'>
                 <tr><td>$buildingName</td></tr>
-                <tr><td><button onclick="server.sendAsyncAjax('ajax/GetCivilizationStatus', { civilization:'$civilization' })">$civilizationName</button></td></tr>
-                <tr><td><button onclick="client.getCityStatus({ col:'$cityCol', row:'$cityRow', city:'$city' })">$cityName</button></td></tr>
+                <tr><td><button onclick="$getCivilizationStatus">$civilizationName</button></td></tr>
+                <tr><td><button onclick="$getCityStatus">$cityName</button></td></tr>
                 <tr><td><img src='$buildingImage'/></td></tr>
             </table>
             """,
 
             "$buildingName", building.getView().getLocalizedName(),
-            "$civilization", building.getCivilization().getId(),
+            "$getCivilizationStatus", GetCivilizationStatus.getAjax(building.getCivilization()),
             "$civilizationName", building.getCivilization().getView().getLocalizedCivilizationName(),
-            "$cityCol", building.getCity().getLocation().getX(),
-            "$cityRow", building.getCity().getLocation().getY(),
-            "$city", building.getCity().getId(),
+            "$getCityStatus", ClientAjaxRequest.getCityStatus(building.getCity()),
             "$cityName", building.getCity().getView().getLocalizedCityName(),
             "$buildingImage", building.getView().getStatusImageSrc()
         );

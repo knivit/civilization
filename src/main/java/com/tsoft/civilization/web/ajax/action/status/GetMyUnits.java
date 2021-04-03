@@ -6,6 +6,7 @@ import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.unit.UnitListService;
 import com.tsoft.civilization.util.Format;
+import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.web.response.JsonResponse;
@@ -17,6 +18,10 @@ public class GetMyUnits extends AbstractAjaxRequest {
 
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
     private final UnitListService unitListService = new UnitListService();
+
+    public static StringBuilder getAjax() {
+        return new StringBuilder("server.sendAsyncAjax('ajax/GetMyUnits')");
+    }
 
     @Override
     public Response getJson(Request request) {
@@ -66,7 +71,7 @@ public class GetMyUnits extends AbstractAjaxRequest {
         for (AbstractUnit unit : units) {
             buf.append(Format.text("""
                 <tr>
-                    <td><button onclick="client.getUnitStatus({ col:'$unitCol', row:'$unitRow', unit:'$unit' })">$unitName</button></td>
+                    <td><button onclick="$getUnitStatus">$unitName</button></td>
                     <td>$passScore</td>
                     <td>$meleeAttackStrength</td>
                     <td>$rangedAttackStrength</td>
@@ -74,14 +79,12 @@ public class GetMyUnits extends AbstractAjaxRequest {
                 </tr>
                 """,
 
+                "$getUnitStatus", ClientAjaxRequest.getUnitStatus(unit),
+                "$unitName", unit.getView().getLocalizedName(),
                 "$passScore", unit.getPassScore(),
                 "$meleeAttackStrength", unit.getCombatStrength().getMeleeAttackStrength(),
                 "$rangedAttackStrength", unit.getCombatStrength().getRangedAttackStrength(),
-                "$strength", unit.getCombatStrength().getStrength(),
-                "$unitCol", unit.getLocation().getX(),
-                "$unitRow", unit.getLocation().getY(),
-                "$unit", unit.getId(),
-                "$unitName", unit.getView().getLocalizedName()
+                "$strength", unit.getCombatStrength().getStrength()
             ));
         }
 

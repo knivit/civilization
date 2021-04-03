@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class PostRequestProcessor {
-    private static final String REQUEST_PREFIX = "ajax/";
+    public static final String REQUEST_PREFIX = "ajax/";
 
     private PostRequestProcessor() { }
 

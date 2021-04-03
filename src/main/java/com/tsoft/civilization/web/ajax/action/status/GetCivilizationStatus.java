@@ -26,6 +26,12 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
     private final CityListService cityListService = new CityListService();
     private final UnitListService unitListService = new UnitListService();
 
+    public static StringBuilder getAjax(Civilization civilization) {
+        return Format.text("server.sendAsyncAjax('ajax/GetCivilizationStatus', { civilization:'$civilization' })",
+            "$civilization", civilization.getId()
+        );
+    }
+
     @Override
     public Response getJson(Request request) {
         Civilization myCivilization = getMyCivilization();

@@ -16,6 +16,12 @@ public class GetFeatureInfo extends AbstractAjaxRequest {
 
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
 
+    public static StringBuilder getAjax(TerrainFeature feature) {
+        return Format.text("server.sendAsyncAjax('ajax/GetFeatureInfo', { feature:'$feature' })",
+            "$feature", feature.getClassUuid()
+        );
+    }
+
     @Override
     public Response getJson(Request request) {
         String featureClassUuid = request.get("feature");

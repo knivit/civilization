@@ -48,14 +48,14 @@ public class GetUnitStatus extends AbstractAjaxRequest {
         return Format.text("""
             <table id='title_table'>
                 <tr><td>$unitName</td></tr>
-                <tr><td><button onclick="server.sendAsyncAjax('ajax/GetCivilizationStatus', { civilization:'$civilization' })">$civilizationName</button></td></tr>
+                <tr><td><button onclick="$getCivilizationStatus">$civilizationName</button></td></tr>
                 <tr><td><img src='$unitImageSrc'/></td></tr>
                 <tr><td>$unitDescription</td></tr>
             </table>
             """,
 
             "$unitName", unit.getView().getLocalizedName(),
-            "$civilization", unit.getCivilization().getId(),
+            "$getCivilizationStatus", GetCivilizationStatus.getAjax(unit.getCivilization()),
             "$civilizationName", unit.getCivilization().getView().getLocalizedCivilizationName(),
             "$unitImageSrc", unit.getView().getStatusImageSrc(),
             "$unitDescription", unit.getView().getLocalizedDescription()

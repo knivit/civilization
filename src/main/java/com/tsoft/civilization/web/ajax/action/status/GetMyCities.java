@@ -7,6 +7,7 @@ import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityList;
 import com.tsoft.civilization.improvement.city.CityListService;
 import com.tsoft.civilization.util.Format;
+import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.web.response.JsonResponse;
@@ -18,6 +19,10 @@ public class GetMyCities extends AbstractAjaxRequest {
 
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
     private final CityListService cityListService = new CityListService();
+
+    public static StringBuilder getAjax() {
+        return new StringBuilder("server.sendAsyncAjax('ajax/GetMyCities')");
+    }
 
     @Override
     public Response getJson(Request request) {
@@ -67,7 +72,7 @@ public class GetMyCities extends AbstractAjaxRequest {
         for (City city : cities) {
             buf.append(Format.text("""
                 <tr>
-                    <td><button onclick="client.getCityStatus({ col:'$cityCol', row:'$cityRow', city:'$city' })">$cityName</button></td>
+                    <td><button onclick="$getCityStatus">$cityName</button></td>
                     <td>$citizens</td>
                     <td>$production</td>
                     <td>$gold</td>
@@ -75,14 +80,12 @@ public class GetMyCities extends AbstractAjaxRequest {
                 </tr>
                 """,
 
+                "$getCityStatus", ClientAjaxRequest.getCityStatus(city),
+                "$cityName", city.getView().getLocalizedCityName(),
                 "$citizens", city.getCitizenCount(),
                 "$production", city.getSupply().getProduction(),
                 "$gold", city.getSupply().getGold(),
-                "$food", city.getSupply().getFood(),
-                "$cityCol", city.getLocation().getX(),
-                "$cityRow", city.getLocation().getY(),
-                "$city", city.getId(),
-                "$cityName", city.getView().getLocalizedCityName()
+                "$food", city.getSupply().getFood()
             ));
         }
 

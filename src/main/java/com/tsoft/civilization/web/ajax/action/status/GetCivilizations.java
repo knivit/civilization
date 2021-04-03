@@ -18,6 +18,10 @@ public class GetCivilizations extends AbstractAjaxRequest {
 
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
 
+    public static StringBuilder getAjax() {
+        return new StringBuilder("server.sendAsyncAjax('ajax/GetCivilizations')");
+    }
+
     @Override
     public Response getJson(Request request) {
         Civilization myCivilization = getMyCivilization();
@@ -50,13 +54,13 @@ public class GetCivilizations extends AbstractAjaxRequest {
             buf.append(Format.text("""
                 <tr>
                     <td><image src='$imageSrc'/></td>
-                    <td><button onclick="server.sendAsyncAjax('ajax/GetCivilizationStatus', { civilization:'$civilizationId' })">$civilizationName</button></td>
+                    <td><button onclick="$getCivilizationStatus">$civilizationName</button></td>
                     <td>$relations</td>
                 </tr>
                 """,
 
                 "$imageSrc", civilization.getView().getStatusImageSrc(),
-                "$civilizationId", civilization.getId(),
+                "$getCivilizationStatus", GetCivilizationStatus.getAjax(civilization),
                 "$civilizationName", civilization.getView().getLocalizedCivilizationName(),
                 "$relations", (relations == null) ? "" : relations.getDescription().toString()
             ));

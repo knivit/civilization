@@ -7,6 +7,7 @@ import com.tsoft.civilization.action.ActionSuccessResult;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationsRelations;
+import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import com.tsoft.civilization.world.World;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 @Slf4j
 public class DeclareWarAction {
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     public static final ActionSuccessResult CAN_DECLARE_WAR = new ActionSuccessResult(L10nCivilization.CAN_DECLARE_WAR);
@@ -53,11 +55,6 @@ public class DeclareWarAction {
         return CAN_DECLARE_WAR;
     }
 
-    private static String getClientJSCode(Civilization civilization) {
-        return String.format("client.declareWarAction({ otherCivilization:'%1$s', confirmationMessage:'%2$s' })",
-            civilization.getId(), L10nCivilization.CONFIRM_DECLARE_WAR);
-    }
-
     private static String getLocalizedName() {
         return L10nCivilization.DECLARE_WAR_NAME.getLocalized();
     }
@@ -75,7 +72,7 @@ public class DeclareWarAction {
             <td><button onclick="$buttonOnClick">$buttonLabel</button></td><td>$actionDescription</td>
             """,
 
-            "$buttonOnClick", getClientJSCode(otherCivilization),
+            "$buttonOnClick", ClientAjaxRequest.declareWar(otherCivilization),
             "$buttonLabel", getLocalizedName(),
             "$actionDescription", getLocalizedDescription());
     }
