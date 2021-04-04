@@ -85,8 +85,8 @@ public class CivilizationCityService {
         world.sendEvent(new Event(Event.UPDATE_WORLD, city, L10nCity.REMOVE_CITY_EVENT, city.getView().getLocalizedCityName()));
 
         // civilizations is destroyed when all its cities are destroyed
-        if (isDestroyed()) {
-            world.sendEvent(new Event(Event.UPDATE_WORLD, this, L10nWorld.DESTROY_CIVILIZATION_EVENT, civilization.getView().getLocalizedCivilizationName()));
+        if (cities.isEmpty()) {
+            civilization.setDestroyed();
         }
     }
 
@@ -115,11 +115,7 @@ public class CivilizationCityService {
 
         // pass the city to the winner's civilization
         city.moveToCivilization(civilization);
-        cities.add(city);
-    }
-
-    public boolean isDestroyed() {
-        return cities.isEmpty();
+        civilization.cities().addCity(city);
     }
 
     public City getCityAtLocation(Point location) {

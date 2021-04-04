@@ -17,6 +17,7 @@ import com.tsoft.civilization.civilization.CivilizationList;
 public class GetCivilizations extends AbstractAjaxRequest {
 
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
+    private final GetCivilizationInfo civilizationInfo = new GetCivilizationInfo();
 
     public static StringBuilder getAjax() {
         return new StringBuilder("server.sendAsyncAjax('ajax/GetCivilizations')");
@@ -24,57 +25,68 @@ public class GetCivilizations extends AbstractAjaxRequest {
 
     @Override
     public Response getJson(Request request) {
-        Civilization myCivilization = getMyCivilization();
-        if (myCivilization == null) {
+        Civilization civilization = getMyCivilization();
+        if (civilization == null) {
             return JsonResponse.badRequest(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
         StringBuilder value = Format.text("""
             $navigationPanel
+            $civilizationInfo
             $civilizations
             """,
 
             "$navigationPanel", navigationPanel.getContent(),
-            "$civilizations", getCivilizations(myCivilization.getWorld())
+            "$civilizationInfo", civilizationInfo.getContent(civilization),
+            "$civilizations", getCivilizations(civilization.getWorld())
         );
 
         return HtmlResponse.ok(value);
     }
 
     private StringBuilder getCivilizations(World world) {
-        CivilizationList civilizations = world.getCivilizations();
+        CivilizationList civilizations = world.getCivilizations().sortByName();
 
-        civilizations.sortByName();
         Civilization myCivilization = getMyCivilization();
 
         StringBuilder buf = new StringBuilder();
         for (Civilization civilization : civilizations) {
+            if (civilization.equals(myCivilization)) {
+                continue;
+            }
+
             CivilizationsRelations relations = world.getCivilizationsRelations(myCivilization, civilization);
 
             buf.append(Format.text("""
                 <tr>
-                    <td><image src='$imageSrc'/></td>
-                    <td><button onclick="$getCivilizationStatus">$civilizationName</button></td>
+                    <td><image src='$imageSrc'/><button onclick="$getCivilizationStatus">$civilizationName</button></td>
                     <td>$relations</td>
+                    <td>$moveState</td>
                 </tr>
                 """,
 
                 "$imageSrc", civilization.getView().getStatusImageSrc(),
                 "$getCivilizationStatus", GetCivilizationStatus.getAjax(civilization),
                 "$civilizationName", civilization.getView().getLocalizedCivilizationName(),
-                "$relations", (relations == null) ? "" : relations.getDescription().toString()
+                "$relations", relations.getDescription(),
+                "$moveState", civilization.getMoveState().getDescription()
             ));
         }
 
         return Format.text("""
             <table id='actions_table'>
-                <tr><th colspan='2'>$name</th><th>$relations</th></tr>
+                <tr>
+                    <th>$name</th>
+                    <th>$relations</th>
+                    <th>$moveState</th>
+                </tr>
                 $civilizations
             </table>
             """,
 
             "$name", L10nCivilization.CIVILIZATION_NAME,
             "$relations", L10nWorld.RELATIONS_NAME,
+            "$moveState", L10nWorld.MOVE_STATE_HEADER,
             "$civilizations", buf
         );
     }

@@ -103,7 +103,8 @@ var client = {
                 console.log("Got information event:", e.data, ", lastEventId =", e.lastEventId);
             }
 
-//            eventPanel.add(JSON.parse(e.data));
+            //eventPanel.add(JSON.parse(e.data));
+            document.getElementById("informationBoard").innerHTML = JSON.parse(e.data).description;
         };
     },
 

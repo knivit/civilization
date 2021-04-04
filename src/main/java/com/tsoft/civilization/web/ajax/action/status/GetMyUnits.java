@@ -17,6 +17,7 @@ import com.tsoft.civilization.civilization.Civilization;
 public class GetMyUnits extends AbstractAjaxRequest {
 
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
+    private final GetCivilizationInfo civilizationInfo = new GetCivilizationInfo();
     private final UnitListService unitListService = new UnitListService();
 
     public static StringBuilder getAjax() {
@@ -37,22 +38,9 @@ public class GetMyUnits extends AbstractAjaxRequest {
             """,
 
             "$navigationPanel", navigationPanel.getContent(),
-            "$civilizationInfo", getCivilizationInfo(civilization),
+            "$civilizationInfo", civilizationInfo.getContent(civilization),
             "$unitsInfo", getUnitsInfo(civilization));
         return HtmlResponse.ok(value);
-    }
-
-    private StringBuilder getCivilizationInfo(Civilization civilization) {
-        return Format.text("""
-            <table id='title_table'>
-                <tr><td>$civilizationName</td></tr>
-                <tr><td><img src='$civilizationImage'/></td></tr>
-            </table>
-            """,
-
-            "$civilizationName", civilization.getView().getLocalizedCivilizationName(),
-            "$civilizationImage", civilization.getView().getStatusImageSrc()
-        );
     }
 
     private StringBuilder getUnitsInfo(Civilization civilization) {

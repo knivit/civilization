@@ -35,6 +35,10 @@ public class L10nWorld {
         .put(EN, "A civilization joined to the world")
         .put(RU, "Цивилизация присоединилась к миру");
 
+    public static final L10n MOVE_STATE_HEADER = new L10n()
+        .put(EN, "State")
+        .put(RU, "Состояние");
+
     /** Relations */
 
     public static final L10n RELATIONS_NAME = new L10n()

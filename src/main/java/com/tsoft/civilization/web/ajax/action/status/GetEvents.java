@@ -20,6 +20,7 @@ import static com.tsoft.civilization.web.L10nServer.INVALID_REQUEST;
 public class GetEvents extends AbstractAjaxRequest {
 
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
+    private final GetCivilizationInfo civilizationInfo = new GetCivilizationInfo();
 
     public static StringBuilder getAjax(int year) {
         return Format.text("server.sendAsyncAjax('ajax/GetEvents', { year:'$year' })",
@@ -47,11 +48,13 @@ public class GetEvents extends AbstractAjaxRequest {
 
         StringBuilder value = Format.text("""
             $navigationPanel
+            $civilizationInfo
             $eventsNavigation
             $events
             """,
 
             "$navigationPanel", navigationPanel.getContent(),
+            "$civilizationInfo", civilizationInfo.getContent(civilization),
             "$eventsNavigation", getEventsNavigation(civilization, year, stepNo),
             "$events", getEvents(civilization, year));
 

@@ -7,6 +7,7 @@ import static com.tsoft.civilization.L10n.L10nLanguage.EN;
 import static com.tsoft.civilization.L10n.L10nLanguage.RU;
 
 public class L10nCivilization {
+
     public static final L10n CIVILIZATION_NAME = new L10n()
         .put(EN, "Civilization")
         .put(RU, "Цивилизация");
@@ -42,6 +43,10 @@ public class L10nCivilization {
     public static final L10n NEXT_MOVE_DESCRIPTION = new L10n()
         .put(EN, "Allow other civilizations take their actions")
         .put(RU, "Позволяет другим цивилизациям выполнить действия");
+
+    public static final L10n MOVE_IN_PROGRESS = new L10n()
+        .put(EN, "Move in progress")
+        .put(RU, "Выполнение хода");
 
     public static final L10n MOVE_DONE = new L10n()
         .put(EN, "Move done")

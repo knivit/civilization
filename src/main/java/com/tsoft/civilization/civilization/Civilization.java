@@ -36,6 +36,7 @@ public abstract class Civilization {
     private final Year startYear;
     private final World world;
 
+    private boolean isDestroyed;
     private final CivilizationUnitService unitService;
     private final CivilizationCityService cityService;
     private final CivilizationTerritoryService territoryService;
@@ -113,7 +114,12 @@ public abstract class Civilization {
     }
 
     public boolean isDestroyed() {
-        return cities().isDestroyed();
+        return isDestroyed;
+    }
+
+    public void setDestroyed() {
+        world.sendEvent(new Event(Event.UPDATE_WORLD, this, L10nWorld.DESTROY_CIVILIZATION_EVENT, getView().getLocalizedCivilizationName()));
+        isDestroyed = true;
     }
 
     public EventsByYearMap getEvents() {

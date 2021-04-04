@@ -1,6 +1,5 @@
 package com.tsoft.civilization.civilization;
 
-import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.TileService;
@@ -152,8 +151,6 @@ public class CivilizationUnitService {
         units.remove(unit);
         destroyedUnits.add(unit);
         unit.setCivilization(null);
-
-        world.sendEvent(new Event(Event.UPDATE_WORLD, this, L10nUnit.UNIT_WAS_DESTROYED_EVENT, unit.getView().getLocalizedName()));
     }
 
     public boolean canBuyUnit(AbstractUnit unit, City city) {

@@ -26,6 +26,7 @@ import static com.tsoft.civilization.web.ajax.ServerStaticResource.*;
 public class GetCivilizationStatus extends AbstractAjaxRequest {
 
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
+    private final GetCivilizationInfo civilizationInfo = new GetCivilizationInfo();
     private final CityListService cityListService = new CityListService();
     private final UnitListService unitListService = new UnitListService();
 
@@ -51,16 +52,16 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
 
         StringBuilder value = Format.text("""
             $navigationPanel
-            $civilizationTitle
             $civilizationInfo
+            $civilizationStatus
             $actions
             $units
             $cities
             """,
 
             "$navigationPanel", navigationPanel.getContent(),
-            "$civilizationTitle", getCivilizationTitle(civilization),
-            "$civilizationInfo", getCivilizationInfo(civilization),
+            "$civilizationInfo", civilizationInfo.getContent(civilization),
+            "$civilizationStatus", getCivilizationStatus(civilization),
             "$actions", getActions(myCivilization, civilization),
             "$units", getUnitsWithAvailableActions(myCivilization, civilization),
             "$cities", getCitiesWithAvailableActions(myCivilization, civilization));
@@ -68,20 +69,7 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
         return HtmlResponse.ok(value);
     }
 
-    private StringBuilder getCivilizationTitle(Civilization civilization) {
-        return Format.text("""
-            <table id='title_table'>
-                <tr><td>$name</td></tr>
-                <tr><td><img src='$imageSrc'/></td></tr>
-            </table>
-            """,
-
-            "$name", civilization.getView().getLocalizedCivilizationName(),
-            "$imageSrc", civilization.getView().getStatusImageSrc()
-        );
-    }
-
-    private StringBuilder getCivilizationInfo(Civilization civilization) {
+    private StringBuilder getCivilizationStatus(Civilization civilization) {
         return Format.text("""
             <table id='info_table'>
                 <tr><th colspan='3'>$features</th></tr>

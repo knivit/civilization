@@ -8,15 +8,12 @@ public class GetNavigationPanel {
     public StringBuilder getContent() {
         return Format.text("""
             <table id='navigation_panel'><tr>
-                <td><button onclick="$getCivilizations">$civilizationsButton</button></td>
                 <td><button onclick="$getMyCities">$citiesButton</button></td>
                 <td><button onclick="$getMyUnits">$unitsButton</button></td>
                 <td><button onclick="$getEvents">$showEventsButton</button></td>
             </tr></table>
             """,
 
-            "$getCivilizations", GetCivilizations.getAjax(),
-            "$civilizationsButton", L10nClient.CIVILIZATIONS_BUTTON,
             "$getMyCities", GetMyCities.getAjax(),
             "$citiesButton", L10nClient.MY_CITIES_BUTTON,
             "$getMyUnits", GetMyUnits.getAjax(),

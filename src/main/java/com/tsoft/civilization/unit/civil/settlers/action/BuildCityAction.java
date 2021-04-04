@@ -41,12 +41,12 @@ public class BuildCityAction {
         }
 
         // unit must have passing score
-        Point location = settlers.getLocation();
         if (settlers.getPassScore() <= 0) {
             return SettlersActionResults.NO_PASS_SCORE;
         }
 
         // the tile must be not civilized or must be civilized by unit's civilization
+        Point location = settlers.getLocation();
         Civilization civilization = settlers.getWorld().getCivilizationOnTile(location);
         if (civilization != null && !civilization.equals(settlers.getCivilization())) {
             return SettlersActionResults.CANT_BUILD_CITY_TILE_IS_OCCUPIED;

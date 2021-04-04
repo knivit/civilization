@@ -1,6 +1,7 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
 import com.tsoft.civilization.civilization.L10nCivilization;
+import com.tsoft.civilization.web.L10nClient;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.civilization.action.NextTurnAction;
 import com.tsoft.civilization.improvement.city.CityList;
@@ -23,25 +24,21 @@ public class GetControlPanel extends AbstractAjaxRequest {
         }
 
         StringBuilder value = Format.text("""
-            $civilizationInfo
+            $informationBoard
             $controls
             """,
 
-            "$civilizationInfo", getCivilizationInfo(civilization),
+            "$informationBoard", getInformationBoard(),
             "$controls", getControls(civilization));
         return HtmlResponse.ok(value);
     }
 
-    private StringBuilder getCivilizationInfo(Civilization civilization) {
-        return Format.text("""
+    private StringBuilder getInformationBoard() {
+        return new StringBuilder("""
             <table id='control_table'>
-                <tr><td>$name, $year</td></tr>
+                <tr><td><div id='informationBoard'></div></td></tr>
             </table>
-            """,
-
-            "$name", civilization.getView().getLocalizedCivilizationName(),
-            "$year", civilization.getWorld().getYear().getYearLocalized()
-        );
+            """);
     }
 
     private StringBuilder getControls(Civilization civilization) {
@@ -61,10 +58,16 @@ public class GetControlPanel extends AbstractAjaxRequest {
 
         return Format.text("""
             <table id='control_table'>
-                <tr>$controls $nextTurnAction</tr>
+                <tr>
+                    <td><button onclick="$getCivilizations">$civilizationsButton</button></td>
+                    $controls
+                    $nextTurnAction
+                </tr>
             </table>
             """,
 
+            "$getCivilizations", GetCivilizations.getAjax(),
+            "$civilizationsButton", L10nClient.CIVILIZATIONS_BUTTON,
             "$nextTurnAction", NextTurnAction.getHtml(civilization),
             "$controls", controls
         );

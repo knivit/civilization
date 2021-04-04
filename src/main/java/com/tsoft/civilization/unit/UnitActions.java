@@ -35,7 +35,7 @@ public class UnitActions {
     private final DefaultUnitActions defaultActions = new DefaultUnitActions();
 
     public <U extends AbstractUnit> StringBuilder getHtmlActions(U unit) {
-        AbstractAction action = ACTIONS.get(unit.getClass());
+        AbstractAction<U> action = ACTIONS.get(unit.getClass());
         return (action == null) ? defaultActions.getHtmlActions(unit) : action.getHtmlActions(unit);
     }
 }
