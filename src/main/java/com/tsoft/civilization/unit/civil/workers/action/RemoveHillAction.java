@@ -9,6 +9,7 @@ import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.feature.hill.Hill;
 import com.tsoft.civilization.unit.civil.workers.Workers;
 import com.tsoft.civilization.util.Format;
+import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 
 import java.util.UUID;
 
@@ -59,10 +60,6 @@ public class RemoveHillAction {
         return CAN_REMOVE_HILL;
     }
 
-    private static String getClientJSCode(Workers workers) {
-        return String.format("client.removeHillAction({ workers:'%1$s' })", workers.getId());
-    }
-
     private static String getLocalizedName() {
         return L10nWorkers.REMOVE_HILL_NAME.getLocalized();
     }
@@ -80,7 +77,7 @@ public class RemoveHillAction {
             <td><button onclick="$buttonOnClick">$buttonLabel</button></td><td>$actionDescription</td>
             """,
 
-            "$buttonOnClick", getClientJSCode(workers),
+            "$buttonOnClick", ClientAjaxRequest.removeHillAction(workers),
             "$buttonLabel", getLocalizedName(),
             "$actionDescription", getLocalizedDescription()
         );

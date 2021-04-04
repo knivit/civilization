@@ -7,6 +7,7 @@ import com.tsoft.civilization.action.ActionSuccessResult;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.util.Format;
+import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 
 import java.util.UUID;
 
@@ -47,10 +48,6 @@ public class DestroyUnitAction {
         return CAN_DESTROY_UNIT;
     }
 
-    private static String getClientJSCode(AbstractUnit unit) {
-        return String.format("client.destroyUnitAction({ unit:'%1$s' })", unit.getId());
-    }
-
     private static String getLocalizedName() {
         return L10nUnit.DESTROY_UNIT_NAME.getLocalized();
     }
@@ -68,7 +65,7 @@ public class DestroyUnitAction {
             <td><button onclick="$buttonOnClick">$buttonLabel</button></td><td>$actionDescription</td>
             """,
 
-            "$buttonOnClick", getClientJSCode(unit),
+            "$buttonOnClick", ClientAjaxRequest.destroyUnitAction(unit),
             "$buttonLabel", getLocalizedName(),
             "$actionDescription", getLocalizedDescription()
         );

@@ -9,6 +9,7 @@ import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.feature.forest.Forest;
 import com.tsoft.civilization.unit.civil.workers.Workers;
 import com.tsoft.civilization.util.Format;
+import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 
 import java.util.UUID;
 
@@ -54,10 +55,6 @@ public class RemoveForestAction {
         return CAN_REMOVE_FOREST;
     }
 
-    private static String getClientJSCode(Workers workers) {
-        return String.format("client.removeForestAction({ workers:'%1$s' })", workers.getId());
-    }
-
     private static String getLocalizedName() {
         return L10nWorkers.REMOVE_FOREST_NAME.getLocalized();
     }
@@ -75,7 +72,7 @@ public class RemoveForestAction {
             <td><button onclick="$buttonOnClick">$buttonLabel</button></td><td>$actionDescription</td>
             """,
 
-            "$buttonOnClick", getClientJSCode(workers),
+            "$buttonOnClick", ClientAjaxRequest.removeForestAction(workers),
             "$buttonLabel", getLocalizedName(),
             "$actionDescription", getLocalizedDescription()
         );

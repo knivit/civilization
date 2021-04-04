@@ -19,7 +19,7 @@ public class Pair<T> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Pair<T> that = (Pair) o;
+        Pair that = (Pair) o;
 
         if ((obj1.equals(that.obj1) && obj2.equals(that.obj2)) ||
                 (obj1.equals(that.obj2) && obj2.equals(that.obj1))) return true;

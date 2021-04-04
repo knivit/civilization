@@ -16,6 +16,7 @@ import com.tsoft.civilization.util.AbstractDir;
 import com.tsoft.civilization.util.Dir6;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
+import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.event.Event;
@@ -294,9 +295,9 @@ public class MoveUnitAction {
         return UnitMoveResult.FAIL_TILE_OCCUPIED_BY_FOREIGN_UNIT;
     }
 
-    public static UnitRoute findRoute(AbstractUnit unit, Point location) {
+    public static UnitRoute findRoute(AbstractUnit unit, Point targetLocation) {
         UnitRoute unitRoute = new UnitRoute();
-        if ((location == null) || (unit.getLocation().equals(location))) {
+        if ((targetLocation == null) || (unit.getLocation().equals(targetLocation))) {
             return unitRoute;
         }
 
@@ -304,9 +305,9 @@ public class MoveUnitAction {
         // Mountains have Integer.MAX_VALUE passing cost,
         // so here we use Integer.MAX_VALUE - 1
         LinkedList<AbstractDir> dirs = new LinkedList<>();
-        Map<Point, DirPassScore> tileScores = getAllLocationsDirPassScore(unit, Integer.MAX_VALUE - 1, location);
-        while (!location.equals(unit.getLocation())) {
-            DirPassScore tileScore = tileScores.get(location);
+        Map<Point, DirPassScore> tileScores = getAllLocationsDirPassScore(unit, Integer.MAX_VALUE - 1, targetLocation);
+        while (!targetLocation.equals(unit.getLocation())) {
+            DirPassScore tileScore = tileScores.get(targetLocation);
 
             // there is no route at all
             if (tileScore == null) {
@@ -318,7 +319,7 @@ public class MoveUnitAction {
             // go back
             int tileY = tileScore.getTileY();
             AbstractDir inverseDir = dir.getInverse(tileY);
-            location = unit.getTilesMap().addDirToLocation(location, inverseDir);
+            targetLocation = unit.getTilesMap().addDirToLocation(targetLocation, inverseDir);
         }
 
         unitRoute.addAll(dirs);
@@ -452,22 +453,6 @@ public class MoveUnitAction {
         }
     }
 
-    private static String getClientJSCode(AbstractUnit unit) {
-        JsonBlock block = new JsonBlock('\'');
-        block.startArray("locations");
-        Set<Point> locations = getLocationsToMove(unit);
-        for (Point loc : locations) {
-            JsonBlock locBlock = new JsonBlock('\'');
-            locBlock.addParam("col", loc.getX());
-            locBlock.addParam("row", loc.getY());
-            block.addElement(locBlock.getText());
-        }
-        block.stopArray();
-
-        return String.format("client.moveUnitAction({ unit:'%1$s', ucol:'%2$s', urow:'%3$s', %4$s })",
-                unit.getId(), unit.getLocation().getX(), unit.getLocation().getY(), block.getValue());
-    }
-
     private static String getLocalizedName() {
         return L10nUnit.MOVE_NAME.getLocalized();
     }
@@ -489,5 +474,19 @@ public class MoveUnitAction {
             "$buttonLabel", getLocalizedName(),
             "$actionDescription", getLocalizedDescription()
         );
+    }
+
+    private static StringBuilder getClientJSCode(AbstractUnit unit) {
+        JsonBlock locations = new JsonBlock('\'');
+        locations.startArray("locations");
+        for (Point loc : getLocationsToMove(unit)) {
+            JsonBlock location = new JsonBlock('\'');
+            location.addParam("col", loc.getX());
+            location.addParam("row", loc.getY());
+            locations.addElement(location.getText());
+        }
+        locations.stopArray();
+
+        return ClientAjaxRequest.moveUnitAction(unit, locations);
     }
 }

@@ -1,6 +1,5 @@
 package com.tsoft.civilization.improvement.city.action;
 
-import com.tsoft.civilization.improvement.city.L10nCity;
 import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.improvement.city.City;
@@ -65,13 +64,13 @@ public class BuildUnitAction {
         }
 
         return Format.text("""
-            <button onclick="$buttonOnClick">$buttonLabel: $productionCost $production</button>
+            <button onclick="$buttonOnClick">$buttonLabel: $productionCost<image src='$productionImage'/></button>
             """,
 
             "$buttonOnClick", ClientAjaxRequest.buildUnitAction(city, unitClassUuid),
             "$buttonLabel", getLocalizedName(),
             "$productionCost", city.getUnitProductionCost(unitClassUuid),
-            "$production", L10nCity.PRODUCTION
+            "$productionImage", "images/status/production.png"
         );
     }
 }

@@ -195,9 +195,21 @@ public class L10nCity {
         .put(EN, "Saint Petersburg")
         .put(RU, "Санкт-Петерсбург");
 
+    public static final L10n YEKATERINBURG = new L10n()
+        .put(EN, "Yekaterinburg")
+        .put(RU, "Екатеринбург");
+
     public static final L10n WASHINGTON = new L10n()
         .put(EN, "Washington")
         .put(RU, "Вашингтон");
+
+    public static final L10n NEW_YORK = new L10n()
+        .put(EN, "New York")
+        .put(RU, "Нью-Йорк");
+
+    public static final L10n CHICAGO = new L10n()
+        .put(EN, "Chicago")
+        .put(RU, "Чикаго");
 
     public static final L10n TOKYO = new L10n()
         .put(EN, "Tokyo")
@@ -207,9 +219,12 @@ public class L10nCity {
         .put(L10nCivilization.RUSSIA, new L10nList()
             .add(L10nCity.MOSCOW)
             .add(L10nCity.SAINT_PETERSBURG)
+            .add(L10nCity.YEKATERINBURG)
         )
         .put(L10nCivilization.AMERICA, new L10nList()
             .add(L10nCity.WASHINGTON)
+            .add(L10nCity.NEW_YORK)
+            .add(L10nCity.CHICAGO)
         )
         .put(L10nCivilization.JAPAN, new L10nList()
             .add(L10nCity.TOKYO)

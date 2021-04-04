@@ -1,5 +1,6 @@
 package com.tsoft.civilization.unit.action;
 
+import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import com.tsoft.civilization.world.L10nWorld;
 import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.action.ActionAbstractResult;
@@ -330,27 +331,6 @@ public class AttackAction {
         return path;
     }
 
-    private static String getClientJSCode(HasCombatStrength attacker) {
-        JsonBlock block = new JsonBlock('\'');
-        block.startArray("locations");
-        HasCombatStrengthList targets = getTargetsToAttack(attacker);
-        for (HasCombatStrength target : targets) {
-            JsonBlock locBlock = new JsonBlock('\'');
-            locBlock.addParam("col", target.getLocation().getX());
-            locBlock.addParam("row", target.getLocation().getY());
-            block.addElement(locBlock.getText());
-        }
-        block.stopArray();
-
-        if (attacker instanceof City) {
-            return String.format("client.cityAttackAction({ attacker:'%1$s', ucol:'%2$s', urow:'%3$s', %4$s })",
-                    attacker.getId(), attacker.getLocation().getX(), attacker.getLocation().getY(), block.getValue());
-        }
-
-        return String.format("client.unitAttackAction({ attacker:'%1$s', ucol:'%2$s', urow:'%3$s', %4$s })",
-                attacker.getId(), attacker.getLocation().getX(), attacker.getLocation().getY(), block.getValue());
-    }
-
     private static String getLocalizedName() {
         return L10nUnit.ATTACK_NAME.getLocalized();
     }
@@ -364,12 +344,32 @@ public class AttackAction {
             return null;
         }
 
-        return Format.text(
-            "<td><button onclick=\"$buttonOnClick\">$buttonLabel</button></td><td>$actionDescription</td>",
+        return Format.text("""
+            <td><button onclick="$buttonOnClick">$buttonLabel</button></td><td>$actionDescription</td>
+            """,
 
             "$buttonOnClick", getClientJSCode(attacker),
             "$buttonLabel", getLocalizedName(),
             "$actionDescription", getLocalizedDescription()
         );
+    }
+
+    private static StringBuilder getClientJSCode(HasCombatStrength attacker) {
+        JsonBlock locations = new JsonBlock('\'');
+        locations.startArray("locations");
+        HasCombatStrengthList targets = getTargetsToAttack(attacker);
+        for (HasCombatStrength target : targets) {
+            JsonBlock locBlock = new JsonBlock('\'');
+            locBlock.addParam("col", target.getLocation().getX());
+            locBlock.addParam("row", target.getLocation().getY());
+            locations.addElement(locBlock.getText());
+        }
+        locations.stopArray();
+
+        if (attacker instanceof City) {
+            return ClientAjaxRequest.cityAttackAction(attacker, locations);
+        }
+
+        return ClientAjaxRequest.unitAttackAction(attacker, locations);
     }
 }

@@ -13,12 +13,15 @@ import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.unit.UnitListService;
 import com.tsoft.civilization.util.Format;
 
+import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
+
+import static com.tsoft.civilization.web.ajax.ServerStaticResource.*;
 
 public class GetCivilizationStatus extends AbstractAjaxRequest {
 
@@ -81,24 +84,29 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
     private StringBuilder getCivilizationInfo(Civilization civilization) {
         return Format.text("""
             <table id='info_table'>
-                <tr><th colspan='2'>$features</th></tr>
-                <tr><td>$populationLabel</td><td>$population</td>
-                <tr><td>$productionLabel</td><td>$production</td>
-                <tr><td>$goldLabel</td><td>$gold</td>
-                <tr><td>$foodLabel</td><td>$food</td>
-                <tr><td>$happinessLabel</td><td>$happiness</td>
-                <tr><td>$militaryUnitsLabel</td><td>$militaryUnits</td>
-                <tr><td>$civilUnitsLabel</td><td>$civilUnits</td>
-                <tr><td>$citiesLabel</td><td>$cities</td>
+                <tr><th colspan='3'>$features</th></tr>
+                <tr><td><image src='$populationImage'/></td><td>$populationLabel</td><td>$population</td>
+                <tr><td><image src='$productionImage'/></td><td>$productionLabel</td><td>$production</td>
+                <tr><td><image src='$goldImage'/></td><td>$goldLabel</td><td>$gold</td>
+                <tr><td><image src='$foodImage'/></td><td>$foodLabel</td><td>$food</td>
+                <tr><td><image src='$happinessImage'/></td><td>$happinessLabel</td><td>$happiness</td>
+                <tr><td></td><td>$militaryUnitsLabel</td><td>$militaryUnits</td>
+                <tr><td></td><td>$civilUnitsLabel</td><td>$civilUnits</td>
+                <tr><td></td><td>$citiesLabel</td><td>$cities</td>
             </table>
             """,
 
             "$features", L10nCivilization.FEATURES,
 
+            "$populationImage", POPULATION_IMAGE,
             "$populationLabel", L10nCivilization.POPULATION, "$population", civilization.calcSupply().getPopulation(),
+            "$productionImage", PRODUCTION_IMAGE,
             "$productionLabel", L10nCivilization.PRODUCTION, "$production", civilization.calcSupply().getProduction(),
+            "$goldImage", GOLD_IMAGE,
             "$goldLabel", L10nCivilization.GOLD, "$gold", civilization.calcSupply().getGold(),
+            "$foodImage", FOOD_IMAGE,
             "$foodLabel", L10nCivilization.FOOD, "$food", civilization.calcSupply().getFood(),
+            "$happinessImage", HAPPINESS_IMAGE(civilization.calcSupply().getHappiness()),
             "$happinessLabel", L10nCivilization.HAPPINESS, "$happiness", civilization.calcSupply().getHappiness(),
             "$militaryUnitsLabel", L10nCivilization.MILITARY_UNITS_COUNT, "$militaryUnits", civilization.units().getMilitaryCount(),
             "$civilUnitsLabel", L10nCivilization.CIVIL_UNITS_COUNT, "$civilUnits", civilization.units().getCivilCount(),
@@ -151,16 +159,14 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
         for (AbstractUnit unit : units) {
             unitBuf.append(Format.text("""
                 <tr>
-                    <td><button onclick="client.getUnitStatus({ col:'$unitCol', row:'$unitRow', unit:'$unit' })">$unitName</button></td>
+                    <td><button onclick="$getUnitStatus">$unitName</button></td>
                     <td>$passScore</td>
                 </tr>
                 """,
 
-                "$passScore", unit.getPassScore(),
-                "$unitCol", unit.getLocation().getX(),
-                "$unitRow", unit.getLocation().getY(),
-                "$unit", unit.getId(),
-                "$unitName", unit.getView().getLocalizedName()
+                "$getUnitStatus", ClientAjaxRequest.getUnitStatus(unit),
+                "$unitName", unit.getView().getLocalizedName(),
+                "$passScore", unit.getPassScore()
             ));
         }
 
@@ -193,16 +199,14 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
         for (City city : cities) {
             citiesBuf.append(Format.text("""
                 <tr>
-                    <td><button onclick="client.getCityStatus({ col:'$cityCol', row:'$cityRow', city:'$city' })">$cityName</button></td>
+                    <td><button onclick="$getCityStatus">$cityName</button></td>
                     <td>$citizenCount</td>
                 </tr>
                 """,
 
-                "$citizenCount", city.getCitizenCount(),
-                "$cityCol", city.getLocation().getX(),
-                "$cityRow", city.getLocation().getY(),
-                "$city", city.getId(),
-                "$cityName", city.getView().getLocalizedCityName()
+                "$getCityStatus", ClientAjaxRequest.getCityStatus(city),
+                "$cityName", city.getView().getLocalizedCityName(),
+                "$citizenCount", city.getCitizenCount()
             ));
         }
 

@@ -23,12 +23,14 @@ import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
 import static com.tsoft.civilization.unit.action.AttackAction.ATTACKED;
 import static com.tsoft.civilization.unit.action.AttackAction.TARGET_DESTROYED;
 import static com.tsoft.civilization.unit.action.CaptureUnitAction.FOREIGN_UNIT_CAPTURED;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AttackActionTest {
+
     @Test
-    public void targetsForMeleeAttackAndCapture() {
+    public void targets_for_melee_attack_and_capture() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
             " |0 1 2 3 ",
             "-+--------",
@@ -47,45 +49,30 @@ public class AttackActionTest {
         assertTrue(c2.units().addUnit(foreignWorkers, new Point(1, 1)));
         Warriors foreignWarriors1 = UnitFactory.newInstance(c2, Warriors.CLASS_UUID);
         assertTrue(c2.units().addUnit(foreignWarriors1, new Point(2, 1)));
-        Warriors foreignWarriors2 = UnitFactory.newInstance(c2, Warriors.CLASS_UUID);
-        assertTrue(c2.units().addUnit(foreignWarriors2, new Point(2, 2)));
         WorldRender.of(this).createHtml(world, c1);
 
         // first, there is foreign workers to attack
         HasCombatStrengthList targets = AttackAction.getTargetsToAttack(warriors);
-        assertEquals(1, targets.size());
-        assertEquals(foreignWorkers, targets.get(0));
+        assertThat(targets)
+            .hasSize(1)
+            .containsExactly(foreignWorkers);
 
         // move close the foreign warriors and now they are the target too
         foreignWarriors1.setLocation(new Point(2, 0));
         targets = AttackAction.getTargetsToAttack(warriors);
-        assertEquals(2, targets.size());
-
-        // see what we can capture
-        List<Point> locations = CaptureUnitAction.getLocationsToCapture(warriors);
-        assertEquals(1, locations.size());
-        assertEquals(foreignWorkers, CaptureUnitAction.getTargetToCaptureAtLocation(warriors, locations.get(0)));
-
-        // capture the foreign workers and move on it's tile
-        assertEquals(FOREIGN_UNIT_CAPTURED, CaptureUnitAction.capture(warriors, foreignWorkers.getLocation()));
-        assertEquals(new Point(1, 1), warriors.getLocation());
-        assertEquals(foreignWorkers.getLocation(), warriors.getLocation());
-        assertEquals(warriors.getCivilization(), foreignWorkers.getCivilization());
-
-        // there must be two foreign warriors to attack
-        targets = AttackAction.getTargetsToAttack(warriors);
-        assertEquals(2, targets.size());
-        assertTrue(targets.contains(foreignWarriors1));
-        assertTrue(targets.contains(foreignWarriors2));
+        assertThat(targets)
+            .hasSize(2)
+            .containsExactly(foreignWorkers, foreignWarriors1);
 
         // attack one of them
-        assertEquals(ATTACKED, AttackAction.attack(warriors, foreignWarriors2.getLocation()));
+        assertThat(AttackAction.attack(warriors, foreignWarriors1.getLocation()))
+            .isEqualTo(ATTACKED);
     }
 
     // Scenario:
     // An archer can fire through an ocean tile but can't through a mountain
     @Test
-    public void targetsForRangedAttackAndCapture() {
+    public void targets_for_ranged_attack_and_capture() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES, 2,
             " |0 1 2 3 4 5 6 ", " |0 1 2 3 4 5 6 ",
             "-+--------------", "-+--------------",
@@ -117,47 +104,43 @@ public class AttackActionTest {
 
         // look for targets
         HasCombatStrengthList targets = AttackAction.getTargetsToAttack(archers);
-        assertEquals(6, targets.size());
-        assertTrue(targets.contains(foreignWorkers));
-        assertTrue(targets.contains(foreignWarriors1));
-        assertTrue(targets.contains(foreignWarriors2));
-        assertTrue(targets.contains(foreignArchers1));
-        assertTrue(targets.contains(foreignCity));
-        assertTrue(targets.contains(foreignArchers2));
+        assertThat(targets)
+            .hasSize(6)
+            .containsExactly(foreignCity, foreignWorkers, foreignWarriors1, foreignWarriors2, foreignArchers1, foreignArchers2);
 
         // see what we can capture
         List<Point> locations = CaptureUnitAction.getLocationsToCapture(archers);
-        assertEquals(1, locations.size());
-        assertEquals(foreignWorkers, CaptureUnitAction.getTargetToCaptureAtLocation(archers, locations.get(0)));
+        assertThat(locations).hasSize(1);
+        assertThat(CaptureUnitAction.getTargetToCaptureAtLocation(archers, locations.get(0))).isEqualTo(foreignWorkers);
 
         // capture the foreign workers
-        assertEquals(FOREIGN_UNIT_CAPTURED, CaptureUnitAction.capture(archers, foreignWorkers.getLocation()));
-        assertEquals(foreignWorkers.getLocation(), archers.getLocation());
-        assertEquals(archers.getCivilization(), foreignWorkers.getCivilization());
+        assertThat(CaptureUnitAction.capture(archers, foreignWorkers.getLocation())).isEqualTo(FOREIGN_UNIT_CAPTURED);
+        assertThat(foreignWorkers.getLocation()).isEqualTo(archers.getLocation());
+        assertThat(foreignWorkers.getCivilization()).isEqualTo(archers.getCivilization());
 
         // attack one of foreign warriors
-        assertEquals(ATTACKED, AttackAction.attack(archers, foreignWarriors2.getLocation()));
-        assertEquals(0, archers.getPassScore());
-        assertEquals(7, foreignWarriors2.getCombatStrength().getStrength());
+        assertThat(AttackAction.attack(archers, foreignWarriors2.getLocation())).isEqualTo(ATTACKED);
+        assertThat(archers.getPassScore()).isEqualTo(0);
+        assertThat(foreignWarriors2.getCombatStrength().getStrength()).isEqualTo(7);
 
-        // next step to be able to strike again
+        // do the next step to be able to strike again
         world.move();
 
         // attack the foreign warriors again
-        assertEquals(TARGET_DESTROYED, AttackAction.attack(archers, foreignWarriors2.getLocation()));
-        assertEquals(0, archers.getPassScore());
+        assertThat(AttackAction.attack(archers, foreignWarriors2.getLocation())).isEqualTo(TARGET_DESTROYED);
+        assertThat(archers.getPassScore()).isEqualTo(0);
 
         // next step
         world.move();
 
         // attack the second line - archers
-        assertEquals(ATTACKED, AttackAction.attack(archers, foreignArchers1.getLocation()));
+        assertThat(AttackAction.attack(archers, foreignArchers1.getLocation())).isEqualTo(ATTACKED);
 
         // next step
         world.move();
 
         // attack the second line - foreign city
-        assertEquals(ATTACKED, AttackAction.attack(archers, foreignCity.getLocation()));
+        assertThat(AttackAction.attack(archers, foreignCity.getLocation())).isEqualTo(ATTACKED);
     }
 
     // Scenario:
@@ -166,7 +149,7 @@ public class AttackActionTest {
     // Four our warriors (melee units) attack the foreign city.
     // After the city is conquered, foreign workers are captured and foreign warriors are destroyed.
     @Test
-    public void warriorsConquerForeignCity() {
+    public void warriors_conquer_foreign_city() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
             " |0 1 2 3 4 5 6 ",
             "-+--------------",

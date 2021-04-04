@@ -2,7 +2,6 @@ package com.tsoft.civilization.web.ajax.action.status;
 
 import com.tsoft.civilization.improvement.city.L10nCity;
 import com.tsoft.civilization.web.L10nServer;
-import com.tsoft.civilization.tile.L10nTile;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityList;
 import com.tsoft.civilization.improvement.city.CityListService;
@@ -14,6 +13,8 @@ import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
+
+import static com.tsoft.civilization.web.ajax.ServerStaticResource.*;
 
 public class GetMyCities extends AbstractAjaxRequest {
 
@@ -59,8 +60,9 @@ public class GetMyCities extends AbstractAjaxRequest {
     private StringBuilder getCitiesInfo(Civilization civilization) {
         CityList cities = civilization.cities().getCities();
         if (cities.isEmpty()) {
-            return Format.text(
-                "<table id='actions_table'><tr><th>$text</th></tr></table>",
+            return Format.text("""
+                <table id='actions_table'><tr><th>$text</th></tr></table>
+                """,
 
                 "$text", L10nCity.NO_CITIES
             );
@@ -93,33 +95,21 @@ public class GetMyCities extends AbstractAjaxRequest {
             <table id='actions_table'>
                 <tr>
                     <th>$name</th>
-                    <th>$citizenHeader</th>
-                    <th>$productionHeader</th>
-                    <th>$goldHeader</th>
-                    <th>$foodHeader</th>
+                    <th><image src='$populationImage'/></th>
+                    <th><image src='$productionImage'/></th>
+                    <th><image src='$goldImage'/></th>
+                    <th><image src='$foodImage'/></th>
                 </tr>
                 $cities
             </table>
-            <table id='legend_table'>
-                <tr><td>$citizenHeader</td><td>$citizenLegend</td></tr>
-                <tr><td>$productionHeader</td><td>$productionLegend</td></tr>
-                <tr><td>$goldHeader</td><td>$goldLegend</td></tr>
-                <tr><td>$foodHeader</td><td>$foodLegend</td></tr>
-            </table>
             """,
 
-            "$citizenHeader", L10nCity.CITIZEN_HEADER,
-            "$productionHeader", L10nTile.PRODUCTION_HEADER,
-            "$goldHeader", L10nTile.GOLD_HEADER,
-            "$foodHeader", L10nTile.FOOD_HEADER,
-
             "$name", L10nCity.NAME,
-            "$cities", buf,
-
-            "$citizenLegend", L10nCity.CITIZEN,
-            "$productionLegend", L10nTile.PRODUCTION,
-            "$goldLegend", L10nTile.GOLD,
-            "$foodLegend", L10nTile.FOOD
+            "$populationImage", POPULATION_IMAGE,
+            "$productionImage", PRODUCTION_IMAGE,
+            "$goldImage", GOLD_IMAGE,
+            "$foodImage", FOOD_IMAGE,
+            "$cities", buf
         );
     }
 }

@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -51,7 +52,8 @@ public class CivilizationTest {
 
         List<Point> locations = WorldGeneratorService.getCivilizationsStartLocations(2, map);
 
-        assertEquals(2, locations.size());
+        assertThat(locations)
+            .hasSize(2);
         assertTrue(locations.contains(new Point(2, 2)));
         assertTrue(locations.contains(new Point(0, 0)) || locations.contains(new Point(1, 0)));
     }

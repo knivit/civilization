@@ -1,5 +1,6 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
+import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.world.L10nEvent;
 import com.tsoft.civilization.web.L10nServer;
@@ -61,10 +62,10 @@ public class GetEvents extends AbstractAjaxRequest {
         StringBuilder priorButton = null;
         if ((stepNo - 1) >= civilization.getStartYear().getStepNo()) {
             priorButton = Format.text("""
-                <button onclick="client.getEvents({ year:'$year' })">$priorButton</button>
+                <button onclick="$getEvents">$priorButton</button>
                 """,
 
-                "$year", (stepNo - 1),
+                "$getEvents", ClientAjaxRequest.getEvents(stepNo - 1),
                 "$priorButton", L10nEvent.PRIOR_YEAR_BUTTON
             );
         }
@@ -72,10 +73,10 @@ public class GetEvents extends AbstractAjaxRequest {
         StringBuilder nextButton = null;
         if ((stepNo + 1) <= civilization.getYear().getStepNo()) {
             nextButton = Format.text("""
-                <button onclick="client.getEvents({ year:'$year' })">$nextButton</button>
+                <button onclick="$getEvents">$nextButton</button>
                 """,
 
-                "$year", (stepNo + 1),
+                "$getEvents", ClientAjaxRequest.getEvents(stepNo + 1),
                 "$nextButton", L10nEvent.NEXT_YEAR_BUTTON
             );
         }

@@ -2,14 +2,13 @@ package com.tsoft.civilization.unit;
 
 import com.tsoft.civilization.util.AbstractDir;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Stream;
 
 /*
  * Unit's route is an array of directions
  */
-public class UnitRoute {
+public class UnitRoute implements Iterable<AbstractDir> {
     private final ArrayList<AbstractDir> dirs = new ArrayList<>();
 
     // size of the route before unit's movement
@@ -19,6 +18,15 @@ public class UnitRoute {
         if (dirs != null) {
             this.dirs.addAll(Arrays.asList(dirs));
         }
+    }
+
+    @Override
+    public Iterator<AbstractDir> iterator() {
+        return dirs.listIterator();
+    }
+
+    public Stream<AbstractDir> stream() {
+        return dirs.stream();
     }
 
     public void add(AbstractDir dir) {

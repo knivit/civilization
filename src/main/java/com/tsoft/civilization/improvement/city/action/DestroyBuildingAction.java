@@ -6,6 +6,7 @@ import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.palace.Palace;
 import com.tsoft.civilization.building.settlement.Settlement;
 import com.tsoft.civilization.util.Format;
+import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 
 import java.util.UUID;
 
@@ -35,11 +36,6 @@ public class DestroyBuildingAction {
         return CityActionResults.CAN_DESTROY_BUILDING;
     }
 
-    перенести в ClientAjaxRequest
-    private static String getClientJSCode(AbstractBuilding building) {
-        return String.format("client.destroyBuildingAction({ building:'%1$s' })", building.getId());
-    }
-
     private static String getLocalizedName() {
         return L10nBuilding.DESTROY.getLocalized();
     }
@@ -53,10 +49,11 @@ public class DestroyBuildingAction {
             return null;
         }
 
-        return Format.text(
-            "<td><button onclick=\"$buttonOnClick\">$buttonLabel</button></td><td>$actionDescription</td>",
+        return Format.text("""
+            <td><button onclick="$buttonOnClick">$buttonLabel</button></td><td>$actionDescription</td>
+            """,
 
-            "$buttonOnClick", getClientJSCode(building),
+            "$buttonOnClick", ClientAjaxRequest.destroyBuildingAction(building),
             "$buttonLabel", getLocalizedName(),
             "$actionDescription", getLocalizedDescription()
         );

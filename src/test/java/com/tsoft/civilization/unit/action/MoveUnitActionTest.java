@@ -5,7 +5,6 @@ import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
-import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.unit.civil.greatartist.GreatArtist;
 import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.unit.civil.workers.Workers;
@@ -15,28 +14,29 @@ import com.tsoft.civilization.unit.UnitRoute;
 import com.tsoft.civilization.util.Dir6;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.web.render.WorldRender;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Set;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.AMERICA;
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
 import static com.tsoft.civilization.unit.action.MoveUnitAction.NO_LOCATIONS_TO_MOVE;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MoveUnitActionTest {
+
     @Test
-    public void failNotEnoughPassingScoreTrivial() {
+    public void fail_not_enough_passing_score_trivial() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
-                " |0 1 2 ",
-                "-+------",
-                "0|. . . ",
-                "1| . g .",
-                "2|. . . ",
-                "3| . . .");
+            " |0 1 2 ",
+            "-+------",
+            "0|. . . ",
+            "1| . g .",
+            "2|. . . ",
+            "3| . . .");
         MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
@@ -49,20 +49,21 @@ public class MoveUnitActionTest {
 
             ArrayList<UnitMoveResult> moveResults = MoveUnitAction.moveByRoute(settlers, route);
 
-            assertEquals(1, moveResults.size());
-            assertEquals(UnitMoveResult.FAIL_NOT_ENOUGH_PASSING_SCORE, moveResults.get(0));
+            assertThat(moveResults)
+                .hasSize(1)
+                .containsExactly(UnitMoveResult.FAIL_NOT_ENOUGH_PASSING_SCORE);
         }
     }
 
     @Test
-    public void successMovedTrivial() {
+    public void success_moved_trivial() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
-                " |0 1 2 ",
-                "-+------",
-                "0|. g g ",
-                "1| g g g",
-                "2|. g g ",
-                "3| . . .");
+            " |0 1 2 ",
+            "-+------",
+            "0|. g g ",
+            "1| g g g",
+            "2|. g g ",
+            "3| . . .");
         MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
@@ -75,20 +76,21 @@ public class MoveUnitActionTest {
 
             ArrayList<UnitMoveResult> moveResults = MoveUnitAction.moveByRoute(settlers, route);
 
-            assertEquals(1, moveResults.size());
-            assertEquals(UnitMoveResult.SUCCESS_MOVED, moveResults.get(0));
+            assertThat(moveResults)
+                .hasSize(1)
+                .containsExactly(UnitMoveResult.SUCCESS_MOVED);
         }
     }
 
     @Test
-    public void successMovedWithoutObstacles() {
+    public void success_moved_without_obstacles() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
-                " |0 1 2 3 4 5 ",
-                "-+------------",
-                "0|g . . g . g ",
-                "1| g g g . . .",
-                "2|g . . . g g ",
-                "3| . . . g . g");
+            " |0 1 2 3 4 5 ",
+            "-+------------",
+            "0|g . . g . g ",
+            "1| g g g . . .",
+            "2|g . . . g g ",
+            "3| . . . g . g");
         MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
@@ -111,11 +113,15 @@ public class MoveUnitActionTest {
 
         ArrayList<UnitMoveResult> moveResults = MoveUnitAction.moveByRoute(settlers, route);
 
-        assertEquals(10, moveResults.size());
-        assertEquals(moveResults.size(), Collections.frequency(moveResults, UnitMoveResult.SUCCESS_MOVED));
-        assertEquals(new Point(1, 1), settlers.getLocation());
-        assertEquals(0, settlers.getPassScore());
-        assertEquals(0, route.size());
+        assertThat(moveResults)
+            .hasSize(10)
+            .allMatch(p -> p.equals(UnitMoveResult.SUCCESS_MOVED));
+
+        assertThat(settlers)
+            .returns(new Point(1, 1), Settlers::getLocation)
+            .returns(0, Settlers::getPassScore);
+
+        assertThat(route).isEmpty();
     }
 
     // Try to move one unit on another - they must be swapped
@@ -124,14 +130,14 @@ public class MoveUnitActionTest {
     // 2) they are located near each other
     // 3) they are the same unit type
     @Test
-    public void successSwapped() {
+    public void success_swapped() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
-                " |0 1 2 ",
-                "-+------",
-                "0|. . . ",
-                "1| . g g",
-                "2|. . . ",
-                "3| . . .");
+            " |0 1 2 ",
+            "-+------",
+            "0|. . . ",
+            "1| . g g",
+            "2|. . . ",
+            "3| . . .");
         MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
@@ -146,13 +152,19 @@ public class MoveUnitActionTest {
         UnitRoute route = new UnitRoute(new Dir6(1, 0));
         ArrayList<UnitMoveResult> moveResults = MoveUnitAction.moveByRoute(settlers1, route);
 
-        assertEquals(1, moveResults.size());
-        assertEquals(UnitMoveResult.SUCCESS_SWAPPED, moveResults.get(0));
-        assertEquals(new Point(2, 1), settlers1.getLocation());
-        assertEquals(new Point(1, 1), settlers2.getLocation());
-        assertEquals(0, settlers1.getPassScore());
-        assertEquals(0, settlers2.getPassScore());
-        assertEquals(0, route.size());
+        assertThat(moveResults)
+            .hasSize(1)
+            .containsExactly(UnitMoveResult.SUCCESS_SWAPPED);
+
+        assertThat(settlers1)
+            .returns(new Point(2, 1), Settlers::getLocation)
+            .returns(0, Settlers::getPassScore);
+
+        assertThat(settlers2)
+            .returns(new Point(1, 1), Settlers::getLocation)
+            .returns(0, Settlers::getPassScore);
+
+        assertThat(route).isEmpty();
     }
 
     // Try to move one unit on another - they must NOT be swapped
@@ -161,14 +173,14 @@ public class MoveUnitActionTest {
     // 2) they are located near each other
     // 3) they are the same unit type
     @Test
-    public void failNotEnoughPassingScoreToSwap() {
+    public void fail_not_enough_passing_score_to_swap() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
-                " |0 1 2 ",
-                "-+------",
-                "0|. . . ",
-                "1| . g g",
-                "2|. . . ",
-                "3| . . .");
+            " |0 1 2 ",
+            "-+------",
+            "0|. . . ",
+            "1| . g g",
+            "2|. . . ",
+            "3| . . .");
         MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
@@ -183,13 +195,21 @@ public class MoveUnitActionTest {
         UnitRoute route = new UnitRoute(new Dir6(1, 0));
         ArrayList<UnitMoveResult> moveResults = MoveUnitAction.moveByRoute(settlers1, route);
 
-        assertEquals(1, moveResults.size());
-        assertEquals(UnitMoveResult.FAIL_NOT_ENOUGH_PASSING_SCORE_TO_SWAP, moveResults.get(0));
-        assertEquals(new Point(1, 1), settlers1.getLocation());
-        assertEquals(new Point(2, 1), settlers2.getLocation());
-        assertEquals(1, settlers1.getPassScore());
-        assertEquals(0, settlers2.getPassScore());
-        assertEquals(1, route.size());
+        assertThat(moveResults)
+            .hasSize(1)
+            .containsExactly(UnitMoveResult.FAIL_NOT_ENOUGH_PASSING_SCORE_TO_SWAP);
+
+        assertThat(settlers1)
+            .returns(new Point(1, 1), Settlers::getLocation)
+            .returns(1, Settlers::getPassScore);
+
+        assertThat(settlers2)
+            .returns(new Point(2, 1), Settlers::getLocation)
+            .returns(0, Settlers::getPassScore);
+
+        assertThat(route)
+            .hasSize(1)
+            .containsExactly(new Dir6(1, 0));
     }
 
     // Try to move one unit on another - they must NOT be swapped
@@ -198,14 +218,14 @@ public class MoveUnitActionTest {
     // 2) they are NOT located near each other
     // 3) they are the same unit type
     @Test
-    public void failSwappingMustBeTheOnlyMove() {
+    public void fail_swapping_must_be_the_only_move() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
-                " |0 1 2 ",
-                "-+------",
-                "0|. . . ",
-                "1| . g .",
-                "2|. g . ",
-                "3| . g .");
+            " |0 1 2 ",
+            "-+------",
+            "0|. . . ",
+            "1| . g .",
+            "2|. g . ",
+            "3| . g .");
         MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
@@ -220,14 +240,21 @@ public class MoveUnitActionTest {
         UnitRoute route = new UnitRoute(new Dir6(0, 1), new Dir6(0, 1));
         ArrayList<UnitMoveResult> moveResults = MoveUnitAction.moveByRoute(settlers1, route);
 
-        assertEquals(2, moveResults.size());
-        assertEquals(UnitMoveResult.SUCCESS_MOVED, moveResults.get(0));
-        assertEquals(UnitMoveResult.FAIL_SWAPPING_MUST_BE_THE_ONLY_MOVE, moveResults.get(1));
-        assertEquals(new Point(1, 2), settlers1.getLocation());
-        assertEquals(new Point(1, 3), settlers2.getLocation());
-        assertEquals(1, settlers1.getPassScore());
-        assertEquals(1, settlers2.getPassScore());
-        assertEquals(1, route.size());
+        assertThat(moveResults)
+            .hasSize(2)
+            .containsExactly(UnitMoveResult.SUCCESS_MOVED, UnitMoveResult.FAIL_SWAPPING_MUST_BE_THE_ONLY_MOVE);
+
+        assertThat(settlers1)
+            .returns(new Point(1, 2), Settlers::getLocation)
+            .returns(1, Settlers::getPassScore);
+
+        assertThat(settlers2)
+            .returns(new Point(1, 3), Settlers::getLocation)
+            .returns(1, Settlers::getPassScore);
+
+        assertThat(route)
+            .hasSize(1)
+            .containsExactly(new Dir6(0, 1));
     }
 
     // Try to move one unit on another - they must NOT be swapped
@@ -236,14 +263,14 @@ public class MoveUnitActionTest {
     // 2) they are located near each other
     // 3) they are NOT the same unit type
     @Test
-    public void successMovedTwoUnitsOnTheSameTile() {
+    public void success_moved_two_units_on_the_same_tile() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
-                " |0 1 2 ",
-                "-+------",
-                "0|. . . ",
-                "1| . g g",
-                "2|. . . ",
-                "3| . . .");
+            " |0 1 2 ",
+            "-+------",
+            "0|. . . ",
+            "1| . g g",
+            "2|. . . ",
+            "3| . . .");
         MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
@@ -258,24 +285,30 @@ public class MoveUnitActionTest {
         UnitRoute route = new UnitRoute(new Dir6(1, 0));
         ArrayList<UnitMoveResult> moveResults = MoveUnitAction.moveByRoute(warriors, route);
 
-        assertEquals(1, moveResults.size());
-        assertEquals(UnitMoveResult.SUCCESS_MOVED, moveResults.get(0));
-        assertEquals(new Point(2, 1), warriors.getLocation());
-        assertEquals(new Point(2, 1), workers.getLocation());
-        assertEquals(0, warriors.getPassScore());
-        assertEquals(1, workers.getPassScore());
-        assertEquals(0, route.size());
+        assertThat(moveResults)
+            .hasSize(1)
+            .containsExactly(UnitMoveResult.SUCCESS_MOVED);
+
+        assertThat(warriors)
+            .returns(new Point(2, 1), Warriors::getLocation)
+            .returns(0, Warriors::getPassScore);
+
+        assertThat(workers)
+            .returns(new Point(2, 1), Workers::getLocation)
+            .returns(1, Workers::getPassScore);
+
+        assertThat(route).isEmpty();
     }
 
     @Test
-    public void successEnteredIntoCity() {
+    public void success_entered_into_city() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
-                " |0 1 2 ",
-                "-+------",
-                "0|. . . ",
-                "1| . g g",
-                "2|. . . ",
-                "3| . . .");
+            " |0 1 2 ",
+            "-+------",
+            "0|. . . ",
+            "1| . g g",
+            "2|. . . ",
+            "3| . . .");
         MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
@@ -288,24 +321,28 @@ public class MoveUnitActionTest {
         UnitRoute route = new UnitRoute(new Dir6(1, 0));
         ArrayList<UnitMoveResult> moveResults = MoveUnitAction.moveByRoute(workers, route);
 
-        assertEquals(1, moveResults.size());
-        assertEquals(UnitMoveResult.SUCCESS_ENTERED_INTO_OWN_CITY, moveResults.get(0));
-        assertEquals(new Point(2, 1), workers.getLocation());
-        assertEquals(0, workers.getPassScore());
-        assertEquals(0, route.size());
+        assertThat(moveResults)
+            .hasSize(1)
+            .containsExactly(UnitMoveResult.SUCCESS_ENTERED_INTO_OWN_CITY);
+
+        assertThat(workers)
+            .returns(new Point(2, 1), Workers::getLocation)
+            .returns(0, Workers::getPassScore);
+
+        assertThat(route).isEmpty();
     }
 
     // There is Great Artist in a city
     // Warriors can't enter to city because of that
     @Test
-    public void failTileOccupiedInCity() {
+    public void fail_tile_occupied_in_city() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
-                " |0 1 2 ",
-                "-+------",
-                "0|. . . ",
-                "1| . g g",
-                "2|. . . ",
-                "3| . . .");
+            " |0 1 2 ",
+            "-+------",
+            "0|. . . ",
+            "1| . g g",
+            "2|. . . ",
+            "3| . . .");
         MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
@@ -317,30 +354,39 @@ public class MoveUnitActionTest {
 
         ActionAbstractResult result = MoveUnitAction.move(workers, city.getLocation());
 
-        assertEquals(NO_LOCATIONS_TO_MOVE, result);
-        assertEquals(city.getLocation(), artist.getLocation());
-        assertEquals(new Point(1, 1), workers.getLocation());
-        assertEquals(2, artist.getPassScore());
-        assertEquals(5, workers.getPassScore());
+        assertThat(result).isEqualTo(NO_LOCATIONS_TO_MOVE);
 
-        assertEquals(city, civilization.cities().getCityAtLocation(new Point(2, 1)));
-        UnitList units = civilization.units().getUnits();
-        assertEquals(2, units.size());
-        units = civilization.units().getUnitsAtLocation(new Point(2, 1));
-        assertEquals(1, units.size());
+        assertThat(civilization.units().getUnits())
+            .hasSize(2)
+            .containsExactly(artist, workers);
+
+        assertThat(civilization.cities().getCityAtLocation(new Point(2, 1)))
+            .isEqualTo(city);
+
+        assertThat(artist)
+            .returns(city.getLocation(), GreatArtist::getLocation)
+            .returns(2, GreatArtist::getPassScore);
+
+        assertThat(civilization.units().getUnitsAtLocation(new Point(2, 1)))
+            .hasSize(1)
+            .containsExactly(artist);
+
+        assertThat(workers)
+            .returns(new Point(1, 1), Workers::getLocation)
+            .returns(5, Workers::getPassScore);
     }
 
     @Test
-    public void getTilesToMove() {
+    public void get_tiles_to_move() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES, 2,
-                " |0 1 2 3 4 ", " |0 1 2 3 4 ",
-                "-+----------", "-+----------",
-                "0|g g g g g ", "0|. . . . . ",
-                "1| g g g g g", "1| . . . . .",
-                "2|g g g g g ", "2|M . . . . ",
-                "3| g g g g g", "3| . M M . .",
-                "4|g g g g g ", "4|M . . . . ",
-                "5| g g g g g", "5| . . . . .");
+            " |0 1 2 3 4 ", " |0 1 2 3 4 ",
+            "-+----------", "-+----------",
+            "0|g g g g g ", "0|. . . . . ",
+            "1| g g g g g", "1| . . . . .",
+            "2|g g g g g ", "2|M . . . . ",
+            "3| g g g g g", "3| . M M . .",
+            "4|g g g g g ", "4|M . . . . ",
+            "5| g g g g g", "5| . . . . .");
         MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
         Civilization c2 = world.createCivilization(AMERICA);
@@ -355,41 +401,48 @@ public class MoveUnitActionTest {
         assertTrue(c2.units().addUnit(workers2, new Point(2, 1)));
 
         Set<Point> locationsToMove = MoveUnitAction.getLocationsToMove(workers1);
-        assertEquals(10, locationsToMove.size());
+        assertThat(locationsToMove)
+            .hasSize(10)
+            .containsExactly(new Point(1, 0), new Point(0, 1), new Point(1, 1), new Point(2, 0), new Point(1, 2),
+                new Point(0, 3), new Point(3, 1), new Point(3, 2), new Point(4, 2), new Point(3, 3));
     }
 
     @Test
-    public void findRoute1() {
+    public void find_route1() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES, 2,
-                " |0 1 2 3 4 ", " |0 1 2 3 4 ",
-                "-+----------", "-+----------",
-                "0|g g g g g ", "0|. . . . . ",
-                "1| g g g g g", "1| . M M . .",
-                "2|g g g g g ", "2|M . . M . ",
-                "3| g g g g g", "3| . M M . .",
-                "4|g g g g g ", "4|M . . . . ",
-                "5| g g g g g", "5| . . . . .");
+            " |0 1 2 3 4 ", " |0 1 2 3 4 ",
+            "-+----------", "-+----------",
+            "0|g g g g g ", "0|. . . . . ",
+            "1| g g g g g", "1| . M M . .",
+            "2|g g g g g ", "2|M . . M . ",
+            "3| g g g g g", "3| . M M . .",
+            "4|g g g g g ", "4|M . . . . ",
+            "5| g g g g g", "5| . . . . .");
         MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
 
         Workers workers = UnitFactory.newInstance(c1, Workers.CLASS_UUID);
         assertTrue(c1.units().addUnit(workers, new Point(2, 2)));
+        WorldRender.of(this).createHtml(world, c1);
+
         UnitRoute route = MoveUnitAction.findRoute(workers, new Point(1, 0));
 
-        assertEquals(3, route.size());
+        assertThat(route)
+            .hasSize(3)
+            .containsExactly(new Dir6(-1, 0), new Dir6(-1, -1), new Dir6(1, -1));
     }
 
     @Test
-    public void findRoute2() {
+    public void find_route2() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES, 2,
-                " |0 1 2 3 4 ", " |0 1 2 3 4 ",
-                "-+----------", "-+----------",
-                "0|g g g g g ", "0|. . . . . ",
-                "1| g g g g g", "1| M M M . .",
-                "2|g g g g g ", "2|M . . M . ",
-                "3| g g g g g", "3| . M M . .",
-                "4|g g g g g ", "4|M . . . . ",
-                "5| g g g g g", "5| . . . . .");
+            " |0 1 2 3 4 ", " |0 1 2 3 4 ",
+            "-+----------", "-+----------",
+            "0|g g g g g ", "0|. . . . . ",
+            "1| g g g g g", "1| M M M . .",
+            "2|g g g g g ", "2|M . . M . ",
+            "3| g g g g g", "3| . M M . .",
+            "4|g g g g g ", "4|M . . . . ",
+            "5| g g g g g", "5| . . . . .");
         MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
 
@@ -399,51 +452,58 @@ public class MoveUnitActionTest {
         // route goes from bottom line to top (map-cyclic test)
         UnitRoute route = MoveUnitAction.findRoute(workers, new Point(1, 0));
 
-        assertEquals(5, route.size());
+        assertThat(route)
+            .hasSize(5)
+            .containsExactly(new Dir6(-1, 0), new Dir6(-1, 1), new Dir6(1, 1), new Dir6(0, 1), new Dir6(0, 1));
     }
 
     @Test
-    public void findRoute3() {
+    public void find_route3() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES, 2,
-                " |0 1 2 3 4 ", " |0 1 2 3 4 ",
-                "-+----------", "-+----------",
-                "0|g g g g g ", "0|. . . . . ",
-                "1| g g g g g", "1| M M M . M",
-                "2|g g g g g ", "2|M . . M . ",
-                "3| g g g g g", "3| . M M . M",
-                "4|g g g g g ", "4|M . . . M ",
-                "5| g g g g g", "5| M M M M M");
+            " |0 1 2 3 4 ", " |0 1 2 3 4 ",
+            "-+----------", "-+----------",
+            "0|g g g g g ", "0|. . . . . ",
+            "1| g g g g g", "1| M M M . M",
+            "2|g g g g g ", "2|M . . M . ",
+            "3| g g g g g", "3| . M M . M",
+            "4|g g g g g ", "4|M . . . M ",
+            "5| g g g g g", "5| M M M M M");
         MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
 
         Workers workers = UnitFactory.newInstance(c1, Workers.CLASS_UUID);
         assertTrue(c1.units().addUnit(workers, new Point(2, 2)));
+        WorldRender.of(this).createHtml(world, c1);
 
         UnitRoute route = MoveUnitAction.findRoute(workers, new Point(1, 0));
 
-        assertEquals(11, route.size());
+        assertThat(route)
+            .hasSize(11)
+            .containsExactly(new Dir6(-1, 0), new Dir6(-1, 1), new Dir6(1, 1), new Dir6(1, 0), new Dir6(1, 0),
+                new Dir6(0, -1), new Dir6(1, -1), new Dir6(-1, -1), new Dir6(0, -1), new Dir6(-1, 0), new Dir6(-1, 0));
     }
 
     @Test
-    public void findRoute4() {
+    public void find_route4() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES, 2,
-                " |0 1 2 3 4 ", " |0 1 2 3 4 ",
-                "-+----------", "-+----------",
-                "0|g g g g g ", "0|. . . . . ",
-                "1| g g g g g", "1| M M M M M",
-                "2|g g g g g ", "2|M . . M . ",
-                "3| g g g g g", "3| . M M . M",
-                "4|g g g g g ", "4|M . . . M ",
-                "5| g g g g g", "5| M M M M M");
+            " |0 1 2 3 4 ", " |0 1 2 3 4 ",
+            "-+----------", "-+----------",
+            "0|g g g g g ", "0|. . . . . ",
+            "1| g g g g g", "1| M M M M M",
+            "2|g g g g g ", "2|M . . M . ",
+            "3| g g g g g", "3| . M M . M",
+            "4|g g g g g ", "4|M . . . M ",
+            "5| g g g g g", "5| M M M M M");
         MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
 
         Workers workers = UnitFactory.newInstance(c1, Workers.CLASS_UUID);
         assertTrue(c1.units().addUnit(workers, new Point(2, 2)));
+        WorldRender.of(this).createHtml(world, c1);
 
         // there is no route here
         UnitRoute route = MoveUnitAction.findRoute(workers, new Point(1, 0));
 
-        assertEquals(0, route.size());
+        assertThat(route).isEmpty();
     }
 }

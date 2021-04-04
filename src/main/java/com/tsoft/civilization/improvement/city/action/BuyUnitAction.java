@@ -70,7 +70,7 @@ public class BuyUnitAction {
             <button onclick="$buttonOnClick">$buttonLabel: $buyCost $gold</button>
             """,
 
-            "$buttonOnClick", ClientAjaxRequest.buyBuildingAction(city, unitClassUuid),
+            "$buttonOnClick", ClientAjaxRequest.buyUnitAction(city, unitClassUuid),
             "$buttonLabel", getLocalizedName(),
             "$buyCost", city.getUnitBuyCost(unitClassUuid),
             "$gold", L10nCity.GOLD

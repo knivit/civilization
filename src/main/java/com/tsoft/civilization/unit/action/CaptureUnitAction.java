@@ -1,5 +1,6 @@
 package com.tsoft.civilization.unit.action;
 
+import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import com.tsoft.civilization.world.L10nWorld;
 import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.action.ActionAbstractResult;
@@ -51,6 +52,9 @@ public class CaptureUnitAction {
 
         // capture foreign unit
         foreignUnit.capturedBy(attacker);
+
+        // passScore ends
+        attacker.setPassScore(0);
 
         return FOREIGN_UNIT_CAPTURED;
     }
@@ -108,22 +112,6 @@ public class CaptureUnitAction {
         return units.getLocations();
     }
 
-    private static String getClientJSCode(AbstractUnit unit) {
-        JsonBlock block = new JsonBlock('\'');
-        block.startArray("locations");
-        List<Point> locations = getLocationsToCapture(unit);
-        for (Point loc : locations) {
-            JsonBlock locBlock = new JsonBlock('\'');
-            locBlock.addParam("col", loc.getX());
-            locBlock.addParam("row", loc.getY());
-            block.addElement(locBlock.getText());
-        }
-        block.stopArray();
-
-        return String.format("client.captureUnitAction({ attacker:'%1$s', ucol:'%2$s', urow:'%3$s', %4$s })",
-                unit.getId(), unit.getLocation().getX(), unit.getLocation().getY(), block.getValue());
-    }
-
     private static String getLocalizedName() {
         return L10nUnit.CAPTURE_NAME.getLocalized();
     }
@@ -145,5 +133,19 @@ public class CaptureUnitAction {
             "$buttonLabel", getLocalizedName(),
             "$actionDescription", getLocalizedDescription()
         );
+    }
+
+    private static StringBuilder getClientJSCode(AbstractUnit unit) {
+        JsonBlock locations = new JsonBlock('\'');
+        locations.startArray("locations");
+        for (Point loc : getLocationsToCapture(unit)) {
+            JsonBlock location = new JsonBlock('\'');
+            location.addParam("col", loc.getX());
+            location.addParam("row", loc.getY());
+            locations.addElement(location.getText());
+        }
+        locations.stopArray();
+
+        return ClientAjaxRequest.captureUnitAction(unit, locations);
     }
 }

@@ -142,7 +142,7 @@ public class L10nCivilization {
         .put(RU, "Америка");
 
     public static final L10n JAPAN = new L10n()
-        .put(EN, "Japanese")
+        .put(EN, "Japan")
         .put(RU, "Япония");
 
     public static final L10nList CIVILIZATIONS = new L10nList()

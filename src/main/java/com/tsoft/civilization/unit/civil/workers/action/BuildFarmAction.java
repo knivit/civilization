@@ -6,6 +6,7 @@ import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.unit.civil.workers.Workers;
 import com.tsoft.civilization.util.Format;
+import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 
 import java.util.UUID;
 
@@ -35,10 +36,6 @@ public class BuildFarmAction {
         return WorkersActionResults.CAN_BUILD_IMPROVEMENT;
     }
 
-    private static String getClientJSCode(Workers workers) {
-        return String.format("client.buildFarmAction({ workers:'%1$s' })", workers.getId());
-    }
-
     private static String getLocalizedName() {
         return L10nImprovement.BUILD_FARM_ACTION.getLocalized();
     }
@@ -52,10 +49,11 @@ public class BuildFarmAction {
             return null;
         }
 
-        return Format.text(
-            "<td><button onclick=\"$buttonOnClick\">$buttonLabel</button></td><td>$actionDescription</td>",
+        return Format.text("""
+            <td><button onclick="$buttonOnClick">$buttonLabel</button></td><td>$actionDescription</td>
+            """,
 
-            "$buttonOnClick", getClientJSCode(workers),
+            "$buttonOnClick", ClientAjaxRequest.buildFarmAction(workers),
             "$buttonLabel", getLocalizedName(),
             "$actionDescription", getLocalizedDescription()
         );

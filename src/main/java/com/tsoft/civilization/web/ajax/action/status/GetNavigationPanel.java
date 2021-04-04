@@ -11,8 +11,6 @@ public class GetNavigationPanel {
                 <td><button onclick="$getCivilizations">$civilizationsButton</button></td>
                 <td><button onclick="$getMyCities">$citiesButton</button></td>
                 <td><button onclick="$getMyUnits">$unitsButton</button></td>
-
-                // use year:10 000 to show last events first
                 <td><button onclick="$getEvents">$showEventsButton</button></td>
             </tr></table>
             """,
