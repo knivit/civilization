@@ -4,14 +4,14 @@ import java.util.*;
 import java.util.stream.Stream;
 
 public class BuildingList implements Iterable<AbstractBuilding> {
-    private List<AbstractBuilding> buildings = new ArrayList<>();
+    private final List<AbstractBuilding> buildings = new ArrayList<>();
     private boolean isUnmodifiable;
 
     public BuildingList() { }
 
     public BuildingList(List<AbstractBuilding> buildings) {
         Objects.requireNonNull(buildings);
-        this.buildings = buildings;
+        this.buildings.addAll(buildings);
     }
 
     public BuildingList(AbstractBuilding ... buildings) {

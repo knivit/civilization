@@ -85,11 +85,11 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
         return Format.text("""
             <table id='info_table'>
                 <tr><th colspan='3'>$features</th></tr>
-                <tr><td><image src='$populationImage'/></td><td>$populationLabel</td><td>$population</td>
-                <tr><td><image src='$productionImage'/></td><td>$productionLabel</td><td>$production</td>
-                <tr><td><image src='$goldImage'/></td><td>$goldLabel</td><td>$gold</td>
-                <tr><td><image src='$foodImage'/></td><td>$foodLabel</td><td>$food</td>
-                <tr><td><image src='$happinessImage'/></td><td>$happinessLabel</td><td>$happiness</td>
+                <tr><td>$populationImage</td><td>$populationLabel</td><td>$population</td>
+                <tr><td>$productionImage</td><td>$productionLabel</td><td>$production</td>
+                <tr><td>$goldImage</td><td>$goldLabel</td><td>$gold</td>
+                <tr><td>$foodImage</td><td>$foodLabel</td><td>$food</td>
+                <tr><td>$happinessImage</td><td>$happinessLabel</td><td>$happiness</td>
                 <tr><td></td><td>$militaryUnitsLabel</td><td>$militaryUnits</td>
                 <tr><td></td><td>$civilUnitsLabel</td><td>$civilUnits</td>
                 <tr><td></td><td>$citiesLabel</td><td>$cities</td>
@@ -98,15 +98,15 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
 
             "$features", L10nCivilization.FEATURES,
 
-            "$populationImage", POPULATION_IMAGE,
+            "$populationImage", POPULATION_IMAGE_WITH_TOOLTIP,
             "$populationLabel", L10nCivilization.POPULATION, "$population", civilization.calcSupply().getPopulation(),
-            "$productionImage", PRODUCTION_IMAGE,
+            "$productionImage", PRODUCTION_IMAGE_WITH_TOOLTIP,
             "$productionLabel", L10nCivilization.PRODUCTION, "$production", civilization.calcSupply().getProduction(),
-            "$goldImage", GOLD_IMAGE,
+            "$goldImage", GOLD_IMAGE_WITH_TOOLTIP,
             "$goldLabel", L10nCivilization.GOLD, "$gold", civilization.calcSupply().getGold(),
-            "$foodImage", FOOD_IMAGE,
+            "$foodImage", FOOD_IMAGE_WITH_TOOLTIP,
             "$foodLabel", L10nCivilization.FOOD, "$food", civilization.calcSupply().getFood(),
-            "$happinessImage", HAPPINESS_IMAGE(civilization.calcSupply().getHappiness()),
+            "$happinessImage", HAPPINESS_IMAGE_WITH_TOOLTIP(civilization.calcSupply().getHappiness()),
             "$happinessLabel", L10nCivilization.HAPPINESS, "$happiness", civilization.calcSupply().getHappiness(),
             "$militaryUnitsLabel", L10nCivilization.MILITARY_UNITS_COUNT, "$militaryUnits", civilization.units().getMilitaryCount(),
             "$civilUnitsLabel", L10nCivilization.CIVIL_UNITS_COUNT, "$civilUnits", civilization.units().getCivilCount(),

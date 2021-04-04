@@ -1,6 +1,6 @@
 "use strict";
 
-var drawCoastTile = {
+var drawCoastFeature = {
     img: new Image(),
 
     draw: function(x, y, tile) {
@@ -8,5 +8,5 @@ var drawCoastTile = {
     }
 };
 
-drawCoastTile.img.src = "";
+drawCoastFeature.img.src = "";
 

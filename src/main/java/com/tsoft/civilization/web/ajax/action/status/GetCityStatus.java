@@ -20,6 +20,8 @@ import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
 
+import static com.tsoft.civilization.web.ajax.ServerStaticResource.*;
+
 public class GetCityStatus extends AbstractAjaxRequest {
 
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
@@ -87,21 +89,31 @@ public class GetCityStatus extends AbstractAjaxRequest {
         return Format.text("""
             <table id='info_table'>
                 <tr><th colspan='2'>$features</th></tr>
-                <tr><td>$populationLabel</td><td>$population</td>
-                <tr><td>$productionLabel</td><td>$production</td>
-                <tr><td>$goldLabel</td><td>$gold</td>
-                <tr><td>$foodLabel</td><td>$food</td>
-                <tr><td>$happinessLabel</td><td>$happiness</td>
+                <tr><td>$populationLabel</td><td>$population $populationImage</td>
+                <tr><td>$productionLabel</td><td>$production $productionImage</td>
+                <tr><td>$goldLabel</td><td>$gold $goldImage</td>
+                <tr><td>$foodLabel</td><td>$food $foodImage</td>
+                <tr><td>$happinessLabel</td><td>$happiness $happinessImage</td>
             </table>
             """,
 
             "$features", L10nCity.BUSINESS_FEATURES,
 
-            "$populationLabel", L10nCity.POPULATION, "$population", city.getSupply().getPopulation(),
-            "$productionLabel", L10nCity.PRODUCTION, "$production", city.getSupply().getProduction(),
-            "$goldLabel", L10nCity.GOLD, "$gold", city.getSupply().getGold(),
-            "$foodLabel", L10nCity.FOOD, "$food", city.getSupply().getFood(),
-            "$happinessLabel", L10nCity.HAPPINESS, "$happiness", city.getSupply().getHappiness()
+            "$populationLabel", L10nCity.POPULATION,
+            "$population", city.getSupply().getPopulation(),
+            "$populationImage", POPULATION_IMAGE,
+            "$productionLabel", L10nCity.PRODUCTION,
+            "$production", city.getSupply().getProduction(),
+            "$productionImage", PRODUCTION_IMAGE,
+            "$goldLabel", L10nCity.GOLD,
+            "$gold", city.getSupply().getGold(),
+            "$goldImage", GOLD_IMAGE,
+            "$foodLabel", L10nCity.FOOD,
+            "$food", city.getSupply().getFood(),
+            "$foodImage", FOOD_IMAGE,
+            "$happinessLabel", L10nCity.HAPPINESS,
+            "$happiness", city.getSupply().getHappiness(),
+            "$happinessImage", HAPPINESS_IMAGE(city.getSupply().getHappiness())
         );
     }
 

@@ -20,6 +20,8 @@ import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.tile.base.AbstractTileView;
 import com.tsoft.civilization.civilization.Civilization;
 
+import static com.tsoft.civilization.web.ajax.ServerStaticResource.*;
+
 public class GetTileInfo extends AbstractAjaxRequest {
 
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
@@ -82,9 +84,9 @@ public class GetTileInfo extends AbstractAjaxRequest {
         return Format.text("""
             <table id='info_table'>
                 <tr><th colspan='2'>$features</th></tr>
-                <tr><td>$productionLabel</td><td>$production</td></tr>
-                <tr><td>$goldLabel</td><td>$gold</td></tr>
-                <tr><td>$foodLabel</td><td>$food</td></tr>
+                <tr><td>$productionLabel</td><td>$production $productionImage</td></tr>
+                <tr><td>$goldLabel</td><td>$gold $goldImage</td></tr>
+                <tr><td>$foodLabel</td><td>$food $foodImage</td></tr>
                 <tr><td>$canBuildCityLabel</td><td>$canBuildCity</td></tr>
                 <tr><td>$defenseBonusLabel</td><td>$defenseBonus</td></tr>
             </table>
@@ -94,10 +96,13 @@ public class GetTileInfo extends AbstractAjaxRequest {
 
             "$productionLabel", L10nTile.PRODUCTION,
             "$production", tileSupply.getProduction(),
+            "$productionImage", PRODUCTION_IMAGE,
             "$goldLabel", L10nTile.GOLD,
             "$gold", tileSupply.getGold(),
+            "$goldImage", GOLD_IMAGE,
             "$foodLabel", L10nTile.FOOD,
             "$food", tileSupply.getFood(),
+            "$foodImage", FOOD_IMAGE,
             "$canBuildCityLabel", L10nTile.CAN_BUILD_CITY,
             "$canBuildCity", (tile.canBuildCity() ? L10nTile.YES : L10nTile.NO),
             "$defenseBonusLabel", L10nTile.DEFENSE_BONUS,

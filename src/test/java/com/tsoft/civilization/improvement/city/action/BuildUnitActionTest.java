@@ -5,7 +5,6 @@ import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.unit.UnitFactory;
-import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.unit.military.archers.Archers;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
@@ -13,9 +12,11 @@ import com.tsoft.civilization.world.economic.SupplyMock;
 import org.junit.jupiter.api.Test;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BuildUnitActionTest {
+
     @Test
     public void failToBuildUnitNoTechnology() {
         MockWorld world = MockWorld.newSimpleWorld();
@@ -37,7 +38,7 @@ public class BuildUnitActionTest {
 
         // Start build Archers
         ActionAbstractResult actionResult = BuildUnitAction.buildUnit(city, Archers.CLASS_UUID);
-        assertEquals(CityActionResults.UNIT_CONSTRUCTION_IS_STARTED, actionResult);
+        assertThat(actionResult).isEqualTo(CityActionResults.UNIT_CONSTRUCTION_IS_STARTED);
 
         // Wait till it builds
         Archers archers = UnitFactory.newInstance(civilization, Archers.CLASS_UUID);
@@ -51,14 +52,10 @@ public class BuildUnitActionTest {
         world.move();
 
         assertTrue(city.getConstructions().isEmpty());
-        assertEquals(1, city.getBuiltThisYearList().size());
-        assertEquals(Archers.CLASS_UUID, city.getBuiltThisYearList().getList().get(0).getObject().getClassUuid());
-        assertEquals(1, civilization.units().size());
-
-        UnitList list = civilization.units().findByClassUuid(Archers.CLASS_UUID);
-        assertTrue(list != null && list.size() == 1);
-        assertNotNull(list.getAny().getId());
-        assertEquals(city.getLocation(), list.getAny().getLocation());
-        assertEquals(city.getCivilization(), list.getAny().getCivilization());
+        assertThat(civilization.units().getUnits())
+            .hasSize(1)
+            .allMatch(e -> e.getClassUuid().equals(Archers.CLASS_UUID))
+            .allMatch(e -> e.getLocation().equals(city.getLocation()))
+            .allMatch(e -> e.getCivilization().equals(city.getCivilization()));
     }
 }

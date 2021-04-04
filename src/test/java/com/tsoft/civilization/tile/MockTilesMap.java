@@ -9,7 +9,9 @@ import com.tsoft.civilization.tile.base.plain.Plain;
 import com.tsoft.civilization.tile.base.snow.Snow;
 import com.tsoft.civilization.tile.base.tundra.Tundra;
 import com.tsoft.civilization.tile.feature.*;
+import com.tsoft.civilization.tile.feature.atoll.Atoll;
 import com.tsoft.civilization.tile.feature.coast.Coast;
+import com.tsoft.civilization.tile.feature.fallout.Fallout;
 import com.tsoft.civilization.tile.feature.floodplain.FloodPlain;
 import com.tsoft.civilization.tile.feature.forest.Forest;
 import com.tsoft.civilization.tile.feature.hill.Hill;
@@ -33,8 +35,8 @@ public class MockTilesMap extends TilesMap {
 
         // base tiles
         tileCodes.put('.', Ocean.CLASS_UUID);
-        tileCodes.put('g', Grassland.CLASS_UUID);
         tileCodes.put('d', Desert.CLASS_UUID);
+        tileCodes.put('g', Grassland.CLASS_UUID);
         tileCodes.put('i', Ice.CLASS_UUID);
         tileCodes.put('l', Lake.CLASS_UUID);
         tileCodes.put('p', Plain.CLASS_UUID);
@@ -42,14 +44,16 @@ public class MockTilesMap extends TilesMap {
         tileCodes.put('t', Tundra.CLASS_UUID);
 
         // terrain features
-        tileCodes.put(',', Coast.CLASS_UUID);
-        tileCodes.put('f', Forest.CLASS_UUID);
+        tileCodes.put('a', Atoll.CLASS_UUID);
+        tileCodes.put('F', Fallout.CLASS_UUID);
         tileCodes.put('n', FloodPlain.CLASS_UUID);
+        tileCodes.put('f', Forest.CLASS_UUID);
         tileCodes.put('h', Hill.CLASS_UUID);
-        tileCodes.put('M', Mountain.CLASS_UUID);
         tileCodes.put('j', Jungle.CLASS_UUID);
+        tileCodes.put('M', Mountain.CLASS_UUID);
         tileCodes.put('m', Marsh.CLASS_UUID);
         tileCodes.put('o', Oasis.CLASS_UUID);
+        tileCodes.put(',', Coast.CLASS_UUID);
     }
 
     private final Map<Character, String> asciiTileClasses = new HashMap<>();

@@ -95,10 +95,10 @@ public class GetMyCities extends AbstractAjaxRequest {
             <table id='actions_table'>
                 <tr>
                     <th>$name</th>
-                    <th><image src='$populationImage'/></th>
-                    <th><image src='$productionImage'/></th>
-                    <th><image src='$goldImage'/></th>
-                    <th><image src='$foodImage'/></th>
+                    <th>$populationImage</th>
+                    <th>$productionImage</th>
+                    <th>$goldImage</th>
+                    <th>$foodImage</th>
                 </tr>
                 $cities
             </table>

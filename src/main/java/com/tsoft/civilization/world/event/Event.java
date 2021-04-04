@@ -14,15 +14,15 @@ public class Event {
     public static final int UPDATE_STATUS_PANEL = 4;
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter
-            .ofPattern("yyyy-MM-dd HH:mm:ss")
-            .withZone(ZoneId.of("UTC"));
+        .ofPattern("yyyy-MM-dd HH:mm:ss")
+        .withZone(ZoneId.of("UTC"));
 
-    private Object obj;
+    private final Object obj;
 
-    private Instant serverEventTime;
-    private L10n description;
-    private Object[] args;
-    private int flags;
+    private final Instant serverEventTime;
+    private final L10n description;
+    private final Object[] args;
+    private final int flags;
 
     public Event(int flags, Object obj, L10n description, Object ... args) {
         this.flags = flags;

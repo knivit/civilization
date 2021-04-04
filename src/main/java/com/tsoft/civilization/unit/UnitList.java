@@ -9,14 +9,14 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class UnitList implements Iterable<AbstractUnit> {
-    private List<AbstractUnit> units = new ArrayList<>();
+    private final List<AbstractUnit> units = new ArrayList<>();
     private boolean isUnmodifiable;
 
     public UnitList() { }
 
     public UnitList(List<AbstractUnit> units) {
         Objects.requireNonNull(units);
-        this.units = units;
+        this.units.addAll(units);
     }
 
     public List<AbstractUnit> getListCopy() {
@@ -144,5 +144,4 @@ public class UnitList implements Iterable<AbstractUnit> {
             .findAny()
             .orElse(null);
     }
-
 }

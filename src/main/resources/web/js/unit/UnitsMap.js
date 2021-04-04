@@ -1,6 +1,8 @@
 "use strict";
 
 var unitsMap = {
+    updateInProgress: false,
+
     mapWidth: {},
     mapHeight: {},
     unitsMap: [],
@@ -13,18 +15,27 @@ var unitsMap = {
     },
 
     update: function(units) {
-        // re-create the map as some units may be destroyed etc
-        unitsMap.unitsMap = utils.createArray(unitsMap.mapWidth, unitsMap.mapHeight);
+        if (unitsMap.updateInProgress) {
+            return;
+        }
 
-        for (var i = 0; i < units.length; i ++) {
-            var col = units[i].col;
-            var row = units[i].row;
-            var unit = new Unit(col, row, units[i]);
-            if (unitsMap.unitsMap[col][row]) {
-                unitsMap.unitsMap[col][row].push(unit);
-            } else {
-                unitsMap.unitsMap[col][row] = [ unit ];
+        unitsMap.updateInProgress = true;
+        try {
+            // re-create the map as some units may be destroyed etc
+            unitsMap.unitsMap = utils.createArray(unitsMap.mapWidth, unitsMap.mapHeight);
+
+            for (var i = 0; i < units.length; i ++) {
+                var col = units[i].col;
+                var row = units[i].row;
+                var unit = new Unit(col, row, units[i]);
+                if (unitsMap.unitsMap[col][row]) {
+                    unitsMap.unitsMap[col][row].push(unit);
+                } else {
+                    unitsMap.unitsMap[col][row] = [ unit ];
+                }
             }
+        } finally {
+            unitsMap.updateInProgress = false;
         }
     },
 

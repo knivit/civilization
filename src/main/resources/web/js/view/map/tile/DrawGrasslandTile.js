@@ -8,4 +8,4 @@ var drawGrasslandTile = {
     }
 };
 
-drawCoastTile.img.src = "";
+drawGrasslandTile.img.src = "";

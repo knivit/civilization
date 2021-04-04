@@ -1,6 +1,6 @@
 "use strict";
 
-var drawMountainTile = {
+var drawMountainFeature = {
     img: new Image(),
 
     draw: function(x, y, tile) {
@@ -9,4 +9,4 @@ var drawMountainTile = {
     }
 };
 
-drawMountainTile.img.src = "images/map/mountain.jpg";
+drawMountainFeature.img.src = "images/map/mountain.jpg";

@@ -62,5 +62,6 @@ public class MockWorld extends World {
 
     public void move() {
         stopYear();
+        startYear();
     }
 }

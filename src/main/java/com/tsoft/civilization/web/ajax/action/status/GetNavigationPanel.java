@@ -7,7 +7,7 @@ public class GetNavigationPanel {
 
     public StringBuilder getContent() {
         return Format.text("""
-            <table id='navigation_panel'><tr> +
+            <table id='navigation_panel'><tr>
                 <td><button onclick="$getCivilizations">$civilizationsButton</button></td>
                 <td><button onclick="$getMyCities">$citiesButton</button></td>
                 <td><button onclick="$getMyUnits">$unitsButton</button></td>

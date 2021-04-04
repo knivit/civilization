@@ -32,19 +32,20 @@ var client = {
     },
 
     onUpdateWorldResponse: function(response) {
-        if (!client.worldUpdateInProgress) {
-            client.worldUpdateInProgress = true;
+        if (client.worldUpdateInProgress) {
+            return;
+        }
 
-            try {
-                var world = JSON.parse(response);
-                tilesMap.update(world.tiles);
-                unitsMap.update(world.units);
-                citiesMap.update(world.cities);
+        client.worldUpdateInProgress = true;
+        try {
+            var world = JSON.parse(response);
+            tilesMap.update(world.tiles);
+            unitsMap.update(world.units);
+            citiesMap.update(world.cities);
 
-                redraw();
-            } finally {
-                client.worldUpdateInProgress = false;
-            }
+            redraw();
+        } finally {
+            client.worldUpdateInProgress = false;
         }
     },
 

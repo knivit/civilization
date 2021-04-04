@@ -17,6 +17,11 @@ public class CivilizationList implements Iterable<Civilization> {
 
     public CivilizationList() { }
 
+    public CivilizationList(List<Civilization> civilizations) {
+        Objects.requireNonNull(civilizations);
+        this.civilizations.addAll(civilizations);
+    }
+
     public CivilizationList unmodifiableList() {
         CivilizationList list = new CivilizationList();
         list.civilizations.addAll(civilizations);
@@ -37,6 +42,10 @@ public class CivilizationList implements Iterable<Civilization> {
         if (isUnmodifiable) {
             throw new UnsupportedOperationException("The list is unmodifiable");
         }
+    }
+
+    public Civilization get(int index) {
+        return civilizations.get(index);
     }
 
     public CivilizationList add(Civilization civilization) {
@@ -154,7 +163,9 @@ public class CivilizationList implements Iterable<Civilization> {
             .orElse(null);
     }
 
-    public void sortByName() {
-        civilizations.sort(Comparator.comparing(c -> c.getView().getLocalizedCivilizationName()));
+    public CivilizationList sortByName() {
+        List<Civilization> list = new ArrayList<>(civilizations);
+        list.sort(Comparator.comparing(e -> e.getView().getLocalizedName()));
+        return new CivilizationList(list);
     }
 }

@@ -71,7 +71,7 @@ public class World {
         for (Civilization otherCivilization : civilizations) {
             if (!civilization.equals(otherCivilization)) {
                 Pair<Civilization> key = new Pair<>(civilization, otherCivilization);
-                relations.put(key, CivilizationsRelations.NEUTRAL);
+                relations.put(key, CivilizationsRelations.neutral());
             }
         }
 
@@ -99,15 +99,15 @@ public class World {
 
     public void setCivilizationsRelations(Civilization c1, Civilization c2, CivilizationsRelations rel) {
         Pair<Civilization> key = new Pair<>(c1, c2);
-        relations.get(key).setState(rel);
+        relations.put(key, rel);
 
         // send an Event about that to all civilizations
-        switch (rel.getState()) {
-            case CivilizationsRelations.WAR_STATE ->
-                sendEvent(new Event(Event.UPDATE_STATUS_PANEL, this, L10nWorld.DECLARE_WAR_EVENT, c1.getView().getLocalizedCivilizationName(), c2.getView().getLocalizedCivilizationName()));
+        if (rel.isWar()) {
+            sendEvent(new Event(Event.UPDATE_STATUS_PANEL, this, L10nWorld.DECLARE_WAR_EVENT, c1.getView().getLocalizedCivilizationName(), c2.getView().getLocalizedCivilizationName()));
+        }
 
-            case CivilizationsRelations.FRIENDS_STATE ->
-                sendEvent(new Event(Event.UPDATE_STATUS_PANEL, this, L10nWorld.DECLARE_FRIENDS_EVENT, c1.getView().getLocalizedCivilizationName(), c2.getView().getLocalizedCivilizationName()));
+        if (rel.isFriends()) {
+            sendEvent(new Event(Event.UPDATE_STATUS_PANEL, this, L10nWorld.DECLARE_FRIENDS_EVENT, c1.getView().getLocalizedCivilizationName(), c2.getView().getLocalizedCivilizationName()));
         }
     }
 
@@ -259,7 +259,7 @@ public class World {
         civilizations.forEach(Civilization::startYear);
 
         // add it to the history
-        sendEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.NEW_YEAR_START_EVENT, year.getValue()));
+        sendEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.NEW_YEAR_START_EVENT, year.getYear()));
     }
 
     public void onCivilizationMoved(Civilization civilization) {
@@ -286,7 +286,7 @@ public class World {
             .filter(c -> PlayerType.BOT.equals(c.getPlayerType()))
             .forEach(Civilization::stopYear);
 
-        sendEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.NEW_YEAR_COMPLETE_EVENT, year.getValue()));
+        sendEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.NEW_YEAR_COMPLETE_EVENT, year.getYear()));
 
         year = year.nextYear();
     }

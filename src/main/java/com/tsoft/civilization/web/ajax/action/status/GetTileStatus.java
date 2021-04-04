@@ -23,6 +23,8 @@ import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.civilization.Civilization;
 
+import static com.tsoft.civilization.web.ajax.ServerStaticResource.*;
+
 public class GetTileStatus extends AbstractAjaxRequest {
 
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
@@ -204,7 +206,12 @@ public class GetTileStatus extends AbstractAjaxRequest {
 
         return Format.text("""
             <table id='info_table'>
-                <tr><th></th><th>$productionLabel</th><th>$goldLabel</th><th>$foodLabel</th></tr>
+                <tr>
+                    <th></th>
+                    <th>$productionImage $productionLabel</th>
+                    <th>$goldImage $goldLabel</th>
+                    <th>$foodImage $foodLabel</th>
+                </tr>
                 <tr>
                     <td><button onclick="$getTileInfo">$tileName</button></td>
                     <td>$production</td>
@@ -217,8 +224,11 @@ public class GetTileStatus extends AbstractAjaxRequest {
             </table>
             """,
 
+            "$productionImage", PRODUCTION_IMAGE,
             "$productionLabel", L10nTile.PRODUCTION,
+            "$goldImage", GOLD_IMAGE,
             "$goldLabel", L10nTile.GOLD,
+            "$foodImage", FOOD_IMAGE,
             "$foodLabel", L10nTile.FOOD,
             "$getTileInfo", GetTileInfo.getAjax(tile),
             "$tileName", tile.getView().getLocalizedName(),

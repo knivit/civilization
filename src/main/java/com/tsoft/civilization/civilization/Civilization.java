@@ -248,8 +248,12 @@ public abstract class Civilization {
         moveState = MoveState.IN_PROGRESS;
     }
 
-    public void stopYear() {
-        // Update state as soon as possible to prevent stopping twice
+    // Update state only once
+    public synchronized void stopYear() {
+        if (moveState == MoveState.DONE) {
+            return;
+        }
+
         moveState = MoveState.DONE;
 
         cityService.stopYear();

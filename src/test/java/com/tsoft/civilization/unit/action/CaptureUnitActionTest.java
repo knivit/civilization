@@ -35,7 +35,7 @@ public class CaptureUnitActionTest {
         MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
         Civilization c2 = world.createCivilization(AMERICA);
-        world.setCivilizationsRelations(c1, c2, CivilizationsRelations.WAR);
+        world.setCivilizationsRelations(c1, c2, CivilizationsRelations.war());
 
         Warriors warriors = UnitFactory.newInstance(c1, Warriors.CLASS_UUID);
         assertTrue(c1.units().addUnit(warriors, new Point(1, 0)));
@@ -79,7 +79,7 @@ public class CaptureUnitActionTest {
         MockWorld world = MockWorld.of(map);
         Civilization c1 = world.createCivilization(RUSSIA);
         Civilization c2 = world.createCivilization(AMERICA);
-        world.setCivilizationsRelations(c1, c2, CivilizationsRelations.WAR);
+        world.setCivilizationsRelations(c1, c2, CivilizationsRelations.war());
 
         // our forces
         Archers archers = UnitFactory.newInstance(c1, Archers.CLASS_UUID);

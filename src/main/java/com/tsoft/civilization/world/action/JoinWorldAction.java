@@ -91,10 +91,21 @@ public class JoinWorldAction {
             return WORLD_NOT_FOUND;
         }
 
-        Civilization civilization = world.getCivilizations().stream()
-            .filter(c -> c.getName().getEnglish().equals(request.civilization))
-            .findAny()
-            .orElse(null);
+        if (world.getCivilizations().isEmpty()) {
+            return CIVILIZATION_NOT_FOUND;
+        }
+
+        Civilization civilization;
+
+        if (request.civilization == null || RANDOM.getEnglish().equals(request.civilization)) {
+            int random = ThreadLocalRandom.current().nextInt(world.getCivilizations().size());
+            civilization = world.getCivilizations().get(random);
+        } else {
+            civilization = world.getCivilizations().stream()
+                .filter(c -> c.getName().getEnglish().equals(request.civilization))
+                .findAny()
+                .orElse(null);
+        }
 
         if (civilization == null) {
             return CIVILIZATION_NOT_FOUND;

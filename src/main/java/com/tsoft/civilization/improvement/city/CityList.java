@@ -9,14 +9,14 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CityList implements Iterable<City> {
-    private List<City> cities = new ArrayList<>();
+    private final List<City> cities = new ArrayList<>();
     private boolean isUnmodifiable;
 
     public CityList() { }
 
     public CityList(List<City> cities) {
         Objects.requireNonNull(cities);
-        this.cities = cities;
+        this.cities.addAll(cities);
     }
 
     public List<City> getList() {

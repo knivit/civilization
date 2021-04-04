@@ -4,14 +4,14 @@ import java.util.*;
 import java.util.stream.Stream;
 
 public class ConstructionList implements Iterable<Construction> {
-    private List<Construction> constructions = new ArrayList<>();
+    private final List<Construction> constructions = new ArrayList<>();
     private boolean isUnmodifiable;
 
     public ConstructionList() { }
 
     public ConstructionList(List<Construction> constructions) {
         Objects.requireNonNull(constructions);
-        this.constructions = constructions;
+        this.constructions.addAll(constructions);
     }
 
     public ConstructionList(Construction ... constructions) {

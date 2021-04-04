@@ -12,6 +12,8 @@ import com.tsoft.civilization.tile.feature.TerrainFeature;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.tile.feature.AbstractFeatureView;
 
+import static com.tsoft.civilization.web.ajax.ServerStaticResource.*;
+
 public class GetFeatureInfo extends AbstractAjaxRequest {
 
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
@@ -63,17 +65,23 @@ public class GetFeatureInfo extends AbstractAjaxRequest {
         return Format.text("""
             <table id='info_table'>
                 <tr><th colspan='2'>$features</th></tr>
-                <tr><td>$productionLabel</td><td>$production</td></tr>
-                <tr><td>$goldLabel</td><td>$gold</td></tr>
-                <tr><td>$foodLabel</td><td>$food</td></tr>
+                <tr><td>$productionLabel</td><td>$production $productionImage</td></tr>
+                <tr><td>$goldLabel</td><td>$gold $goldImage</td></tr>
+                <tr><td>$foodLabel</td><td>$food $foodImage</td></tr>
             </table>
             """,
 
             "$features", L10nFeature.FEATURES,
 
-            "$productionLabel", L10nFeature.FEATURE_PRODUCTION, "$production", featureSupply.getProduction(),
-            "$goldLabel", L10nFeature.FEATURE_GOLD, "$gold", featureSupply.getGold(),
-            "$foodLabel", L10nFeature.FEATURE_FOOD, "$food", featureSupply.getFood()
+            "$productionLabel", L10nFeature.FEATURE_PRODUCTION,
+            "$production", featureSupply.getProduction(),
+            "$productionImage", PRODUCTION_IMAGE,
+            "$goldLabel", L10nFeature.FEATURE_GOLD,
+            "$gold", featureSupply.getGold(),
+            "$goldImage", GOLD_IMAGE,
+            "$foodLabel", L10nFeature.FEATURE_FOOD,
+            "$food", featureSupply.getFood(),
+            "$foodImage", FOOD_IMAGE
         );
     }
 }

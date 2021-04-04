@@ -15,16 +15,15 @@ function Tile(col, row, tile) {
     this.isTundra = (this.name === 't');
     this.isGrassland = (this.name === 'g');
 
-    if (this.name === '.') this.drawTile = drawOceanTile;
-    if (this.name === ',') this.drawTile = drawCoastTile;
-    if (this.name === 'd') this.drawTile = drawDesertTile;
-    if (this.name === 'g') this.drawTile = drawGrasslandTile;
-    if (this.name === 'i') this.drawTile = drawIceTile;
-    if (this.name === 'l') this.drawTile = drawLakeTile;
-    if (this.name === 'M') this.drawTile = drawMountainTile;
-    if (this.name === 'p') this.drawTile = drawPlainTile;
-    if (this.name === 's') this.drawTile = drawSnowTile;
-    if (this.name === 't') this.drawTile = drawTundraTile;
+         if (this.name === '.') this.drawTile = drawOceanTile
+    else if (this.name === 'd') this.drawTile = drawDesertTile
+    else if (this.name === 'g') this.drawTile = drawGrasslandTile
+    else if (this.name === 'i') this.drawTile = drawIceTile
+    else if (this.name === 'l') this.drawTile = drawLakeTile
+    else if (this.name === 'p') this.drawTile = drawPlainTile
+    else if (this.name === 's') this.drawTile = drawSnowTile
+    else if (this.name === 't') this.drawTile = drawTundraTile
+    else alert("Unknown tile " + this.name);
 
     this.draw = function(x, y) {
         this.drawTile.draw(x, y, this);

@@ -109,9 +109,9 @@ public class L10nWorld {
         .put(EN, "Year")
         .put(RU, "Год");
 
-    public static final L10n NUM_OF_CIVILIZATIONS_HEADER = new L10n()
-        .put(EN, "Num of Civilizations")
-        .put(RU, "Кол-во цивилизаций");
+    public static final L10n CIVILIZATIONS_HEADER = new L10n()
+        .put(EN, "Civilizations")
+        .put(RU, "Цивилизации");
 
     public static final L10n SLOTS_AVAILABLE_HEADER = new L10n()
         .put(EN, "Slots Available")

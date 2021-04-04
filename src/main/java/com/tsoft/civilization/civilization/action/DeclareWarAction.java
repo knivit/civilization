@@ -32,7 +32,7 @@ public class DeclareWarAction {
         }
 
         World world = myCivilization.getWorld();
-        world.setCivilizationsRelations(myCivilization, otherCivilization, CivilizationsRelations.WAR);
+        world.setCivilizationsRelations(myCivilization, otherCivilization, CivilizationsRelations.war());
         return CAN_DECLARE_WAR;
     }
 

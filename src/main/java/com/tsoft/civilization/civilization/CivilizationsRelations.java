@@ -3,19 +3,27 @@ package com.tsoft.civilization.civilization;
 import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.world.L10nWorld;
 
+// immutable
 public class CivilizationsRelations {
-    public static final int WAR_STATE = -50;
-    public static final CivilizationsRelations WAR = new CivilizationsRelations(WAR_STATE);
+    private static final int WAR_STATE = -50;
+    private static final int NEUTRAL_STATE = 0;
+    private static final int FRIENDS_STATE = 50;
 
-    public static final CivilizationsRelations NEUTRAL = new CivilizationsRelations(0);
+    private final int state;
 
-    public static final int FRIENDS_STATE = 50;
-    public static final CivilizationsRelations FRIENDS = new CivilizationsRelations(FRIENDS_STATE);
+    public static CivilizationsRelations war() {
+        return new CivilizationsRelations(WAR_STATE);
+    }
 
-    private int state;
+    public static CivilizationsRelations neutral() {
+        return new CivilizationsRelations(NEUTRAL_STATE);
+    }
 
-    public CivilizationsRelations(int state) {
-        assert (state >= WAR_STATE && state <= FRIENDS_STATE) : "Wrong state = " + state + ". It must be in [-50..50]";
+    public static CivilizationsRelations friends() {
+        return new CivilizationsRelations(FRIENDS_STATE);
+    }
+
+    private CivilizationsRelations(int state) {
         this.state = state;
     }
 
@@ -23,22 +31,18 @@ public class CivilizationsRelations {
         return state;
     }
 
-    public void setState(int state) {
-        this.state = state;
-    }
-
-    public void setState(CivilizationsRelations relations) {
-        this.state = relations.getState();
-    }
-
     public boolean isWar() {
-        return WAR.equals(this);
+        return state == WAR_STATE;
+    }
+
+    public boolean isFriends() {
+        return state == FRIENDS_STATE;
     }
 
     public L10n getDescription() {
         if (state == WAR_STATE) return L10nWorld.WAR_RELATIONS_DESCRIPTION;
-        if (state < NEUTRAL.state) return L10nWorld.BAD_RELATIONS_DESCRIPTION;
-        if (state == NEUTRAL.state) return L10nWorld.NEUTRAL_RELATIONS_DESCRIPTION;
+        if (state < NEUTRAL_STATE) return L10nWorld.BAD_RELATIONS_DESCRIPTION;
+        if (state == NEUTRAL_STATE) return L10nWorld.NEUTRAL_RELATIONS_DESCRIPTION;
         if (state < FRIENDS_STATE) return L10nWorld.GOOD_RELATIONS_DESCRIPTION;
         return L10nWorld.FRIENDS_RELATIONS_DESCRIPTION;
     }

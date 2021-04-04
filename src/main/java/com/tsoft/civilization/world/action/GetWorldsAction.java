@@ -1,7 +1,7 @@
 package com.tsoft.civilization.world.action;
 
 import com.tsoft.civilization.L10n.L10n;
-import com.tsoft.civilization.civilization.PlayerType;
+import com.tsoft.civilization.civilization.*;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.ajax.action.world.GetCreateWorldFormRequest;
 import com.tsoft.civilization.web.ajax.action.world.JoinWorldRequest;
@@ -73,7 +73,34 @@ public class GetWorldsAction {
         );
     }
 
-    private static StringBuilder getCivilizations() {
+    private static StringBuilder getCivilizationsTable(World world) {
+        CivilizationList civilizations = world.getCivilizations().sortByName();
+
+        StringBuilder buf = new StringBuilder();
+        for (Civilization civilization : civilizations) {
+            buf.append(Format.text("""
+                <tr>
+                    <td><image src='$imageSrc'/></td>
+                    <td>$civilizationName</td>
+                </tr>
+                """,
+
+                "$imageSrc", civilization.getView().getStatusImageSrc(),
+                "$civilizationName", civilization.getView().getLocalizedCivilizationName()
+            ));
+        }
+
+        return Format.text("""
+            <table id='actions_table'>
+                $civilizations
+            </table>
+            """,
+
+            "$civilizations", buf
+        );
+    }
+
+    private static StringBuilder getCivilizationsSelect() {
         StringBuilder civilizations = new StringBuilder();
 
         List<L10n> list = new ArrayList<>();
@@ -99,7 +126,7 @@ public class GetWorldsAction {
                 <th>$world</td>
                 <th>$era</td>
                 <th>$year</td>
-                <th>$numOfCivilizations</td>
+                <th>$civilizations</td>
                 <th>$slotsAvailable</td>
                 <th>$action</td>
             </tr>
@@ -108,12 +135,12 @@ public class GetWorldsAction {
             "$world", WORLD_HEADER,
             "$era", ERA_HEADER,
             "$year", YEAR_HEADER,
-            "$numOfCivilizations", NUM_OF_CIVILIZATIONS_HEADER,
+            "$civilizations", CIVILIZATIONS_HEADER,
             "$slotsAvailable", SLOTS_AVAILABLE_HEADER,
             "$action", ACTION_HEADER
         ));
 
-        StringBuilder civilizations = getCivilizations();
+        StringBuilder civilizations = getCivilizationsSelect();
 
         for (World world : Worlds.getWorlds()) {
             StringBuilder actions = new StringBuilder();
@@ -136,7 +163,7 @@ public class GetWorldsAction {
                     <td>$worldName</td>
                     <td>$era</td>
                     <td>$year</td>
-                    <td>$numberOfCivilizations</td>
+                    <td>$civilizations</td>
                     <td>$slotsAvailable</td>
                     <td><table id='GetWorldsRequest_action_table'>$actions</table></td>
                 </tr>
@@ -145,7 +172,7 @@ public class GetWorldsAction {
                 "$worldName", world.getName(),
                 "$era", world.getYear().getEraLocalized(),
                 "$year", world.getYear().getYearLocalized(),
-                "$numberOfCivilizations", world.getCivilizations().size(),
+                "$civilizations", getCivilizationsTable(world),
                 "$slotsAvailable", slotsAvailable,
                 "$actions", actions
             ));
@@ -154,10 +181,10 @@ public class GetWorldsAction {
         return Format.text("""
             <table id='GetWorldsRequest_table'>
                 <colgroup>
-                    <col width='40%' />
+                    <col width='30%' />
                     <col width='10%' />
-                    <col width='10%' />
-                    <col width='10%' />
+                    <col width='5%' />
+                    <col width='25%' />
                     <col width='10%' />
                     <col width='20%' />
                   </colgroup>

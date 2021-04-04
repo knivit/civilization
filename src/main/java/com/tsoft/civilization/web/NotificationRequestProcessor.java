@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class NotificationRequestProcessor {
+    private static final String LAST_EVENT_ID_HEADER = "Last-Event-ID";
+
     private NotificationRequestProcessor() { }
 
     public static void processRequest(Client client, Request request) {
@@ -46,69 +48,53 @@ public class NotificationRequestProcessor {
         // Change the name of this thread
         Thread.currentThread().setName("Notifications for " + request.toString());
 
-        boolean needWorldUpdate = false;
-        boolean needControlPanelUpdate = false;
-        boolean needStatusPanelUpdate = false;
-
         World world = myCivilization.getWorld();
 
-        int lastEventId = NumberUtil.parseInt(request.getHeader("Last-Event-ID"), -1);
-        log.debug("Notifications for {} are started from {}",  request, lastEventId);
+        int sentEventId = NumberUtil.parseInt(request.getHeader(LAST_EVENT_ID_HEADER), -1);
+        log.debug("Notifications for {} are started from eventId = {}",  request, sentEventId);
 
         while (true) {
-            // Waiting for events
-            if (lastEventId >= (myCivilization.getEvents().size() - 1)) {
-                // Update the World's map
-                if (needWorldUpdate) {
-                    if (!sendUpdateWorldEvent(client, world)) {
-                        return;
-                    }
-                    needWorldUpdate = false;
-                }
+            boolean needWorldUpdate = false;
+            boolean needControlPanelUpdate = false;
+            boolean needStatusPanelUpdate = false;
 
-                // Update the Control Panel
-                if (needControlPanelUpdate) {
-                    if (!sendUpdateControlPanelEvent(client)) {
-                        return;
-                    }
-                    needControlPanelUpdate = false;
-                }
+            // Send all information event to the client
+            while ((sentEventId + 1) < (myCivilization.getEvents().size())) {
+                sentEventId++;
 
-                // Update the Status Panel
-                if (needStatusPanelUpdate) {
-                    if (!sendUpdateStatusPanelEvent(client)) {
-                        return;
-                    }
-                    needStatusPanelUpdate = false;
-                }
+                Event event = myCivilization.getEvents().get(sentEventId);
+                log.debug("{}: notifying the client with event = {}", sentEventId, event);
 
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    // Sending HTTP 400 will stop other requests from EventSource
-                    client.sendError(L10nServer.SERVER_ERROR);
+                needWorldUpdate = needWorldUpdate || event.isUpdateWorldEvent();
+                needControlPanelUpdate = needControlPanelUpdate || event.isUpdateControlPanelEvent();
+                needStatusPanelUpdate = needStatusPanelUpdate || event.isUpdateStatusPanelEvent();
+
+                if (!sendInformationEvent(client, event, sentEventId)) {
                     return;
                 }
-                continue;
             }
 
-            // Send the next event
-            lastEventId ++;
-
-            Event event = myCivilization.getEvents().get(lastEventId);
-            if (event.isUpdateWorldEvent()) {
-                needWorldUpdate = true;
+            // Send an update of the World's state
+            if (needWorldUpdate && !sendUpdateWorldEvent(client, world)) {
+                return;
             }
 
-            if (event.isUpdateControlPanelEvent()) {
-                needControlPanelUpdate = true;
+            // Update the Control Panel
+            if (needControlPanelUpdate && !sendUpdateControlPanelEvent(client)) {
+                return;
             }
 
-            if (event.isUpdateStatusPanelEvent()) {
-                needStatusPanelUpdate = true;
+            // Update the Status Panel
+            if (needStatusPanelUpdate && !sendUpdateStatusPanelEvent(client)) {
+                return;
             }
 
-            if (!sendInformationEvent(client, event, lastEventId)) {
+            // Waiting for the next batch of events
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                // Sending HTTP 400 will stop other requests from EventSource
+                client.sendError(L10nServer.SERVER_ERROR);
                 return;
             }
         }

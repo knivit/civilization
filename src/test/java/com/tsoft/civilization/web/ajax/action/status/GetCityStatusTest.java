@@ -31,7 +31,7 @@ public class GetCityStatusTest {
         City city1 = c1.createCity(new Point(2, 0));
 
         Civilization c2 = world.createCivilization(AMERICA);
-        world.setCivilizationsRelations(c1, c2, CivilizationsRelations.WAR);
+        world.setCivilizationsRelations(c1, c2, CivilizationsRelations.war());
         Warriors foreignWarriors = UnitFactory.newInstance(c2, Warriors.CLASS_UUID);
         assertTrue(c2.units().addUnit(foreignWarriors, new Point(2, 1)));
 
