@@ -91,7 +91,7 @@ public class CivilizationList implements Iterable<Civilization> {
             if (civilization.equals(excludeCivilization)) {
                 continue;
             }
-            cities.add(civilization.cities().getCitiesAtLocations(locations));
+            cities.addAll(civilization.cities().getCitiesAtLocations(locations));
         }
         return cities;
     }

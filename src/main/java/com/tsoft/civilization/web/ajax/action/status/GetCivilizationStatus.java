@@ -176,7 +176,7 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
             return null;
         }
 
-        CityList cities = civilization.cities().getCitiesWithActionsAvailable();
+        CityList cities = civilization.cities().getCitiesWithAvailableActions();
         if (cities.isEmpty()) {
             return null;
         }

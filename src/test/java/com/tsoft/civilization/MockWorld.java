@@ -31,6 +31,19 @@ public class MockWorld extends World {
         "2|. . g . ", "2|. . h . ", "2|. . . . ",
         "3| . . . .", "3| . . . .", "3| . . . .");
 
+    public static final MockTilesMap GRASSLAND_MAP_8x8 = new MockTilesMap(MapType.SIX_TILES,
+        " |0 1 2 3 4 5 6 7 8 ",
+        "-+------------------",
+        "0|g g g g g g g g g ",
+        "1| g g g g g g g g g",
+        "2|g g g g g g g g g ",
+        "3| g g g g g g g g g",
+        "4|g g g g g g g g g ",
+        "5| g g g g g g g g g",
+        "6|g g g g g g g g g ",
+        "7| g g g g g g g g g",
+        "8|g g g g g g g g g ");
+
     public static MockWorld newSimpleWorld() {
         return MockWorld.of(SIMPLE_TILES_MAP);
     }
@@ -57,7 +70,7 @@ public class MockWorld extends World {
     }
 
     public Civilization createCivilization(L10n civilizationName) {
-        return super.createCivilization(PlayerType.BOT, civilizationName);
+        return super.createCivilization(PlayerType.HUMAN, civilizationName);
     }
 
     public void move() {

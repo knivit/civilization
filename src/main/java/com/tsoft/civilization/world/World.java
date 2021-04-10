@@ -8,12 +8,10 @@ import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
-import com.tsoft.civilization.util.Pair;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.event.Event;
 
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class World {
     private final String id = UUID.randomUUID().toString();
@@ -26,12 +24,8 @@ public class World {
     private final String name;
     private int maxNumberOfCivilizations;
 
-    // use ArrayList as almost always we need to iterate through it
-    private final CivilizationList civilizations = new CivilizationList();
-
-    private final HashMap<Pair<Civilization>, CivilizationsRelations> relations = new HashMap<>();
     private final List<Year> years = new ArrayList<>();
-
+    private final CivilizationService civilizationService;
     private final TileService tileService = new TileService();
 
     public World(String name, TilesMap tilesMap) {
@@ -39,6 +33,8 @@ public class World {
         year = new Year(-3000);
         view = new WorldView(this);
         this.tilesMap = tilesMap;
+
+        civilizationService = new CivilizationService(this);
     }
 
     public String getId() {
@@ -55,120 +51,45 @@ public class World {
 
     // Send an event to all civilizations
     public void sendEvent(Event event) {
-        Objects.requireNonNull(event, "event can't be null");
-        civilizations.forEach(e -> e.addEvent(event));
+        civilizationService.sendEvent(event);
     }
 
     // Returns NULL when a civilization can not be created (it is already exists etc)
     public Civilization createCivilization(PlayerType playerType, L10n civilizationName) {
-        if (civilizations.getCivilizationByName(civilizationName) != null) {
-            return null;
-        }
-
-        Civilization civilization = CivilizationFactory.newInstance(civilizationName, this, playerType);
-
-        // set NEUTRAL state for this civilization with others
-        for (Civilization otherCivilization : civilizations) {
-            if (!civilization.equals(otherCivilization)) {
-                Pair<Civilization> key = new Pair<>(civilization, otherCivilization);
-                relations.put(key, CivilizationsRelations.neutral());
-            }
-        }
-
-        civilizations.add(civilization);
-
-        civilization.startYear();
-
-        // send an event to civilizations about the new one
-        // clients need to update their maps to see the new civilization (settlers and warriors)
-        sendEvent(new Event(Event.UPDATE_WORLD, civilization, L10nWorld.NEW_CIVILIZATION_EVENT,
-            civilization.getView().getLocalizedCivilizationName(), year));
-
-        return civilization;
+        return civilizationService.create(playerType, civilizationName);
     }
 
     // Returns NULL when relations can not be found
     public CivilizationsRelations getCivilizationsRelations(Civilization c1, Civilization c2) {
-        if (c1.equals(c2)) {
-            return null;
-        }
-
-        Pair<Civilization> key = new Pair<>(c1, c2);
-        return relations.get(key);
+        return civilizationService.getRelations(c1, c2);
     }
 
     public void setCivilizationsRelations(Civilization c1, Civilization c2, CivilizationsRelations rel) {
-        Pair<Civilization> key = new Pair<>(c1, c2);
-        relations.put(key, rel);
-
-        // send an Event about that to all civilizations
-        if (rel.isWar()) {
-            sendEvent(new Event(Event.UPDATE_STATUS_PANEL, this, L10nWorld.DECLARE_WAR_EVENT, c1.getView().getLocalizedCivilizationName(), c2.getView().getLocalizedCivilizationName()));
-        }
-
-        if (rel.isFriends()) {
-            sendEvent(new Event(Event.UPDATE_STATUS_PANEL, this, L10nWorld.DECLARE_FRIENDS_EVENT, c1.getView().getLocalizedCivilizationName(), c2.getView().getLocalizedCivilizationName()));
-        }
+        civilizationService.setRelations(c1, c2, rel);
     }
 
     public boolean isWar(Civilization c1, Civilization c2) {
-        if (c1 == null || c2 == null || c1.equals(c2)) {
-            return false;
-        }
-
-        CivilizationsRelations relations = getCivilizationsRelations(c1, c2);
-        if (relations == null) {
-            return false;
-        }
-
-        return relations.isWar();
+        return civilizationService.isWar(c1, c2);
     }
 
     // Find a location to place a Settlers
     public Point getCivilizationStartLocation(Civilization civ) {
-        // not less than 4 tiles from other civilizations tiles
-        // location must be passable for the Settlers
-        // there are must be 3 tiles of Earth around the location
-        Set<Point> busyLocations = new HashSet<>();
-        for (Civilization civilization : civilizations) {
-            // skip the target civilization
-            if (civilization.equals(civ)) {
-                continue;
-            }
-
-            // exclude cities
-            for (City city : civilization.cities().getCities()) {
-                busyLocations.addAll(city.getLocations());
-            }
-
-            // exclude units
-            for (AbstractUnit unit : civilization.units().getUnits()) {
-                busyLocations.add(unit.getLocation());
-            }
-        }
-
         List<Point> possibleLocations = tileService.getTilesToStartCivilization(tilesMap);
-        possibleLocations.removeAll(busyLocations);
-        if (possibleLocations.isEmpty()) {
-            return null;
-        }
-
-        int n = ThreadLocalRandom.current().nextInt(possibleLocations.size());
-        return possibleLocations.get(n);
+        return civilizationService.getCivilizationStartLocation(civ, possibleLocations);
     }
 
     public Civilization getCivilizationById(String civilizationId) {
-        return civilizations.getCivilizationById(civilizationId);
+        return civilizationService.getCivilizationById(civilizationId);
     }
 
     // Find out what Civilization have this tile, or null
     public Civilization getCivilizationOnTile(Point location) {
-        return civilizations.getCivilizationOnTile(location);
+        return civilizationService.getCivilizationOnTile(location);
     }
 
     // Only one city may be on a tile
     public City getCityAtLocation(Point location) {
-        return civilizations.getCityAtLocation(location);
+        return civilizationService.getCityAtLocation(location);
     }
 
     public CityList getCitiesAtLocations(Collection<Point> locations) {
@@ -176,7 +97,7 @@ public class World {
     }
 
     public CityList getCitiesAtLocations(Collection<Point> locations, Civilization excludeCivilization) {
-        return civilizations.getCitiesAtLocations(locations, excludeCivilization);
+        return civilizationService.getCitiesAtLocations(locations, excludeCivilization);
     }
 
     public UnitList getUnitsAtLocation(Point location) {
@@ -184,7 +105,7 @@ public class World {
     }
 
     public UnitList getUnitsAtLocation(Point location, Civilization excludeCivilization) {
-        return civilizations.getUnitsAtLocation(location, excludeCivilization);
+        return civilizationService.getUnitsAtLocation(location, excludeCivilization);
     }
 
     public UnitList getUnitsAtLocations(Collection<Point> locations) {
@@ -192,7 +113,7 @@ public class World {
     }
 
     public UnitList getUnitsAtLocations(Collection<Point> locations, Civilization excludeCivilization) {
-        return civilizations.getUnitsAtLocations(locations, excludeCivilization);
+        return civilizationService.getUnitsAtLocations(locations, excludeCivilization);
     }
 
     public List<Point> getLocationsAround(Point location, int radius) {
@@ -216,15 +137,15 @@ public class World {
     }
 
     public CivilizationList getCivilizations() {
-        return civilizations.unmodifiableList();
+        return civilizationService.getCivilizations();
     }
 
     public AbstractUnit getUnitById(String unitId) {
-        return civilizations.getUnitById(unitId);
+        return civilizationService.getUnitById(unitId);
     }
 
     public City getCityById(String cityId) {
-        return civilizations.getCityById(cityId);
+        return civilizationService.getCityById(cityId);
     }
 
     public List<Year> getYears() {
@@ -256,23 +177,16 @@ public class World {
     public void startYear() {
         years.add(year);
         tilesMap.startYear();
-        civilizations.forEach(Civilization::startYear);
+        civilizationService.startYear();
 
         // add it to the history
         sendEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.NEW_YEAR_START_EVENT, year.getYear()));
     }
 
-    public void onCivilizationMoved(Civilization civilization) {
-        if (!PlayerType.HUMAN.equals(civilization.getPlayerType())) {
-            return;
-        }
+    public void onCivilizationMoved() {
+        CivilizationList list = civilizationService.getMovingCivilizations();
 
-        Optional<Civilization> humanNotMoved = civilizations.stream()
-            .filter(c -> PlayerType.HUMAN.equals(c.getPlayerType()))
-            .filter(c -> MoveState.DONE != c.getMoveState())
-            .findAny();
-
-        if (humanNotMoved.isEmpty()) {
+        if (list.isEmpty()) {
             stopYear();
 
             // Start a new year !
@@ -281,11 +195,6 @@ public class World {
     }
 
     public void stopYear() {
-        // Move AI civilizations
-        civilizations.stream()
-            .filter(c -> PlayerType.BOT.equals(c.getPlayerType()))
-            .forEach(Civilization::stopYear);
-
         sendEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.NEW_YEAR_COMPLETE_EVENT, year.getYear()));
 
         year = year.nextYear();

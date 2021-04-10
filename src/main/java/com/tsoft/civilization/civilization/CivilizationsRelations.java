@@ -35,6 +35,10 @@ public class CivilizationsRelations {
         return state == WAR_STATE;
     }
 
+    public boolean isNeutral() {
+        return state == NEUTRAL_STATE;
+    }
+
     public boolean isFriends() {
         return state == FRIENDS_STATE;
     }

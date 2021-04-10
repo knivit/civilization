@@ -124,7 +124,7 @@ public class UnitList implements Iterable<AbstractUnit> {
             new UnitList() : filter(e -> locations.contains(e.getLocation()));
     }
 
-    public UnitList getUnitsWithActionsAvailable() {
+    public UnitList getUnitsWithAvailableActions() {
         return filter(AbstractUnit::isActionAvailable);
     }
 

@@ -1,11 +1,9 @@
 package com.tsoft.civilization.improvement.city;
 
-import com.tsoft.civilization.unit.action.AttackAction;
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.util.Point;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CityList implements Iterable<City> {
@@ -14,9 +12,9 @@ public class CityList implements Iterable<City> {
 
     public CityList() { }
 
-    public CityList(List<City> cities) {
-        Objects.requireNonNull(cities);
-        this.cities.addAll(cities);
+    public CityList(List<City> list) {
+        Objects.requireNonNull(list);
+        cities.addAll(list);
     }
 
     public List<City> getList() {
@@ -63,8 +61,9 @@ public class CityList implements Iterable<City> {
         return this;
     }
 
-    public CityList add(CityList other) {
+    public CityList addAll(CityList other) {
         checkIsUnmodifiable();
+
         if (other != null && !other.isEmpty()) {
             cities.addAll(other.cities);
         }
@@ -113,17 +112,6 @@ public class CityList implements Iterable<City> {
             }
         }
         return result;
-    }
-
-    public CityList getCitiesWithActionsAvailable() {
-        CityList cities = new CityList();
-        for (City city : cities) {
-            boolean canAttack = (city.getPassScore() > 0) && !AttackAction.getTargetsToAttack(city).isEmpty();
-            if (!city.isDestroyed() && (canAttack || city.canStartConstruction())) {
-                cities.add(city);
-            }
-        }
-        return cities;
     }
 
     public boolean isHavingTile(Point location) {

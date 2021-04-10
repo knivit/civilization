@@ -114,7 +114,7 @@ public class CivilizationUnitService {
     }
 
     public UnitList getUnitsWithActionsAvailable() {
-        return units.getUnitsWithActionsAvailable();
+        return units.getUnitsWithAvailableActions();
     }
 
     public HasCombatStrength getAttackerById(String attackerId) {

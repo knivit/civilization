@@ -77,7 +77,7 @@ public class JoinWorldAction {
 
         Civilization civilization = world.createCivilization(request.playerType, civilizationName);
 
-        if (!civilization.units().addFirstUnits()) {
+        if (civilization == null) {
             return CANT_CREATE_CIVILIZATION;
         }
 

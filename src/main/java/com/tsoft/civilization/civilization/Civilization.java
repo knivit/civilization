@@ -31,12 +31,14 @@ import java.util.*;
 @Slf4j
 @EqualsAndHashCode(of = "id")
 public abstract class Civilization {
+    @Getter
     private final String id = UUID.randomUUID().toString();
 
     private final Year startYear;
     private final World world;
 
     private boolean isDestroyed;
+
     private final CivilizationUnitService unitService;
     private final CivilizationCityService cityService;
     private final CivilizationTerritoryService territoryService;
@@ -58,6 +60,16 @@ public abstract class Civilization {
     @Getter
     private volatile MoveState moveState;
 
+    @Getter
+    private final CivilizationView view;
+
+    @Getter
+    private final CivilizationBot bot;
+
+    protected abstract CivilizationView createView();
+
+    protected abstract CivilizationBot createBot(World world, Civilization civilization);
+
     public Civilization(World world, PlayerType playerType) {
         Objects.requireNonNull(world, "world can't be null");
         Objects.requireNonNull(playerType, "playerType can't be null");
@@ -73,13 +85,10 @@ public abstract class Civilization {
         unitService = new CivilizationUnitService(this);
         cityService = new CivilizationCityService(this);
         territoryService = new CivilizationTerritoryService(this);
-    }
 
-    public String getId() {
-        return id;
+        view = createView();
+        bot = createBot(world, this);
     }
-
-    public abstract CivilizationView getView();
 
     public L10n getName() {
         return getView().getName();
@@ -245,17 +254,25 @@ public abstract class Civilization {
             return;
         }
 
+        moveState = MoveState.IN_PROGRESS;
+
         addEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.MOVE_START_EVENT, getView().getLocalizedCivilizationName()));
 
         unitService.startYear();
         cityService.startYear();
         territoryService.startYear();
 
-        moveState = MoveState.IN_PROGRESS;
+        // A bot can be helping a human player
+        getBot().startYear();
     }
 
-    // Update state only once
     public synchronized void stopYear() {
+        // There can be a helper bot still doing
+        if (!MoveState.DONE.equals(getBot().getMoveState())) {
+            return;
+        }
+
+        // Update state only once
         if (moveState == MoveState.DONE) {
             return;
         }
@@ -270,7 +287,7 @@ public abstract class Civilization {
 
         addEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.MOVE_DONE_EVENT, getView().getLocalizedCivilizationName()));
 
-        world.onCivilizationMoved(this);
+        world.onCivilizationMoved();
     }
 
     @Override

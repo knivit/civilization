@@ -5,7 +5,7 @@ import com.tsoft.civilization.web.render.*;
 
 public class SettlersRender implements Render<Settlers> {
 
-    private final IconRender icon = new IconRender("web/images/status/units/settler.jpg");
+    private final IconRender icon = new IconRender("web/images/status/units/settlers.jpg");
 
     @Override
     public void render(RenderContext context, GraphicsContext graphics, RenderTileInfo tileInfo, Settlers objToRender) {

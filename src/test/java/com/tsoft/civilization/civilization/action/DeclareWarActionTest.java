@@ -5,6 +5,7 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationsRelations;
 import org.junit.jupiter.api.Test;
 
+import static com.tsoft.civilization.MockWorld.GRASSLAND_MAP_8x8;
 import static com.tsoft.civilization.civilization.L10nCivilization.*;
 import static com.tsoft.civilization.civilization.action.DeclareWarAction.CAN_DECLARE_WAR;
 import static com.tsoft.civilization.civilization.action.DeclareWarAction.WRONG_CIVILIZATION;
@@ -15,7 +16,7 @@ public class DeclareWarActionTest {
 
     @Test
     public void declare_war() {
-        MockWorld world = MockWorld.newSimpleWorld();
+        MockWorld world = MockWorld.of(GRASSLAND_MAP_8x8);
         Civilization civ1 = world.createCivilization(RUSSIA);
         Civilization civ2 = world.createCivilization(AMERICA);
         Civilization civ3 = world.createCivilization(JAPAN);

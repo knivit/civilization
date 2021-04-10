@@ -3,7 +3,7 @@ package com.tsoft.civilization.civilization;
 import com.tsoft.civilization.L10n.L10nList;
 import com.tsoft.civilization.improvement.city.L10nCity;
 import com.tsoft.civilization.L10n.L10n;
-import com.tsoft.civilization.world.L10nWorld;
+import com.tsoft.civilization.unit.action.AttackAction;
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.improvement.city.City;
@@ -18,6 +18,7 @@ import com.tsoft.civilization.world.event.Event;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CivilizationCityService {
@@ -126,10 +127,6 @@ public class CivilizationCityService {
         return cities.getCitiesAtLocations(locations);
     }
 
-    public CityList getCitiesWithActionsAvailable() {
-        return cities.getCitiesWithActionsAvailable();
-    }
-
     public void startYear() {
         destroyedCities = new CityList();
         cities.forEach(City::startYear);
@@ -146,5 +143,16 @@ public class CivilizationCityService {
             supply = supply.add(city.getSupply());
         }
         return supply;
+    }
+
+    public CityList getCitiesWithAvailableActions() {
+        return new CityList(cities.stream()
+            .filter(city -> !city.isDestroyed())
+            .filter(city -> canAttack(city) || city.canStartConstruction())
+            .collect(Collectors.toList()));
+    }
+
+    private boolean canAttack(City city) {
+        return (city.getPassScore() > 0) && !AttackAction.getTargetsToAttack(city).isEmpty();
     }
 }

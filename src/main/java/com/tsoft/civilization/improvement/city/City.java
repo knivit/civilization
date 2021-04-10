@@ -24,21 +24,15 @@ public class City extends AbstractImprovement implements HasCombatStrength {
 
     private final Set<Point> locations = new HashSet<>();
 
-    private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
-        .setTargetBackFireStrength(5)
-        .setStrength(50)
-        .setRangedAttackStrength(10)
-        .setRangedAttackRadius(2);
-
     private CityView view;
 
     private CityPopulationService populationService;
     private CityBuildingService buildingService;
     private CityConstructionService constructionService;
+    private CityCombatService combatService;
 
     private Supply citySupply;
 
-    private CombatStrength combatStrength;
     private int passScore;
 
     public City(Civilization civilization, Point location) {
@@ -61,9 +55,7 @@ public class City extends AbstractImprovement implements HasCombatStrength {
         buildingService = new CityBuildingService(this);
         buildingService.addFirstBuilding(isCapital);
         constructionService = new CityConstructionService(this);
-
-        // military
-        combatStrength = new CombatStrength(this, getBaseCombatStrength());
+        combatService = new CityCombatService(this);
 
         // media
         view = new CityView(cityName);
@@ -75,12 +67,12 @@ public class City extends AbstractImprovement implements HasCombatStrength {
 
     @Override
     public CombatStrength getBaseCombatStrength() {
-        return COMBAT_STRENGTH;
+        return combatService.getBaseCombatStrength();
     }
 
     @Override
     public CombatStrength getCombatStrength() {
-        return combatStrength;
+        return combatService.getCombatStrength();
     }
 
     @Override
@@ -94,7 +86,7 @@ public class City extends AbstractImprovement implements HasCombatStrength {
 
     @Override
     public UnitCategory getUnitCategory() {
-        return UnitCategory.MILITARY_RANGED_CITY;
+        return combatService.getUnitCategory();
     }
 
     public Set<Point> getLocations() {
@@ -135,14 +127,11 @@ public class City extends AbstractImprovement implements HasCombatStrength {
 
     public void addBuilding(AbstractBuilding building) {
         buildingService.add(building);
-
-        // check is this building adds defense strength
-        int strength = getCombatStrength().getStrength();
-        strength += building.getStrength();
-        getCombatStrength().setStrength(strength);
+        combatService.addBuilding(building);
     }
 
     public void destroyBuilding(AbstractBuilding building) {
+        combatService.destroyBuilding(building);
         buildingService.remove(building);
     }
 
@@ -195,7 +184,7 @@ public class City extends AbstractImprovement implements HasCombatStrength {
 
     @Override
     public boolean isDestroyed() {
-        return getCombatStrength().isDestroyed();
+        return combatService.isDestroyed();
     }
 
     @Override
@@ -247,7 +236,6 @@ public class City extends AbstractImprovement implements HasCombatStrength {
         return findBuildingByClassUuid(building.getClassUuid()) == null;
     }
 
-
     public Supply getTilesSupply() {
         return populationService.getAllCitizensSupply();
     }
@@ -268,6 +256,7 @@ public class City extends AbstractImprovement implements HasCombatStrength {
         populationService.startYear();
         buildingService.startYear();
         constructionService.startYear();
+        combatService.startYear();
 
         // can do actions (attack, buy, build etc)
         passScore = 1;
@@ -287,6 +276,9 @@ public class City extends AbstractImprovement implements HasCombatStrength {
         // construction
         Supply constructionSupply = constructionService.stopYear(supply);
         supply = supply.add(constructionSupply);
+
+        // military
+        combatService.stopYear();
 
         citySupply = citySupply.add(supply);
         log.debug("City: Year {}, supply = {}, total supply = {}", getWorld().getYear(), supply, citySupply);
