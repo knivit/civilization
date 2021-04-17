@@ -11,6 +11,8 @@ import com.tsoft.civilization.civilization.Civilization;
 import org.junit.jupiter.api.Test;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
+import static com.tsoft.civilization.unit.civil.settlers.action.BuildCityAction.CANT_BUILD_CITY_THERE_IS_ANOTHER_CITY_NEARBY;
+import static com.tsoft.civilization.unit.civil.settlers.action.BuildCityAction.CITY_BUILT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -30,7 +32,7 @@ public class BuildCityActionTest {
         // Build a city
         Settlers settlers1 = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
         assertTrue(civilization.units().addUnit(settlers1, new Point(1, 1)));
-        assertEquals(SettlersActionResults.CITY_BUILT, BuildCityAction.buildCity(settlers1));
+        assertEquals(CITY_BUILT, BuildCityAction.buildCity(settlers1));
 
         // check the city
         assertEquals(1, civilization.cities().size());
@@ -45,7 +47,7 @@ public class BuildCityActionTest {
         // A city can't be build on a tile where another city is built
         Settlers settlers2 = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
         assertTrue(civilization.units().addUnit(settlers2, new Point(1, 1)));
-        assertEquals(SettlersActionResults.CANT_BUILD_CITY_THERE_IS_ANOTHER_CITY_NEARBY, BuildCityAction.buildCity(settlers2));
+        assertEquals(CANT_BUILD_CITY_THERE_IS_ANOTHER_CITY_NEARBY, BuildCityAction.buildCity(settlers2));
     }
 
     @Test
@@ -64,13 +66,13 @@ public class BuildCityActionTest {
         // Build a city
         Settlers settlers1 = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
         assertTrue(civilization.units().addUnit(settlers1, new Point(1, 1)));
-        assertEquals(SettlersActionResults.CITY_BUILT, BuildCityAction.buildCity(settlers1));
+        assertEquals(CITY_BUILT, BuildCityAction.buildCity(settlers1));
 
         // check 2
         // A city can not be build less than 4 tiles away from other city
         Settlers settlers2 = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
         assertTrue(civilization.units().addUnit(settlers2, new Point(2, 3)));
-        assertEquals(SettlersActionResults.CANT_BUILD_CITY_THERE_IS_ANOTHER_CITY_NEARBY, BuildCityAction.buildCity(settlers2));
+        assertEquals(CANT_BUILD_CITY_THERE_IS_ANOTHER_CITY_NEARBY, BuildCityAction.buildCity(settlers2));
     }
 
     @Test
@@ -89,14 +91,14 @@ public class BuildCityActionTest {
         // Build a city
         Settlers settlers1 = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
         assertTrue(civilization.units().addUnit(settlers1, new Point(0, 0)));
-        assertEquals(SettlersActionResults.CITY_BUILT, BuildCityAction.buildCity(settlers1));
+        assertEquals(CITY_BUILT, BuildCityAction.buildCity(settlers1));
 
         // check 2
         // a city can not be build less than 4 tiles away from other city
         // (cities looks like far away, but don't forget - the map is cyclic)
         Settlers settlers2 = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
         assertTrue(civilization.units().addUnit(settlers2, new Point(7, 3)));
-        assertEquals(SettlersActionResults.CANT_BUILD_CITY_THERE_IS_ANOTHER_CITY_NEARBY, BuildCityAction.buildCity(settlers2));
+        assertEquals(CANT_BUILD_CITY_THERE_IS_ANOTHER_CITY_NEARBY, BuildCityAction.buildCity(settlers2));
     }
 
     @Test
@@ -119,12 +121,12 @@ public class BuildCityActionTest {
         // Build a city
         Settlers settlers1 = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
         assertTrue(civilization.units().addUnit(settlers1, new Point(2, 2)));
-        assertEquals(SettlersActionResults.CITY_BUILT, BuildCityAction.buildCity(settlers1));
+        assertEquals(CITY_BUILT, BuildCityAction.buildCity(settlers1));
 
         // check 2
         // Build a city - it's OK now
         Settlers settlers2 = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
         assertTrue(civilization.units().addUnit(settlers2, new Point(6, 4)));
-        assertEquals(SettlersActionResults.CITY_BUILT, BuildCityAction.buildCity(settlers2));
+        assertEquals(CITY_BUILT, BuildCityAction.buildCity(settlers2));
     }
 }

@@ -48,8 +48,10 @@ public class CivilizationScoreTest {
             "3| . . .");
 
         MockWorld world = MockWorld.of(map);
-        Civilization c1 = world.createCivilization(RUSSIA);
-        City city = c1.createCity(new Point(1, 1));
+        Civilization c1 = world
+            .civilization(RUSSIA)
+            .city(new Point(1, 1))
+            .build();
 
         // Step 1
         // food | prod | gold | science | culture | happiness | unhappiness | population | produced/consumed by
@@ -88,8 +90,12 @@ public class CivilizationScoreTest {
             "3| . g p . .", "3| . j o . .", "3| . . . . .");
 
         MockWorld world = MockWorld.of(map);
-        Civilization civilization = world.createCivilization(RUSSIA);
-        City city = civilization.createCity(new Point(2, 1));
+        Civilization civilization = world
+            .civilization(RUSSIA)
+            .city(new Point(2, 1))
+            .build();
+
+        City city = civilization.cities().getAny();
 
         // add all other tiles
         Collection<Point> locations = map.getLocationsAround(new Point(2, 1), 3);
@@ -126,8 +132,12 @@ public class CivilizationScoreTest {
             "3| . . .", "3| . . .");
 
         MockWorld world = MockWorld.of(map);
-        Civilization c1 = world.createCivilization(RUSSIA);
-        City city = c1.createCity(new Point(1, 1));
+        Civilization c1 = world
+            .civilization(RUSSIA)
+            .city(new Point(1, 1))
+            .build();
+
+        City city = c1.cities().getAny();
         city.addCitizen();
 
         // Step 1

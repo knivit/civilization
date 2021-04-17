@@ -43,7 +43,7 @@ public abstract class Civilization {
     private final CivilizationCityService cityService;
     private final CivilizationTerritoryService territoryService;
 
-    private final HashSet<Technology> technologies = new TechnologySet();
+    private final Set<Technology> technologies = new TechnologySet();
 
     @Getter
     private Supply supply;
@@ -70,7 +70,7 @@ public abstract class Civilization {
 
     protected abstract CivilizationBot createBot(World world, Civilization civilization);
 
-    public Civilization(World world, PlayerType playerType) {
+    protected Civilization(World world, PlayerType playerType) {
         Objects.requireNonNull(world, "world can't be null");
         Objects.requireNonNull(playerType, "playerType can't be null");
 
@@ -216,7 +216,10 @@ public abstract class Civilization {
         return new Point(0, 0);
     }
 
-    public City createCity(Point location) {
+    public City createCity(Settlers settlers) {
+        Objects.requireNonNull(settlers, "settlers must be not null");
+
+        Point location = settlers.getLocation();
         L10n cityName = cityService.findCityName();
         boolean isCapital = cityService.size() == 0;
         City city = ImprovementFactory.newInstance(City.CLASS_UUID, this, location);
@@ -225,6 +228,9 @@ public abstract class Civilization {
 
         Event event = new Event(Event.INFORMATION, city, L10nCity.FOUNDED_SETTLERS, cityName);
         addEvent(event);
+
+        settlers.destroyedBy(null, false);
+
         return city;
     }
 

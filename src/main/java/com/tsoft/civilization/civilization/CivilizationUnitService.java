@@ -7,8 +7,6 @@ import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.base.TilePassCostTable;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitFactory;
-import com.tsoft.civilization.unit.civil.settlers.Settlers;
-import com.tsoft.civilization.unit.military.warriors.Warriors;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.World;
@@ -51,34 +49,6 @@ public class CivilizationUnitService {
 
     public UnitList findByClassUuid(String classUuid) {
         return units.findByClassUuid(classUuid);
-    }
-
-    // Returns TRUE on success
-    public boolean addFirstUnits() {
-        // find a location for the Settlers
-        Point settlersLocation = world.getCivilizationStartLocation(civilization);
-        if (settlersLocation == null) {
-            log.warn("Can't place Settlers");
-            return false;
-        }
-
-        // create the Settlers unit
-        Settlers settlers = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
-        if (!addUnit(settlers, settlersLocation)) {
-            log.warn("Can't place Settlers");
-            return false;
-        }
-
-        // try to place Warriors near the Settlers
-        Warriors warriors = UnitFactory.newInstance(civilization, Warriors.CLASS_UUID);
-        Collection<Point> locations = world.getLocationsAround(settlersLocation, 2);
-        for (Point location : locations) {
-            if (addUnit(warriors, location)) {
-                break;
-            }
-        }
-
-        return true;
     }
 
     public AbstractUnit getAny() {

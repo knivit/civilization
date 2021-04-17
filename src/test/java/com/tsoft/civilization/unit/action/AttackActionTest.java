@@ -1,5 +1,6 @@
 package com.tsoft.civilization.unit.action;
 
+import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.combat.HasCombatStrengthList;
@@ -39,33 +40,34 @@ public class AttackActionTest {
             "2|. . g . ",
             "3| . . . .");
         MockWorld world = MockWorld.of(map);
-        Civilization c1 = world.createCivilization(RUSSIA);
-        Civilization c2 = world.createCivilization(AMERICA);
+        MockScenario sc1 = new MockScenario()
+            .unit("MyWarriors", new Point(1, 0), Warriors.CLASS_UUID);
+        Civilization c1 = world.createCivilization(RUSSIA, sc1);
+
+        MockScenario sc2 = new MockScenario()
+            .unit("EnemyWorkers", new Point(1, 1), Workers.CLASS_UUID)
+            .unit("EnemyWarriors", new Point(2, 1), Warriors.CLASS_UUID);
+        Civilization c2 = world.createCivilization(AMERICA, sc2);
+
         world.setCivilizationsRelations(c1, c2, CivilizationsRelations.war());
 
-        Warriors warriors = UnitFactory.newInstance(c1, Warriors.CLASS_UUID);
-        assertTrue(c1.units().addUnit(warriors, new Point(1, 0)));
-        Workers foreignWorkers = UnitFactory.newInstance(c2, Workers.CLASS_UUID);
-        assertTrue(c2.units().addUnit(foreignWorkers, new Point(1, 1)));
-        Warriors foreignWarriors1 = UnitFactory.newInstance(c2, Warriors.CLASS_UUID);
-        assertTrue(c2.units().addUnit(foreignWarriors1, new Point(2, 1)));
         WorldRender.of(this).createHtml(world, c1);
 
         // first, there is foreign workers to attack
-        HasCombatStrengthList targets = AttackAction.getTargetsToAttack(warriors);
+        HasCombatStrengthList targets = AttackAction.getTargetsToAttack(sc1.get("MyWarriors"));
         assertThat(targets)
             .hasSize(1)
-            .containsExactly(foreignWorkers);
+            .containsExactly(sc2.get("EnemyWorkers"));
 
         // move close the foreign warriors and now they are the target too
-        foreignWarriors1.setLocation(new Point(2, 0));
-        targets = AttackAction.getTargetsToAttack(warriors);
+        sc2.unit("EnemyWarriors").setLocation(new Point(2, 0));
+        targets = AttackAction.getTargetsToAttack(sc1.get("MyWarriors"));
         assertThat(targets)
             .hasSize(2)
-            .containsExactly(foreignWorkers, foreignWarriors1);
+            .containsExactly(sc2.get("EnemyWorkers"), sc2.get("EnemyWarriors"));
 
         // attack one of them
-        assertThat(AttackAction.attack(warriors, foreignWarriors1.getLocation()))
+        assertThat(AttackAction.attack(sc1.get("MyWarriors"), sc2.unit("EnemyWarriors").getLocation()))
             .isEqualTo(ATTACKED);
     }
 
@@ -81,66 +83,81 @@ public class AttackActionTest {
             "2|. . g . g . . ", "2|. . f . . . . ",
             "3| . g g g . . .", "3| . . . h . . .");
         MockWorld world = MockWorld.of(map);
-        Civilization c1 = world.createCivilization(RUSSIA);
-        Civilization c2 = world.createCivilization(AMERICA);
+
+        MockScenario sc1 = new MockScenario()
+            .unit("MyArchers", new Point(2, 1), Archers.CLASS_UUID);
+        Civilization c1 = world.createCivilization(RUSSIA, sc1);
+
+        MockScenario sc2 = new MockScenario()
+            .unit("EnemyWorkers", new Point(3, 1), Workers.CLASS_UUID)
+            .unit("EnemyWarriors1", new Point(2, 2), Warriors.CLASS_UUID)
+            .unit("EnemyWarriors2", new Point(4, 2), Warriors.CLASS_UUID)
+            .unit("EnemyArchers1", new Point(1, 3), Archers.CLASS_UUID)
+            .unit("EnemyArchers2", new Point(3, 3), Archers.CLASS_UUID)
+            .city("EnemyCity", new Point(2, 3));
+        Civilization c2 = world.createCivilization(AMERICA, sc2);
+
         world.setCivilizationsRelations(c1, c2, CivilizationsRelations.war());
 
         // our forces
-        Archers archers = UnitFactory.newInstance(c1, Archers.CLASS_UUID);
-        assertTrue(c1.units().addUnit(archers, new Point(2, 1)));
+
 
         // foreign forces
-        Workers foreignWorkers = UnitFactory.newInstance(c2, Workers.CLASS_UUID);
-        assertTrue(c2.units().addUnit(foreignWorkers, new Point(3, 1)));
-        Warriors foreignWarriors1 = UnitFactory.newInstance(c2, Warriors.CLASS_UUID);
-        assertTrue(c2.units().addUnit(foreignWarriors1, new Point(2, 2)));
-        Warriors foreignWarriors2 = UnitFactory.newInstance(c2, Warriors.CLASS_UUID);
-        assertTrue(c2.units().addUnit(foreignWarriors2, new Point(4, 2)));
-        Archers foreignArchers1 = UnitFactory.newInstance(c2, Archers.CLASS_UUID);
-        assertTrue(c2.units().addUnit(foreignArchers1, new Point(1, 3)));
-        City foreignCity = c2.createCity(new Point(2, 3));
-        Archers foreignArchers2 = UnitFactory.newInstance(c2, Archers.CLASS_UUID);
-        assertTrue(c2.units().addUnit(foreignArchers2, new Point(3, 3)));
+        //Workers foreignWorkers = UnitFactory.newInstance(c2, );
+        //assertTrue(c2.units().addUnit(foreignWorkers, ));
+        //Warriors foreignWarriors1 = UnitFactory.newInstance(c2, );
+        //assertTrue(c2.units().addUnit(foreignWarriors1, ));
+        //Warriors foreignWarriors2 = UnitFactory.newInstance(c2, );
+        //assertTrue(c2.units().addUnit(foreignWarriors2, ));
+        //Archers foreignArchers1 = UnitFactory.newInstance(c2, A);
+        //assertTrue(c2.units().addUnit(foreignArchers1, ));
+        //City foreignCity = c2.createCity();
+        //Archers foreignArchers2 = UnitFactory.newInstance(c2);
+        //assertTrue(c2.units().addUnit(foreignArchers2, ));
 
         // look for targets
-        HasCombatStrengthList targets = AttackAction.getTargetsToAttack(archers);
+        HasCombatStrengthList targets = AttackAction.getTargetsToAttack(sc1.get("MyArchers"));
         assertThat(targets)
             .hasSize(6)
-            .containsExactly(foreignCity, foreignWorkers, foreignWarriors1, foreignWarriors2, foreignArchers1, foreignArchers2);
+            .containsExactly(sc2.unit("EnemyWorkers"), sc2.unit("EnemyWarriors1"), sc2.unit("EnemyWarriors2"),
+                sc2.unit("EnemyArchers1"), sc2.unit("EnemyArchers2"), sc2.unit("EnemyCity"));
 
         // see what we can capture
-        List<Point> locations = CaptureUnitAction.getLocationsToCapture(archers);
+        List<Point> locations = CaptureUnitAction.getLocationsToCapture(sc1.unit("MyArchers"));
         assertThat(locations).hasSize(1);
-        assertThat(CaptureUnitAction.getTargetToCaptureAtLocation(archers, locations.get(0))).isEqualTo(foreignWorkers);
+        assertThat(CaptureUnitAction.getTargetToCaptureAtLocation(sc1.get("MyArchers"), locations.get(0)))
+            .isEqualTo(sc2.unit("EnemyWorkers"));
 
         // capture the foreign workers
-        assertThat(CaptureUnitAction.capture(archers, foreignWorkers.getLocation())).isEqualTo(FOREIGN_UNIT_CAPTURED);
-        assertThat(foreignWorkers.getLocation()).isEqualTo(archers.getLocation());
-        assertThat(foreignWorkers.getCivilization()).isEqualTo(archers.getCivilization());
+        assertThat(CaptureUnitAction.capture(sc1.unit("MyArchers"), sc2.unit("EnemyWorkers").getLocation()))
+            .isEqualTo(FOREIGN_UNIT_CAPTURED);
+        assertThat(sc2.unit("EnemyWorkers").getLocation()).isEqualTo(sc1.unit("MyArchers").getLocation());
+        assertThat(sc2.unit("EnemyWorkers").getCivilization()).isEqualTo(sc1.unit("MyArchers").getCivilization());
 
         // attack one of foreign warriors
-        assertThat(AttackAction.attack(archers, foreignWarriors2.getLocation())).isEqualTo(ATTACKED);
-        assertThat(archers.getPassScore()).isEqualTo(0);
-        assertThat(foreignWarriors2.getCombatStrength().getStrength()).isEqualTo(7);
+        assertThat(AttackAction.attack(sc1.unit("MyArchers"), sc2.unit("EnemyWarriors2").getLocation()))
+            .isEqualTo(ATTACKED);
+        assertThat(sc1.unit("MyArchers").getPassScore()).isEqualTo(0);
+        assertThat(sc2.unit("EnemyWarriors2").getCombatStrength().getStrength()).isEqualTo(7);
 
         // do the next step to be able to strike again
         world.move();
 
         // attack the foreign warriors again
-        assertThat(AttackAction.attack(archers, foreignWarriors2.getLocation())).isEqualTo(TARGET_DESTROYED);
-        assertThat(archers.getPassScore()).isEqualTo(0);
+        assertThat(AttackAction.attack(sc1.unit("MyArchers"), sc2.unit("EnemyWarriors2").getLocation())).isEqualTo(TARGET_DESTROYED);
+        assertThat(sc1.unit("MyArchers").getPassScore()).isEqualTo(0);
 
         // next step
         world.move();
 
         // attack the second line - archers
-        assertThat(AttackAction.attack(archers, foreignArchers1.getLocation())).isEqualTo(ATTACKED);
+        assertThat(AttackAction.attack(sc1.unit("MyArchers"), sc2.unit("EnemyArchers1").getLocation())).isEqualTo(ATTACKED);
 
         // next step
         world.move();
 
         // attack the second line - foreign city
-        assertThat(AttackAction.attack(archers, foreignCity.getLocation())).isEqualTo(ATTACKED);
+        assertThat(AttackAction.attack(sc1.unit("MyArchers"), sc2.city("EnemyCity").getLocation())).isEqualTo(ATTACKED);
     }
 
     // Scenario:

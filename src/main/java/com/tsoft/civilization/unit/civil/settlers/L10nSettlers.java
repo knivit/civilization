@@ -19,6 +19,10 @@ public class L10nSettlers {
             .put("en", "A city can be build here")
             .put("ru", "Здесь может быть построен город");
 
+    public static final L10n CANT_BUILD_CITY = new L10n()
+        .put("en", "A city can not be build here")
+        .put("ru", "Здесь неможет быть построен город");
+
     public static final L10n CANT_BUILD_CITY_TILE_IS_OCCUPIED = new L10n()
             .put("en", "Can't build a city because this tile is occupied")
             .put("ru", "Нельзя построить город, потому что эта ячейка занята");

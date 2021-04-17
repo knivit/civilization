@@ -20,8 +20,13 @@ public class BuildUnitActionTest {
     @Test
     public void failToBuildUnitNoTechnology() {
         MockWorld world = MockWorld.newSimpleWorld();
-        Civilization civilization = world.createCivilization(RUSSIA);
-        City city = civilization.createCity(new Point(2, 0));
+
+        Civilization civilization = world
+            .civilization(RUSSIA)
+            .city(new Point(2, 0))
+            .build();
+
+        City city = civilization.cities().getAny();
 
         assertEquals(CityActionResults.WRONG_ERA_OR_TECHNOLOGY, BuildUnitAction.buildUnit(city, Archers.CLASS_UUID));
     }
@@ -29,10 +34,14 @@ public class BuildUnitActionTest {
     @Test
     public void buildUnit() {
         MockWorld world = MockWorld.newSimpleWorld();
-        Civilization civilization = world.createCivilization(RUSSIA);
+        Civilization civilization = world
+            .civilization(RUSSIA)
+            .city(new Point(2, 0))
+            .build();
+
         civilization.addTechnology(Technology.ARCHERY);
 
-        City city = civilization.createCity(new Point(2, 0));
+        City city = civilization.cities().getAny();
         city.setPassScore(1);
         assertTrue(SupplyMock.equals("F1 P3 G3 S4 C1 H0 U1 O1", civilization.calcSupply()));
 

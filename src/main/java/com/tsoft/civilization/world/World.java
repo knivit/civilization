@@ -7,9 +7,12 @@ import com.tsoft.civilization.improvement.city.CityList;
 import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.unit.AbstractUnit;
+import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.unit.UnitList;
+import com.tsoft.civilization.unit.military.warriors.Warriors;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.event.Event;
+import com.tsoft.civilization.world.scenario.Scenario;
 
 import java.util.*;
 
@@ -24,7 +27,7 @@ public class World {
     private final String name;
     private int maxNumberOfCivilizations;
 
-    private final List<Year> years = new ArrayList<>();
+    private final List<Year> history = new ArrayList<>();
     private final CivilizationService civilizationService;
     private final TileService tileService = new TileService();
 
@@ -41,6 +44,22 @@ public class World {
         return id;
     }
 
+    public WorldView getView() {
+        return view;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getMaxNumberOfCivilizations() {
+        return maxNumberOfCivilizations;
+    }
+
+    public void setMaxNumberOfCivilizations(int maxNumberOfCivilizations) {
+        this.maxNumberOfCivilizations = maxNumberOfCivilizations;
+    }
+
     public Year getYear() {
         return year;
     }
@@ -55,8 +74,8 @@ public class World {
     }
 
     // Returns NULL when a civilization can not be created (it is already exists etc)
-    public Civilization createCivilization(PlayerType playerType, L10n civilizationName) {
-        return civilizationService.create(playerType, civilizationName);
+    public Civilization createCivilization(PlayerType playerType, L10n civilizationName, Scenario scenario) {
+        return civilizationService.create(playerType, civilizationName, scenario);
     }
 
     // Returns NULL when relations can not be found
@@ -73,9 +92,24 @@ public class World {
     }
 
     // Find a location to place a Settlers
-    public Point getCivilizationStartLocation(Civilization civ) {
+    public Point getSettlersStartLocation(Civilization civ) {
         List<Point> possibleLocations = tileService.getTilesToStartCivilization(tilesMap);
         return civilizationService.getCivilizationStartLocation(civ, possibleLocations);
+    }
+
+    // Find a location to place warriors
+    public Point getWarriorsStartLocation(Civilization civ, Point settlersLocation) {
+        // try to place Warriors near the Settlers
+        List<Point> locations = getLocationsAround(settlersLocation, 2);
+        Collections.shuffle(locations);
+
+        Warriors warriors = UnitFactory.newInstance(civ, Warriors.CLASS_UUID);
+        for (Point location : locations) {
+            if (civ.units().addUnit(warriors, location)) {
+                return location;
+            }
+        }
+        return null;
     }
 
     public Civilization getCivilizationById(String civilizationId) {
@@ -120,22 +154,6 @@ public class World {
         return getTilesMap().getLocationsAround(location, radius);
     }
 
-    public WorldView getView() {
-        return view;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getMaxNumberOfCivilizations() {
-        return maxNumberOfCivilizations;
-    }
-
-    public void setMaxNumberOfCivilizations(int maxNumberOfCivilizations) {
-        this.maxNumberOfCivilizations = maxNumberOfCivilizations;
-    }
-
     public CivilizationList getCivilizations() {
         return civilizationService.getCivilizations();
     }
@@ -148,34 +166,13 @@ public class World {
         return civilizationService.getCityById(cityId);
     }
 
-    public List<Year> getYears() {
-        return years;
+    public List<Year> getHistory() {
+        return history;
     }
-
-    /**
-     *
-     * Движение мира
-     *
-     * 1. Создается мир (пустой, без цивилизаций, в стартовый год)
-     * 2. Присоединяются игроки (управляемые человеком или AI) и создаются их цивилизации (JoinWorldAction)
-     * 3. Все человеческие цивилизации ходят
-     *    - игроки делают ходы
-     *    - игроки нажимают "Next Turn" - цивилизация переводится в состояние "DONE" (NextTurnAction)
-     *    - цивилизация вызывает метод World.onCivilizationMoved()
-     *    - когда все человеческие цивилизации перешли в "DONE", переход к 4)
-     * 4. Год завершается
-     *    - все AI-цивилизации по очереди делают ходы
-     *    - все (управляемые человеком или AI) цивилизации строятся, популяция меняется, рассчитывается supply etc
-     * 5. Стартует новый год
-     *    - меняется ландшафт (глубина океанов etc)
-     *    - цивилизации переводятся в состояние "IN PROGRESS"
-     *    - каждая цивилизация подготавливает свое состояние к началу нового года
-     * 6. Переход к 3)
-    */
 
     // Start a new year
     public void startYear() {
-        years.add(year);
+        history.add(year);
         tilesMap.startYear();
         civilizationService.startYear();
 
@@ -183,6 +180,7 @@ public class World {
         sendEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.NEW_YEAR_START_EVENT, year.getYear()));
     }
 
+    // Callback on civilizations' stopYear
     public void onCivilizationMoved() {
         CivilizationList list = civilizationService.getMovingCivilizations();
 

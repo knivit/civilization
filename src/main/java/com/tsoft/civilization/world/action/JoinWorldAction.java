@@ -11,6 +11,7 @@ import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.state.Worlds;
 import com.tsoft.civilization.world.L10nWorld;
 import com.tsoft.civilization.world.World;
+import com.tsoft.civilization.world.scenario.DefaultScenario;
 import lombok.Builder;
 
 import java.util.Arrays;
@@ -75,7 +76,7 @@ public class JoinWorldAction {
             return NO_CIVILIZATION_AVAILABLE;
         }
 
-        Civilization civilization = world.createCivilization(request.playerType, civilizationName);
+        Civilization civilization = world.createCivilization(request.playerType, civilizationName, new DefaultScenario());
 
         if (civilization == null) {
             return CANT_CREATE_CIVILIZATION;

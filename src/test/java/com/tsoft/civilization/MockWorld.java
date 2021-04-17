@@ -8,8 +8,9 @@ import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.state.Worlds;
 import com.tsoft.civilization.world.World;
+import com.tsoft.civilization.world.scenario.Scenario;
 
-import java.util.UUID;
+import java.util.*;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.CIVILIZATIONS;
 
@@ -69,8 +70,8 @@ public class MockWorld extends World {
         startYear();
     }
 
-    public Civilization createCivilization(L10n civilizationName) {
-        return super.createCivilization(PlayerType.HUMAN, civilizationName);
+    public Civilization createCivilization(L10n civilizationName, Scenario scenario) {
+        return super.createCivilization(PlayerType.HUMAN, civilizationName, scenario);
     }
 
     public void move() {

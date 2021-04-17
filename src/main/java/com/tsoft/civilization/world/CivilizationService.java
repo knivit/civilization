@@ -9,6 +9,8 @@ import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Pair;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.event.Event;
+import com.tsoft.civilization.world.scenario.Scenario;
+import com.tsoft.civilization.world.scenario.ScenarioApplyResult;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -26,23 +28,15 @@ public class CivilizationService {
         civilizations = new CivilizationList();
     }
 
-    public Civilization create(PlayerType playerType, L10n civilizationName) {
+    public Civilization create(PlayerType playerType, L10n civilizationName, Scenario scenario) {
         if (civilizations.getCivilizationByName(civilizationName) != null) {
             return null;
         }
 
         Civilization civilization = CivilizationFactory.newInstance(civilizationName, world, playerType);
 
-        if (!civilization.units().addFirstUnits()) {
+        if (ScenarioApplyResult.FAIL.equals(scenario.apply(civilization))) {
             return null;
-        }
-
-        // set NEUTRAL state for this civilization with others
-        for (Civilization otherCivilization : civilizations) {
-            if (!civilization.equals(otherCivilization)) {
-                Pair<Civilization> key = new Pair<>(civilization, otherCivilization);
-                relations.put(key, CivilizationsRelations.neutral());
-            }
         }
 
         civilizations.add(civilization);

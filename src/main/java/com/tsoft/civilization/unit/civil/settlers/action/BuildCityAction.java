@@ -1,5 +1,8 @@
 package com.tsoft.civilization.unit.civil.settlers.action;
 
+import com.tsoft.civilization.action.ActionFailureResult;
+import com.tsoft.civilization.action.ActionSuccessResult;
+import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.unit.civil.settlers.L10nSettlers;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.improvement.city.City;
@@ -18,6 +21,16 @@ import java.util.UUID;
 public class BuildCityAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
+    public static final ActionSuccessResult CITY_BUILT = new ActionSuccessResult(L10nSettlers.CITY_BUILT);
+    public static final ActionSuccessResult CAN_BUILD_CITY = new ActionSuccessResult(L10nSettlers.CAN_BUILD_CITY);
+
+    public static final ActionFailureResult CANT_BUILD_CITY = new ActionFailureResult(L10nSettlers.CANT_BUILD_CITY_TILE_IS_OCCUPIED);
+    public static final ActionFailureResult CANT_BUILD_CITY_TILE_IS_OCCUPIED = new ActionFailureResult(L10nSettlers.CANT_BUILD_CITY_TILE_IS_OCCUPIED);
+    public static final ActionFailureResult CANT_BUILD_CITY_THERE_IS_ANOTHER_CITY_NEARBY = new ActionFailureResult(L10nSettlers.CANT_BUILD_CITY_THERE_IS_ANOTHER_CITY_NEARBY);
+    public static final ActionFailureResult NO_PASS_SCORE = new ActionFailureResult(L10nUnit.NO_PASS_SCORE);
+    public static final ActionFailureResult UNIT_NOT_FOUND = new ActionFailureResult(L10nUnit.UNIT_NOT_FOUND);
+
+
     public static ActionAbstractResult buildCity(Settlers settlers) {
         ActionAbstractResult result = canBuildCity(settlers);
         log.debug("{}", result.getLocalized());
@@ -27,29 +40,29 @@ public class BuildCityAction {
         }
 
         Civilization civilization = settlers.getCivilization();
-        Point location = settlers.getLocation();
-        City city = civilization.createCity(location);
+        City city = civilization.createCity(settlers);
+        if (city == null) {
+            return CANT_BUILD_CITY;
+        }
 
-        settlers.destroyedBy(null, false);
-
-        return SettlersActionResults.CITY_BUILT;
+        return CITY_BUILT;
     }
 
     private static ActionAbstractResult canBuildCity(Settlers settlers) {
         if (settlers == null || settlers.isDestroyed()) {
-            return SettlersActionResults.UNIT_NOT_FOUND;
+            return UNIT_NOT_FOUND;
         }
 
         // unit must have passing score
         if (settlers.getPassScore() <= 0) {
-            return SettlersActionResults.NO_PASS_SCORE;
+            return NO_PASS_SCORE;
         }
 
         // the tile must be not civilized or must be civilized by unit's civilization
         Point location = settlers.getLocation();
         Civilization civilization = settlers.getWorld().getCivilizationOnTile(location);
         if (civilization != null && !civilization.equals(settlers.getCivilization())) {
-            return SettlersActionResults.CANT_BUILD_CITY_TILE_IS_OCCUPIED;
+            return CANT_BUILD_CITY_TILE_IS_OCCUPIED;
         }
 
         // there should be no cities as far as 4 tiles around
@@ -58,11 +71,11 @@ public class BuildCityAction {
         for (Point loc : locations) {
             AbstractTile tile = settlers.getTilesMap().getTile(loc);
             if (tile.getImprovement() != null && City.class.equals(tile.getImprovement().getClass())) {
-                return SettlersActionResults.CANT_BUILD_CITY_THERE_IS_ANOTHER_CITY_NEARBY;
+                return CANT_BUILD_CITY_THERE_IS_ANOTHER_CITY_NEARBY;
             }
         }
 
-        return SettlersActionResults.CAN_BUILD_CITY;
+        return CAN_BUILD_CITY;
     }
 
     private static String getLocalizedName() {
