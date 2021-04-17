@@ -22,6 +22,7 @@ public class WorldRender {
 
     public void createHtml(World world, Civilization activeCivilization) {
         Civilization currentCivilization = Sessions.getCurrent().getCivilization();
+
         try {
             Sessions.getCurrent().setActiveCivilization(activeCivilization);
 

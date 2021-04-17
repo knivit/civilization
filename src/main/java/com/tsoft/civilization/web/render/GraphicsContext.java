@@ -7,7 +7,6 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
@@ -40,13 +39,6 @@ public class GraphicsContext {
     }
 
     public void saveImageToFile(Path outputFileName) {
-        try {
-            Files.deleteIfExists(outputFileName);
-            Files.createDirectories(outputFileName);
-        } catch (Exception e) {
-            throw new IllegalStateException("Can't create file " + outputFileName, e);
-        }
-
         try {
             ImageIO.write(img, "png", outputFileName.toFile());
             log.info("File {} generated", outputFileName);

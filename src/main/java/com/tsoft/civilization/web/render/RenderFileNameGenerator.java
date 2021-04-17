@@ -1,5 +1,6 @@
 package com.tsoft.civilization.web.render;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +27,14 @@ public class RenderFileNameGenerator {
         AtomicInteger n = order.computeIfAbsent(methodName, (s) -> new AtomicInteger(0));
         String fileName = methodName  + "_" + fileNameTemplate + "_" + n.addAndGet(1) + ext;
 
-        return Path.of("target", clazz.getPackageName().replace('.', '/'), clazz.getSimpleName(), fileName);
+        Path folder = Path.of("target", clazz.getPackageName().replace('.', '/'), clazz.getSimpleName());
+
+        try {
+            Files.createDirectories(folder);
+        } catch (Exception e) {
+            throw new IllegalStateException("Can't create folder " + folder, e);
+        }
+
+        return folder.resolve(fileName);
     }
 }

@@ -1,9 +1,8 @@
 package com.tsoft.civilization.civilization;
 
+import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
-import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.unit.civil.settlers.Settlers;
-import com.tsoft.civilization.unit.military.warriors.Warriors;
 import com.tsoft.civilization.util.Point;
 import org.junit.jupiter.api.Test;
 
@@ -16,29 +15,29 @@ public class CivilizationCityServiceTest {
     @Test
     public void no_cities_with_available_actions() {
         MockWorld world = MockWorld.newSimpleWorld();
-        Civilization c1 = world
-            .civilization(RUSSIA)
-            .unit(new Point(0, 2), Settlers.CLASS_UUID)
-            .build();
 
-        CivilizationCityService cityService = new CivilizationCityService(c1);
+        Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
+            .settlers("settlers", new Point(2, 0))
+        );
+
+        CivilizationCityService cityService = new CivilizationCityService(russia);
 
         // no cities
         assertThat(cityService.getCitiesWithAvailableActions()).isEmpty();
 
         // add a city
-        Settlers settlers = (Settlers)c1.units().findByClassUuid(Settlers.CLASS_UUID).getAny();
-        City myCity = c1.createCity(settlers);
+        russia.createCity((Settlers) world.unit("settlers"));
+
+        // a new city can't do anything in this move
         assertThat(cityService.getCitiesWithAvailableActions()).isEmpty();
 
-        // add a foreign civilization (two units will be created, warriors and settlers)
-        Civilization c2 = world
-            .civilization(AMERICA)
-            .unit(new Point(2, 2), Settlers.CLASS_UUID)
-            .unit(new Point(1, 2), Warriors.CLASS_UUID)
-            .build();
+        // add a foreign civilization
+        Civilization america = world.createCivilization(AMERICA, new MockScenario()
+            .settlers("settlers", new Point(2, 2))
+            .warriors("warriors", new Point(1, 2))
+        );
 
-        assertThat(world.getCivilizationsRelations(c1, c2))
+        assertThat(world.getCivilizationsRelations(russia, america))
             .isNotNull()
             .returns(true, CivilizationsRelations::isNeutral);
     }

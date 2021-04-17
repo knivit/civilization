@@ -11,11 +11,13 @@ import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.event.Event;
 import com.tsoft.civilization.world.scenario.Scenario;
 import com.tsoft.civilization.world.scenario.ScenarioApplyResult;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class CivilizationService {
     private final World world;
 
@@ -30,12 +32,14 @@ public class CivilizationService {
 
     public Civilization create(PlayerType playerType, L10n civilizationName, Scenario scenario) {
         if (civilizations.getCivilizationByName(civilizationName) != null) {
+            log.warn("Civilization '{}' already exists", civilizationName);
             return null;
         }
 
         Civilization civilization = CivilizationFactory.newInstance(civilizationName, world, playerType);
 
         if (ScenarioApplyResult.FAIL.equals(scenario.apply(civilization))) {
+            log.warn("Can't apply a scenario on Civilization '{}'", civilizationName);
             return null;
         }
 

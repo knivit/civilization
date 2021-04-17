@@ -2,14 +2,10 @@ package com.tsoft.civilization.web.view.world;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
-import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
-import com.tsoft.civilization.unit.civil.settlers.Settlers;
-import com.tsoft.civilization.unit.military.warriors.Warriors;
-import com.tsoft.civilization.unit.civil.workers.Workers;
-import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.civilization.Civilization;
@@ -28,16 +24,13 @@ public class WorldViewTest {
             "0|g g g ", "0|h h . ", "0|f . . ",
             "1| g g g", "1| h h .", "1| f . .");
         MockWorld world = MockWorld.of(map);
-        Civilization c1 = world.createCivilization(RUSSIA);
 
-        // a city with two units in it
-        City city1 = c1.createCity(new Point(0, 0));
-        Warriors warriors = UnitFactory.newInstance(c1, Warriors.CLASS_UUID);
-        assertTrue(c1.units().addUnit(warriors, new Point(0, 0)));
-        Workers workers = UnitFactory.newInstance(c1, Workers.CLASS_UUID);
-        assertTrue(c1.units().addUnit(workers, new Point(0, 0)));
-        Settlers settlers = UnitFactory.newInstance(c1, Settlers.CLASS_UUID);
-        assertTrue(c1.units().addUnit(settlers, new Point(1, 0)));
+        Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
+            .city("city1", new Point(0, 0))
+            .warriors("warriors", new Point(0, 0))
+            .workers("workers", new Point(0, 0))
+            .settlers("settlers", new Point(1, 0))
+        );
 
         JsonBlock worldBlock = world.getView().getJson();
         JsonNode jsonObj = new ObjectMapper().readTree(worldBlock.getText());

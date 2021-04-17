@@ -1,10 +1,7 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
+import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
-import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.unit.military.warriors.Warriors;
-import com.tsoft.civilization.unit.civil.workers.Workers;
-import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.MockRequest;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
@@ -17,8 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.AMERICA;
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 public class GetCivilizationStatusTest {
     private static final AbstractAjaxRequest getCivilizationStatusRequest =
@@ -28,37 +24,39 @@ public class GetCivilizationStatusTest {
     public void getJsonForMyCivilization() {
         MockWorld world = MockWorld.newSimpleWorld();
 
-        Civilization c1 = world.createCivilization(RUSSIA);
-        Workers workers = UnitFactory.newInstance(c1, Workers.CLASS_UUID);
-        assertTrue(c1.units().addUnit(workers, new Point(2, 0)));
-        Warriors warriors = UnitFactory.newInstance(c1, Warriors.CLASS_UUID);
-        assertTrue(c1.units().addUnit(warriors, new Point(2, 1)));
-        City city1 = c1.createCity(new Point(2, 2));
+        Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
+            .workers("workers", new Point(2, 0))
+            .warriors("warriors", new Point(2, 1))
+            .city("city1", new Point(2, 2))
+        );
 
-        Sessions.getCurrent().setActiveCivilization(c1);
-        Request request = MockRequest.newInstance("civilization", c1.getId());
+        Sessions.getCurrent().setActiveCivilization(russia);
+        Request request = MockRequest.newInstance("civilization", russia.getId());
 
         Response response = getCivilizationStatusRequest.getJson(request);
-        assertEquals(ResponseCode.OK, response.getResponseCode());
+
+        assertThat(response.getResponseCode())
+            .isEqualTo(ResponseCode.OK);
     }
 
     @Test
     public void getJsonForForeignCivilization() {
         MockWorld world = MockWorld.newSimpleWorld();
 
-        Civilization c1 = world.createCivilization(RUSSIA);
+        Civilization russia = world.createCivilization(RUSSIA, new MockScenario());
 
-        Civilization c2 = world.createCivilization(AMERICA);
-        Workers workers = UnitFactory.newInstance(c2, Workers.CLASS_UUID);
-        assertTrue(c2.units().addUnit(workers, new Point(2, 0)));
-        Warriors warriors = UnitFactory.newInstance(c2, Warriors.CLASS_UUID);
-        assertTrue(c2.units().addUnit(warriors, new Point(2, 1)));
-        City city1 = c2.createCity(new Point(2, 2));
+        world.createCivilization(AMERICA, new MockScenario()
+            .workers("workers", new Point(2, 0))
+            .warriors("warriors", new Point(2, 1))
+            .city("city1", new Point(2, 2))
+        );
 
-        Sessions.getCurrent().setActiveCivilization(c1);
-        Request mockRequest = MockRequest.newInstance("civilization", c1.getId());
+        Sessions.getCurrent().setActiveCivilization(russia);
+        Request mockRequest = MockRequest.newInstance("civilization", russia.getId());
 
         Response response = getCivilizationStatusRequest.getJson(mockRequest);
-        assertEquals(ResponseCode.OK, response.getResponseCode());
+
+        assertThat(response.getResponseCode())
+            .isEqualTo(ResponseCode.OK);
     }
 }

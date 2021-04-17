@@ -1,5 +1,6 @@
 package com.tsoft.civilization.improvement.city.action;
 
+import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.improvement.city.City;
@@ -21,47 +22,45 @@ public class BuildUnitActionTest {
     public void failToBuildUnitNoTechnology() {
         MockWorld world = MockWorld.newSimpleWorld();
 
-        Civilization civilization = world
-            .civilization(RUSSIA)
-            .city(new Point(2, 0))
-            .build();
+        world.createCivilization(RUSSIA, new MockScenario()
+            .city("Moscow", new Point(2, 0))
+        );
 
-        City city = civilization.cities().getAny();
-
-        assertEquals(CityActionResults.WRONG_ERA_OR_TECHNOLOGY, BuildUnitAction.buildUnit(city, Archers.CLASS_UUID));
+        assertEquals(CityActionResults.WRONG_ERA_OR_TECHNOLOGY, BuildUnitAction.buildUnit(world.city("Moscow"), Archers.CLASS_UUID));
     }
 
     @Test
     public void buildUnit() {
         MockWorld world = MockWorld.newSimpleWorld();
-        Civilization civilization = world
-            .civilization(RUSSIA)
-            .city(new Point(2, 0))
-            .build();
 
-        civilization.addTechnology(Technology.ARCHERY);
+        Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
+            .city("Moscow", new Point(2, 0))
+        );
 
-        City city = civilization.cities().getAny();
+        russia.addTechnology(Technology.ARCHERY);
+
+        City city = world.city("Moscow");
         city.setPassScore(1);
-        assertTrue(SupplyMock.equals("F1 P3 G3 S4 C1 H0 U1 O1", civilization.calcSupply()));
+
+        assertTrue(SupplyMock.equals("F1 P3 G3 S4 C1 H0 U1 O1", russia.calcSupply()));
 
         // Start build Archers
         ActionAbstractResult actionResult = BuildUnitAction.buildUnit(city, Archers.CLASS_UUID);
         assertThat(actionResult).isEqualTo(CityActionResults.UNIT_CONSTRUCTION_IS_STARTED);
 
         // Wait till it builds
-        Archers archers = UnitFactory.newInstance(civilization, Archers.CLASS_UUID);
+        Archers archers = UnitFactory.newInstance(russia, Archers.CLASS_UUID);
         int neededSteps = archers.getProductionCost() / 3;
         for (int i = 0; i < neededSteps; i ++) {
             world.move();
 
             assertFalse(city.getConstructions().isEmpty());
-            assertEquals(0, civilization.units().size());
+            assertEquals(0, russia.units().size());
         }
         world.move();
 
         assertTrue(city.getConstructions().isEmpty());
-        assertThat(civilization.units().getUnits())
+        assertThat(russia.units().getUnits())
             .hasSize(1)
             .allMatch(e -> e.getClassUuid().equals(Archers.CLASS_UUID))
             .allMatch(e -> e.getLocation().equals(city.getLocation()))

@@ -1,7 +1,7 @@
 package com.tsoft.civilization.improvement.city.action;
 
+import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
-import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.military.archers.Archers;
@@ -20,14 +20,11 @@ public class BuyUnitActionTest {
     public void fail_to_buy_unit_no_technology() {
         MockWorld world = MockWorld.newSimpleWorld();
 
-        Civilization civilization = world
-            .civilization(RUSSIA)
-            .city(new Point(2, 0))
-            .build();
+        world.createCivilization(RUSSIA, new MockScenario()
+            .city("Moscow", new Point(2, 0))
+        );
 
-        City city = civilization.cities().getAny();
-
-        assertThat(BuyUnitAction.buyUnit(city, Archers.CLASS_UUID))
+        assertThat(BuyUnitAction.buyUnit(world.city("Moscow"), Archers.CLASS_UUID))
             .isEqualTo(CityActionResults.WRONG_ERA_OR_TECHNOLOGY);
     }
 
@@ -35,25 +32,22 @@ public class BuyUnitActionTest {
     public void buy_unit() {
         MockWorld world = MockWorld.newSimpleWorld();
 
-        Civilization civilization = world
-            .civilization(RUSSIA)
-            .city(new Point(2, 0))
-            .build();
+        Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
+            .city("Moscow", new Point(2, 0))
+        );
 
-        civilization.addTechnology(Technology.ARCHERY);
-        City city = civilization.cities().getAny();
-        city.setPassScore(1);
+        russia.addTechnology(Technology.ARCHERY);
+        world.city("Moscow").setPassScore(1);
 
-        Civilization puppet = world
-            .civilization(AMERICA)
-            .city(new Point(2, 2))
-            .unit(new Point(2, 2), Archers.CLASS_UUID)
-            .build();
+        Civilization puppet = world.createCivilization(AMERICA, new MockScenario()
+            .city("Columbus", new Point(2, 2))
+            .archers("foreignArchers", new Point(2, 2))
+        );
 
-        AbstractUnit archers = puppet.units().getAny();
-        civilization.giftReceived(puppet, Supply.builder().gold(archers.getGoldCost()).build());
+        AbstractUnit foreignArchers = world.unit("foreignArchers");
+        russia.giftReceived(puppet, Supply.builder().gold(foreignArchers.getGoldCost()).build());
 
-        assertThat(BuyUnitAction.buyUnit(city, Archers.CLASS_UUID))
+        assertThat(BuyUnitAction.buyUnit(world.city("Moscow"), Archers.CLASS_UUID))
             .isEqualTo(CityActionResults.UNIT_WAS_BOUGHT);
     }
 }

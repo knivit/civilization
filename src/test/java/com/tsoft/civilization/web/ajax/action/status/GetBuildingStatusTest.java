@@ -1,8 +1,8 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
+import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.building.palace.Palace;
-import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.MockRequest;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
@@ -25,11 +25,14 @@ public class GetBuildingStatusTest {
     public void getJsonForMyCityBuilding() {
         MockWorld world = MockWorld.newSimpleWorld();
 
-        Civilization c1 = world.createCivilization(RUSSIA);
-        City city1 = c1.createCity(new Point(2, 0));
+        Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
+            .city("Tula", new Point(2, 0))
+        );
 
-        Sessions.getCurrent().setActiveCivilization(c1);
-        Request request = MockRequest.newInstance("building", city1.getBuildings().findByClassUuid(Palace.CLASS_UUID).getId());
+        Sessions.getCurrent().setActiveCivilization(russia);
+
+        String palaceId = world.city("Tula").getBuildings().findByClassUuid(Palace.CLASS_UUID).getId();
+        Request request = MockRequest.newInstance("building", palaceId);
 
         Response response = getBuildingStatusRequest.getJson(request);
         assertEquals(ResponseCode.OK, response.getResponseCode());
@@ -39,12 +42,16 @@ public class GetBuildingStatusTest {
     public void getJsonForForeignCityBuilding() {
         MockWorld world = MockWorld.newSimpleWorld();
 
-        Civilization c1 = world.createCivilization(RUSSIA);
-        Civilization c2 = world.createCivilization(AMERICA);
-        City city2 = c2.createCity(new Point(2, 0));
+        Civilization russia = world.createCivilization(RUSSIA, new MockScenario());
 
-        Sessions.getCurrent().setActiveCivilization(c1);
-        Request request = MockRequest.newInstance("building", city2.getBuildings().findByClassUuid(Palace.CLASS_UUID).getId());
+        Civilization america = world.createCivilization(AMERICA, new MockScenario()
+            .city("Washington", new Point(2, 0))
+        );
+
+        Sessions.getCurrent().setActiveCivilization(russia);
+
+        String palaceId = world.city("Washington").getBuildings().findByClassUuid(Palace.CLASS_UUID).getId();
+        Request request = MockRequest.newInstance("building", palaceId);
 
         Response response = getBuildingStatusRequest.getJson(request);
         assertEquals(ResponseCode.BAD_REQUEST, response.getResponseCode());

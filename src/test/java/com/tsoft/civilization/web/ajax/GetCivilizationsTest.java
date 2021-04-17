@@ -1,5 +1,6 @@
 package com.tsoft.civilization.web.ajax;
 
+import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 
 import com.tsoft.civilization.web.MockRequest;
@@ -16,16 +17,17 @@ import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GetCivilizationsTest {
+
     private static final AbstractAjaxRequest getCivilizationsRequest =
         AbstractAjaxRequest.getInstance(GetCivilizations.class.getSimpleName());
 
     @Test
     public void getJson() {
         MockWorld world = MockWorld.newSimpleWorld();
-        Civilization c1 = world.createCivilization(RUSSIA);
-        Civilization c2 = world.createCivilization(AMERICA);
+        Civilization russia = world.createCivilization(RUSSIA, new MockScenario());
+        world.createCivilization(AMERICA, new MockScenario());
 
-        Sessions.getCurrent().setActiveCivilization(c1);
+        Sessions.getCurrent().setActiveCivilization(russia);
         Request request = MockRequest.newInstance();
 
         Response response = getCivilizationsRequest.getJson(request);

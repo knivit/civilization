@@ -1,5 +1,6 @@
 package com.tsoft.civilization.civilization.action;
 
+import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.MoveState;
@@ -14,7 +15,7 @@ public class NextTurnActionTest {
     @Test
     public void nextTurn() {
         MockWorld world = MockWorld.newSimpleWorld();
-        Civilization civilization = world.createCivilization(RUSSIA);
+        Civilization civilization = world.createCivilization(RUSSIA, new MockScenario());
 
         assertThat(civilization.getMoveState())
             .isNotEqualTo(MoveState.DONE);

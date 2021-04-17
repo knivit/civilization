@@ -58,10 +58,10 @@ public final class UnitFactory {
     }
 
     private static AbstractUnit createUnit(Civilization civilization, String unitClassUuid) {
-        Function<Civilization, AbstractUnit> supplier = UNIT_CATALOG.get(unitClassUuid);
-        if (supplier == null) {
+        Function<Civilization, AbstractUnit> creator = UNIT_CATALOG.get(unitClassUuid);
+        if (creator == null) {
             throw new IllegalArgumentException("Unknown unit classUuid = " + unitClassUuid);
         }
-        return supplier.apply(civilization);
+        return creator.apply(civilization);
     }
 }

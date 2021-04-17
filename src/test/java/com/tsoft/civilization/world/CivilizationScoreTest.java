@@ -1,5 +1,6 @@
 package com.tsoft.civilization.world;
 
+import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.improvement.city.City;
@@ -29,12 +30,12 @@ public class CivilizationScoreTest {
             "1| . g .",
             "2|. . . ",
             "3| . . .");
-
         MockWorld world = MockWorld.of(map);
-        Civilization c1 = world.createCivilization(RUSSIA);
+
+        Civilization russia = world.createCivilization(RUSSIA, new MockScenario());
 
         world.move();
-        assertTrue(SupplyMock.equals(Supply.EMPTY_SUPPLY, c1.calcSupply()));
+        assertTrue(SupplyMock.equals(Supply.EMPTY_SUPPLY, russia.calcSupply()));
     }
 
     @Test
@@ -46,12 +47,11 @@ public class CivilizationScoreTest {
             "1| . g .",
             "2|. . . ",
             "3| . . .");
-
         MockWorld world = MockWorld.of(map);
-        Civilization c1 = world
-            .civilization(RUSSIA)
-            .city(new Point(1, 1))
-            .build();
+
+        Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
+            .city("Moscow", new Point(1, 1))
+        );
 
         // Step 1
         // food | prod | gold | science | culture | happiness | unhappiness | population | produced/consumed by
@@ -61,7 +61,7 @@ public class CivilizationScoreTest {
         // -------------------------------------------------------------------------------
         //    1 |    3 |    3 |       4 |       1 |           |           1 |          1 |
         world.move();
-        assertTrue(SupplyMock.equals("F1 P3 G3 S4 C1 H0 U1 O1", c1.calcSupply()));
+        assertTrue(SupplyMock.equals("F1 P3 G3 S4 C1 H0 U1 O1", russia.calcSupply()));
 
         // Step 2
         // food | prod | gold | science | culture | happiness | unhappiness | population | produced/consumed by
@@ -75,8 +75,8 @@ public class CivilizationScoreTest {
         // --------------------------------------------------------------------------------
         //    2 |    6 |    6 |       6 |       2 |           |           2 |          1 |
         world.move();
-        assertTrue(SupplyMock.equals("F1 P3 G3 S4 C1 H0 U1 O1", c1.calcSupply()));
-        assertTrue(SupplyMock.equals("F2 P6 G6 S8 C2 H0 U2 O1", c1.getSupply()));
+        assertTrue(SupplyMock.equals("F1 P3 G3 S4 C1 H0 U1 O1", russia.calcSupply()));
+        assertTrue(SupplyMock.equals("F2 P6 G6 S8 C2 H0 U2 O1", russia.getSupply()));
     }
 
     @Test
@@ -88,14 +88,13 @@ public class CivilizationScoreTest {
             "1| l g p s t", "1| . M . . .", "1| . . . . .",
             "2|g g g g g ", "2|n f h h m ", "2|. . . f . ",
             "3| . g p . .", "3| . j o . .", "3| . . . . .");
-
         MockWorld world = MockWorld.of(map);
-        Civilization civilization = world
-            .civilization(RUSSIA)
-            .city(new Point(2, 1))
-            .build();
 
-        City city = civilization.cities().getAny();
+        Civilization civilization = world.createCivilization(RUSSIA, new MockScenario()
+            .city("Moscow", new Point(2, 1))
+        );
+
+        City city = world.city("Moscow");
 
         // add all other tiles
         Collection<Point> locations = map.getLocationsAround(new Point(2, 1), 3);
@@ -130,14 +129,13 @@ public class CivilizationScoreTest {
             "1| g g .", "1| m f .",
             "2|. g . ", "2|. n . ",
             "3| . . .", "3| . . .");
-
         MockWorld world = MockWorld.of(map);
-        Civilization c1 = world
-            .civilization(RUSSIA)
-            .city(new Point(1, 1))
-            .build();
 
-        City city = c1.cities().getAny();
+        Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
+            .city("Moscow", new Point(1, 1))
+        );
+
+        City city = world.city("Moscow");
         city.addCitizen();
 
         // Step 1
@@ -151,7 +149,7 @@ public class CivilizationScoreTest {
         city.setSupplyStrategy(CitySupplyStrategy.MAX_PRODUCTION);
         world.move();
         assertEquals(Arrays.asList(new Point(1, 0), new Point(1, 1)), city.getCitizenLocations());
-        assertTrue(SupplyMock.equals("F-1 P6 G3 S5 C1 H0 U2 O2", c1.calcSupply()));
+        assertTrue(SupplyMock.equals("F-1 P6 G3 S5 C1 H0 U2 O2", russia.calcSupply()));
 
         // Step 2
         // food | prod | gold | science | culture | unhappiness | population | produced/consumed by
@@ -168,7 +166,7 @@ public class CivilizationScoreTest {
         city.setSupplyStrategy(CitySupplyStrategy.MAX_FOOD);
         world.move();
         assertEquals(Arrays.asList(new Point(1, 2), new Point(0, 1)), city.getCitizenLocations());
-        assertTrue(SupplyMock.equals("F3 P3 G3 S5 C1 U2 O2", c1.calcSupply()));
-        assertTrue(SupplyMock.equals("F2 P9 G6 S10 C2 U4 O2", c1.getSupply()));
+        assertTrue(SupplyMock.equals("F3 P3 G3 S5 C1 U2 O2", russia.calcSupply()));
+        assertTrue(SupplyMock.equals("F2 P9 G6 S10 C2 U4 O2", russia.getSupply()));
     }
 }

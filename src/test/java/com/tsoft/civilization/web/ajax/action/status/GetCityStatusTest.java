@@ -1,9 +1,7 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
+import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
-import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.unit.military.warriors.Warriors;
-import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.MockRequest;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
@@ -18,7 +16,6 @@ import org.junit.jupiter.api.Test;
 import static com.tsoft.civilization.civilization.L10nCivilization.AMERICA;
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GetCityStatusTest {
     private static final AbstractAjaxRequest getCityStatusRequest =
@@ -27,16 +24,18 @@ public class GetCityStatusTest {
     @Test
     public void getJsonForMyCity() {
         MockWorld world = MockWorld.newSimpleWorld();
-        Civilization c1 = world.createCivilization(RUSSIA);
-        City city1 = c1.createCity(new Point(2, 0));
+        Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
+            .city("city1", new Point(2, 0))
+        );
 
-        Civilization c2 = world.createCivilization(AMERICA);
-        world.setCivilizationsRelations(c1, c2, CivilizationsRelations.war());
-        Warriors foreignWarriors = UnitFactory.newInstance(c2, Warriors.CLASS_UUID);
-        assertTrue(c2.units().addUnit(foreignWarriors, new Point(2, 1)));
+        Civilization america = world.createCivilization(AMERICA, new MockScenario()
+            .workers("foreignWarriors", new Point(2, 1))
+        );
 
-        Sessions.getCurrent().setActiveCivilization(c1);
-        Request request = MockRequest.newInstance("city", city1.getId());
+        world.setCivilizationsRelations(russia, america, CivilizationsRelations.war());
+
+        Sessions.getCurrent().setActiveCivilization(russia);
+        Request request = MockRequest.newInstance("city", world.city("city1").getId());
 
         Response response = getCityStatusRequest.getJson(request);
         assertEquals(ResponseCode.OK, response.getResponseCode());
@@ -45,12 +44,13 @@ public class GetCityStatusTest {
     @Test
     public void getJsonForMyDestroyedCity() {
         MockWorld world = MockWorld.newSimpleWorld();
-        Civilization c1 = world.createCivilization(RUSSIA);
-        City city1 = c1.createCity(new Point(2, 0));
-        city1.getCombatStrength().setDestroyed(true);
+        Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
+            .city("city1", new Point(2, 0))
+        );
+        world.city("city1").getCombatStrength().setDestroyed(true);
 
-        Sessions.getCurrent().setActiveCivilization(c1);
-        Request request = MockRequest.newInstance("city", city1.getId());
+        Sessions.getCurrent().setActiveCivilization(russia);
+        Request request = MockRequest.newInstance("city", world.city("city1").getId());
 
         Response response = getCityStatusRequest.getJson(request);
         assertEquals(ResponseCode.OK, response.getResponseCode());
@@ -59,14 +59,17 @@ public class GetCityStatusTest {
     @Test
     public void getJsonForForeignCity() {
         MockWorld world = MockWorld.newSimpleWorld();
-        Civilization c1 = world.createCivilization(RUSSIA);
-        City city1 = c1.createCity(new Point(2, 0));
 
-        Civilization c2 = world.createCivilization(AMERICA);
-        City city2 = c2.createCity(new Point(2, 2));
+        Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
+            .city("city1", new Point(2, 0))
+        );
 
-        Sessions.getCurrent().setActiveCivilization(c1);
-        Request mockRequest = MockRequest.newInstance("city", city2.getId());
+        Civilization america = world.createCivilization(AMERICA, new MockScenario()
+            .city("city2", new Point(2, 2))
+        );
+
+        Sessions.getCurrent().setActiveCivilization(russia);
+        Request mockRequest = MockRequest.newInstance("city", world.city("city2").getId());
 
         Response response = getCityStatusRequest.getJson(mockRequest);
         assertEquals(ResponseCode.OK, response.getResponseCode());
