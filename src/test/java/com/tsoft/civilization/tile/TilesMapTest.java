@@ -12,8 +12,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class TilesMapTest {
 
@@ -34,13 +34,12 @@ public class TilesMapTest {
         // round 1
         List<Point> locations = map.getLocationsAround(new Point(3, 3), 1);
 
-        assertEquals(6, locations.size());
-        assertEquals(new Point(3, 2), locations.get(0));
-        assertEquals(new Point(4, 2), locations.get(1));
-        assertEquals(new Point(4, 3), locations.get(2));
-        assertEquals(new Point(4, 4), locations.get(3));
-        assertEquals(new Point(3, 4), locations.get(4));
-        assertEquals(new Point(2, 3), locations.get(5));
+        assertThat(locations)
+            .hasSize(6)
+            .containsExactly(
+                new Point(3, 2), new Point(4, 2), new Point(4, 3),
+                new Point(4, 4), new Point(3, 4), new Point(2, 3)
+            );
     }
 
     @Test
@@ -60,29 +59,19 @@ public class TilesMapTest {
         // round 2
         List<Point> locations = map.getLocationsAround(new Point(3, 3), 2);
 
-        assertEquals(6 + 12, locations.size());
+        assertThat(locations)
+            .hasSize(6 + 12)
+            .containsExactly(
+                // from round 1
+                new Point(3, 2), new Point(4, 2), new Point(4, 3),
+                new Point(4, 4), new Point(3, 4), new Point(2, 3),
 
-        // from round 1
-        assertEquals(new Point(3, 2), locations.get(0));
-        assertEquals(new Point(4, 2), locations.get(1));
-        assertEquals(new Point(4, 3), locations.get(2));
-        assertEquals(new Point(4, 4), locations.get(3));
-        assertEquals(new Point(3, 4), locations.get(4));
-        assertEquals(new Point(2, 3), locations.get(5));
-
-        // from round 2
-        assertEquals(new Point(2, 1), locations.get(6));
-        assertEquals(new Point(3, 1), locations.get(7));
-        assertEquals(new Point(4, 1), locations.get(8));
-        assertEquals(new Point(5, 2), locations.get(9));
-        assertEquals(new Point(5, 3), locations.get(10));
-        assertEquals(new Point(5, 4), locations.get(11));
-        assertEquals(new Point(4, 5), locations.get(12));
-        assertEquals(new Point(3, 5), locations.get(13));
-        assertEquals(new Point(2, 5), locations.get(14));
-        assertEquals(new Point(2, 4), locations.get(15));
-        assertEquals(new Point(1, 3), locations.get(16));
-        assertEquals(new Point(2, 2), locations.get(17));
+                // from round 2
+                new Point(2, 1), new Point(3, 1), new Point(4, 1),
+                new Point(5, 2), new Point(5, 3), new Point(5, 4),
+                new Point(4, 5), new Point(3, 5), new Point(2, 5),
+                new Point(2, 4), new Point(1, 3), new Point(2, 2)
+            );
     }
 
     @Test
@@ -102,49 +91,27 @@ public class TilesMapTest {
         // round 3
         List<Point> locations = map.getLocationsAround(new Point(3, 3), 3);
 
-        assertEquals(6 + 12 + 18, locations.size());
+        assertThat(locations)
+            .hasSize(6 + 12 + 18)
+            .containsExactly(
+                // from round 1
+                new Point(3, 2), new Point(4, 2), new Point(4, 3),
+                new Point(4, 4), new Point(3, 4), new Point(2, 3),
 
-        // from round 1
-        assertEquals(new Point(3, 2), locations.get(0));
-        assertEquals(new Point(4, 2), locations.get(1));
-        assertEquals(new Point(4, 3), locations.get(2));
-        assertEquals(new Point(4, 4), locations.get(3));
-        assertEquals(new Point(3, 4), locations.get(4));
-        assertEquals(new Point(2, 3), locations.get(5));
+                // from round 2
+                new Point(2, 1), new Point(3, 1), new Point(4, 1),
+                new Point(5, 2), new Point(5, 3), new Point(5, 4),
+                new Point(4, 5), new Point(3, 5), new Point(2, 5),
+                new Point(2, 4), new Point(1, 3), new Point(2, 2),
 
-        // from round 2
-        assertEquals(new Point(2, 1), locations.get(6));
-        assertEquals(new Point(3, 1), locations.get(7));
-        assertEquals(new Point(4, 1), locations.get(8));
-        assertEquals(new Point(5, 2), locations.get(9));
-        assertEquals(new Point(5, 3), locations.get(10));
-        assertEquals(new Point(5, 4), locations.get(11));
-        assertEquals(new Point(4, 5), locations.get(12));
-        assertEquals(new Point(3, 5), locations.get(13));
-        assertEquals(new Point(2, 5), locations.get(14));
-        assertEquals(new Point(2, 4), locations.get(15));
-        assertEquals(new Point(1, 3), locations.get(16));
-        assertEquals(new Point(2, 2), locations.get(17));
-
-        // from round 3
-        assertEquals(new Point(2, 0), locations.get(18));
-        assertEquals(new Point(3, 0), locations.get(19));
-        assertEquals(new Point(4, 0), locations.get(20));
-        assertEquals(new Point(5, 0), locations.get(21));
-        assertEquals(new Point(5, 1), locations.get(22));
-        assertEquals(new Point(6, 2), locations.get(23));
-        assertEquals(new Point(6, 3), locations.get(24));
-        assertEquals(new Point(6, 4), locations.get(25));
-        assertEquals(new Point(5, 5), locations.get(26));
-        assertEquals(new Point(5, 6), locations.get(27));
-        assertEquals(new Point(4, 6), locations.get(28));
-        assertEquals(new Point(3, 6), locations.get(29));
-        assertEquals(new Point(2, 6), locations.get(30));
-        assertEquals(new Point(1, 5), locations.get(31));
-        assertEquals(new Point(1, 4), locations.get(32));
-        assertEquals(new Point(0, 3), locations.get(33));
-        assertEquals(new Point(1, 2), locations.get(34));
-        assertEquals(new Point(1, 1), locations.get(35));
+                // from round 3
+                new Point(2, 0), new Point(3, 0), new Point(4, 0),
+                new Point(5, 0), new Point(5, 1), new Point(6, 2),
+                new Point(6, 3), new Point(6, 4), new Point(5, 5),
+                new Point(5, 6), new Point(4, 6), new Point(3, 6),
+                new Point(2, 6), new Point(1, 5), new Point(1, 4),
+                new Point(0, 3), new Point(1, 2), new Point(1, 1)
+            );
     }
 
     @Test
@@ -158,7 +125,7 @@ public class TilesMapTest {
             }
         }
 
-        assertFalse(tiles.hasNext());
+        assertThat(tiles.hasNext()).isFalse();
     }
 
     @Test

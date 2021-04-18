@@ -15,12 +15,12 @@ public class NextTurnActionTest {
     @Test
     public void nextTurn() {
         MockWorld world = MockWorld.newSimpleWorld();
-        Civilization civilization = world.createCivilization(RUSSIA, new MockScenario());
+        Civilization russia = world.createCivilization(RUSSIA, new MockScenario());
 
-        assertThat(civilization.getMoveState())
+        assertThat(russia.getMoveState())
             .isNotEqualTo(MoveState.DONE);
 
-        assertThat(NextTurnAction.nextTurn(civilization))
+        assertThat(NextTurnAction.nextTurn(russia))
             .isEqualTo(MOVE_DONE);
     }
 }

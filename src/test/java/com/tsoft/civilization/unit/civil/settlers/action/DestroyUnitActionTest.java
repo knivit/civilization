@@ -18,6 +18,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DestroyUnitActionTest {
+
     @Test
     public void buildCity1() {
         MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,

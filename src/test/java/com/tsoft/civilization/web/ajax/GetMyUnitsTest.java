@@ -5,6 +5,7 @@ import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.MockRequest;
 import com.tsoft.civilization.web.ajax.action.status.GetMyUnits;
+import com.tsoft.civilization.web.render.HtmlRender;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
@@ -33,6 +34,7 @@ public class GetMyUnitsTest {
         Request request = MockRequest.newInstance();
 
         Response response = getMyUnitsRequest.getJson(request);
+        HtmlRender.of(this).saveToFile(response);
 
         assertThat(response.getResponseCode())
             .isEqualTo(ResponseCode.OK);

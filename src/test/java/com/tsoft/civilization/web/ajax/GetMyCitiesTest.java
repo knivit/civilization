@@ -14,7 +14,7 @@ import com.tsoft.civilization.civilization.Civilization;
 import org.junit.jupiter.api.Test;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class GetMyCitiesTest {
 
@@ -35,6 +35,7 @@ public class GetMyCitiesTest {
         Response response = getMyCitiesRequest.getJson(request);
         HtmlRender.of(this).saveToFile(response);
 
-        assertEquals(ResponseCode.OK, response.getResponseCode());
+        assertThat(response.getResponseCode())
+            .isEqualTo(ResponseCode.OK);
     }
 }
