@@ -84,12 +84,12 @@ public class GetUnitStatus extends AbstractAjaxRequest {
             "$features", L10nUnit.FEATURES,
 
             "$meleeAttackStrengthLabel", L10nUnit.MELEE_ATTACK_STRENGTH, "$meleeAttackStrength", unit.getCombatStrength().getMeleeAttackStrength(),
-            "$canConquerCityLabel", L10nUnit.CAN_CONQUER_CITY, "$canConquerCity", unit.getCombatStrength().canConquerCity(),
+            "$canConquerCityLabel", L10nUnit.CAN_CONQUER_CITY, "$canConquerCity", unit.getCombatStrength().isCanConquerCity(),
             "$attackExperienceLabel", L10nUnit.ATTACK_EXPERIENCE, "$attackExperience", unit.getCombatStrength().getAttackExperience(),
             "$defenseExperienceLabel", L10nUnit.DEFENSE_EXPERIENCE, "$defenseExperience", unit.getCombatStrength().getDefenseExperience(),
             "$rangedAttackStrengthLabel", L10nUnit.RANGED_ATTACK_STRENGTH, "$rangedAttackStrength", unit.getCombatStrength().getRangedAttackStrength(),
             "$rangedAttackRadiusLabel", L10nUnit.RANGED_ATTACK_RADIUS, "$rangedAttackRadius", unit.getCombatStrength().getRangedAttackRadius(),
-            "$strengthLabel", L10nUnit.STRENGTH, "$strength", unit.getCombatStrength().getStrength()
+            "$strengthLabel", L10nUnit.STRENGTH, "$strength", unit.getCombatStrength().getDefenseStrength()
         );
     }
 

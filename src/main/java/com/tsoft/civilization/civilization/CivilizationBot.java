@@ -21,8 +21,6 @@ public abstract class CivilizationBot implements Runnable {
     }
 
     public void startYear() {
-        log.debug("Bot {} enters to a new year", getClass().getSimpleName());
-
         moveState = MoveState.IN_PROGRESS;
 
         Thread worker = new Thread(this);
@@ -33,7 +31,6 @@ public abstract class CivilizationBot implements Runnable {
     public void run() {
         calculate();
 
-        log.debug("Bot {} done", getClass().getSimpleName());
         moveState = MoveState.DONE;
 
         // If this is a bot (fully managed civilization, not just a human's helper)

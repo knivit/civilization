@@ -19,11 +19,12 @@ import java.util.UUID;
 public class Warriors extends AbstractUnit {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
-            .setMeleeAttackStrength(10)
-            .setTargetBackFireStrength(5)
-            .setStrength(20)
-            .setCanConquerCity(true);
+    private static final CombatStrength COMBAT_STRENGTH = CombatStrength.builder()
+        .meleeAttackStrength(10)
+        .targetBackFireStrength(5)
+        .defenseStrength(20)
+        .canConquerCity(true)
+        .build();
 
     private static final WarriorsView VIEW = new WarriorsView();
 
@@ -37,7 +38,7 @@ public class Warriors extends AbstractUnit {
     }
 
     @Override
-    protected CombatStrength getBaseCombatStrength() {
+    public CombatStrength getBaseCombatStrength() {
         return COMBAT_STRENGTH;
     }
 

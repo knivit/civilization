@@ -37,8 +37,9 @@ import java.util.UUID;
 public class Road extends AbstractImprovement {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
-            .setStrength(10);
+    private static final CombatStrength COMBAT_STRENGTH = CombatStrength.builder()
+        .defenseStrength(10)
+        .build();
 
     private static final AbstractImprovementView VIEW = new RoadView();
 

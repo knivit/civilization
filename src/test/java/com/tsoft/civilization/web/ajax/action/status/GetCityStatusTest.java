@@ -47,7 +47,7 @@ public class GetCityStatusTest {
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .city("city1", new Point(2, 0))
         );
-        world.city("city1").getCombatStrength().setDestroyed(true);
+        world.city("city1").destroy();
 
         Sessions.getCurrent().setActiveCivilization(russia);
         Request request = MockRequest.newInstance("city", world.city("city1").getId());

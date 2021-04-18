@@ -27,6 +27,10 @@ public class L10nWorld {
         .put(EN, "Can not create a world")
         .put(RU, "Невозможно создать новый мир");
 
+    public static final L10n CANT_CREATE_BARBARIANS = new L10n()
+        .put(EN, "Can not create Barbarians")
+        .put(RU, "Не удалось создать Варваров");
+
     public static final L10n INVALID_MAX_NUMBER_OF_CIVILIZATIONS = new L10n()
         .put(EN, "Number of civilizations must be within [1..16]")
         .put(RU, "Количество цивилизаций должно быть в пределах [1..16]");

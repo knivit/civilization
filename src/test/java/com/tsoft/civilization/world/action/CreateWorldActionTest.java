@@ -1,7 +1,11 @@
 package com.tsoft.civilization.world.action;
 
+import com.tsoft.civilization.civilization.CivilizationList;
+import com.tsoft.civilization.web.state.Worlds;
+import com.tsoft.civilization.world.World;
 import org.junit.jupiter.api.Test;
 
+import static com.tsoft.civilization.civilization.L10nCivilization.BARBARIANS;
 import static com.tsoft.civilization.world.action.CreateWorldAction.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,6 +22,16 @@ public class CreateWorldActionTest {
 
         assertThat(CreateWorldAction.create(request))
             .isEqualTo(CREATED);
+
+        assertThat(Worlds.getWorlds())
+            .hasSize(1)
+            .element(0)
+            .returns("World 1", World::getName)
+
+            // check for Barbarians
+            .extracting(World::getCivilizations)
+            .returns(1, CivilizationList::size)
+            .returns(BARBARIANS, e -> e.get(0).getName());
     }
 
     @Test

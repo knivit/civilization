@@ -72,7 +72,7 @@ public class GetMyUnits extends AbstractAjaxRequest {
                 "$passScore", unit.getPassScore(),
                 "$meleeAttackStrength", unit.getCombatStrength().getMeleeAttackStrength(),
                 "$rangedAttackStrength", unit.getCombatStrength().getRangedAttackStrength(),
-                "$strength", unit.getCombatStrength().getStrength()
+                "$strength", unit.getCombatStrength().getDefenseStrength()
             ));
         }
 

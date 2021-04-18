@@ -14,6 +14,8 @@ import com.tsoft.civilization.civilization.CivilizationsRelations;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.civilization.CivilizationList;
 
+import static com.tsoft.civilization.civilization.L10nCivilization.BARBARIANS;
+
 public class GetCivilizations extends AbstractAjaxRequest {
 
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
@@ -52,6 +54,10 @@ public class GetCivilizations extends AbstractAjaxRequest {
         StringBuilder buf = new StringBuilder();
         for (Civilization civilization : civilizations) {
             if (civilization.equals(myCivilization)) {
+                continue;
+            }
+
+            if (BARBARIANS.equals(civilization.getName())) {
                 continue;
             }
 

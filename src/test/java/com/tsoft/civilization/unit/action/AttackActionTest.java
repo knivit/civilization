@@ -2,6 +2,7 @@ package com.tsoft.civilization.unit.action;
 
 import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
+import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrengthList;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
@@ -123,7 +124,7 @@ public class AttackActionTest {
             .isEqualTo(ATTACKED);
 
         assertThat(world.unit("archers").getPassScore()).isEqualTo(0);
-        assertThat(world.unit("foreignWarriors2").getCombatStrength().getStrength()).isEqualTo(7);
+        assertThat(world.unit("foreignWarriors2").getCombatStrength().getDefenseStrength()).isEqualTo(7);
 
         // do the next step to be able to strike again
         world.move();
@@ -182,7 +183,7 @@ public class AttackActionTest {
             .warriors("foreignWarriors", new Point(4, 3))
             .workers("foreignWorkers", new Point(4, 3))
         );
-        world.city("Chicago").getCombatStrength().setStrength(30);
+        world.city("Chicago").addCombatStrength(CombatStrength.builder().defenseStrength(30).build());
 
         world.setCivilizationsRelations(russia, america, CivilizationsRelations.war());
 
@@ -192,7 +193,7 @@ public class AttackActionTest {
 
         assertThat(world.unit("warriors1"))
             .returns(0, e -> e.getPassScore())
-            .returns(15, e -> e.getCombatStrength().getStrength())
+            .returns(15, e -> e.getCombatStrength().getDefenseStrength())
             .returns(2, e -> e.getCombatStrength().getAttackExperience());
 
         assertThat(russia.cities().size()).isEqualTo(1);
@@ -202,10 +203,10 @@ public class AttackActionTest {
             .returns(2, e -> e.units().size());
 
         assertThat(world.city("Chicago"))
-            .returns(30 - 10, e -> e.getCombatStrength().getStrength());
+            .returns(30 - 10, e -> e.getCombatStrength().getDefenseStrength());
 
         assertThat(world.unit("foreignWarriors"))
-            .returns(20, e -> e.getCombatStrength().getStrength());
+            .returns(20, e -> e.getCombatStrength().getDefenseStrength());
 
         // strike 2
         assertThat(AttackAction.attack(world.unit("warriors2"), world.location("Chicago")))
@@ -213,7 +214,7 @@ public class AttackActionTest {
 
         assertThat(world.unit("warriors2"))
             .returns(0, e -> e.getPassScore())
-            .returns(15, e -> e.getCombatStrength().getStrength())
+            .returns(15, e -> e.getCombatStrength().getDefenseStrength())
             .returns(2, e -> e.getCombatStrength().getAttackExperience());
 
         assertThat(russia.cities().size()).isEqualTo(1);
@@ -223,10 +224,10 @@ public class AttackActionTest {
             .returns(2, e -> e.units().size());
 
         assertThat(world.city("Chicago"))
-            .returns(20 - 9, e -> e.getCombatStrength().getStrength());
+            .returns(20 - 9, e -> e.getCombatStrength().getDefenseStrength());
 
         assertThat(world.unit("foreignWarriors"))
-            .returns(20, e -> e.getCombatStrength().getStrength());
+            .returns(20, e -> e.getCombatStrength().getDefenseStrength());
 
         // strike 3
         assertThat(AttackAction.attack(world.unit("warriors3"), world.location("Chicago")))
@@ -234,7 +235,7 @@ public class AttackActionTest {
 
         assertThat(world.unit("warriors3"))
             .returns(0, e -> e.getPassScore())
-            .returns(15, e -> e.getCombatStrength().getStrength())
+            .returns(15, e -> e.getCombatStrength().getDefenseStrength())
             .returns(2, e -> e.getCombatStrength().getAttackExperience());
 
         assertThat(russia.cities().size()).isEqualTo(1);
@@ -244,10 +245,10 @@ public class AttackActionTest {
             .returns(2, e -> e.units().size());
 
         assertThat(world.city("Chicago"))
-            .returns(20 - 9 - 8, e -> e.getCombatStrength().getStrength());
+            .returns(20 - 9 - 8, e -> e.getCombatStrength().getDefenseStrength());
 
         assertThat(world.unit("foreignWarriors"))
-            .returns(20, e -> e.getCombatStrength().getStrength());
+            .returns(20, e -> e.getCombatStrength().getDefenseStrength());
 
         // strike 4
         assertThat(AttackAction.attack(world.unit("warriors4"), world.location("Chicago")))
@@ -255,7 +256,7 @@ public class AttackActionTest {
 
         assertThat(world.unit("warriors4"))
             .returns(0, e -> e.getPassScore())
-            .returns(15, e -> e.getCombatStrength().getStrength())
+            .returns(15, e -> e.getCombatStrength().getDefenseStrength())
             .returns(2, e -> e.getCombatStrength().getAttackExperience());
 
         assertThat(russia.cities().size()).isEqualTo(2);

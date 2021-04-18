@@ -138,6 +138,10 @@ public class L10nCivilization {
         .put(EN, "Random")
         .put(RU, "Случайная");
 
+    public static final L10n BARBARIANS = new L10n()
+        .put(EN, "Barbarians")
+        .put(RU, "Варвары");
+
     public static final L10n RUSSIA = new L10n()
         .put(EN, "Russia")
         .put(RU, "Россия");
@@ -150,6 +154,7 @@ public class L10nCivilization {
         .put(EN, "Japan")
         .put(RU, "Япония");
 
+    // Tha barbarians don't include in this list - they are always AI
     public static final L10nList CIVILIZATIONS = new L10nList()
         .add(L10nCivilization.RUSSIA)
         .add(L10nCivilization.AMERICA)

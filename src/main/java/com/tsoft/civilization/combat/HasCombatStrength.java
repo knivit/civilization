@@ -21,7 +21,13 @@ public interface HasCombatStrength {
 
     List<AbstractSkill> getSkills();
 
+    CombatStrength getBaseCombatStrength();
+
     CombatStrength getCombatStrength();
+
+    void setCombatStrength(CombatStrength combatStrength);
+
+    CombatStrength calcCombatStrength();
 
     void destroyedBy(HasCombatStrength target, boolean destroyOtherUnitsAtLocation);
 
@@ -30,4 +36,8 @@ public interface HasCombatStrength {
     String getClassUuid();
 
     boolean isDestroyed();
+
+    default void addCombatStrength(CombatStrength other) {
+        setCombatStrength(getCombatStrength().add(other));
+    }
 }

@@ -92,7 +92,7 @@ public class CivilizationCityService {
     }
 
     public void captureCity(City city, HasCombatStrength destroyer, boolean destroyOtherUnitsAtLocation) {
-        city.getCombatStrength().setDestroyed(true);
+        city.destroy();
         city.setPassScore(0);
 
         Event worldEvent = new Event(Event.UPDATE_WORLD, this, L10nCity.CITY_WAS_CAPTURED, city.getView().getLocalizedCityName());

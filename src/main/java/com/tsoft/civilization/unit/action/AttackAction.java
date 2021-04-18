@@ -1,5 +1,7 @@
 package com.tsoft.civilization.unit.action;
 
+import com.tsoft.civilization.combat.BaseCombatService;
+import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import com.tsoft.civilization.world.L10nWorld;
 import com.tsoft.civilization.unit.L10nUnit;
@@ -40,6 +42,7 @@ public class AttackAction {
     public static final ActionFailureResult INVALID_LOCATION = new ActionFailureResult(L10nWorld.INVALID_LOCATION);
 
     private static final TileService tileService = new TileService();
+    private static final BaseCombatService baseCombatService = new BaseCombatService();
 
     public static ActionAbstractResult attack(HasCombatStrength attacker, Point location) {
         ActionAbstractResult result = canAttack(attacker);
@@ -115,7 +118,7 @@ public class AttackAction {
         int rangedAttackStrength = attacker.getCombatStrength().getRangedAttackStrength();
 
         // add all bonuses
-        int missileStrength = attacker.getCombatStrength().calcStrikeStrength(rangedAttackStrength, target);
+        int missileStrength = baseCombatService.calcStrikeStrength(attacker, rangedAttackStrength, target);
 
         for (Point loc : path) {
             AbstractTile tile = attacker.getCivilization().getTilesMap().getTile(loc);
@@ -142,18 +145,18 @@ public class AttackAction {
 
         // calc the strength of the attack
         int meleeAttackStrength = attacker.getCombatStrength().getMeleeAttackStrength();
-        int attackStrength = attacker.getCombatStrength().calcStrikeStrength(meleeAttackStrength, target);
+        int attackStrength = baseCombatService.calcStrikeStrength(attacker, meleeAttackStrength, target);
 
         return attackTarget(attacker, target, attackStrength);
     }
 
     private static ActionAbstractResult attackTarget(HasCombatStrength attacker, HasCombatStrength target, int strikeStrength) {
         World world = attacker.getCivilization().getWorld();
-        int attackerStrength = attacker.getCombatStrength().getStrength();
-        int targetStrength = target.getCombatStrength().getStrength();
+        int attackerStrength = attacker.getCombatStrength().getDefenseStrength();
+        int targetStrength = target.getCombatStrength().getDefenseStrength();
 
         // before the attack calculate target's backfire strength
-        int targetBackFireStrength = attacker.getCombatStrength().calcTargetBackFireStrength(target);
+        int targetBackFireStrength = baseCombatService.calcTargetBackFireStrength(attacker, target);
 
         // decrease target's strength
         // take into account target's defense experience
@@ -174,8 +177,10 @@ public class AttackAction {
             destroyTarget(attacker, target);
             isTargetAlive = false;
         } else {
-            target.getCombatStrength().setStrength(targetStrength);
-            target.getCombatStrength().addDefenseExperience(1);
+            target.addCombatStrength(CombatStrength.builder()
+                .defenseStrength(targetStrength - target.getCombatStrength().getDefenseStrength())
+                .defenseExperience(1)
+                .build());
             isTargetAlive = true;
         }
 
@@ -193,8 +198,10 @@ public class AttackAction {
             attacker.destroyedBy(target, false);
             isAttackerAlive = false;
         } else {
-            attacker.getCombatStrength().setStrength(attackerStrength);
-            attacker.getCombatStrength().addAttackExperience(2);
+            target.addCombatStrength(CombatStrength.builder()
+                .defenseStrength(attackerStrength - target.getCombatStrength().getDefenseStrength())
+                .attackExperience(2)
+                .build());
             isAttackerAlive = true;
         }
 

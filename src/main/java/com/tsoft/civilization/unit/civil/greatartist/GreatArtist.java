@@ -20,8 +20,9 @@ import java.util.UUID;
 public class GreatArtist extends AbstractUnit {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
-            .setStrength(20);
+    private static final CombatStrength COMBAT_STRENGTH = CombatStrength.builder()
+        .defenseStrength(20)
+        .build();
 
     private static final GreatArtistView VIEW = new GreatArtistView();
 
@@ -35,7 +36,7 @@ public class GreatArtist extends AbstractUnit {
     }
 
     @Override
-    protected CombatStrength getBaseCombatStrength() {
+    public CombatStrength getBaseCombatStrength() {
         return COMBAT_STRENGTH;
     }
 

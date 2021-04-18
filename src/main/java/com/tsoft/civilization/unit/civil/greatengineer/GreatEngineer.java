@@ -19,8 +19,9 @@ import java.util.UUID;
 public class GreatEngineer extends AbstractUnit {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
-            .setStrength(0);
+    private static final CombatStrength COMBAT_STRENGTH = CombatStrength.builder()
+        .defenseStrength(0)
+        .build();
 
     private static final GreatEngineerView VIEW = new GreatEngineerView();
 
@@ -34,7 +35,7 @@ public class GreatEngineer extends AbstractUnit {
     }
 
     @Override
-    protected CombatStrength getBaseCombatStrength() {
+    public CombatStrength getBaseCombatStrength() {
         return COMBAT_STRENGTH;
     }
 

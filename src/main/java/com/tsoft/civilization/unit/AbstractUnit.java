@@ -56,7 +56,6 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
 
     public abstract AbstractUnitView getView();
     public abstract boolean checkEraAndTechnology(Civilization civilization);
-    protected abstract CombatStrength getBaseCombatStrength();
 
     private final TileService tileService = new TileService();
 
@@ -66,7 +65,7 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
 
     // Initialization on create the object
     public void init() {
-        combatStrength = new CombatStrength(this, getBaseCombatStrength());
+        combatStrength = getBaseCombatStrength();
         initPassScore();
     }
 
@@ -132,6 +131,16 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
 
     @Override
     public CombatStrength getCombatStrength() {
+        return combatStrength;
+    }
+
+    @Override
+    public void setCombatStrength(CombatStrength combatStrength) {
+        this.combatStrength = combatStrength;
+    }
+
+    @Override
+    public CombatStrength calcCombatStrength() {
         return combatStrength;
     }
 
@@ -210,7 +219,7 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
 
     @Override
     public void destroyedBy(HasCombatStrength destroyer, boolean destroyOtherUnitsAtLocation) {
-        combatStrength.setDestroyed(true);
+        combatStrength = combatStrength.setIsDestroyed(true);
 
         // destroyer may be null (for settlers who had settled)
         if (destroyer != null) {

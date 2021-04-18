@@ -3,6 +3,8 @@ package com.tsoft.civilization.world.action;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.action.ActionFailureResult;
 import com.tsoft.civilization.action.ActionSuccessResult;
+import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.civilization.PlayerType;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.web.state.Worlds;
@@ -11,10 +13,12 @@ import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.world.generator.Climate;
 import com.tsoft.civilization.world.generator.WorldGenerator;
 import com.tsoft.civilization.world.generator.WorldGeneratorService;
+import com.tsoft.civilization.world.scenario.BarbariansScenario;
 import lombok.Builder;
 
 import java.util.UUID;
 
+import static com.tsoft.civilization.civilization.L10nCivilization.BARBARIANS;
 import static com.tsoft.civilization.civilization.L10nCivilization.CIVILIZATIONS;
 
 public class CreateWorldAction {
@@ -26,6 +30,7 @@ public class CreateWorldAction {
     public static final ActionFailureResult INVALID_WORLD_NAME = new ActionFailureResult(L10nWorld.INVALID_WORLD_NAME);
     public static final ActionFailureResult INVALID_MAX_NUMBER_OF_CIVILIZATIONS = new ActionFailureResult(L10nWorld.INVALID_MAX_NUMBER_OF_CIVILIZATIONS);
     public static final ActionFailureResult CANT_CREATE_WORLD = new ActionFailureResult(L10nWorld.CANT_CREATE_WORLD);
+    public static final ActionFailureResult CANT_CREATE_BARBARIANS = new ActionFailureResult(L10nWorld.CANT_CREATE_BARBARIANS);
 
     @Builder
     public static class Request {
@@ -60,7 +65,14 @@ public class CreateWorldAction {
         WorldGenerator generator = WorldGeneratorService.getGenerator(request.worldType);
         generator.generate(tilesMap, Climate.getClimateByNo(request.climate));
 
+        // start history
         world.startYear();
+
+        // add Barbarians civilization
+        Civilization barbarians = world.createCivilization(PlayerType.BOT, BARBARIANS, new BarbariansScenario());
+        if (barbarians == null) {
+            return CANT_CREATE_BARBARIANS;
+        }
 
         if (!Worlds.add(world)) {
             return CANT_CREATE_WORLD;

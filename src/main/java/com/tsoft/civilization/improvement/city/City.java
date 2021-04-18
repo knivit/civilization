@@ -76,6 +76,20 @@ public class City extends AbstractImprovement implements HasCombatStrength {
     }
 
     @Override
+    public void setCombatStrength(CombatStrength combatStrength) {
+        combatService.setCombatStrength(combatStrength);
+    }
+
+    public void destroy() {
+        combatService.setCombatStrength(getCombatStrength().setIsDestroyed(true));
+    }
+
+    @Override
+    public CombatStrength calcCombatStrength() {
+        return combatService.calcCombatStrength();
+    }
+
+    @Override
     public CityView getView() {
         return view;
     }
@@ -127,11 +141,9 @@ public class City extends AbstractImprovement implements HasCombatStrength {
 
     public void addBuilding(AbstractBuilding building) {
         buildingService.add(building);
-        combatService.addBuilding(building);
     }
 
     public void destroyBuilding(AbstractBuilding building) {
-        combatService.destroyBuilding(building);
         buildingService.remove(building);
     }
 

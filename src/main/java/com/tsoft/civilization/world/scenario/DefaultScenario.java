@@ -8,6 +8,8 @@ import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.World;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.tsoft.civilization.civilization.L10nCivilization.BARBARIANS;
+
 /**
  * The default scenario for a new civilization
  * - Mandatory Settlers unit added
@@ -23,10 +25,17 @@ public class DefaultScenario implements Scenario {
             return ScenarioApplyResult.FAIL;
         }
 
-        // set NEUTRAL state for this civilization with others
+        // set NEUTRAL state for this civilization with others;
+        // with Barbarians there will be WAR
         World world = civilization.getWorld();
         for (Civilization otherCivilization : world.getCivilizations()) {
-            if (!civilization.equals(otherCivilization)) {
+            if (civilization.equals(otherCivilization)) {
+                continue;
+            }
+
+            if (BARBARIANS.equals(otherCivilization.getName())) {
+                world.setCivilizationsRelations(civilization, otherCivilization, CivilizationsRelations.war());
+            } else {
                 world.setCivilizationsRelations(civilization, otherCivilization, CivilizationsRelations.neutral());
             }
         }

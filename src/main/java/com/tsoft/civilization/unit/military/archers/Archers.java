@@ -26,13 +26,14 @@ import java.util.UUID;
 public class Archers extends AbstractUnit {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    private static final CombatStrength COMBAT_STRENGTH = new CombatStrength()
-        .setMeleeAttackStrength(5)
-        .setTargetBackFireStrength(5)
-        .setStrength(30)
-        .setRangedAttackStrength(15)
-        .setRangedAttackRadius(2)
-        .setCanConquerCity(false);
+    private static final CombatStrength COMBAT_STRENGTH = CombatStrength.builder()
+        .meleeAttackStrength(5)
+        .targetBackFireStrength(5)
+        .defenseStrength(30)
+        .rangedAttackStrength(15)
+        .rangedAttackRadius(2)
+        .canConquerCity(false)
+        .build();
 
     private static final ArchersView VIEW = new ArchersView();
 
@@ -46,7 +47,7 @@ public class Archers extends AbstractUnit {
     }
 
     @Override
-    protected CombatStrength getBaseCombatStrength() {
+    public CombatStrength getBaseCombatStrength() {
         return COMBAT_STRENGTH;
     }
 
