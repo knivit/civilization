@@ -8,7 +8,7 @@ import com.tsoft.civilization.tile.base.TileType;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.improvement.AbstractImprovementView;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.world.economic.Supply;
+import com.tsoft.civilization.economic.Supply;
 
 import java.util.UUID;
 

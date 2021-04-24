@@ -2,13 +2,13 @@ package com.tsoft.civilization.building;
 
 import com.tsoft.civilization.common.HasId;
 import com.tsoft.civilization.common.HasView;
+import com.tsoft.civilization.economic.HasSupply;
 import com.tsoft.civilization.improvement.CanBeBuilt;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.World;
-import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.world.event.Event;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
@@ -93,16 +93,16 @@ import java.util.UUID;
  */
 @Slf4j
 @EqualsAndHashCode(of = "id")
-public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt {
+public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt, HasSupply {
     private final String id = UUID.randomUUID().toString();
 
     private final City city;
     private boolean isDestroyed;
 
     public abstract BuildingType getBuildingType();
-    public abstract Supply getSupply();
+
     public abstract int getGoldCost();
-    public abstract int getStrength();
+    public abstract int getDefenseStrength();
     public abstract AbstractBuildingView getView();
     public abstract String getClassUuid();
 

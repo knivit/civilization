@@ -1,7 +1,7 @@
 package com.tsoft.civilization.tile.feature.floodplain;
 
 import com.tsoft.civilization.tile.feature.TerrainFeature;
-import com.tsoft.civilization.world.economic.Supply;
+import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.tile.base.TileType;
 
 import java.util.UUID;

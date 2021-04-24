@@ -4,7 +4,8 @@ import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.BuildingType;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.world.economic.Supply;
+import com.tsoft.civilization.economic.Supply;
+import lombok.Getter;
 
 import java.util.UUID;
 
@@ -55,6 +56,9 @@ public class Palace extends AbstractBuilding {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
     private static final PalaceView VIEW = new PalaceView();
 
+    @Getter
+    private Supply supply = Supply.EMPTY_SUPPLY;
+
     public Palace(City city) {
         super(city);
     }
@@ -69,12 +73,22 @@ public class Palace extends AbstractBuilding {
      * Connecting other Cities to the Capital by Road will produce additional Gold.
      */
     @Override
-    public Supply getSupply() {
+    public Supply calcSupply() {
         return Supply.builder().production(3).gold(3).science(3).culture(1).build();
     }
 
     @Override
-    public int getStrength() {
+    public void startYear() {
+
+    }
+
+    @Override
+    public void stopYear() {
+        supply = calcSupply();
+    }
+
+    @Override
+    public int getDefenseStrength() {
         return 25;
     }
 

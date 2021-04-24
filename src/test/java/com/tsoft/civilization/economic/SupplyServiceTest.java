@@ -1,4 +1,4 @@
-package com.tsoft.civilization.world.economic;
+package com.tsoft.civilization.economic;
 
 import com.tsoft.civilization.improvement.city.CitySupplyStrategy;
 import org.junit.jupiter.api.Test;

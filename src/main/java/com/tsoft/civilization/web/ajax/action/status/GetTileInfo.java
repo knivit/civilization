@@ -13,7 +13,7 @@ import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.web.response.HtmlResponse;
-import com.tsoft.civilization.world.economic.Supply;
+import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.web.response.Response;

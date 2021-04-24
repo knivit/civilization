@@ -5,20 +5,21 @@ import com.tsoft.civilization.building.BuildingFactory;
 import com.tsoft.civilization.building.BuildingList;
 import com.tsoft.civilization.building.palace.Palace;
 import com.tsoft.civilization.building.settlement.Settlement;
-import com.tsoft.civilization.world.economic.Supply;
+import com.tsoft.civilization.economic.HasSupply;
+import com.tsoft.civilization.economic.Supply;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
 
 @Slf4j
-public class CityBuildingService {
+public class CityBuildingService implements HasSupply {
     private final City city;
 
     private final BuildingList buildings = new BuildingList();
 
     @Getter
-    private Supply supply;
+    private Supply supply = Supply.EMPTY_SUPPLY;
 
     public CityBuildingService(City city) {
         this.city = city;
@@ -56,6 +57,7 @@ public class CityBuildingService {
         return buildings.findByClassUuid(classUuid);
     }
 
+    @Override
     public Supply calcSupply() {
         Supply supply = Supply.EMPTY_SUPPLY;
         for (AbstractBuilding building : buildings) {
@@ -64,9 +66,11 @@ public class CityBuildingService {
         return supply;
     }
 
+    @Override
     public void startYear() {
     }
 
+    @Override
     public void stopYear() {
         supply = calcSupply();
     }

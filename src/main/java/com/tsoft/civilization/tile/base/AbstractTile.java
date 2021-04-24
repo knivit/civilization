@@ -5,7 +5,7 @@ import com.tsoft.civilization.tile.base.grassland.Grassland;
 import com.tsoft.civilization.tile.base.ocean.Ocean;
 import com.tsoft.civilization.tile.base.tundra.Tundra;
 import com.tsoft.civilization.tile.feature.TerrainFeatureList;
-import com.tsoft.civilization.world.economic.Supply;
+import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.tile.feature.*;
 import com.tsoft.civilization.tile.luxury.AbstractLuxury;
 import com.tsoft.civilization.tile.resource.AbstractResource;

@@ -1,4 +1,4 @@
-package com.tsoft.civilization.world.economic;
+package com.tsoft.civilization.economic;
 
 import lombok.Builder;
 import lombok.Getter;

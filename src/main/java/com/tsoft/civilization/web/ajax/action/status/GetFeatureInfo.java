@@ -7,7 +7,7 @@ import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.web.response.JsonResponse;
-import com.tsoft.civilization.world.economic.Supply;
+import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.tile.feature.TerrainFeature;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.tile.feature.AbstractFeatureView;

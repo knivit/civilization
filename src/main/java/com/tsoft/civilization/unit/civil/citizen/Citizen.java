@@ -6,7 +6,7 @@ import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.unit.civil.citizen.view.LaborerView;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.world.economic.Supply;
+import com.tsoft.civilization.economic.Supply;
 
 import java.util.Objects;
 import java.util.UUID;

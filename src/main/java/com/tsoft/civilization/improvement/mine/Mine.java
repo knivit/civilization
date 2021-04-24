@@ -8,7 +8,7 @@ import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.feature.hill.Hill;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.world.economic.Supply;
+import com.tsoft.civilization.economic.Supply;
 
 /**
  * Mine

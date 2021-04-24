@@ -13,7 +13,7 @@ import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.world.economic.Supply;
+import com.tsoft.civilization.economic.Supply;
 
 import static com.tsoft.civilization.web.ajax.ServerStaticResource.*;
 
@@ -105,7 +105,7 @@ public class GetBuildingStatus extends AbstractAjaxRequest {
             "$happiness", supply.getHappiness(),
             "$happinessImage", HAPPINESS_IMAGE(supply.getHappiness()),
             "$strengthLabel", L10nCity.DEFENSE_STRENGTH,
-            "$strength", building.getStrength()
+            "$strength", building.getDefenseStrength()
         );
     }
 

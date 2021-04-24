@@ -7,8 +7,8 @@ import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CitySupplyStrategy;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
-import com.tsoft.civilization.world.economic.Supply;
-import com.tsoft.civilization.world.economic.SupplyMock;
+import com.tsoft.civilization.economic.Supply;
+import com.tsoft.civilization.economic.SupplyMock;
 import com.tsoft.civilization.util.Point;
 import org.junit.jupiter.api.Test;
 

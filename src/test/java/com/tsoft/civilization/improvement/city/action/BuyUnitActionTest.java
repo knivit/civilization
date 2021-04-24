@@ -7,7 +7,7 @@ import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.military.archers.Archers;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.world.economic.Supply;
+import com.tsoft.civilization.economic.Supply;
 import org.junit.jupiter.api.Test;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.AMERICA;

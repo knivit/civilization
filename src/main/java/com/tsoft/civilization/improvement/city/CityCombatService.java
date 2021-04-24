@@ -207,7 +207,7 @@ public class CityCombatService {
     // Check is this building adds defense strength
     private int calcBuildingsStrength() {
         return city.getBuildings().stream()
-            .mapToInt(AbstractBuilding::getStrength)
+            .mapToInt(AbstractBuilding::getDefenseStrength)
             .sum();
     }
 

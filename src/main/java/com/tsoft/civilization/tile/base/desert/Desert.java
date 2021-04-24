@@ -2,7 +2,7 @@ package com.tsoft.civilization.tile.base.desert;
 
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.base.TileType;
-import com.tsoft.civilization.world.economic.Supply;
+import com.tsoft.civilization.economic.Supply;
 
 import java.util.UUID;
 

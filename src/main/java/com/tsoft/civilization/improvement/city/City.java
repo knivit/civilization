@@ -11,7 +11,7 @@ import com.tsoft.civilization.improvement.CanBeBuilt;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.base.TileType;
 import com.tsoft.civilization.unit.*;
-import com.tsoft.civilization.world.economic.*;
+import com.tsoft.civilization.economic.*;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
 import lombok.Getter;
@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.*;
 
 @Slf4j
-public class City extends AbstractImprovement implements HasCombatStrength {
+public class City extends AbstractImprovement implements HasCombatStrength, HasSupply {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private final Set<Point> locations = new HashSet<>();
@@ -33,7 +33,7 @@ public class City extends AbstractImprovement implements HasCombatStrength {
     private CityCombatService combatService;
 
     @Getter
-    private Supply supply;
+    private Supply supply = Supply.EMPTY_SUPPLY;
 
     private int passScore;
 
@@ -49,9 +49,6 @@ public class City extends AbstractImprovement implements HasCombatStrength {
         // population
         populationService = new CityPopulationService(this);
         populationService.addCitizen();
-
-        // economics
-        supply = Supply.EMPTY_SUPPLY;
 
         // buildings & construction
         buildingService = new CityBuildingService(this);
@@ -254,10 +251,11 @@ public class City extends AbstractImprovement implements HasCombatStrength {
         return findBuildingByClassUuid(building.getClassUuid()) == null;
     }
 
-    public Supply getTilesSupply() {
-        return populationService.getAllCitizensSupply();
+    public Supply calcTilesSupply() {
+        return populationService.calcAllCitizensSupply();
     }
 
+    @Override
     public Supply calcSupply() {
         Supply supply = Supply.builder().population(getCitizenCount()).build();
 
@@ -269,6 +267,7 @@ public class City extends AbstractImprovement implements HasCombatStrength {
         return supply;
     }
 
+    @Override
     public void startYear() {
         populationService.startYear();
         buildingService.startYear();
@@ -279,6 +278,7 @@ public class City extends AbstractImprovement implements HasCombatStrength {
         passScore = 1;
     }
 
+    @Override
     public void stopYear() {
         Supply yearSupply = Supply.EMPTY_SUPPLY;
 

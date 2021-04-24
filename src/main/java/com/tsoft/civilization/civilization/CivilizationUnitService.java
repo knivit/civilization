@@ -1,16 +1,17 @@
 package com.tsoft.civilization.civilization;
 
 import com.tsoft.civilization.combat.HasCombatStrength;
+import com.tsoft.civilization.economic.HasSupply;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.base.TilePassCostTable;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.World;
-import com.tsoft.civilization.world.economic.Supply;
+import com.tsoft.civilization.economic.Supply;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @Slf4j
-public class CivilizationUnitService {
+public class CivilizationUnitService implements HasSupply {
 
     private final World world;
     private final Civilization civilization;
@@ -29,6 +30,9 @@ public class CivilizationUnitService {
     private UnitList destroyedUnits = new UnitList();
 
     private final TileService tileService = new TileService();
+
+    @Getter
+    private Supply supply = Supply.EMPTY_SUPPLY;
 
     public CivilizationUnitService(Civilization civilization) {
         this.civilization = civilization;
@@ -145,6 +149,7 @@ public class CivilizationUnitService {
     }
 
     // units keeping
+    @Override
     public Supply calcSupply() {
         Supply supply = Supply.EMPTY_SUPPLY;
 
@@ -155,12 +160,15 @@ public class CivilizationUnitService {
         return supply;
     }
 
+    @Override
     public void startYear() {
         destroyedUnits = new UnitList();
         units.stream().forEach(AbstractUnit::startYear);
     }
 
+    @Override
     public void stopYear() {
         units.stream().forEach(AbstractUnit::stopYear);
+        supply = calcSupply();
     }
 }

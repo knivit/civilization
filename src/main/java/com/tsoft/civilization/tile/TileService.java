@@ -9,7 +9,7 @@ import com.tsoft.civilization.tile.feature.TerrainFeature;
 import com.tsoft.civilization.tile.feature.TerrainFeatureList;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.world.economic.Supply;
+import com.tsoft.civilization.economic.Supply;
 
 import java.util.List;
 import java.util.stream.Collectors;

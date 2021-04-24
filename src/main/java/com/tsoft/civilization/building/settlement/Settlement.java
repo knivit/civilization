@@ -4,7 +4,8 @@ import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.BuildingType;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.world.economic.Supply;
+import com.tsoft.civilization.economic.Supply;
+import lombok.Getter;
 
 import java.util.UUID;
 
@@ -13,6 +14,9 @@ public class Settlement extends AbstractBuilding {
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();
     private static final SettlementView VIEW = new SettlementView();
+
+    @Getter
+    private Supply supply = Supply.EMPTY_SUPPLY;
 
     public Settlement(City city) {
         super(city);
@@ -24,12 +28,22 @@ public class Settlement extends AbstractBuilding {
     }
 
     @Override
-    public Supply getSupply() {
+    public Supply calcSupply() {
         return Supply.builder().production(1).gold(1).culture(1).build();
     }
 
     @Override
-    public int getStrength() {
+    public void startYear() {
+
+    }
+
+    @Override
+    public void stopYear() {
+        supply = calcSupply();
+    }
+
+    @Override
+    public int getDefenseStrength() {
         return 10;
     }
 

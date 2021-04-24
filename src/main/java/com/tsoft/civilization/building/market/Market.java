@@ -6,7 +6,8 @@ import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.Year;
-import com.tsoft.civilization.world.economic.Supply;
+import com.tsoft.civilization.economic.Supply;
+import lombok.Getter;
 
 import java.util.UUID;
 
@@ -60,6 +61,9 @@ public class Market extends AbstractBuilding {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
     private static final MarketView VIEW = new MarketView();
 
+    @Getter
+    private Supply supply = Supply.EMPTY_SUPPLY;
+
     @Override
     public BuildingType getBuildingType() {
         return BuildingType.BUILDING;
@@ -73,8 +77,8 @@ public class Market extends AbstractBuilding {
      * The Market significantly increases a city's output of gold.
      */
     @Override
-    public Supply getSupply() {
-        Supply tileScore = getCity().getTilesSupply();
+    public Supply calcSupply() {
+        Supply tileScore = getCity().calcTilesSupply();
         int gold = tileScore.getGold();
         if (gold > 0) {
             gold = (int) Math.round(gold * 0.25);
@@ -85,7 +89,17 @@ public class Market extends AbstractBuilding {
     }
 
     @Override
-    public int getStrength() {
+    public void startYear() {
+
+    }
+
+    @Override
+    public void stopYear() {
+        supply = calcSupply();
+    }
+
+    @Override
+    public int getDefenseStrength() {
         return 0;
     }
 

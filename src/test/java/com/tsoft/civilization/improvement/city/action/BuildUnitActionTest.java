@@ -9,7 +9,7 @@ import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.unit.military.archers.Archers;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.world.economic.SupplyMock;
+import com.tsoft.civilization.economic.SupplyMock;
 import org.junit.jupiter.api.Test;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;

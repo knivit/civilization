@@ -3,7 +3,7 @@ package com.tsoft.civilization.web.render.tile;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.feature.TerrainFeature;
 import com.tsoft.civilization.web.render.StatusContext;
-import com.tsoft.civilization.world.economic.Supply;
+import com.tsoft.civilization.economic.Supply;
 
 public class TileStatusRender {
 

@@ -2,9 +2,10 @@ package com.tsoft.civilization.improvement.city;
 
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.BuildingFactory;
+import com.tsoft.civilization.economic.HasSupply;
 import com.tsoft.civilization.improvement.CanBeBuilt;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.world.economic.Supply;
+import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.world.event.Event;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -12,12 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class CityConstructionService {
+public class CityConstructionService implements HasSupply {
 
     private final City city;
 
     @Getter
-    private Supply supply;
+    private Supply supply = Supply.EMPTY_SUPPLY;
 
     private ConstructionList constructions = new ConstructionList(); // Current constructions (buildings, units etc)
     private ConstructionList builtThisYear = new ConstructionList(); // Constructions built during the last move
@@ -47,7 +48,8 @@ public class CityConstructionService {
         return calcSupply(approvedProduction, true);
     }
 
-    private Supply calcSupply(int approvedProduction, boolean doConstruction) {
+    @Override TODO + Supply (HasSupply)
+    public Supply calcSupply(int approvedProduction, boolean doConstruction) {
         Supply supply = Supply.EMPTY_SUPPLY;
 
         for (Construction construction : constructions) {
@@ -73,11 +75,13 @@ public class CityConstructionService {
         return supply;
     }
 
+    @Override
     public void startYear() {
         builtThisYear = new ConstructionList();
     }
 
     // Buildings and units construction
+    @Override
     public void stopYear(Supply citySupply) {
         if (constructions.isEmpty()) {
             log.debug("No construction is in progress");

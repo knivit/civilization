@@ -6,7 +6,8 @@ import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.world.economic.Supply;
+import com.tsoft.civilization.economic.Supply;
+import lombok.Getter;
 
 import java.util.UUID;
 
@@ -38,9 +39,13 @@ import java.util.UUID;
  * The city of York, England, has extensive walls which date back to Roman times.
  */
 public class Walls extends AbstractBuilding {
+
     public static final Walls STUB = new Walls(null);
     public static final String CLASS_UUID = UUID.randomUUID().toString();
     private static final WallsView VIEW = new WallsView();
+
+    @Getter
+    private Supply supply = Supply.EMPTY_SUPPLY;
 
     public Walls(City city) {
         super(city);
@@ -56,12 +61,22 @@ public class Walls extends AbstractBuilding {
      * Walls are quite useful for cities located along a civilization's frontier.
      */
     @Override
-    public Supply getSupply() {
+    public Supply calcSupply() {
         return Supply.builder().gold(-1).build();
     }
 
     @Override
-    public int getStrength() {
+    public void startYear() {
+
+    }
+
+    @Override
+    public void stopYear() {
+        supply = calcSupply();
+    }
+
+    @Override
+    public int getDefenseStrength() {
         return 40;
     }
 

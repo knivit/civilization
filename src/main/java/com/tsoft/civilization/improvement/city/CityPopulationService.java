@@ -1,13 +1,14 @@
 package com.tsoft.civilization.improvement.city;
 
+import com.tsoft.civilization.economic.HasSupply;
 import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.unit.civil.citizen.Citizen;
 import com.tsoft.civilization.unit.civil.citizen.CitizenList;
 import com.tsoft.civilization.unit.civil.citizen.CitizenPlacementTable;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.world.economic.Supply;
-import com.tsoft.civilization.world.economic.SupplyService;
+import com.tsoft.civilization.economic.Supply;
+import com.tsoft.civilization.economic.SupplyService;
 import com.tsoft.civilization.world.event.Event;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,7 @@ import java.util.*;
  * will die of starvation.
  */
 @Slf4j
-public class CityPopulationService {
+public class CityPopulationService implements HasSupply {
     private final City city;
 
     private final CitizenList citizens = new CitizenList();
@@ -35,7 +36,7 @@ public class CityPopulationService {
     private final TileService tileService = new TileService();
 
     @Getter
-    private Supply supply;
+    private Supply supply = Supply.EMPTY_SUPPLY;
 
     private int growthPool = 0;
     private boolean isStarvation = false;
@@ -123,7 +124,7 @@ public class CityPopulationService {
         }
     }
 
-    public Supply getAllCitizensSupply() {
+    public Supply calcAllCitizensSupply() {
         Supply supply = Supply.EMPTY_SUPPLY;
 
         for (Citizen citizen : citizens) {
@@ -132,17 +133,20 @@ public class CityPopulationService {
         return supply;
     }
 
+    @Override
     public Supply calcSupply() {
         // 1 citizen consumes 1 food
-        return getAllCitizensSupply()
+        return calcAllCitizensSupply()
             .add(Supply.builder().food(-citizens.size()).build());
     }
 
+    @Override
     public void startYear() {
 
     }
 
     // Citizen's birth, death, happiness
+    @Override
     public void stopYear() {
         Supply yearSupply = calcSupply();
 

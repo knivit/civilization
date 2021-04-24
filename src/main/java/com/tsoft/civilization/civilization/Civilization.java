@@ -1,5 +1,6 @@
 package com.tsoft.civilization.civilization;
 
+import com.tsoft.civilization.economic.HasSupply;
 import com.tsoft.civilization.improvement.city.L10nCity;
 import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.unit.UnitFactory;
@@ -20,7 +21,7 @@ import com.tsoft.civilization.technology.TechnologySet;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.world.agreement.AgreementList;
 import com.tsoft.civilization.world.agreement.OpenBordersAgreement;
-import com.tsoft.civilization.world.economic.Supply;
+import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.world.event.Event;
 import com.tsoft.civilization.world.event.EventsByYearMap;
 import lombok.EqualsAndHashCode;
@@ -31,7 +32,7 @@ import java.util.*;
 
 @Slf4j
 @EqualsAndHashCode(of = "id")
-public abstract class Civilization {
+public abstract class Civilization implements HasSupply {
     @Getter
     private final String id = UUID.randomUUID().toString();
 
@@ -47,7 +48,7 @@ public abstract class Civilization {
     private final Set<Technology> technologies = new TechnologySet();
 
     @Getter
-    private Supply supply;
+    private Supply supply = Supply.EMPTY_SUPPLY;
 
     // Agreements which this civilization has with others
     private final HashMap<Civilization, AgreementList> agreements = new HashMap<>();
@@ -82,7 +83,6 @@ public abstract class Civilization {
         events = new EventsByYearMap(world);
 
         // initialize params
-        supply = Supply.EMPTY_SUPPLY;
         unitService = new CivilizationUnitService(this);
         cityService = new CivilizationCityService(this);
         territoryService = new CivilizationTerritoryService(this);
@@ -252,6 +252,7 @@ public abstract class Civilization {
         addEvent(new Event(Event.INFORMATION, this, L10nCivilization.GIFT_RECEIVED, receivedSupply.toString(), sender.getView().getLocalizedName()));
     }
 
+    @Override
     public Supply calcSupply() {
         Supply supply = Supply.EMPTY_SUPPLY;
 
@@ -264,6 +265,7 @@ public abstract class Civilization {
         return supply;
     }
 
+    @Override
     public void startYear() {
         if (isDestroyed()) {
             return;
@@ -281,6 +283,7 @@ public abstract class Civilization {
         getBot().startYear();
     }
 
+    @Override
     public synchronized void stopYear() {
         // There can be a helper bot still in progress
         if (!MoveState.DONE.equals(getBot().getMoveState())) {

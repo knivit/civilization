@@ -2,6 +2,8 @@ package com.tsoft.civilization.civilization;
 
 import com.tsoft.civilization.L10n.L10nList;
 import com.tsoft.civilization.combat.CombatService;
+import com.tsoft.civilization.common.HasView;
+import com.tsoft.civilization.economic.HasSupply;
 import com.tsoft.civilization.improvement.city.L10nCity;
 import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.building.AbstractBuilding;
@@ -12,8 +14,9 @@ import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.World;
-import com.tsoft.civilization.world.economic.Supply;
+import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.world.event.Event;
+import lombok.Getter;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -21,7 +24,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class CivilizationCityService {
+public class CivilizationCityService implements HasSupply {
 
     private static final CombatService combatService = new CombatService();
 
@@ -31,6 +34,9 @@ public class CivilizationCityService {
     // Active cities and destroyed (on this step) cities
     private final CityList cities = new CityList();
     private CityList destroyedCities = new CityList();
+
+    @Getter
+    private Supply supply = Supply.EMPTY_SUPPLY;
 
     public CivilizationCityService(Civilization civilization) {
         this.civilization = civilization;
@@ -130,15 +136,19 @@ public class CivilizationCityService {
         return cities.getCitiesAtLocations(locations);
     }
 
+    @Override
     public void startYear() {
         destroyedCities = new CityList();
         cities.forEach(City::startYear);
     }
 
+    @Override
     public void stopYear() {
         cities.forEach(City::stopYear);
+        supply = calcSupply();
     }
 
+    @Override
     public Supply calcSupply() {
         Supply supply = Supply.EMPTY_SUPPLY;
 

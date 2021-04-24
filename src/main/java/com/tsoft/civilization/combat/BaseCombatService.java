@@ -7,14 +7,14 @@ import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.World;
-import com.tsoft.civilization.world.economic.Supply;
+import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.world.event.Event;
 
 import java.util.Collection;
 
-public class BaseCombatService {
+class BaseCombatService {
 
-    public HasCombatStrengthList getPossibleTargetsAround(HasCombatStrength attacker, int radius) {
+    HasCombatStrengthList getPossibleTargetsAround(HasCombatStrength attacker, int radius) {
         World world = attacker.getCivilization().getWorld();
         Collection<Point> locations = world.getLocationsAround(attacker.getLocation(), radius);
 
@@ -28,7 +28,7 @@ public class BaseCombatService {
         return targets;
     }
 
-    public CombatResult attack(HasCombatStrength attacker, HasCombatStrength target, int strikeStrength) {
+    CombatResult attack(HasCombatStrength attacker, HasCombatStrength target, int strikeStrength) {
         //
         // PREPARE THE ATTACK
         //
@@ -151,7 +151,7 @@ public class BaseCombatService {
     }
 
     /** Calc the strike strength */
-    public int calcStrikeStrength(HasCombatStrength attacker, int strikeStrength, HasCombatStrength target) {
+    int calcStrikeStrength(HasCombatStrength attacker, int strikeStrength, HasCombatStrength target) {
         int strikeSkillsPercent = calcAttackerStrikeSkillsPercent(attacker, target);
         int strikeGeneralsPercent = getGreatGeneralCount(attacker) * 33;
         int strikeTerrainPercent = 0;
@@ -177,7 +177,7 @@ public class BaseCombatService {
     private int calcAttackerStrikeHappinessPercent(HasCombatStrength attacker) {
         int value = 0;
 
-        Supply supply = attacker.getCivilization().calcSupply();
+        Supply supply = attacker.getCivilization().getSupply();
         if (supply.getHappiness() < -30) {
             value -= 33;
         } else

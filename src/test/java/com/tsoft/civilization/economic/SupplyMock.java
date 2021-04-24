@@ -1,4 +1,4 @@
-package com.tsoft.civilization.world.economic;
+package com.tsoft.civilization.economic;
 
 public class SupplyMock {
     public static Supply of(String str) {

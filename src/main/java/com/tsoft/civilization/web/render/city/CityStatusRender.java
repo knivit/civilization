@@ -7,7 +7,7 @@ import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.render.StatusContext;
 import com.tsoft.civilization.web.render.civilization.CivilizationRender;
 import com.tsoft.civilization.world.World;
-import com.tsoft.civilization.world.economic.Supply;
+import com.tsoft.civilization.economic.Supply;
 
 import java.awt.*;
 import java.util.*;

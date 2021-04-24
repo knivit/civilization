@@ -9,7 +9,8 @@ import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.luxury.Bananas;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.Year;
-import com.tsoft.civilization.world.economic.Supply;
+import com.tsoft.civilization.economic.Supply;
+import lombok.Getter;
 
 import java.util.UUID;
 
@@ -46,6 +47,9 @@ public class Granary extends AbstractBuilding {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
     private static final GranaryView VIEW = new GranaryView();
 
+    @Getter
+    private Supply supply = Supply.EMPTY_SUPPLY;
+
     public Granary(City city) {
         super(city);
     }
@@ -59,7 +63,7 @@ public class Granary extends AbstractBuilding {
      * Each source of Wheat Bananas and Deer worked by this City produce +1 Food.
      */
     @Override
-    public Supply getSupply() {
+    public Supply calcSupply() {
         int food = 2;
         for (Point location : getCity().getCitizenLocations()) {
             AbstractTile tile = getTile(location);
@@ -72,7 +76,17 @@ public class Granary extends AbstractBuilding {
     }
 
     @Override
-    public int getStrength() {
+    public void startYear() {
+
+    }
+
+    @Override
+    public void stopYear() {
+        supply = calcSupply();
+    }
+
+    @Override
+    public int getDefenseStrength() {
         return 0;
     }
 

@@ -1,6 +1,6 @@
 package com.tsoft.civilization.unit.civil.citizen;
 
-import com.tsoft.civilization.world.economic.Supply;
+import com.tsoft.civilization.economic.Supply;
 
 import java.util.HashMap;
 import java.util.Map;

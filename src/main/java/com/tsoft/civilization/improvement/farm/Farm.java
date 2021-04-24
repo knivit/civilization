@@ -11,7 +11,7 @@ import com.tsoft.civilization.tile.base.plain.Plain;
 import com.tsoft.civilization.tile.base.tundra.Tundra;
 import com.tsoft.civilization.tile.feature.hill.Hill;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.world.economic.Supply;
+import com.tsoft.civilization.economic.Supply;
 
 import java.util.UUID;
 
