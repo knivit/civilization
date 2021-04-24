@@ -55,11 +55,24 @@ public class BuildingList implements Iterable<AbstractBuilding> {
         return buildings.size();
     }
 
+    public BuildingList clear() {
+        checkIsUnmodifiable();
+        buildings.clear();
+        return this;
+    }
+
     public BuildingList add(AbstractBuilding building) {
         Objects.requireNonNull(building, "building can't be null");
 
         checkIsUnmodifiable();
         buildings.add(building);
+        return this;
+    }
+
+    public BuildingList addAll(BuildingList list) {
+        checkIsUnmodifiable();
+
+        buildings.addAll(list.buildings);
         return this;
     }
 

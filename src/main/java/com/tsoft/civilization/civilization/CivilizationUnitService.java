@@ -11,7 +11,6 @@ import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.world.economic.Supply;
-import com.tsoft.civilization.world.event.Event;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -21,6 +20,7 @@ import java.util.stream.Stream;
 
 @Slf4j
 public class CivilizationUnitService {
+
     private final World world;
     private final Civilization civilization;
 
@@ -131,17 +131,9 @@ public class CivilizationUnitService {
         return false;
     }
 
-    public Supply buyUnit(String unitClassUuid, City city) {
-        AbstractUnit unit = UnitFactory.newInstance(civilization, unitClassUuid);
-        if (!addUnit(unit, city.getLocation())) {
-            throw new IllegalStateException("Can't buy a unit");
-        }
-
+    public Supply buyUnit(AbstractUnit unit) {
         int gold = unit.getGoldCost();
-        Supply expenses = Supply.builder().gold(-gold).build();
-
-        civilization.addEvent(new Event(Event.INFORMATION, expenses, L10nCivilization.BUY_UNIT_EVENT));
-        return expenses;
+        return Supply.builder().gold(-gold).build();
     }
 
     public int getGoldKeepingExpenses() {
@@ -153,7 +145,7 @@ public class CivilizationUnitService {
     }
 
     // units keeping
-    public Supply getSupply() {
+    public Supply calcSupply() {
         Supply supply = Supply.EMPTY_SUPPLY;
 
         int unitKeepingGold = getGoldKeepingExpenses();

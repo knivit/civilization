@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.AMERICA;
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
+import static com.tsoft.civilization.improvement.city.action.BuyUnitAction.UNIT_WAS_BOUGHT;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 public class BuyUnitActionTest {
@@ -48,6 +49,6 @@ public class BuyUnitActionTest {
         russia.giftReceived(puppet, Supply.builder().gold(foreignArchers.getGoldCost()).build());
 
         assertThat(BuyUnitAction.buyUnit(world.city("Moscow"), Archers.CLASS_UUID))
-            .isEqualTo(CityActionResults.UNIT_WAS_BOUGHT);
+            .isEqualTo(UNIT_WAS_BOUGHT);
     }
 }

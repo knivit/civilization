@@ -2,6 +2,7 @@ package com.tsoft.civilization.civilization;
 
 import com.tsoft.civilization.improvement.city.L10nCity;
 import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.world.L10nWorld;
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.BuildingFactory;
@@ -156,9 +157,17 @@ public abstract class Civilization {
         addEvent(new Event(Event.INFORMATION, supply, L10nCivilization.BUY_BUILDING_EVENT, building.getView().getLocalizedName()));
     }
 
-    public void buyUnit(String unitClassUuid, City city) {
-        Supply expenses = units().buyUnit(unitClassUuid, city);
+    public boolean buyUnit(String unitClassUuid, City city) {
+        AbstractUnit unit = UnitFactory.newInstance(this, unitClassUuid);
+        if (!unitService.addUnit(unit, city.getLocation())) {
+            return false;
+        }
+
+        Supply expenses = units().buyUnit(unit);
         supply = supply.add(expenses);
+
+        addEvent(new Event(Event.INFORMATION, expenses, L10nCivilization.BUY_UNIT_EVENT));
+        return true;
     }
 
     public boolean isResearched(Technology technology) {
@@ -247,10 +256,10 @@ public abstract class Civilization {
         Supply supply = Supply.EMPTY_SUPPLY;
 
         // income
-        supply = supply.add(cityService.getSupply());
+        supply = supply.add(cityService.calcSupply());
 
         // expenses
-        supply = supply.add(unitService.getSupply());
+        supply = supply.add(unitService.calcSupply());
 
         return supply;
     }

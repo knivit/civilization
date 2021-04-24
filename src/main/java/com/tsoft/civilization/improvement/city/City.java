@@ -14,6 +14,7 @@ import com.tsoft.civilization.unit.*;
 import com.tsoft.civilization.world.economic.*;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -31,7 +32,8 @@ public class City extends AbstractImprovement implements HasCombatStrength {
     private CityConstructionService constructionService;
     private CityCombatService combatService;
 
-    private Supply citySupply;
+    @Getter
+    private Supply supply;
 
     private int passScore;
 
@@ -49,7 +51,7 @@ public class City extends AbstractImprovement implements HasCombatStrength {
         populationService.addCitizen();
 
         // economics
-        citySupply = Supply.EMPTY_SUPPLY;
+        supply = Supply.EMPTY_SUPPLY;
 
         // buildings & construction
         buildingService = new CityBuildingService(this);
@@ -256,14 +258,13 @@ public class City extends AbstractImprovement implements HasCombatStrength {
         return populationService.getAllCitizensSupply();
     }
 
-    @Override
-    public Supply getSupply() {
+    public Supply calcSupply() {
         Supply supply = Supply.builder().population(getCitizenCount()).build();
 
         supply = supply
             .add(populationService.calcSupply())
-            .add(buildingService.getSupply())
-            .add(constructionService.getSupply(supply.getProduction()));
+            .add(buildingService.calcSupply())
+            .add(constructionService.calcSupply(supply.getProduction()));
 
         return supply;
     }
@@ -279,25 +280,28 @@ public class City extends AbstractImprovement implements HasCombatStrength {
     }
 
     public void stopYear() {
-        Supply supply = Supply.EMPTY_SUPPLY;
+        Supply yearSupply = Supply.EMPTY_SUPPLY;
 
         // population
-        Supply populationSupply = populationService.stopYear();
-        supply = supply.add(populationSupply);
+        populationService.stopYear();
+        Supply populationSupply = populationService.getSupply();
+        yearSupply = yearSupply.add(populationSupply);
 
         // buildings
-        Supply buildingSupply = buildingService.stopYear();
-        supply = supply.add(buildingSupply);
+        buildingService.stopYear();
+        Supply buildingSupply = buildingService.getSupply();
+        yearSupply = yearSupply.add(buildingSupply);
 
         // construction
-        Supply constructionSupply = constructionService.stopYear(supply);
-        supply = supply.add(constructionSupply);
+        constructionService.stopYear(yearSupply);
+        Supply constructionSupply = constructionService.getSupply();
+        yearSupply = yearSupply.add(constructionSupply);
 
         // military
         combatService.stopYear();
 
-        citySupply = citySupply.add(supply);
-        log.debug("City: Year {}, supply = {}, total supply = {}", getWorld().getYear(), supply, citySupply);
+        supply = supply.add(yearSupply);
+        log.debug("City: Year {}, supply = {}, total supply = {}", getWorld().getYear(), yearSupply, supply);
     }
 
     @Override

@@ -4,7 +4,6 @@ import com.tsoft.civilization.L10n.L10nList;
 import com.tsoft.civilization.combat.CombatService;
 import com.tsoft.civilization.improvement.city.L10nCity;
 import com.tsoft.civilization.L10n.L10n;
-import com.tsoft.civilization.unit.action.AttackAction;
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.improvement.city.City;
@@ -140,11 +139,11 @@ public class CivilizationCityService {
         cities.forEach(City::stopYear);
     }
 
-    public Supply getSupply() {
+    public Supply calcSupply() {
         Supply supply = Supply.EMPTY_SUPPLY;
 
         for (City city : cities) {
-            supply = supply.add(city.getSupply());
+            supply = supply.add(city.calcSupply());
         }
         return supply;
     }

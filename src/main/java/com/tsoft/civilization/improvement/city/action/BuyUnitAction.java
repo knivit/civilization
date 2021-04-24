@@ -1,5 +1,7 @@
 package com.tsoft.civilization.improvement.city.action;
 
+import com.tsoft.civilization.action.ActionFailureResult;
+import com.tsoft.civilization.action.ActionSuccessResult;
 import com.tsoft.civilization.improvement.city.L10nCity;
 import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.action.ActionAbstractResult;
@@ -14,7 +16,13 @@ import java.util.UUID;
 
 @Slf4j
 public class BuyUnitAction {
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
+
+    public static final ActionSuccessResult CAN_BUY_UNIT = new ActionSuccessResult(L10nCity.CAN_BUY_THIS_UNIT);
+    public static final ActionSuccessResult UNIT_WAS_BOUGHT = new ActionSuccessResult(L10nUnit.UNIT_WAS_BOUGHT);
+
+    public static final ActionFailureResult CANT_BUY_THIS_UNIT = new ActionFailureResult(L10nUnit.CANT_BUY_THIS_UNIT);
 
     public static ActionAbstractResult buyUnit(City city, String unitClassUuid) {
         ActionAbstractResult result = canBuyUnit(city, unitClassUuid);
@@ -24,8 +32,11 @@ public class BuyUnitAction {
             return result;
         }
 
-        city.getCivilization().buyUnit(unitClassUuid, city);
-        return CityActionResults.UNIT_WAS_BOUGHT;
+        if (!city.getCivilization().buyUnit(unitClassUuid, city)) {
+            return CANT_BUY_THIS_UNIT;
+        }
+
+        return UNIT_WAS_BOUGHT;
     }
 
     public static ActionAbstractResult canBuyUnit(City city, String unitClassUuid) {
@@ -50,7 +61,7 @@ public class BuyUnitAction {
             return CityActionResults.NOT_ENOUGH_MONEY;
         }
 
-        return CityActionResults.CAN_BUY_UNIT;
+        return CAN_BUY_UNIT;
     }
 
     private static String getLocalizedName() {

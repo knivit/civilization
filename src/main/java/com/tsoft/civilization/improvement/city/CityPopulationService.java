@@ -9,6 +9,7 @@ import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.world.economic.SupplyService;
 import com.tsoft.civilization.world.event.Event;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -32,6 +33,9 @@ public class CityPopulationService {
     private CitySupplyStrategy supplyStrategy = CitySupplyStrategy.MAX_FOOD;
     private final SupplyService supplyService = new SupplyService();
     private final TileService tileService = new TileService();
+
+    @Getter
+    private Supply supply;
 
     private int growthPool = 0;
     private boolean isStarvation = false;
@@ -139,18 +143,20 @@ public class CityPopulationService {
     }
 
     // Citizen's birth, death, happiness
-    public Supply stopYear() {
-        Supply supply = calcSupply();
+    public void stopYear() {
+        Supply yearSupply = calcSupply();
 
-        updateState(supply);
+        updateState(yearSupply);
 
-        if (supply.getFood() > 0) {
+        if (yearSupply.getFood() > 0) {
             birth();
         } else {
             death();
         }
 
-        return Supply.builder().population(getCitizenCount()).build();
+        supply = Supply.builder()
+            .population(getCitizenCount())
+            .build();
     }
 
     public boolean starvation() {

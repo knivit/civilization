@@ -6,6 +6,7 @@ import com.tsoft.civilization.improvement.CanBeBuilt;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.world.economic.Supply;
 import com.tsoft.civilization.world.event.Event;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.stream.Collectors;
@@ -14,6 +15,9 @@ import java.util.stream.Collectors;
 public class CityConstructionService {
 
     private final City city;
+
+    @Getter
+    private Supply supply;
 
     private ConstructionList constructions = new ConstructionList(); // Current constructions (buildings, units etc)
     private ConstructionList builtThisYear = new ConstructionList(); // Constructions built during the last move
@@ -35,7 +39,7 @@ public class CityConstructionService {
         constructions.add(new Construction(object));
     }
 
-    public Supply getSupply(int approvedProduction) {
+    public Supply calcSupply(int approvedProduction) {
         return calcSupply(approvedProduction, false);
     }
 
@@ -74,12 +78,12 @@ public class CityConstructionService {
     }
 
     // Buildings and units construction
-    public Supply stopYear(Supply supply) {
+    public void stopYear(Supply citySupply) {
         if (constructions.isEmpty()) {
             log.debug("No construction is in progress");
         }
 
-        int approvedProduction = supply.getProduction();
+        int approvedProduction = citySupply.getProduction();
 
         if (approvedProduction <= 0) {
             log.debug("The production = {} is less or equal 0, any construction is postponed", approvedProduction);
@@ -92,7 +96,7 @@ public class CityConstructionService {
 
         createNextYearConstructionList();
 
-        return constructionExpenses;
+        supply = constructionExpenses;
     }
 
     public ConstructionList getBuiltThisYear() {
