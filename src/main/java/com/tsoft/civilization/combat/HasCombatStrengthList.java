@@ -7,9 +7,21 @@ import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Point;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class HasCombatStrengthList extends ArrayList<HasCombatStrength> {
+
+    public static HasCombatStrengthList of(HasCombatStrength ... list) {
+        HasCombatStrengthList result = new HasCombatStrengthList();
+        if (list == null) {
+            return result;
+        }
+
+        result.addAll(Arrays.asList(list));
+        return result;
+    }
+
     public List<Point> getLocations() {
         List<Point> locations = new ArrayList<>(size());
         for (HasCombatStrength combatant : this) {

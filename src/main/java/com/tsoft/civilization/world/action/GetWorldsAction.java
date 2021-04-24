@@ -18,8 +18,7 @@ import java.util.stream.Collectors;
 
 import static com.tsoft.civilization.L10n.L10nLanguage.EN;
 import static com.tsoft.civilization.L10n.L10nLanguage.LANGUAGES;
-import static com.tsoft.civilization.civilization.L10nCivilization.CIVILIZATIONS;
-import static com.tsoft.civilization.civilization.L10nCivilization.RANDOM;
+import static com.tsoft.civilization.civilization.L10nCivilization.*;
 import static com.tsoft.civilization.world.L10nWorld.*;
 
 public class GetWorldsAction {
@@ -145,7 +144,11 @@ public class GetWorldsAction {
         for (World world : Worlds.getWorlds()) {
             StringBuilder actions = new StringBuilder();
 
-            int slotsAvailable = world.getMaxNumberOfCivilizations() - world.getCivilizations().size();
+            int civilizationsCount = (int)world.getCivilizations().stream()
+                .filter(e -> !BARBARIANS.equals(e.getName()))
+                .count();
+
+            int slotsAvailable = world.getMaxNumberOfCivilizations() - civilizationsCount;
             if (slotsAvailable > 0) {
                 // add a human
                 actions.append(addPlayer(civilizations, world, PlayerType.HUMAN, L10nWorld.JOIN_WORLD_BUTTON));

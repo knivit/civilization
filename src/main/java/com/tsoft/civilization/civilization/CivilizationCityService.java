@@ -1,6 +1,7 @@
 package com.tsoft.civilization.civilization;
 
 import com.tsoft.civilization.L10n.L10nList;
+import com.tsoft.civilization.combat.CombatService;
 import com.tsoft.civilization.improvement.city.L10nCity;
 import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.unit.action.AttackAction;
@@ -22,6 +23,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CivilizationCityService {
+
+    private static final CombatService combatService = new CombatService();
+
     private final Civilization civilization;
     private final World world;
 
@@ -153,6 +157,6 @@ public class CivilizationCityService {
     }
 
     private boolean canAttack(City city) {
-        return (city.getPassScore() > 0) && !AttackAction.getTargetsToAttack(city).isEmpty();
+        return (city.getPassScore() > 0) && !combatService.getTargetsToAttack(city).isEmpty();
     }
 }

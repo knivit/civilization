@@ -5,6 +5,8 @@ import com.tsoft.civilization.web.state.Worlds;
 import com.tsoft.civilization.world.World;
 import org.junit.jupiter.api.Test;
 
+import java.util.UUID;
+
 import static com.tsoft.civilization.civilization.L10nCivilization.BARBARIANS;
 import static com.tsoft.civilization.world.action.CreateWorldAction.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,8 +15,10 @@ public class CreateWorldActionTest {
 
     @Test
     public void created() {
+        String worldName = UUID.randomUUID().toString();
+
         CreateWorldAction.Request request = CreateWorldAction.Request.builder()
-            .worldName("World 1")
+            .worldName(worldName)
             .mapWidth(10)
             .mapHeight(10)
             .maxNumberOfCivilizations(8)
@@ -24,9 +28,9 @@ public class CreateWorldActionTest {
             .isEqualTo(CREATED);
 
         assertThat(Worlds.getWorlds())
+            .filteredOn(e -> worldName.equals(e.getName()))
             .hasSize(1)
-            .element(0)
-            .returns("World 1", World::getName)
+            .first()
 
             // check for Barbarians
             .extracting(World::getCivilizations)

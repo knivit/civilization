@@ -193,11 +193,11 @@ public class CityCombatService {
         int garrisonRangedAttackStrength = calcGarrisonedRangedAttackStrength();
         int garrisonDefenseStrength = calcGarrisonedDefenseStrength();
 
-        return combatStrength.add(CombatStrength.builder()
-            .meleeAttackStrength(garrisonMeleeAttackStrength)
-            .rangedAttackStrength(garrisonRangedAttackStrength)
-            .defenseStrength(buildingsStrength + garrisonDefenseStrength)
-            .build());
+        return combatStrength.copy()
+            .meleeAttackStrength(combatStrength.getMeleeAttackStrength() + garrisonMeleeAttackStrength)
+            .rangedAttackStrength(combatStrength.getRangedAttackStrength() + garrisonRangedAttackStrength)
+            .defenseStrength(combatStrength.getDefenseStrength() + buildingsStrength + garrisonDefenseStrength)
+            .build();
     }
 
     public UnitCategory getUnitCategory() {

@@ -7,6 +7,8 @@ import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 
+import static com.tsoft.civilization.civilization.L10nCivilization.CIVILIZATIONS;
+
 public class GetCreateWorldFormRequest extends AbstractAjaxRequest {
 
     private static final String GET_WORLDS_REQUEST = "client.on" + GetWorldsRequest.class.getSimpleName();
@@ -61,7 +63,7 @@ public class GetCreateWorldFormRequest extends AbstractAjaxRequest {
                 </tr>
                 <tr>
                     <td>$maxNumberOfCivilizations</td>
-                    <td><input id='maxNumberOfCivilizations' type='text' placeholder='4' /></td>
+                    <td><input id='maxNumberOfCivilizations' type='text' placeholder='$maxNumberOfCivilizationsPlaceHolder' /></td>
                 </tr>
                 <tr>
                     <td>$backButton</td>
@@ -76,6 +78,7 @@ public class GetCreateWorldFormRequest extends AbstractAjaxRequest {
             "$mapHeight", L10nWorld.INPUT_MAP_HEIGHT,
             "$climate", L10nWorld.INPUT_CLIMATE,
             "$maxNumberOfCivilizations", L10nWorld.INPUT_MAX_NUMBER_OF_CIVILIZATIONS,
+            "$maxNumberOfCivilizationsPlaceHolder", Math.min(CIVILIZATIONS.size(), 8),
 
             "$backButton", backButton,
             "$createWorldButton", createWorldButton

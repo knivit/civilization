@@ -1,5 +1,6 @@
 package com.tsoft.civilization.web.ajax.action.unit.workers;
 
+import com.tsoft.civilization.combat.CombatService;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.unit.action.AttackAction;
@@ -14,6 +15,9 @@ import com.tsoft.civilization.civilization.Civilization;
 
 public class RemoveHillActionRequest extends AbstractAjaxRequest {
 
+    private final CombatService combatService = new CombatService();
+    private final AttackAction attackAction = new AttackAction(combatService);
+
     @Override
     public Response getJson(Request request) {
         Civilization myCivilization = getMyCivilization();
@@ -25,7 +29,7 @@ public class RemoveHillActionRequest extends AbstractAjaxRequest {
         AbstractUnit workers = myCivilization.units().getUnitById(workersId);
         Point location = myCivilization.getTilesMap().getLocation(request.get("col"), request.get("row"));
 
-        ActionAbstractResult result = AttackAction.attack(workers, location);
+        ActionAbstractResult result = attackAction.attack(workers, location);
         if (result.isFail()) {
             return JsonResponse.accepted(result.getMessage());
         }

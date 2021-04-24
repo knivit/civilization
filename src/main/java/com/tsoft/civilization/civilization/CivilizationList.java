@@ -146,17 +146,7 @@ public class CivilizationList implements Iterable<Civilization> {
             .orElse(null);
     }
 
-    public CivilizationList filter(Predicate<Civilization> cond) {
-        CivilizationList list = new CivilizationList();
-        for (Civilization civ : civilizations) {
-            if (cond.test(civ)) {
-                list.add(civ);
-            }
-        }
-        return list;
-    }
-
-    public Civilization findAny(Predicate<Civilization> cond) {
+    private Civilization findAny(Predicate<Civilization> cond) {
         return civilizations.stream()
             .filter(cond)
             .findAny()

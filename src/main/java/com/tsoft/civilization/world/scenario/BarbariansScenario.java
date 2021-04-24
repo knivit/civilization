@@ -121,8 +121,7 @@ public class BarbariansScenario implements Scenario {
         // Create an encampment
 
         // Create a military unit in it
-todo
-    +fix tests after CombatStrength made final (see City's calcCombatStrength')
+
         return null;
     }
 }

@@ -9,8 +9,6 @@ import lombok.ToString;
 @ToString
 public class CombatStrength {
 
-    private static final CombatStrength ZERO = CombatStrength.builder().build();
-
     // Attack
     private final int meleeAttackStrength;    // Melee units' attack strength
     private final int targetBackFireStrength; // Any units' back fire
@@ -26,29 +24,16 @@ public class CombatStrength {
     private final boolean canConquerCity;     // Unit's options
     private final boolean isDestroyed;        // Was destroyed during a step
 
-    public CombatStrength add(CombatStrength other) {
-        return add(other, this.rangedAttackRadius, this.canConquerCity, this.isDestroyed);
-    }
-
-    public CombatStrength setRangedAttackRadius(int rangedAttackRadius) {
-        return add(ZERO, rangedAttackRadius, this.canConquerCity, this.isDestroyed);
-    }
-
-    public CombatStrength setIsDestroyed(boolean isDestroyed) {
-        return add(ZERO, this.rangedAttackRadius, this.canConquerCity, isDestroyed);
-    }
-
-    private CombatStrength add(CombatStrength other, int rangedAttackRadius, boolean canConquerCity, boolean isDestroyed) {
+    public CombatStrengthBuilder copy() {
         return CombatStrength.builder()
-            .meleeAttackStrength(meleeAttackStrength + other.meleeAttackStrength)
-            .targetBackFireStrength(targetBackFireStrength + other.targetBackFireStrength)
-            .defenseStrength(defenseStrength + other.defenseStrength)
-            .rangedAttackStrength(rangedAttackStrength + other.rangedAttackStrength)
+            .meleeAttackStrength(meleeAttackStrength)
+            .targetBackFireStrength(targetBackFireStrength)
+            .rangedAttackStrength(rangedAttackStrength)
             .rangedAttackRadius(rangedAttackRadius)
-            .attackExperience(attackExperience + other.attackExperience)
-            .defenseExperience(defenseExperience + other.defenseExperience)
+            .attackExperience(attackExperience)
+            .defenseStrength(defenseStrength)
+            .defenseExperience(defenseExperience)
             .canConquerCity(canConquerCity)
-            .isDestroyed(isDestroyed)
-            .build();
+            .isDestroyed(isDestroyed);
     }
 }

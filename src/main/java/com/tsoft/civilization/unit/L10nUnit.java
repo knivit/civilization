@@ -94,6 +94,10 @@ public class L10nUnit {
         .put(EN, "There are no targets to attack")
         .put(RU, "Нет целей для атаки");
 
+    public static final L10n ATTACK_SKIPPED = new L10n()
+        .put(EN, "The attack did not take place")
+        .put(RU, "Атака не состоялась");
+
     public static final L10n MELEE_NOT_ENOUGH_PASS_SCORE = new L10n()
         .put(EN, "Can't move on target's tile")
         .put(RU, "Невозможно перейти на ячейку цели");
@@ -110,7 +114,7 @@ public class L10nUnit {
         .put(EN, "Unit can attack")
         .put(RU, "Юнит может выполнить атаку");
 
-    public static final L10n UNDERSHOOT = new L10n()
+    public static final L10n RANGED_UNDERSHOOT = new L10n()
         .put(EN, "Distance too long or missile can't overcome it")
         .put(RU, "Расстояние слишком большое или снаряд не может преодолеть его");
 

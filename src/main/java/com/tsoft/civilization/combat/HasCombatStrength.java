@@ -36,8 +36,4 @@ public interface HasCombatStrength {
     String getClassUuid();
 
     boolean isDestroyed();
-
-    default void addCombatStrength(CombatStrength other) {
-        setCombatStrength(getCombatStrength().add(other));
-    }
 }

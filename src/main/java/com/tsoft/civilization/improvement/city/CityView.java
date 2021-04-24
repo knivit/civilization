@@ -1,12 +1,17 @@
 package com.tsoft.civilization.improvement.city;
 
 import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.combat.CombatService;
 import com.tsoft.civilization.unit.action.AttackAction;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.improvement.AbstractImprovementView;
 
 public class CityView extends AbstractImprovementView {
+
+    private final CombatService combatService = new CombatService();
+    private final AttackAction attackAction = new AttackAction(combatService);
+
     private final L10n name;
 
     public CityView(L10n name) {
@@ -60,15 +65,15 @@ public class CityView extends AbstractImprovementView {
     }
 
     public StringBuilder getHtmlActions(City city) {
-        StringBuilder attackAction = AttackAction.getHtml(city);
-        if (attackAction == null) {
+        StringBuilder cityAttackAction = attackAction.getHtml(city);
+        if (cityAttackAction == null) {
             return null;
         }
 
         return Format.text(
             "<tr>$attackAction</tr>",
 
-            "$attackAction", attackAction
+            "$attackAction", cityAttackAction
         );
     }
 }

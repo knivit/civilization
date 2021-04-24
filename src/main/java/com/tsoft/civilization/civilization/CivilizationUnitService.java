@@ -95,7 +95,7 @@ public class CivilizationUnitService {
         return attacker;
     }
 
-    // This is not a move (or swap), just a check, can be a unit placed here, or not
+    // This is not a move (or a swap), just a check, can be a unit placed here, or not
     public boolean canBePlaced(AbstractUnit unit, Point location) {
         AbstractTile tile = world.getTilesMap().getTile(location);
         if (tileService.getPassCost(unit, tile) == TilePassCostTable.UNPASSABLE) {

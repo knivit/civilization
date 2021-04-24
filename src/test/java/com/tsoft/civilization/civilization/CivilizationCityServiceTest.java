@@ -32,10 +32,7 @@ public class CivilizationCityServiceTest {
         assertThat(cityService.getCitiesWithAvailableActions()).isEmpty();
 
         // add a foreign civilization
-        Civilization america = world.createCivilization(AMERICA, new MockScenario()
-            .settlers("settlers", new Point(2, 2))
-            .warriors("warriors", new Point(1, 2))
-        );
+        Civilization america = world.createCivilization(AMERICA);
 
         assertThat(world.getCivilizationsRelations(russia, america))
             .isNotNull()

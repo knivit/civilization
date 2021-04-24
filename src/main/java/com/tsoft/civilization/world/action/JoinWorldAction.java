@@ -64,7 +64,7 @@ public class JoinWorldAction {
         }
 
         List<L10n> notUsed = CIVILIZATIONS.stream()
-            .filter(name -> world.getCivilizations().filter(c -> c.getName().equals(name)).isEmpty())
+            .filter(name -> world.getCivilizations().stream().noneMatch(c -> c.getName().equals(name)))
             .collect(Collectors.toList());
 
         if (notUsed.isEmpty()) {

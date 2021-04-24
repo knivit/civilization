@@ -1,5 +1,6 @@
 package com.tsoft.civilization.web.ajax.action.unit;
 
+import com.tsoft.civilization.combat.CombatService;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.unit.action.AttackAction;
@@ -14,6 +15,9 @@ import com.tsoft.civilization.civilization.Civilization;
 
 public class AttackActionRequest extends AbstractAjaxRequest {
 
+    private final CombatService combatService = new CombatService();
+    private final AttackAction attackAction = new AttackAction(combatService);
+
     @Override
     public Response getJson(Request request) {
         Civilization myCivilization = getMyCivilization();
@@ -25,7 +29,7 @@ public class AttackActionRequest extends AbstractAjaxRequest {
         HasCombatStrength attacker = myCivilization.units().getAttackerById(attackerId);
         Point location = myCivilization.getTilesMap().getLocation(request.get("col"), request.get("row"));
 
-        ActionAbstractResult result = AttackAction.attack(attacker, location);
+        ActionAbstractResult result = attackAction.attack(attacker, location);
         if (result.isFail()) {
             return JsonResponse.accepted(result.getMessage());
         }
