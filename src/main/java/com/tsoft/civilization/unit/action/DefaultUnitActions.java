@@ -2,6 +2,8 @@ package com.tsoft.civilization.unit.action;
 
 import com.tsoft.civilization.combat.CombatService;
 import com.tsoft.civilization.unit.AbstractUnit;
+import com.tsoft.civilization.unit.UnitCaptureService;
+import com.tsoft.civilization.unit.UnitMoveService;
 import com.tsoft.civilization.util.Format;
 
 public class DefaultUnitActions {
@@ -9,10 +11,16 @@ public class DefaultUnitActions {
     private final CombatService combatService = new CombatService();
     private final AttackAction attackAction = new AttackAction(combatService);
 
+    private final UnitMoveService unitMoveService = new UnitMoveService();
+    private final MoveUnitAction moveAction = new MoveUnitAction(unitMoveService);
+
+    private final UnitCaptureService unitCaptureService = new UnitCaptureService();
+    private final CaptureUnitAction captureAction = new CaptureUnitAction(unitCaptureService);
+
     public StringBuilder getHtmlActions(AbstractUnit unit) {
         StringBuilder attackUnitAction = attackAction.getHtml(unit);
-        StringBuilder captureUnitAction = CaptureUnitAction.getHtml(unit);
-        StringBuilder moveUnitAction = MoveUnitAction.getHtml(unit);
+        StringBuilder captureUnitAction = captureAction.getHtml(unit);
+        StringBuilder moveUnitAction = moveAction.getHtml(unit);
         StringBuilder destroyUnitAction = DestroyUnitAction.getHtml(unit);
 
         if (attackUnitAction == null && captureUnitAction == null && moveUnitAction == null && destroyUnitAction == null) {
@@ -20,13 +28,13 @@ public class DefaultUnitActions {
         }
 
         return Format.text("""
-            <tr>$attackAction</tr>
+            <tr>$attackUnitAction</tr>
             <tr>$captureUnitAction</tr>
             <tr>$moveUnitAction</tr>
             <tr>$destroyUnitAction</tr>
             """,
 
-            "$attackAction", attackUnitAction,
+            "$attackUnitAction", attackUnitAction,
             "$captureUnitAction", captureUnitAction,
             "$moveUnitAction", moveUnitAction,
             "$destroyUnitAction", destroyUnitAction

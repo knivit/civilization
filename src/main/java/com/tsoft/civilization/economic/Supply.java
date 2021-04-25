@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class Supply {
+public final class Supply {
     public static final Supply EMPTY_SUPPLY = Supply.builder().build();
 
     private final int food;

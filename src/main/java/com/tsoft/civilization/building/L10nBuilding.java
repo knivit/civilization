@@ -15,8 +15,8 @@ public class L10nBuilding {
         .put(RU, "Здание не может быть разрушено");
 
     public static final L10n BUILDING_DESTROYED = new L10n()
-        .put(EN, "Building %s has been destroyed")
-        .put(RU, "Здание %s разрушено");
+        .put(EN, "Building $buildingName has been destroyed")
+        .put(RU, "Здание $buildingName разрушено");
 
     public static final L10n DESTROY = new L10n()
         .put(EN, "Destroy")

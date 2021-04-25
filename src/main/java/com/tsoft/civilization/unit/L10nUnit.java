@@ -65,12 +65,12 @@ public class L10nUnit {
         .put(RU, "Юнит %s был уничтожен");
 
     public static final L10n UNIT_HAS_WON_ATTACK_EVENT = new L10n()
-        .put(EN, "Unit has won the attack")
-        .put(RU, "Юнит выиграл атаку");
+        .put(EN, "Unit $attackerName has won $targetName")
+        .put(RU, "Юнит $attackerName выиграл $targetName");
 
     public static final L10n UNIT_MOVED_EVENT = new L10n()
-        .put(EN, "Unit has moved")
-        .put(RU, "Юнит переместился");
+        .put(EN, "Unit $unitName has moved")
+        .put(RU, "Юнит $unitName переместился");
 
     public static final L10n ATTACK_DONE_EVENT = new L10n()
         .put(EN, "Attack done")
@@ -79,8 +79,8 @@ public class L10nUnit {
     /** Actions */
 
     public static final L10n UNIT_WAS_DESTROYED = new L10n()
-        .put(EN, "Unit was destroyed")
-        .put(RU, "Юнит был уничтожен");
+        .put(EN, "Unit $unitName was destroyed")
+        .put(RU, "Юнит $unitName был уничтожен");
 
     public static final L10n INVALID_LOCATION = new L10n()
         .put(EN, "Invalid location")

@@ -11,7 +11,8 @@ import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.unit.military.warriors.Warriors;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.world.event.Event;
+import com.tsoft.civilization.world.event.NewYearStartEvent;
+import com.tsoft.civilization.world.event.WorldStopYearEvent;
 import com.tsoft.civilization.world.scenario.Scenario;
 
 import java.util.*;
@@ -170,16 +171,6 @@ public class World {
         return history;
     }
 
-    // Start a new year
-    public void startYear() {
-        history.add(year);
-        tilesMap.startYear();
-        civilizationService.startYear();
-
-        // add it to the history
-        sendEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.NEW_YEAR_START_EVENT, year.getYear()));
-    }
-
     // Callback on civilizations' stopYear
     public void onCivilizationMoved() {
         CivilizationList list = civilizationService.getMovingCivilizations();
@@ -192,8 +183,21 @@ public class World {
         }
     }
 
+    public void startYear() {
+        history.add(year);
+        tilesMap.startYear();
+        civilizationService.startYear();
+
+        sendEvent(NewYearStartEvent.builder()
+            .year(year.getYear())
+            .build());
+    }
+
     public void stopYear() {
-        sendEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.NEW_YEAR_COMPLETE_EVENT, year.getYear()));
+        sendEvent(WorldStopYearEvent.builder()
+            .year(year.getYear())
+            .build()
+        );
 
         year = year.nextYear();
     }

@@ -2,22 +2,26 @@ package com.tsoft.civilization.web.ajax.action.status;
 
 import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import com.tsoft.civilization.web.response.JsonResponse;
-import com.tsoft.civilization.world.L10nEvent;
+import com.tsoft.civilization.world.*;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.NumberUtil;
 import com.tsoft.civilization.web.response.HtmlResponse;
-import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.world.event.Event;
-import com.tsoft.civilization.world.event.EventList;
+
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 import static com.tsoft.civilization.web.L10nServer.INVALID_REQUEST;
 
 public class GetEvents extends AbstractAjaxRequest {
+
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter
+        .ofPattern("HH:mm:ss")
+        .withZone(ZoneId.of("UTC"));
 
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
     private final GetCivilizationInfo civilizationInfo = new GetCivilizationInfo();
@@ -111,8 +115,8 @@ public class GetEvents extends AbstractAjaxRequest {
             buf.append(Format.text(
                 "<tr><td>$serverTime<br>$description</td></tr>",
 
-                "$serverTime", event.getServerEventTime(),
-                "$description", event.getLocalized()
+                "$serverTime", DATE_TIME_FORMATTER.format(event.getServerTime()),
+                "$description", event.getMessage().getLocalized(event.getArgs())
             ));
         }
 

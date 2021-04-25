@@ -1,11 +1,17 @@
 package com.tsoft.civilization.building.walls;
 
+import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.building.AbstractBuildingView;
+import lombok.Getter;
 
 public class WallsView extends AbstractBuildingView {
+
+    @Getter
+    public final L10n name = L10nWalls.NAME;
+
     @Override
     public String getLocalizedName() {
-        return L10nWalls.NAME.getLocalized();
+        return name.getLocalized();
     }
 
     @Override

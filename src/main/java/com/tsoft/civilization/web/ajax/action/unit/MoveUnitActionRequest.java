@@ -1,5 +1,6 @@
 package com.tsoft.civilization.web.ajax.action.unit;
 
+import com.tsoft.civilization.unit.UnitMoveService;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.unit.action.MoveUnitAction;
@@ -13,6 +14,10 @@ import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.civilization.Civilization;
 
 public class MoveUnitActionRequest extends AbstractAjaxRequest {
+
+    private static final UnitMoveService unitMoveService = new UnitMoveService();
+    private static final MoveUnitAction moveUnitAction = new MoveUnitAction(unitMoveService);
+
     @Override
     public Response getJson(Request request) {
         Civilization myCivilization = getMyCivilization();
@@ -24,7 +29,7 @@ public class MoveUnitActionRequest extends AbstractAjaxRequest {
         AbstractUnit unit = myCivilization.units().getUnitById(unitId);
         Point location = myCivilization.getTilesMap().getLocation(request.get("col"), request.get("row"));
 
-        ActionAbstractResult result = MoveUnitAction.move(unit, location);
+        ActionAbstractResult result = moveUnitAction.move(unit, location);
         if (result.isFail()) {
             return JsonResponse.accepted(result.getMessage());
         }

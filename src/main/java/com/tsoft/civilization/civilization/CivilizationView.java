@@ -1,12 +1,9 @@
 package com.tsoft.civilization.civilization;
 
-import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.common.AbstractView;
 import com.tsoft.civilization.web.view.JsonBlock;
 
 public abstract class CivilizationView implements AbstractView {
-
-    public abstract L10n getName();
 
     @Override
     public String getLocalizedName() {

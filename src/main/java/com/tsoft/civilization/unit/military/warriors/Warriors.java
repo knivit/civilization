@@ -5,6 +5,7 @@ import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.civilization.Civilization;
+import lombok.Getter;
 
 import java.util.UUID;
 
@@ -19,37 +20,22 @@ import java.util.UUID;
 public class Warriors extends AbstractUnit {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    private static final CombatStrength COMBAT_STRENGTH = CombatStrength.builder()
+    @Getter
+    private static final String classUuid = UUID.randomUUID().toString();
+
+    @Getter
+    private final CombatStrength baseCombatStrength = CombatStrength.builder()
         .meleeAttackStrength(10)
         .targetBackFireStrength(5)
         .defenseStrength(20)
         .canConquerCity(true)
         .build();
 
-    private static final WarriorsView VIEW = new WarriorsView();
+    @Getter
+    private final WarriorsView view = new WarriorsView();
 
     public Warriors(Civilization civilization) {
         super(civilization);
-    }
-
-    @Override
-    public UnitCategory getUnitCategory() {
-        return UnitCategory.MILITARY_MELEE;
-    }
-
-    @Override
-    public CombatStrength getBaseCombatStrength() {
-        return COMBAT_STRENGTH;
-    }
-
-    @Override
-    public void initPassScore() {
-        setPassScore(5);
-    }
-
-    @Override
-    public WarriorsView getView() {
-        return VIEW;
     }
 
     @Override
@@ -58,17 +44,27 @@ public class Warriors extends AbstractUnit {
     }
 
     @Override
+    public UnitCategory getUnitCategory() {
+        return UnitCategory.MILITARY_MELEE;
+    }
+
+    @Override
+    public void initPassScore() {
+        setPassScore(5);
+    }
+
+    @Override
     public int getProductionCost() {
         return 40;
     }
 
     @Override
-    public boolean checkEraAndTechnology(Civilization civilization) {
-        return civilization.getYear().getEra() == Year.ANCIENT_ERA;
+    public int getGoldCost() {
+        return 200;
     }
 
     @Override
-    public int getGoldCost() {
-        return 200;
+    public boolean checkEraAndTechnology(Civilization civilization) {
+        return civilization.getYear().getEra() == Year.ANCIENT_ERA;
     }
 }

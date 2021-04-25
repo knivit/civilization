@@ -1,8 +1,11 @@
 package com.tsoft.civilization.civilization;
 
 import com.tsoft.civilization.L10n.L10nList;
+import com.tsoft.civilization.civilization.event.CityCapturedEvent;
+import com.tsoft.civilization.civilization.event.CityDestroyedEvent;
+import com.tsoft.civilization.civilization.event.CreateCityEvent;
+import com.tsoft.civilization.civilization.event.UnitHasCapturedCityEvent;
 import com.tsoft.civilization.combat.CombatService;
-import com.tsoft.civilization.common.HasView;
 import com.tsoft.civilization.economic.HasSupply;
 import com.tsoft.civilization.improvement.city.L10nCity;
 import com.tsoft.civilization.L10n.L10n;
@@ -15,7 +18,6 @@ import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.economic.Supply;
-import com.tsoft.civilization.world.event.Event;
 import lombok.Getter;
 
 import java.util.Collection;
@@ -86,13 +88,19 @@ public class CivilizationCityService implements HasSupply {
         Objects.requireNonNull(city, "city can't be null");
 
         cities.add(city);
-        world.sendEvent(new Event(Event.UPDATE_WORLD, city, L10nCity.NEW_CITY_EVENT, city.getView().getLocalizedCityName()));
+
+        world.sendEvent(CreateCityEvent.builder()
+            .cityName(city.getName())
+            .build());
     }
 
     public void removeCity(City city) {
         cities.remove(city);
         destroyedCities.add(city);
-        world.sendEvent(new Event(Event.UPDATE_WORLD, city, L10nCity.REMOVE_CITY_EVENT, city.getView().getLocalizedCityName()));
+
+        world.sendEvent(CityDestroyedEvent.builder()
+            .cityName(city.getName())
+            .build());
 
         // civilizations is destroyed when all its cities are destroyed
         if (cities.isEmpty()) {
@@ -104,11 +112,14 @@ public class CivilizationCityService implements HasSupply {
         city.destroy();
         city.setPassScore(0);
 
-        Event worldEvent = new Event(Event.UPDATE_WORLD, this, L10nCity.CITY_WAS_CAPTURED, city.getView().getLocalizedCityName());
-        world.sendEvent(worldEvent);
+        world.sendEvent(CityCapturedEvent.builder()
+            .cityName(city.getName())
+            .build());
 
-        Event event = new Event(Event.UPDATE_WORLD, destroyer, L10nCity.UNIT_HAS_CAPTURED_CITY);
-        civilization.addEvent(event);
+        civilization.addEvent(UnitHasCapturedCityEvent.builder()
+            .unitName(destroyer.getView().getName())
+            .cityName(city.getName())
+            .build());
 
         // remove the city from its civilization
         city.getCivilization().cities().removeCity(city);

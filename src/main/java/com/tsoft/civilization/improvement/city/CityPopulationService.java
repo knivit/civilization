@@ -1,6 +1,10 @@
 package com.tsoft.civilization.improvement.city;
 
 import com.tsoft.civilization.economic.HasSupply;
+import com.tsoft.civilization.improvement.city.event.CitizenHasDiedEvent;
+import com.tsoft.civilization.improvement.city.event.CitizenWasBornEvent;
+import com.tsoft.civilization.improvement.city.event.StarvationEndedEvent;
+import com.tsoft.civilization.improvement.city.event.StarvationStartedEvent;
 import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.unit.civil.citizen.Citizen;
@@ -9,7 +13,6 @@ import com.tsoft.civilization.unit.civil.citizen.CitizenPlacementTable;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.economic.SupplyService;
-import com.tsoft.civilization.world.event.Event;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -173,8 +176,9 @@ public class CityPopulationService implements HasSupply {
             if (isStarvation) {
                 isStarvation = false;
 
-                Event event = new Event(Event.INFORMATION, city, L10nCity.STARVATION_ENDED);
-                city.getCivilization().addEvent(event);
+                city.getCivilization().addEvent(StarvationEndedEvent.builder()
+                    .cityName(city.getName())
+                    .build());
             }
 
             // Excess food above the 2 per citizen goes into a pool for growth
@@ -196,20 +200,22 @@ public class CityPopulationService implements HasSupply {
         growthPool = 0;
         isStarvation = true;
 
-        Event event = new Event(Event.INFORMATION, city, L10nCity.STARVATION_STARTED);
-        city.getCivilization().addEvent(event);
+        city.getCivilization().addEvent(StarvationStartedEvent.builder()
+            .cityName(city.getName())
+            .build());
     }
 
     private void birth() {
         int birthFood = 2 * citizens.size();
-        if (growthPool <= birthFood) return;;
+        if (growthPool <= birthFood) return;
 
         growthPool -= birthFood;
 
         addCitizen();
 
-        Event event = new Event(Event.INFORMATION, city, L10nCity.CITIZEN_WAS_BORN, city.getView().getLocalizedCityName());
-        city.getCivilization().addEvent(event);
+        city.getCivilization().addEvent(CitizenWasBornEvent.builder()
+            .cityName(city.getName())
+            .build());
     }
 
     // If the growth pool is emptied, one citizen is dying of starvation
@@ -239,8 +245,9 @@ public class CityPopulationService implements HasSupply {
 
         citizens.remove(target);
 
-        Event event = new Event(Event.INFORMATION, city, L10nCity.CITIZEN_HAS_DIED, city.getView().getLocalizedCityName());
-        city.getCivilization().addEvent(event);
+        city.getCivilization().addEvent(CitizenHasDiedEvent.builder()
+            .cityName(city.getName())
+            .build());
     }
 
     // The supply strategy has changed, reorganize citizens for best profit

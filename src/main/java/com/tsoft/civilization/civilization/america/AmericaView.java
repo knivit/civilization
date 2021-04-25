@@ -2,15 +2,13 @@ package com.tsoft.civilization.civilization.america;
 
 import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.civilization.CivilizationView;
-
-import static com.tsoft.civilization.civilization.L10nCivilization.AMERICA;
+import com.tsoft.civilization.civilization.L10nCivilization;
+import lombok.Getter;
 
 public class AmericaView extends CivilizationView {
 
-    @Override
-    public L10n getName() {
-        return AMERICA;
-    }
+    @Getter
+    public final L10n name = L10nCivilization.AMERICA;
 
     @Override
     public String getStatusImageSrc() {

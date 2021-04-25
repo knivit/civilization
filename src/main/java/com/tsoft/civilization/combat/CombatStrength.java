@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Builder
 @ToString
-public class CombatStrength {
+public final class CombatStrength {
 
     // Attack
     private final int meleeAttackStrength;    // Melee units' attack strength

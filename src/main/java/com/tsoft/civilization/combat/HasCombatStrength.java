@@ -1,6 +1,7 @@
 package com.tsoft.civilization.combat;
 
 import com.tsoft.civilization.combat.skill.AbstractSkill;
+import com.tsoft.civilization.common.AbstractView;
 import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Point;
@@ -9,7 +10,10 @@ import com.tsoft.civilization.civilization.Civilization;
 import java.util.List;
 
 public interface HasCombatStrength {
+
     String getId();
+
+    AbstractView getView();
 
     Civilization getCivilization();
 

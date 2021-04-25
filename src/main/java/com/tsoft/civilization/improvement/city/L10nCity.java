@@ -112,46 +112,50 @@ public class L10nCity {
     /** Events */
 
     public static final L10n NEW_CITY_EVENT = new L10n()
-        .put(EN, "A new city %s was founded")
-        .put(RU, "Основан новый %s город");
+        .put(EN, "A new city $cityName was founded")
+        .put(RU, "Основан новый $cityName город");
 
-    public static final L10n REMOVE_CITY_EVENT = new L10n()
-        .put(EN, "City %s was removed")
-        .put(RU, "Город %s удален");
+    public static final L10n CITY_DESTROYED_EVENT = new L10n()
+        .put(EN, "City $cityName was destroyed")
+        .put(RU, "Город $cityName разрушен");
 
     public static final L10n CITY_WAS_CAPTURED = new L10n()
-        .put(EN, "City %s was captured")
-        .put(RU, "Город %s был захвачен");
+        .put(EN, "City $cityName was captured")
+        .put(RU, "Город $cityName был захвачен");
 
     public static final L10n UNIT_HAS_CAPTURED_CITY = new L10n()
-        .put(EN, "A unit %s has captured the city")
-        .put(RU, "Юнит %s захватил город");
+        .put(EN, "A unit $unitName has captured the city $cityName")
+        .put(RU, "Юнит $unitName захватил город $cityName");
 
     public static final L10n NEW_BUILDING_BUILT_EVENT = new L10n()
-        .put(EN, "A new building %s has been constructed")
-        .put(RU, "Было построено %s новое здание");
+        .put(EN, "A new building $buildingName has been constructed")
+        .put(RU, "Было построено новое здание $buildingName");
 
     public static final L10n NEW_UNIT_BUILT_EVENT = new L10n()
-        .put(EN, "A new unit %s has been constructed")
-        .put(RU, "Был построен %s новый юнит");
+        .put(EN, "A new unit $unitName has been constructed")
+        .put(RU, "Был построен новый юнит $unitName");
+
+    public static final L10n CITY_STOP_YEAR_EVENT = new L10n()
+        .put(EN, "City $cityName stop year: population=$populationSupply, buildings=$buildingsSupply, construction=$constructionSupply, totalSupply=$supply")
+        .put(RU, "Город $cityName завершил год: население=$populationSupply, здания=$buildingsSupply, строительство=$constructionSupply, итог=$supply");
 
     /** Population */
 
     public static final L10n STARVATION_STARTED = new L10n()
-        .put(EN, "All food is consumed, the starvation has started")
-        .put(RU, "Пища закончилась, начался голод");
+        .put(EN, "All food is consumed, the starvation has started in city $cityName")
+        .put(RU, "Пища закончилась, начался голод в городе $cityName");
 
     public static final L10n STARVATION_ENDED = new L10n()
-        .put(EN, "The starvation has ended")
-        .put(RU, "Голод закончился");
+        .put(EN, "The starvation has ended in the city $cityName")
+        .put(RU, "В городе $cityName закончился голод");
 
     public static final L10n CITIZEN_WAS_BORN = new L10n()
-        .put(EN, "A citizen was born in city %s")
-        .put(RU, "Родился житель in city %s");
+        .put(EN, "A citizen was born in city $cityName")
+        .put(RU, "Родился житель in city $cityName");
 
     public static final L10n CITIZEN_HAS_DIED = new L10n()
-        .put(EN, "A citizen has died in city %s")
-        .put(RU, "Умер житель in city %s");
+        .put(EN, "A citizen has died in city $cityName")
+        .put(RU, "Умер житель in city $cityName");
 
     /** Statistic */
 
@@ -178,12 +182,6 @@ public class L10nCity {
     public static final L10n HAPPINESS = new L10n()
         .put(EN, "Happiness")
         .put(RU, "Настроение");
-
-    /** Economics */
-
-    public static final L10n FOUNDED_SETTLERS = new L10n()
-            .put(EN, "Settlers founded a city %s")
-            .put(RU, "Поселенцы, которые основали город %s");
 
     /** Cities */
 

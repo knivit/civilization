@@ -4,9 +4,10 @@ import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.BuildingFactory;
 import com.tsoft.civilization.economic.HasSupply;
 import com.tsoft.civilization.improvement.CanBeBuilt;
+import com.tsoft.civilization.improvement.city.event.NewBuildingBuiltEvent;
+import com.tsoft.civilization.improvement.city.event.NewUnitBuiltEvent;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.economic.Supply;
-import com.tsoft.civilization.world.event.Event;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,8 +21,14 @@ public class CityConstructionService implements HasSupply {
     @Getter
     private Supply supply = Supply.EMPTY_SUPPLY;
 
-    private ConstructionList constructions = new ConstructionList(); // Current constructions (buildings, units etc)
-    private ConstructionList builtThisYear = new ConstructionList(); // Constructions built during the last move
+    // Current constructions (buildings, units etc) in needed order
+    // Order is important, as the player can set as a first an expensive construction
+    // and all the construction process will wait (no other less expensive construction started)
+    // until the City will get enough production to build the expensive construction
+    private ConstructionList constructions = new ConstructionList();
+
+    // Constructions built during the last move
+    private ConstructionList builtThisYear = new ConstructionList();
 
     public CityConstructionService(City city) {
         this.city = city;
@@ -40,39 +47,19 @@ public class CityConstructionService implements HasSupply {
         constructions.add(new Construction(object));
     }
 
-    public Supply calcSupply(int approvedProduction) {
-        return calcSupply(approvedProduction, false);
-    }
-
-    private Supply doConstruction(int approvedProduction) {
-        return calcSupply(approvedProduction, true);
-    }
-
-    @Override TODO + Supply (HasSupply)
-    public Supply calcSupply(int approvedProduction, boolean doConstruction) {
-        Supply supply = Supply.EMPTY_SUPPLY;
-
+    @Override
+    public Supply calcSupply() {
+        int productionCost = 0;
         for (Construction construction : constructions) {
             int cost = construction.getProductionCost();
             if (cost <= 0) {
                 continue;
             }
 
-            int useProduction = Math.min(cost, approvedProduction);
-            if (doConstruction) {
-                construction.useProductionCost(useProduction);
-            }
-            approvedProduction -= useProduction;
-
-            Supply constructionExpenses = Supply.builder().production(-useProduction).build();
-            supply = supply.add(constructionExpenses);
-
-            if (approvedProduction <= 0) {
-                break;
-            }
+            productionCost += cost;
         }
 
-        return supply;
+        return Supply.builder().production(-productionCost).build();
     }
 
     @Override
@@ -82,11 +69,12 @@ public class CityConstructionService implements HasSupply {
 
     // Buildings and units construction
     @Override
-    public void stopYear(Supply citySupply) {
+    public void stopYear() {
         if (constructions.isEmpty()) {
             log.debug("No construction is in progress");
         }
 
+        Supply citySupply = city.getSupply();
         int approvedProduction = citySupply.getProduction();
 
         if (approvedProduction <= 0) {
@@ -101,6 +89,25 @@ public class CityConstructionService implements HasSupply {
         createNextYearConstructionList();
 
         supply = constructionExpenses;
+    }
+
+    private Supply doConstruction(int approvedProduction) {
+        int productionCost = 0;
+        for (Construction construction : constructions) {
+            int cost = construction.getProductionCost();
+            if (cost <= 0) {
+                continue;
+            }
+
+            if ((productionCost + cost) > approvedProduction) {
+                break;
+            }
+
+            construction.useProductionCost(cost);
+            productionCost += cost;
+        }
+
+        return Supply.builder().production(-productionCost).build();
     }
 
     public ConstructionList getBuiltThisYear() {
@@ -129,14 +136,22 @@ public class CityConstructionService implements HasSupply {
         if (obj instanceof AbstractBuilding) {
             AbstractBuilding building = BuildingFactory.newInstance(obj.getClassUuid(), city);
             city.addBuilding(building);
-            city.getWorld().sendEvent(new Event(Event.UPDATE_WORLD, obj, L10nCity.NEW_BUILDING_BUILT_EVENT, building.getView().getLocalizedName()));
+
+            city.getWorld().sendEvent(NewBuildingBuiltEvent.builder()
+                .buildingName(building.getView().getName())
+                .build());
+
             return;
         }
 
         if (obj instanceof AbstractUnit) {
             AbstractUnit unit = (AbstractUnit)obj;
             city.addUnit(unit);
-            city.getWorld().sendEvent(new Event(Event.UPDATE_WORLD, obj, L10nCity.NEW_UNIT_BUILT_EVENT, unit.getView().getLocalizedName()));
+
+            city.getWorld().sendEvent(NewUnitBuiltEvent.builder()
+                .unitName(unit.getView().getName())
+                .build());
+
             return;
         }
 

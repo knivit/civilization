@@ -8,12 +8,16 @@ import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.world.World;
-import com.tsoft.civilization.world.event.Event;
+import com.tsoft.civilization.world.Event;
+import com.tsoft.civilization.world.EventService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class NotificationRequestProcessor {
+
     private static final String LAST_EVENT_ID_HEADER = "Last-Event-ID";
+
+    private static final EventService eventService = new EventService();
 
     private NotificationRequestProcessor() { }
 
@@ -65,9 +69,9 @@ public class NotificationRequestProcessor {
                 Event event = myCivilization.getEvents().get(sentEventId);
                 log.debug("{}: notifying the client with event = {}", sentEventId, event);
 
-                needWorldUpdate = needWorldUpdate || event.isUpdateWorldEvent();
-                needControlPanelUpdate = needControlPanelUpdate || event.isUpdateControlPanelEvent();
-                needStatusPanelUpdate = needStatusPanelUpdate || event.isUpdateStatusPanelEvent();
+                needWorldUpdate = needWorldUpdate || event.isUpdateWorldMap();
+                needControlPanelUpdate = needControlPanelUpdate || event.isUpdateControlPanel();
+                needStatusPanelUpdate = needStatusPanelUpdate || event.isUpdateStatusPanel();
 
                 if (!sendInformationEvent(client, event, sentEventId)) {
                     return;
@@ -101,7 +105,7 @@ public class NotificationRequestProcessor {
     }
 
     private static boolean sendInformationEvent(Client client, Event event, int lastEventId) {
-        String data = event.getJson().getText();
+        String data = eventService.getJson(event).getText();
 
         // 'id' field must go in the end so a browser will update it after the data was received
         StringBuilder msg = Format.text(

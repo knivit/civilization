@@ -1,7 +1,4 @@
-package com.tsoft.civilization.world.event;
-
-import com.tsoft.civilization.world.Year;
-import com.tsoft.civilization.world.World;
+package com.tsoft.civilization.world;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -36,7 +36,7 @@ public class JoinWorldAction {
     public static final ActionFailureResult CIVILIZATION_NOT_FOUND = new ActionFailureResult(L10nServer.CIVILIZATION_NOT_FOUND);
 
     @Builder
-    public static class Request {
+    public final static class Request {
         private final String worldId;
         private final String civilization;
         private final PlayerType playerType;

@@ -1,10 +1,9 @@
 package com.tsoft.civilization.civilization;
 
+import com.tsoft.civilization.civilization.event.*;
 import com.tsoft.civilization.economic.HasSupply;
-import com.tsoft.civilization.improvement.city.L10nCity;
 import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.unit.UnitFactory;
-import com.tsoft.civilization.world.L10nWorld;
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.BuildingFactory;
 import com.tsoft.civilization.combat.HasCombatStrength;
@@ -22,8 +21,8 @@ import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.world.agreement.AgreementList;
 import com.tsoft.civilization.world.agreement.OpenBordersAgreement;
 import com.tsoft.civilization.economic.Supply;
-import com.tsoft.civilization.world.event.Event;
-import com.tsoft.civilization.world.event.EventsByYearMap;
+import com.tsoft.civilization.world.Event;
+import com.tsoft.civilization.world.EventsByYearMap;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -53,7 +52,6 @@ public abstract class Civilization implements HasSupply {
     // Agreements which this civilization has with others
     private final HashMap<Civilization, AgreementList> agreements = new HashMap<>();
 
-    // true when any event that needs score to be calculated was generated
     private final EventsByYearMap events;
 
     @Getter
@@ -128,7 +126,10 @@ public abstract class Civilization implements HasSupply {
     }
 
     public void setDestroyed() {
-        world.sendEvent(new Event(Event.UPDATE_WORLD, this, L10nWorld.DESTROY_CIVILIZATION_EVENT, getView().getLocalizedCivilizationName()));
+        world.sendEvent(CivilizationDestroyedEvent.builder()
+            .civilizationName(getView().getName())
+            .build());
+
         isDestroyed = true;
     }
 
@@ -137,7 +138,8 @@ public abstract class Civilization implements HasSupply {
     }
 
     /** Something is happened in our civilization (a citizen was born,
-     * a building was built, a unit has won etc) */
+     * a building was built, a unit has won etc)
+    */
     public void addEvent(Event event) {
         events.add(event);
     }
@@ -154,7 +156,9 @@ public abstract class Civilization implements HasSupply {
         Supply expenses = Supply.builder().gold(-gold).build();
         supply = supply.add(expenses);
 
-        addEvent(new Event(Event.INFORMATION, supply, L10nCivilization.BUY_BUILDING_EVENT, building.getView().getLocalizedName()));
+        addEvent(BuildingBoughtEvent.builder()
+            .buildingName(building.getView().getName())
+            .build());
     }
 
     public boolean buyUnit(String unitClassUuid, City city) {
@@ -166,7 +170,10 @@ public abstract class Civilization implements HasSupply {
         Supply expenses = units().buyUnit(unit);
         supply = supply.add(expenses);
 
-        addEvent(new Event(Event.INFORMATION, expenses, L10nCivilization.BUY_UNIT_EVENT));
+        addEvent(UnitBoughtEvent.builder()
+            .unitName(unit.getView().getName())
+            .build());
+
         return true;
     }
 
@@ -231,12 +238,10 @@ public abstract class Civilization implements HasSupply {
         Point location = settlers.getLocation();
         L10n cityName = cityService.findCityName();
         boolean isCapital = cityService.size() == 0;
+
         City city = ImprovementFactory.newInstance(City.CLASS_UUID, this, location);
         city.init(cityName, isCapital);
         cityService.addCity(city);
-
-        Event event = new Event(Event.INFORMATION, city, L10nCity.FOUNDED_SETTLERS, cityName);
-        addEvent(event);
 
         settlers.destroyedBy(null, false);
 
@@ -249,7 +254,11 @@ public abstract class Civilization implements HasSupply {
 
     public void giftReceived(Civilization sender, Supply receivedSupply) {
         supply = supply.add(receivedSupply);
-        addEvent(new Event(Event.INFORMATION, this, L10nCivilization.GIFT_RECEIVED, receivedSupply.toString(), sender.getView().getLocalizedName()));
+
+        addEvent(GiftReceivedEvent.builder()
+            .senderName(sender.getView().getName())
+            .receivedSupply(receivedSupply)
+            .build());
     }
 
     @Override
@@ -273,7 +282,9 @@ public abstract class Civilization implements HasSupply {
 
         moveState = MoveState.IN_PROGRESS;
 
-        addEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.MOVE_START_EVENT, getView().getLocalizedCivilizationName()));
+        addEvent(StartYearEvent.builder()
+            .civilizationName(getName())
+            .build());
 
         unitService.startYear();
         cityService.startYear();
@@ -303,7 +314,9 @@ public abstract class Civilization implements HasSupply {
 
         supply = supply.addWithoutPopulation(calcSupply());
 
-        addEvent(new Event(Event.UPDATE_CONTROL_PANEL, this, L10nWorld.MOVE_DONE_EVENT, getView().getLocalizedCivilizationName()));
+        addEvent(StopYearEvent.builder()
+            .civilizationName(getName())
+            .build());
 
         world.onCivilizationMoved();
     }

@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class CombatResult {
+public final class CombatResult {
 
     // Attacker
     private final int attackerDefenseStrength;

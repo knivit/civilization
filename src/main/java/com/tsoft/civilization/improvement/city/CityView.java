@@ -6,20 +6,18 @@ import com.tsoft.civilization.unit.action.AttackAction;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.improvement.AbstractImprovementView;
+import lombok.Getter;
 
 public class CityView extends AbstractImprovementView {
 
     private final CombatService combatService = new CombatService();
     private final AttackAction attackAction = new AttackAction(combatService);
 
+    @Getter
     private final L10n name;
 
     public CityView(L10n name) {
         this.name = name;
-    }
-
-    public L10n getName() {
-        return name;
     }
 
     @Override

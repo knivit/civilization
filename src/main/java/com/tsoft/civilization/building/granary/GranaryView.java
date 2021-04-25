@@ -1,11 +1,17 @@
 package com.tsoft.civilization.building.granary;
 
+import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.building.AbstractBuildingView;
+import lombok.Getter;
 
 public class GranaryView extends AbstractBuildingView {
+
+    @Getter
+    public final L10n name = L10nGranary.NAME;
+
     @Override
     public String getLocalizedName() {
-        return L10nGranary.NAME.getLocalized();
+        return name.getLocalized();
     }
 
     @Override

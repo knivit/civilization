@@ -2,103 +2,82 @@ package com.tsoft.civilization.unit.action;
 
 import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
-import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.civilization.CivilizationsRelations;
-import com.tsoft.civilization.tile.MapType;
-import com.tsoft.civilization.tile.MockTilesMap;
-import com.tsoft.civilization.unit.AbstractUnit;
+import com.tsoft.civilization.unit.UnitCaptureService;
+import com.tsoft.civilization.unit.civil.workers.Workers;
+import com.tsoft.civilization.unit.military.warriors.Warriors;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.web.render.WorldRender;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.util.Collections;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.AMERICA;
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
-import static com.tsoft.civilization.unit.action.CaptureUnitAction.FOREIGN_UNIT_CAPTURED;
+import static com.tsoft.civilization.unit.action.AttackAction.INVALID_LOCATION;
+import static com.tsoft.civilization.unit.action.CaptureUnitAction.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class CaptureUnitActionTest {
 
+    private final MockWorld world = MockWorld.newSimpleWorld();
+
     @Test
-    public void targets_for_melee_unit_to_capture() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
-            " |0 1 2 3 ",
-            "-+--------",
-            "0|. g g . ",
-            "1| . g g .",
-            "2|. . g . ",
-            "3| . . . .");
-        MockWorld world = MockWorld.of(map);
+    public void attacker_not_found() {
+        UnitCaptureService unitCaptureService = mock(UnitCaptureService.class);
+        CaptureUnitAction captureUnitAction = new CaptureUnitAction(unitCaptureService);
 
-        Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
-            .warriors("warriors", new Point(1, 0))
-        );
-
-        Civilization america = world.createCivilization(AMERICA, new MockScenario()
-            .workers("foreignWorkers", new Point(1, 1))
-        );
-
-        world.setCivilizationsRelations(russia, america, CivilizationsRelations.war());
-
-        WorldRender.of(this).createHtml(world, russia);
-
-        // see what we can capture
-        List<Point> locations = CaptureUnitAction.getLocationsToCapture(world.unit("warriors"));
-        assertThat(locations)
-            .isNotNull()
-            .hasSize(1);
-
-        assertThat(CaptureUnitAction.getTargetToCaptureAtLocation(world.unit("warriors"), locations.get(0)))
-            .isEqualTo(world.unit("foreignWorkers"));
-
-        // capture the foreign workers and move on it's tile
-        assertThat(CaptureUnitAction.capture(world.unit("warriors"), world.location("foreignWorkers")))
-            .isEqualTo(FOREIGN_UNIT_CAPTURED);
-
-        assertThat(world.unit("warriors"))
-            .returns(0, AbstractUnit::getPassScore)
-            .returns(new Point(1, 1), AbstractUnit::getLocation);
-
-        assertThat(world.unit("foreignWorkers"))
-            .returns(world.unit("warriors").getLocation(), AbstractUnit::getLocation)
-            .returns(world.unit("warriors").getCivilization(), AbstractUnit::getCivilization)
-            .returns(0, AbstractUnit::getPassScore);
+        assertThat(captureUnitAction.capture(null, null))
+            .isEqualTo(ATTACKER_NOT_FOUND);
     }
 
     @Test
-    public void targets_for_ranged_unit_to_capture() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES, 2,
-            " |0 1 2 3 4 5 6 ", " |0 1 2 3 4 5 6 ",
-            "-+--------------", "-+--------------",
-            "0|. . g g . . . ", "0|. . M M . . . ",
-            "1| . . g g . . .", "1| . . . j . . .",
-            "2|. . g . g . . ", "2|. . f . . . . ",
-            "3| . g g g . . .", "3| . . . h . . .");
-        MockWorld world = MockWorld.of(map);
+    public void no_locations_to_capture() {
+        UnitCaptureService unitCaptureService = mock(UnitCaptureService.class);
+        CaptureUnitAction captureUnitAction = new CaptureUnitAction(unitCaptureService);
 
-        Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
-            .archers("archers", new Point(2, 1))
-        );
+        world.createCivilization(RUSSIA, new MockScenario()
+            .warriors("warriors", new Point(2, 0)));
+        Warriors warriors = (Warriors) world.unit("warriors");
 
-        Civilization america = world.createCivilization(AMERICA, new MockScenario()
-            .workers("foreignWorkers", new Point(3, 1))
-        );
+        assertThat(captureUnitAction.capture(world.unit("warriors"), null))
+            .isEqualTo(NO_LOCATIONS_TO_CAPTURE);
+    }
 
-        world.setCivilizationsRelations(russia, america, CivilizationsRelations.war());
+    @Test
+    public void invalid_location() {
+        UnitCaptureService unitCaptureService = mock(UnitCaptureService.class);
+        CaptureUnitAction captureUnitAction = new CaptureUnitAction(unitCaptureService);
 
-        // see what we can capture
-        List<Point> locations = CaptureUnitAction.getLocationsToCapture(world.unit("archers"));
-        assertThat(locations).hasSize(1);
-        assertThat(CaptureUnitAction.getTargetToCaptureAtLocation(world.unit("archers"), locations.get(0)))
-            .isEqualTo(world.unit("foreignWorkers"));
+        world.createCivilization(RUSSIA, new MockScenario()
+            .warriors("warriors", new Point(2, 0)));
+        Warriors warriors = (Warriors) world.unit("warriors");
 
-        // capture the foreign workers
-        assertThat(CaptureUnitAction.capture(world.unit("archers"), world.unit("foreignWorkers").getLocation()))
-            .isEqualTo(FOREIGN_UNIT_CAPTURED);
+        world.createCivilization(AMERICA, new MockScenario()
+            .workers("foreignWorkers", new Point(2, 2)));
+        Workers foreignWorkers = (Workers) world.unit("foreignWorkers");
 
-        assertThat(world.unit("foreignWorkers"))
-            .returns(world.unit("archers").getLocation(), e -> e.getLocation())
-            .returns(russia, e -> e.getCivilization());
+        assertThat(captureUnitAction.capture(warriors, null))
+            .isEqualTo(INVALID_LOCATION);
+    }
+
+    @Test
+    public void nothing_to_capture() {
+        UnitCaptureService unitCaptureService = mock(UnitCaptureService.class);
+        CaptureUnitAction captureUnitAction = new CaptureUnitAction(unitCaptureService);
+
+        world.createCivilization(RUSSIA, new MockScenario()
+            .warriors("warriors", new Point(2, 0)));
+        Warriors warriors = (Warriors) world.unit("warriors");
+
+        world.createCivilization(AMERICA, new MockScenario()
+            .workers("foreignWorkers", new Point(2, 2)));
+        Workers foreignWorkers = (Workers) world.unit("foreignWorkers");
+
+        when(unitCaptureService.getLocationsToCapture(eq(warriors))).thenReturn(Collections.emptyList());
+
+        assertThat(captureUnitAction.capture(warriors, null))
+            .isEqualTo(NOTHING_TO_CAPTURE);
     }
 }

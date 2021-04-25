@@ -9,9 +9,9 @@ import com.tsoft.civilization.improvement.CanBeBuilt;
 import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.tile.base.AbstractTile;
+import com.tsoft.civilization.unit.event.UnitHasWonAttackEvent;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.world.event.Event;
 import com.tsoft.civilization.world.World;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
@@ -224,13 +224,16 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
     }
 
     @Override
-    public void destroyedBy(HasCombatStrength destroyer, boolean destroyOtherUnitsAtLocation) {
+    public void destroyedBy(HasCombatStrength attacker, boolean destroyOtherUnitsAtLocation) {
         setDestroyed();
 
-        // destroyer may be null (for settlers who had settled)
-        if (destroyer != null) {
-            Event event = new Event(Event.UPDATE_WORLD, destroyer, L10nUnit.UNIT_HAS_WON_ATTACK_EVENT);
-            destroyer.getCivilization().addEvent(event);
+        // attacker may be null (for settlers who had settled)
+        if (attacker != null) {
+            attacker.getCivilization().addEvent(UnitHasWonAttackEvent.builder()
+                .attackerName(attacker.getView().getName())
+                .targetName(this.getView().getName())
+                .build()
+            );
         }
 
         // destroy all units located in that location
@@ -239,7 +242,7 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
             for (AbstractUnit unit : units) {
                 // to prevent a recursion
                 if (!unit.equals(this)) {
-                    unit.destroyedBy(destroyer, false);
+                    unit.destroyedBy(attacker, false);
                 }
             }
         }

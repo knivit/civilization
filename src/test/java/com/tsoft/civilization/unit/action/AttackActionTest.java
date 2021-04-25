@@ -14,7 +14,8 @@ import org.junit.jupiter.api.Test;
 import static com.tsoft.civilization.civilization.L10nCivilization.AMERICA;
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
 import static com.tsoft.civilization.unit.action.AttackAction.*;
-import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -77,8 +78,9 @@ public class AttackActionTest {
             .workers("foreignWorkers", new Point(2, 2)));
         Workers foreignWorkers = (Workers) world.unit("foreignWorkers");
 
-        when(combatService.getTargetsToAttack(warriors)).thenReturn(HasCombatStrengthList.of(foreignWorkers));
+        when(combatService.getTargetsToAttack(eq(warriors))).thenReturn(HasCombatStrengthList.of(foreignWorkers));
 
-        assertThat(attackAction.attack(warriors, null)).isEqualTo(INVALID_LOCATION);
+        assertThat(attackAction.attack(warriors, null))
+            .isEqualTo(INVALID_LOCATION);
     }
 }

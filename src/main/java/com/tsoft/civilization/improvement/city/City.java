@@ -8,6 +8,7 @@ import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.combat.skill.AbstractSkill;
 import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.improvement.CanBeBuilt;
+import com.tsoft.civilization.improvement.city.event.CityStopYearEvent;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.base.TileType;
 import com.tsoft.civilization.unit.*;
@@ -25,12 +26,13 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasS
 
     private final Set<Point> locations = new HashSet<>();
 
-    private CityView view;
-
     private CityPopulationService populationService;
     private CityBuildingService buildingService;
     private CityConstructionService constructionService;
     private CityCombatService combatService;
+
+    @Getter
+    private CityView view;
 
     @Getter
     private Supply supply = Supply.EMPTY_SUPPLY;
@@ -58,6 +60,11 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasS
 
         // media
         view = new CityView(cityName);
+    }
+
+    @Override
+    public String getClassUuid() {
+        return CLASS_UUID;
     }
 
     public L10n getName() {
@@ -90,11 +97,6 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasS
     @Override
     public CombatStrength calcCombatStrength() {
         return combatService.calcCombatStrength();
-    }
-
-    @Override
-    public CityView getView() {
-        return view;
     }
 
     public int getPassScore() {
@@ -259,12 +261,10 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasS
     public Supply calcSupply() {
         Supply supply = Supply.builder().population(getCitizenCount()).build();
 
-        supply = supply
+        return supply
             .add(populationService.calcSupply())
             .add(buildingService.calcSupply())
-            .add(constructionService.calcSupply(supply.getProduction()));
-
-        return supply;
+            .add(constructionService.calcSupply());
     }
 
     @Override
@@ -280,32 +280,31 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasS
 
     @Override
     public void stopYear() {
-        Supply yearSupply = Supply.EMPTY_SUPPLY;
-
         // population
         populationService.stopYear();
         Supply populationSupply = populationService.getSupply();
-        yearSupply = yearSupply.add(populationSupply);
+        supply = supply.add(populationSupply);
 
         // buildings
         buildingService.stopYear();
-        Supply buildingSupply = buildingService.getSupply();
-        yearSupply = yearSupply.add(buildingSupply);
+        Supply buildingsSupply = buildingService.getSupply();
+        supply = supply.add(buildingsSupply);
 
         // construction
-        constructionService.stopYear(yearSupply);
+        constructionService.stopYear();
         Supply constructionSupply = constructionService.getSupply();
-        yearSupply = yearSupply.add(constructionSupply);
+        supply = supply.add(constructionSupply);
 
         // military
         combatService.stopYear();
 
-        supply = supply.add(yearSupply);
-        log.debug("City: Year {}, supply = {}, total supply = {}", getWorld().getYear(), yearSupply, supply);
-    }
-
-    @Override
-    public String getClassUuid() {
-        return CLASS_UUID;
+        // event
+        civilization.addEvent(CityStopYearEvent.builder()
+            .cityName(getName())
+            .populationSupply(populationSupply)
+            .buildingsSupply(buildingsSupply)
+            .constructionSupply(constructionSupply)
+            .totalSupply(supply)
+            .build());
     }
 }

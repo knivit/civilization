@@ -1,7 +1,9 @@
 package com.tsoft.civilization.unit.civil.workers;
 
+import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.unit.AbstractUnitView;
+import lombok.Getter;
 
 /**
  * The Worker is vital for a civilization - absolutely the most important civilian unit in the game.
@@ -26,9 +28,13 @@ import com.tsoft.civilization.unit.AbstractUnitView;
  * Once a player researches Industrialization, all of his or her Workers change in appearance, looking more like stereotypical factory workers.
  */
 public class WorkersView extends AbstractUnitView {
+
+    @Getter
+    public final L10n name = L10nUnit.WORKERS_NAME;
+
     @Override
     public String getLocalizedName() {
-        return L10nUnit.WORKERS_NAME.getLocalized();
+        return name.getLocalized();
     }
 
     @Override

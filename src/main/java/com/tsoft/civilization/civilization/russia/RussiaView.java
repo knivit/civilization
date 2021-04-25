@@ -2,15 +2,13 @@ package com.tsoft.civilization.civilization.russia;
 
 import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.civilization.CivilizationView;
-
-import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
+import com.tsoft.civilization.civilization.L10nCivilization;
+import lombok.Getter;
 
 public class RussiaView extends CivilizationView {
 
-    @Override
-    public L10n getName() {
-        return RUSSIA;
-    }
+    @Getter
+    public final L10n name = L10nCivilization.RUSSIA;
 
     @Override
     public String getStatusImageSrc() {

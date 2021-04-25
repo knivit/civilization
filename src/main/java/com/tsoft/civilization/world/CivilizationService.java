@@ -8,7 +8,9 @@ import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Pair;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.world.event.Event;
+import com.tsoft.civilization.world.event.DeclareFriendsEvent;
+import com.tsoft.civilization.world.event.DeclareWarEvent;
+import com.tsoft.civilization.world.event.NewCivilizationEvent;
 import com.tsoft.civilization.world.scenario.Scenario;
 import com.tsoft.civilization.world.scenario.ScenarioApplyResult;
 import lombok.extern.slf4j.Slf4j;
@@ -49,8 +51,9 @@ public class CivilizationService {
 
         // send an event to civilizations about the new one
         // clients need to update their maps to see the new civilization (settlers and warriors)
-        sendEvent(new Event(Event.UPDATE_WORLD, civilization, L10nWorld.NEW_CIVILIZATION_EVENT,
-            civilization.getView().getLocalizedCivilizationName(), world.getYear()));
+        sendEvent(NewCivilizationEvent.builder()
+            .civilizationName(civilizationName)
+            .build());
 
         return civilization;
     }
@@ -80,11 +83,17 @@ public class CivilizationService {
 
         // send an Event about that to all civilizations
         if (rel.isWar()) {
-            sendEvent(new Event(Event.UPDATE_STATUS_PANEL, this, L10nWorld.DECLARE_WAR_EVENT, c1.getView().getLocalizedCivilizationName(), c2.getView().getLocalizedCivilizationName()));
+            sendEvent(DeclareWarEvent.builder()
+                .civilizationName1(c1.getName())
+                .civilizationName2(c2.getName())
+                .build());
         }
 
         if (rel.isFriends()) {
-            sendEvent(new Event(Event.UPDATE_STATUS_PANEL, this, L10nWorld.DECLARE_FRIENDS_EVENT, c1.getView().getLocalizedCivilizationName(), c2.getView().getLocalizedCivilizationName()));
+            sendEvent(DeclareFriendsEvent.builder()
+                .civilizationName1(c1.getName())
+                .civilizationName2(c2.getName())
+                .build());
         }
     }
 

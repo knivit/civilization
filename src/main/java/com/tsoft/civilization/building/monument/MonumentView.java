@@ -1,11 +1,17 @@
 package com.tsoft.civilization.building.monument;
 
+import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.building.AbstractBuildingView;
+import lombok.Getter;
 
 public class MonumentView extends AbstractBuildingView {
+
+    @Getter
+    public final L10n name = L10nMonument.NAME;
+
     @Override
     public String getLocalizedName() {
-        return L10nMonument.NAME.getLocalized();
+        return name.getLocalized();
     }
 
     @Override

@@ -1,14 +1,13 @@
 package com.tsoft.civilization.combat;
 
+import com.tsoft.civilization.combat.event.AttackDoneEvent;
 import com.tsoft.civilization.combat.skill.AbstractSkill;
 import com.tsoft.civilization.improvement.city.CityList;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.economic.Supply;
-import com.tsoft.civilization.world.event.Event;
 
 import java.util.Collection;
 
@@ -127,7 +126,8 @@ class BaseCombatService {
         result.done(true);
 
         // send the event about the attack
-        world.sendEvent(new Event(Event.UPDATE_WORLD + Event.UPDATE_STATUS_PANEL, attacker, L10nUnit.ATTACK_DONE_EVENT));
+        world.sendEvent(AttackDoneEvent.builder()
+            .build());
 
         // return the result
         return result.build();
@@ -184,12 +184,13 @@ class BaseCombatService {
         if (supply.getHappiness() < -15) {
             value -= 15;
         } else
-        if (supply.getHappiness() > 15) {
-            value += 15;
-        } else
         if (supply.getHappiness() > 30) {
             value += 33;
+        } else
+        if (supply.getHappiness() > 15) {
+            value += 15;
         }
+
         return value;
     }
 

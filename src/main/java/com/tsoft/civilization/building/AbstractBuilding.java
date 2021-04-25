@@ -1,5 +1,6 @@
 package com.tsoft.civilization.building;
 
+import com.tsoft.civilization.building.event.BuildingDestroyedEvent;
 import com.tsoft.civilization.common.HasId;
 import com.tsoft.civilization.common.HasView;
 import com.tsoft.civilization.economic.HasSupply;
@@ -9,7 +10,6 @@ import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.World;
-import com.tsoft.civilization.world.event.Event;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 
@@ -144,9 +144,10 @@ public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt, Ha
     public void remove() {
         isDestroyed = true;
 
-        Event event = new Event(Event.INFORMATION, this, L10nBuilding.BUILDING_DESTROYED, getView().getLocalizedName());
-        getCivilization().addEvent(event);
-
         city.destroyBuilding(this);
+
+        getCivilization().addEvent(BuildingDestroyedEvent.builder()
+            .buildingName(getView().getName())
+            .build());
     }
 }

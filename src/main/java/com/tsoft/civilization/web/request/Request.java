@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Builder(builderClassName = "RequestBuilder")
-public class Request {
+public final class Request {
     @Getter
     private final String clientIp;
     private final int clientPort;

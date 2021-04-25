@@ -120,17 +120,17 @@ public class L10nCivilization {
 
     /** Economic */
 
-    public static final L10n BUY_UNIT_EVENT = new L10n()
-        .put(EN, "A unit was bought")
-        .put(RU, "Юнит был куплен");
+    public static final L10n UNIT_BOUGHT_EVENT = new L10n()
+        .put(EN, "A unit $unitName was bought")
+        .put(RU, "Юнит $unitName был куплен");
 
-    public static final L10n BUY_BUILDING_EVENT = new L10n()
-        .put(EN, "A building %s was bought")
-        .put(RU, "Куплено здание %s");
+    public static final L10n BUILDING_BOUGHT_EVENT = new L10n()
+        .put(EN, "A building $buildingName was bought")
+        .put(RU, "Куплено здание $buildingName");
 
     public static final L10n GIFT_RECEIVED = new L10n()
-        .put(EN, "A gift %s received from %s")
-        .put(RU, "Получен подарок %s от %s");
+        .put(EN, "A gift $receivedSupply received from $senderName")
+        .put(RU, "Получен подарок $receivedSupply от $senderName");
 
     /** Civilizations */
 

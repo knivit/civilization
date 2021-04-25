@@ -1,12 +1,18 @@
 package com.tsoft.civilization.improvement.farm;
 
+import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.improvement.L10nImprovement;
 import com.tsoft.civilization.improvement.AbstractImprovementView;
+import lombok.Getter;
 
 public class FarmView extends AbstractImprovementView {
+
+    @Getter
+    private final L10n name = L10nImprovement.FARM_NAME;
+
     @Override
     public String getLocalizedName() {
-        return L10nImprovement.FARM_NAME.getLocalized();
+        return name.getLocalized();
     }
 
     @Override

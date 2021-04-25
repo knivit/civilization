@@ -1,5 +1,6 @@
 package com.tsoft.civilization.L10n;
 
+import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.state.Sessions;
 
@@ -35,7 +36,7 @@ public class L10n {
     public String getLocalized(Object ... params) {
         String value = getLocalized();
         if (value != null && params != null) {
-            return String.format(value, params);
+            return Format.text(value, params).toString();
         }
         return value;
     }

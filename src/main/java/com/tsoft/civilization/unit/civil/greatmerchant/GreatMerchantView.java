@@ -1,12 +1,18 @@
 package com.tsoft.civilization.unit.civil.greatmerchant;
 
+import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.unit.AbstractUnitView;
+import lombok.Getter;
 
 public class GreatMerchantView extends AbstractUnitView {
+
+    @Getter
+    public final L10n name = L10nUnit.GREAT_MERCHANT_NAME;
+
     @Override
     public String getLocalizedName() {
-        return L10nUnit.GREAT_MERCHANT_NAME.getLocalized();
+        return name.getLocalized();
     }
 
     @Override

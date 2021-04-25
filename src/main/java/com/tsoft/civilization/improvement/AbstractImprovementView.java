@@ -1,9 +1,7 @@
 package com.tsoft.civilization.improvement;
 
-public abstract class AbstractImprovementView {
-    public abstract String getLocalizedName();
+import com.tsoft.civilization.common.AbstractView;
 
-    public abstract String getLocalizedDescription();
+public abstract class AbstractImprovementView implements AbstractView {
 
-    public abstract String getStatusImageSrc();
 }

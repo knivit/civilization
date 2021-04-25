@@ -6,6 +6,7 @@ import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.civilization.Civilization;
+import lombok.Getter;
 
 import java.util.UUID;
 
@@ -26,7 +27,8 @@ import java.util.UUID;
 public class Archers extends AbstractUnit {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    private static final CombatStrength COMBAT_STRENGTH = CombatStrength.builder()
+    @Getter
+    private final CombatStrength baseCombatStrength = CombatStrength.builder()
         .meleeAttackStrength(5)
         .targetBackFireStrength(5)
         .defenseStrength(30)
@@ -35,20 +37,19 @@ public class Archers extends AbstractUnit {
         .canConquerCity(false)
         .build();
 
-    private static final ArchersView VIEW = new ArchersView();
+    @Getter
+    private final ArchersView view = new ArchersView();
+
+    @Getter
+    private final UnitCategory unitCategory = UnitCategory.MILITARY_RANGED;
 
     public Archers(Civilization civilization) {
         super(civilization);
     }
 
     @Override
-    public UnitCategory getUnitCategory() {
-        return UnitCategory.MILITARY_RANGED;
-    }
-
-    @Override
-    public CombatStrength getBaseCombatStrength() {
-        return COMBAT_STRENGTH;
+    public String getClassUuid() {
+        return CLASS_UUID;
     }
 
     @Override
@@ -57,19 +58,8 @@ public class Archers extends AbstractUnit {
     }
 
     @Override
-    public ArchersView getView() {
-        return VIEW;
-    }
-
-    @Override
     public int getProductionCost() {
         return 40;
-    }
-
-    @Override
-    public boolean checkEraAndTechnology(Civilization civilization) {
-        return (civilization.getYear().getEra() == Year.ANCIENT_ERA) &&
-                (civilization.isResearched(Technology.ARCHERY));
     }
 
     @Override
@@ -78,7 +68,8 @@ public class Archers extends AbstractUnit {
     }
 
     @Override
-    public String getClassUuid() {
-        return CLASS_UUID;
+    public boolean checkEraAndTechnology(Civilization civilization) {
+        return (civilization.getYear().getEra() == Year.ANCIENT_ERA) &&
+            (civilization.isResearched(Technology.ARCHERY));
     }
 }

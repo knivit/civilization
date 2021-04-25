@@ -1,4 +1,4 @@
-package com.tsoft.civilization.world.event;
+package com.tsoft.civilization.world;
 
 import java.util.ArrayList;
 

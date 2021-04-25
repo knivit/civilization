@@ -176,34 +176,34 @@ public class L10nWorld {
     /** Events */
 
     public static final L10n DECLARE_WAR_EVENT = new L10n()
-        .put(EN, "A war has been declared between %s and %s !")
-        .put(RU, "Была объявлена война between %s and %s !");
+        .put(EN, "$civilizationName1 declared a war to $civilizationName2 !")
+        .put(RU, "$civilizationName1 объявила войну $civilizationName !");
 
     public static final L10n DECLARE_FRIENDS_EVENT = new L10n()
-        .put(EN, "A war has stopped between %s and %s !")
-        .put(RU, "Война прекращена between %s and %s !");
+        .put(EN, "$civilizationName1 declared $civilizationName2 a friend !")
+        .put(RU, "$civilizationName1 объявила $civilizationName другом !");
 
     public static final L10n NEW_CIVILIZATION_EVENT = new L10n()
-        .put(EN, "A new Civilization %s has been founded on %s")
-        .put(RU, "Была основана %s новая цивилизация %s");
+        .put(EN, "A new Civilization $civilizationName has been founded")
+        .put(RU, "Была основана новая цивилизация $civilizationName");
 
-    public static final L10n DESTROY_CIVILIZATION_EVENT = new L10n()
-        .put(EN, "Civilization %s has been destroyed")
-        .put(RU, "Цивилизация %s уничтожена");
+    public static final L10n CIVILIZATION_DESTROYED_EVENT = new L10n()
+        .put(EN, "Civilization $civilizationName has been destroyed")
+        .put(RU, "Цивилизация $civilizationName уничтожена");
 
     public static final L10n MOVE_START_EVENT = new L10n()
-        .put(EN, "Civilization %s move begins")
-        .put(RU, "Цивилизация %s начинает свой ход");
+        .put(EN, "New year started for Civilization $civilizationName")
+        .put(RU, "Начался новый год цивилизации $civilizationName");
 
     public static final L10n MOVE_DONE_EVENT = new L10n()
-        .put(EN, "Civilization %s has made its move")
-        .put(RU, "Цивилизация %s сделала ход");
+        .put(EN, "Civilization $civilizationName has made its move")
+        .put(RU, "Цивилизация $civilizationName сделала ход");
 
-    public static final L10n NEW_YEAR_START_EVENT = new L10n()
-        .put(EN, "Started a new Year %d !")
-        .put(RU, "Начался новый год %d !");
+    public static final L10n WORLD_START_YEAR_EVENT = new L10n()
+        .put(EN, "Started a new Year $year !")
+        .put(RU, "Начался новый год $year !");
 
-    public static final L10n NEW_YEAR_COMPLETE_EVENT = new L10n()
-        .put(EN, "All civilizations has moved into new Year %d")
-        .put(RU, "Все цивилизации вошли в Новый Год %d");
+    public static final L10n WORLD_STOP_YEAR_EVENT = new L10n()
+        .put(EN, "Year $year ended")
+        .put(RU, "Год $year завершен");
 }

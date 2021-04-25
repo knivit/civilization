@@ -33,7 +33,7 @@ public class CreateWorldAction {
     public static final ActionFailureResult CANT_CREATE_BARBARIANS = new ActionFailureResult(L10nWorld.CANT_CREATE_BARBARIANS);
 
     @Builder
-    public static class Request {
+    public final static class Request {
         final String worldName;
         final int mapWidth;
         final int mapHeight;
