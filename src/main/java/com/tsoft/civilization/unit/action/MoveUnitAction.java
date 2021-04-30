@@ -20,6 +20,8 @@ public class MoveUnitAction {
     public static final ActionSuccessResult CAN_MOVE = new ActionSuccessResult(L10nUnit.CAN_MOVE);
 
     public static final ActionFailureResult UNIT_NOT_FOUND = new ActionFailureResult(L10nUnit.UNIT_NOT_FOUND);
+    public static final ActionFailureResult UNIT_DESTROYED = new ActionFailureResult(L10nUnit.UNIT_DESTROYED);
+    public static final ActionFailureResult INVALID_UNIT_LOCATION = new ActionFailureResult(L10nUnit.INVALID_UNIT_LOCATION);
     public static final ActionFailureResult INVALID_LOCATION = new ActionFailureResult(L10nUnit.INVALID_LOCATION);
     public static final ActionFailureResult NO_LOCATIONS_TO_MOVE = new ActionFailureResult(L10nUnit.NO_LOCATIONS_TO_MOVE);
 
@@ -51,8 +53,16 @@ public class MoveUnitAction {
     }
 
     public ActionAbstractResult canMove(AbstractUnit unit) {
-        if (unit == null || unit.isDestroyed() || unit.getLocation() == null) {
+        if (unit == null) {
             return UNIT_NOT_FOUND;
+        }
+
+        if (unit.isDestroyed()) {
+            return UNIT_DESTROYED;
+        }
+
+        if (unit.getLocation() == null) {
+            return INVALID_UNIT_LOCATION;
         }
 
         Set<Point> locations = unitMoveService.getLocationsToMove(unit);

@@ -38,7 +38,7 @@ public class AttackActionTest {
 
         Civilization russia = world.createCivilization(RUSSIA);
         Warriors warriors = UnitFactory.newInstance(russia, Warriors.CLASS_UUID);
-        warriors.setDestroyed();
+        warriors.destroy();
 
         assertThat(attackAction.attack(warriors, null)).isEqualTo(ATTACKER_NOT_FOUND);
     }

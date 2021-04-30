@@ -1,6 +1,9 @@
 package com.tsoft.civilization.economic;
 
+import java.util.Comparator;
+
 public class SupplyMock {
+
     public static Supply of(String str) {
         Supply supply = Supply.EMPTY_SUPPLY;
 
@@ -56,6 +59,8 @@ public class SupplyMock {
 
         throw new IllegalArgumentException("Unknown type = " + type);
     }
+
+    private static Comparator<Supply> comparator = (a, b) -> equals(a, b) ? 0 : 1;
 
     public static boolean equals(String expectedSupply, Supply actualSupply) {
         return equals(SupplyMock.of(expectedSupply), actualSupply);
@@ -122,5 +127,9 @@ public class SupplyMock {
 
     private static String cmp(int a, int b) {
         return (a == b) ? "" : "*";
+    }
+
+    public static int compare(Supply a, Supply b) {
+        return comparator.compare(a, b);
     }
 }

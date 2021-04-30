@@ -21,9 +21,6 @@ public class Warriors extends AbstractUnit {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     @Getter
-    private static final String classUuid = UUID.randomUUID().toString();
-
-    @Getter
     private final CombatStrength baseCombatStrength = CombatStrength.builder()
         .meleeAttackStrength(10)
         .targetBackFireStrength(5)

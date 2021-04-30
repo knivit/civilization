@@ -150,6 +150,10 @@ public class L10nUnit {
         .put(EN, "The unit is destroyed")
         .put(RU, "Юнит уничтожен");
 
+    public static final L10n INVALID_UNIT_LOCATION = new L10n()
+        .put(EN, "Invalid unit's location")
+        .put(RU, "Неверное местоположение юнита");
+
     public static final L10n CAN_DESTROY_UNIT = new L10n()
         .put(EN, "The unit can be destroyed")
         .put(RU, "Юнит может быть удален");

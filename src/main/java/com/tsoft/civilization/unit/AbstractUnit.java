@@ -217,7 +217,7 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
         return getCombatStrength().isDestroyed();
     }
 
-    public void setDestroyed() {
+    public void destroy() {
         combatStrength = combatStrength.copy()
             .isDestroyed(true)
             .build();
@@ -225,7 +225,7 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
 
     @Override
     public void destroyedBy(HasCombatStrength attacker, boolean destroyOtherUnitsAtLocation) {
-        setDestroyed();
+        destroy();
 
         // attacker may be null (for settlers who had settled)
         if (attacker != null) {

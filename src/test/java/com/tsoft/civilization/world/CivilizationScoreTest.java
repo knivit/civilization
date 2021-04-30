@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CivilizationScoreTest {
@@ -61,7 +62,10 @@ public class CivilizationScoreTest {
         // -------------------------------------------------------------------------------
         //    1 |    3 |    3 |       4 |       1 |           |           1 |          1 |
         world.move();
-        assertTrue(SupplyMock.equals("F1 P3 G3 S4 C1 H0 U1 O1", russia.calcSupply()));
+
+        assertThat(russia.calcSupply())
+            .usingComparator(SupplyMock::compare)
+            .isEqualTo(SupplyMock.of("F1 P3 G3 S4 C1 H0 U1 O1"));
 
         // Step 2
         // food | prod | gold | science | culture | happiness | unhappiness | population | produced/consumed by
@@ -75,8 +79,14 @@ public class CivilizationScoreTest {
         // --------------------------------------------------------------------------------
         //    2 |    6 |    6 |       6 |       2 |           |           2 |          1 |
         world.move();
-        assertTrue(SupplyMock.equals("F1 P3 G3 S4 C1 H0 U1 O1", russia.calcSupply()));
-        assertTrue(SupplyMock.equals("F2 P6 G6 S8 C2 H0 U2 O1", russia.getSupply()));
+
+        assertThat(russia.calcSupply())
+            .usingComparator(SupplyMock::compare)
+            .isEqualTo(SupplyMock.of("F1 P3 G3 S4 C1 H0 U1 O1"));
+
+        assertThat(russia.getSupply())
+            .usingComparator(SupplyMock::compare)
+            .isEqualTo(SupplyMock.of("F2 P6 G6 S8 C2 H0 U2 O1"));
     }
 
     @Test
@@ -90,7 +100,7 @@ public class CivilizationScoreTest {
             "3| . g p . .", "3| . j o . .", "3| . . . . .");
         MockWorld world = MockWorld.of(map);
 
-        Civilization civilization = world.createCivilization(RUSSIA, new MockScenario()
+        Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .city("Moscow", new Point(2, 1))
         );
 
@@ -110,7 +120,10 @@ public class CivilizationScoreTest {
         assertEquals(4 * 5 - 3, city.getCitizenLocations().size());
 
         world.move();
-        assertTrue(SupplyMock.equals("F2 P12 G10 S20 C1 H0 U17 O20", civilization.calcSupply()));
+
+        assertThat(russia.calcSupply())
+            .usingComparator(SupplyMock::compare)
+            .isEqualTo(SupplyMock.of("F2 P12 G10 S20 C1 H0 U17 O20"));
 
         // check the citizens don't work on tiles with empty supply
         assertTrue(Collections.disjoint(city.getCitizenLocations(), Arrays.asList(
@@ -148,8 +161,12 @@ public class CivilizationScoreTest {
         //   -1 |    6 |    3 |       5 |       1 |           |           2 |          2 |
         city.setSupplyStrategy(CitySupplyStrategy.MAX_PRODUCTION);
         world.move();
+
         assertEquals(Arrays.asList(new Point(1, 0), new Point(1, 1)), city.getCitizenLocations());
-        assertTrue(SupplyMock.equals("F-1 P6 G3 S5 C1 H0 U2 O2", russia.calcSupply()));
+
+        assertThat(russia.calcSupply())
+            .usingComparator(SupplyMock::compare)
+            .isEqualTo(SupplyMock.of("F-1 P6 G3 S5 C1 H0 U2 O2"));
 
         // Step 2
         // food | prod | gold | science | culture | unhappiness | population | produced/consumed by
@@ -165,8 +182,15 @@ public class CivilizationScoreTest {
         //    2 |    9 |    6 |      10 |       2 |           4 |          2 | total
         city.setSupplyStrategy(CitySupplyStrategy.MAX_FOOD);
         world.move();
+
         assertEquals(Arrays.asList(new Point(1, 2), new Point(0, 1)), city.getCitizenLocations());
-        assertTrue(SupplyMock.equals("F3 P3 G3 S5 C1 U2 O2", russia.calcSupply()));
-        assertTrue(SupplyMock.equals("F2 P9 G6 S10 C2 U4 O2", russia.getSupply()));
+
+        assertThat(russia.calcSupply())
+            .usingComparator(SupplyMock::compare)
+            .isEqualTo(SupplyMock.of("F3 P3 G3 S5 C1 U2 O2"));
+
+        assertThat(russia.getSupply())
+            .usingComparator(SupplyMock::compare)
+            .isEqualTo(SupplyMock.of("F2 P9 G6 S10 C2 U4 O2"));
     }
 }
