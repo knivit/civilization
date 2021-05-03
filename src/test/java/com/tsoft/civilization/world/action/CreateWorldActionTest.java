@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.util.UUID;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.BARBARIANS;
+import static com.tsoft.civilization.world.DifficultyLevel.WARLORD;
 import static com.tsoft.civilization.world.action.CreateWorldAction.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,6 +23,7 @@ public class CreateWorldActionTest {
             .mapWidth(10)
             .mapHeight(10)
             .maxNumberOfCivilizations(8)
+            .difficultyLevel(WARLORD.name())
             .build();
 
         assertThat(CreateWorldAction.create(request))

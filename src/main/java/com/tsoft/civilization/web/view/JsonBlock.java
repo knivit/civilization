@@ -79,7 +79,7 @@ public class JsonBlock {
     }
 
     public String getText() {
-        return "{" + buf.toString() + "}";
+        return "{" + buf + "}";
     }
 
     public String getValue() {

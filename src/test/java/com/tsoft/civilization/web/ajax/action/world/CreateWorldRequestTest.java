@@ -21,7 +21,8 @@ public class CreateWorldRequestTest {
             "mapHeight", "4",
             "worldType", "0",
             "climate", "0",
-            "maxNumberOfCivilizations", "2"
+            "maxNumberOfCivilizations", "2",
+            "difficultyLevel", "PRINCE"
         );
 
         CreateWorldRequest createWorldRequest = new CreateWorldRequest();

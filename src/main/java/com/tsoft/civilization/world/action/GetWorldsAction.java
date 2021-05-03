@@ -8,6 +8,7 @@ import com.tsoft.civilization.web.ajax.action.world.JoinWorldRequest;
 import com.tsoft.civilization.web.ajax.action.world.SelectLanguageRequest;
 import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.web.response.Response;
+import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.state.Worlds;
 import com.tsoft.civilization.world.L10nWorld;
@@ -43,8 +44,8 @@ public class GetWorldsAction {
     }
 
     private static StringBuilder getLanguages() {
-        String selected = Sessions.getCurrent().getLanguage();
-        selected = (selected == null) ? EN : selected;
+        ClientSession session = Sessions.getCurrent();
+        String selected = (session == null || session.getLanguage() == null) ? EN : session.getLanguage();
 
         StringBuilder languages = new StringBuilder();
         for (Map.Entry<String, String> lang : LANGUAGES.entrySet()) {

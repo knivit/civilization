@@ -7,6 +7,7 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
+import com.tsoft.civilization.unit.action.MoveUnitAction;
 import com.tsoft.civilization.unit.civil.greatartist.GreatArtist;
 import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.unit.civil.workers.Workers;
@@ -26,10 +27,67 @@ import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
 import static com.tsoft.civilization.unit.move.UnitMoveService.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 
 public class UnitMoveServiceTest {
 
     private static final UnitMoveService unitMoveService = new UnitMoveService();
+
+    @Test
+    public void invalid_location() {
+        assertThat(unitMoveService.move(null, null))
+            .isEqualTo(INVALID_TARGET_LOCATION);
+    }
+
+    @Test
+    public void unit_not_found() {
+        assertThat(unitMoveService.move(null, new Point(1, 1)))
+            .isEqualTo(UNIT_NOT_FOUND);
+    }
+
+    @Test
+    public void invalid_destroyed() {
+        MockWorld world = MockWorld.newSimpleWorld();
+
+        Civilization russia = world.createCivilization(RUSSIA);
+        Warriors warriors = UnitFactory.newInstance(russia, Warriors.CLASS_UUID);
+        warriors.destroy();
+
+        assertThat(unitMoveService.move(warriors, new Point(1, 1)))
+            .isEqualTo(UNIT_DESTROYED);
+    }
+
+    @Test
+    public void invalid_unit_location() {
+        MockWorld world = MockWorld.newSimpleWorld();
+
+        world.createCivilization(RUSSIA, new MockScenario()
+            .workers("workers", new Point(2, 0)));
+
+        assertThat(unitMoveService.move(world.unit("workers"), new Point(1, 1)))
+            .isEqualTo(INVALID_UNIT_LOCATION);
+    }
+
+    @Test
+    public void no_locations_to_move() {
+        MockWorld world = MockWorld.of(new MockTilesMap(MapType.SIX_TILES,
+            " |0 1 2 3 ",
+            "-+--------",
+            "0|g . . g ",
+            "1| . g . .",
+            "2|g . . g ",
+            "3| . g . ."));
+
+        UnitMoveService unitMoveService = mock(UnitMoveService.class);
+        MoveUnitAction moveUnitAction = new MoveUnitAction(unitMoveService);
+
+        world.createCivilization(RUSSIA, new MockScenario()
+            .workers("workers", new Point(0, 0))
+        );
+
+        assertThat(moveUnitAction.move(world.unit("workers"), new Point(1, 1)))
+            .isEqualTo(NO_LOCATIONS_TO_MOVE);
+    }
 
     @Test
     public void fail_not_enough_passing_score_trivial() {

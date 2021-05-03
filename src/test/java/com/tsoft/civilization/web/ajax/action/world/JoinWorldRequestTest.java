@@ -1,7 +1,7 @@
 package com.tsoft.civilization.web.ajax.action.world;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.tsoft.civilization.JsonHelper;
+import com.tsoft.civilization.helper.JsonHelper;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.PlayerType;

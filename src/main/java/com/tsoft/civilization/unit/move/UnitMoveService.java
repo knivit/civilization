@@ -22,7 +22,7 @@ public class UnitMoveService {
 
     public static final ActionSuccessResult UNIT_MOVED = new ActionSuccessResult(L10nUnit.UNIT_MOVED);
     public static final ActionSuccessResult UNIT_SWAPPED = new ActionSuccessResult(L10nUnit.UNIT_SWAPPED);
-    private static final ActionSuccessResult CAN_MOVE = new ActionSuccessResult(L10nUnit.CAN_MOVE);
+    public static final ActionSuccessResult CAN_MOVE = new ActionSuccessResult(L10nUnit.CAN_MOVE);
 
     public static final ActionFailureResult NO_PASS_SCORE = new ActionFailureResult(L10nUnit.NO_PASS_SCORE);
     public static final ActionFailureResult CANT_CROSS_BORDERS = new ActionFailureResult(L10nUnit.CANT_CROSS_BORDERS);
