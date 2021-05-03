@@ -26,7 +26,7 @@ public class RemoveForestActionRequest extends AbstractAjaxRequest {
         }
 
         String workersId = request.get("workers");
-        AbstractUnit workers = myCivilization.units().getUnitById(workersId);
+        AbstractUnit workers = myCivilization.getUnitService().getUnitById(workersId);
         Point location = myCivilization.getTilesMap().getLocation(request.get("col"), request.get("row"));
 
         ActionAbstractResult result = attackAction.attack(workers, location);

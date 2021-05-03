@@ -29,6 +29,9 @@ public class Warriors extends AbstractUnit {
         .build();
 
     @Getter
+    private final int baseProductionCost = 40;
+
+    @Getter
     private final WarriorsView view = new WarriorsView();
 
     public Warriors(Civilization civilization) {
@@ -48,11 +51,6 @@ public class Warriors extends AbstractUnit {
     @Override
     public void initPassScore() {
         setPassScore(5);
-    }
-
-    @Override
-    public int getProductionCost() {
-        return 40;
     }
 
     @Override

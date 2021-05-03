@@ -2,12 +2,14 @@ package com.tsoft.civilization.web.state;
 
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.World;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 import java.util.UUID;
 
 import static com.tsoft.civilization.L10n.L10n.DEFAULT_LANGUAGE;
 
+@EqualsAndHashCode(of = "sessionId")
 public class ClientSession {
     // Client-server data
     private final String sessionId;
@@ -61,22 +63,5 @@ public class ClientSession {
             worldId = civilization.getWorld().getId();
         }
         return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ClientSession that = (ClientSession) o;
-
-        if (!sessionId.equals(that.sessionId)) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return sessionId.hashCode();
     }
 }

@@ -21,18 +21,18 @@ public final class CityStopYearEvent implements Event {
 
     private final L10n message = L10nCity.CITY_STOP_YEAR_EVENT;
     private final L10n cityName;
-    private final Supply populationSupply;
-    private final Supply buildingsSupply;
-    private final Supply constructionSupply;
+    private final Supply originalSupply;
+    private final Supply incomeSupply;
+    private final Supply outcomeSupply;
     private final Supply totalSupply;
 
     public Object[] getArgs() {
         return new Object[] {
             "$cityName", cityName,
-            "$populationSupply", populationSupply,
-            "$buildingsSupply", buildingsSupply,
-            "$constructionSupply", constructionSupply,
-            "$supply", totalSupply
+            "$originalSupply", originalSupply,
+            "$incomeSupply", incomeSupply,
+            "$outcomeSupply", outcomeSupply,
+            "$totalSupply", totalSupply
         };
     }
 }

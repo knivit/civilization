@@ -62,6 +62,9 @@ public class Market extends AbstractBuilding {
     private static final MarketView VIEW = new MarketView();
 
     @Getter
+    private final int baseProductionCost = 120;
+
+    @Getter
     private Supply supply = Supply.EMPTY_SUPPLY;
 
     @Override
@@ -77,7 +80,7 @@ public class Market extends AbstractBuilding {
      * The Market significantly increases a city's output of gold.
      */
     @Override
-    public Supply calcSupply() {
+    public Supply calcIncomeSupply() {
         Supply tileScore = getCity().calcTilesSupply();
         int gold = tileScore.getGold();
         if (gold > 0) {
@@ -89,23 +92,23 @@ public class Market extends AbstractBuilding {
     }
 
     @Override
+    public Supply calcOutcomeSupply() {
+        return Supply.EMPTY_SUPPLY;
+    }
+
+    @Override
     public void startYear() {
 
     }
 
     @Override
     public void stopYear() {
-        supply = calcSupply();
+
     }
 
     @Override
     public int getDefenseStrength() {
         return 0;
-    }
-
-    @Override
-    public int getProductionCost() {
-        return 120;
     }
 
     @Override

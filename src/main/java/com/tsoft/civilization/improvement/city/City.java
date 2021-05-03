@@ -3,41 +3,64 @@ package com.tsoft.civilization.improvement.city;
 import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.building.*;
 import com.tsoft.civilization.building.palace.Palace;
+import com.tsoft.civilization.civilization.happiness.Happiness;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.combat.skill.AbstractSkill;
 import com.tsoft.civilization.improvement.AbstractImprovement;
-import com.tsoft.civilization.improvement.CanBeBuilt;
+import com.tsoft.civilization.improvement.city.construction.CanBeBuilt;
+import com.tsoft.civilization.improvement.city.supply.CitySupplyService;
+import com.tsoft.civilization.improvement.city.tile.CityTileService;
+import com.tsoft.civilization.improvement.city.building.CityBuildingService;
+import com.tsoft.civilization.improvement.city.combat.CityCombatService;
+import com.tsoft.civilization.improvement.city.construction.CityConstructionService;
+import com.tsoft.civilization.improvement.city.construction.ConstructionList;
 import com.tsoft.civilization.improvement.city.event.CityStopYearEvent;
+import com.tsoft.civilization.improvement.city.population.CityPopulationService;
+import com.tsoft.civilization.improvement.city.supply.TileSupplyStrategy;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.tile.base.TileType;
 import com.tsoft.civilization.unit.*;
 import com.tsoft.civilization.economic.*;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.world.HasHistory;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 
 @Slf4j
-public class City extends AbstractImprovement implements HasCombatStrength, HasSupply {
+public class City extends AbstractImprovement implements HasCombatStrength, HasHistory {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    private final Set<Point> locations = new HashSet<>();
-
+    private CityTileService tileService;
     private CityPopulationService populationService;
     private CityBuildingService buildingService;
     private CityConstructionService constructionService;
     private CityCombatService combatService;
 
     @Getter
+    private CitySupplyService supplyService;
+
+    @Getter
     private CityView view;
+
+    private final Set<Point> locations = new HashSet<>();
+
+    @Getter
+    @Setter
+    private int passScore;
 
     @Getter
     private Supply supply = Supply.EMPTY_SUPPLY;
 
-    private int passScore;
+    @Getter
+    private Happiness happiness = Happiness.EMPTY;
+
+    @Getter
+    private boolean annexed;
 
     public City(Civilization civilization, Point location) {
         super(civilization, location);
@@ -45,6 +68,7 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasS
 
     public void init(L10n cityName, boolean isCapital) {
         // area
+        tileService = new CityTileService(this);
         locations.add(location);
         locations.addAll(getTilesMap().getLocationsAround(location, 1));
 
@@ -57,6 +81,9 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasS
         buildingService.addFirstBuilding(isCapital);
         constructionService = new CityConstructionService(this);
         combatService = new CityCombatService(this);
+
+        // economics
+        supplyService = new CitySupplyService(this);
 
         // media
         view = new CityView(cityName);
@@ -99,10 +126,6 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasS
         return combatService.calcCombatStrength();
     }
 
-    public int getPassScore() {
-        return passScore;
-    }
-
     @Override
     public UnitCategory getUnitCategory() {
         return combatService.getUnitCategory();
@@ -120,12 +143,14 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasS
         return locations.contains(location);
     }
 
-    public CitySupplyStrategy getSupplyStrategy() {
-        return populationService.getSupplyStrategy();
+    public TileSupplyStrategy getSupplyStrategy() {
+        return supplyService.getSupplyStrategy();
     }
 
-    public void setSupplyStrategy(CitySupplyStrategy supplyStrategy) {
-        populationService.setSupplyStrategy(supplyStrategy);
+    public void setSupplyStrategy(TileSupplyStrategy supplyStrategy) {
+        if (supplyService.setSupplyStrategy(supplyStrategy)) {
+            populationService.reorganizeCitizensOnTiles();
+        }
     }
 
     public void addCitizen() {
@@ -157,7 +182,7 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasS
     }
 
     public List<Point> getCitizenLocations() {
-        return populationService.getPopulationLocations();
+        return populationService.getCitizenLocations();
     }
 
     public AbstractBuilding findBuildingByClassUuid(String classUuid) {
@@ -195,29 +220,13 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasS
     }
 
     @Override
-    public void setPassScore(int passScore) {
-        this.passScore = passScore;
-    }
-
-    @Override
     public boolean isDestroyed() {
         return combatService.isDestroyed();
     }
 
     @Override
-    public UnitList getUnitsAround(int radius) {
-        return civilization.units().getUnitsAround(getLocation(), radius);
-    }
-
-    @Override
     public List<AbstractSkill> getSkills() {
         return Collections.emptyList();
-    }
-
-    /** A city may be destroyed only during a melee attack */
-    @Override
-    public void destroyedBy(HasCombatStrength destroyer, boolean destroyOtherUnitsAtLocation) {
-        destroyer.getCivilization().captureCity(this, destroyer);
     }
 
     /** City has moved to another Civilization (was captured) */
@@ -226,7 +235,7 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasS
     }
 
     public void addUnit(AbstractUnit unit) {
-        civilization.units().addUnit(unit, location);
+        civilization.getUnitService().addUnit(unit, location);
     }
 
     public int getUnitProductionCost(String unitClassUuid) {
@@ -254,23 +263,18 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasS
     }
 
     public Supply calcTilesSupply() {
-        return populationService.calcAllCitizensSupply();
+        return supplyService.calcTilesSupply();
     }
 
-    @Override
-    public Supply calcSupply() {
-        Supply supply = Supply.builder().population(getCitizenCount()).build();
-
-        return supply
-            .add(populationService.calcSupply())
-            .add(buildingService.calcSupply())
-            .add(constructionService.calcSupply());
+    public Supply calcTilesSupply(Point location) {
+        return supplyService.calcTilesSupply(location);
     }
 
     @Override
     public void startYear() {
-        populationService.startYear();
+        tileService.startYear();
         buildingService.startYear();
+        populationService.startYear();
         constructionService.startYear();
         combatService.startYear();
 
@@ -280,30 +284,28 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasS
 
     @Override
     public void stopYear() {
-        // population
-        populationService.stopYear();
-        Supply populationSupply = populationService.getSupply();
-        supply = supply.add(populationSupply);
+        Supply originalSupply = supply.copy().build();
+        Supply incomeSupply = supplyService.calcIncomeSupply();
+        Supply outcomeSupply = supplyService.calcOutcomeSupply();
+        supply = originalSupply.add(incomeSupply).add(outcomeSupply);
 
-        // buildings
+        tileService.stopYear();
+
+        Supply populationSupplyChanges = populationService.stopYear(supply);
+        supply = supply.add(populationSupplyChanges);
+
         buildingService.stopYear();
-        Supply buildingsSupply = buildingService.getSupply();
-        supply = supply.add(buildingsSupply);
 
-        // construction
-        constructionService.stopYear();
-        Supply constructionSupply = constructionService.getSupply();
-        supply = supply.add(constructionSupply);
+        Supply constructionSupplyChanges = constructionService.stopYear(supply);
+        supply = supply.add(constructionSupplyChanges);
 
-        // military
         combatService.stopYear();
 
-        // event
         civilization.addEvent(CityStopYearEvent.builder()
             .cityName(getName())
-            .populationSupply(populationSupply)
-            .buildingsSupply(buildingsSupply)
-            .constructionSupply(constructionSupply)
+            .originalSupply(originalSupply)
+            .incomeSupply(incomeSupply)
+            .outcomeSupply(outcomeSupply)
             .totalSupply(supply)
             .build());
     }

@@ -50,6 +50,7 @@ public class RequestsMap {
         requests.put(GetEvents.class.getSimpleName(), new GetEvents());
         requests.put(GetCivilizations.class.getSimpleName(), new GetCivilizations());
         requests.put(GetCivilizationStatus.class.getSimpleName(), new GetCivilizationStatus());
+        requests.put(GetConstructionStatus.class.getSimpleName(), new GetConstructionStatus());
         requests.put(GetBuildingStatus.class.getSimpleName(), new GetBuildingStatus());
         requests.put(GetControlPanel.class.getSimpleName(), new GetControlPanel());
 

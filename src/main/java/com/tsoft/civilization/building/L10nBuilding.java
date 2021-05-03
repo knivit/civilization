@@ -63,8 +63,12 @@ public class L10nBuilding {
         .put(RU, "Здания города");
 
     public static final L10n CONSTRUCTION_LIST = new L10n()
-        .put(EN, "Construction in progress")
+        .put(EN, "Construction")
         .put(RU, "Строительство");
+
+    public static final L10n CONSTRUCTION_PRIORITY_LABEL = new L10n()
+        .put(EN, "Priority")
+        .put(RU, "Приоритет");
 
     public static final L10n NAME = new L10n()
         .put(EN, "Name")

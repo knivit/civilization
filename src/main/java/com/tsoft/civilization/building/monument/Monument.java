@@ -59,7 +59,7 @@ public class Monument extends AbstractBuilding {
     private static final MonumentView VIEW = new MonumentView();
 
     @Getter
-    private Supply supply = Supply.EMPTY_SUPPLY;
+    private final int baseProductionCost = 40;
 
     public Monument(City city) {
         super(city);
@@ -75,8 +75,13 @@ public class Monument extends AbstractBuilding {
      * and the civilization's acquisition of Social Policies.
      */
     @Override
-    public Supply calcSupply() {
+    public Supply calcIncomeSupply() {
         return Supply.builder().gold(-1).culture(2).build();
+    }
+
+    @Override
+    public Supply calcOutcomeSupply() {
+        return Supply.EMPTY_SUPPLY;
     }
 
     @Override
@@ -86,17 +91,12 @@ public class Monument extends AbstractBuilding {
 
     @Override
     public void stopYear() {
-        supply = calcSupply();
+
     }
 
     @Override
     public int getDefenseStrength() {
         return 0;
-    }
-
-    @Override
-    public int getProductionCost() {
-        return 40;
     }
 
     @Override

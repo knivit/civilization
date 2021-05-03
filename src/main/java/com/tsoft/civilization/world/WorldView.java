@@ -61,7 +61,7 @@ public class WorldView {
         // cities
         worldBlock.startArray(("cities"));
         for (Civilization civilization : world.getCivilizations()) {
-            civilization.cities().applyToAll(city -> {
+            civilization.getCityService().applyToAll(city -> {
                 CityView cityView = city.getView();
                 worldBlock.addElement(cityView.getJson(city).getText());
             });

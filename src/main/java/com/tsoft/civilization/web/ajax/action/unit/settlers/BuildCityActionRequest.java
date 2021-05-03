@@ -21,7 +21,7 @@ public class BuildCityActionRequest extends AbstractAjaxRequest {
         }
 
         String settlersId = request.get("settlers");
-        Settlers settlers = (Settlers)myCivilization.units().getUnitById(settlersId);
+        Settlers settlers = (Settlers)myCivilization.getUnitService().getUnitById(settlersId);
 
         ActionAbstractResult result = BuildCityAction.buildCity(settlers);
         if (result.isFail()) {

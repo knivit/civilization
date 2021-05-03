@@ -1,6 +1,7 @@
 package com.tsoft.civilization.web.ajax.action.unit;
 
-import com.tsoft.civilization.unit.UnitCaptureService;
+import com.tsoft.civilization.combat.CaptureService;
+import com.tsoft.civilization.unit.move.UnitMoveService;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.unit.action.CaptureUnitAction;
@@ -15,8 +16,9 @@ import com.tsoft.civilization.civilization.Civilization;
 
 public class CaptureUnitActionRequest extends AbstractAjaxRequest {
 
-    private final UnitCaptureService unitCaptureService = new UnitCaptureService();
-    private final CaptureUnitAction captureUnitAction = new CaptureUnitAction(unitCaptureService);
+    private final UnitMoveService moveService = new UnitMoveService();
+    private final CaptureService captureService = new CaptureService();
+    private final CaptureUnitAction captureUnitAction = new CaptureUnitAction(captureService);
 
     @Override
     public Response getJson(Request request) {
@@ -26,7 +28,7 @@ public class CaptureUnitActionRequest extends AbstractAjaxRequest {
         }
 
         String attackerId = request.get("attacker");
-        AbstractUnit attacker = myCivilization.units().getUnitById(attackerId);
+        AbstractUnit attacker = myCivilization.getUnitService().getUnitById(attackerId);
         Point location = myCivilization.getTilesMap().getLocation(request.get("col"), request.get("row"));
 
         ActionAbstractResult result = captureUnitAction.capture(attacker, location);

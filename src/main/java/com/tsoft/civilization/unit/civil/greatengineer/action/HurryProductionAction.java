@@ -6,7 +6,7 @@ import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;
 
-import static com.tsoft.civilization.unit.action.MoveUnitAction.INVALID_LOCATION;
+import static com.tsoft.civilization.unit.move.UnitMoveService.INVALID_TARGET_LOCATION;
 
 // The Hurry Production ability is used such that the Engineer will speed the
 // production of whatever is being built. Most of the time, the building, Wonder
@@ -16,11 +16,11 @@ public class HurryProductionAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     public static ActionAbstractResult hurryProduction(GreatEngineer unit) {
-        return INVALID_LOCATION;
+        return INVALID_TARGET_LOCATION;
     }
 
     private static ActionAbstractResult canHurryProduction(GreatEngineer unit) {
-        return INVALID_LOCATION;
+        return INVALID_TARGET_LOCATION;
     }
 
     private static String getClientJSCode(GreatEngineer unit) {

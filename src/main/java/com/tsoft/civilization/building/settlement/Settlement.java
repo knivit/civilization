@@ -16,7 +16,7 @@ public class Settlement extends AbstractBuilding {
     private static final SettlementView VIEW = new SettlementView();
 
     @Getter
-    private Supply supply = Supply.EMPTY_SUPPLY;
+    private final int baseProductionCost = -1;
 
     public Settlement(City city) {
         super(city);
@@ -28,8 +28,13 @@ public class Settlement extends AbstractBuilding {
     }
 
     @Override
-    public Supply calcSupply() {
+    public Supply calcIncomeSupply() {
         return Supply.builder().production(1).gold(1).culture(1).build();
+    }
+
+    @Override
+    public Supply calcOutcomeSupply() {
+        return Supply.EMPTY_SUPPLY;
     }
 
     @Override
@@ -39,17 +44,12 @@ public class Settlement extends AbstractBuilding {
 
     @Override
     public void stopYear() {
-        supply = calcSupply();
+
     }
 
     @Override
     public int getDefenseStrength() {
         return 10;
-    }
-
-    @Override
-    public int getProductionCost() {
-        return -1;
     }
 
     @Override

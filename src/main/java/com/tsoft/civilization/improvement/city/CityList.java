@@ -4,6 +4,7 @@ import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.util.Point;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CityList implements Iterable<City> {
@@ -121,5 +122,11 @@ public class CityList implements Iterable<City> {
             }
         }
         return false;
+    }
+
+    public CityList sortByName() {
+        return new CityList(cities.stream()
+            .sorted(Comparator.comparing(e -> e.getView().getLocalizedName()))
+            .collect(Collectors.toList()));
     }
 }

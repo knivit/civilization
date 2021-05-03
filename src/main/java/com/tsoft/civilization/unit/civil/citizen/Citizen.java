@@ -1,14 +1,13 @@
 package com.tsoft.civilization.unit.civil.citizen;
 
-import com.tsoft.civilization.improvement.AbstractImprovement;
+import com.tsoft.civilization.economic.HasSupply;
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.tile.TileService;
-import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.unit.civil.citizen.view.LaborerView;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.economic.Supply;
+import com.tsoft.civilization.world.HasHistory;
+import lombok.EqualsAndHashCode;
 
-import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -34,7 +33,8 @@ import java.util.UUID;
  *
  * Each unit of 1 Population produces 1 Unhappiness, and so happiness serves to cap the number of citizens in the empire.
  */
-public class Citizen {
+@EqualsAndHashCode(of = "id")
+public class Citizen implements HasSupply, HasHistory {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private final String id = UUID.randomUUID().toString();
@@ -44,8 +44,6 @@ public class Citizen {
     private SpecialistType specialistType;
 
     private static final CitizenView VIEW = new LaborerView();
-
-    private final TileService tileService = new TileService();
 
     public Citizen(City city) {
         this.city = city;
@@ -75,7 +73,8 @@ public class Citizen {
         return isSpecialist() ? specialistType.getView() : VIEW;
     }
 
-    public Supply getSupply() {
+    @Override
+    public Supply calcIncomeSupply() {
         // +1 Production
         // In a few ways, Unemployed citizens behave as specialists.
         // They do not work a tile, and receive the bonus from the Statue of Liberty, as though they were specialists,
@@ -89,56 +88,23 @@ public class Citizen {
             return SpecialistSupplyTable.get(specialistType);
         }
 
-        return getCitizenSupply()
-            .add(getTileSupply())
-            .add(getImprovementsSupply());
-    }
-
-    // Base supply from an employed citizen
-    private Supply getCitizenSupply() {
-        return Supply.builder().science(1).unhappiness(1).build();
-    }
-
-    // Get supply from tiles without improvements where the citizen is working
-    private Supply getTileSupply() {
-        if (location == null) {
-            return Supply.EMPTY_SUPPLY;
-        }
-
-        AbstractTile tile = city.getTilesMap().getTile(location);
-        AbstractImprovement improvement = tile.getImprovement();
-        if (improvement == null || !improvement.isBlockingTileSupply()) {
-            return tileService.getSupply(tile);
-        }
-
-        return Supply.EMPTY_SUPPLY;
-    }
-
-    // Get supply from improvements where citizen is working
-    private Supply getImprovementsSupply() {
-        if (location == null) {
-            return Supply.EMPTY_SUPPLY;
-        }
-
-        AbstractTile tile = city.getTilesMap().getTile(location);
-        AbstractImprovement improvement = tile.getImprovement();
-        if (improvement != null && !(improvement instanceof City)) {
-            return improvement.getSupply();
-        }
-
-        return Supply.EMPTY_SUPPLY;
+        // Base supply from an employed citizen
+        return Supply.builder().science(1).build();
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Citizen citizen = (Citizen) o;
-        return Objects.equals(id, citizen.id);
+    public Supply calcOutcomeSupply() {
+        // 1 citizen consumes 1 food
+        return Supply.builder().food(-1).build();
     }
 
     @Override
-    public int hashCode() {
-        return id.hashCode();
+    public void startYear() {
+
+    }
+
+    @Override
+    public void stopYear() {
+
     }
 }

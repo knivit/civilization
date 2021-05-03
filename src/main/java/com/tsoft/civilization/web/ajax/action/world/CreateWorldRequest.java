@@ -16,12 +16,13 @@ public class CreateWorldRequest extends AbstractAjaxRequest {
     @Override
     public Response getJson(Request request) {
         CreateWorldAction.Request req = CreateWorldAction.Request.builder()
-            .worldName(request.get("worldName", "World " + UUID.randomUUID().toString()))
+            .worldName(request.get("worldName", "World " + UUID.randomUUID()))
             .mapWidth(NumberUtil.parseInt(request.get("mapWidth"), 20))
             .mapHeight(NumberUtil.parseInt(request.get("mapHeight"), 20))
             .worldType(NumberUtil.parseInt(request.get("worldType"), 0))
             .climate(NumberUtil.parseInt(request.get("climate"), 1))
             .maxNumberOfCivilizations(NumberUtil.parseInt(request.get("maxNumberOfCivilizations"), 4))
+            .difficultyLevel(request.get("difficultyLevel"))
             .build();
 
         ActionAbstractResult result = CreateWorldAction.create(req);

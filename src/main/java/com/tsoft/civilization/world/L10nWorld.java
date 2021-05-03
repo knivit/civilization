@@ -23,6 +23,10 @@ public class L10nWorld {
         .put(EN, "Invalid world's name")
         .put(RU, "Неверное название мира");
 
+    public static final L10n INVALID_DIFFICULTY_LEVEL = new L10n()
+        .put(EN, "Invalid difficulty level")
+        .put(RU, "Неверный уровень сложности");
+
     public static final L10n CANT_CREATE_WORLD = new L10n()
         .put(EN, "Can not create a world")
         .put(RU, "Невозможно создать новый мир");
@@ -149,6 +153,10 @@ public class L10nWorld {
         .put(EN, "World Name")
         .put(RU, "Название мира");
 
+    public static final L10n DIFFICULTY_LEVEL_NAME = new L10n()
+        .put(EN, "Difficulty level")
+        .put(RU, "Уровень сложности");
+
     public static final L10n INPUT_WORLD_TYPE = new L10n()
         .put(EN, "World Type")
         .put(RU, "Тип мира");
@@ -206,4 +214,38 @@ public class L10nWorld {
     public static final L10n WORLD_STOP_YEAR_EVENT = new L10n()
         .put(EN, "Year $year ended")
         .put(RU, "Год $year завершен");
+
+    /** Difficulty levels */
+
+    public static final L10n DIFFICULTY_LEVEL_SETTLER = new L10n()
+        .put(EN, "Settler")
+        .put(RU, "Поселенец");
+
+    public static final L10n DIFFICULTY_LEVEL_CHIEFTAIN = new L10n()
+        .put(EN, "Chieftain")
+        .put(RU, "Вождь");
+
+    public static final L10n DIFFICULTY_LEVEL_WARLORD = new L10n()
+        .put(EN, "Warlord")
+        .put(RU, "Завоеватель");
+
+    public static final L10n DIFFICULTY_LEVEL_PRINCE = new L10n()
+        .put(EN, "Prince")
+        .put(RU, "Принц");
+
+    public static final L10n DIFFICULTY_LEVEL_KING = new L10n()
+        .put(EN, "King")
+        .put(RU, "Король");
+
+    public static final L10n DIFFICULTY_LEVEL_EMPEROR = new L10n()
+        .put(EN, "Emperor")
+        .put(RU, "Император");
+
+    public static final L10n DIFFICULTY_LEVEL_IMMORTAL = new L10n()
+        .put(EN, "Immortal")
+        .put(RU, "Бессмертный");
+
+    public static final L10n DIFFICULTY_LEVEL_DEITY = new L10n()
+        .put(EN, "Deity")
+        .put(RU, "Божественный");
 }

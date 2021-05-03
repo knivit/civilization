@@ -66,7 +66,7 @@ public class ImageRender {
 
     private void drawUnits(RenderContext renderContext, GraphicsContext graphics, CivilizationList civilizations) {
         civilizations.stream()
-            .flatMap(c -> c.units().stream())
+            .flatMap(c -> c.getUnitService().stream())
             .forEach(u -> {
                 List<RenderTileInfo> infos = renderContext.getTileInfo(u.getLocation());
                 drawUnit(renderContext, graphics, infos, u);
@@ -83,7 +83,7 @@ public class ImageRender {
 
     private void drawCities(RenderContext renderContext, GraphicsContext graphics, CivilizationList civilizations) {
         civilizations.stream()
-            .flatMap(c -> c.cities().stream())
+            .flatMap(c -> c.getCityService().stream())
             .forEach(c -> {
                 List<RenderTileInfo> infos = renderContext.getTileInfo(c.getLocation());
                 drawCity(renderContext, graphics, infos, c);

@@ -5,6 +5,7 @@ import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.civilization.Civilization;
+import lombok.Getter;
 
 import java.util.UUID;
 
@@ -22,6 +23,9 @@ public class GreatEngineer extends AbstractUnit {
     private static final CombatStrength COMBAT_STRENGTH = CombatStrength.builder()
         .defenseStrength(0)
         .build();
+
+    @Getter
+    private final int baseProductionCost = 1;
 
     private static final GreatEngineerView VIEW = new GreatEngineerView();
 

@@ -4,7 +4,7 @@ import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.improvement.city.CitySupplyStrategy;
+import com.tsoft.civilization.improvement.city.supply.TileSupplyStrategy;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.economic.Supply;
@@ -36,7 +36,10 @@ public class CivilizationScoreTest {
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario());
 
         world.move();
-        assertTrue(SupplyMock.equals(Supply.EMPTY_SUPPLY, russia.calcSupply()));
+
+        assertThat(russia.calcSupply())
+            .usingComparator(SupplyMock::compare)
+            .isEqualTo(Supply.EMPTY_SUPPLY);
     }
 
     @Test
@@ -116,8 +119,8 @@ public class CivilizationScoreTest {
         for (int i = 0; i < 4 * 5 - 1; i ++) {
             city.addCitizen();
         }
-        assertEquals(4 * 5, city.getCitizenCount());
-        assertEquals(4 * 5 - 3, city.getCitizenLocations().size());
+        assertThat(city.getCitizenCount()).isEqualTo(4 * 5);
+        assertThat(city.getCitizenLocations().size()).isEqualTo(4 * 5 - 3);
 
         world.move();
 
@@ -159,7 +162,7 @@ public class CivilizationScoreTest {
         //   -2 |    0 |    0 |       2 |         |           |           2 |          2 | 2 citizens
         // -------------------------------------------------------------------------------
         //   -1 |    6 |    3 |       5 |       1 |           |           2 |          2 |
-        city.setSupplyStrategy(CitySupplyStrategy.MAX_PRODUCTION);
+        city.setSupplyStrategy(TileSupplyStrategy.MAX_PRODUCTION);
         world.move();
 
         assertEquals(Arrays.asList(new Point(1, 0), new Point(1, 1)), city.getCitizenLocations());
@@ -180,7 +183,7 @@ public class CivilizationScoreTest {
         //   -1 |    6 |    3 |       5 |       1 |           2 |          2 | from previous step
         // -------------------------------------------------------------------
         //    2 |    9 |    6 |      10 |       2 |           4 |          2 | total
-        city.setSupplyStrategy(CitySupplyStrategy.MAX_FOOD);
+        city.setSupplyStrategy(TileSupplyStrategy.MAX_FOOD);
         world.move();
 
         assertEquals(Arrays.asList(new Point(1, 2), new Point(0, 1)), city.getCitizenLocations());

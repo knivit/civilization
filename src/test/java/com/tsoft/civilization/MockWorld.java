@@ -10,6 +10,7 @@ import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.state.Worlds;
+import com.tsoft.civilization.world.DifficultyLevel;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.world.scenario.DefaultScenario;
 
@@ -73,6 +74,7 @@ public class MockWorld extends World {
     private MockWorld(MockTilesMap mockTilesMap) {
         super(UUID.randomUUID().toString(), mockTilesMap);
         setMaxNumberOfCivilizations(CIVILIZATIONS.size());
+        setDifficultyLevel(DifficultyLevel.PRINCE);
         startYear();
     }
 

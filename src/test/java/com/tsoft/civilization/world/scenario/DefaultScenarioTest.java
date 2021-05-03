@@ -2,8 +2,8 @@ package com.tsoft.civilization.world.scenario;
 
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.civilization.CivilizationCityService;
-import com.tsoft.civilization.civilization.CivilizationUnitService;
+import com.tsoft.civilization.civilization.city.CivilizationCityService;
+import com.tsoft.civilization.civilization.unit.CivilizationUnitService;
 import com.tsoft.civilization.civilization.CivilizationsRelations;
 import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.unit.military.warriors.Warriors;
@@ -22,12 +22,12 @@ public class DefaultScenarioTest {
         Civilization barbarians = world.createCivilization(BARBARIANS);
         Civilization russia = world.createCivilization(RUSSIA);
 
-        assertThat(russia.units())
+        assertThat(russia.getUnitService())
             .returns(2, CivilizationUnitService::size)
             .returns(1, e -> e.findByClassUuid(Settlers.CLASS_UUID).size())
             .returns(1, e -> e.findByClassUuid(Warriors.CLASS_UUID).size());
 
-        assertThat(russia.cities())
+        assertThat(russia.getCityService())
             .isNotNull()
             .returns(0, CivilizationCityService::size);
 

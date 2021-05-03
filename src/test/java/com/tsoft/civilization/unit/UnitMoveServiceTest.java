@@ -2,15 +2,17 @@ package com.tsoft.civilization.unit;
 
 import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
+import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
-import com.tsoft.civilization.unit.action.UnitMoveResult;
 import com.tsoft.civilization.unit.civil.greatartist.GreatArtist;
 import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.unit.civil.workers.Workers;
 import com.tsoft.civilization.unit.military.warriors.Warriors;
+import com.tsoft.civilization.unit.move.UnitMoveService;
+import com.tsoft.civilization.unit.move.UnitRoute;
 import com.tsoft.civilization.util.Dir6;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.render.WorldRender;
@@ -21,6 +23,7 @@ import java.util.Set;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.AMERICA;
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
+import static com.tsoft.civilization.unit.move.UnitMoveService.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -47,11 +50,11 @@ public class UnitMoveServiceTest {
         for (Dir6 dir : Dir6.staticGetDirs(1)) {
             UnitRoute route = new UnitRoute(dir);
 
-            ArrayList<UnitMoveResult> moveResults = unitMoveService.moveByRoute(world.unit("settlers"), route);
+            ArrayList<ActionAbstractResult> moveResults = unitMoveService.moveByRoute(world.unit("settlers"), route);
 
             assertThat(moveResults)
                 .hasSize(1)
-                .containsExactly(UnitMoveResult.FAIL_NOT_ENOUGH_PASSING_SCORE);
+                .containsExactly(NO_PASS_SCORE);
         }
     }
 
@@ -71,15 +74,15 @@ public class UnitMoveServiceTest {
         // try out all possible directions - it must be OK
         for (Dir6 dir : Dir6.staticGetDirs(1)) {
             Settlers settlers = UnitFactory.newInstance(russia, Settlers.CLASS_UUID);
-            assertTrue(russia.units().addUnit(settlers, new Point(1, 1)));
+            assertTrue(russia.getUnitService().addUnit(settlers, new Point(1, 1)));
             UnitRoute route = new UnitRoute(dir);
             settlers.setPassScore(1);
 
-            ArrayList<UnitMoveResult> moveResults = unitMoveService.moveByRoute(settlers, route);
+            ArrayList<ActionAbstractResult> moveResults = unitMoveService.moveByRoute(settlers, route);
 
             assertThat(moveResults)
                 .hasSize(1)
-                .containsExactly(UnitMoveResult.SUCCESS_MOVED);
+                .containsExactly(UNIT_MOVED);
         }
     }
 
@@ -94,7 +97,7 @@ public class UnitMoveServiceTest {
             "3| . . . g . g");
         MockWorld world = MockWorld.of(map);
 
-        Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
+        world.createCivilization(RUSSIA, new MockScenario()
             .settlers("settlers", new Point(1, 1))
         );
 
@@ -114,11 +117,11 @@ public class UnitMoveServiceTest {
         route.add(new Dir6(0, 1));
         route.add(new Dir6(1, 0));
 
-        ArrayList<UnitMoveResult> moveResults = unitMoveService.moveByRoute(settlers, route);
+        ArrayList<ActionAbstractResult> moveResults = unitMoveService.moveByRoute(settlers, route);
 
         assertThat(moveResults)
             .hasSize(10)
-            .allMatch(p -> p.equals(UnitMoveResult.SUCCESS_MOVED));
+            .allMatch(p -> p.equals(UNIT_MOVED));
 
         assertThat(settlers)
             .returns(new Point(1, 1), Settlers::getLocation)
@@ -142,7 +145,8 @@ public class UnitMoveServiceTest {
             "2|. . . ",
             "3| . . .");
         MockWorld world = MockWorld.of(map);
-        Civilization civilization = world.createCivilization(RUSSIA, new MockScenario()
+
+        world.createCivilization(RUSSIA, new MockScenario()
             .settlers("settlers1", new Point(1, 1))
             .settlers("settlers2", new Point(2, 1))
         );
@@ -155,11 +159,11 @@ public class UnitMoveServiceTest {
         settlers2.setPassScore(1);
 
         UnitRoute route = new UnitRoute(new Dir6(1, 0));
-        ArrayList<UnitMoveResult> moveResults = unitMoveService.moveByRoute(settlers1, route);
+        ArrayList<ActionAbstractResult> moveResults = unitMoveService.moveByRoute(settlers1, route);
 
         assertThat(moveResults)
             .hasSize(1)
-            .containsExactly(UnitMoveResult.SUCCESS_SWAPPED);
+            .containsExactly(UNIT_SWAPPED);
 
         assertThat(settlers1)
             .returns(new Point(2, 1), Settlers::getLocation)
@@ -188,7 +192,7 @@ public class UnitMoveServiceTest {
             "3| . . .");
         MockWorld world = MockWorld.of(map);
 
-        Civilization civilization = world.createCivilization(RUSSIA, new MockScenario()
+        world.createCivilization(RUSSIA, new MockScenario()
             .settlers("settlers1", new Point(1, 1))
             .settlers("settlers2", new Point(2, 1))
         );
@@ -201,11 +205,11 @@ public class UnitMoveServiceTest {
         settlers2.setPassScore(0);
 
         UnitRoute route = new UnitRoute(new Dir6(1, 0));
-        ArrayList<UnitMoveResult> moveResults = unitMoveService.moveByRoute(settlers1, route);
+        ArrayList<ActionAbstractResult> moveResults = unitMoveService.moveByRoute(settlers1, route);
 
         assertThat(moveResults)
             .hasSize(1)
-            .containsExactly(UnitMoveResult.FAIL_NOT_ENOUGH_PASSING_SCORE_TO_SWAP);
+            .containsExactly(NO_PASS_SCORE);
 
         assertThat(settlers1)
             .returns(new Point(1, 1), Settlers::getLocation)
@@ -235,7 +239,7 @@ public class UnitMoveServiceTest {
             "2|. g . ",
             "3| . g .");
         MockWorld world = MockWorld.of(map);
-        Civilization civilization = world.createCivilization(RUSSIA, new MockScenario()
+        world.createCivilization(RUSSIA, new MockScenario()
             .settlers("settlers1", new Point(1, 1))
             .settlers("settlers2", new Point(1, 3))
         );
@@ -248,11 +252,11 @@ public class UnitMoveServiceTest {
         settlers2.setPassScore(1);
 
         UnitRoute route = new UnitRoute(new Dir6(0, 1), new Dir6(0, 1));
-        ArrayList<UnitMoveResult> moveResults = unitMoveService.moveByRoute(settlers1, route);
+        ArrayList<ActionAbstractResult> moveResults = unitMoveService.moveByRoute(settlers1, route);
 
         assertThat(moveResults)
             .hasSize(2)
-            .containsExactly(UnitMoveResult.SUCCESS_MOVED, UnitMoveResult.FAIL_SWAPPING_MUST_BE_THE_ONLY_MOVE);
+            .containsExactly(UNIT_MOVED, INVALID_TARGET_LOCATION);
 
         assertThat(settlers1)
             .returns(new Point(1, 2), Settlers::getLocation)
@@ -282,7 +286,7 @@ public class UnitMoveServiceTest {
             "2|. . . ",
             "3| . . .");
         MockWorld world = MockWorld.of(map);
-        Civilization civilization = world.createCivilization(RUSSIA, new MockScenario()
+        world.createCivilization(RUSSIA, new MockScenario()
             .warriors("warriors", new Point(1, 1))
             .workers("workers", new Point(2, 1))
         );
@@ -295,11 +299,11 @@ public class UnitMoveServiceTest {
         workers.setPassScore(1);
 
         UnitRoute route = new UnitRoute(new Dir6(1, 0));
-        ArrayList<UnitMoveResult> moveResults = unitMoveService.moveByRoute(warriors, route);
+        ArrayList<ActionAbstractResult> moveResults = unitMoveService.moveByRoute(warriors, route);
 
         assertThat(moveResults)
             .hasSize(1)
-            .containsExactly(UnitMoveResult.SUCCESS_MOVED);
+            .containsExactly(UNIT_MOVED);
 
         assertThat(warriors)
             .returns(new Point(2, 1), Warriors::getLocation)
@@ -333,11 +337,11 @@ public class UnitMoveServiceTest {
         workers.setPassScore(1);
 
         UnitRoute route = new UnitRoute(new Dir6(1, 0));
-        ArrayList<UnitMoveResult> moveResults = unitMoveService.moveByRoute(workers, route);
+        ArrayList<ActionAbstractResult> moveResults = unitMoveService.moveByRoute(workers, route);
 
         assertThat(moveResults)
             .hasSize(1)
-            .containsExactly(UnitMoveResult.SUCCESS_ENTERED_INTO_OWN_CITY);
+            .containsExactly(UNIT_MOVED);
 
         assertThat(workers)
             .returns(new Point(2, 1), Workers::getLocation)
@@ -373,18 +377,18 @@ public class UnitMoveServiceTest {
 
         assertThat(locations).isEmpty();
 
-        assertThat(civilization.units().getUnits())
+        assertThat(civilization.getUnitService().getUnits())
             .hasSize(2)
             .containsExactly(artist, workers);
 
-        assertThat(civilization.cities().getCityAtLocation(new Point(2, 1)))
+        assertThat(civilization.getCityService().getCityAtLocation(new Point(2, 1)))
             .isEqualTo(city);
 
         assertThat(artist)
             .returns(city.getLocation(), GreatArtist::getLocation)
             .returns(2, GreatArtist::getPassScore);
 
-        assertThat(civilization.units().getUnitsAtLocation(new Point(2, 1)))
+        assertThat(civilization.getUnitService().getUnitsAtLocation(new Point(2, 1)))
             .hasSize(1)
             .containsExactly(artist);
 
@@ -406,13 +410,13 @@ public class UnitMoveServiceTest {
             "5| g g g g g", "5| . . . . .");
         MockWorld world = MockWorld.of(map);
 
-        Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
+        world.createCivilization(RUSSIA, new MockScenario()
             .workers("workers1", new Point(2, 2))
         );
         Workers workers1 = (Workers) world.unit("workers1");
         workers1.setPassScore(2);
 
-        Civilization america = world.createCivilization(AMERICA, new MockScenario()
+        world.createCivilization(AMERICA, new MockScenario()
             .workers("workers2", new Point(2, 1))
         );
 
@@ -465,7 +469,7 @@ public class UnitMoveServiceTest {
             "5| g g g g g", "5| . . . . .");
         MockWorld world = MockWorld.of(map);
 
-        Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
+        world.createCivilization(RUSSIA, new MockScenario()
             .workers("workers", new Point(2, 2))
         );
 

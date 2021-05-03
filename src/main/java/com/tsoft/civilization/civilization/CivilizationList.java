@@ -71,12 +71,12 @@ public class CivilizationList implements Iterable<Civilization> {
     }
 
     public Civilization getCivilizationOnTile(Point location) {
-        return findAny(e -> e.cities().isHavingTile(location));
+        return findAny(e -> e.getCityService().isHavingTile(location));
     }
 
     public City getCityAtLocation(Point location) {
         for (Civilization civilization : civilizations) {
-            City city = civilization.cities().getCityAtLocation(location);
+            City city = civilization.getCityService().getCityAtLocation(location);
             if (city != null) {
                 return city;
             }
@@ -91,7 +91,7 @@ public class CivilizationList implements Iterable<Civilization> {
             if (civilization.equals(excludeCivilization)) {
                 continue;
             }
-            cities.addAll(civilization.cities().getCitiesAtLocations(locations));
+            cities.addAll(civilization.getCityService().getCitiesAtLocations(locations));
         }
         return cities;
     }
@@ -106,7 +106,8 @@ public class CivilizationList implements Iterable<Civilization> {
             if (civilization.equals(excludeCivilization)) {
                 continue;
             }
-            units.addAll(civilization.units().getUnitsAtLocation(location));
+
+            units.addAll(civilization.getUnitService().getUnitsAtLocation(location));
         }
         return units;
     }
@@ -117,7 +118,7 @@ public class CivilizationList implements Iterable<Civilization> {
             if (civilization.equals(excludeCivilization)) {
                 continue;
             }
-            units.addAll(civilization.units().getUnitsAtLocations(locations));
+            units.addAll(civilization.getUnitService().getUnitsAtLocations(locations));
         }
         return units;
     }
@@ -128,7 +129,7 @@ public class CivilizationList implements Iterable<Civilization> {
         }
 
         return civilizations.stream()
-            .map(e -> e.units().getUnitById(unitId))
+            .map(e -> e.getUnitService().getUnitById(unitId))
             .filter(Objects::nonNull)
             .findAny()
             .orElse(null);
@@ -140,7 +141,7 @@ public class CivilizationList implements Iterable<Civilization> {
         }
 
         return civilizations.stream()
-            .map(e -> e.cities().getCityById(cityId))
+            .map(e -> e.getCityService().getCityById(cityId))
             .filter(Objects::nonNull)
             .findAny()
             .orElse(null);

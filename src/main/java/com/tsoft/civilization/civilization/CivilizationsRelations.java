@@ -2,8 +2,10 @@ package com.tsoft.civilization.civilization;
 
 import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.world.L10nWorld;
+import lombok.EqualsAndHashCode;
 
 // immutable
+@EqualsAndHashCode(of = "state")
 public class CivilizationsRelations {
     private static final int WAR_STATE = -50;
     private static final int NEUTRAL_STATE = 0;
@@ -49,21 +51,6 @@ public class CivilizationsRelations {
         if (state == NEUTRAL_STATE) return L10nWorld.NEUTRAL_RELATIONS_DESCRIPTION;
         if (state < FRIENDS_STATE) return L10nWorld.GOOD_RELATIONS_DESCRIPTION;
         return L10nWorld.FRIENDS_RELATIONS_DESCRIPTION;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        CivilizationsRelations that = (CivilizationsRelations) o;
-
-        return state == that.state;
-    }
-
-    @Override
-    public int hashCode() {
-        return state;
     }
 
     @Override

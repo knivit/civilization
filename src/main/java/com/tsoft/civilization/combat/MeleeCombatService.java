@@ -1,10 +1,9 @@
 package com.tsoft.civilization.combat;
 
+import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.UnitMoveService;
-import com.tsoft.civilization.unit.action.MoveUnitAction;
-import com.tsoft.civilization.unit.action.UnitMoveResult;
+import com.tsoft.civilization.unit.move.UnitMoveService;
 import com.tsoft.civilization.util.AbstractDir;
 import com.tsoft.civilization.world.World;
 
@@ -31,8 +30,8 @@ public class MeleeCombatService {
             }
 
             // check we can move to the location
-            UnitMoveResult moveResult = unitMoveService.getMoveOnAttackResult((AbstractUnit)attacker, target.getLocation());
-            if (moveResult.isFailed()) {
+            ActionAbstractResult moveResult = unitMoveService.getMoveOnAttackResult((AbstractUnit)attacker, target.getLocation());
+            if (moveResult.isFail()) {
                 continue;
             }
 
@@ -53,8 +52,8 @@ public class MeleeCombatService {
 
         // attacker must be able to pass to target's tile
         AbstractUnit unit = (AbstractUnit) attacker;
-        UnitMoveResult moveResult = unitMoveService.getMoveOnAttackResult(unit, target.getLocation());
-        if (moveResult.isFailed()) {
+        ActionAbstractResult moveResult = unitMoveService.getMoveOnAttackResult(unit, target.getLocation());
+        if (moveResult.isFail()) {
             return CombatResult.builder()
                 .skippedAsMeleeNotEnoughPassScore(true)
                 .build();

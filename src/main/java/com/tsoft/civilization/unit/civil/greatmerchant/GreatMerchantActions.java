@@ -1,6 +1,6 @@
 package com.tsoft.civilization.unit.civil.greatmerchant;
 
-import com.tsoft.civilization.common.AbstractAction;
+import com.tsoft.civilization.action.AbstractAction;
 import com.tsoft.civilization.unit.action.DefaultUnitActions;
 import com.tsoft.civilization.unit.civil.greatmerchant.action.CustomsHouseImprovementAction;
 import com.tsoft.civilization.unit.civil.greatmerchant.action.TradeMissionAction;

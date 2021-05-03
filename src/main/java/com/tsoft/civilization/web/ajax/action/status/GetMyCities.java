@@ -4,7 +4,6 @@ import com.tsoft.civilization.improvement.city.L10nCity;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityList;
-import com.tsoft.civilization.improvement.city.CityListService;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import com.tsoft.civilization.web.request.Request;
@@ -20,7 +19,6 @@ public class GetMyCities extends AbstractAjaxRequest {
 
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
     private final GetCivilizationInfo civilizationInfo = new GetCivilizationInfo();
-    private final CityListService cityListService = new CityListService();
 
     public static StringBuilder getAjax() {
         return new StringBuilder("server.sendAsyncAjax('ajax/GetMyCities')");
@@ -46,7 +44,7 @@ public class GetMyCities extends AbstractAjaxRequest {
     }
 
     private StringBuilder getCitiesInfo(Civilization civilization) {
-        CityList cities = civilization.cities().getCities();
+        CityList cities = civilization.getCityService().getCities();
         if (cities.isEmpty()) {
             return Format.text("""
                 <table id='actions_table'><tr><th>$text</th></tr></table>
@@ -56,10 +54,8 @@ public class GetMyCities extends AbstractAjaxRequest {
             );
         }
 
-        cities = cityListService.sortByName(cities);
-
         StringBuilder buf = new StringBuilder();
-        for (City city : cities) {
+        for (City city : cities.sortByName()) {
             buf.append(Format.text("""
                 <tr>
                     <td><button onclick="$getCityStatus">$cityName</button></td>

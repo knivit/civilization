@@ -45,7 +45,7 @@ public class Walls extends AbstractBuilding {
     private static final WallsView VIEW = new WallsView();
 
     @Getter
-    private Supply supply = Supply.EMPTY_SUPPLY;
+    private final int baseProductionCost = 200;
 
     public Walls(City city) {
         super(city);
@@ -61,8 +61,13 @@ public class Walls extends AbstractBuilding {
      * Walls are quite useful for cities located along a civilization's frontier.
      */
     @Override
-    public Supply calcSupply() {
+    public Supply calcIncomeSupply() {
         return Supply.builder().gold(-1).build();
+    }
+
+    @Override
+    public Supply calcOutcomeSupply() {
+        return Supply.EMPTY_SUPPLY;
     }
 
     @Override
@@ -72,17 +77,11 @@ public class Walls extends AbstractBuilding {
 
     @Override
     public void stopYear() {
-        supply = calcSupply();
     }
 
     @Override
     public int getDefenseStrength() {
         return 40;
-    }
-
-    @Override
-    public int getProductionCost() {
-        return 200;
     }
 
     @Override

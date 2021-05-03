@@ -57,7 +57,7 @@ public class Palace extends AbstractBuilding {
     private static final PalaceView VIEW = new PalaceView();
 
     @Getter
-    private Supply supply = Supply.EMPTY_SUPPLY;
+    private final int baseProductionCost = -1;
 
     public Palace(City city) {
         super(city);
@@ -73,8 +73,13 @@ public class Palace extends AbstractBuilding {
      * Connecting other Cities to the Capital by Road will produce additional Gold.
      */
     @Override
-    public Supply calcSupply() {
+    public Supply calcIncomeSupply() {
         return Supply.builder().production(3).gold(3).science(3).culture(1).build();
+    }
+
+    @Override
+    public Supply calcOutcomeSupply() {
+        return Supply.EMPTY_SUPPLY;
     }
 
     @Override
@@ -84,17 +89,12 @@ public class Palace extends AbstractBuilding {
 
     @Override
     public void stopYear() {
-        supply = calcSupply();
+
     }
 
     @Override
     public int getDefenseStrength() {
         return 25;
-    }
-
-    @Override
-    public int getProductionCost() {
-        return -1;
     }
 
     @Override

@@ -53,11 +53,11 @@ public class BuyUnitAction {
             return CityActionResults.WRONG_ERA_OR_TECHNOLOGY;
         }
 
-        if (!city.getCivilization().units().canBePlaced(unit, city.getLocation())) {
+        if (!city.getCivilization().getUnitService().canBePlaced(unit, city.getLocation())) {
             return CityActionResults.CITY_CANT_PLACE_UNIT;
         }
 
-        if (!city.getCivilization().units().canBuyUnit(unit, city)) {
+        if (!city.getCivilization().getUnitService().canBuyUnit(unit, city)) {
             return CityActionResults.NOT_ENOUGH_MONEY;
         }
 

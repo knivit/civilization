@@ -1,17 +1,23 @@
 package com.tsoft.civilization.combat;
 
+import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.civilization.happiness.Happiness;
 import com.tsoft.civilization.combat.event.AttackDoneEvent;
+import com.tsoft.civilization.combat.event.UnitHasWonAttackEvent;
 import com.tsoft.civilization.combat.skill.AbstractSkill;
+import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityList;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
+import com.tsoft.civilization.unit.move.UnitMoveService;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.World;
-import com.tsoft.civilization.economic.Supply;
 
 import java.util.Collection;
 
-class BaseCombatService {
+public class BaseCombatService {
+
+    private static final UnitMoveService moveService = new UnitMoveService();
 
     HasCombatStrengthList getPossibleTargetsAround(HasCombatStrength attacker, int radius) {
         World world = attacker.getCivilization().getWorld();
@@ -81,7 +87,7 @@ class BaseCombatService {
         result.targetDestroyed(targetDestroyed);
 
         if (targetDestroyed) {
-            destroyTarget(attacker, target);
+            destroy(attacker, target);
         }
 
         //
@@ -118,7 +124,7 @@ class BaseCombatService {
         result.attackerDestroyed(attackerDestroyed);
 
         if (attackerDestroyed) {
-            attacker.destroyedBy(target, false);
+            destroy(target, attacker);
         }
 
         // set to 0 attacker's passScore - it can't action (move, attack, capture etc) anymore
@@ -133,20 +139,48 @@ class BaseCombatService {
         return result.build();
     }
 
-    private void destroyTarget(HasCombatStrength attacker, HasCombatStrength target) {
-        Point location = target.getLocation();
+    private void destroyUnit(HasCombatStrength attacker, HasCombatStrength victim) {
+        Point location = victim.getLocation();
 
         if (attacker.getUnitCategory().isRanged()) {
             // if the attacker is a ranged unit
             // the destroy the target only
-            target.destroyedBy(attacker, false);
+            destroy(attacker, victim);
         } else {
             // if attacker is a melee unit
             // then destroy all units on that location
-            target.destroyedBy(attacker, true);
+            destroyAllUnitsAtLocation(attacker, victim.getLocation());
 
-            // second, move the attacker there
-            ((AbstractUnit)attacker).moveTo(location);
+            // move the attacker there
+            moveService.moveUnit((AbstractUnit) attacker, location);
+        }
+    }
+
+    // destroy all units located in that location
+    public void destroyAllUnitsAtLocation(HasCombatStrength attacker, Point location) {
+        Civilization winner = attacker.getCivilization();
+        UnitList victims = winner.getWorld().getUnitsAtLocation(location);
+
+        for (AbstractUnit victim : victims) {
+            destroy(attacker, victim);
+        }
+    }
+
+    public void destroy(HasCombatStrength attacker, HasCombatStrength victim) {
+        victim.destroy();
+
+        attacker.getCivilization().addEvent(UnitHasWonAttackEvent.builder()
+            .attackerName(attacker.getView().getName())
+            .targetName(victim.getView().getName())
+            .build()
+        );
+
+        // A city may be destroyed only during a melee attack
+        if (victim instanceof City) {
+            throw new IllegalArgumentException("FIXME: find out the calling method and use CaptureService#captureCity(); A city may be destroyed only during a melee attack");
+        } else {
+            Civilization loser = victim.getCivilization();
+            loser.getUnitService().destroyUnit((AbstractUnit) victim);
         }
     }
 
@@ -177,17 +211,17 @@ class BaseCombatService {
     private int calcAttackerStrikeHappinessPercent(HasCombatStrength attacker) {
         int value = 0;
 
-        Supply supply = attacker.getCivilization().getSupply();
-        if (supply.getHappiness() < -30) {
+        Happiness happiness = attacker.getCivilization().getHappiness();
+        if (happiness.getTotal() < -30) {
             value -= 33;
         } else
-        if (supply.getHappiness() < -15) {
+        if (happiness.getTotal() < -15) {
             value -= 15;
         } else
-        if (supply.getHappiness() > 30) {
+        if (happiness.getTotal() > 30) {
             value += 33;
         } else
-        if (supply.getHappiness() > 15) {
+        if (happiness.getTotal() > 15) {
             value += 15;
         }
 
@@ -218,7 +252,8 @@ class BaseCombatService {
     }
 
     private int getGreatGeneralCount(HasCombatStrength unit) {
-        UnitList unitsAround = unit.getUnitsAround(2);
+        Civilization civilization = unit.getCivilization();
+        UnitList unitsAround = civilization.getUnitService().getUnitsAround(unit.getLocation(), 2);
         return unitsAround.getGreatGeneralCount();
     }
 }

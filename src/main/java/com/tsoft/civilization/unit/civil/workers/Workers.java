@@ -4,6 +4,7 @@ import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.civilization.Civilization;
+import lombok.Getter;
 
 import java.util.UUID;
 
@@ -29,6 +30,9 @@ public class Workers extends AbstractUnit {
     private static final CombatStrength COMBAT_STRENGTH = CombatStrength.builder()
         .defenseStrength(0)
         .build();
+
+    @Getter
+    private final int baseProductionCost = 40;
 
     private static final WorkersView VIEW = new WorkersView();
 
@@ -59,11 +63,6 @@ public class Workers extends AbstractUnit {
     @Override
     public String getClassUuid() {
         return CLASS_UUID;
-    }
-
-    @Override
-    public int getProductionCost() {
-        return 40;
     }
 
     @Override

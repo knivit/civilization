@@ -6,7 +6,7 @@ import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;
 
-import static com.tsoft.civilization.unit.action.MoveUnitAction.INVALID_LOCATION;
+import static com.tsoft.civilization.unit.move.UnitMoveService.INVALID_TARGET_LOCATION;
 
 // Combat Bonus is basically where all friendly units within 2 tiles of the
 // General gets a boost to their combat abilities, regardless of their combat
@@ -16,11 +16,11 @@ public class CombatBonusAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     public static ActionAbstractResult combatBonus(GreatGeneral unit) {
-        return INVALID_LOCATION;
+        return INVALID_TARGET_LOCATION;
     }
 
     private static ActionAbstractResult canCombatBonus(GreatGeneral unit) {
-        return INVALID_LOCATION;
+        return INVALID_TARGET_LOCATION;
     }
 
     private static String getClientJSCode(GreatGeneral unit) {

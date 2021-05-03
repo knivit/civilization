@@ -21,7 +21,7 @@ public class DestroyUnitActionRequest extends AbstractAjaxRequest {
         }
 
         String unitId = request.get("unit");
-        AbstractUnit unit = myCivilization.units().getUnitById(unitId);
+        AbstractUnit unit = myCivilization.getUnitService().getUnitById(unitId);
 
         ActionAbstractResult result = DestroyUnitAction.destroyUnit(unit);
         if (result.isFail()) {

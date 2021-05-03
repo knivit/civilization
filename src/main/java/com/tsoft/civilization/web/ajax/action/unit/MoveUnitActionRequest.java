@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web.ajax.action.unit;
 
-import com.tsoft.civilization.unit.UnitMoveService;
+import com.tsoft.civilization.unit.move.UnitMoveService;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.unit.action.MoveUnitAction;
@@ -26,7 +26,7 @@ public class MoveUnitActionRequest extends AbstractAjaxRequest {
         }
 
         String unitId = request.get("unit");
-        AbstractUnit unit = myCivilization.units().getUnitById(unitId);
+        AbstractUnit unit = myCivilization.getUnitService().getUnitById(unitId);
         Point location = myCivilization.getTilesMap().getLocation(request.get("col"), request.get("row"));
 
         ActionAbstractResult result = moveUnitAction.move(unit, location);

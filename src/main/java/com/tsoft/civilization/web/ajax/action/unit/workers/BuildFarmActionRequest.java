@@ -21,7 +21,7 @@ public class BuildFarmActionRequest extends AbstractAjaxRequest {
         }
 
         String workersId = request.get("workersId");
-        Workers workers = (Workers)myCivilization.units().getUnitById(workersId);
+        Workers workers = (Workers)myCivilization.getUnitService().getUnitById(workersId);
 
         ActionAbstractResult result = BuildFarmAction.buildFarm(workers);
         if (result.isFail()) {

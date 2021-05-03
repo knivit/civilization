@@ -2,8 +2,8 @@ package com.tsoft.civilization.unit.action;
 
 import com.tsoft.civilization.combat.CombatService;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.UnitCaptureService;
-import com.tsoft.civilization.unit.UnitMoveService;
+import com.tsoft.civilization.combat.CaptureService;
+import com.tsoft.civilization.unit.move.UnitMoveService;
 import com.tsoft.civilization.util.Format;
 
 public class DefaultUnitActions {
@@ -14,8 +14,8 @@ public class DefaultUnitActions {
     private final UnitMoveService unitMoveService = new UnitMoveService();
     private final MoveUnitAction moveAction = new MoveUnitAction(unitMoveService);
 
-    private final UnitCaptureService unitCaptureService = new UnitCaptureService();
-    private final CaptureUnitAction captureAction = new CaptureUnitAction(unitCaptureService);
+    private final CaptureService captureService = new CaptureService();
+    private final CaptureUnitAction captureAction = new CaptureUnitAction(captureService);
 
     public StringBuilder getHtmlActions(AbstractUnit unit) {
         StringBuilder attackUnitAction = attackAction.getHtml(unit);

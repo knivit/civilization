@@ -10,7 +10,6 @@ import com.tsoft.civilization.unit.military.warriors.Warriors;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.render.MapRender;
 import com.tsoft.civilization.world.generator.WorldGeneratorService;
-import com.tsoft.civilization.world.scenario.DefaultScenario;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -75,7 +74,7 @@ public class CivilizationTest {
         MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
-        UnitList units = civilization.units().getUnits();
+        UnitList units = civilization.getUnitService().getUnits();
 
         assertThat(units).hasSize(2);
         assertEquals(1, units.getUnitClassCount(Settlers.class));
@@ -99,7 +98,7 @@ public class CivilizationTest {
         MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
 
-        UnitList units = civilization.units().getUnits();
+        UnitList units = civilization.getUnitService().getUnits();
         assertEquals(1, units.size());
         assertEquals(1, units.getUnitClassCount(Settlers.class));
     }

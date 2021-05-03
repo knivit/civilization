@@ -1,7 +1,7 @@
 package com.tsoft.civilization.building;
 
 import com.tsoft.civilization.building.action.DefaultBuildingAction;
-import com.tsoft.civilization.common.AbstractAction;
+import com.tsoft.civilization.action.AbstractAction;
 
 import java.util.HashMap;
 import java.util.Map;

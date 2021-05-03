@@ -6,14 +6,14 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.unit.UnitFactory;
-import com.tsoft.civilization.unit.UnitMoveService;
+import com.tsoft.civilization.unit.move.UnitMoveService;
 import com.tsoft.civilization.unit.civil.workers.Workers;
 import com.tsoft.civilization.unit.military.warriors.Warriors;
 import com.tsoft.civilization.util.Point;
 import org.junit.jupiter.api.Test;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
-import static com.tsoft.civilization.unit.action.MoveUnitAction.*;
+import static com.tsoft.civilization.unit.move.UnitMoveService.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
@@ -27,7 +27,7 @@ public class MoveUnitActionTest {
         MoveUnitAction moveUnitAction = new MoveUnitAction(unitMoveService);
 
         assertThat(moveUnitAction.move(null, null))
-            .isEqualTo(INVALID_LOCATION);
+            .isEqualTo(INVALID_TARGET_LOCATION);
     }
 
     @Test

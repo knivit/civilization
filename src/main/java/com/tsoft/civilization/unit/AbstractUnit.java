@@ -5,15 +5,18 @@ import com.tsoft.civilization.common.HasView;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.combat.skill.AbstractSkill;
-import com.tsoft.civilization.improvement.CanBeBuilt;
-import com.tsoft.civilization.tile.TileService;
+import com.tsoft.civilization.improvement.city.construction.CanBeBuilt;
+import com.tsoft.civilization.improvement.city.construction.CityConstructionService;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.tile.base.AbstractTile;
-import com.tsoft.civilization.unit.event.UnitHasWonAttackEvent;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.world.DifficultyLevel;
+import com.tsoft.civilization.world.HasHistory;
 import com.tsoft.civilization.world.World;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -37,14 +40,22 @@ import java.util.*;
  */
 @Slf4j
 @EqualsAndHashCode(of = "id")
-public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength, CanBeBuilt {
+public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength, HasHistory, CanBeBuilt {
+    @Getter @Setter
     private String id = UUID.randomUUID().toString();
 
+    @Getter @Setter
     private Civilization civilization;
 
+    @Getter @Setter
     private Point location;
+
+    @Getter @Setter
     private int passScore;
+
+    @Getter @Setter
     private CombatStrength combatStrength;
+
     private boolean isMoved;
 
     private final ArrayList<AbstractSkill> skills = new ArrayList<>();
@@ -53,11 +64,10 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
     public abstract void initPassScore();
     public abstract int getGoldCost();
     public abstract String getClassUuid();
+    public abstract int getBaseProductionCost();
 
     public abstract AbstractUnitView getView();
     public abstract boolean checkEraAndTechnology(Civilization civilization);
-
-    private final TileService tileService = new TileService();
 
     protected AbstractUnit(Civilization civilization) {
         this.civilization = civilization;
@@ -69,38 +79,18 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
         initPassScore();
     }
 
+    @Override
     public void startYear() {
         initPassScore();
         isMoved = false;
     }
 
-    // TODO do an artificial move
-    private void aiMove() {
-        isMoved = true;
-    }
-
-    public void stopYear() {
-        if (!isMoved) {
-            aiMove();
-        }
-    }
-
     @Override
-    public String getId() {
-        return id;
+    public void stopYear() {
     }
 
     public World getWorld() {
         return civilization.getWorld();
-    }
-
-    @Override
-    public Civilization getCivilization() {
-        return civilization;
-    }
-
-    public void setCivilization(Civilization civilization) {
-        this.civilization = civilization;
     }
 
     public TilesMap getTilesMap() {
@@ -112,36 +102,15 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
     }
 
     @Override
-    public Point getLocation() {
-        return location;
-    }
-
-    public void setLocation(Point location) {
-        this.location = location;
-    }
-
-    public int getPassScore() {
-        return passScore;
-    }
-
-    @Override
-    public void setPassScore(int passScore) {
-        this.passScore = passScore;
-    }
-
-    @Override
-    public CombatStrength getCombatStrength() {
-        return combatStrength;
-    }
-
-    @Override
-    public void setCombatStrength(CombatStrength combatStrength) {
-        this.combatStrength = combatStrength;
-    }
-
-    @Override
     public CombatStrength calcCombatStrength() {
         return combatStrength;
+    }
+
+    @Override
+    public int getProductionCost() {
+        DifficultyLevel difficultyLevel = getCivilization().getWorld().getDifficultyLevel();
+        int baseProductionCost = getBaseProductionCost();
+        return (int)Math.round(baseProductionCost * CityConstructionService.UNIT_COST_PER_DIFFICULTY_LEVEL.get(difficultyLevel));
     }
 
     @Override
@@ -153,63 +122,8 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
         return 3;
     }
 
-    @Override
-    public UnitList getUnitsAround(int radius) {
-        return civilization.units().getUnitsAround(location, radius);
-    }
-
-    public void moveTo(Point location) {
-        if (!swapTo(location)) {
-            if (getCivilization().units().canBePlaced(this, location)) {
-                doMoveTo(location);
-            }
-        }
-    }
-
-    // Try to move one unit on another - they must be swapped
-    // conditions:
-    // 1) both are the same civilization
-    // 2) both units have movements
-    // 3) they are located near each other
-    // 4) they are the same unit type
-    private boolean swapTo(Point location) {
-        if (getTilesMap().isTilesNearby(this.location, location)) {
-            UnitList other = civilization.units().getUnitsAtLocation(location);
-            AbstractUnit swapUnit = other.findUnitByCategory(getUnitCategory());
-
-            if (swapUnit != null && getCivilization().equals(swapUnit.getCivilization()) && swapUnit.isActionAvailable()) {
-                swapUnit.doMoveTo(getLocation());
-                doMoveTo(location);
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    // All the checks was made - just do the move
-    private void doMoveTo(Point location) {
-        setLocation(location);
-
-        AbstractTile tile = getTilesMap().getTile(location);
-        int tilePassCost = tileService.getPassCost(this, tile);
-        passScore -= tilePassCost;
-    }
-
     public boolean canBeCaptured() {
         return !getUnitCategory().isMilitary();
-    }
-
-    public void capturedBy(HasCombatStrength capturer) {
-        civilization.units().removeUnit(this);
-
-        // re-create foreigner's unit ID so it can't be used anymore
-        id = UUID.randomUUID().toString();
-
-        // captured unit can't move
-        setPassScore(0);
-        setCivilization(capturer.getCivilization());
-        capturer.getCivilization().units().addUnit(this, location);
     }
 
     @Override
@@ -221,34 +135,6 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
         combatStrength = combatStrength.copy()
             .isDestroyed(true)
             .build();
-    }
-
-    @Override
-    public void destroyedBy(HasCombatStrength attacker, boolean destroyOtherUnitsAtLocation) {
-        destroy();
-
-        // attacker may be null (for settlers who had settled)
-        if (attacker != null) {
-            attacker.getCivilization().addEvent(UnitHasWonAttackEvent.builder()
-                .attackerName(attacker.getView().getName())
-                .targetName(this.getView().getName())
-                .build()
-            );
-        }
-
-        // destroy all units located in that location
-        if (destroyOtherUnitsAtLocation) {
-            UnitList units = civilization.getWorld().getUnitsAtLocation(location);
-            for (AbstractUnit unit : units) {
-                // to prevent a recursion
-                if (!unit.equals(this)) {
-                    unit.destroyedBy(attacker, false);
-                }
-            }
-        }
-
-        // destroy the unit itself
-        civilization.units().removeUnit(this);
     }
 
     public boolean isActionAvailable() {

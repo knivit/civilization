@@ -1,8 +1,10 @@
 package com.tsoft.civilization.world;
 
 import com.tsoft.civilization.L10n.L10n;
+import lombok.EqualsAndHashCode;
 
 // immutable
+@EqualsAndHashCode(of = "year")
 public class Year {
     public static final int ANCIENT_ERA = 1000;
     public static final int CLASSICAL_ERA = 1200;
@@ -88,18 +90,5 @@ public class Year {
     @Override
     public String toString() {
         return "Year{" + year + '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Year year = (Year) o;
-        return this.year == year.year;
-    }
-
-    @Override
-    public int hashCode() {
-        return year;
     }
 }

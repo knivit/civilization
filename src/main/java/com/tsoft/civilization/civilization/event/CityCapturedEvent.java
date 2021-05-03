@@ -19,10 +19,12 @@ public final class CityCapturedEvent implements Event {
     private final boolean updateStatusPanel;
 
     private final L10n message = L10nCity.CITY_WAS_CAPTURED;
+    private final L10n winner;
     private final L10n cityName;
 
     public Object[] getArgs() {
         return new Object[] {
+            "$winner", winner,
             "$cityName", cityName
         };
     }

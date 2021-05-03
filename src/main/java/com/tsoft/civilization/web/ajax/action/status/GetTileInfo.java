@@ -112,7 +112,8 @@ public class GetTileInfo extends AbstractAjaxRequest {
 
     private StringBuilder getTilePassInfo(AbstractTile tile, Civilization civilization) {
         StringBuilder buf = new StringBuilder();
-        UnitList units = civilization.units().getUnits();
+
+        UnitList units = civilization.getUnitService().getUnits().sortByName();
         for (AbstractUnit unit : units) {
             int passCost = tileService.getPassCost(unit, tile);
             buf.append(Format.text("""

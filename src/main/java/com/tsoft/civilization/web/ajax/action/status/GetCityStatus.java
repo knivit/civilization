@@ -5,8 +5,8 @@ import com.tsoft.civilization.unit.*;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.building.L10nBuilding;
 import com.tsoft.civilization.building.*;
-import com.tsoft.civilization.improvement.city.Construction;
-import com.tsoft.civilization.improvement.city.ConstructionList;
+import com.tsoft.civilization.improvement.city.construction.Construction;
+import com.tsoft.civilization.improvement.city.construction.ConstructionList;
 import com.tsoft.civilization.improvement.city.action.BuildBuildingAction;
 import com.tsoft.civilization.improvement.city.action.BuildUnitAction;
 import com.tsoft.civilization.improvement.city.action.BuyBuildingAction;
@@ -20,12 +20,12 @@ import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
 
+import static com.tsoft.civilization.building.L10nBuilding.CONSTRUCTION_PRIORITY_LABEL;
 import static com.tsoft.civilization.web.ajax.ServerStaticResource.*;
 
 public class GetCityStatus extends AbstractAjaxRequest {
 
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
-    private final UnitListService unitListService = new UnitListService();
     private final BuildingListService buildingListService = new BuildingListService();
 
     @Override
@@ -112,8 +112,8 @@ public class GetCityStatus extends AbstractAjaxRequest {
             "$food", city.getSupply().getFood(),
             "$foodImage", FOOD_IMAGE,
             "$happinessLabel", L10nCity.HAPPINESS,
-            "$happiness", city.getSupply().getHappiness(),
-            "$happinessImage", HAPPINESS_IMAGE(city.getSupply().getHappiness())
+            "$happiness", city.getHappiness().getTotal(),
+            "$happinessImage", HAPPINESS_IMAGE(city.getHappiness().getTotal())
         );
     }
 
@@ -206,7 +206,8 @@ public class GetCityStatus extends AbstractAjaxRequest {
     private StringBuilder getUnitConstructionActions(City city) {
         StringBuilder buf = new StringBuilder();
         UnitList units = UnitFactory.getAvailableUnits(city.getCivilization());
-        for (AbstractUnit unit : unitListService.sortByName(units)) {
+
+        for (AbstractUnit unit : units.sortByName()) {
             StringBuilder buyUnitAction = BuildUnitAction.getHtml(city, unit.getClassUuid());
             StringBuilder buildUnitAction = BuyUnitAction.getHtml(city, unit.getClassUuid());
 
@@ -345,8 +346,14 @@ public class GetCityStatus extends AbstractAjaxRequest {
 
         ConstructionList constructions = city.getConstructions();
         if (constructions.isEmpty()) {
-            return Format.text(
-                "<table id='actions_table'><tr><th>$text</th></tr></table>",
+            return Format.text("""
+                <table id='actions_table'>
+                    <tr>
+                        <th>$text</th>
+                    </tr>
+                </table>
+                """,
+
                 "$text", L10nBuilding.NO_CONSTRUCTIONS
             );
         }
@@ -354,21 +361,27 @@ public class GetCityStatus extends AbstractAjaxRequest {
         StringBuilder buf = new StringBuilder();
         for (Construction construction : constructions) {
             buf.append(Format.text("""
-                <tr><td><button onclick="server.sendAsyncAjax('ajax/GetConstructionStatus', { construction:'$construction' })">$buttonLabel</button></td></tr>
+                <tr>
+                    <td><button onclick="$getConstructionStatus">$buttonLabel</button></td>
+                </tr>
                 """,
 
-                "$construction", construction.getId(),
+                "$getConstructionStatus", GetConstructionStatus.getAjax(construction),
                 "$buttonLabel", construction.getView().getLocalizedName()
             ));
         }
 
         return Format.text("""
             <table id='actions_table'>
-                <tr><th>$header</th></tr>
+                <tr>
+                    <th>$priorityLabel</th>
+                    <th>$header</th>
+                </tr>
                 $constructions
             </table>
             """,
 
+            "$priorityLabel", CONSTRUCTION_PRIORITY_LABEL,
             "$header", L10nBuilding.CONSTRUCTION_LIST,
             "$constructions", buf
         );

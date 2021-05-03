@@ -1,5 +1,6 @@
 package com.tsoft.civilization.web.ajax.action.world;
 
+import com.tsoft.civilization.world.DifficultyLevel;
 import com.tsoft.civilization.world.L10nWorld;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
@@ -66,6 +67,11 @@ public class GetCreateWorldFormRequest extends AbstractAjaxRequest {
                     <td><input id='maxNumberOfCivilizations' type='text' placeholder='$maxNumberOfCivilizationsPlaceHolder' /></td>
                 </tr>
                 <tr>
+                    <td>$difficultyLevel</td>
+                    <td><select id='difficultyLevel'>$difficultyLevelOptions</select>
+                    </td>
+                </tr>
+                <tr>
                     <td>$backButton</td>
                     <td>$createWorldButton</td>
                 </tr>
@@ -79,11 +85,24 @@ public class GetCreateWorldFormRequest extends AbstractAjaxRequest {
             "$climate", L10nWorld.INPUT_CLIMATE,
             "$maxNumberOfCivilizations", L10nWorld.INPUT_MAX_NUMBER_OF_CIVILIZATIONS,
             "$maxNumberOfCivilizationsPlaceHolder", Math.min(CIVILIZATIONS.size(), 8),
+            "$difficultyLevel", L10nWorld.DIFFICULTY_LEVEL_NAME,
+            "$difficultyLevelOptions", getDifficultyLevelOptions(),
 
             "$backButton", backButton,
             "$createWorldButton", createWorldButton
         );
 
         return HtmlResponse.ok(value);
+    }
+
+    private StringBuilder getDifficultyLevelOptions() {
+        StringBuilder buf = new StringBuilder();
+        for (DifficultyLevel level : DifficultyLevel.values()) {
+            buf.append(Format.text("<option value='$value'>$text</option>",
+                "$value", level.name(),
+                "$text", level.getL10n()));
+
+        }
+        return buf;
     }
 }

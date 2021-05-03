@@ -120,8 +120,8 @@ public class L10nCity {
         .put(RU, "Город $cityName разрушен");
 
     public static final L10n CITY_WAS_CAPTURED = new L10n()
-        .put(EN, "City $cityName was captured")
-        .put(RU, "Город $cityName был захвачен");
+        .put(EN, "City $cityName was captured by $winner")
+        .put(RU, "Город $cityName был захвачен $winner");
 
     public static final L10n UNIT_HAS_CAPTURED_CITY = new L10n()
         .put(EN, "A unit $unitName has captured the city $cityName")

@@ -48,7 +48,7 @@ public class Granary extends AbstractBuilding {
     private static final GranaryView VIEW = new GranaryView();
 
     @Getter
-    private Supply supply = Supply.EMPTY_SUPPLY;
+    private final int baseProductionCost = 60;
 
     public Granary(City city) {
         super(city);
@@ -63,7 +63,7 @@ public class Granary extends AbstractBuilding {
      * Each source of Wheat Bananas and Deer worked by this City produce +1 Food.
      */
     @Override
-    public Supply calcSupply() {
+    public Supply calcIncomeSupply() {
         int food = 2;
         for (Point location : getCity().getCitizenLocations()) {
             AbstractTile tile = getTile(location);
@@ -76,23 +76,13 @@ public class Granary extends AbstractBuilding {
     }
 
     @Override
-    public void startYear() {
-
-    }
-
-    @Override
-    public void stopYear() {
-        supply = calcSupply();
+    public Supply calcOutcomeSupply() {
+        return Supply.EMPTY_SUPPLY;
     }
 
     @Override
     public int getDefenseStrength() {
         return 0;
-    }
-
-    @Override
-    public int getProductionCost() {
-        return 60;
     }
 
     @Override
@@ -114,5 +104,15 @@ public class Granary extends AbstractBuilding {
     @Override
     public String getClassUuid() {
         return CLASS_UUID;
+    }
+
+    @Override
+    public void startYear() {
+
+    }
+
+    @Override
+    public void stopYear() {
+
     }
 }

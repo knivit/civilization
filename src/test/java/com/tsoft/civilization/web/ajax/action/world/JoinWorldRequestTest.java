@@ -40,7 +40,7 @@ public class JoinWorldRequestTest {
         Civilization civilization = Sessions.getCurrent().getCivilization();
         assertThat(civilization).isNotNull();
 
-        UnitList units = civilization.units().findByClassUuid(Settlers.CLASS_UUID);
+        UnitList units = civilization.getUnitService().findByClassUuid(Settlers.CLASS_UUID);
         assertThat(units).isNotNull().hasSize(1);
 
         Settlers settlers = (Settlers)units.getAny();

@@ -7,10 +7,8 @@ import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.civilization.action.DeclareWarAction;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityList;
-import com.tsoft.civilization.improvement.city.CityListService;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
-import com.tsoft.civilization.unit.UnitListService;
 import com.tsoft.civilization.util.Format;
 
 import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
@@ -27,8 +25,6 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
 
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
     private final GetCivilizationInfo civilizationInfo = new GetCivilizationInfo();
-    private final CityListService cityListService = new CityListService();
-    private final UnitListService unitListService = new UnitListService();
 
     public static StringBuilder getAjax(Civilization civilization) {
         return Format.text("server.sendAsyncAjax('ajax/GetCivilizationStatus', { civilization:'$civilization' })",
@@ -94,11 +90,11 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
             "$goldLabel", L10nCivilization.GOLD, "$gold", civilization.calcSupply().getGold(),
             "$foodImage", FOOD_IMAGE_WITH_TOOLTIP,
             "$foodLabel", L10nCivilization.FOOD, "$food", civilization.calcSupply().getFood(),
-            "$happinessImage", HAPPINESS_IMAGE_WITH_TOOLTIP(civilization.calcSupply().getHappiness()),
-            "$happinessLabel", L10nCivilization.HAPPINESS, "$happiness", civilization.calcSupply().getHappiness(),
-            "$militaryUnitsLabel", L10nCivilization.MILITARY_UNITS_COUNT, "$militaryUnits", civilization.units().getMilitaryCount(),
-            "$civilUnitsLabel", L10nCivilization.CIVIL_UNITS_COUNT, "$civilUnits", civilization.units().getCivilCount(),
-            "$citiesLabel", L10nCivilization.CITIES_COUNT, "$cities", civilization.cities().size()
+            "$happinessImage", HAPPINESS_IMAGE_WITH_TOOLTIP(civilization.getHappiness().getTotal()),
+            "$happinessLabel", L10nCivilization.HAPPINESS, "$happiness", civilization.getHappiness().getTotal(),
+            "$militaryUnitsLabel", L10nCivilization.MILITARY_UNITS_COUNT, "$militaryUnits", civilization.getUnitService().getMilitaryCount(),
+            "$civilUnitsLabel", L10nCivilization.CIVIL_UNITS_COUNT, "$civilUnits", civilization.getUnitService().getCivilCount(),
+            "$citiesLabel", L10nCivilization.CITIES_COUNT, "$cities", civilization.getCityService().size()
         );
     }
 
@@ -136,15 +132,13 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
             return null;
         }
 
-        UnitList units = civilization.units().getUnitsWithActionsAvailable();
+        UnitList units = civilization.getUnitService().getUnitsWithActionsAvailable();
         if (units.isEmpty()) {
             return null;
         }
 
-        units = unitListService.sortByName(units);
-
         StringBuilder unitBuf = new StringBuilder();
-        for (AbstractUnit unit : units) {
+        for (AbstractUnit unit : units.sortByName()) {
             unitBuf.append(Format.text("""
                 <tr>
                     <td><button onclick="$getUnitStatus">$unitName</button></td>
@@ -176,15 +170,13 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
             return null;
         }
 
-        CityList cities = civilization.cities().getCitiesWithAvailableActions();
+        CityList cities = civilization.getCityService().getCitiesWithAvailableActions();
         if (cities.isEmpty()) {
             return null;
         }
 
-        cities = cityListService.sortByName(cities);
-
         StringBuilder citiesBuf = new StringBuilder();
-        for (City city : cities) {
+        for (City city : cities.sortByName()) {
             citiesBuf.append(Format.text("""
                 <tr>
                     <td><button onclick="$getCityStatus">$cityName</button></td>

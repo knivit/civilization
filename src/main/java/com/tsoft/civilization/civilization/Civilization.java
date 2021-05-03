@@ -1,12 +1,17 @@
 package com.tsoft.civilization.civilization;
 
+import com.tsoft.civilization.civilization.city.CivilizationCityService;
 import com.tsoft.civilization.civilization.event.*;
-import com.tsoft.civilization.economic.HasSupply;
+import com.tsoft.civilization.civilization.happiness.CivilizationHappinessService;
+import com.tsoft.civilization.civilization.happiness.CivilizationUnhappinessService;
+import com.tsoft.civilization.civilization.happiness.Happiness;
+import com.tsoft.civilization.civilization.happiness.Unhappiness;
 import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.civilization.tile.CivilizationTileService;
+import com.tsoft.civilization.civilization.unit.CivilizationUnitService;
 import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.BuildingFactory;
-import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.improvement.ImprovementFactory;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.technology.Technology;
@@ -31,7 +36,7 @@ import java.util.*;
 
 @Slf4j
 @EqualsAndHashCode(of = "id")
-public abstract class Civilization implements HasSupply {
+public abstract class Civilization {
     @Getter
     private final String id = UUID.randomUUID().toString();
 
@@ -40,9 +45,20 @@ public abstract class Civilization implements HasSupply {
 
     private boolean isDestroyed;
 
+    @Getter
     private final CivilizationUnitService unitService;
+
+    @Getter
     private final CivilizationCityService cityService;
-    private final CivilizationTerritoryService territoryService;
+
+    @Getter
+    private final CivilizationTileService tileService;
+
+    @Getter
+    private final CivilizationHappinessService happinessService;
+
+    @Getter
+    private final CivilizationUnhappinessService unhappinessService;
 
     private final Set<Technology> technologies = new TechnologySet();
 
@@ -66,6 +82,15 @@ public abstract class Civilization implements HasSupply {
     @Getter
     private final CivilizationBot bot;
 
+    @Getter
+    private int goldenAgeCounter;
+
+    @Getter
+    private Happiness happiness;
+
+    @Getter
+    private Unhappiness unhappiness;
+
     protected abstract CivilizationView createView();
 
     protected abstract CivilizationBot createBot(World world, Civilization civilization);
@@ -83,7 +108,9 @@ public abstract class Civilization implements HasSupply {
         // initialize params
         unitService = new CivilizationUnitService(this);
         cityService = new CivilizationCityService(this);
-        territoryService = new CivilizationTerritoryService(this);
+        tileService = new CivilizationTileService(this);
+        happinessService = new CivilizationHappinessService(this);
+        unhappinessService = new CivilizationUnhappinessService(this);
 
         view = createView();
         bot = createBot(world, this);
@@ -91,18 +118,6 @@ public abstract class Civilization implements HasSupply {
 
     public L10n getName() {
         return getView().getName();
-    }
-
-    public CivilizationUnitService units() {
-        return unitService;
-    }
-
-    public CivilizationCityService cities() {
-        return cityService;
-    }
-
-    public CivilizationTerritoryService territory() {
-        return territoryService;
     }
 
     public Year getStartYear() {
@@ -167,7 +182,7 @@ public abstract class Civilization implements HasSupply {
             return false;
         }
 
-        Supply expenses = units().buyUnit(unit);
+        Supply expenses = unitService.buyUnit(unit);
         supply = supply.add(expenses);
 
         addEvent(UnitBoughtEvent.builder()
@@ -243,13 +258,9 @@ public abstract class Civilization implements HasSupply {
         city.init(cityName, isCapital);
         cityService.addCity(city);
 
-        settlers.destroyedBy(null, false);
+        unitService.destroyUnit(settlers);
 
         return city;
-    }
-
-    public void captureCity(City city, HasCombatStrength destroyer) {
-        cityService.captureCity(city, destroyer, false);
     }
 
     public void giftReceived(Civilization sender, Supply receivedSupply) {
@@ -261,7 +272,10 @@ public abstract class Civilization implements HasSupply {
             .build());
     }
 
-    @Override
+    public Happiness calcHappiness() {
+        return happinessService.calcHappiness();
+    }
+
     public Supply calcSupply() {
         Supply supply = Supply.EMPTY_SUPPLY;
 
@@ -274,7 +288,6 @@ public abstract class Civilization implements HasSupply {
         return supply;
     }
 
-    @Override
     public void startYear() {
         if (isDestroyed()) {
             return;
@@ -288,13 +301,12 @@ public abstract class Civilization implements HasSupply {
 
         unitService.startYear();
         cityService.startYear();
-        territoryService.startYear();
+        tileService.startYear();
 
         // A bot can be helping a human player
         getBot().startYear();
     }
 
-    @Override
     public synchronized void stopYear() {
         // There can be a helper bot still in progress
         if (!MoveState.DONE.equals(getBot().getMoveState())) {
@@ -310,9 +322,19 @@ public abstract class Civilization implements HasSupply {
 
         cityService.stopYear();
         unitService.stopYear();
-        territoryService.stopYear();
+        tileService.stopYear();
 
-        supply = supply.addWithoutPopulation(calcSupply());
+        Supply yearSupply = calcSupply();
+
+        supply = supply
+            .add(yearSupply)
+            .copy()
+            .population(yearSupply.getPopulation())
+            .build();
+
+        happiness = happinessService.calcHappiness();
+        unhappiness = unhappinessService.calcUnhappiness();
+        goldenAgeCounter = Math.max(0, goldenAgeCounter);
 
         addEvent(StopYearEvent.builder()
             .civilizationName(getName())

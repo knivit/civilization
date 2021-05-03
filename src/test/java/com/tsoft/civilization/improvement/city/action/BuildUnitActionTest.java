@@ -3,7 +3,7 @@ package com.tsoft.civilization.improvement.city.action;
 import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.civilization.CivilizationUnitService;
+import com.tsoft.civilization.civilization.unit.CivilizationUnitService;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.unit.UnitFactory;
@@ -60,14 +60,14 @@ public class BuildUnitActionTest {
 
             assertThat(city.getConstructions()).isNotEmpty();
 
-            assertThat(russia.units())
+            assertThat(russia.getUnitService())
                 .returns(0, CivilizationUnitService::size);
         }
         world.move();
 
         assertThat(city.getConstructions()).isEmpty();
 
-        assertThat(russia.units().getUnits())
+        assertThat(russia.getUnitService().getUnits())
             .hasSize(1)
             .allMatch(e -> e.getClassUuid().equals(Archers.CLASS_UUID))
             .allMatch(e -> e.getLocation().equals(city.getLocation()))

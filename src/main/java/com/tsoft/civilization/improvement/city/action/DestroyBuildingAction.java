@@ -19,7 +19,7 @@ public class DestroyBuildingAction {
             return result;
         }
 
-        building.remove();
+        building.getCity().destroyBuilding(building);
 
         return CityActionResults.BUILDING_DESTROYED;
     }

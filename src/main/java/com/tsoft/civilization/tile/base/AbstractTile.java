@@ -10,12 +10,14 @@ import com.tsoft.civilization.tile.feature.*;
 import com.tsoft.civilization.tile.luxury.AbstractLuxury;
 import com.tsoft.civilization.tile.resource.AbstractResource;
 import com.tsoft.civilization.util.Point;
+import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Constructor;
 import java.util.stream.Collectors;
 
 @Slf4j
+@EqualsAndHashCode(of = "location")
 public abstract class AbstractTile {
     private Point location;
     private AbstractLuxury luxury;
@@ -143,20 +145,6 @@ public abstract class AbstractTile {
         }
 
         return false;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        AbstractTile that = (AbstractTile) o;
-        return location.equals(that.location);
-    }
-
-    @Override
-    public int hashCode() {
-        return location.hashCode();
     }
 
     @Override

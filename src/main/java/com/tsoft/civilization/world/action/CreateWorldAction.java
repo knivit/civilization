@@ -8,6 +8,7 @@ import com.tsoft.civilization.civilization.PlayerType;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.web.state.Worlds;
+import com.tsoft.civilization.world.DifficultyLevel;
 import com.tsoft.civilization.world.L10nWorld;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.world.generator.Climate;
@@ -28,6 +29,7 @@ public class CreateWorldAction {
 
     public static final ActionFailureResult INVALID_MAP_SIZE = new ActionFailureResult(L10nWorld.INVALID_MAP_SIZE);
     public static final ActionFailureResult INVALID_WORLD_NAME = new ActionFailureResult(L10nWorld.INVALID_WORLD_NAME);
+    public static final ActionFailureResult INVALID_DIFFICULTY_LEVEL = new ActionFailureResult(L10nWorld.INVALID_DIFFICULTY_LEVEL);
     public static final ActionFailureResult INVALID_MAX_NUMBER_OF_CIVILIZATIONS = new ActionFailureResult(L10nWorld.INVALID_MAX_NUMBER_OF_CIVILIZATIONS);
     public static final ActionFailureResult CANT_CREATE_WORLD = new ActionFailureResult(L10nWorld.CANT_CREATE_WORLD);
     public static final ActionFailureResult CANT_CREATE_BARBARIANS = new ActionFailureResult(L10nWorld.CANT_CREATE_BARBARIANS);
@@ -40,6 +42,7 @@ public class CreateWorldAction {
         final int worldType;
         final int climate;
         final int maxNumberOfCivilizations;
+        final String difficultyLevel;
     }
 
     public static ActionAbstractResult create(Request request) {
@@ -56,10 +59,16 @@ public class CreateWorldAction {
             return INVALID_MAX_NUMBER_OF_CIVILIZATIONS;
         }
 
+        DifficultyLevel difficultyLevel = DifficultyLevel.find(request.difficultyLevel);
+        if (difficultyLevel == null) {
+            return INVALID_DIFFICULTY_LEVEL;
+        }
+
         // create a world
         TilesMap tilesMap = new TilesMap(MapType.SIX_TILES, request.mapWidth, request.mapHeight);
         World world = new World(request.worldName, tilesMap);
         world.setMaxNumberOfCivilizations(Math.min(CIVILIZATIONS.size(), request.maxNumberOfCivilizations));
+        world.setDifficultyLevel(difficultyLevel);
 
         // generate landscape
         WorldGenerator generator = WorldGeneratorService.getGenerator(request.worldType);

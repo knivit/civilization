@@ -20,7 +20,7 @@ public class BuyBuildingActionRequest extends AbstractAjaxRequest {
             return JsonResponse.badRequest(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
-        City city = myCivilization.cities().getCityById(request.get("city"));
+        City city = myCivilization.getCityService().getCityById(request.get("city"));
         String buildingUuid = request.get("buildingUuid");
         ActionAbstractResult result = BuyBuildingAction.buyBuilding(city, buildingUuid);
         if (result.isFail()) {

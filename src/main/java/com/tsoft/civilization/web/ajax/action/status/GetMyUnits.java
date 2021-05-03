@@ -4,7 +4,6 @@ import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
-import com.tsoft.civilization.unit.UnitListService;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import com.tsoft.civilization.web.request.Request;
@@ -18,7 +17,6 @@ public class GetMyUnits extends AbstractAjaxRequest {
 
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
     private final GetCivilizationInfo civilizationInfo = new GetCivilizationInfo();
-    private final UnitListService unitListService = new UnitListService();
 
     public static StringBuilder getAjax() {
         return new StringBuilder("server.sendAsyncAjax('ajax/GetMyUnits')");
@@ -44,7 +42,7 @@ public class GetMyUnits extends AbstractAjaxRequest {
     }
 
     private StringBuilder getUnitsInfo(Civilization civilization) {
-        UnitList units = civilization.units().getUnits();
+        UnitList units = civilization.getUnitService().getUnits();
         if (units.isEmpty()) {
             return Format.text(
                 "<table id='actions_table'><tr><th>$text</th></tr></table>",
@@ -53,10 +51,8 @@ public class GetMyUnits extends AbstractAjaxRequest {
             );
         }
 
-        units = unitListService.sortByName(units);
-
         StringBuilder buf = new StringBuilder();
-        for (AbstractUnit unit : units) {
+        for (AbstractUnit unit : units.sortByName()) {
             buf.append(Format.text("""
                 <tr>
                     <td><button onclick="$getUnitStatus">$unitName</button></td>

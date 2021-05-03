@@ -4,9 +4,11 @@ import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationsRelations;
+import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
+import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.render.WorldRender;
 import org.junit.jupiter.api.Test;
@@ -270,15 +272,15 @@ public class CombatServiceTest {
             .returns(true, CombatResult::isDone);
 
         assertThat(world.unit("warriors1"))
-            .returns(0, e -> e.getPassScore())
+            .returns(0, AbstractUnit::getPassScore)
             .returns(15, e -> e.getCombatStrength().getDefenseStrength())
             .returns(2, e -> e.getCombatStrength().getAttackExperience());
 
-        assertThat(russia.cities().size()).isEqualTo(1);
+        assertThat(russia.getCityService().size()).isEqualTo(1);
 
         assertThat(america)
-            .returns(1, e -> e.cities().size())
-            .returns(2, e -> e.units().size());
+            .returns(1, e -> e.getCityService().size())
+            .returns(2, e -> e.getUnitService().size());
 
         assertThat(world.city("foreignCity"))
             .returns(30 - 10, e -> e.getCombatStrength().getDefenseStrength());
@@ -291,15 +293,15 @@ public class CombatServiceTest {
             .returns(true, CombatResult::isDone);
 
         assertThat(world.unit("warriors2"))
-            .returns(0, e -> e.getPassScore())
+            .returns(0, AbstractUnit::getPassScore)
             .returns(15, e -> e.getCombatStrength().getDefenseStrength())
             .returns(2, e -> e.getCombatStrength().getAttackExperience());
 
-        assertThat(russia.cities().size()).isEqualTo(1);
+        assertThat(russia.getCityService().size()).isEqualTo(1);
 
         assertThat(america)
-            .returns(1, e -> e.cities().size())
-            .returns(2, e -> e.units().size());
+            .returns(1, e -> e.getCityService().size())
+            .returns(2, e -> e.getUnitService().size());
 
         assertThat(world.city("foreignCity"))
             .returns(20 - 9, e -> e.getCombatStrength().getDefenseStrength());
@@ -312,15 +314,15 @@ public class CombatServiceTest {
             .returns(true, CombatResult::isDone);
 
         assertThat(world.unit("warriors3"))
-            .returns(0, e -> e.getPassScore())
+            .returns(0, AbstractUnit::getPassScore)
             .returns(15, e -> e.getCombatStrength().getDefenseStrength())
             .returns(2, e -> e.getCombatStrength().getAttackExperience());
 
-        assertThat(russia.cities().size()).isEqualTo(1);
+        assertThat(russia.getCityService().size()).isEqualTo(1);
 
         assertThat(america)
-            .returns(1, e -> e.cities().size())
-            .returns(2, e -> e.units().size());
+            .returns(1, e -> e.getCityService().size())
+            .returns(2, e -> e.getUnitService().size());
 
         assertThat(world.city("foreignCity"))
             .returns(20 - 9 - 8, e -> e.getCombatStrength().getDefenseStrength());
@@ -334,25 +336,25 @@ public class CombatServiceTest {
             .returns(true, CombatResult::isTargetDestroyed);
 
         assertThat(world.unit("warriors4"))
-            .returns(0, e -> e.getPassScore())
+            .returns(0, AbstractUnit::getPassScore)
             .returns(15, e -> e.getCombatStrength().getDefenseStrength())
             .returns(2, e -> e.getCombatStrength().getAttackExperience());
 
-        assertThat(russia.cities().size()).isEqualTo(2);
+        assertThat(russia.getCityService().size()).isEqualTo(2);
 
-        assertThat(america.cities().size()).isEqualTo(0);
+        assertThat(america.getCityService().size()).isEqualTo(0);
 
         // foreign city is captured
         assertThat(world.city("foreignCity"))
-            .returns(world.location("warriors4"), e -> e.getLocation())
-            .returns(russia, e -> e.getCivilization());
+            .returns(world.location("warriors4"), AbstractImprovement::getLocation)
+            .returns(russia, AbstractImprovement::getCivilization);
 
         // foreign warriors are destroyed and foreign workers are captured
-        assertThat(russia.units().size()).isEqualTo(5);
-        assertThat(america.units().size()).isEqualTo(0);
+        assertThat(russia.getUnitService().size()).isEqualTo(5);
+        assertThat(america.getUnitService().size()).isEqualTo(0);
 
         assertThat(world.unit("foreignWorkers"))
-            .returns(world.location("foreignCity"), e -> e.getLocation())
-            .returns(russia, e -> e.getCivilization());
+            .returns(world.location("foreignCity"), AbstractUnit::getLocation)
+            .returns(russia, AbstractUnit::getCivilization);
     }
 }

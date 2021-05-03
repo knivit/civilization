@@ -43,7 +43,7 @@ public class JoinWorldRequest extends AbstractAjaxRequest {
         }
 
         Point settlersLocation = null;
-        UnitList settlers = myCivilization.units().findByClassUuid(Settlers.CLASS_UUID);
+        UnitList settlers = myCivilization.getUnitService().findByClassUuid(Settlers.CLASS_UUID);
         if (!settlers.isEmpty()) {
             settlersLocation = settlers.getAny().getLocation();
         }

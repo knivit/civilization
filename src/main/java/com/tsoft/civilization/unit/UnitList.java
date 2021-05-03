@@ -144,4 +144,10 @@ public class UnitList implements Iterable<AbstractUnit> {
             .findAny()
             .orElse(null);
     }
+
+    public UnitList sortByName() {
+        return new UnitList(stream()
+            .sorted(Comparator.comparing(a -> a.getView().getLocalizedName()))
+            .collect(Collectors.toList()));
+    }
 }

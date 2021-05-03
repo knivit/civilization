@@ -5,6 +5,7 @@ import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.civilization.Civilization;
+import lombok.Getter;
 
 import java.util.UUID;
 
@@ -29,6 +30,9 @@ public class Settlers extends AbstractUnit {
     private static final CombatStrength COMBAT_STRENGTH = CombatStrength.builder()
         .defenseStrength(0)
         .build();
+
+    @Getter
+    private final int baseProductionCost = 25;
 
     private static final SettlersView VIEW = new SettlersView();
 
@@ -59,11 +63,6 @@ public class Settlers extends AbstractUnit {
     @Override
     public String getClassUuid() {
         return CLASS_UUID;
-    }
-
-    @Override
-    public int getProductionCost() {
-        return 25;
     }
 
     @Override

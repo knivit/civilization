@@ -45,8 +45,8 @@ public class SupplyMock {
             case 'G': return Supply.builder().gold(value).build();
             case 'S': return Supply.builder().science(value).build();
             case 'C': return Supply.builder().culture(value).build();
-            case 'H': return Supply.builder().happiness(value).build();
-            case 'U': return Supply.builder().unhappiness(value).build();
+            case 'H': throw new IllegalArgumentException("fix");
+            case 'U': throw new IllegalArgumentException("fix");
             case 'O': return Supply.builder().population(value).build();
 
             case 'A': return Supply.builder().greatArtist(value).build();
@@ -60,11 +60,7 @@ public class SupplyMock {
         throw new IllegalArgumentException("Unknown type = " + type);
     }
 
-    private static Comparator<Supply> comparator = (a, b) -> equals(a, b) ? 0 : 1;
-
-    public static boolean equals(String expectedSupply, Supply actualSupply) {
-        return equals(SupplyMock.of(expectedSupply), actualSupply);
-    }
+    private static final Comparator<Supply> comparator = (a, b) -> equals(a, b) ? 0 : 1;
 
     public static boolean equals(Supply a, Supply b) {
         boolean isEqual =
@@ -73,8 +69,6 @@ public class SupplyMock {
             a.getGold() == b.getGold() &&
             a.getScience() == b.getScience() &&
             a.getCulture() == b.getCulture() &&
-            a.getHappiness() == b.getHappiness() &&
-            a.getUnhappiness() == b.getUnhappiness() &&
             a.getPopulation() == b.getPopulation() &&
             a.getGreatArtist() == b.getGreatArtist() &&
             a.getGreatMusician() == b.getGreatMusician() &&
@@ -85,32 +79,32 @@ public class SupplyMock {
 
         // log them out as jUnit doesn't show the values in assertTrue
         if (!isEqual) {
-            System.out.printf(
-                "Type            | Expected   | Actual\n" +
-                "-----------------------------------------\n" +
-                "Food            |     %5d  |    %5d | %s\n" +
-                "Production      |     %5d  |    %5d | %s\n" +
-                "Gold            |     %5d  |    %5d | %s\n" +
-                "Science         |     %5d  |    %5d | %s\n" +
-                "Culture         |     %5d  |    %5d | %s\n" +
-                "Happiness       |     %5d  |    %5d | %s\n" +
-                "Unhappiness     |     %5d  |    %5d | %s\n" +
-                "Population      |     %5d  |    %5d | %s\n" +
-
-                "Great Artist    |     %5d  |    %5d | %s\n" +
-                "Great Musicians |     %5d  |    %5d | %s\n" +
-                "Great Writer    |     %5d  |    %5d | %s\n" +
-                "Great Merchant  |     %5d  |    %5d | %s\n" +
-                "Great Engineer  |     %5d  |    %5d | %s\n" +
-                "Great Scientist |     %5d  |    %5d | %s\n%n",
+            System.out.printf("""
+                Type            | Expected   | Actual
+                -----------------------------------------
+                Food            |     %5d  |    %5d | %s
+                Production      |     %5d  |    %5d | %s
+                Gold            |     %5d  |    %5d | %s
+                Science         |     %5d  |    %5d | %s
+                Culture         |     %5d  |    %5d | %s
+                Happiness       |     %5d  |    %5d | %s
+                Unhappiness     |     %5d  |    %5d | %s
+                Population      |     %5d  |    %5d | %s
+                Great Artist    |     %5d  |    %5d | %s
+                Great Musicians |     %5d  |    %5d | %s
+                Great Writer    |     %5d  |    %5d | %s
+                Great Merchant  |     %5d  |    %5d | %s
+                Great Engineer  |     %5d  |    %5d | %s
+                Great Scientist |     %5d  |    %5d | %s
+                %n""",
 
                 a.getFood(), b.getFood(), cmp(a.getFood(), b.getFood()),
                 a.getProduction(), b.getProduction(), cmp(a.getProduction(), b.getProduction()),
                 a.getGold(), b.getGold(), cmp(a.getGold(), b.getGold()),
                 a.getScience(), b.getScience(), cmp(a.getScience(), b.getScience()),
                 a.getCulture(), b.getCulture(), cmp(a.getCulture(), b.getCulture()),
-                a.getHappiness(), b.getHappiness(), cmp(a.getHappiness(), b.getHappiness()),
-                a.getUnhappiness(), b.getUnhappiness(), cmp(a.getUnhappiness(), b.getUnhappiness()),
+0, 0, "x",//                a.getHappiness(), b.getHappiness(), cmp(a.getHappiness(), b.getHappiness()),
+0, 0, "x",//                a.getUnhappiness(), b.getUnhappiness(), cmp(a.getUnhappiness(), b.getUnhappiness()),
                 a.getPopulation(), b.getPopulation(), cmp(a.getPopulation(), b.getPopulation()),
 
                 a.getGreatArtist(), b.getGreatArtist(), cmp(a.getGreatArtist(), b.getGreatArtist()),

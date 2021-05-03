@@ -80,7 +80,7 @@ public class MockScenario implements Scenario {
         cities.forEach(c -> {
             // Create Settlers
             Settlers settlers = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
-            if (!civilization.units().addUnit(settlers, c.location)) {
+            if (!civilization.getUnitService().addUnit(settlers, c.location)) {
                 throw new IllegalStateException("Can't place Settlers at " + c.location + " to build a city");
             }
 
@@ -92,7 +92,7 @@ public class MockScenario implements Scenario {
         // Create units
         units.forEach(u -> {
             AbstractUnit unit = UnitFactory.newInstance(civilization, u.classUuid);
-            if (!civilization.units().addUnit(unit, u.location)) {
+            if (!civilization.getUnitService().addUnit(unit, u.location)) {
                 throw new IllegalStateException("Can't add unit " + u.name + " at " + u.location);
             }
 

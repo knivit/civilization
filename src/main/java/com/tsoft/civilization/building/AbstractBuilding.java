@@ -1,14 +1,16 @@
 package com.tsoft.civilization.building;
 
-import com.tsoft.civilization.building.event.BuildingDestroyedEvent;
 import com.tsoft.civilization.common.HasId;
 import com.tsoft.civilization.common.HasView;
 import com.tsoft.civilization.economic.HasSupply;
-import com.tsoft.civilization.improvement.CanBeBuilt;
+import com.tsoft.civilization.improvement.city.construction.CanBeBuilt;
 import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.improvement.city.construction.CityConstructionService;
 import com.tsoft.civilization.tile.base.AbstractTile;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.world.DifficultyLevel;
+import com.tsoft.civilization.world.HasHistory;
 import com.tsoft.civilization.world.World;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
@@ -16,9 +18,11 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.UUID;
 
 /**
+ * Cost - production cost
  * Mnt. - required Maintenance costs in gold
  *
  * Building	            Technology	        Cost	Mnt.	Benefit	                    Specialists		Notes
+ * ----------------------------------------------------------------------------------------------------------
  * Monument	            -	                40	    1	    +2 Culture	                -
  * Granary	            Pottery	            60	    1	    +2 Food	                    -	 	        +1 Food for each worked source of Wheat, Bananas and Deer
  * Barracks	            Bronze Working	    75	    1	    -	                        -	 	        +15 XP for all Units.
@@ -93,7 +97,7 @@ import java.util.UUID;
  */
 @Slf4j
 @EqualsAndHashCode(of = "id")
-public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt, HasSupply {
+public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt, HasSupply, HasHistory {
     private final String id = UUID.randomUUID().toString();
 
     private final City city;
@@ -102,6 +106,7 @@ public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt, Ha
     public abstract BuildingType getBuildingType();
 
     public abstract int getGoldCost();
+    public abstract int getBaseProductionCost();
     public abstract int getDefenseStrength();
     public abstract AbstractBuildingView getView();
     public abstract String getClassUuid();
@@ -133,21 +138,18 @@ public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt, Ha
         return city.getCivilization();
     }
 
+    @Override
+    public int getProductionCost() {
+        DifficultyLevel difficultyLevel = getCivilization().getWorld().getDifficultyLevel();
+        int baseProductionCost = getBaseProductionCost();
+        return (int)Math.round(baseProductionCost * CityConstructionService.BUILDING_COST_PER_DIFFICULTY_LEVEL.get(difficultyLevel));
+    }
+
     public boolean isDestroyed() {
         return isDestroyed;
     }
 
     public void setDestroyed(boolean destroyed) {
         isDestroyed = destroyed;
-    }
-
-    public void remove() {
-        isDestroyed = true;
-
-        city.destroyBuilding(this);
-
-        getCivilization().addEvent(BuildingDestroyedEvent.builder()
-            .buildingName(getView().getName())
-            .build());
     }
 }

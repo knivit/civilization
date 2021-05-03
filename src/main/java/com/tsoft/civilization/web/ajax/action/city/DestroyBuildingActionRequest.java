@@ -20,7 +20,7 @@ public class DestroyBuildingActionRequest extends AbstractAjaxRequest {
             return JsonResponse.badRequest(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
-        AbstractBuilding building = myCivilization.cities().getBuildingById(request.get("building"));
+        AbstractBuilding building = myCivilization.getCityService().getBuildingById(request.get("building"));
         ActionAbstractResult result = DestroyBuildingAction.destroyBuilding(building);
         if (result.isFail()) {
             return JsonResponse.accepted(result.getMessage());

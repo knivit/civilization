@@ -270,7 +270,7 @@ public class GetTileStatus extends AbstractAjaxRequest {
             return null;
         }
 
-        Supply supply = tileService.getSupply(tile);
+        Supply supply = tileService.calcSupply(tile);
         return Format.text("""
             <tr>
                 <td>$totalLabel</td>

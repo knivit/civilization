@@ -13,8 +13,6 @@ public final class Supply {
     private final int gold;
     private final int science;
     private final int culture;
-    private final int happiness;
-    private final int unhappiness;
     private final int population;
 
     private final int greatArtist;
@@ -25,23 +23,13 @@ public final class Supply {
     private final int greatScientist;
 
     public Supply add(Supply other) {
-        return add(other, true);
-    }
-
-    public Supply addWithoutPopulation(Supply other) {
-        return add(other, false);
-    }
-
-    private Supply add(Supply other, boolean sumPopulation) {
         return Supply.builder()
             .food(food + other.food)
             .production(production + other.production)
             .gold(gold + other.gold)
             .science(science + other.science)
             .culture(culture + other.culture)
-            .happiness(happiness + other.happiness)
-            .unhappiness(unhappiness + other.unhappiness)
-            .population(sumPopulation ? population + other.population : other.population)
+            .population(population + other.population)
 
             .greatArtist(greatArtist + other.greatArtist)
             .greatMusician(greatMusician + other.greatMusician)
@@ -53,6 +41,23 @@ public final class Supply {
             .build();
     }
 
+    public Supply.SupplyBuilder copy() {
+        return Supply.builder()
+            .food(food)
+            .production(production)
+            .gold(gold)
+            .science(science)
+            .culture(culture)
+            .population(population)
+
+            .greatArtist(greatArtist)
+            .greatMusician(greatMusician )
+            .greatWriter(greatWriter )
+            .greatEngineer(greatEngineer)
+            .greatMerchant(greatMerchant)
+            .greatScientist(greatScientist);
+    }
+
     @Override
     public String toString() {
         return "{" +
@@ -61,8 +66,6 @@ public final class Supply {
             ", gold=" + gold +
             ", science=" + science +
             ", culture=" + culture +
-            ", happiness=" + happiness +
-            ", unhappiness=" + unhappiness +
             ", population=" + population +
 
             ", Great Artist=" + greatArtist +

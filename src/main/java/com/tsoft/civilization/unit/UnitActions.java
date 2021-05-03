@@ -1,6 +1,6 @@
 package com.tsoft.civilization.unit;
 
-import com.tsoft.civilization.common.AbstractAction;
+import com.tsoft.civilization.action.AbstractAction;
 import com.tsoft.civilization.unit.action.*;
 import com.tsoft.civilization.unit.civil.greatartist.GreatArtist;
 import com.tsoft.civilization.unit.civil.greatartist.GreatArtistActions;

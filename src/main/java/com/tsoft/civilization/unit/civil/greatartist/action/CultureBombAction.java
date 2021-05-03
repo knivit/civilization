@@ -6,7 +6,7 @@ import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;
 
-import static com.tsoft.civilization.unit.action.MoveUnitAction.INVALID_LOCATION;
+import static com.tsoft.civilization.unit.move.UnitMoveService.INVALID_TARGET_LOCATION;
 
 // The Culture Bomb ability is quite useful, where the tile that the artist is
 // standing on, as well as the 6 surrounding hex tiles, will be converted to
@@ -18,11 +18,11 @@ public class CultureBombAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     public static ActionAbstractResult cultureBomb(GreatArtist unit) {
-        return INVALID_LOCATION;
+        return INVALID_TARGET_LOCATION;
     }
 
     private static ActionAbstractResult canCultureBomb(GreatArtist unit) {
-        return INVALID_LOCATION;
+        return INVALID_TARGET_LOCATION;
     }
 
     private static String getClientJSCode(GreatArtist unit) {

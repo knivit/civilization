@@ -1,5 +1,6 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
+import com.tsoft.civilization.civilization.happiness.CivilizationHappinessService;
 import com.tsoft.civilization.improvement.city.L10nCity;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.building.L10nBuilding;
@@ -37,7 +38,7 @@ public class GetBuildingStatus extends AbstractAjaxRequest {
 
         // See buildings only for my civilization
         String buildingId = request.get("building");
-        AbstractBuilding building = myCivilization.cities().getBuildingById(buildingId);
+        AbstractBuilding building = myCivilization.getCityService().getBuildingById(buildingId);
         if (building == null) {
             return JsonResponse.badRequest(L10nBuilding.BUILDING_NOT_FOUND);
         }
@@ -81,7 +82,9 @@ public class GetBuildingStatus extends AbstractAjaxRequest {
             return null;
         }
 
-        Supply supply = building.getSupply();
+        CivilizationHappinessService happinessService = building.getCivilization().getHappinessService();
+        int happiness = happinessService.calcHappiness().getTotal();
+        Supply supply = building.calcIncomeSupply();
         return Format.text("""
             <table id='info_table'>
                 <tr><td>$productionLabel</td><td>$production $productionImage</td>
@@ -102,8 +105,8 @@ public class GetBuildingStatus extends AbstractAjaxRequest {
             "$food", supply.getFood(),
             "$foodImage", FOOD_IMAGE,
             "$happinessLabel", L10nCity.HAPPINESS,
-            "$happiness", supply.getHappiness(),
-            "$happinessImage", HAPPINESS_IMAGE(supply.getHappiness()),
+            "$happiness", happiness,
+            "$happinessImage", HAPPINESS_IMAGE(happiness),
             "$strengthLabel", L10nCity.DEFENSE_STRENGTH,
             "$strength", building.getDefenseStrength()
         );

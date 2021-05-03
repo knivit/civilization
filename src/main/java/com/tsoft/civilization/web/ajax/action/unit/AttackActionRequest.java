@@ -26,7 +26,7 @@ public class AttackActionRequest extends AbstractAjaxRequest {
         }
 
         String attackerId = request.get("attacker");
-        HasCombatStrength attacker = myCivilization.units().getAttackerById(attackerId);
+        HasCombatStrength attacker = myCivilization.getUnitService().getAttackerById(attackerId);
         Point location = myCivilization.getTilesMap().getLocation(request.get("col"), request.get("row"));
 
         ActionAbstractResult result = attackAction.attack(attacker, location);

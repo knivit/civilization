@@ -6,7 +6,7 @@ import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;
 
-import static com.tsoft.civilization.unit.action.MoveUnitAction.INVALID_LOCATION;
+import static com.tsoft.civilization.unit.move.UnitMoveService.INVALID_TARGET_LOCATION;
 
 // The Great Engineer can be used to build a Manufacture tile, which is basically
 // a tile improvement that generates 3 production hammers when it is worked,
@@ -15,11 +15,11 @@ public class ManufactureImprovementAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     public static ActionAbstractResult buildManufactureImprovement(GreatEngineer unit) {
-        return INVALID_LOCATION;
+        return INVALID_TARGET_LOCATION;
     }
 
     private static ActionAbstractResult canBuildManufactureImprovement(GreatEngineer unit) {
-        return INVALID_LOCATION;
+        return INVALID_TARGET_LOCATION;
     }
 
     private static String getClientJSCode(GreatEngineer unit) {

@@ -1,6 +1,6 @@
 package com.tsoft.civilization.unit.civil.greatgeneral;
 
-import com.tsoft.civilization.common.AbstractAction;
+import com.tsoft.civilization.action.AbstractAction;
 import com.tsoft.civilization.unit.action.DefaultUnitActions;
 import com.tsoft.civilization.unit.civil.greatgeneral.action.CitadelImprovementAction;
 import com.tsoft.civilization.unit.civil.greatgeneral.action.CombatBonusAction;

@@ -12,6 +12,7 @@ import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.civilization.Civilization;
 
 public class BuildBuildingActionRequest extends AbstractAjaxRequest {
+
     @Override
     public Response getJson(Request request) {
         Civilization myCivilization = getMyCivilization();
@@ -19,7 +20,7 @@ public class BuildBuildingActionRequest extends AbstractAjaxRequest {
             return JsonResponse.badRequest(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
-        City city = myCivilization.cities().getCityById(request.get("city"));
+        City city = myCivilization.getCityService().getCityById(request.get("city"));
         String buildingUuid = request.get("buildingUuid");
         ActionAbstractResult result = BuildBuildingAction.buildBuilding(city, buildingUuid);
         if (result.isFail()) {

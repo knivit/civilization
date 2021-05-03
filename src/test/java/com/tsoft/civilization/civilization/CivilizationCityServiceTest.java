@@ -2,6 +2,7 @@ package com.tsoft.civilization.civilization;
 
 import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
+import com.tsoft.civilization.civilization.city.CivilizationCityService;
 import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.util.Point;
 import org.junit.jupiter.api.Test;

@@ -56,13 +56,13 @@ public class DefaultScenario implements Scenario {
 
         // create the Settlers unit
         Settlers settlers = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
-        if (!civilization.units().addUnit(settlers, settlersLocation)) {
+        if (!civilization.getUnitService().addUnit(settlers, settlersLocation)) {
             log.warn("Can't place Settlers");
             return false;
         }
 
         // try to place Warriors near the Settlers
-        Point warriorsLocation = world.getWarriorsStartLocation(civilization, settlersLocation);
+        Point warriorsLocation = civilization.getUnitService().getWarriorsStartLocation(civilization, settlersLocation);
         if (warriorsLocation == null) {
             log.warn("Can't place Warriors");
         }

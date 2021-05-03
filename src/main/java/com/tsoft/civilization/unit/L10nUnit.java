@@ -82,9 +82,9 @@ public class L10nUnit {
         .put(EN, "Unit $unitName was destroyed")
         .put(RU, "Юнит $unitName был уничтожен");
 
-    public static final L10n INVALID_LOCATION = new L10n()
-        .put(EN, "Invalid location")
-        .put(RU, "Неверное местоположение");
+    public static final L10n INVALID_TARGET_LOCATION = new L10n()
+        .put(EN, "Invalid target location")
+        .put(RU, "Неверное конечное местоположение");
 
     public static final L10n NO_LOCATIONS_TO_MOVE = new L10n()
         .put(EN, "There are no locations to move in")
@@ -106,6 +106,10 @@ public class L10nUnit {
         .put(EN, "Unit moved")
         .put(RU, "Юнит перемещен");
 
+    public static final L10n UNIT_SWAPPED = new L10n()
+        .put(EN, "Units swapped")
+        .put(RU, "Юниты обменялись местоположением");
+
     public static final L10n CAN_MOVE = new L10n()
         .put(EN, "Unit can move there")
         .put(RU, "Юнит может быть перемещен");
@@ -126,7 +130,7 @@ public class L10nUnit {
         .put(EN, "Attack is done")
         .put(RU, "Атака завершена");
 
-    public static final L10n FOREIGN_UNIT_CAPTURED = new L10n()
+    public static final L10n UNIT_CAPTURED = new L10n()
         .put(EN, "Foreign unit is captured")
         .put(RU, "Иностранный юнит захвачен");
 
@@ -165,6 +169,10 @@ public class L10nUnit {
     public static final L10n NO_PASS_SCORE = new L10n()
         .put(EN, "Not enough the passing score")
         .put(RU, "Недостаточно ходов перемещения");
+
+    public static final L10n CANT_CROSS_BORDERS = new L10n()
+        .put(EN, "Can not cross borders")
+        .put(RU, "Нельзя пересекать границу");
 
     public static final L10n LAST_SETTLERS_CANT_BE_DESTROYED = new L10n()
         .put(EN, "The only settlers unit can not be destroyed")

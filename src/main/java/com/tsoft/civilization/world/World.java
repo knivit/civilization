@@ -7,29 +7,43 @@ import com.tsoft.civilization.improvement.city.CityList;
 import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.unit.UnitList;
-import com.tsoft.civilization.unit.military.warriors.Warriors;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.event.NewYearStartEvent;
 import com.tsoft.civilization.world.event.WorldStopYearEvent;
 import com.tsoft.civilization.world.scenario.Scenario;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.*;
 
 public class World {
+    @Getter
     private final String id = UUID.randomUUID().toString();
 
+    @Getter
     private Year year;
+
+    @Getter
     private final TilesMap tilesMap;
+
+    @Getter
     private final WorldView view;
 
-    // Filled on World creation
+    @Getter
+    private final WorldSize worldSize;
+
+    @Getter
     private final String name;
+
+    @Getter @Setter
     private int maxNumberOfCivilizations;
 
+    @Getter @Setter
+    private DifficultyLevel difficultyLevel;
+
     private final List<Year> history = new ArrayList<>();
-    private final CivilizationService civilizationService;
+    private final WorldService worldService;
     private final TileService tileService = new TileService();
 
     public World(String name, TilesMap tilesMap) {
@@ -38,93 +52,51 @@ public class World {
         view = new WorldView(this);
         this.tilesMap = tilesMap;
 
-        civilizationService = new CivilizationService(this);
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public WorldView getView() {
-        return view;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getMaxNumberOfCivilizations() {
-        return maxNumberOfCivilizations;
-    }
-
-    public void setMaxNumberOfCivilizations(int maxNumberOfCivilizations) {
-        this.maxNumberOfCivilizations = maxNumberOfCivilizations;
-    }
-
-    public Year getYear() {
-        return year;
-    }
-
-    public TilesMap getTilesMap() {
-        return tilesMap;
+        worldService = new WorldService(this);
+        worldSize = WorldSize.find(tilesMap.getWidth(), tilesMap.getHeight());
     }
 
     // Send an event to all civilizations
     public void sendEvent(Event event) {
-        civilizationService.sendEvent(event);
+        worldService.sendEvent(event);
     }
 
     // Returns NULL when a civilization can not be created (it is already exists etc)
     public Civilization createCivilization(PlayerType playerType, L10n civilizationName, Scenario scenario) {
-        return civilizationService.create(playerType, civilizationName, scenario);
+        return worldService.createCivilization(playerType, civilizationName, scenario);
     }
 
     // Returns NULL when relations can not be found
     public CivilizationsRelations getCivilizationsRelations(Civilization c1, Civilization c2) {
-        return civilizationService.getRelations(c1, c2);
+        return worldService.getRelations(c1, c2);
     }
 
     public void setCivilizationsRelations(Civilization c1, Civilization c2, CivilizationsRelations rel) {
-        civilizationService.setRelations(c1, c2, rel);
+        worldService.setRelations(c1, c2, rel);
     }
 
     public boolean isWar(Civilization c1, Civilization c2) {
-        return civilizationService.isWar(c1, c2);
+        return worldService.isWar(c1, c2);
     }
 
     // Find a location to place a Settlers
     public Point getSettlersStartLocation(Civilization civ) {
-        List<Point> possibleLocations = tileService.getTilesToStartCivilization(tilesMap);
-        return civilizationService.getCivilizationStartLocation(civ, possibleLocations);
-    }
-
-    // Find a location to place warriors
-    public Point getWarriorsStartLocation(Civilization civ, Point settlersLocation) {
-        // try to place Warriors near the Settlers
-        List<Point> locations = getLocationsAround(settlersLocation, 2);
-        Collections.shuffle(locations);
-
-        Warriors warriors = UnitFactory.newInstance(civ, Warriors.CLASS_UUID);
-        for (Point location : locations) {
-            if (civ.units().addUnit(warriors, location)) {
-                return location;
-            }
-        }
-        return null;
+        List<Point> possibleLocations = worldService.getTilesToStartCivilization(tilesMap);
+        return worldService.getCivilizationStartLocation(civ, possibleLocations);
     }
 
     public Civilization getCivilizationById(String civilizationId) {
-        return civilizationService.getCivilizationById(civilizationId);
+        return worldService.getCivilizationById(civilizationId);
     }
 
     // Find out what Civilization have this tile, or null
     public Civilization getCivilizationOnTile(Point location) {
-        return civilizationService.getCivilizationOnTile(location);
+        return worldService.getCivilizationOnTile(location);
     }
 
     // Only one city may be on a tile
     public City getCityAtLocation(Point location) {
-        return civilizationService.getCityAtLocation(location);
+        return worldService.getCityAtLocation(location);
     }
 
     public CityList getCitiesAtLocations(Collection<Point> locations) {
@@ -132,7 +104,7 @@ public class World {
     }
 
     public CityList getCitiesAtLocations(Collection<Point> locations, Civilization excludeCivilization) {
-        return civilizationService.getCitiesAtLocations(locations, excludeCivilization);
+        return worldService.getCitiesAtLocations(locations, excludeCivilization);
     }
 
     public UnitList getUnitsAtLocation(Point location) {
@@ -140,7 +112,7 @@ public class World {
     }
 
     public UnitList getUnitsAtLocation(Point location, Civilization excludeCivilization) {
-        return civilizationService.getUnitsAtLocation(location, excludeCivilization);
+        return worldService.getUnitsAtLocation(location, excludeCivilization);
     }
 
     public UnitList getUnitsAtLocations(Collection<Point> locations) {
@@ -148,7 +120,7 @@ public class World {
     }
 
     public UnitList getUnitsAtLocations(Collection<Point> locations, Civilization excludeCivilization) {
-        return civilizationService.getUnitsAtLocations(locations, excludeCivilization);
+        return worldService.getUnitsAtLocations(locations, excludeCivilization);
     }
 
     public List<Point> getLocationsAround(Point location, int radius) {
@@ -156,15 +128,15 @@ public class World {
     }
 
     public CivilizationList getCivilizations() {
-        return civilizationService.getCivilizations();
+        return worldService.getCivilizations();
     }
 
     public AbstractUnit getUnitById(String unitId) {
-        return civilizationService.getUnitById(unitId);
+        return worldService.getUnitById(unitId);
     }
 
     public City getCityById(String cityId) {
-        return civilizationService.getCityById(cityId);
+        return worldService.getCityById(cityId);
     }
 
     public List<Year> getHistory() {
@@ -173,7 +145,7 @@ public class World {
 
     // Callback on civilizations' stopYear
     public void onCivilizationMoved() {
-        CivilizationList list = civilizationService.getMovingCivilizations();
+        CivilizationList list = worldService.getMovingCivilizations();
 
         if (list.isEmpty()) {
             stopYear();
@@ -186,7 +158,7 @@ public class World {
     public void startYear() {
         history.add(year);
         tilesMap.startYear();
-        civilizationService.startYear();
+        worldService.startYear();
 
         sendEvent(NewYearStartEvent.builder()
             .year(year.getYear())

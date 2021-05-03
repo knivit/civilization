@@ -1,5 +1,6 @@
 package com.tsoft.civilization.unit.action;
 
+import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.action.ActionFailureResult;
@@ -27,7 +28,8 @@ public class DestroyUnitAction {
             return result;
         }
 
-        unit.destroyedBy(null, false);
+        Civilization civilization = unit.getCivilization();
+        civilization.getUnitService().destroyUnit(unit);
 
         return UNIT_DESTROYED;
     }
@@ -41,7 +43,7 @@ public class DestroyUnitAction {
             return NO_PASS_SCORE;
         }
 
-        if (unit instanceof Settlers && unit.getCivilization().units().size() == 1) {
+        if (unit instanceof Settlers && unit.getCivilization().getUnitService().size() == 1) {
             return LAST_SETTLERS_CANT_BE_DESTROYED;
         }
 
