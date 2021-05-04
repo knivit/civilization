@@ -24,7 +24,7 @@ public class Mountain extends TerrainFeature {
 
     @Override
     public Supply getSupply() {
-        return Supply.EMPTY_SUPPLY;
+        return Supply.EMPTY;
     }
 
     @Override

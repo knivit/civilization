@@ -1,10 +1,10 @@
 package com.tsoft.civilization.improvement.city.action;
 
+import com.tsoft.civilization.building.BuildingFactory;
 import com.tsoft.civilization.improvement.city.L10nCity;
 import com.tsoft.civilization.building.L10nBuilding;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.building.AbstractBuilding;
-import com.tsoft.civilization.building.BuildingCatalog;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
@@ -34,8 +34,8 @@ public class BuyBuildingAction {
             return CityActionResults.CITY_NOT_FOUND;
         }
 
-        AbstractBuilding building = BuildingCatalog.findByClassUuid(buildingClassUuid);
-        if (building == null || building.getGoldCost() < 0) {
+        AbstractBuilding building = BuildingFactory.findByClassUuid(buildingClassUuid);
+        if (building == null || building.getGoldCost(city.getCivilization()) < 0) {
             return CityActionResults.INVALID_BUILDING;
         }
 

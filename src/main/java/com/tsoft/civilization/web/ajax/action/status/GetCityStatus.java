@@ -26,7 +26,6 @@ import static com.tsoft.civilization.web.ajax.ServerStaticResource.*;
 public class GetCityStatus extends AbstractAjaxRequest {
 
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
-    private final BuildingListService buildingListService = new BuildingListService();
 
     @Override
     public Response getJson(Request request) {
@@ -100,7 +99,7 @@ public class GetCityStatus extends AbstractAjaxRequest {
             "$features", L10nCity.BUSINESS_FEATURES,
 
             "$populationLabel", L10nCity.POPULATION,
-            "$population", city.getSupply().getPopulation(),
+            "$population", city.getPopulationService().getCitizenCount(),
             "$populationImage", POPULATION_IMAGE,
             "$productionLabel", L10nCity.PRODUCTION,
             "$production", city.getSupply().getProduction(),
@@ -247,8 +246,8 @@ public class GetCityStatus extends AbstractAjaxRequest {
     private StringBuilder getBuildingConstructionActions(City city) {
         StringBuilder buf = new StringBuilder();
 
-        BuildingList buildings = BuildingCatalog.values();
-        for (AbstractBuilding building : buildingListService.sortByName(buildings)) {
+        BuildingList buildings = BuildingFactory.getAvailableBuildings(city.getCivilization());
+        for (AbstractBuilding building : buildings.sortByName()) {
             StringBuilder buyBuildingAction = BuildBuildingAction.getHtml(city, building.getClassUuid());
             StringBuilder buildBuildingAction = BuyBuildingAction.getHtml(city, building.getClassUuid());
 
@@ -316,7 +315,7 @@ public class GetCityStatus extends AbstractAjaxRequest {
         }
 
         StringBuilder buf = new StringBuilder();
-        for (AbstractBuilding building : buildingListService.sortByName(buildings)) {
+        for (AbstractBuilding building : buildings.sortByName()) {
             buf.append(Format.text("""
                 <tr><td><button onclick="$getBuildingStatus">$buttonLabel</button></td></tr>
                 """,

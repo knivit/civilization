@@ -1,7 +1,7 @@
 package com.tsoft.civilization.unit;
 
-import com.tsoft.civilization.common.HasId;
-import com.tsoft.civilization.common.HasView;
+import com.tsoft.civilization.world.HasId;
+import com.tsoft.civilization.world.HasView;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.combat.skill.AbstractSkill;
@@ -60,10 +60,10 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
 
     private final ArrayList<AbstractSkill> skills = new ArrayList<>();
 
+    public abstract String getClassUuid();
     public abstract UnitCategory getUnitCategory();
     public abstract void initPassScore();
-    public abstract int getGoldCost();
-    public abstract String getClassUuid();
+    public abstract int getGoldCost(Civilization civilization);
     public abstract int getBaseProductionCost();
 
     public abstract AbstractUnitView getView();
@@ -107,8 +107,8 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
     }
 
     @Override
-    public int getProductionCost() {
-        DifficultyLevel difficultyLevel = getCivilization().getWorld().getDifficultyLevel();
+    public int getProductionCost(Civilization civilization) {
+        DifficultyLevel difficultyLevel = civilization.getWorld().getDifficultyLevel();
         int baseProductionCost = getBaseProductionCost();
         return (int)Math.round(baseProductionCost * CityConstructionService.UNIT_COST_PER_DIFFICULTY_LEVEL.get(difficultyLevel));
     }

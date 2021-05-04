@@ -5,18 +5,24 @@ import com.tsoft.civilization.building.BuildingType;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.economic.Supply;
+import com.tsoft.civilization.world.Year;
 import lombok.Getter;
 
 import java.util.UUID;
 
 public class Settlement extends AbstractBuilding {
-    public static final Settlement STUB = new Settlement(null);
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();
     private static final SettlementView VIEW = new SettlementView();
 
     @Getter
     private final int baseProductionCost = -1;
+
+    @Getter
+    private final int localHappiness = 0;
+
+    @Getter
+    private final int globalHappiness = 0;
 
     public Settlement(City city) {
         super(city);
@@ -28,13 +34,18 @@ public class Settlement extends AbstractBuilding {
     }
 
     @Override
+    public boolean checkEraAndTechnology(Civilization civilization) {
+        return civilization.getYear().getEra() == Year.ANCIENT_ERA;
+    }
+
+    @Override
     public Supply calcIncomeSupply() {
         return Supply.builder().production(1).gold(1).culture(1).build();
     }
 
     @Override
     public Supply calcOutcomeSupply() {
-        return Supply.EMPTY_SUPPLY;
+        return Supply.EMPTY;
     }
 
     @Override
@@ -58,7 +69,7 @@ public class Settlement extends AbstractBuilding {
     }
 
     @Override
-    public int getGoldCost() {
+    public int getGoldCost(Civilization civilization) {
         return -1;
     }
 

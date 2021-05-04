@@ -16,7 +16,6 @@
         <slf4j-api.version>1.7.30</slf4j-api.version>
         <lombok.version>1.18.12</lombok.version>
         <jackson-databind.version>2.11.2</jackson-databind.version>
-        <jsoup.version>1.13.1</jsoup.version>
         <junit-jupiter-api.version>5.7.1</junit-jupiter-api.version>
         <assertj-core.version>3.19.0</assertj-core.version>
         <mockito-core.version>3.9.0</mockito-core.version>
@@ -94,14 +93,6 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson-databind.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
-        <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>${jsoup.version}</version>
             <scope>test</scope>
         </dependency>
 

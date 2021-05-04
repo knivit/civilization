@@ -44,7 +44,7 @@ public class BuildCityActionTest {
         City city = russia.getCityService().getAny();
 
         // city's tiles
-        assertEquals(7, city.getLocations().size());
+        assertEquals(7, city.getTileService().getLocations().size());
 
         // settlers must be destroyed
         assertEquals(0, russia.getUnitService().size());

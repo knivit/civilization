@@ -1,6 +1,6 @@
 package com.tsoft.civilization.civilization;
 
-import com.tsoft.civilization.common.AbstractView;
+import com.tsoft.civilization.world.AbstractView;
 import com.tsoft.civilization.web.view.JsonBlock;
 
 public abstract class CivilizationView implements AbstractView {

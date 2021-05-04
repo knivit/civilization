@@ -24,7 +24,7 @@ public class Desert extends AbstractTile {
 
     @Override
     public Supply getBaseSupply() {
-        return Supply.EMPTY_SUPPLY;
+        return Supply.EMPTY;
     }
 
     @Override

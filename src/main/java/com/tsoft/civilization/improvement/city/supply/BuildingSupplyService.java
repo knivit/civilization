@@ -15,7 +15,7 @@ public class BuildingSupplyService implements HasSupply {
 
     @Override
     public Supply calcIncomeSupply() {
-        Supply supply = Supply.EMPTY_SUPPLY;
+        Supply supply = Supply.EMPTY;
         for (AbstractBuilding building : city.getBuildings()) {
             supply = supply.add(building.calcIncomeSupply());
         }
@@ -24,7 +24,7 @@ public class BuildingSupplyService implements HasSupply {
 
     @Override
     public Supply calcOutcomeSupply() {
-        Supply supply = Supply.EMPTY_SUPPLY;
+        Supply supply = Supply.EMPTY;
         for (AbstractBuilding building : city.getBuildings()) {
             supply = supply.add(building.calcOutcomeSupply());
         }

@@ -51,7 +51,7 @@ public class CityView extends AbstractImprovementView {
 
         // tiles owned by the city
         cityBlock.startArray("locations");
-        city.getLocations().forEach(loc -> {
+        city.getTileService().getLocations().forEach(loc -> {
             JsonBlock locBlock = new JsonBlock();
             locBlock.addParam("col", loc.getX());
             locBlock.addParam("row", loc.getY());

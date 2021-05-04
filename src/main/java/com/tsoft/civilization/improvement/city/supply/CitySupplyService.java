@@ -26,7 +26,7 @@ public class CitySupplyService {
     }
 
     public Supply calcIncomeSupply() {
-        return Supply.EMPTY_SUPPLY
+        return Supply.EMPTY
             .add(tileSupplyService.calcIncomeSupply(city.getCitizenLocations()))
             .add(buildingSupplyService.calcIncomeSupply())
             .add(constructionSupplyService.calcIncomeSupply())
@@ -34,7 +34,7 @@ public class CitySupplyService {
     }
 
     public Supply calcOutcomeSupply() {
-        return Supply.EMPTY_SUPPLY
+        return Supply.EMPTY
             .add(tileSupplyService.calcOutcomeSupply(city.getCitizenLocations()))
             .add(buildingSupplyService.calcOutcomeSupply())
             .add(constructionSupplyService.calcOutcomeSupply())

@@ -4,6 +4,9 @@ import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.civilization.unit.CivilizationUnitService;
+import com.tsoft.civilization.economic.HappinessMock;
+import com.tsoft.civilization.economic.Supply;
+import com.tsoft.civilization.economic.UnhappinessMock;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.unit.UnitFactory;
@@ -43,9 +46,18 @@ public class BuildUnitActionTest {
         City city = world.city("Moscow");
         city.setPassScore(1);
 
-        assertThat(russia.calcSupply())
+        Supply s = russia.calcSupply();
+        assertThat(s)
             .usingComparator(SupplyMock::compare)
-            .isEqualTo(SupplyMock.of("F1 P3 G3 S4 C1 H0 U1 O1"));
+            .isEqualTo(SupplyMock.of("F1 P3 G3 S4 C1"));
+
+        assertThat(russia.calcHappiness())
+            .usingComparator(HappinessMock::compare)
+            .isEqualTo(HappinessMock.of("D9 L0 B0 W0 N0 P0 G0"));
+
+        assertThat(russia.calcUnhappiness())
+            .usingComparator(UnhappinessMock::compare)
+            .isEqualTo(UnhappinessMock.of("C1 A0 U0 P1 T4"));
 
         // Start build Archers
         ActionAbstractResult actionResult = BuildUnitAction.buildUnit(city, Archers.CLASS_UUID);
@@ -53,8 +65,8 @@ public class BuildUnitActionTest {
             .isEqualTo(CityActionResults.UNIT_CONSTRUCTION_IS_STARTED);
 
         // Wait till it builds
-        Archers archers = UnitFactory.newInstance(russia, Archers.CLASS_UUID);
-        int neededSteps = archers.getProductionCost() / 3;
+        Archers archers = UnitFactory.findByClassUuid(Archers.CLASS_UUID);
+        int neededSteps = archers.getProductionCost(russia) / 3;
         for (int i = 0; i < neededSteps; i ++) {
             world.move();
 

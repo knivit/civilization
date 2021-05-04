@@ -7,15 +7,8 @@ import com.tsoft.civilization.tile.base.MissileTilePastCostTable;
 import com.tsoft.civilization.tile.base.TilePassCostTable;
 import com.tsoft.civilization.tile.feature.TerrainFeature;
 import com.tsoft.civilization.tile.feature.TerrainFeatureList;
-import com.tsoft.civilization.tile.luxury.AbstractLuxury;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.economic.Supply;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class TileService {
 
@@ -40,11 +33,6 @@ public class TileService {
             }
         }
         return supply;
-    }
-
-    // Returns passing cost for a unit
-    public int getPassCost(AbstractUnit unit, AbstractTile tile) {
-        return getPassCost(unit.getCivilization(), unit, tile);
     }
 
     public int getPassCost(Civilization civilization, AbstractUnit unit, AbstractTile tile) {

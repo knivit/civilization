@@ -74,7 +74,7 @@ public class CityConstructionService {
     }
 
     public void startConstruction(CanBeBuilt object) {
-        Construction construction = new Construction(object);
+        Construction construction = new Construction(city.getCivilization(), object);
         constructionStrategy.add(constructions, construction);
     }
 

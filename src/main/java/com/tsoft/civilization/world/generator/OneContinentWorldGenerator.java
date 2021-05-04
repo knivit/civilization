@@ -13,7 +13,7 @@ import com.tsoft.civilization.tile.feature.ice.Ice;
 import com.tsoft.civilization.tile.feature.jungle.Jungle;
 import com.tsoft.civilization.tile.feature.marsh.Marsh;
 import com.tsoft.civilization.tile.feature.oasis.Oasis;
-import com.tsoft.civilization.tile.luxury.LuxuryList;
+import com.tsoft.civilization.tile.resource.luxury.LuxuryList;
 import com.tsoft.civilization.tile.resource.ResourceList;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.tile.base.*;

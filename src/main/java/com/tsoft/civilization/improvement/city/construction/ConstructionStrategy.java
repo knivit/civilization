@@ -27,8 +27,12 @@ public enum ConstructionStrategy {
     }
 
     private static void random(ConstructionList list, Construction construction) {
-        int index = random.nextInt(list.size());
-        list.set(index, construction);
+        if (list.isEmpty()) {
+            list.add(construction);
+        } else {
+            int index = random.nextInt(list.size());
+            list.set(index, construction);
+        }
     }
 
     private static void auto(ConstructionList list, Construction construction) {

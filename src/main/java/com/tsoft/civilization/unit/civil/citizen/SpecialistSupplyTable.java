@@ -21,6 +21,6 @@ public final class SpecialistSupplyTable {
     }
 
     public static Supply get(SpecialistType type) {
-        return (type == null) ? Supply.EMPTY_SUPPLY : table.get(type);
+        return (type == null) ? Supply.EMPTY : table.get(type);
     }
 }

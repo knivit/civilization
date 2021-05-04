@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
-import com.tsoft.civilization.civilization.happiness.CivilizationHappinessService;
+import com.tsoft.civilization.civilization.population.CivilizationHappinessService;
 import com.tsoft.civilization.improvement.city.L10nCity;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.building.L10nBuilding;
@@ -83,7 +83,7 @@ public class GetBuildingStatus extends AbstractAjaxRequest {
         }
 
         CivilizationHappinessService happinessService = building.getCivilization().getHappinessService();
-        int happiness = happinessService.calcHappiness().getTotal();
+        int happiness = happinessService.calc().getTotal();
         Supply supply = building.calcIncomeSupply();
         return Format.text("""
             <table id='info_table'>

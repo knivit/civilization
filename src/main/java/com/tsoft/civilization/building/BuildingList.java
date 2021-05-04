@@ -1,6 +1,7 @@
 package com.tsoft.civilization.building;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class BuildingList implements Iterable<AbstractBuilding> {
@@ -12,13 +13,6 @@ public class BuildingList implements Iterable<AbstractBuilding> {
     public BuildingList(List<AbstractBuilding> buildings) {
         Objects.requireNonNull(buildings);
         this.buildings.addAll(buildings);
-    }
-
-    public BuildingList(AbstractBuilding ... buildings) {
-        if (buildings != null) {
-            this.buildings.addAll(Arrays.asList(buildings));
-        }
-        isUnmodifiable = true;
     }
 
     public List<AbstractBuilding> getList() {
@@ -86,11 +80,23 @@ public class BuildingList implements Iterable<AbstractBuilding> {
 
     public AbstractBuilding getBuildingById(String buildingId) {
         Objects.requireNonNull(buildingId, "buildingId can't be null");
-        return buildings.stream().filter(e -> e.getId().equals(buildingId)).findFirst().orElse(null);
+        return buildings.stream()
+            .filter(e -> e.getId().equals(buildingId))
+            .findFirst()
+            .orElse(null);
     }
 
     public AbstractBuilding findByClassUuid(String classUuid) {
         Objects.requireNonNull(classUuid, "classUuid can't be null");
-        return buildings.stream().filter(e -> e.getClassUuid().equals(classUuid)).findFirst().orElse(null);
+        return buildings.stream()
+            .filter(e -> e.getClassUuid().equals(classUuid))
+            .findFirst()
+            .orElse(null);
+    }
+
+    public BuildingList sortByName() {
+        return new BuildingList(stream()
+            .sorted(Comparator.comparing(a -> a.getView().getLocalizedName()))
+            .collect(Collectors.toList()));
     }
 }

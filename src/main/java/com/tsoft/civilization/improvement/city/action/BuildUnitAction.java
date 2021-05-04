@@ -33,9 +33,9 @@ public class BuildUnitAction {
             return CityActionResults.CITY_NOT_FOUND;
         }
 
-        AbstractUnit unit = UnitFactory.newInstance(city.getCivilization(), unitClassUuid);
+        AbstractUnit unit = UnitFactory.findByClassUuid(unitClassUuid);
 
-        if (unit.getProductionCost() < 0) {
+        if (unit.getProductionCost(city.getCivilization()) < 0) {
             return CityActionResults.INVALID_UNIT;
         }
 

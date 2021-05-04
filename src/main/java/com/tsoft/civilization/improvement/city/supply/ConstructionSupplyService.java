@@ -15,7 +15,7 @@ public class ConstructionSupplyService implements HasSupply {
 
     @Override
     public Supply calcIncomeSupply() {
-        return Supply.EMPTY_SUPPLY;
+        return Supply.EMPTY;
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.tsoft.civilization.building.BuildingType;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.economic.Supply;
+import com.tsoft.civilization.world.Year;
 import lombok.Getter;
 
 import java.util.UUID;
@@ -51,13 +52,18 @@ import java.util.UUID;
  * and foreign visitors the leader's importance and grandeur.
  */
 public class Palace extends AbstractBuilding {
-    public static final Palace STUB = new Palace(null);
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();
     private static final PalaceView VIEW = new PalaceView();
 
     @Getter
     private final int baseProductionCost = -1;
+
+    @Getter
+    private final int localHappiness = 0;
+
+    @Getter
+    private final int globalHappiness = 0;
 
     public Palace(City city) {
         super(city);
@@ -66,6 +72,11 @@ public class Palace extends AbstractBuilding {
     @Override
     public BuildingType getBuildingType() {
         return BuildingType.BUILDING;
+    }
+
+    @Override
+    public boolean checkEraAndTechnology(Civilization civilization) {
+        return civilization.getYear().getEra() == Year.ANCIENT_ERA;
     }
 
     /**
@@ -79,7 +90,7 @@ public class Palace extends AbstractBuilding {
 
     @Override
     public Supply calcOutcomeSupply() {
-        return Supply.EMPTY_SUPPLY;
+        return Supply.EMPTY;
     }
 
     @Override
@@ -103,7 +114,7 @@ public class Palace extends AbstractBuilding {
     }
 
     @Override
-    public int getGoldCost() {
+    public int getGoldCost(Civilization civilization) {
         return -1;
     }
 

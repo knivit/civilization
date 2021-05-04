@@ -46,7 +46,8 @@ public class BuyUnitActionTest {
         );
 
         AbstractUnit foreignArchers = world.unit("foreignArchers");
-        russia.giftReceived(puppet, Supply.builder().gold(foreignArchers.getGoldCost()).build());
+        Supply gift = Supply.builder().gold(foreignArchers.getGoldCost(russia)).build();
+        russia.giftReceived(puppet, gift);
 
         assertThat(BuyUnitAction.buyUnit(world.city("Moscow"), Archers.CLASS_UUID))
             .isEqualTo(UNIT_WAS_BOUGHT);

@@ -35,7 +35,7 @@ public class CivilizationUnitService {
     private final TileService tileService = new TileService();
 
     @Getter
-    private Supply supply = Supply.EMPTY_SUPPLY;
+    private Supply supply = Supply.EMPTY;
 
     public CivilizationUnitService(Civilization civilization) {
         this.civilization = civilization;
@@ -117,7 +117,7 @@ public class CivilizationUnitService {
     // This is not a move (or a swap), just a check, can be a unit placed here, or not
     public boolean canBePlaced(AbstractUnit unit, Point location) {
         AbstractTile tile = world.getTilesMap().getTile(location);
-        if (tileService.getPassCost(unit, tile) == TilePassCostTable.UNPASSABLE) {
+        if (tileService.getPassCost(civilization, unit, tile) == TilePassCostTable.UNPASSABLE) {
             return false;
         }
 
@@ -158,13 +158,13 @@ public class CivilizationUnitService {
     public boolean canBuyUnit(AbstractUnit unit, City city) {
         if (canBePlaced(unit, city.getLocation())) {
             int gold = civilization.getSupply().getGold();
-            return gold >= unit.getGoldCost();
+            return gold >= unit.getGoldCost(civilization);
         }
         return false;
     }
 
     public Supply buyUnit(AbstractUnit unit) {
-        int gold = unit.getGoldCost();
+        int gold = unit.getGoldCost(civilization);
         return Supply.builder().gold(-gold).build();
     }
 
@@ -178,7 +178,7 @@ public class CivilizationUnitService {
 
     // units keeping
     public Supply calcSupply() {
-        Supply supply = Supply.EMPTY_SUPPLY;
+        Supply supply = Supply.EMPTY;
 
         int unitKeepingGold = getGoldKeepingExpenses();
         if (unitKeepingGold != 0) {

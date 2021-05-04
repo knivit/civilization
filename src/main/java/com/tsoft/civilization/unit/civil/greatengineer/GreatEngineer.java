@@ -59,7 +59,7 @@ public class GreatEngineer extends AbstractUnit {
     }
 
     @Override
-    public int getProductionCost() {
+    public int getProductionCost(Civilization civilization) {
         return -1;
     }
 
@@ -69,7 +69,7 @@ public class GreatEngineer extends AbstractUnit {
     }
 
     @Override
-    public int getGoldCost() {
+    public int getGoldCost(Civilization civilization) {
         return -1;
     }
 }

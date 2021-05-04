@@ -29,7 +29,7 @@ public class PopulationSupplyService implements HasSupply {
 
     /* Returns NULL when a location doesn't found */
     public Point findLocationForCitizen(List<Point> usedLocations) {
-        Set<Point> locations = new HashSet<>(city.getLocations());
+        Set<Point> locations = new HashSet<>(city.getTileService().getLocations());
         usedLocations.forEach(locations::remove);
 
         AbstractTile bestTile = null;
@@ -96,22 +96,20 @@ public class PopulationSupplyService implements HasSupply {
 
     @Override
     public Supply calcIncomeSupply() {
-        Supply supply = Supply.EMPTY_SUPPLY;
+        Supply supply = Supply.EMPTY;
 
-        for (Citizen citizen : city.population().getCitizens()) {
+        for (Citizen citizen : city.getPopulationService().getCitizens()) {
             supply = supply.add(citizen.calcIncomeSupply());
         }
 
-        Supply population = Supply.builder().population(city.getCitizenCount()).build();
-
-        return supply.add(population);
+        return supply;
     }
 
     @Override
     public Supply calcOutcomeSupply() {
-        Supply supply = Supply.EMPTY_SUPPLY;
+        Supply supply = Supply.EMPTY;
 
-        for (Citizen citizen : city.population().getCitizens()) {
+        for (Citizen citizen : city.getPopulationService().getCitizens()) {
             supply = supply.add(citizen.calcOutcomeSupply());
         }
 

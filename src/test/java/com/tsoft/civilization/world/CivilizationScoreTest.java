@@ -3,6 +3,8 @@ package com.tsoft.civilization.world;
 import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.economic.HappinessMock;
+import com.tsoft.civilization.economic.UnhappinessMock;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.supply.TileSupplyStrategy;
 import com.tsoft.civilization.tile.MapType;
@@ -39,7 +41,7 @@ public class CivilizationScoreTest {
 
         assertThat(russia.calcSupply())
             .usingComparator(SupplyMock::compare)
-            .isEqualTo(Supply.EMPTY_SUPPLY);
+            .isEqualTo(Supply.EMPTY);
     }
 
     @Test
@@ -58,38 +60,54 @@ public class CivilizationScoreTest {
         );
 
         // Step 1
-        // food | prod | gold | science | culture | happiness | unhappiness | population | produced/consumed by
-        //      |    3 |    3 |       3 |       1 |           |             |            | Palace
-        //    2 |      |      |         |         |           |             |            | grassland
-        //   -1 |      |      |       1 |         |           |           1 |          1 | 1 citizen
-        // -------------------------------------------------------------------------------
-        //    1 |    3 |    3 |       4 |       1 |           |           1 |          1 |
+        // food | prod | gold | science | culture | population | produced/consumed by
+        //      |    3 |    3 |       3 |       1 |            | Palace
+        //    2 |      |      |         |         |            | grassland
+        //   -1 |      |      |       1 |         |          1 | 1 citizen
+        // -----------------------------------------------------
+        //    1 |    3 |    3 |       4 |       1 |          1 |
         world.move();
 
         assertThat(russia.calcSupply())
             .usingComparator(SupplyMock::compare)
-            .isEqualTo(SupplyMock.of("F1 P3 G3 S4 C1 H0 U1 O1"));
+            .isEqualTo(SupplyMock.of("F1 P3 G3 S4 C1"));
+
+        assertThat(russia.calcHappiness())
+            .usingComparator(HappinessMock::compare)
+            .isEqualTo(HappinessMock.of("D9 L0 B0 W0 N0 P0 G0"));
+
+        assertThat(russia.calcUnhappiness())
+            .usingComparator(UnhappinessMock::compare)
+            .isEqualTo(UnhappinessMock.of("C1 A0 U0 P1 T4"));
 
         // Step 2
-        // food | prod | gold | science | culture | happiness | unhappiness | population | produced/consumed by
-        //      |    3 |    3 |       3 |       1 |           |             |            | Palace
-        //    2 |      |      |         |         |           |             |            | grassland
-        //   -1 |      |      |       1 |         |           |           1 |          1 | 1 citizen
-        // -------------------------------------------------------------------------------
-        //    1 |    3 |    3 |       4 |       1 |           |           1 |            |
-        // -------------------------------------------------------------------------------
-        //    1 |    3 |    3 |       4 |       1 |           |           1 |          1 | previous step
-        // --------------------------------------------------------------------------------
-        //    2 |    6 |    6 |       6 |       2 |           |           2 |          1 |
+        // food | prod | gold | science | culture | population | produced/consumed by
+        //      |    3 |    3 |       3 |       1 |            | Palace
+        //    2 |      |      |         |         |            | grassland
+        //   -1 |      |      |       1 |         |          1 | 1 citizen
+        // -----------------------------------------------------
+        //    1 |    3 |    3 |       4 |       1 |            |
+        // -----------------------------------------------------
+        //    1 |    3 |    3 |       4 |       1 |          1 | previous step
+        // ------------------------------------------------------
+        //    2 |    6 |    6 |       6 |       2 |          1 |
         world.move();
 
         assertThat(russia.calcSupply())
             .usingComparator(SupplyMock::compare)
-            .isEqualTo(SupplyMock.of("F1 P3 G3 S4 C1 H0 U1 O1"));
+            .isEqualTo(SupplyMock.of("F1 P3 G3 S4 C1"));
 
         assertThat(russia.getSupply())
             .usingComparator(SupplyMock::compare)
-            .isEqualTo(SupplyMock.of("F2 P6 G6 S8 C2 H0 U2 O1"));
+            .isEqualTo(SupplyMock.of("F2 P6 G6 S8 C2"));
+
+        assertThat(russia.calcHappiness())
+            .usingComparator(HappinessMock::compare)
+            .isEqualTo(HappinessMock.of("D9 L0 B0 W0 N0 P0 G0"));
+
+        assertThat(russia.calcUnhappiness())
+            .usingComparator(UnhappinessMock::compare)
+            .isEqualTo(UnhappinessMock.of("C1 A0 U0 P1 T4"));
     }
 
     @Test
@@ -111,8 +129,8 @@ public class CivilizationScoreTest {
 
         // add all other tiles
         Collection<Point> locations = map.getLocationsAround(new Point(2, 1), 3);
-        city.addLocations(locations);
-        assertEquals(20, city.getLocations().size());
+        city.getTileService().addLocations(locations);
+        assertEquals(20, city.getTileService().getLocations().size());
 
         // add citizens to work on the tiles
         // three of them will be unemployed (ice, mountain and jungle)

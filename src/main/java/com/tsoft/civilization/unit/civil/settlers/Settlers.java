@@ -71,7 +71,7 @@ public class Settlers extends AbstractUnit {
     }
 
     @Override
-    public int getGoldCost() {
+    public int getGoldCost(Civilization civilization) {
         return 200;
     }
 }

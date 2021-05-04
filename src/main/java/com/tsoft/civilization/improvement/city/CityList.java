@@ -117,7 +117,7 @@ public class CityList implements Iterable<City> {
 
     public boolean isHavingTile(Point location) {
         for (City city : cities) {
-            if (city.isHavingTile(location)) {
+            if (city.getTileService().isHavingTile(location)) {
                 return true;
             }
         }

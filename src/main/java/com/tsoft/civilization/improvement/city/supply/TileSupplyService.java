@@ -20,7 +20,7 @@ public class TileSupplyService {
     }
 
     public Supply calcIncomeSupply(List<Point> locations) {
-        Supply supply = Supply.EMPTY_SUPPLY;
+        Supply supply = Supply.EMPTY;
 
         for (Point location : locations) {
             supply = supply.add(calcIncomeSupply(location));
@@ -36,17 +36,17 @@ public class TileSupplyService {
     }
 
     public Supply calcOutcomeSupply(List<Point> locations) {
-        return Supply.EMPTY_SUPPLY;
+        return Supply.EMPTY;
     }
 
     public Supply calcOutcomeSupply(Point locations) {
-        return Supply.EMPTY_SUPPLY;
+        return Supply.EMPTY;
     }
 
     // Calc supply from tiles without improvements
     private Supply calcTileSupply(Point location) {
         if (location == null) {
-            return Supply.EMPTY_SUPPLY;
+            return Supply.EMPTY;
         }
 
         AbstractTile tile = city.getTilesMap().getTile(location);
@@ -55,13 +55,13 @@ public class TileSupplyService {
             return tileService.calcSupply(tile);
         }
 
-        return Supply.EMPTY_SUPPLY;
+        return Supply.EMPTY;
     }
 
     // Calc supply from improvements
     private Supply calcImprovementsSupply(Point location) {
         if (location == null) {
-            return Supply.EMPTY_SUPPLY;
+            return Supply.EMPTY;
         }
 
         AbstractTile tile = city.getTilesMap().getTile(location);
@@ -70,6 +70,6 @@ public class TileSupplyService {
             return improvement.getSupply();
         }
 
-        return Supply.EMPTY_SUPPLY;
+        return Supply.EMPTY;
     }
 }

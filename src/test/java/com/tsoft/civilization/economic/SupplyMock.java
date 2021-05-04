@@ -5,37 +5,8 @@ import java.util.Comparator;
 public class SupplyMock {
 
     public static Supply of(String str) {
-        Supply supply = Supply.EMPTY_SUPPLY;
-
-        int i = 0;
-        char type = '\0';
-        boolean typeMode = true;
-        while (i < str.length()) {
-            if (typeMode) {
-                type = str.charAt(i);
-                if (type != ' ') typeMode = false;
-                i ++;
-
-                continue;
-            }
-
-            int k = i + 1;
-            int sign = 1;
-            if (k < str.length() && str.charAt(k) == '-') {
-                sign = -1;
-                k ++;
-            }
-
-            while (k < str.length() && str.charAt(k) >= '0' && str.charAt(k) <= '9') k++;
-
-            int value = sign * Integer.parseInt(str.substring(i, k));
-            i = k;
-            typeMode = true;
-
-            supply = supply.add(getSupply(type, value));
-        }
-
-        return supply;
+        StringParser<Supply> parser = new StringParser<>();
+        return parser.parse(str, Supply.EMPTY, SupplyMock::getSupply, Supply::add);
     }
 
     private static Supply getSupply(char type, int value) {
@@ -47,7 +18,7 @@ public class SupplyMock {
             case 'C': return Supply.builder().culture(value).build();
             case 'H': throw new IllegalArgumentException("fix");
             case 'U': throw new IllegalArgumentException("fix");
-            case 'O': return Supply.builder().population(value).build();
+            case 'O': throw new IllegalArgumentException("fix");
 
             case 'A': return Supply.builder().greatArtist(value).build();
             case 'M': return Supply.builder().greatMusician(value).build();
@@ -69,7 +40,7 @@ public class SupplyMock {
             a.getGold() == b.getGold() &&
             a.getScience() == b.getScience() &&
             a.getCulture() == b.getCulture() &&
-            a.getPopulation() == b.getPopulation() &&
+
             a.getGreatArtist() == b.getGreatArtist() &&
             a.getGreatMusician() == b.getGreatMusician() &&
             a.getGreatWriter() == b.getGreatWriter() &&
@@ -80,16 +51,13 @@ public class SupplyMock {
         // log them out as jUnit doesn't show the values in assertTrue
         if (!isEqual) {
             System.out.printf("""
-                Type            | Expected   | Actual
+                Type            |   Actual | Expected
                 -----------------------------------------
                 Food            |     %5d  |    %5d | %s
                 Production      |     %5d  |    %5d | %s
                 Gold            |     %5d  |    %5d | %s
                 Science         |     %5d  |    %5d | %s
                 Culture         |     %5d  |    %5d | %s
-                Happiness       |     %5d  |    %5d | %s
-                Unhappiness     |     %5d  |    %5d | %s
-                Population      |     %5d  |    %5d | %s
                 Great Artist    |     %5d  |    %5d | %s
                 Great Musicians |     %5d  |    %5d | %s
                 Great Writer    |     %5d  |    %5d | %s
@@ -103,9 +71,6 @@ public class SupplyMock {
                 a.getGold(), b.getGold(), cmp(a.getGold(), b.getGold()),
                 a.getScience(), b.getScience(), cmp(a.getScience(), b.getScience()),
                 a.getCulture(), b.getCulture(), cmp(a.getCulture(), b.getCulture()),
-0, 0, "x",//                a.getHappiness(), b.getHappiness(), cmp(a.getHappiness(), b.getHappiness()),
-0, 0, "x",//                a.getUnhappiness(), b.getUnhappiness(), cmp(a.getUnhappiness(), b.getUnhappiness()),
-                a.getPopulation(), b.getPopulation(), cmp(a.getPopulation(), b.getPopulation()),
 
                 a.getGreatArtist(), b.getGreatArtist(), cmp(a.getGreatArtist(), b.getGreatArtist()),
                 a.getGreatMusician(), b.getGreatMusician(), cmp(a.getGreatMusician(), b.getGreatMusician()),

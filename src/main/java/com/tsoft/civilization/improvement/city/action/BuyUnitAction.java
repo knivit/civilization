@@ -44,8 +44,8 @@ public class BuyUnitAction {
             return CityActionResults.CITY_NOT_FOUND;
         }
 
-        AbstractUnit unit = UnitFactory.newInstance(city.getCivilization(), unitClassUuid);
-        if (unit.getGoldCost() < 0) {
+        AbstractUnit unit = UnitFactory.findByClassUuid(unitClassUuid);
+        if (unit.getGoldCost(city.getCivilization()) < 0) {
             return CityActionResults.INVALID_UNIT;
         }
 

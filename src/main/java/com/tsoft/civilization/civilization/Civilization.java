@@ -2,11 +2,13 @@ package com.tsoft.civilization.civilization;
 
 import com.tsoft.civilization.civilization.city.CivilizationCityService;
 import com.tsoft.civilization.civilization.event.*;
-import com.tsoft.civilization.civilization.happiness.CivilizationHappinessService;
-import com.tsoft.civilization.civilization.happiness.CivilizationUnhappinessService;
-import com.tsoft.civilization.civilization.happiness.Happiness;
-import com.tsoft.civilization.civilization.happiness.Unhappiness;
+import com.tsoft.civilization.civilization.population.CivilizationHappinessService;
+import com.tsoft.civilization.civilization.population.CivilizationUnhappinessService;
+import com.tsoft.civilization.civilization.population.Happiness;
+import com.tsoft.civilization.civilization.population.Unhappiness;
 import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.civilization.population.CivilizationPopulationService;
+import com.tsoft.civilization.civilization.social.CivilizationSocialPolicyService;
 import com.tsoft.civilization.civilization.tile.CivilizationTileService;
 import com.tsoft.civilization.civilization.unit.CivilizationUnitService;
 import com.tsoft.civilization.unit.UnitFactory;
@@ -55,15 +57,21 @@ public abstract class Civilization {
     private final CivilizationTileService tileService;
 
     @Getter
+    private final CivilizationPopulationService populationService;
+
+    @Getter
     private final CivilizationHappinessService happinessService;
 
     @Getter
     private final CivilizationUnhappinessService unhappinessService;
 
+    @Getter
+    private final CivilizationSocialPolicyService socialPolicyService;
+
     private final Set<Technology> technologies = new TechnologySet();
 
     @Getter
-    private Supply supply = Supply.EMPTY_SUPPLY;
+    private Supply supply = Supply.EMPTY;
 
     // Agreements which this civilization has with others
     private final HashMap<Civilization, AgreementList> agreements = new HashMap<>();
@@ -109,8 +117,10 @@ public abstract class Civilization {
         unitService = new CivilizationUnitService(this);
         cityService = new CivilizationCityService(this);
         tileService = new CivilizationTileService(this);
+        populationService = new CivilizationPopulationService(this);
         happinessService = new CivilizationHappinessService(this);
         unhappinessService = new CivilizationUnhappinessService(this);
+        socialPolicyService = new CivilizationSocialPolicyService(this);
 
         view = createView();
         bot = createBot(world, this);
@@ -161,13 +171,13 @@ public abstract class Civilization {
 
     public boolean canBuyBuilding(AbstractBuilding building) {
         int gold = supply.getGold();
-        return gold >= building.getGoldCost();
+        return gold >= building.getGoldCost(this);
     }
 
     public void buyBuilding(String buildingClassUuid, City city) {
         AbstractBuilding building = BuildingFactory.newInstance(buildingClassUuid, city);
 
-        int gold = building.getGoldCost();
+        int gold = building.getGoldCost(this);
         Supply expenses = Supply.builder().gold(-gold).build();
         supply = supply.add(expenses);
 
@@ -273,11 +283,15 @@ public abstract class Civilization {
     }
 
     public Happiness calcHappiness() {
-        return happinessService.calcHappiness();
+        return happinessService.calc();
+    }
+
+    public Unhappiness calcUnhappiness() {
+        return unhappinessService.calc();
     }
 
     public Supply calcSupply() {
-        Supply supply = Supply.EMPTY_SUPPLY;
+        Supply supply = Supply.EMPTY;
 
         // income
         supply = supply.add(cityService.calcSupply());
@@ -326,14 +340,10 @@ public abstract class Civilization {
 
         Supply yearSupply = calcSupply();
 
-        supply = supply
-            .add(yearSupply)
-            .copy()
-            .population(yearSupply.getPopulation())
-            .build();
+        supply = supply.add(yearSupply);
 
-        happiness = happinessService.calcHappiness();
-        unhappiness = unhappinessService.calcUnhappiness();
+        happiness = calcHappiness();
+        unhappiness = calcUnhappiness();
         goldenAgeCounter = Math.max(0, goldenAgeCounter);
 
         addEvent(StopYearEvent.builder()

@@ -47,10 +47,10 @@ public class MoveUnitAction {
     }
 
     private StringBuilder getClientJSCode(AbstractUnit unit) {
-        JsonBlock locations = new JsonBlock('\'');
+        JsonBlock locations = new JsonBlock('"');
         locations.startArray("locations");
         for (Point loc : moveService.getLocationsToMove(unit)) {
-            JsonBlock location = new JsonBlock('\'');
+            JsonBlock location = new JsonBlock('"');
             location.addParam("col", loc.getX());
             location.addParam("row", loc.getY());
             locations.addElement(location.getText());

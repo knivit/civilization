@@ -10,58 +10,58 @@ import com.tsoft.civilization.unit.civil.workers.Workers;
 import com.tsoft.civilization.unit.military.archers.Archers;
 import com.tsoft.civilization.unit.military.warriors.Warriors;
 import com.tsoft.civilization.civilization.Civilization;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-@Slf4j
 public final class UnitFactory {
+
+    private static final Map<String, AbstractUnit> CATALOG = new HashMap<>();
+    private static final Map<String, Function<Civilization, AbstractUnit>> FACTORY = new HashMap<>();
+
+    static {
+        FACTORY.put(Archers.CLASS_UUID, Archers::new);
+
+        FACTORY.put(GreatArtist.CLASS_UUID, GreatArtist::new);
+        FACTORY.put(GreatEngineer.CLASS_UUID, GreatEngineer::new);
+        FACTORY.put(GreatGeneral.CLASS_UUID, GreatGeneral::new);
+        FACTORY.put(GreatMerchant.CLASS_UUID, GreatMerchant::new);
+        FACTORY.put(GreatScientist.CLASS_UUID, GreatScientist::new);
+
+        FACTORY.put(Settlers.CLASS_UUID, Settlers::new);
+        FACTORY.put(Warriors.CLASS_UUID, Warriors::new);
+        FACTORY.put(Workers.CLASS_UUID, Workers::new);
+
+        FACTORY.forEach((k, v) -> CATALOG.put(k, v.apply(null)));
+    }
 
     private UnitFactory() { }
 
     public static <T extends AbstractUnit> T newInstance(Civilization civilization, String classUuid) {
-        T unit = (T)createUnit(civilization, classUuid);
-        unit.init();
+        Function<Civilization, AbstractUnit> creator = FACTORY.get(classUuid);
+        if (creator == null) {
+            throw new IllegalArgumentException("Unknown unit classUuid = " + classUuid);
+        }
 
+        T unit = (T)creator.apply(civilization);
+        unit.init();
         return unit;
     }
 
-    private static final Map<String, Function<Civilization, AbstractUnit>> UNIT_CATALOG = new HashMap<>();
-
-    static {
-        UNIT_CATALOG.put(Archers.CLASS_UUID, Archers::new);
-
-        UNIT_CATALOG.put(GreatArtist.CLASS_UUID, GreatArtist::new);
-        UNIT_CATALOG.put(GreatEngineer.CLASS_UUID, GreatEngineer::new);
-        UNIT_CATALOG.put(GreatGeneral.CLASS_UUID, GreatGeneral::new);
-        UNIT_CATALOG.put(GreatMerchant.CLASS_UUID, GreatMerchant::new);
-        UNIT_CATALOG.put(GreatScientist.CLASS_UUID, GreatScientist::new);
-
-        UNIT_CATALOG.put(Settlers.CLASS_UUID, Settlers::new);
-        UNIT_CATALOG.put(Warriors.CLASS_UUID, Warriors::new);
-        UNIT_CATALOG.put(Workers.CLASS_UUID, Workers::new);
+    public static <T extends AbstractUnit> T findByClassUuid(String classUuid) {
+        return (T)CATALOG.get(classUuid);
     }
 
     public static UnitList getAvailableUnits(Civilization civilization) {
         UnitList result = new UnitList();
 
-        for (Function<Civilization, AbstractUnit> supplier : UNIT_CATALOG.values()) {
-            AbstractUnit unit = supplier.apply(civilization);
+        for (AbstractUnit unit : CATALOG.values()) {
             if (unit.checkEraAndTechnology(civilization)) {
                 result.add(unit);
             }
         }
 
         return result;
-    }
-
-    private static AbstractUnit createUnit(Civilization civilization, String unitClassUuid) {
-        Function<Civilization, AbstractUnit> creator = UNIT_CATALOG.get(unitClassUuid);
-        if (creator == null) {
-            throw new IllegalArgumentException("Unknown unit classUuid = " + unitClassUuid);
-        }
-        return creator.apply(civilization);
     }
 }

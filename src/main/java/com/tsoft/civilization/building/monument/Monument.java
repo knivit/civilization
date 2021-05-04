@@ -54,12 +54,18 @@ import java.util.UUID;
  * The best of them imbue the city's inhabitants with a great feeling of civic and national pride.
  */
 public class Monument extends AbstractBuilding {
-    public static final Monument STUB = new Monument(null);
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
     private static final MonumentView VIEW = new MonumentView();
 
     @Getter
     private final int baseProductionCost = 40;
+
+    @Getter
+    private final int localHappiness = 0;
+
+    @Getter
+    private final int globalHappiness = 0;
 
     public Monument(City city) {
         super(city);
@@ -68,6 +74,11 @@ public class Monument extends AbstractBuilding {
     @Override
     public BuildingType getBuildingType() {
         return BuildingType.BUILDING;
+    }
+
+    @Override
+    public boolean checkEraAndTechnology(Civilization civilization) {
+        return civilization.getYear().getEra() == Year.ANCIENT_ERA;
     }
 
     /**
@@ -81,7 +92,7 @@ public class Monument extends AbstractBuilding {
 
     @Override
     public Supply calcOutcomeSupply() {
-        return Supply.EMPTY_SUPPLY;
+        return Supply.EMPTY;
     }
 
     @Override
@@ -105,7 +116,7 @@ public class Monument extends AbstractBuilding {
     }
 
     @Override
-    public int getGoldCost() {
+    public int getGoldCost(Civilization civilization) {
         return 280;
     }
 

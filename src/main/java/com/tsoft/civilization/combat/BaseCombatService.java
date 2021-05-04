@@ -1,7 +1,7 @@
 package com.tsoft.civilization.combat;
 
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.civilization.happiness.Happiness;
+import com.tsoft.civilization.civilization.population.Happiness;
 import com.tsoft.civilization.combat.event.AttackDoneEvent;
 import com.tsoft.civilization.combat.event.UnitHasWonAttackEvent;
 import com.tsoft.civilization.combat.skill.AbstractSkill;
@@ -211,7 +211,7 @@ public class BaseCombatService {
     private int calcAttackerStrikeHappinessPercent(HasCombatStrength attacker) {
         int value = 0;
 
-        Happiness happiness = attacker.getCivilization().getHappiness();
+        Happiness happiness = attacker.getCivilization().calcHappiness();
         if (happiness.getTotal() < -30) {
             value -= 33;
         } else

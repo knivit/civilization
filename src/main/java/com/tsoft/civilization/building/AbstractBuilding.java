@@ -1,7 +1,7 @@
 package com.tsoft.civilization.building;
 
-import com.tsoft.civilization.common.HasId;
-import com.tsoft.civilization.common.HasView;
+import com.tsoft.civilization.world.HasId;
+import com.tsoft.civilization.world.HasView;
 import com.tsoft.civilization.economic.HasSupply;
 import com.tsoft.civilization.improvement.city.construction.CanBeBuilt;
 import com.tsoft.civilization.improvement.city.City;
@@ -23,11 +23,13 @@ import java.util.UUID;
  *
  * Building	            Technology	        Cost	Mnt.	Benefit	                    Specialists		Notes
  * ----------------------------------------------------------------------------------------------------------
+ * Ancient Era
+ * -----------
  * Monument	            -	                40	    1	    +2 Culture	                -
  * Granary	            Pottery	            60	    1	    +2 Food	                    -	 	        +1 Food for each worked source of Wheat, Bananas and Deer
  * Barracks	            Bronze Working	    75	    1	    -	                        -	 	        +15 XP for all Units.
  * Shrine	            Pottery	            40	    1	    +1 Faith
- * Circus	            Trapping	        75	    2	    +2 Happiness	            -	 	        Must have improved Horses or Ivory.
+ * Circus	            Trapping	        75	    2	    +2 local Happiness	        -	 	        Must have improved Horses or Ivory.
  * Library	            Writing	            75	    1	 	-                                           +1 Science for every 2 Citizens in this City.
  * Walls	            Masonry	            75	    0	    +4 Defense	                -
  * Water Mill	        The Wheel	        75	    2	    +2 Food, +1 Production	    -	 	        City must be next to a River.
@@ -38,24 +40,30 @@ import java.util.UUID;
  * Walls of Babylon*	Masonry	            65	    0	    +6 Defense	                -	 	        Babylonian UB*, replaces Walls.
  * Krepost*	            Bronze Working	    75	    1	    -	                        -	 	        Russian UB*, replaces Barracks; +15 XP for all Units. -25% Culture and Gold costs of acquiring new tiles in this city.
  * Floating Gardens*	The Wheel	        75	    1	    +2 Food, +1 Production	    -	 	        Aztec UB*, replaces Water Mill. +15% Food, +2 Food each Lake tile. City must be next to fresh water.
- * Burial Tomb*	        Philosophy	        100	    0	    +2 Happiness, +2 Culture	1 Artist	 	Egyptian UB*, replaces Temple; Should this city be captured, the amount of Gold plundered by the enemy is doubled.
- * Colosseum	        Construction	    100	    1	    +2 Happiness	            -	 	        Cannot provide more Happiness than Citizens
+ *
+ * Classical Era
+ * -------------
+ * Amphitheater	        Drama & Poetry	    100	    2	    +3 Culture	                1 Artist	 	Requires Monument
+ * Aqueduct	            Engineering	        100	    1	    -	                        -	 	        40% of Food is carried over after a new Citizen is born.
+ * Colosseum	        Construction	    100	    1	    +2 local Happiness          -	 	        Cannot provide more Happiness than Citizens
  * Courthouse	        Mathematics	        100	    4	    -	                        -	 	        Eliminates extra Unhappiness from Occupation.
  * Lighthouse	        Optics	            75	    1	    -	                        -	 	        +1 Food from Ocean tiles, +1 Food from worked Fish. City must be on the coast.
- * Mud Pyramid Mosque*	Philosophy	        100	    0	    +4 Culture	                1 Artist	 	Songhai UB*, replaces Temple; Requires no Gold maintenance
- * Stable	            Horseback Riding	100	    1	    -	                        -	 	        +15% Production toward Mounted units. +1 Production for each worked Horses, Sheep and Cattle. Must have at least one of these resources improved with a Pasture.
- * Amphitheater	        Drama & Poetry	    100	    2	    +3 Culture	                1 Artist	 	Requires Monument
- * Temple	            Philosophy	        100	    2	    +2 Faith	                1 Artist	 	Requires Shrine
- * Aqueduct	            Engineering	        100	    1	    -	                        -	 	        40% of Food is carried over after a new Citizen is born.
- * Armory	            Machinery	        160	    1	    -	                        -	 	        +15 XP for all Units. Requires Barracks or Krepost.
+ * Market	            Currency	        120	    0	    +2 Gold	                    1 Merchant	 	+25% Gold.
  * Bazaar*	            Currency	        120	    0	    +2 Gold	                    1 Merchant	 	Arab UB, replaces Market*; +25% Gold, Provides 1 extra copy of each improved luxury resource near this city. +2 Gold for each Oil and Oasis.
+ * Mint	                Currency	        120	    0	    -	                        -	 	        +2 Gold for reach source of Gold or Silver. Requires one of these resources mined nearby.
+ * Stable	            Horseback Riding	100	    1	    -	                        -	 	        +15% Production toward Mounted units. +1 Production for each worked Horses, Sheep and Cattle. Must have at least one of these resources improved with a Pasture.
+ * Temple	            Philosophy	        100	    2	    +2 Faith	                1 Artist	 	Requires Shrine
+ * Burial Tomb*	        Philosophy	        100	    0	    +2 local Happiness, +2 Culture	1 Artist 	Egyptian UB*, replaces Temple; Should this city be captured, the amount of Gold plundered by the enemy is doubled.
+ * Mud Pyramid Mosque*	Philosophy	        100	    0	    +4 Culture	                1 Artist	 	Songhai UB*, replaces Temple; Requires no Gold maintenance
+ *
+ * Medieval Era
+ * ------------
+ * Armory	            Machinery	        160	    1	    -	                        -	 	        +15 XP for all Units. Requires Barracks or Krepost.
  * Castle	            Chivalry	        160	    0	    +4 Defense	                -	 	        Requires Walls.
  * Forge	            Metal Casting	    120	    1	    -	                        -	 	        +15% Production towards Land Units. +1 Production for each worked Iron. Requires Iron.
  * Garden	            Theology	        120	    1	    -	                        -	 	        +25% Great People generation in this city. Must be next to River or Lake.
  * Harbor	            Compass	            120	    3	    -	                        -	 	        Forms a Trade Route with Capital. +1 Production from sea Resources. Must be on the coast.
  * Longhouse*	        Metal Casting	    100	    2	    +2 Production	            1 Engineer	 	Iroquois UB*, replaces Workshop. +1 Production for Forest.
- * Market	            Currency	        120	    0	    +2 Gold	                    1 Merchant	 	+25% Gold.
- * Mint	                Currency	        120	    0	    -	                        -	 	        +2 Gold for reach source of Gold or Silver. Requires one of these resources mined nearby.
  * Mughal Fort*	        Chivalry	        150	    0	    +2 Culture, +6 Defense	    -	 	        Indian UB*, replaces Castle. Requires Walls.
  * University	        Education	        160	    2	    +33% Science	            2 Scientist	 	+2 Science from worked Jungle tiles.
  * Wat*	                Education	        160	    2	    +3 Culture, +33% Science	2 Scientist	 	Siamese UB*, replaces University.
@@ -64,32 +72,50 @@ import java.util.UUID;
  * Bank	                Banking	            200	    0	    +25% Gold	                1 Merchant	 	Requires Market.
  * Hanse*	            Banking	            200	    0	    +25% Gold	                1 Merchant	 	German UB*, replaces Bank. +5% Production for each City-State Trade Route. Requires Market.
  * Constabulary	        Banking	            160	    1	    -	                        -	 	        Reduces enemy spy stealing rate by 25%.
- * Military Academy	    Military Science	300	    1	    -	                        -	 	        +15 XP for all Units. Requires Armory.
- * Museum	            Archaeology	        300	    3	    +6 Culture	                2 Artist	 	Requires Opera House.
  * Observatory	        Astronomy	        200	    0	    +50% Science	            -	        	City must be next to a Mountain.
  * Opera House	        Acoustics	        200	    2	    +4 Culture	                1 Artist	 	Requires Temple or Mud Pyramid Mosque.
- * Public School	    Scientific Theory	300	    3	    +3 Science	                1 Scientist	 	+1 Science for every 2 Citizens. Requires University.
- * Ceilidh Hall*	    Acoustics	        200	    2	    +3 Happiness, +4 Culture	-	 	Celtic UB*, replaces Opera House. Requires Amphitheater.
- * Coffee House*	    Economics	        250	    2	    +2 Production, +5% Prod-on	1 Engineer	 	Austrian UB*, replaces Windmill. +25% Great Person generation in this city.
- * Satrap's Court*	    Banking	            200	    0	    +2 Gold, +2 Happiness	 	 	            Persian UB*, replaces Bank. +25% Gold. Requires Market.
- * Seaport	            Navigation	        250	    2	    -	                        -	 	        +15% Production towards Naval units. +1 Gold and +1 Production from each worked sea Resource. Must be on the coast.
+ *
+ * Renaissance Era
+ * ---------------
  * Theatre	            Printing Press	    200	    2	    +3 Happiness	            -	 	        Can't provide more Happiness than Population. Requires Colosseum.
+ * Ceilidh Hall*	    Acoustics	        200	    2	    +3 local Happ, +4 Culture	-	 	Celtic UB*, replaces Opera House. Requires Amphitheater.
+ * Coffee House*	    Economics	        250	    2	    +2 Production, +5% Prod-on	1 Engineer	 	Austrian UB*, replaces Windmill. +25% Great Person generation in this city.
+ * Satrap's Court*	    Banking	            200	    0	    +2 Gold, +2 local Happiness	 	            Persian UB*, replaces Bank. +25% Gold. Requires Market.
+ * Seaport	            Navigation	        250	    2	    -	                        -	 	        +15% Production towards Naval units. +1 Gold and +1 Production from each worked sea Resource. Must be on the coast.
  * Windmill	            Economics	        250	    2	    +2 Production	            1 Engineer	 	+10% Production towards Buildings. City must not be on a Hill.
  * Broadcast Tower	    Radio	            500	    3	    +3 Culture	                -	 	        +33% Culture. Requires Museum.
- * Factory	            Steam Power	        360	    3	    +4 Production	            2 Engineer	 	+10% Production. Requires Workshop or Longhouse, consumes 1 Coal.
- * Hospital	            Biology	            360	    2	    +5 Food	                    -
  * Military Base	    Telegraph	        500	    0	    +12 Defense	                -	 	        Requires Arsenal.
- * Police Station	    Electricity	        300	    1	    -	                        -	 	        Reduces enemy spy stealing rate by 25%. Requires Constabulary.
- * Stock Exchange	    Electricity	        500	    0	    +33% Gold	                2 Merchant	 	Requires Bank.
- * Hydro Plant	        Plastics	        500	    3	    -	                        -	 	        +1 Production for each River tile; must be next to a River. Consumes 1 Aluminum.
  * Medical Lab	        Penicillin	        500	    3	    -	                        -	 	        25% of Food is carried over after a new Citizen is born.
  * Nuclear Plant	    Nuclear Fission	    360	    3	    +5 Production	            -	 	        +15 % Production. Consumes 1 Uranium. City must most contain a Solar Plant.
+ *
+ * Industrial Era
+ * --------------
+ * Factory	            Steam Power	        360	    3	    +4 Production	            2 Engineer	 	+10% Production. Requires Workshop or Longhouse, consumes 1 Coal.
+ * Hospital	            Biology	            360	    2	    +5 Food	                    -
+ * Hydro Plant	        Plastics	        500	    3	    -	                        -	 	        +1 Production for each River tile; must be next to a River. Consumes 1 Aluminum.
+ * Military Academy	    Military Science	300	    1	    -	                        -	 	        +15 XP for all Units. Requires Armory.
+ * Museum	            Archaeology	        300	    3	    +6 Culture	                2 Artist	 	Requires Opera House.
+ * Police Station	    Electricity	        300	    1	    -	                        -	 	        Reduces enemy spy stealing rate by 25%. Requires Constabulary.
+ * Public School	    Scientific Theory	300	    3	    +3 Science	                1 Scientist	 	+1 Science for every 2 Citizens. Requires University.
+ * Stock Exchange	    Electricity	        500	    0	    +33% Gold	                2 Merchant	 	Requires Bank.
+ *
+ * Modern Era
+ * ----------
  * Research Lab	        Plastics	        500	    3	    +4 Science	                1 Scientist	 	+50% Science. Requires Public School.
+ * Stadium	            Mass Media	        500	    2	    +4 Happiness	            -	 	        Can't provide more Happiness than Citizens. Requires Theatre.
+ *
+ * Atomic Era
+ * ----------
  * Recycling Center	    Ecology	            500	    3	    -	                        -	 	        Provides 2 Aluminum. Maximum of 5 of these buildings in your empire.
  * Solar Plant	        Ecology	            360	    3	    +5 Production	            -	 	        +15% Production, must be next to Desert and not contain a Nuclear Plant.
- * Spaceship Factory	Robotics	        360	    3	    -	                        -	 	        +50% Production towards Spaceship Parts. Requires Factory. Consumes 1 Aluminum.
- * Stadium	            Mass Media	        500	    2	    +4 Happiness	            -	 	        Can't provide more Happiness than Citizens. Requires Theatre.
+ *
+ * Information Era
+ * ---------------
  * Bomb Shelther	    Telecommunications	300	    1	    -	                        -	 	        Reduces population loss from nuclear attack by 75%.
+ * Spaceship Factory	Robotics	        360	    3	    -	                        -	 	        +50% Production towards Spaceship Parts. Requires Factory. Consumes 1 Aluminum.
+ *
+ * Religious
+ * ---------
  * Cathedral	(Cathedral Belief)	        200	    -	    +1 Happ, +3 Cult, +1 Faith	1 Artist	 	Can only be built in cities following a religion with the Cathedrals belief. Construct this building by purchasing it with Faith.
  * Monastery	(Monastery Belief)	        150	    -	    +2 Culture, +2 Faith	    -	 	        Each source of Incense and Wine worked by this City produce +1 Faith and +1 Culture.
  * Mosque	(Mosque Belief)	                200	    -	    +1 Happ, +2 Cult, +3 Faith	-	 	        Can only be built in cities following a religion with the Mosques belief. Construct this building by purchasing it with Faith.
@@ -105,11 +131,15 @@ public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt, Ha
 
     public abstract BuildingType getBuildingType();
 
-    public abstract int getGoldCost();
+    public abstract String getClassUuid();
+    public abstract int getGoldCost(Civilization civilization);
     public abstract int getBaseProductionCost();
     public abstract int getDefenseStrength();
+    public abstract int getLocalHappiness();
+    public abstract int getGlobalHappiness();
+
     public abstract AbstractBuildingView getView();
-    public abstract String getClassUuid();
+    public abstract boolean checkEraAndTechnology(Civilization civilization);
 
     protected AbstractBuilding(City city) {
         this.city = city;
@@ -139,8 +169,8 @@ public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt, Ha
     }
 
     @Override
-    public int getProductionCost() {
-        DifficultyLevel difficultyLevel = getCivilization().getWorld().getDifficultyLevel();
+    public int getProductionCost(Civilization civilization) {
+        DifficultyLevel difficultyLevel = civilization.getWorld().getDifficultyLevel();
         int baseProductionCost = getBaseProductionCost();
         return (int)Math.round(baseProductionCost * CityConstructionService.BUILDING_COST_PER_DIFFICULTY_LEVEL.get(difficultyLevel));
     }

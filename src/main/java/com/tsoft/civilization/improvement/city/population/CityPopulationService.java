@@ -117,7 +117,7 @@ public class CityPopulationService {
                 return Supply.builder().food(-excessFood).build();
             }
 
-            return Supply.EMPTY_SUPPLY;
+            return Supply.EMPTY;
         }
 
         // Can we use food from the growth pool ?
@@ -182,7 +182,7 @@ public class CityPopulationService {
     private List<Point> findNewLocations() {
         List<Point> newLocations = new ArrayList<>();
 
-        for (int i = 0; i < city.population().getCitizens().size(); i ++) {
+        for (int i = 0; i < city.getCitizenCount(); i ++) {
             Point location = populationSupplyService.findLocationForCitizen(newLocations);
 
             // No tile found, the reorganization is impossible

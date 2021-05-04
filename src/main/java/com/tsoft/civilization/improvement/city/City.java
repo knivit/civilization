@@ -3,12 +3,13 @@ package com.tsoft.civilization.improvement.city;
 import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.building.*;
 import com.tsoft.civilization.building.palace.Palace;
-import com.tsoft.civilization.civilization.happiness.Happiness;
+import com.tsoft.civilization.civilization.population.Happiness;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.combat.skill.AbstractSkill;
 import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.improvement.city.construction.CanBeBuilt;
+import com.tsoft.civilization.improvement.city.population.CityHappinessService;
 import com.tsoft.civilization.improvement.city.supply.CitySupplyService;
 import com.tsoft.civilization.improvement.city.tile.CityTileService;
 import com.tsoft.civilization.improvement.city.building.CityBuildingService;
@@ -35,8 +36,12 @@ import java.util.*;
 public class City extends AbstractImprovement implements HasCombatStrength, HasHistory {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
+    @Getter
     private CityTileService tileService;
+
+    @Getter
     private CityPopulationService populationService;
+
     private CityBuildingService buildingService;
     private CityConstructionService constructionService;
     private CityCombatService combatService;
@@ -45,16 +50,17 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
     private CitySupplyService supplyService;
 
     @Getter
-    private CityView view;
+    private CityHappinessService happinessService;
 
-    private final Set<Point> locations = new HashSet<>();
+    @Getter
+    private CityView view;
 
     @Getter
     @Setter
     private int passScore;
 
     @Getter
-    private Supply supply = Supply.EMPTY_SUPPLY;
+    private Supply supply = Supply.EMPTY;
 
     @Getter
     private Happiness happiness = Happiness.EMPTY;
@@ -69,8 +75,7 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
     public void init(L10n cityName, boolean isCapital) {
         // area
         tileService = new CityTileService(this);
-        locations.add(location);
-        locations.addAll(getTilesMap().getLocationsAround(location, 1));
+        tileService.addStartLocations(location);
 
         // population
         populationService = new CityPopulationService(this);
@@ -84,6 +89,7 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
 
         // economics
         supplyService = new CitySupplyService(this);
+        happinessService = new CityHappinessService(this);
 
         // media
         view = new CityView(cityName);
@@ -113,6 +119,12 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
         combatService.setCombatStrength(combatStrength);
     }
 
+    @Override
+    public CombatStrength calcCombatStrength() {
+        return combatService.calcCombatStrength();
+    }
+
+    @Override
     public void destroy() {
         CombatStrength destroyed = getCombatStrength().copy()
             .isDestroyed(true)
@@ -122,25 +134,8 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
     }
 
     @Override
-    public CombatStrength calcCombatStrength() {
-        return combatService.calcCombatStrength();
-    }
-
-    @Override
     public UnitCategory getUnitCategory() {
         return combatService.getUnitCategory();
-    }
-
-    public Set<Point> getLocations() {
-        return Collections.unmodifiableSet(locations);
-    }
-
-    public void addLocations(Collection<Point> locations) {
-        this.locations.addAll(locations);
-    }
-
-    public boolean isHavingTile(Point location) {
-        return locations.contains(location);
     }
 
     public TileSupplyStrategy getSupplyStrategy() {
@@ -175,10 +170,6 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
 
     public void destroyBuilding(AbstractBuilding building) {
         buildingService.remove(building);
-    }
-
-    public CityPopulationService population() {
-        return populationService;
     }
 
     public List<Point> getCitizenLocations() {
@@ -239,23 +230,23 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
     }
 
     public int getUnitProductionCost(String unitClassUuid) {
-        AbstractUnit unit = UnitFactory.newInstance(civilization, unitClassUuid);
-        return unit.getProductionCost();
+        AbstractUnit unit = UnitFactory.findByClassUuid(unitClassUuid);
+        return unit.getProductionCost(civilization);
     }
 
     public int getUnitBuyCost(String unitClassUuid) {
-        AbstractUnit unit = UnitFactory.newInstance(civilization, unitClassUuid);
-        return unit.getGoldCost();
+        AbstractUnit unit = UnitFactory.findByClassUuid(unitClassUuid);
+        return unit.getGoldCost(civilization);
     }
 
     public int getBuildingProductionCost(String buildingClassUuid) {
-        AbstractBuilding building = BuildingCatalog.findByClassUuid(buildingClassUuid);
-        return building.getProductionCost();
+        AbstractBuilding building = BuildingFactory.findByClassUuid(buildingClassUuid);
+        return building.getProductionCost(civilization);
     }
 
     public int getBuildingBuyCost(String buildingClassUuid) {
-        AbstractBuilding building = BuildingCatalog.findByClassUuid(buildingClassUuid);
-        return building.getGoldCost();
+        AbstractBuilding building = BuildingFactory.findByClassUuid(buildingClassUuid);
+        return building.getGoldCost(civilization);
     }
 
     public boolean canPlaceBuilding(AbstractBuilding building) {
@@ -268,6 +259,10 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
 
     public Supply calcTilesSupply(Point location) {
         return supplyService.calcTilesSupply(location);
+    }
+
+    public Happiness calcHappiness() {
+        return happinessService.calcHappiness();
     }
 
     @Override

@@ -40,12 +40,17 @@ import java.util.UUID;
  */
 public class Walls extends AbstractBuilding {
 
-    public static final Walls STUB = new Walls(null);
     public static final String CLASS_UUID = UUID.randomUUID().toString();
     private static final WallsView VIEW = new WallsView();
 
     @Getter
     private final int baseProductionCost = 200;
+
+    @Getter
+    private final int localHappiness = 0;
+
+    @Getter
+    private final int globalHappiness = 0;
 
     public Walls(City city) {
         super(city);
@@ -54,6 +59,11 @@ public class Walls extends AbstractBuilding {
     @Override
     public BuildingType getBuildingType() {
         return BuildingType.BUILDING;
+    }
+
+    @Override
+    public boolean checkEraAndTechnology(Civilization civilization) {
+        return civilization.getYear().getEra() == Year.ANCIENT_ERA;
     }
 
     /**
@@ -67,7 +77,7 @@ public class Walls extends AbstractBuilding {
 
     @Override
     public Supply calcOutcomeSupply() {
-        return Supply.EMPTY_SUPPLY;
+        return Supply.EMPTY;
     }
 
     @Override
@@ -91,7 +101,7 @@ public class Walls extends AbstractBuilding {
     }
 
     @Override
-    public int getGoldCost() {
+    public int getGoldCost(Civilization civilization) {
         return 400;
     }
 

@@ -83,15 +83,15 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
             "$features", L10nCivilization.FEATURES,
 
             "$populationImage", POPULATION_IMAGE_WITH_TOOLTIP,
-            "$populationLabel", L10nCivilization.POPULATION, "$population", civilization.calcSupply().getPopulation(),
+            "$populationLabel", L10nCivilization.POPULATION, "$population", civilization.getPopulationService().getCitizenCount(),
             "$productionImage", PRODUCTION_IMAGE_WITH_TOOLTIP,
             "$productionLabel", L10nCivilization.PRODUCTION, "$production", civilization.calcSupply().getProduction(),
             "$goldImage", GOLD_IMAGE_WITH_TOOLTIP,
             "$goldLabel", L10nCivilization.GOLD, "$gold", civilization.calcSupply().getGold(),
             "$foodImage", FOOD_IMAGE_WITH_TOOLTIP,
             "$foodLabel", L10nCivilization.FOOD, "$food", civilization.calcSupply().getFood(),
-            "$happinessImage", HAPPINESS_IMAGE_WITH_TOOLTIP(civilization.getHappiness().getTotal()),
-            "$happinessLabel", L10nCivilization.HAPPINESS, "$happiness", civilization.getHappiness().getTotal(),
+            "$happinessImage", HAPPINESS_IMAGE_WITH_TOOLTIP(civilization.calcHappiness().getTotal()),
+            "$happinessLabel", L10nCivilization.HAPPINESS, "$happiness", civilization.calcHappiness().getTotal(),
             "$militaryUnitsLabel", L10nCivilization.MILITARY_UNITS_COUNT, "$militaryUnits", civilization.getUnitService().getMilitaryCount(),
             "$civilUnitsLabel", L10nCivilization.CIVIL_UNITS_COUNT, "$civilUnits", civilization.getUnitService().getCivilCount(),
             "$citiesLabel", L10nCivilization.CITIES_COUNT, "$cities", civilization.getCityService().size()

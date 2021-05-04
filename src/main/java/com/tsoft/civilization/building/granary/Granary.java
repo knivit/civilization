@@ -6,7 +6,7 @@ import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.tile.base.AbstractTile;
-import com.tsoft.civilization.tile.luxury.Bananas;
+import com.tsoft.civilization.tile.resource.bonus.Bananas;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.economic.Supply;
@@ -16,10 +16,11 @@ import java.util.UUID;
 
 /**
  * Granary
- *
+ * -------
  * Building of the Ancient Era
+ *
  * Cost
- * Production	Maintenance
+ * Production	    Maintenance
  * 60 Production	1 Gold
  * Required Technology: Pottery
  * Effects
@@ -30,6 +31,7 @@ import java.util.UUID;
  * Allows Food to be moved from this city along trade routes inside your civilization.
  *
  * Strategy
+ * --------
  * The Granary increases the Food Food production of a city, speeding up the city's growth, especially if it has one of
  * the above-mentioned resources nearby (which need not be improved with a Farm).
  * It's always useful when you want to create a large city, and for speeding up growth of smaller ones.
@@ -42,13 +44,18 @@ import java.util.UUID;
  * to circulate more freely and provided some protection for the grain from mice and other menaces.
  */
 public class Granary extends AbstractBuilding {
-    public static final Granary STUB = new Granary(null);
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();
     private static final GranaryView VIEW = new GranaryView();
 
     @Getter
     private final int baseProductionCost = 60;
+
+    @Getter
+    private final int localHappiness = 0;
+
+    @Getter
+    private final int globalHappiness = 0;
 
     public Granary(City city) {
         super(city);
@@ -57,6 +64,11 @@ public class Granary extends AbstractBuilding {
     @Override
     public BuildingType getBuildingType() {
         return BuildingType.BUILDING;
+    }
+
+    @Override
+    public boolean checkEraAndTechnology(Civilization civilization) {
+        return civilization.getYear().getEra() == Year.ANCIENT_ERA;
     }
 
     /**
@@ -77,7 +89,7 @@ public class Granary extends AbstractBuilding {
 
     @Override
     public Supply calcOutcomeSupply() {
-        return Supply.EMPTY_SUPPLY;
+        return Supply.EMPTY;
     }
 
     @Override
@@ -86,7 +98,7 @@ public class Granary extends AbstractBuilding {
     }
 
     @Override
-    public int getGoldCost() {
+    public int getGoldCost(Civilization civilization) {
         return 340;
     }
 

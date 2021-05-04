@@ -115,7 +115,7 @@ public class GetTileInfo extends AbstractAjaxRequest {
 
         UnitList units = civilization.getUnitService().getUnits().sortByName();
         for (AbstractUnit unit : units) {
-            int passCost = tileService.getPassCost(unit, tile);
+            int passCost = tileService.getPassCost(civilization, unit, tile);
             buf.append(Format.text("""
                 <tr>
                     <td><button onclick="$getUnitStatus">$unitName</button></td>

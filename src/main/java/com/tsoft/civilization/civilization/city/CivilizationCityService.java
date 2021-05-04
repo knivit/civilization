@@ -4,14 +4,13 @@ import com.tsoft.civilization.L10n.L10nList;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.event.CityDestroyedEvent;
 import com.tsoft.civilization.civilization.event.CreateCityEvent;
-import com.tsoft.civilization.combat.BaseCombatService;
+import com.tsoft.civilization.civilization.population.Happiness;
 import com.tsoft.civilization.combat.CombatService;
 import com.tsoft.civilization.improvement.city.L10nCity;
 import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityList;
-import com.tsoft.civilization.combat.CaptureService;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.economic.Supply;
@@ -37,7 +36,7 @@ public class CivilizationCityService {
     private CityList destroyedCities = new CityList();
 
     @Getter
-    private Supply supply = Supply.EMPTY_SUPPLY;
+    private Supply supply = Supply.EMPTY;
 
     public CivilizationCityService(Civilization civilization) {
         this.civilization = civilization;
@@ -55,7 +54,7 @@ public class CivilizationCityService {
     public Set<Point> getLocations() {
         Set<Point> locations = new HashSet<>();
         cities.stream()
-            .forEach(c -> locations.addAll(c.getLocations()));
+            .forEach(c -> locations.addAll(c.getTileService().getLocations()));
         return locations;
     }
 
@@ -114,9 +113,6 @@ public class CivilizationCityService {
         }
     }
 
-    private static final BaseCombatService baseCombatService = new BaseCombatService();
-    private static final CaptureService captureService = new CaptureService();
-
     public City getCityAtLocation(Point location) {
         return cities.getCityAtLocation(location);
     }
@@ -136,8 +132,8 @@ public class CivilizationCityService {
     }
 
     public Supply calcSupply() {
-        Supply income = Supply.EMPTY_SUPPLY;
-        Supply outcome = Supply.EMPTY_SUPPLY;
+        Supply income = Supply.EMPTY;
+        Supply outcome = Supply.EMPTY;
 
         for (City city : cities) {
             income = income.add(city.getSupplyService().calcIncomeSupply());
@@ -155,5 +151,13 @@ public class CivilizationCityService {
 
     private boolean canAttack(City city) {
         return (city.getPassScore() > 0) && !combatService.getTargetsToAttack(city).isEmpty();
+    }
+
+    public Happiness calcHappiness() {
+        Happiness happiness = Happiness.EMPTY;
+        for (City city : cities) {
+            happiness = happiness.add(city.calcHappiness());
+        }
+        return happiness;
     }
 }

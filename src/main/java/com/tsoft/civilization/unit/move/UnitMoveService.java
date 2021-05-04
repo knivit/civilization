@@ -145,7 +145,7 @@ public class UnitMoveService {
         unit.setLocation(location);
 
         AbstractTile tile = unit.getCivilization().getTilesMap().getTile(location);
-        int tilePassCost = tileService.getPassCost(unit, tile);
+        int tilePassCost = tileService.getPassCost(unit.getCivilization(), unit, tile);
         unit.setPassScore(unit.getPassScore() - tilePassCost);
     }
 
@@ -239,7 +239,7 @@ public class UnitMoveService {
                     Point nextLocation = tilesMap.addDirToLocation(currLocation, dir);
                     AbstractTile nextTile = tilesMap.getTile(nextLocation);
 
-                    int nextPassScore = passScore - tileService.getPassCost(unit, nextTile);
+                    int nextPassScore = passScore - tileService.getPassCost(unit.getCivilization(), unit, nextTile);
                     if (nextPassScore >= 0) {
                         // check for foreign city located there
                         boolean isBlocked = false;
@@ -362,7 +362,7 @@ public class UnitMoveService {
 
     public ActionAbstractResult checkCanMoveOnTile(AbstractUnit unit, Point location) {
         AbstractTile tile = unit.getTilesMap().getTile(location);
-        int tilePassCost = tileService.getPassCost(unit, tile);
+        int tilePassCost = tileService.getPassCost(unit.getCivilization(), unit, tile);
 
         int passScore = unit.getPassScore();
         if (passScore < tilePassCost) {

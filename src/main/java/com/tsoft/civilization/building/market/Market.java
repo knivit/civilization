@@ -56,7 +56,6 @@ import java.util.UUID;
  * for over a thousand years, which helps to explain some of the street names like, "Cow Cross Street."
  */
 public class Market extends AbstractBuilding {
-    public static final Market STUB = new Market(null);
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();
     private static final MarketView VIEW = new MarketView();
@@ -65,7 +64,13 @@ public class Market extends AbstractBuilding {
     private final int baseProductionCost = 120;
 
     @Getter
-    private Supply supply = Supply.EMPTY_SUPPLY;
+    private final int localHappiness = 0;
+
+    @Getter
+    private final int globalHappiness = 0;
+
+    @Getter
+    private Supply supply = Supply.EMPTY;
 
     @Override
     public BuildingType getBuildingType() {
@@ -74,6 +79,11 @@ public class Market extends AbstractBuilding {
 
     public Market(City city) {
         super(city);
+    }
+
+    @Override
+    public boolean checkEraAndTechnology(Civilization civilization) {
+        return civilization.getYear().getEra() == Year.ANCIENT_ERA;
     }
 
     /**
@@ -93,7 +103,7 @@ public class Market extends AbstractBuilding {
 
     @Override
     public Supply calcOutcomeSupply() {
-        return Supply.EMPTY_SUPPLY;
+        return Supply.EMPTY;
     }
 
     @Override
@@ -118,7 +128,7 @@ public class Market extends AbstractBuilding {
     }
 
     @Override
-    public int getGoldCost() {
+    public int getGoldCost(Civilization civilization) {
         return 580;
     }
 

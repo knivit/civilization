@@ -136,7 +136,7 @@ public class WorldService {
 
             // exclude cities
             for (City city : civilization.getCityService().getCities()) {
-                busyLocations.addAll(city.getLocations());
+                busyLocations.addAll(city.getTileService().getLocations());
             }
 
             // exclude units

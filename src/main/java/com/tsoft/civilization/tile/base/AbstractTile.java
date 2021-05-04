@@ -7,7 +7,7 @@ import com.tsoft.civilization.tile.base.tundra.Tundra;
 import com.tsoft.civilization.tile.feature.TerrainFeatureList;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.tile.feature.*;
-import com.tsoft.civilization.tile.luxury.AbstractLuxury;
+import com.tsoft.civilization.tile.resource.luxury.AbstractLuxuryResource;
 import com.tsoft.civilization.tile.resource.AbstractResource;
 import com.tsoft.civilization.util.Point;
 import lombok.EqualsAndHashCode;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @EqualsAndHashCode(of = "location")
 public abstract class AbstractTile {
     private Point location;
-    private AbstractLuxury luxury;
+    private AbstractLuxuryResource luxury;
     private AbstractResource resource;
     private AbstractImprovement improvement;
 
@@ -61,11 +61,11 @@ public abstract class AbstractTile {
         this.location = location;
     }
 
-    public AbstractLuxury getLuxury() {
+    public AbstractLuxuryResource getLuxury() {
         return luxury;
     }
 
-    public boolean setLuxury(AbstractLuxury luxury) {
+    public boolean setLuxury(AbstractLuxuryResource luxury) {
         if (getResource() == null) {
             this.luxury = luxury;
             return true;

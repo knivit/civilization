@@ -1,8 +1,9 @@
 package com.tsoft.civilization.improvement.city.construction;
 
-import com.tsoft.civilization.common.AbstractView;
-import com.tsoft.civilization.common.HasId;
-import com.tsoft.civilization.common.HasView;
+import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.world.AbstractView;
+import com.tsoft.civilization.world.HasId;
+import com.tsoft.civilization.world.HasView;
 
 public class Construction implements HasView, HasId {
 
@@ -10,10 +11,10 @@ public class Construction implements HasView, HasId {
     private final int totalProductionCost; // total production cost
     private int usedProductionCost;        // used production cost
 
-    public Construction(CanBeBuilt object) {
+    public Construction(Civilization civilization, CanBeBuilt object) {
         this.object = object;
 
-        totalProductionCost = object.getProductionCost();
+        totalProductionCost = object.getProductionCost(civilization);
         usedProductionCost = 0;
     }
 

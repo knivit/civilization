@@ -6,14 +6,13 @@ import lombok.Getter;
 @Getter
 @Builder
 public final class Supply {
-    public static final Supply EMPTY_SUPPLY = Supply.builder().build();
+    public static final Supply EMPTY = Supply.builder().build();
 
     private final int food;
     private final int production;
     private final int gold;
     private final int science;
     private final int culture;
-    private final int population;
 
     private final int greatArtist;
     private final int greatMusician;
@@ -29,7 +28,6 @@ public final class Supply {
             .gold(gold + other.gold)
             .science(science + other.science)
             .culture(culture + other.culture)
-            .population(population + other.population)
 
             .greatArtist(greatArtist + other.greatArtist)
             .greatMusician(greatMusician + other.greatMusician)
@@ -48,7 +46,6 @@ public final class Supply {
             .gold(gold)
             .science(science)
             .culture(culture)
-            .population(population)
 
             .greatArtist(greatArtist)
             .greatMusician(greatMusician )
@@ -66,7 +63,6 @@ public final class Supply {
             ", gold=" + gold +
             ", science=" + science +
             ", culture=" + culture +
-            ", population=" + population +
 
             ", Great Artist=" + greatArtist +
             ", Great Musician=" + greatMusician +
