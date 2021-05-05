@@ -3,7 +3,7 @@ package com.tsoft.civilization.improvement.city.population;
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.civilization.population.Happiness;
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.tile.resource.luxury.AbstractLuxuryResource;
+import com.tsoft.civilization.tile.resource.AbstractResource;
 import com.tsoft.civilization.world.DifficultyLevel;
 
 import static com.tsoft.civilization.civilization.population.CivilizationHappinessService.EXTRA_HAPPINESS_PER_LUXURY;
@@ -41,7 +41,7 @@ public class CityHappinessService {
         DifficultyLevel difficultyLevel = city.getCivilization().getWorld().getDifficultyLevel();
 
         int luxuryResourcesCount = (int)city.getTileService().getLuxuryResources().stream()
-            .map(AbstractLuxuryResource::getClass)
+            .map(AbstractResource::getClass)
             .distinct()
             .count();
 

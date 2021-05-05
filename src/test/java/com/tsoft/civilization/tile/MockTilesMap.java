@@ -1,13 +1,13 @@
 package com.tsoft.civilization.tile;
 
-import com.tsoft.civilization.tile.base.*;
-import com.tsoft.civilization.tile.base.desert.Desert;
-import com.tsoft.civilization.tile.base.grassland.Grassland;
-import com.tsoft.civilization.tile.base.lake.Lake;
-import com.tsoft.civilization.tile.base.ocean.Ocean;
-import com.tsoft.civilization.tile.base.plain.Plain;
-import com.tsoft.civilization.tile.base.snow.Snow;
-import com.tsoft.civilization.tile.base.tundra.Tundra;
+import com.tsoft.civilization.tile.tile.*;
+import com.tsoft.civilization.tile.tile.desert.Desert;
+import com.tsoft.civilization.tile.tile.grassland.Grassland;
+import com.tsoft.civilization.tile.tile.lake.Lake;
+import com.tsoft.civilization.tile.tile.ocean.Ocean;
+import com.tsoft.civilization.tile.tile.plain.Plain;
+import com.tsoft.civilization.tile.tile.snow.Snow;
+import com.tsoft.civilization.tile.tile.tundra.Tundra;
 import com.tsoft.civilization.tile.feature.*;
 import com.tsoft.civilization.tile.feature.atoll.Atoll;
 import com.tsoft.civilization.tile.feature.coast.Coast;
@@ -59,15 +59,15 @@ public class MockTilesMap extends TilesMap {
     private final Map<Character, String> asciiTileClasses = new HashMap<>();
 
     /** To use with one layer (i.e. tiles only, without features) */
-    public MockTilesMap(MapType mapType, String ... asciiLines) {
-        super(mapType, (asciiLines[0].length() - 2) / 2, asciiLines.length - 2);
+    public MockTilesMap(String ... asciiLines) {
+        super((asciiLines[0].length() - 2) / 2, asciiLines.length - 2);
         setTileCodes(TILE_CODES);
         setMockTiles(1, asciiLines);
     }
 
     /** To use with features on the tiles */
-    public MockTilesMap(MapType mapType, int layerCount, String ... asciiLines) {
-        super(mapType, (asciiLines[0].length() - 2) / 2, asciiLines.length / layerCount - 2);
+    public MockTilesMap(int layerCount, String ... asciiLines) {
+        super((asciiLines[0].length() - 2) / 2, asciiLines.length / layerCount - 2);
         setTileCodes(TILE_CODES);
         setMockTiles(layerCount, asciiLines);
     }
@@ -103,12 +103,7 @@ public class MockTilesMap extends TilesMap {
             }
 
             if (isTile) {
-                AbstractTile tile = AbstractTile.newInstance(classUuid);
-                if (tile == null) {
-                    throw new IllegalArgumentException(("Unknown tile's char = " + ch));
-                }
-
-                // System.out.println("(" + x + "," + y + ") " + ch);
+                AbstractTile tile = TileFactory.newInstance(classUuid);
                 setTile(new Point(x, y), tile);
                 continue;
             }
@@ -118,12 +113,8 @@ public class MockTilesMap extends TilesMap {
                 continue;
             }
 
-            // System.out.println("(" + x + "," + y + ") " + ch);
             AbstractTile tile = getTile(x, y);
-            TerrainFeature feature = TerrainFeature.newInstance(classUuid, tile);
-            if (feature == null) {
-                throw new IllegalArgumentException("Unknown feature's char = " + ch);
-            }
+            AbstractFeature feature = FeatureFactory.newInstance(classUuid, tile);
         }
     }
 }

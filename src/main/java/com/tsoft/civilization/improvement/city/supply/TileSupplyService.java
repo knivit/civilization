@@ -4,7 +4,7 @@ import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.TileService;
-import com.tsoft.civilization.tile.base.AbstractTile;
+import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.util.Point;
 
 import java.util.List;

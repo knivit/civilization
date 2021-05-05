@@ -15,11 +15,6 @@ public class OasisView extends AbstractFeatureView {
     }
 
     @Override
-    public String getJsonName() {
-        return "o";
-    }
-
-    @Override
     public String getStatusImageSrc() {
         return "images/status/tiles/oasis.jpg";
     }

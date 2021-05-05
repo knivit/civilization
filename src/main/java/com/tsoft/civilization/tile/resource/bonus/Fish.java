@@ -1,16 +1,15 @@
 package com.tsoft.civilization.tile.resource.bonus;
 
-import com.tsoft.civilization.tile.resource.luxury.AbstractLuxuryResource;
-import com.tsoft.civilization.tile.resource.luxury.LuxuryType;
+import com.tsoft.civilization.tile.resource.AbstractResource;
+import com.tsoft.civilization.tile.resource.ResourceType;
+import lombok.Getter;
 
-public class Fish extends AbstractLuxuryResource {
-    @Override
-    public LuxuryType getLuxuryType() {
-        return LuxuryType.SEA_FOOD;
-    }
+import java.util.UUID;
 
-    @Override
-    public char getAsciiChar() {
-        return 'f';
-    }
+public class Fish extends AbstractResource {
+
+    public static final String CLASS_UUID = UUID.randomUUID().toString();
+
+    @Getter
+    private final ResourceType resourceType = ResourceType.SEA;
 }

@@ -8,24 +8,28 @@ import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.world.action.CreateWorldAction;
 import com.tsoft.civilization.world.action.GetWorldsAction;
+import com.tsoft.civilization.world.service.CreateWorldParams;
+import com.tsoft.civilization.world.service.CreateWorldService;
 
 import java.util.UUID;
 
 public class CreateWorldRequest extends AbstractAjaxRequest {
 
+    private final CreateWorldService createWorldService = new CreateWorldService();
+    private final CreateWorldAction createWorldAction = new CreateWorldAction(createWorldService);
+
     @Override
     public Response getJson(Request request) {
-        CreateWorldAction.Request req = CreateWorldAction.Request.builder()
+        CreateWorldParams params = CreateWorldParams.builder()
             .worldName(request.get("worldName", "World " + UUID.randomUUID()))
-            .mapWidth(NumberUtil.parseInt(request.get("mapWidth"), 20))
-            .mapHeight(NumberUtil.parseInt(request.get("mapHeight"), 20))
-            .worldType(NumberUtil.parseInt(request.get("worldType"), 0))
-            .climate(NumberUtil.parseInt(request.get("climate"), 1))
+            .mapSize(request.get("mapSize"))
+            .mapConfiguration(request.get("mapConfiguration"))
+            .climate(request.get("climate"))
             .maxNumberOfCivilizations(NumberUtil.parseInt(request.get("maxNumberOfCivilizations"), 4))
             .difficultyLevel(request.get("difficultyLevel"))
             .build();
 
-        ActionAbstractResult result = CreateWorldAction.create(req);
+        ActionAbstractResult result = createWorldAction.create(params);
 
         if (result.isFail()) {
             return JsonResponse.accepted(result.getMessage());

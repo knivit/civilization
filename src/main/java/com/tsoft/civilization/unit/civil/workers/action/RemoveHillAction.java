@@ -5,7 +5,7 @@ import com.tsoft.civilization.action.ActionSuccessResult;
 import com.tsoft.civilization.unit.civil.workers.L10nWorkers;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.technology.Technology;
-import com.tsoft.civilization.tile.base.AbstractTile;
+import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.tile.feature.hill.Hill;
 import com.tsoft.civilization.unit.civil.workers.Workers;
 import com.tsoft.civilization.util.Format;
@@ -53,7 +53,7 @@ public class RemoveHillAction {
         }
 
         // there must be no forest on the hill
-        if (tile.getTerrainFeatures().size() != 1) {
+        if (tile.getFeatures().size() != 1) {
             return WorkersActionResults.FAIL_FOREST_MUST_BE_REMOVED_FIRST;
         }
 

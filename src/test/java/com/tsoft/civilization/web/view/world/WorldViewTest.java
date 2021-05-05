@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
-import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.view.JsonBlock;
@@ -18,7 +17,7 @@ public class WorldViewTest {
 
     @Test
     public void worldView() throws Exception {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES, 3,
+        MockTilesMap map = new MockTilesMap(3,
             " |0 1 2 ", " |0 1 2 ", " |0 1 2 ",
             "-+------", "-+------", "-+------",
             "0|g g g ", "0|h h . ", "0|f . . ",

@@ -1,11 +1,11 @@
 package com.tsoft.civilization.world;
 
-import com.tsoft.civilization.tile.base.AbstractTile;
+import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.improvement.city.CityView;
-import com.tsoft.civilization.tile.base.AbstractTileView;
+import com.tsoft.civilization.tile.tile.AbstractTileView;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationView;
 

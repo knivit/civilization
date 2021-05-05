@@ -15,6 +15,7 @@ import java.util.UUID;
  *
  * Building of the Ancient Era
  * Cost
+ * ----
  * Production	Maintenance
  * 40 Production	1 Gold
  * Effects

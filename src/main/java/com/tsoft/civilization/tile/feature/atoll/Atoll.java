@@ -1,8 +1,8 @@
 package com.tsoft.civilization.tile.feature.atoll;
 
-import com.tsoft.civilization.tile.feature.TerrainFeature;
+import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.economic.Supply;
-import com.tsoft.civilization.tile.base.TileType;
+import com.tsoft.civilization.tile.tile.TileType;
 
 import java.util.UUID;
 
@@ -11,8 +11,7 @@ import java.util.UUID;
  * Production Modifiers: Food 1, Production +1
  * Movement Cost: 1
  */
-public class Atoll extends TerrainFeature {
-    public static final Atoll STUB = new Atoll();
+public class Atoll extends AbstractFeature {
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 

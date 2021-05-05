@@ -2,15 +2,14 @@ package com.tsoft.civilization.tile.resource.strategic;
 
 import com.tsoft.civilization.tile.resource.AbstractResource;
 import com.tsoft.civilization.tile.resource.ResourceType;
+import lombok.Getter;
+
+import java.util.UUID;
 
 public class Oil extends AbstractResource {
-    @Override
-    public ResourceType getResourceType() {
-        return ResourceType.EARTH_SEA;
-    }
 
-    @Override
-    public char getAsciiChar() {
-        return 'o';
-    }
+    public static final String CLASS_UUID = UUID.randomUUID().toString();
+
+    @Getter
+    private final ResourceType resourceType = ResourceType.EARTH_SEA;
 }

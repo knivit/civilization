@@ -6,7 +6,6 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationsRelations;
 import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.util.Point;
@@ -23,7 +22,7 @@ public class CombatServiceTest {
 
     @Test
     public void get_targets_to_attack_for_melee_attacker() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(
             " |0 1 2 3 ",
             "-+--------",
             "0|. g g . ",
@@ -61,7 +60,7 @@ public class CombatServiceTest {
     // An archer can fire through an ocean tile but can't through a mountain
     @Test
     public void get_targets_to_attack_for_ranged_attacker() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES, 2,
+        MockTilesMap map = new MockTilesMap(2,
             " |0 1 2 3 4 5 6 ", " |0 1 2 3 4 5 6 ",
             "-+--------------", "-+--------------",
             "0|. . g g . . . ", "0|. . M M . . . ",
@@ -234,7 +233,7 @@ public class CombatServiceTest {
     // After the city is conquered, foreign workers are captured and foreign warriors are destroyed.
     @Test
     public void warriors_conquer_foreign_city() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(
             " |0 1 2 3 4 5 6 ",
             "-+--------------",
             "0|. . g . . . . ",

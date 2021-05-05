@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web.render.tile;
 
-import com.tsoft.civilization.tile.feature.TerrainFeature;
+import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.tile.feature.coast.Coast;
 import com.tsoft.civilization.tile.feature.floodplain.FloodPlain;
 import com.tsoft.civilization.tile.feature.forest.Forest;
@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class TerrainFeatureRenderCatalog extends RenderCatalog {
 
-    private static final Map<Class<? extends TerrainFeature>, Render<? extends TerrainFeature>> TERRAIN_FEATURE_RENDERS = new HashMap<>();
+    private static final Map<Class<? extends AbstractFeature>, Render<? extends AbstractFeature>> TERRAIN_FEATURE_RENDERS = new HashMap<>();
     static {
         TERRAIN_FEATURE_RENDERS.put(Coast.class, new CoastRender());
         TERRAIN_FEATURE_RENDERS.put(FloodPlain.class, new FloodPlainRender());

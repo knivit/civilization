@@ -1,10 +1,11 @@
 package com.tsoft.civilization.world.generator;
 
 import com.tsoft.civilization.tile.TilesMap;
-import com.tsoft.civilization.tile.base.grassland.Grassland;
-import com.tsoft.civilization.tile.base.ocean.Ocean;
+import com.tsoft.civilization.tile.tile.grassland.Grassland;
+import com.tsoft.civilization.tile.tile.ocean.Ocean;
 import com.tsoft.civilization.tile.feature.hill.Hill;
 import com.tsoft.civilization.util.Point;
+import com.tsoft.civilization.world.Climate;
 
 public class EarthWorldGenerator implements WorldGenerator {
 

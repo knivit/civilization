@@ -1,7 +1,7 @@
 package com.tsoft.civilization.tile.feature.ice;
 
-import com.tsoft.civilization.tile.base.TileType;
-import com.tsoft.civilization.tile.feature.TerrainFeature;
+import com.tsoft.civilization.tile.tile.TileType;
+import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.economic.Supply;
 
 import java.util.UUID;
@@ -9,8 +9,7 @@ import java.util.UUID;
 /**
  * Impassable except to Air and Submarine units.
  */
-public class Ice extends TerrainFeature {
-    public final static Ice STUB = new Ice();
+public class Ice extends AbstractFeature {
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 

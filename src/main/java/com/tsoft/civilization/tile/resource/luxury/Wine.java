@@ -1,15 +1,15 @@
 package com.tsoft.civilization.tile.resource.luxury;
 
-public class Wine extends AbstractLuxuryResource {
-    private LuxuryType luxuryType;
+import com.tsoft.civilization.tile.resource.AbstractResource;
+import com.tsoft.civilization.tile.resource.ResourceType;
+import lombok.Getter;
 
-    @Override
-    public LuxuryType getLuxuryType() {
-        return LuxuryType.FOOD;
-    }
+import java.util.UUID;
 
-    @Override
-    public char getAsciiChar() {
-        return 'i';
-    }
+public class Wine extends AbstractResource {
+
+    public static final String CLASS_UUID = UUID.randomUUID().toString();
+
+    @Getter
+    private final ResourceType resourceType = ResourceType.LUXURY_FOOD;
 }

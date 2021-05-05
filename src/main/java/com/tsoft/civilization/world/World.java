@@ -4,7 +4,6 @@ import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.civilization.*;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityList;
-import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
@@ -18,6 +17,7 @@ import lombok.Setter;
 import java.util.*;
 
 public class World {
+
     @Getter
     private final String id = UUID.randomUUID().toString();
 
@@ -31,9 +31,6 @@ public class World {
     private final WorldView view;
 
     @Getter
-    private final WorldSize worldSize;
-
-    @Getter
     private final String name;
 
     @Getter @Setter
@@ -44,16 +41,14 @@ public class World {
 
     private final List<Year> history = new ArrayList<>();
     private final WorldService worldService;
-    private final TileService tileService = new TileService();
 
-    public World(String name, TilesMap tilesMap) {
+    public World(String name, TilesMap tilesMap, Climate climate) {
         this.name = name;
         year = new Year(-3000);
         view = new WorldView(this);
         this.tilesMap = tilesMap;
 
         worldService = new WorldService(this);
-        worldSize = WorldSize.find(tilesMap.getWidth(), tilesMap.getHeight());
     }
 
     // Send an event to all civilizations

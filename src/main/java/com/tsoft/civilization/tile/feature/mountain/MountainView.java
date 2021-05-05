@@ -15,11 +15,6 @@ public class MountainView extends AbstractFeatureView {
     }
 
     @Override
-    public String getJsonName() {
-        return "M";
-    }
-
-    @Override
     public String getStatusImageSrc() {
         return "images/status/tiles/mountain.jpg";
     }

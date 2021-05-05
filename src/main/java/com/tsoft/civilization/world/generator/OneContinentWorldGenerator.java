@@ -1,11 +1,11 @@
 package com.tsoft.civilization.world.generator;
 
-import com.tsoft.civilization.tile.base.desert.Desert;
-import com.tsoft.civilization.tile.base.grassland.Grassland;
-import com.tsoft.civilization.tile.base.ocean.Ocean;
-import com.tsoft.civilization.tile.base.plain.Plain;
-import com.tsoft.civilization.tile.base.snow.Snow;
-import com.tsoft.civilization.tile.base.tundra.Tundra;
+import com.tsoft.civilization.tile.tile.desert.Desert;
+import com.tsoft.civilization.tile.tile.grassland.Grassland;
+import com.tsoft.civilization.tile.tile.ocean.Ocean;
+import com.tsoft.civilization.tile.tile.plain.Plain;
+import com.tsoft.civilization.tile.tile.snow.Snow;
+import com.tsoft.civilization.tile.tile.tundra.Tundra;
 import com.tsoft.civilization.tile.feature.coast.Coast;
 import com.tsoft.civilization.tile.feature.forest.Forest;
 import com.tsoft.civilization.tile.feature.hill.Hill;
@@ -13,12 +13,11 @@ import com.tsoft.civilization.tile.feature.ice.Ice;
 import com.tsoft.civilization.tile.feature.jungle.Jungle;
 import com.tsoft.civilization.tile.feature.marsh.Marsh;
 import com.tsoft.civilization.tile.feature.oasis.Oasis;
-import com.tsoft.civilization.tile.resource.luxury.LuxuryList;
-import com.tsoft.civilization.tile.resource.ResourceList;
 import com.tsoft.civilization.tile.TilesMap;
-import com.tsoft.civilization.tile.base.*;
+import com.tsoft.civilization.tile.tile.*;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.util.Rect;
+import com.tsoft.civilization.world.Climate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,11 +54,14 @@ public class OneContinentWorldGenerator implements WorldGenerator {
 
         addRivers();
 
-        LuxuryList luxuryList = new LuxuryList(tilesMap, climate);
-        luxuryList.addToMap();
+        BonusResourceGenerator bonusResourceGenerator = new BonusResourceGenerator(tilesMap, climate);
+        bonusResourceGenerator.addToMap();
 
-        ResourceList resourceList = new ResourceList(tilesMap, climate);
-        resourceList.addToMap();
+        LuxuryResourcesGenerator luxuryResourcesGenerator = new LuxuryResourcesGenerator(tilesMap, climate);
+        luxuryResourcesGenerator.addToMap();
+
+        StrategicResourceGenerator strategicResourceGenerator = new StrategicResourceGenerator(tilesMap, climate);
+        strategicResourceGenerator.addToMap();
     }
 
     private void addMountains() {

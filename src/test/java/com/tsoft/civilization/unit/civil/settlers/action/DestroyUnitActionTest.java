@@ -3,7 +3,6 @@ package com.tsoft.civilization.unit.civil.settlers.action;
 import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.unit.action.DestroyUnitAction;
-import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.unit.UnitFactory;
@@ -21,7 +20,7 @@ public class DestroyUnitActionTest {
 
     @Test
     public void buildCity1() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",

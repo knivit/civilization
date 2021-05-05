@@ -1,8 +1,8 @@
 package com.tsoft.civilization.web.render;
 
 import com.tsoft.civilization.tile.TilesMap;
-import com.tsoft.civilization.tile.base.AbstractTile;
-import com.tsoft.civilization.tile.feature.TerrainFeature;
+import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.web.render.tile.HexagonRender;
 import com.tsoft.civilization.web.render.tile.TerrainFeatureRenderCatalog;
 import com.tsoft.civilization.web.render.tile.TileRenderCatalog;
@@ -16,7 +16,7 @@ public class MapRender {
     private RenderFileNameGenerator fileNameGenerator;
 
     private final RenderCatalog<AbstractTile> tileRenderCatalog = new TileRenderCatalog();
-    private final RenderCatalog<TerrainFeature> terrainFeatureRenderCatalog = new TerrainFeatureRenderCatalog();
+    private final RenderCatalog<AbstractFeature> terrainFeatureRenderCatalog = new TerrainFeatureRenderCatalog();
 
     public MapRender() { }
 
@@ -50,12 +50,12 @@ public class MapRender {
     }
 
     private void drawTerrainFeatures(RenderContext renderContext, GraphicsContext graphicsContext, RenderTileInfo tileInfo, AbstractTile tile) {
-        for (TerrainFeature feature : tile.getTerrainFeatures()) {
+        for (AbstractFeature feature : tile.getFeatures()) {
             drawTerrainFeature(renderContext, graphicsContext, tileInfo, feature);
         }
     }
 
-    private void drawTerrainFeature(RenderContext renderContext, GraphicsContext graphicsContext, RenderTileInfo tileInfo, TerrainFeature feature) {
+    private void drawTerrainFeature(RenderContext renderContext, GraphicsContext graphicsContext, RenderTileInfo tileInfo, AbstractFeature feature) {
         terrainFeatureRenderCatalog.render(renderContext, graphicsContext, tileInfo, feature);
     }
 

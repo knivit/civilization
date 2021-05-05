@@ -1,8 +1,8 @@
 package com.tsoft.civilization.tile.feature.forest;
 
-import com.tsoft.civilization.tile.feature.TerrainFeature;
+import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.economic.Supply;
-import com.tsoft.civilization.tile.base.TileType;
+import com.tsoft.civilization.tile.tile.TileType;
 
 import java.util.UUID;
 
@@ -12,8 +12,7 @@ import java.util.UUID;
  * Notes: Tiles with forests covering them always yield 1 Food and 1 Production, regardless of the underlying terrain type.
  * Forests can be cleared by Workers (with the Advent of Mining).
  */
-public class Forest extends TerrainFeature {
-    public static final Forest STUB = new Forest();
+public class Forest extends AbstractFeature {
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 

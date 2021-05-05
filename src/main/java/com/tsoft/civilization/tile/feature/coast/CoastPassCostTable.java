@@ -1,7 +1,7 @@
 package com.tsoft.civilization.tile.feature.coast;
 
-import com.tsoft.civilization.tile.PassCost;
-import com.tsoft.civilization.tile.PassCostList;
+import com.tsoft.civilization.unit.move.PassCost;
+import com.tsoft.civilization.unit.move.PassCostList;
 import com.tsoft.civilization.unit.civil.greatartist.GreatArtist;
 import com.tsoft.civilization.unit.civil.greatengineer.GreatEngineer;
 import com.tsoft.civilization.unit.civil.greatgeneral.GreatGeneral;
@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.tsoft.civilization.technology.Technology.NAVIGATION;
-import static com.tsoft.civilization.tile.base.TilePassCostTable.UNPASSABLE;
+import static com.tsoft.civilization.unit.move.TilePassCostTable.UNPASSABLE;
 
 public final class CoastPassCostTable {
 

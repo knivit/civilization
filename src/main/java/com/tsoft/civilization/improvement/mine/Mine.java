@@ -5,7 +5,7 @@ import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.improvement.AbstractImprovementView;
 import com.tsoft.civilization.technology.Technology;
-import com.tsoft.civilization.tile.base.AbstractTile;
+import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.tile.feature.hill.Hill;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.economic.Supply;

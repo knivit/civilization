@@ -15,11 +15,6 @@ public class MarshView extends AbstractFeatureView {
     }
 
     @Override
-    public String getJsonName() {
-        return "m";
-    }
-
-    @Override
     public String getStatusImageSrc() {
         return "images/status/tiles/marsh.jpg";
     }

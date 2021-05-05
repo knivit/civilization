@@ -2,11 +2,11 @@ package com.tsoft.civilization.tile;
 
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.combat.HasCombatStrength;
-import com.tsoft.civilization.tile.base.AbstractTile;
-import com.tsoft.civilization.tile.base.MissileTilePastCostTable;
-import com.tsoft.civilization.tile.base.TilePassCostTable;
-import com.tsoft.civilization.tile.feature.TerrainFeature;
-import com.tsoft.civilization.tile.feature.TerrainFeatureList;
+import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.combat.MissileTilePastCostTable;
+import com.tsoft.civilization.unit.move.TilePassCostTable;
+import com.tsoft.civilization.tile.feature.AbstractFeature;
+import com.tsoft.civilization.tile.feature.FeatureList;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.economic.Supply;
 
@@ -18,11 +18,11 @@ public class TileService {
         Supply supply = tile.getBaseSupply();
 
         // add feature's supply
-        TerrainFeatureList features = tile.getTerrainFeatures();
+        FeatureList features = tile.getFeatures();
         if (!features.isEmpty()) {
             // start from last (i.e. on top) feature
             for (int i = features.size() - 1; i >= 0; i --) {
-                TerrainFeature feature = features.get(i);
+                AbstractFeature feature = features.get(i);
 
                 // look for a blocking feature
                 if (feature.isBlockingTileSupply()) {
@@ -33,52 +33,5 @@ public class TileService {
             }
         }
         return supply;
-    }
-
-    public int getPassCost(Civilization civilization, AbstractUnit unit, AbstractTile tile) {
-        int passCost = TilePassCostTable.get(civilization, unit, tile);
-
-        TerrainFeatureList features = tile.getTerrainFeatures();
-        if (features.isEmpty()) {
-            return passCost;
-        }
-
-        // add features starting from the uppermost
-        for (int i = features.size() - 1; i >= 0; i --) {
-            TerrainFeature feature = features.get(i);
-
-            int featurePassCost = feature.getPassCost(unit);
-            if (featurePassCost == TilePassCostTable.UNPASSABLE) {
-                return TilePassCostTable.UNPASSABLE;
-            }
-
-            passCost += featurePassCost;
-        }
-
-        return passCost;
-    }
-
-    // Returns passing (or flying) cost for attacker's missile
-    public int getMissilePastCost(HasCombatStrength attacker, AbstractTile tile) {
-        int passCost = MissileTilePastCostTable.get(attacker, tile);
-
-        TerrainFeatureList features = tile.getTerrainFeatures();
-        if (features.isEmpty()) {
-            return passCost;
-        }
-
-        // start from last (i.e. on top) feature
-        for (int i = features.size() - 1; i >= 0; i --) {
-            TerrainFeature feature = features.get(i);
-
-            int featurePassCost = feature.getMissilePassCost(attacker);
-            if (featurePassCost == TilePassCostTable.UNPASSABLE) {
-                return TilePassCostTable.UNPASSABLE;
-            }
-
-            passCost += featurePassCost;
-        }
-
-        return passCost;
     }
 }

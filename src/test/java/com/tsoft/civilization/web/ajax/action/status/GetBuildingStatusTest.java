@@ -22,7 +22,7 @@ public class GetBuildingStatusTest {
         AbstractAjaxRequest.getInstance(GetBuildingStatus.class.getSimpleName());
 
     @Test
-    public void getJsonForMyCityBuilding() {
+    public void get_json_for_my_city_building() {
         MockWorld world = MockWorld.newSimpleWorld();
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()

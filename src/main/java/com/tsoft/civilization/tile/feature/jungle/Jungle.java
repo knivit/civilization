@@ -1,8 +1,8 @@
 package com.tsoft.civilization.tile.feature.jungle;
 
-import com.tsoft.civilization.tile.feature.TerrainFeature;
+import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.economic.Supply;
-import com.tsoft.civilization.tile.base.TileType;
+import com.tsoft.civilization.tile.tile.TileType;
 
 import java.util.UUID;
 
@@ -12,8 +12,7 @@ import java.util.UUID;
  * Notes: Jungle can be cleared by Workers (with the advent of Bronze Working).
  * Jungle no longer has a negative modifier to Food production.
  */
-public class Jungle extends TerrainFeature {
-    public static final Jungle STUB = new Jungle();
+public class Jungle extends AbstractFeature {
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 

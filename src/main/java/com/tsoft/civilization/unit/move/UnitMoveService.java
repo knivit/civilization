@@ -6,9 +6,10 @@ import com.tsoft.civilization.action.ActionSuccessResult;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityList;
-import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.TilesMap;
-import com.tsoft.civilization.tile.base.AbstractTile;
+import com.tsoft.civilization.tile.feature.AbstractFeature;
+import com.tsoft.civilization.tile.feature.FeatureList;
+import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.unit.UnitList;
@@ -31,8 +32,6 @@ public class UnitMoveService {
     public static final ActionFailureResult INVALID_UNIT_LOCATION = new ActionFailureResult(L10nUnit.INVALID_UNIT_LOCATION);
     public static final ActionFailureResult INVALID_TARGET_LOCATION = new ActionFailureResult(L10nUnit.INVALID_TARGET_LOCATION);
     public static final ActionFailureResult NO_LOCATIONS_TO_MOVE = new ActionFailureResult(L10nUnit.NO_LOCATIONS_TO_MOVE);
-
-    private static final TileService tileService = new TileService();
 
     // Move the unit along the given route
     // All passed steps are removed from the route
@@ -145,7 +144,7 @@ public class UnitMoveService {
         unit.setLocation(location);
 
         AbstractTile tile = unit.getCivilization().getTilesMap().getTile(location);
-        int tilePassCost = tileService.getPassCost(unit.getCivilization(), unit, tile);
+        int tilePassCost = getPassCost(unit.getCivilization(), unit, tile);
         unit.setPassScore(unit.getPassScore() - tilePassCost);
     }
 
@@ -215,7 +214,7 @@ public class UnitMoveService {
         return unitRoute;
     }
 
-    private static Map<Point, DirPassScore> getAllLocationsDirPassScore(AbstractUnit unit, int passScore, Point finishLocation) {
+    private Map<Point, DirPassScore> getAllLocationsDirPassScore(AbstractUnit unit, int passScore, Point finishLocation) {
         TilesMap tilesMap = unit.getTilesMap();
 
         Map<Point, DirPassScore> tileScores = new HashMap<>();
@@ -239,7 +238,7 @@ public class UnitMoveService {
                     Point nextLocation = tilesMap.addDirToLocation(currLocation, dir);
                     AbstractTile nextTile = tilesMap.getTile(nextLocation);
 
-                    int nextPassScore = passScore - tileService.getPassCost(unit.getCivilization(), unit, nextTile);
+                    int nextPassScore = passScore - getPassCost(unit.getCivilization(), unit, nextTile);
                     if (nextPassScore >= 0) {
                         // check for foreign city located there
                         boolean isBlocked = false;
@@ -279,7 +278,7 @@ public class UnitMoveService {
     // Any units and foreign cities blocks further movement
     // (i.e. when there is a narrow passage the enter of which
     // is blocked by any unit or foreign city, we can not pass trough it)
-    private static Set<Point> getCandidatesToMove(AbstractUnit unit) {
+    private Set<Point> getCandidatesToMove(AbstractUnit unit) {
         int passScore = unit.getPassScore();
         if (passScore == 0) {
             return Collections.emptySet();
@@ -362,7 +361,7 @@ public class UnitMoveService {
 
     public ActionAbstractResult checkCanMoveOnTile(AbstractUnit unit, Point location) {
         AbstractTile tile = unit.getTilesMap().getTile(location);
-        int tilePassCost = tileService.getPassCost(unit.getCivilization(), unit, tile);
+        int tilePassCost = getPassCost(unit.getCivilization(), unit, tile);
 
         int passScore = unit.getPassScore();
         if (passScore < tilePassCost) {
@@ -468,5 +467,37 @@ public class UnitMoveService {
         }
 
         return UNIT_MOVED;
+    }
+
+    public int getPassCost(Civilization civilization, AbstractUnit unit, AbstractTile tile) {
+        int passCost = TilePassCostTable.get(civilization, unit, tile);
+
+        FeatureList features = tile.getFeatures();
+        if (features.isEmpty()) {
+            return passCost;
+        }
+
+        // add features starting from the uppermost
+        for (int i = features.size() - 1; i >= 0; i --) {
+            AbstractFeature feature = features.get(i);
+
+            int featurePassCost = getPassCost(unit, feature);
+            if (featurePassCost == TilePassCostTable.UNPASSABLE) {
+                return TilePassCostTable.UNPASSABLE;
+            }
+
+            passCost += featurePassCost;
+        }
+
+        return passCost;
+    }
+
+
+    public int getPassCost(AbstractUnit unit, AbstractFeature feature) {
+        return getPassCost(unit.getCivilization(), unit, feature);
+    }
+
+    public int getPassCost(Civilization civilization, AbstractUnit unit, AbstractFeature feature) {
+        return FeaturePassCostTable.get(civilization, unit, feature);
     }
 }

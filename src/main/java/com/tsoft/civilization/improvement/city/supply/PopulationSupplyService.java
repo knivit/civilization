@@ -4,7 +4,7 @@ import com.tsoft.civilization.economic.HasSupply;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.TileService;
-import com.tsoft.civilization.tile.base.AbstractTile;
+import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.unit.civil.citizen.Citizen;
 import com.tsoft.civilization.unit.civil.citizen.CitizenPlacementTable;
 import com.tsoft.civilization.util.Point;
@@ -37,7 +37,6 @@ public class PopulationSupplyService implements HasSupply {
         for (Point location : locations) {
             AbstractTile tile = city.getTilesMap().getTile(location);
             Supply tileSupply = tileService.calcSupply(tile);
-            log.trace("Supply of tile {} = {}", tile, tileSupply);
 
             // don't place a citizen on harsh tiles (terrain features)
             if (!CitizenPlacementTable.canPlaceCitizen(tile)) {
@@ -66,7 +65,6 @@ public class PopulationSupplyService implements HasSupply {
             }
         }
 
-        log.trace("Best supply tile {} = {} for the strategy = {}", bestTile, bestTileSupply, supplyStrategy);
         return (bestTile == null) ? null : bestTile.getLocation();
     }
 

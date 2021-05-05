@@ -3,10 +3,9 @@ package com.tsoft.civilization.unit.civil.workers.action;
 import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.technology.Technology;
-import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
-import com.tsoft.civilization.tile.base.grassland.Grassland;
-import com.tsoft.civilization.tile.feature.TerrainFeature;
+import com.tsoft.civilization.tile.tile.grassland.Grassland;
+import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.tile.feature.hill.Hill;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.unit.civil.workers.Workers;
@@ -26,7 +25,7 @@ public class RemoveForestActionTest {
 
     @Test
     public void cantRemoveForestedHill() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES, 3,
+        MockTilesMap map = new MockTilesMap(3,
                 " |0 1 2 ", " |0 1 2 ", " |0 1 2 ",
                 "-+------", "-+------", "-+------",
                 "0|. . . ", "0|. . . ", "0|. . . ",
@@ -53,7 +52,7 @@ public class RemoveForestActionTest {
 
     @Test
     public void removeForestedHill() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES, 3,
+        MockTilesMap map = new MockTilesMap(3,
                 " |0 1 2 ", " |0 1 2 ", " |0 1 2 ",
                 "-+------", "-+------", "-+------",
                 "0|. . . ", "0|. . . ", "0|. . . ",
@@ -80,12 +79,12 @@ public class RemoveForestActionTest {
         assertThat(map.getTile(1, 1).getClass()).isEqualTo(Grassland.class);
 
         // now there is a hill
-        assertThat(map.getTile(1, 1).getTerrainFeatures())
+        assertThat(map.getTile(1, 1).getFeatures())
             .isNotNull()
             .returns(1, ArrayList::size)
             .extracting(list -> list.get(0))
             .isNotNull()
-            .returns(Hill.class, TerrainFeature::getClass);
+            .returns(Hill.class, AbstractFeature::getClass);
 
         // remove a hill
         for (int i = 0; i < 4; i ++) {
@@ -100,7 +99,7 @@ public class RemoveForestActionTest {
         assertThat(map.getTile(1, 1).getClass()).isEqualTo(Grassland.class);
 
         // no any features
-        assertThat(map.getTile(1, 1).getTerrainFeatures())
+        assertThat(map.getTile(1, 1).getFeatures())
             .isNotNull()
             .returns(0, ArrayList::size);
     }

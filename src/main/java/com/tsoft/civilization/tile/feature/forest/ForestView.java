@@ -15,11 +15,6 @@ public class ForestView extends AbstractFeatureView {
     }
 
     @Override
-    public String getJsonName() {
-        return "f";
-    }
-
-    @Override
     public String getStatusImageSrc() {
         return "images/status/tiles/forest.jpg";
     }

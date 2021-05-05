@@ -3,7 +3,6 @@ package com.tsoft.civilization.unit.civil.settlers.action;
 import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.unit.UnitFactory;
@@ -22,7 +21,7 @@ public class BuildCityActionTest {
 
     @Test
     public void buildCity1() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
@@ -57,7 +56,7 @@ public class BuildCityActionTest {
 
     @Test
     public void buildCity2() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
@@ -84,7 +83,7 @@ public class BuildCityActionTest {
 
     @Test
     public void buildCity3() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(
             " |0 1 2 3 4 5 6 7 ",
             "-+----------------",
             "0|g . . . . . . . ",
@@ -112,7 +111,7 @@ public class BuildCityActionTest {
 
     @Test
     public void buildCity4() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(
             " |0 1 2 3 4 5 6 7 ",
             "-+----------------",
             "0|. . . . . . . . ",

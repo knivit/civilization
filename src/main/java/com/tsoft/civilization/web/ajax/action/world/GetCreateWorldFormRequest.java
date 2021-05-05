@@ -1,7 +1,6 @@
 package com.tsoft.civilization.web.ajax.action.world;
 
-import com.tsoft.civilization.world.DifficultyLevel;
-import com.tsoft.civilization.world.L10nWorld;
+import com.tsoft.civilization.world.*;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.HtmlResponse;
@@ -38,29 +37,16 @@ public class GetCreateWorldFormRequest extends AbstractAjaxRequest {
                     <td><input id='worldName' type='text' placeholder='My World' /></td>
                 </tr>
                 <tr>
-                    <td>$worldType</td>
-                    <td><select id='worldType'>
-                        <option value='0'>Earth</option>
-                        <option selected value='1'>One big continent</option>
-                        </select>
-                    </td>
+                    <td>$mapConfiguration</td>
+                    <td><select id='mapConfiguration'>$mapConfigurationOptions</select>
                 </tr>
                 <tr>
-                    <td>$mapWidth</td>
-                    <td><input id='mapWidth' type='text' placeholder='20' /></td>
-                </tr>
-                <tr>
-                    <td>$mapHeight</td>
-                    <td><input id='mapHeight' type='text' placeholder='20' /></td>
+                    <td>$mapSize</td>
+                    <td><select id='mapSize'>$mapSizeOptions</select>
                 </tr>
                 <tr>
                     <td>$climate</td>
-                    <td><select id='climate'>
-                        <option value='0'>Cold</option>
-                        <option selected value='1'>Normal</option>
-                        <option value='2'>Hot</option>
-                        </select>
-                    </td>
+                    <td><select id='climate'>$climateOptions</select>
                 </tr>
                 <tr>
                     <td>$maxNumberOfCivilizations</td>
@@ -79,10 +65,12 @@ public class GetCreateWorldFormRequest extends AbstractAjaxRequest {
             """,
 
             "$worldName", L10nWorld.INPUT_WORLD_NAME,
-            "$worldType", L10nWorld.INPUT_WORLD_TYPE,
-            "$mapWidth", L10nWorld.INPUT_MAP_WIDTH,
-            "$mapHeight", L10nWorld.INPUT_MAP_HEIGHT,
+            "$mapConfiguration", L10nWorld.INPUT_MAP_CONFIGURATION,
+            "$mapConfigurationOptions", getMapConfigurationOptions(),
+            "$mapSize", L10nWorld.INPUT_MAP_SIZE,
+            "$mapSizeOptions", getMapSizeOptions(),
             "$climate", L10nWorld.INPUT_CLIMATE,
+            "$climateOptions", getClimateOptions(),
             "$maxNumberOfCivilizations", L10nWorld.INPUT_MAX_NUMBER_OF_CIVILIZATIONS,
             "$maxNumberOfCivilizationsPlaceHolder", Math.min(CIVILIZATIONS.size(), 8),
             "$difficultyLevel", L10nWorld.DIFFICULTY_LEVEL_NAME,
@@ -93,6 +81,39 @@ public class GetCreateWorldFormRequest extends AbstractAjaxRequest {
         );
 
         return HtmlResponse.ok(value);
+    }
+
+    private StringBuilder getMapConfigurationOptions() {
+        StringBuilder buf = new StringBuilder();
+        for (MapConfiguration conf : MapConfiguration.values()) {
+            buf.append(Format.text("<option value='$value' description='$desc'>$text</option>",
+                "$value", conf.name(),
+                "$text", conf.name(),
+                "$desc", conf.getDescription()));
+        }
+        return buf;
+    }
+
+    private StringBuilder getMapSizeOptions() {
+        StringBuilder buf = new StringBuilder();
+        for (MapSize size : MapSize.values()) {
+            buf.append(Format.text("<option value='$value'>$text</option>",
+                "$value", size.name(),
+                "$text", size.getL10n()));
+
+        }
+        return buf;
+    }
+
+    private StringBuilder getClimateOptions() {
+        StringBuilder buf = new StringBuilder();
+        for (Climate climate : Climate.values()) {
+            buf.append(Format.text("<option value='$value'>$text</option>",
+                "$value", climate.name(),
+                "$text", climate.getL10n()));
+
+        }
+        return buf;
     }
 
     private StringBuilder getDifficultyLevelOptions() {

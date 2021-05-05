@@ -2,8 +2,8 @@ package com.tsoft.civilization.combat.skill;
 
 import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.combat.HasCombatStrength;
-import com.tsoft.civilization.tile.base.AbstractTile;
-import com.tsoft.civilization.tile.base.TileType;
+import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.tile.TileType;
 import com.tsoft.civilization.util.Point;
 
 public class StrikeOnRoughTerrainSkill extends AbstractSkill {

@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web.render.tile.base;
 
-import com.tsoft.civilization.tile.base.grassland.Grassland;
+import com.tsoft.civilization.tile.tile.grassland.Grassland;
 import com.tsoft.civilization.web.render.*;
 import com.tsoft.civilization.web.render.tile.HexagonRender;
 

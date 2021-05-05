@@ -7,6 +7,46 @@ import static com.tsoft.civilization.L10n.L10nLanguage.RU;
 
 public class L10nWorld {
 
+    public static final L10n MAP_SIZE_DUEL = new L10n()
+        .put(EN, "Duel")
+        .put(RU, "Дуэль");
+
+    public static final L10n MAP_SIZE_TINY = new L10n()
+        .put(EN, "Tiny")
+        .put(RU, "Крошечная");
+
+    public static final L10n MAP_SIZE_SMALL = new L10n()
+        .put(EN, "Small")
+        .put(RU, "Маленькая");
+
+    public static final L10n MAP_SIZE_STANDARD = new L10n()
+        .put(EN, "Standard")
+        .put(RU, "Стандартная");
+
+    public static final L10n MAP_SIZE_LARGE = new L10n()
+        .put(EN, "Large")
+        .put(RU, "Большая");
+
+    public static final L10n MAP_SIZE_HUGE = new L10n()
+        .put(EN, "Huge")
+        .put(RU, "Огромная");
+
+    public static final L10n MAP_SIZE_CUSTOM = new L10n()
+        .put(EN, "Custom")
+        .put(RU, "Нестандартная");
+
+    public static final L10n CLIMATE_COLD = new L10n()
+        .put(EN, "Cold")
+        .put(RU, "Холодный");
+
+    public static final L10n CLIMATE_NORMAL = new L10n()
+        .put(EN, "Normal")
+        .put(RU, "Умеренный");
+
+    public static final L10n CLIMATE_HOT = new L10n()
+        .put(EN, "Hot")
+        .put(RU, "Жаркий");
+
     public static final L10n INVALID_LOCATION = new L10n()
         .put(EN, "Invalid location")
         .put(RU, "Неверные координаты");
@@ -26,6 +66,14 @@ public class L10nWorld {
     public static final L10n INVALID_DIFFICULTY_LEVEL = new L10n()
         .put(EN, "Invalid difficulty level")
         .put(RU, "Неверный уровень сложности");
+
+    public static final L10n INVALID_CLIMATE = new L10n()
+        .put(EN, "Invalid climate")
+        .put(RU, "Неверный климат");
+
+    public static final L10n INVALID_MAP_CONFIGURATION = new L10n()
+        .put(EN, "Invalid map configuration")
+        .put(RU, "Неверная конфигурация карты");
 
     public static final L10n CANT_CREATE_WORLD = new L10n()
         .put(EN, "Can not create a world")
@@ -157,21 +205,17 @@ public class L10nWorld {
         .put(EN, "Difficulty level")
         .put(RU, "Уровень сложности");
 
-    public static final L10n INPUT_WORLD_TYPE = new L10n()
-        .put(EN, "World Type")
-        .put(RU, "Тип мира");
+    public static final L10n INPUT_MAP_CONFIGURATION = new L10n()
+        .put(EN, "Map configuration")
+        .put(RU, "Конфигурация карты");
 
-    public static final L10n INPUT_MAP_WIDTH = new L10n()
-        .put(EN, "Map Width")
-        .put(RU, "Ширина карты");
+    public static final L10n INPUT_MAP_SIZE = new L10n()
+        .put(EN, "Map size")
+        .put(RU, "Размер карты");
 
     public static final L10n INPUT_MAX_NUMBER_OF_CIVILIZATIONS = new L10n()
-        .put(EN, "Max number of Civilizations")
+        .put(EN, "Max number of civilizations")
         .put(RU, "Макс. кол-во цивилизаций");
-
-    public static final L10n INPUT_MAP_HEIGHT = new L10n()
-        .put(EN, "Map Height")
-        .put(RU, "Высота карты");
 
     public static final L10n INPUT_CLIMATE = new L10n()
         .put(EN, "Climate")

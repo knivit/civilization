@@ -2,15 +2,21 @@ package com.tsoft.civilization.unit.action;
 
 import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
+import com.tsoft.civilization.helper.html.HtmlAttribute;
+import com.tsoft.civilization.helper.html.HtmlDocument;
+import com.tsoft.civilization.helper.html.HtmlParser;
+import com.tsoft.civilization.helper.html.HtmlTag;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.move.UnitMoveService;
 import com.tsoft.civilization.util.Point;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
 import java.util.Set;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
 import static com.tsoft.civilization.unit.move.UnitMoveService.CAN_MOVE;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -42,22 +48,21 @@ public class MoveUnitActionTest {
         //     'locations':[{'col':'2','row':'1'},{'col':'2','row':'0'}] })">Move</button>
         // </td>
         // <td>Move unit to a tile</td>
-/*
-
- todo see HtmlHelper
-
- Document doc = Jsoup.parse(buf.toString());
-        assertThat(doc.select("button"))
-            .hasSize(1)
-            .first()
-            .returns("Move", Element::text)
-            .extracting(e -> e.attr("onclick"))
-            .extracting(HtmlHelper::extractEvent)
-            .returns("client.moveUnitAction", MockHtmlEvent::getAction)
-            .extracting(MockHtmlEvent::getArgs)
-            .isNotNull()
-            .returns(workers.getId(), e -> e.get("unit").asText())
-            .returns(workers.getLocation(), e -> new Point(e.get("ucol").asInt(), e.get("urow").asInt()))
-            .returns(locations, e -> HtmlHelper.extractLocations(e.get("locations")));
-*/    }
+        HtmlDocument doc = HtmlParser.parse(buf);
+        assertThat(doc).isNotNull()
+            .returns(2, e -> e.getTags().size())
+            .extracting(e -> e.getTags().get(0))
+            .returns("td", HtmlTag::getName)
+            .returns(null, HtmlTag::getText)
+            .returns(Collections.emptyList(), HtmlTag::getAttributes)
+            .returns(1, e -> e.getTags().size())
+            .extracting(e -> e.getTags().get(0))
+            .returns("button", HtmlTag::getName)
+            .returns("Move", HtmlTag::getText)
+            .returns(Collections.emptyList(), HtmlTag::getTags)
+            .returns(1, e -> e.getAttributes().size())
+            .extracting(e -> e.getAttributes().get(0))
+            .returns("onclick", HtmlAttribute::getName)
+            .returns("client.moveUnitAction({ unit:'" + workers.getId() + "', ucol:'1', urow:'1', 'locations':[{'col':'2','row':'0'},{'col':'2','row':'1'}] })", HtmlAttribute::getValue);
+    }
 }

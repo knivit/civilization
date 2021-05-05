@@ -1,16 +1,15 @@
 package com.tsoft.civilization.tile.resource.bonus;
 
-import com.tsoft.civilization.tile.resource.luxury.AbstractLuxuryResource;
-import com.tsoft.civilization.tile.resource.luxury.LuxuryType;
+import com.tsoft.civilization.tile.resource.AbstractResource;
+import com.tsoft.civilization.tile.resource.ResourceType;
+import lombok.Getter;
 
-public class Bananas extends AbstractLuxuryResource {
-    @Override
-    public LuxuryType getLuxuryType() {
-        return LuxuryType.FOOD;
-    }
+import java.util.UUID;
 
-    @Override
-    public char getAsciiChar() {
-        return 'b';
-    }
+public class Bananas extends AbstractResource {
+
+    public static final String CLASS_UUID = UUID.randomUUID().toString();
+
+    @Getter
+    private final ResourceType resourceType = ResourceType.EARTH;
 }

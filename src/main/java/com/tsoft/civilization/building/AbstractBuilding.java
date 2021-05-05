@@ -6,7 +6,7 @@ import com.tsoft.civilization.economic.HasSupply;
 import com.tsoft.civilization.improvement.city.construction.CanBeBuilt;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.construction.CityConstructionService;
-import com.tsoft.civilization.tile.base.AbstractTile;
+import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.DifficultyLevel;

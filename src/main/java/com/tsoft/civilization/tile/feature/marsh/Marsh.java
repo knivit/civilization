@@ -1,8 +1,8 @@
 package com.tsoft.civilization.tile.feature.marsh;
 
-import com.tsoft.civilization.tile.feature.TerrainFeature;
+import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.economic.Supply;
-import com.tsoft.civilization.tile.base.TileType;
+import com.tsoft.civilization.tile.tile.TileType;
 
 import java.util.UUID;
 
@@ -13,8 +13,7 @@ import java.util.UUID;
  * (ability gained with Masonry) before a Plantation can be built.
  * Some improvements such as farms can be built directly on a marsh, but with the -1 food penalty.
  */
-public class Marsh extends TerrainFeature {
-    public static final Marsh STUB = new Marsh();
+public class Marsh extends AbstractFeature {
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 

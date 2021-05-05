@@ -1,13 +1,13 @@
 package com.tsoft.civilization.web.render.tile;
 
-import com.tsoft.civilization.tile.base.AbstractTile;
-import com.tsoft.civilization.tile.base.desert.Desert;
-import com.tsoft.civilization.tile.base.grassland.Grassland;
-import com.tsoft.civilization.tile.base.lake.Lake;
-import com.tsoft.civilization.tile.base.ocean.Ocean;
-import com.tsoft.civilization.tile.base.plain.Plain;
-import com.tsoft.civilization.tile.base.snow.Snow;
-import com.tsoft.civilization.tile.base.tundra.Tundra;
+import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.tile.desert.Desert;
+import com.tsoft.civilization.tile.tile.grassland.Grassland;
+import com.tsoft.civilization.tile.tile.lake.Lake;
+import com.tsoft.civilization.tile.tile.ocean.Ocean;
+import com.tsoft.civilization.tile.tile.plain.Plain;
+import com.tsoft.civilization.tile.tile.snow.Snow;
+import com.tsoft.civilization.tile.tile.tundra.Tundra;
 import com.tsoft.civilization.web.render.Render;
 import com.tsoft.civilization.web.render.RenderCatalog;
 import com.tsoft.civilization.web.render.tile.base.*;

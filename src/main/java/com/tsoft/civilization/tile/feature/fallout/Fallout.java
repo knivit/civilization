@@ -1,8 +1,8 @@
 package com.tsoft.civilization.tile.feature.fallout;
 
-import com.tsoft.civilization.tile.feature.TerrainFeature;
+import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.economic.Supply;
-import com.tsoft.civilization.tile.base.TileType;
+import com.tsoft.civilization.tile.tile.TileType;
 
 import java.util.UUID;
 
@@ -12,8 +12,7 @@ import java.util.UUID;
  * Movement Cost: 2
  * Fallout must be cleared by a Worker before any improvements can be built.
  */
-public class Fallout extends TerrainFeature {
-    public static final Fallout STUB = new Fallout();
+public class Fallout extends AbstractFeature {
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 

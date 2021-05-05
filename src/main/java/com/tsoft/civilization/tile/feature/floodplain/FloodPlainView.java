@@ -15,11 +15,6 @@ public class FloodPlainView extends AbstractFeatureView {
     }
 
     @Override
-    public String getJsonName() {
-        return "n";
-    }
-
-    @Override
     public String getStatusImageSrc() {
         return "images/status/tiles/floodplain.jpg";
     }

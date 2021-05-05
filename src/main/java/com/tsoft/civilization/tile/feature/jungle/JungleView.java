@@ -15,11 +15,6 @@ public class JungleView extends AbstractFeatureView {
     }
 
     @Override
-    public String getJsonName() {
-        return "j";
-    }
-
-    @Override
     public String getStatusImageSrc() {
         return "images/status/tiles/jungle.jpg";
     }

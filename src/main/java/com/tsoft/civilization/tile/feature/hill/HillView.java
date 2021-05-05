@@ -15,11 +15,6 @@ public class HillView extends AbstractFeatureView {
     }
 
     @Override
-    public String getJsonName() {
-        return "h";
-    }
-
-    @Override
     public String getStatusImageSrc() {
         return "images/status/tiles/hill.jpg";
     }

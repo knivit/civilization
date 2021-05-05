@@ -15,11 +15,6 @@ public class FalloutView extends AbstractFeatureView {
     }
 
     @Override
-    public String getJsonName() {
-        return "F";
-    }
-
-    @Override
     public String getStatusImageSrc() {
         return "images/status/tiles/fallout.jpg";
     }

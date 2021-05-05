@@ -1,16 +1,20 @@
 package com.tsoft.civilization.tile;
 
-import com.tsoft.civilization.tile.base.AbstractTile;
-import com.tsoft.civilization.tile.base.ocean.Ocean;
-import com.tsoft.civilization.tile.feature.TerrainFeature;
+import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.tile.ocean.Ocean;
+import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.util.AbstractDir;
 import com.tsoft.civilization.util.Dir6;
 import com.tsoft.civilization.util.NumberUtil;
 import com.tsoft.civilization.util.Point;
+import com.tsoft.civilization.world.MapSize;
+import lombok.Getter;
 
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static com.tsoft.civilization.world.MapSize.CUSTOM;
 
 public class TilesMap implements Iterable<AbstractTile> {
     public static int MIN_WIDTH = 2;
@@ -19,30 +23,35 @@ public class TilesMap implements Iterable<AbstractTile> {
     public static int MAX_HEIGHT = 1000;
 
     private final AbstractTile[][] tiles;
-    private final MapType mapType;
+
+    @Getter
+    private final MapSize mapSize;
 
     private final int width;
     private final int height;
 
-    public TilesMap(MapType mapType, int width, int height) {
-        if (mapType == MapType.SIX_TILES) {
-            // For 'Six Tiles' map the number of rows must be even
-            if ((height % 2) != 0) {
-                height ++;
-            }
+    public TilesMap(MapSize mapSize) {
+        this(mapSize, MapSize.MAP_SIZE.get(mapSize)[0], MapSize.MAP_SIZE.get(mapSize)[1]);
+    }
+
+    public TilesMap(int width, int height) {
+        this(CUSTOM, width, height);
+    }
+
+    public TilesMap(MapSize mapSize, int width, int height) {
+        this.mapSize = mapSize;
+
+        // For 'Six Tiles' map the number of rows must be even
+        if ((height % 2) != 0) {
+            height ++;
         }
 
         assert (width >= MIN_WIDTH && width <= MAX_WIDTH) : "Width = " + width + " is not in range [2..1000]";
         assert (height >= MIN_HEIGHT && height <= MAX_HEIGHT) : "Height = " + height + " is not in range [2..1000]";
 
-        this.mapType = mapType;
         this.width = width;
         this.height = height;
         tiles = new AbstractTile[width][height];
-    }
-
-    public MapType getMapType() {
-        return mapType;
     }
 
     public int getWidth() {
@@ -148,7 +157,7 @@ public class TilesMap implements Iterable<AbstractTile> {
 
     public List<AbstractTile> getTilesAround(Point location, int radius) {
         return getLocationsAround(location, radius).stream()
-            .map(p -> getTile(p))
+            .map(this::getTile)
             .collect(Collectors.toList());
     }
 
@@ -163,7 +172,7 @@ public class TilesMap implements Iterable<AbstractTile> {
         // first round
         // define the corners, their order must be clockwise, i.e. for SIX_TILES
         // (Left, Up) -> (Right, Up) -> (Right, Zero) -> (Right, Down) -> (Left, Down) -> (Left, Zero)
-        ArrayList<? extends AbstractDir> dirs = mapType.getDir().getDirs(location.getY());
+        ArrayList<? extends AbstractDir> dirs = new Dir6(-1, 0).getDirs(location.getY());
         ArrayList<Point> corners = new ArrayList<>();
         for (AbstractDir dir : dirs) {
             Point cornerLocation = addDirToLocation(location, dir);
@@ -173,29 +182,21 @@ public class TilesMap implements Iterable<AbstractTile> {
 
         // other rounds
         for (int r = 2; r <= radius; r ++) {
-            switch (mapType) {
-                case SIX_TILES: {
-                    // expand the corners further
-                    dirs = mapType.getDir().getDirs(location.getY() - r + 1);
-                    for (int i = 0; i < corners.size(); i ++) {
-                        Point newCorner = addDirToLocation(corners.get(i), dirs.get(i));
-                        corners.set(i, newCorner);
-                    }
+            // expand the corners further
+            dirs = new Dir6(-1, 0).getDirs(location.getY() - r + 1);
+            for (int i = 0; i < corners.size(); i ++) {
+                Point newCorner = addDirToLocation(corners.get(i), dirs.get(i));
+                corners.set(i, newCorner);
+            }
 
-                    // draw lines between corners and get tiles from that lines
-                    for (int i = 0; i < corners.size(); i ++) {
-                        int toCorner = (i == corners.size() - 1) ? 0 : i + 1;
-                        List<Point> locationsOnLine = getLocationsOnLine(corners.get(i), corners.get(toCorner), i);
-                        locations.addAll(locationsOnLine);
-                    }
-                    break;
-                }
-
-                default: {
-                    throw new IllegalArgumentException("Cases for other map's type don't implemented yet");
-                }
+            // draw lines between corners and get tiles from that lines
+            for (int i = 0; i < corners.size(); i ++) {
+                int toCorner = (i == corners.size() - 1) ? 0 : i + 1;
+                List<Point> locationsOnLine = getLocationsOnLine(corners.get(i), corners.get(toCorner), i);
+                locations.addAll(locationsOnLine);
             }
         }
+
         return locations;
     }
 
@@ -253,7 +254,7 @@ public class TilesMap implements Iterable<AbstractTile> {
             .collect(Collectors.toList());
     }
 
-    public List<Point> getTerrainFeatureClassLocations(Class<? extends TerrainFeature> featureClass) {
+    public List<Point> getTerrainFeatureClassLocations(Class<? extends AbstractFeature> featureClass) {
         Objects.requireNonNull(featureClass, "TerrainFeature class must be not null");
 
         return tiles()
@@ -276,8 +277,8 @@ public class TilesMap implements Iterable<AbstractTile> {
     /** Start a new year, refresh tiles' properties */
     public void startYear() {
         tiles()
-            .filter(t -> t.isOcean())
-            .filter(t -> isDeepOcean(t))
+            .filter(AbstractTile::isOcean)
+            .filter(this::isDeepOcean)
             .forEach(t -> ((Ocean) t).setDeepOcean(true));
     }
 

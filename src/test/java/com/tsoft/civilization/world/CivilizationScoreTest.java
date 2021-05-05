@@ -7,7 +7,6 @@ import com.tsoft.civilization.economic.HappinessMock;
 import com.tsoft.civilization.economic.UnhappinessMock;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.supply.TileSupplyStrategy;
-import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.economic.SupplyMock;
@@ -26,7 +25,7 @@ public class CivilizationScoreTest {
 
     @Test
     public void noCitiesScore() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
@@ -46,7 +45,7 @@ public class CivilizationScoreTest {
 
     @Test
     public void oneCityOneTileScore() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
@@ -112,8 +111,8 @@ public class CivilizationScoreTest {
 
     @Test
     public void oneCityAllTypesOfTilesScore() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES, 3,
-            " |0 1 2 3 4 ", " |0 1 2 3 4 ", " |0 1 2 3 4 ",
+        MockTilesMap map = new MockTilesMap(
+            "BASE        ", "FEATURE     ", "FEATURE     ",
             "-+----------", "-+----------", "-+----------",
             "0|. g d . . ", "0|. . . i . ", "0|. . . . . ",
             "1| l g p s t", "1| . M . . .", "1| . . . . .",
@@ -156,7 +155,7 @@ public class CivilizationScoreTest {
 
     @Test
     public void maxSupplyStrategies() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES, 2,
+        MockTilesMap map = new MockTilesMap(2,
             " |0 1 2 ", " |0 1 2 ",
             "-+------", "-+------",
             "0|. g . ", "0|. h . ",

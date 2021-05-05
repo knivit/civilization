@@ -4,7 +4,6 @@ import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationsRelations;
-import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.combat.CaptureService;
 import com.tsoft.civilization.util.Point;
@@ -24,7 +23,7 @@ public class CaptureServiceTest {
 
     @Test
     public void targets_for_melee_unit_to_capture() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(
             " |0 1 2 3 ",
             "-+--------",
             "0|. g g . ",
@@ -70,7 +69,7 @@ public class CaptureServiceTest {
 
     @Test
     public void targets_for_ranged_unit_to_capture() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES, 2,
+        MockTilesMap map = new MockTilesMap(2,
             " |0 1 2 3 4 5 6 ", " |0 1 2 3 4 5 6 ",
             "-+--------------", "-+--------------",
             "0|. . g g . . . ", "0|. . M M . . . ",

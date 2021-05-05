@@ -2,7 +2,9 @@ package com.tsoft.civilization.combat;
 
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.unit.AbstractUnit;
+import com.tsoft.civilization.unit.move.FeaturePassCostTable;
 import com.tsoft.civilization.unit.move.UnitMoveService;
 import com.tsoft.civilization.util.AbstractDir;
 import com.tsoft.civilization.world.World;

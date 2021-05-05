@@ -16,8 +16,8 @@ import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.economic.Supply;
-import com.tsoft.civilization.tile.base.AbstractTile;
-import com.tsoft.civilization.tile.feature.TerrainFeature;
+import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.response.Response;
@@ -201,8 +201,8 @@ public class GetTileStatus extends AbstractAjaxRequest {
     // | Total | 0 | 0 | 0 |
     // +-------+---+---+---+
     private StringBuilder getTileInfo(AbstractTile tile) {
-        TerrainFeature feature1 = (tile.getTerrainFeatures().size() > 0 ? tile.getTerrainFeatures().get(0) : null);
-        TerrainFeature feature2 = (tile.getTerrainFeatures().size() > 1 ? tile.getTerrainFeatures().get(1) : null);
+        AbstractFeature feature1 = (tile.getFeatures().size() > 0 ? tile.getFeatures().get(0) : null);
+        AbstractFeature feature2 = (tile.getFeatures().size() > 1 ? tile.getFeatures().get(1) : null);
 
         return Format.text("""
             <table id='info_table'>
@@ -242,7 +242,7 @@ public class GetTileStatus extends AbstractAjaxRequest {
         );
     }
 
-    private StringBuilder getFeatureInfo(TerrainFeature feature) {
+    private StringBuilder getFeatureInfo(AbstractFeature feature) {
         if (feature == null) {
             return null;
         }

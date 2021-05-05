@@ -1,16 +1,15 @@
 package com.tsoft.civilization.tile.feature.floodplain;
 
-import com.tsoft.civilization.tile.feature.TerrainFeature;
+import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.economic.Supply;
-import com.tsoft.civilization.tile.base.TileType;
+import com.tsoft.civilization.tile.tile.TileType;
 
 import java.util.UUID;
 
 /**
  * Production Modifier: +2 Food
  */
-public class FloodPlain extends TerrainFeature {
-    public static final FloodPlain STUB = new FloodPlain();
+public class FloodPlain extends AbstractFeature {
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 

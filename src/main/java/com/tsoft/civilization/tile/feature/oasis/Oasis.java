@@ -1,8 +1,8 @@
 package com.tsoft.civilization.tile.feature.oasis;
 
-import com.tsoft.civilization.tile.feature.TerrainFeature;
+import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.economic.Supply;
-import com.tsoft.civilization.tile.base.TileType;
+import com.tsoft.civilization.tile.tile.TileType;
 
 import java.util.UUID;
 
@@ -10,8 +10,7 @@ import java.util.UUID;
  * Production Modifier: +3 Food, +1 Gold
  * Oasis can't be improved (except with roads)
  */
-public class Oasis extends TerrainFeature {
-    public final static Oasis STUB = new Oasis();
+public class Oasis extends AbstractFeature {
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 

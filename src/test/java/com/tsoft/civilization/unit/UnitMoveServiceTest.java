@@ -5,7 +5,6 @@ import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.unit.action.MoveUnitAction;
 import com.tsoft.civilization.unit.civil.greatartist.GreatArtist;
@@ -70,7 +69,7 @@ public class UnitMoveServiceTest {
 
     @Test
     public void no_locations_to_move() {
-        MockWorld world = MockWorld.of(new MockTilesMap(MapType.SIX_TILES,
+        MockWorld world = MockWorld.of(new MockTilesMap(
             " |0 1 2 3 ",
             "-+--------",
             "0|g . . g ",
@@ -91,7 +90,7 @@ public class UnitMoveServiceTest {
 
     @Test
     public void fail_not_enough_passing_score_trivial() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
@@ -118,7 +117,7 @@ public class UnitMoveServiceTest {
 
     @Test
     public void success_moved_trivial() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(
             " |0 1 2 ",
             "-+------",
             "0|. g g ",
@@ -146,7 +145,7 @@ public class UnitMoveServiceTest {
 
     @Test
     public void success_moved_without_obstacles() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(
             " |0 1 2 3 4 5 ",
             "-+------------",
             "0|g . . g . g ",
@@ -195,7 +194,7 @@ public class UnitMoveServiceTest {
     // 3) they are the same unit type
     @Test
     public void success_swapped() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
@@ -241,7 +240,7 @@ public class UnitMoveServiceTest {
     // 3) they are the same unit type
     @Test
     public void fail_not_enough_passing_score_to_swap() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
@@ -289,7 +288,7 @@ public class UnitMoveServiceTest {
     // 3) they are the same unit type
     @Test
     public void fail_swapping_must_be_the_only_move() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
@@ -336,7 +335,7 @@ public class UnitMoveServiceTest {
     // 3) they are NOT the same unit type
     @Test
     public void success_moved_two_units_on_the_same_tile() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
@@ -376,7 +375,7 @@ public class UnitMoveServiceTest {
 
     @Test
     public void success_entered_into_city() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
@@ -412,7 +411,7 @@ public class UnitMoveServiceTest {
     // Warriors can't enter to city because of that
     @Test
     public void fail_tile_occupied_in_city() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
@@ -457,7 +456,7 @@ public class UnitMoveServiceTest {
 
     @Test
     public void get_tiles_to_move() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES, 2,
+        MockTilesMap map = new MockTilesMap(2,
             " |0 1 2 3 4 ", " |0 1 2 3 4 ",
             "-+----------", "-+----------",
             "0|g g g g g ", "0|. . . . . ",
@@ -490,7 +489,7 @@ public class UnitMoveServiceTest {
 
     @Test
     public void find_route1() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES, 2,
+        MockTilesMap map = new MockTilesMap(2,
             " |0 1 2 3 4 ", " |0 1 2 3 4 ",
             "-+----------", "-+----------",
             "0|g g g g g ", "0|. . . . . ",
@@ -516,7 +515,7 @@ public class UnitMoveServiceTest {
 
     @Test
     public void find_route2() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES, 2,
+        MockTilesMap map = new MockTilesMap(2,
             " |0 1 2 3 4 ", " |0 1 2 3 4 ",
             "-+----------", "-+----------",
             "0|g g g g g ", "0|. . . . . ",
@@ -541,7 +540,7 @@ public class UnitMoveServiceTest {
 
     @Test
     public void find_route3() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES, 2,
+        MockTilesMap map = new MockTilesMap(2,
             " |0 1 2 3 4 ", " |0 1 2 3 4 ",
             "-+----------", "-+----------",
             "0|g g g g g ", "0|. . . . . ",
@@ -568,7 +567,7 @@ public class UnitMoveServiceTest {
 
     @Test
     public void find_route4() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES, 2,
+        MockTilesMap map = new MockTilesMap(2,
             " |0 1 2 3 4 ", " |0 1 2 3 4 ",
             "-+----------", "-+----------",
             "0|g g g g g ", "0|. . . . . ",

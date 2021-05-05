@@ -1,13 +1,15 @@
 package com.tsoft.civilization.tile.resource.luxury;
 
-public class Whales extends AbstractLuxuryResource {
-    @Override
-    public LuxuryType getLuxuryType() {
-        return LuxuryType.SEA_FOOD;
-    }
+import com.tsoft.civilization.tile.resource.AbstractResource;
+import com.tsoft.civilization.tile.resource.ResourceType;
+import lombok.Getter;
 
-    @Override
-    public char getAsciiChar() {
-        return 'w';
-    }
+import java.util.UUID;
+
+public class Whales extends AbstractResource {
+
+    public static final String CLASS_UUID = UUID.randomUUID().toString();
+
+    @Getter
+    private final ResourceType resourceType = ResourceType.LUXURY_SEA_FOOD;
 }

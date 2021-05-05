@@ -15,11 +15,6 @@ public class AtollView extends AbstractFeatureView {
     }
 
     @Override
-    public String getJsonName() {
-        return "a";
-    }
-
-    @Override
     public String getStatusImageSrc() {
         return "images/status/tiles/atoll.jpg";
     }

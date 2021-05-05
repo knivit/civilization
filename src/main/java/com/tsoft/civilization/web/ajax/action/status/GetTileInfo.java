@@ -1,12 +1,12 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
+import com.tsoft.civilization.unit.move.UnitMoveService;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.tile.L10nTile;
 import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.world.L10nWorld;
-import com.tsoft.civilization.tile.TileService;
-import com.tsoft.civilization.tile.base.TilePassCostTable;
+import com.tsoft.civilization.unit.move.TilePassCostTable;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
@@ -14,10 +14,10 @@ import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.economic.Supply;
-import com.tsoft.civilization.tile.base.AbstractTile;
+import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.web.response.Response;
-import com.tsoft.civilization.tile.base.AbstractTileView;
+import com.tsoft.civilization.tile.tile.AbstractTileView;
 import com.tsoft.civilization.civilization.Civilization;
 
 import static com.tsoft.civilization.web.ajax.ServerStaticResource.*;
@@ -25,7 +25,7 @@ import static com.tsoft.civilization.web.ajax.ServerStaticResource.*;
 public class GetTileInfo extends AbstractAjaxRequest {
 
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
-    private static final TileService tileService = new TileService();
+    private final UnitMoveService unitMoveService = new UnitMoveService();
 
     public static StringBuilder getAjax(AbstractTile tile) {
         return Format.text("server.sendAsyncAjax('ajax/GetTileInfo', { col:'$col', row:'$row' })",
@@ -115,7 +115,7 @@ public class GetTileInfo extends AbstractAjaxRequest {
 
         UnitList units = civilization.getUnitService().getUnits().sortByName();
         for (AbstractUnit unit : units) {
-            int passCost = tileService.getPassCost(civilization, unit, tile);
+            int passCost = unitMoveService.getPassCost(civilization, unit, tile);
             buf.append(Format.text("""
                 <tr>
                     <td><button onclick="$getUnitStatus">$unitName</button></td>

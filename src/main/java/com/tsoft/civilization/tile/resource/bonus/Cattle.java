@@ -1,4 +1,15 @@
 package com.tsoft.civilization.tile.resource.bonus;
 
-public class Cattle {
+import com.tsoft.civilization.tile.resource.AbstractResource;
+import com.tsoft.civilization.tile.resource.ResourceType;
+import lombok.Getter;
+
+import java.util.UUID;
+
+public class Cattle extends AbstractResource {
+
+    public static final String CLASS_UUID = UUID.randomUUID().toString();
+
+    @Getter
+    private final ResourceType resourceType = ResourceType.EARTH;
 }

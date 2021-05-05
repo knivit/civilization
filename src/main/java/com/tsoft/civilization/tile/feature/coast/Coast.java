@@ -1,7 +1,7 @@
 package com.tsoft.civilization.tile.feature.coast;
 
-import com.tsoft.civilization.tile.base.TileType;
-import com.tsoft.civilization.tile.feature.TerrainFeature;
+import com.tsoft.civilization.tile.tile.TileType;
+import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.economic.Supply;
 
 import java.util.UUID;
@@ -11,8 +11,7 @@ import java.util.UUID;
  * Coastal tiles now often go several hexes out into the water,
  * allowing for better freedom of movement for ancient units that are restricted from deep ocean.
  */
-public class Coast extends TerrainFeature {
-    public static final Coast STUB = new Coast();
+public class Coast extends AbstractFeature {
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 

@@ -1,8 +1,8 @@
 package com.tsoft.civilization.tile.feature.hill;
 
-import com.tsoft.civilization.tile.feature.TerrainFeature;
+import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.economic.Supply;
-import com.tsoft.civilization.tile.base.TileType;
+import com.tsoft.civilization.tile.tile.TileType;
 
 import java.util.UUID;
 
@@ -11,8 +11,7 @@ import java.util.UUID;
  * Movement Cost: 2; Defensive Bonus: +25%
  * Notes: Hills yield 0 Food and 2 Hammers, regardless of the underlying terrain type.
  */
-public class Hill extends TerrainFeature {
-    public final static Hill STUB = new Hill();
+public class Hill extends AbstractFeature {
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 

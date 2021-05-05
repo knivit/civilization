@@ -1,7 +1,7 @@
 package com.tsoft.civilization.tile.feature.mountain;
 
-import com.tsoft.civilization.tile.base.TileType;
-import com.tsoft.civilization.tile.feature.TerrainFeature;
+import com.tsoft.civilization.tile.tile.TileType;
+import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.economic.Supply;
 
 import java.util.UUID;
@@ -10,8 +10,7 @@ import java.util.UUID;
  * Production: 0
  * Movement Cost: Impassable except to Air units; Defensive Bonus: +25%
  */
-public class Mountain extends TerrainFeature {
-    public final static Mountain STUB = new Mountain();
+public class Mountain extends AbstractFeature {
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 

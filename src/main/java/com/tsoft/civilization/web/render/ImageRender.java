@@ -4,7 +4,7 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationList;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.TilesMap;
-import com.tsoft.civilization.tile.base.AbstractTile;
+import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.web.render.city.CityRender;
 import com.tsoft.civilization.web.render.civilization.BorderRender;

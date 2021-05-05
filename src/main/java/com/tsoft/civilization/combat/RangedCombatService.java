@@ -1,8 +1,10 @@
 package com.tsoft.civilization.combat;
 
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.tile.TileService;
-import com.tsoft.civilization.tile.base.AbstractTile;
+import com.tsoft.civilization.tile.feature.FeatureList;
+import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.feature.AbstractFeature;
+import com.tsoft.civilization.unit.move.TilePassCostTable;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.World;
 
@@ -11,7 +13,6 @@ import java.util.List;
 
 public class RangedCombatService {
 
-    private static final TileService tileService = new TileService();
     private static final BaseCombatService baseCombatService = new BaseCombatService();
 
     // Get all targets where the unit's missile can reach (there can be more than one targets on a tile)
@@ -59,7 +60,7 @@ public class RangedCombatService {
         List<Point> path = getMissilePath(attacker.getLocation(), target.getLocation());
         for (Point loc : path) {
             AbstractTile tile = attacker.getCivilization().getTilesMap().getTile(loc);
-            missilePathCost += tileService.getMissilePastCost(attacker, tile);
+            missilePathCost += getMissilePastCost(attacker, tile);
         }
 
         missileStrength -= missilePathCost;
@@ -94,5 +95,33 @@ public class RangedCombatService {
         }
 
         return path;
+    }
+
+    // Returns passing (or flying) cost for attacker's missile
+    public int getMissilePastCost(HasCombatStrength attacker, AbstractTile tile) {
+        int passCost = MissileTilePastCostTable.get(attacker, tile);
+
+        FeatureList features = tile.getFeatures();
+        if (features.isEmpty()) {
+            return passCost;
+        }
+
+        // start from last (i.e. on top) feature
+        for (int i = features.size() - 1; i >= 0; i --) {
+            AbstractFeature feature = features.get(i);
+
+            int featurePassCost = getMissilePassCost(attacker, feature);
+            if (featurePassCost == TilePassCostTable.UNPASSABLE) {
+                return TilePassCostTable.UNPASSABLE;
+            }
+
+            passCost += featurePassCost;
+        }
+
+        return passCost;
+    }
+
+    public int getMissilePassCost(HasCombatStrength attacker, AbstractFeature feature) {
+        return MissileFeaturePastCostTable.get(attacker, feature);
     }
 }

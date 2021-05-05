@@ -11,18 +11,18 @@ function Tile(col, row, tile) {
         this.features[i] = feature;
     }
 
-    this.isOcean = (this.name === '.');
-    this.isTundra = (this.name === 't');
-    this.isGrassland = (this.name === 'g');
+    this.isOcean = (this.name === 'Ocean');
+    this.isTundra = (this.name === 'Tundra');
+    this.isGrassland = (this.name === 'Grassland');
 
-         if (this.name === '.') this.drawTile = drawOceanTile
-    else if (this.name === 'd') this.drawTile = drawDesertTile
-    else if (this.name === 'g') this.drawTile = drawGrasslandTile
-    else if (this.name === 'i') this.drawTile = drawIceTile
-    else if (this.name === 'l') this.drawTile = drawLakeTile
-    else if (this.name === 'p') this.drawTile = drawPlainTile
-    else if (this.name === 's') this.drawTile = drawSnowTile
-    else if (this.name === 't') this.drawTile = drawTundraTile
+         if (this.name === 'Ocean') this.drawTile = drawOceanTile
+    else if (this.name === 'Desert') this.drawTile = drawDesertTile
+    else if (this.name === 'Grassland') this.drawTile = drawGrasslandTile
+    else if (this.name === 'Ice') this.drawTile = drawIceTile
+    else if (this.name === 'Lake') this.drawTile = drawLakeTile
+    else if (this.name === 'Plain') this.drawTile = drawPlainTile
+    else if (this.name === 'Snow') this.drawTile = drawSnowTile
+    else if (this.name === 'Tundra') this.drawTile = drawTundraTile
     else alert("Unknown tile " + this.name);
 
     this.draw = function(x, y) {

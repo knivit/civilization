@@ -2,11 +2,10 @@ package com.tsoft.civilization.world;
 
 import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.civilization.*;
-import com.tsoft.civilization.civilization.tile.CivilizationTileService;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityList;
 import com.tsoft.civilization.tile.TilesMap;
-import com.tsoft.civilization.tile.base.AbstractTile;
+import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Pair;

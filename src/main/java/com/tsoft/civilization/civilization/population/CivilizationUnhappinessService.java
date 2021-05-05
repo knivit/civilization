@@ -3,13 +3,13 @@ package com.tsoft.civilization.civilization.population;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.world.DifficultyLevel;
-import com.tsoft.civilization.world.WorldSize;
+import com.tsoft.civilization.world.MapSize;
 import lombok.Value;
 
 import java.util.Map;
 
 import static com.tsoft.civilization.world.DifficultyLevel.*;
-import static com.tsoft.civilization.world.WorldSize.*;
+import static com.tsoft.civilization.world.MapSize.*;
 
 /**
  *
@@ -236,7 +236,7 @@ public class CivilizationUnhappinessService {
         double forAnnexedCity;
     }
 
-    private static final Map<WorldSize, UnhappinessPerCity> UNHAPPINESS_PER_CITY_FOR_WORLD_SIZE = Map.of(
+    private static final Map<MapSize, UnhappinessPerCity> UNHAPPINESS_PER_CITY_FOR_WORLD_SIZE = Map.of(
         DUEL, new UnhappinessPerCity(3.0, 5.0),
         TINY, new UnhappinessPerCity(3.0, 5.0),
         SMALL, new UnhappinessPerCity(3.0, 5.0),
@@ -285,8 +285,8 @@ public class CivilizationUnhappinessService {
 
         int inPuppetCities = 0; // TODO
 
-        WorldSize worldSize = civilization.getWorld().getWorldSize();
-        UnhappinessPerCity unhappinessPerCity = UNHAPPINESS_PER_CITY_FOR_WORLD_SIZE.get(worldSize);
+        MapSize mapSize = civilization.getWorld().getTilesMap().getMapSize();
+        UnhappinessPerCity unhappinessPerCity = UNHAPPINESS_PER_CITY_FOR_WORLD_SIZE.get(mapSize);
         double difficultyLevelCoeff = UNHAPPINESS_PER_CITY_FOR_DIFFICULT_LEVEL.get(difficultyLevel);
         int cities = (int)Math.round(
             inMyCities * unhappinessPerCity.forMyCity * difficultyLevelCoeff

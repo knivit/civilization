@@ -1,7 +1,7 @@
 package com.tsoft.civilization.web.render.tile;
 
-import com.tsoft.civilization.tile.base.AbstractTile;
-import com.tsoft.civilization.tile.feature.TerrainFeature;
+import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.web.render.StatusContext;
 import com.tsoft.civilization.economic.Supply;
 
@@ -25,7 +25,7 @@ public class TileStatusRender {
             .append("<td>").append(tileSupply.getGold()).append("</td>")
             .append("</tr>");
 
-        for (TerrainFeature feature : tile.getTerrainFeatures()) {
+        for (AbstractFeature feature : tile.getFeatures()) {
             Supply featureSupply = feature.getSupply();
             buf.append("<tr>")
                 .append("<td>")

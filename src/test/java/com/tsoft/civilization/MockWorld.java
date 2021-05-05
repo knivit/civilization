@@ -4,12 +4,12 @@ import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.PlayerType;
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.tile.MapType;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.state.Sessions;
 import com.tsoft.civilization.web.state.Worlds;
+import com.tsoft.civilization.world.Climate;
 import com.tsoft.civilization.world.DifficultyLevel;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.world.scenario.DefaultScenario;
@@ -20,7 +20,7 @@ import static com.tsoft.civilization.civilization.L10nCivilization.CIVILIZATIONS
 
 public class MockWorld extends World {
 
-    public static final MockTilesMap SIMPLE_TILES_MAP = new MockTilesMap(MapType.SIX_TILES,
+    public static final MockTilesMap SIMPLE_TILES_MAP = new MockTilesMap(
         " |0 1 2 3 ",
         "-+--------",
         "0|. . g . ",
@@ -28,7 +28,7 @@ public class MockWorld extends World {
         "2|. . g . ",
         "3| . . . .");
 
-    public static final MockTilesMap TILES_MAP_WITH_FEATURES = new MockTilesMap(MapType.SIX_TILES, 3,
+    public static final MockTilesMap TILES_MAP_WITH_FEATURES = new MockTilesMap(3,
         " |0 1 2 3 ", " |0 1 2 3 ", " |0 1 2 3 ",
         "-+--------", "-+--------", "-+--------",
         "0|. . g . ", "0|. . h . ", "0|. . f . ",
@@ -36,7 +36,7 @@ public class MockWorld extends World {
         "2|. . g . ", "2|. . h . ", "2|. . . . ",
         "3| . . . .", "3| . . . .", "3| . . . .");
 
-    public static final MockTilesMap GRASSLAND_MAP_10x10 = new MockTilesMap(MapType.SIX_TILES,
+    public static final MockTilesMap GRASSLAND_MAP_10x10 = new MockTilesMap(
         " |0 1 2 3 4 5 6 7 8 9 ",
         "-+--------------------",
         "0|g g g g g g g g g g ",
@@ -72,7 +72,8 @@ public class MockWorld extends World {
     }
 
     private MockWorld(MockTilesMap mockTilesMap) {
-        super(UUID.randomUUID().toString(), mockTilesMap);
+        super(UUID.randomUUID().toString(), mockTilesMap, Climate.NORMAL);
+
         setMaxNumberOfCivilizations(CIVILIZATIONS.size());
         setDifficultyLevel(DifficultyLevel.PRINCE);
         startYear();

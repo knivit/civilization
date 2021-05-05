@@ -3,13 +3,13 @@ package com.tsoft.civilization.civilization.unit;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.tile.TileService;
-import com.tsoft.civilization.tile.base.AbstractTile;
-import com.tsoft.civilization.tile.base.TilePassCostTable;
+import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.unit.move.TilePassCostTable;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.unit.military.warriors.Warriors;
+import com.tsoft.civilization.unit.move.UnitMoveService;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.economic.Supply;
@@ -32,7 +32,7 @@ public class CivilizationUnitService {
     private final UnitList units = new UnitList();
     private UnitList destroyedUnits = new UnitList();
 
-    private final TileService tileService = new TileService();
+    private final UnitMoveService unitMoveService = new UnitMoveService();
 
     @Getter
     private Supply supply = Supply.EMPTY;
@@ -117,7 +117,7 @@ public class CivilizationUnitService {
     // This is not a move (or a swap), just a check, can be a unit placed here, or not
     public boolean canBePlaced(AbstractUnit unit, Point location) {
         AbstractTile tile = world.getTilesMap().getTile(location);
-        if (tileService.getPassCost(civilization, unit, tile) == TilePassCostTable.UNPASSABLE) {
+        if (unitMoveService.getPassCost(civilization, unit, tile) == TilePassCostTable.UNPASSABLE) {
             return false;
         }
 

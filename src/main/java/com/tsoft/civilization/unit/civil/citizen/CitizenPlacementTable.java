@@ -1,14 +1,14 @@
 package com.tsoft.civilization.unit.civil.citizen;
 
-import com.tsoft.civilization.tile.base.*;
-import com.tsoft.civilization.tile.base.desert.Desert;
-import com.tsoft.civilization.tile.base.grassland.Grassland;
-import com.tsoft.civilization.tile.base.lake.Lake;
-import com.tsoft.civilization.tile.base.ocean.Ocean;
-import com.tsoft.civilization.tile.base.plain.Plain;
-import com.tsoft.civilization.tile.base.snow.Snow;
-import com.tsoft.civilization.tile.base.tundra.Tundra;
-import com.tsoft.civilization.tile.feature.TerrainFeature;
+import com.tsoft.civilization.tile.tile.*;
+import com.tsoft.civilization.tile.tile.desert.Desert;
+import com.tsoft.civilization.tile.tile.grassland.Grassland;
+import com.tsoft.civilization.tile.tile.lake.Lake;
+import com.tsoft.civilization.tile.tile.ocean.Ocean;
+import com.tsoft.civilization.tile.tile.plain.Plain;
+import com.tsoft.civilization.tile.tile.snow.Snow;
+import com.tsoft.civilization.tile.tile.tundra.Tundra;
+import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.tile.feature.atoll.Atoll;
 import com.tsoft.civilization.tile.feature.coast.Coast;
 import com.tsoft.civilization.tile.feature.fallout.Fallout;
@@ -40,7 +40,7 @@ public final class CitizenPlacementTable {
         tiles.put(Tundra.class, true);
     }
 
-    private static final Map<Class<? extends TerrainFeature>, Boolean> features = new HashMap<>();
+    private static final Map<Class<? extends AbstractFeature>, Boolean> features = new HashMap<>();
 
     static {
         features.put(Atoll.class, true);
@@ -61,7 +61,7 @@ public final class CitizenPlacementTable {
             return false;
         }
 
-        for (TerrainFeature feature : tile.getTerrainFeatures()) {
+        for (AbstractFeature feature : tile.getFeatures()) {
             if (!features.get(feature.getClass())) {
                 return false;
             }

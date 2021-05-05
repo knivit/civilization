@@ -13,12 +13,14 @@ import java.util.UUID;
 
 /**
  * Market
-
+ *
  * Cost
+ * ----
  * Production	Maintenance
  * 100 Production	0 Gold
  * Required Technology: Currency
  * Specialists Type: Merchant
+ *
  * Effects
  *   +25% Gold
  *   +1 Gold
@@ -61,7 +63,7 @@ public class Market extends AbstractBuilding {
     private static final MarketView VIEW = new MarketView();
 
     @Getter
-    private final int baseProductionCost = 120;
+    private final int baseProductionCost = 100;
 
     @Getter
     private final int localHappiness = 0;

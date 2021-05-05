@@ -1,7 +1,7 @@
 package com.tsoft.civilization.tile;
 
 import com.tsoft.civilization.MockWorld;
-import com.tsoft.civilization.tile.base.AbstractTile;
+import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.util.Point;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +19,7 @@ public class TilesMapTest {
 
     @Test
     public void getTilesAround1() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(
             " |0 1 2 3 4 5 6 7 ",
             "-+----------------",
             "0|. . . . . . . . ",
@@ -44,7 +44,7 @@ public class TilesMapTest {
 
     @Test
     public void getTilesAround2() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(
             " |0 1 2 3 4 5 6 7 ",
             "-+----------------",
             "0|. . . . . . . . ",
@@ -76,7 +76,7 @@ public class TilesMapTest {
 
     @Test
     public void getTilesAround3() {
-        MockTilesMap map = new MockTilesMap(MapType.SIX_TILES,
+        MockTilesMap map = new MockTilesMap(
             " |0 1 2 3 4 5 6 7 ",
             "-+----------------",
             "0|. . . . . . . . ",
