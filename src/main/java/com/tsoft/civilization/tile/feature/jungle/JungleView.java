@@ -16,6 +16,6 @@ public class JungleView extends AbstractFeatureView {
 
     @Override
     public String getStatusImageSrc() {
-        return "images/status/tiles/jungle.jpg";
+        return "images/status/tiles/jungle_status.png";
     }
 }

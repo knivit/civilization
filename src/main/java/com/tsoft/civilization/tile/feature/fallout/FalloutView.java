@@ -16,6 +16,6 @@ public class FalloutView extends AbstractFeatureView {
 
     @Override
     public String getStatusImageSrc() {
-        return "images/status/tiles/fallout.jpg";
+        return "images/status/tiles/fallout_status.png";
     }
 }

@@ -16,6 +16,6 @@ public class FloodPlainView extends AbstractFeatureView {
 
     @Override
     public String getStatusImageSrc() {
-        return "images/status/tiles/floodplain.jpg";
+        return "images/status/tiles/floodplain_status.png";
     }
 }

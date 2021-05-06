@@ -16,6 +16,6 @@ public class HillView extends AbstractFeatureView {
 
     @Override
     public String getStatusImageSrc() {
-        return "images/status/tiles/hill.jpg";
+        return "images/status/tiles/hill_status.png";
     }
 }

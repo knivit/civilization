@@ -40,17 +40,17 @@ public class WorldViewTest {
 
         JsonNode tilesObj = jsonObj.get("tiles");
         assertEquals(3 * 2, tilesObj.size());
-        assertEquals("g", tilesObj.get(0).get("name").asText());
+        assertEquals("Grassland", tilesObj.get(0).get("name").asText());
         assertEquals(2, tilesObj.get(0).get("features").size()); // h + f
-        assertEquals("g", tilesObj.get(1).get("name").asText());
+        assertEquals("Grassland", tilesObj.get(1).get("name").asText());
         assertEquals(1, tilesObj.get(1).get("features").size()); // h
-        assertEquals("g", tilesObj.get(2).get("name").asText());
+        assertEquals("Grassland", tilesObj.get(2).get("name").asText());
         assertEquals(0, tilesObj.get(2).get("features").size()); // <empty>
-        assertEquals("g", tilesObj.get(3).get("name").asText());
+        assertEquals("Grassland", tilesObj.get(3).get("name").asText());
         assertEquals(2, tilesObj.get(3).get("features").size()); // h + f
-        assertEquals("g", tilesObj.get(4).get("name").asText());
+        assertEquals("Grassland", tilesObj.get(4).get("name").asText());
         assertEquals(1, tilesObj.get(4).get("features").size()); // h
-        assertEquals("g", tilesObj.get(5).get("name").asText());
+        assertEquals("Grassland", tilesObj.get(5).get("name").asText());
         assertEquals(0, tilesObj.get(5).get("features").size()); // <empty>
 
         JsonNode civilizationsObj = jsonObj.get("civilizations");

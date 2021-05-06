@@ -16,6 +16,6 @@ public class MountainView extends AbstractFeatureView {
 
     @Override
     public String getStatusImageSrc() {
-        return "images/status/tiles/mountain.jpg";
+        return "images/status/tiles/mountain_status.png";
     }
 }

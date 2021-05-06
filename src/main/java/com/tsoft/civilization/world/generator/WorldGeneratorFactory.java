@@ -17,6 +17,7 @@ public class WorldGeneratorFactory {
     };
 
     public static WorldGenerator getGenerator(MapConfiguration conf)  {
-        return GENERATORS.get(conf);
+        WorldGenerator generator = GENERATORS.get(conf);
+        return (generator == null) ? GENERATORS.get(CONTINENTS) : generator;
     }
 }

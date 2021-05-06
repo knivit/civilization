@@ -21,6 +21,7 @@ import com.tsoft.civilization.tile.feature.marsh.Marsh;
 import com.tsoft.civilization.tile.feature.mountain.Mountain;
 import com.tsoft.civilization.tile.feature.oasis.Oasis;
 import com.tsoft.civilization.util.Point;
+import com.tsoft.civilization.world.MapSize;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -56,33 +57,19 @@ public class MockTilesMap extends TilesMap {
         tileCodes.put(',', Coast.CLASS_UUID);
     }
 
-    private final Map<Character, String> asciiTileClasses = new HashMap<>();
-
     /** To use with one layer (i.e. tiles only, without features) */
     public MockTilesMap(String ... asciiLines) {
-        super((asciiLines[0].length() - 2) / 2, asciiLines.length - 2);
-        setTileCodes(TILE_CODES);
-        setMockTiles(1, asciiLines);
+        this(1, asciiLines);
     }
 
     /** To use with features on the tiles */
     public MockTilesMap(int layerCount, String ... asciiLines) {
-        super((asciiLines[0].length() - 2) / 2, asciiLines.length / layerCount - 2);
-        setTileCodes(TILE_CODES);
+        super(MapSize.STANDARD, (asciiLines[0].length() - 2) / 2, asciiLines.length / layerCount - 2);
         setMockTiles(layerCount, asciiLines);
-    }
-
-    // Set tiles' ascii codes
-    private void setTileCodes(Map<Character, String> tileCodes) {
-        for (Character ch : tileCodes.keySet()) {
-            String tileClass = tileCodes.get(ch);
-            asciiTileClasses.put(ch, tileClass);
-        }
     }
 
     // Add tiles (first layer) and tiles' features (second etc)
     private void setMockTiles(int layerCount, String ... asciiLines) {
-        // System.out.println("Map is " + getWidth() + " x " + getHeight() + " tiles, layers = " + layerCount);
         for (int layer = 0; layer < layerCount; layer ++) {
             for (int y = 2; y < asciiLines.length / layerCount; y ++) {
                 setAsciiLine(y - 2, asciiLines[y * layerCount + layer], (layer == 0));
@@ -92,12 +79,14 @@ public class MockTilesMap extends TilesMap {
 
     private void setAsciiLine(int y, String line, boolean isTile) {
         int x = 0, n = 2;
-        if ((y % 2) == 1) n = 3;
+        if ((y % 2) == 1) {
+            n = 3;
+        }
 
         for ( ; n < line.length(); n += 2, x ++) {
             char ch = line.charAt(n);
 
-            String classUuid = asciiTileClasses.get(ch);
+            String classUuid = TILE_CODES.get(ch);
             if (classUuid == null) {
                 throw new IllegalStateException("Tile class doesn't defined for [" + ch + "] char");
             }

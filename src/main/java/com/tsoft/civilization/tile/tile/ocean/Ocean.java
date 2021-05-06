@@ -7,8 +7,32 @@ import com.tsoft.civilization.economic.Supply;
 import java.util.UUID;
 
 /**
- * Basic Production: 1 Food, 1 Gold
- * Movement Cost: 1
+ * Ocean
+ * -----
+ * Base terrain
+ * Yields
+ *   1 Food
+ *   0 Gold with BNW-only.png,
+ *   else 1 Gold
+ *
+ * Unit Effects
+ *   1 Movement cost
+ *
+ * Possible features found
+ * Ice	Atoll
+ *
+ * Game Info
+ * Base terrain, forming the world ocean far (1-3 tiles away) from land tiles.
+ *
+ * Strategy
+ * --------
+ * Ocean tiles benefit from the +1 Food bonus of the Lighthouse, if they're in range of the city with it.
+ *
+ * Moving through Ocean tiles is impossible before the Renaissance Era (unless you are playing as Polynesia).
+ *
+ * Civilopedia entry
+ * -----------------
+ * Ocean hexes are deep-water hexes. They provide food and gold to a city once the city has the technology to access them.
  */
 public class Ocean extends AbstractTile {
 

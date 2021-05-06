@@ -16,6 +16,6 @@ public class TundraView extends AbstractTileView {
 
     @Override
     public String getStatusImageSrc() {
-        return "images/status/tiles/tundra.jpg";
+        return "images/status/tiles/tundra_status.png";
     }
 }

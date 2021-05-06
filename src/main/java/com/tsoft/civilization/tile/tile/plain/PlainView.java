@@ -16,6 +16,6 @@ public class PlainView extends AbstractTileView {
 
     @Override
     public String getStatusImageSrc() {
-        return "images/status/tiles/plain.jpg";
+        return "images/status/tiles/plain_status.png";
     }
 }

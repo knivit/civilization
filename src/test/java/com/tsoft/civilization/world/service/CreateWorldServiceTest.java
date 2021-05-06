@@ -2,9 +2,7 @@ package com.tsoft.civilization.world.service;
 
 import com.tsoft.civilization.civilization.CivilizationList;
 import com.tsoft.civilization.web.state.Worlds;
-import com.tsoft.civilization.world.MapConfiguration;
-import com.tsoft.civilization.world.MapSize;
-import com.tsoft.civilization.world.World;
+import com.tsoft.civilization.world.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -27,6 +25,7 @@ public class CreateWorldServiceTest {
             .mapConfiguration(MapConfiguration.EARTH.name())
             .mapSize(MapSize.STANDARD.name())
             .maxNumberOfCivilizations(8)
+            .climate(Climate.NORMAL.name())
             .difficultyLevel(WARLORD.name())
             .build();
 
@@ -48,6 +47,13 @@ public class CreateWorldServiceTest {
     public void invalid_map_size() {
         CreateWorldParams params = CreateWorldParams.builder()
             .worldName("World 1")
+            .mapSize(MapSize.CUSTOM.name())
+            .mapWidth(0)
+            .mapHeight(0)
+            .mapConfiguration(MapConfiguration.ASIA.name())
+            .maxNumberOfCivilizations(2)
+            .difficultyLevel(DifficultyLevel.SETTLER.name())
+            .climate(Climate.COLD.name())
             .build();
 
         assertThat(createWorldService.create(params))

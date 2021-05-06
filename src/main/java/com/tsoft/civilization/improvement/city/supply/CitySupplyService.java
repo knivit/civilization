@@ -5,6 +5,8 @@ import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.util.Point;
 import lombok.Getter;
 
+import java.util.List;
+
 public class CitySupplyService {
 
     @Getter
@@ -41,11 +43,11 @@ public class CitySupplyService {
             .add(populationSupplyService.calcOutcomeSupply());
     }
 
-    public TileSupplyStrategy getSupplyStrategy() {
+    public List<TileSupplyStrategy> getSupplyStrategy() {
         return populationSupplyService.getSupplyStrategy();
     }
 
-    public boolean setSupplyStrategy(TileSupplyStrategy supplyStrategy) {
+    public boolean setSupplyStrategy(List<TileSupplyStrategy> supplyStrategy) {
         return populationSupplyService.setSupplyStrategy(supplyStrategy);
     }
 

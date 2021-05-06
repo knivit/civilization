@@ -3,17 +3,18 @@ package com.tsoft.civilization.combat.action;
 import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.combat.service.CaptureUnitService;
-import com.tsoft.civilization.combat.action.CaptureUnitAction;
-import com.tsoft.civilization.unit.civil.workers.Workers;
-import com.tsoft.civilization.unit.military.warriors.Warriors;
+import com.tsoft.civilization.helper.html.HtmlDocument;
+import com.tsoft.civilization.helper.html.HtmlParser;
+import com.tsoft.civilization.unit.AbstractUnit;
+import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
+import java.util.List;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.AMERICA;
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
-import static com.tsoft.civilization.combat.service.CaptureUnitService.*;
+import static com.tsoft.civilization.combat.service.CaptureUnitService.CAN_CAPTURE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -21,63 +22,35 @@ import static org.mockito.Mockito.when;
 
 public class CaptureUnitActionTest {
 
-    private final MockWorld world = MockWorld.newSimpleWorld();
-
     @Test
-    public void attacker_not_found() {
-        CaptureUnitService captureService = mock(CaptureUnitService.class);
-        CaptureUnitAction captureUnitAction = new CaptureUnitAction(captureService);
-
-        assertThat(captureUnitAction.capture(null, null))
-            .isEqualTo(ATTACKER_NOT_FOUND);
-    }
-
-    @Test
-    public void no_locations_to_capture() {
-        CaptureUnitService captureService = mock(CaptureUnitService.class);
-        CaptureUnitAction captureUnitAction = new CaptureUnitAction(captureService);
+    public void get_html() {
+        MockWorld world = MockWorld.newSimpleWorld();
 
         world.createCivilization(RUSSIA, new MockScenario()
-            .warriors("warriors", new Point(2, 0)));
-        Warriors warriors = (Warriors) world.unit("warriors");
-
-        assertThat(captureUnitAction.capture(world.unit("warriors"), null))
-            .isEqualTo(NO_LOCATIONS_TO_CAPTURE);
-    }
-
-    @Test
-    public void invalid_location() {
-        CaptureUnitService captureService = mock(CaptureUnitService.class);
-        CaptureUnitAction captureUnitAction = new CaptureUnitAction(captureService);
-
-        world.createCivilization(RUSSIA, new MockScenario()
-            .warriors("warriors", new Point(2, 0)));
-        Warriors warriors = (Warriors) world.unit("warriors");
+            .warriors("warriors", new Point(1, 1)));
+        AbstractUnit warriors = world.unit("warriors");
 
         world.createCivilization(AMERICA, new MockScenario()
-            .workers("foreignWorkers", new Point(2, 2)));
-        Workers foreignWorkers = (Workers) world.unit("foreignWorkers");
+            .workers("workers", new Point(2, 1)));
+        AbstractUnit workers = world.unit("workers");
 
-        assertThat(captureUnitAction.capture(warriors, null))
-            .isEqualTo(INVALID_LOCATION);
-    }
+        CaptureUnitService captureUnitService = mock(CaptureUnitService.class);
+        when(captureUnitService.canCapture(eq(warriors))).thenReturn(CAN_CAPTURE);
+        when(captureUnitService.getLocationsToCapture(eq(warriors))).thenReturn(List.of(workers.getLocation()));
 
-    @Test
-    public void nothing_to_capture() {
-        CaptureUnitService captureService = mock(CaptureUnitService.class);
-        CaptureUnitAction captureUnitAction = new CaptureUnitAction(captureService);
+        CaptureUnitAction captureUnitAction = new CaptureUnitAction(captureUnitService);
+        StringBuilder buf = captureUnitAction.getHtml(warriors);
 
-        world.createCivilization(RUSSIA, new MockScenario()
-            .warriors("warriors", new Point(2, 0)));
-        Warriors warriors = (Warriors) world.unit("warriors");
+        HtmlDocument expected = HtmlParser.parse(Format.text("""
+            <td>
+              <button onclick="client.captureUnitAction({ attacker:'$warriorsId', ucol:'1', urow:'1', 'locations':[{'col':'2','row':'1'}] })">Capture</button>
+            </td>
+            <td>Capture foreign civil unit</td>
+            """,
 
-        world.createCivilization(AMERICA, new MockScenario()
-            .workers("foreignWorkers", new Point(2, 2)));
-        Workers foreignWorkers = (Workers) world.unit("foreignWorkers");
+            "$warriorsId", warriors.getId()));
 
-        when(captureService.getLocationsToCapture(eq(warriors))).thenReturn(Collections.emptyList());
-
-        assertThat(captureUnitAction.capture(warriors, null))
-            .isEqualTo(NOTHING_TO_CAPTURE);
+        HtmlDocument actual = HtmlParser.parse(buf);
+        assertThat(actual).isEqualTo(expected);
     }
 }

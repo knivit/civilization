@@ -16,6 +16,6 @@ public class OceanView extends AbstractTileView {
 
     @Override
     public String getStatusImageSrc() {
-        return "images/status/tiles/ocean.jpg";
+        return "images/status/tiles/ocean_status.png";
     }
 }

@@ -12,7 +12,7 @@ import java.util.UUID;
 
 /**
  * Palace
- *
+ * ------
  * National wonder in Civilization V
  * Production cost: 1 Production
  * Culture: 1 Culture
@@ -57,7 +57,7 @@ public class Palace extends AbstractBuilding {
     private static final PalaceView VIEW = new PalaceView();
 
     @Getter
-    private final int baseProductionCost = -1;
+    private final int baseProductionCost = 1;
 
     @Getter
     private final int localHappiness = 0;

@@ -16,6 +16,6 @@ public class CoastView extends AbstractFeatureView {
 
     @Override
     public String getStatusImageSrc() {
-        return "images/status/tiles/coast.jpg";
+        return "images/status/tiles/coast_status.png";
     }
 }

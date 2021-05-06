@@ -16,6 +16,6 @@ public class IceView extends AbstractFeatureView {
 
     @Override
     public String getStatusImageSrc() {
-        return "images/status/tiles/ice.jpg";
+        return "images/status/tiles/ice_status.png";
     }
 }

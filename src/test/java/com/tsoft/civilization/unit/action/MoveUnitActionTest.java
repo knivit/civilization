@@ -40,9 +40,7 @@ public class MoveUnitActionTest {
 
         HtmlDocument expected = HtmlParser.parse(Format.text("""
             <td>
-              <button onclick="client.moveUnitAction({
-                unit:'$workersId', col:'1', row:'1',
-                'locations':[{'col':'2','row':'1'},{'col':'2','row':'0'}] })">Move</button>
+              <button onclick="client.moveUnitAction({ unit:'$workersId', col:'1', row:'1', 'locations':[{'col':'2','row':'1'},{'col':'2','row':'0'}] })">Move</button>
             </td>
             <td>Move unit to a tile</td>
             """,

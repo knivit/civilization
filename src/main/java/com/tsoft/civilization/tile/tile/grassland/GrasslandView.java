@@ -16,6 +16,6 @@ public class GrasslandView extends AbstractTileView {
 
     @Override
     public String getStatusImageSrc() {
-        return "images/status/tiles/grassland.jpg";
+        return "images/status/tiles/grassland_status.png";
     }
 }

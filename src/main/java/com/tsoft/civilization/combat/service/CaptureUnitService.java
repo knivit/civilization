@@ -51,19 +51,6 @@ public class CaptureUnitService {
         return units.getLocations();
     }
 
-    public ActionAbstractResult canCapture(AbstractUnit attacker) {
-        if (attacker == null || attacker.isDestroyed()) {
-            return ATTACKER_NOT_FOUND;
-        }
-
-        Collection<Point> locations = getLocationsToCapture(attacker);
-        if (locations.isEmpty()) {
-            return NO_LOCATIONS_TO_CAPTURE;
-        }
-
-        return CAN_CAPTURE;
-    }
-
     // Do not destroy unit; remove it from it's civilization and reassign to the winner's
     public void capture(HasCombatStrength attacker, AbstractUnit victim) {
         victim.getCivilization().getUnitService().removeUnit(victim);
@@ -81,13 +68,13 @@ public class CaptureUnitService {
     }
 
     public ActionAbstractResult capture(AbstractUnit attacker, Point location) {
+        if (location == null) {
+            return INVALID_LOCATION;
+        }
+
         ActionAbstractResult result = canCapture(attacker);
         if (result.isFail()) {
             return result;
-        }
-
-        if (location == null) {
-            return INVALID_LOCATION;
         }
 
         Collection<Point> locations = getLocationsToCapture(attacker);
@@ -109,6 +96,19 @@ public class CaptureUnitService {
         // passScore ends
         attacker.setPassScore(0);
         return UNIT_CAPTURED;
+    }
+
+    public ActionAbstractResult canCapture(AbstractUnit attacker) {
+        if (attacker == null || attacker.isDestroyed()) {
+            return ATTACKER_NOT_FOUND;
+        }
+
+        Collection<Point> locations = getLocationsToCapture(attacker);
+        if (locations.isEmpty()) {
+            return NO_LOCATIONS_TO_CAPTURE;
+        }
+
+        return CAN_CAPTURE;
     }
 
     public void captureCity(HasCombatStrength attacker, City city) {

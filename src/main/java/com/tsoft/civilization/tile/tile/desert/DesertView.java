@@ -16,6 +16,6 @@ public class DesertView extends AbstractTileView {
 
     @Override
     public String getStatusImageSrc() {
-        return "images/status/tiles/desert.jpg";
+        return "images/status/tiles/desert_status.png";
     }
 }

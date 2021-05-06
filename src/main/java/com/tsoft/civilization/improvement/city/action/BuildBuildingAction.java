@@ -36,7 +36,7 @@ public class BuildBuildingAction {
 
         AbstractBuilding building = BuildingFactory.findByClassUuid(buildingClassUuid);
 
-        if (buildingClassUuid == null || building.getProductionCost(city.getCivilization()) < 0) {
+        if (buildingClassUuid == null || building == null) {
             return CityActionResults.INVALID_BUILDING;
         }
 
@@ -50,6 +50,11 @@ public class BuildBuildingAction {
 
         if (!city.canStartConstruction()) {
             return CityActionResults.CANT_BUILD_BUILDING_OTHER_ACTION_IN_PROGRESS;
+        }
+
+        int productionCost = city.getBuildingProductionCost(buildingClassUuid);
+        if (productionCost < 0) {
+            return CityActionResults.CANT_BUILD_THIS_BUILDING;
         }
 
         return CityActionResults.CAN_START_CONSTRUCTION;

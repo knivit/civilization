@@ -51,7 +51,7 @@ public class SupplyMock {
         // log them out as jUnit doesn't show the values in assertTrue
         if (!isEqual) {
             System.out.printf("""
-                Type            |   Actual | Expected
+                Type            |   Actual   | Expected
                 -----------------------------------------
                 Food            |     %5d  |    %5d | %s
                 Production      |     %5d  |    %5d | %s

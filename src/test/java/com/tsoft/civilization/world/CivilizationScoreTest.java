@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -111,8 +112,8 @@ public class CivilizationScoreTest {
 
     @Test
     public void oneCityAllTypesOfTilesScore() {
-        MockTilesMap map = new MockTilesMap(
-            "BASE        ", "FEATURE     ", "FEATURE     ",
+        MockTilesMap map = new MockTilesMap(3,
+            " |0 1 2 3 4 ", " |0 1 2 3 4 ", " |0 1 2 3 4 ",
             "-+----------", "-+----------", "-+----------",
             "0|. g d . . ", "0|. . . i . ", "0|. . . . . ",
             "1| l g p s t", "1| . M . . .", "1| . . . . .",
@@ -179,7 +180,7 @@ public class CivilizationScoreTest {
         //   -2 |    0 |    0 |       2 |         |           |           2 |          2 | 2 citizens
         // -------------------------------------------------------------------------------
         //   -1 |    6 |    3 |       5 |       1 |           |           2 |          2 |
-        city.setSupplyStrategy(TileSupplyStrategy.MAX_PRODUCTION);
+        city.setSupplyStrategy(List.of(TileSupplyStrategy.MAX_PRODUCTION));
         world.move();
 
         assertEquals(Arrays.asList(new Point(1, 0), new Point(1, 1)), city.getCitizenLocations());
@@ -200,7 +201,7 @@ public class CivilizationScoreTest {
         //   -1 |    6 |    3 |       5 |       1 |           2 |          2 | from previous step
         // -------------------------------------------------------------------
         //    2 |    9 |    6 |      10 |       2 |           4 |          2 | total
-        city.setSupplyStrategy(TileSupplyStrategy.MAX_FOOD);
+        city.setSupplyStrategy(List.of(TileSupplyStrategy.MAX_FOOD));
         world.move();
 
         assertEquals(Arrays.asList(new Point(1, 2), new Point(0, 1)), city.getCitizenLocations());

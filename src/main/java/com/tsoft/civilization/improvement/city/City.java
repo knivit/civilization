@@ -138,11 +138,11 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
         return combatService.getUnitCategory();
     }
 
-    public TileSupplyStrategy getSupplyStrategy() {
+    public List<TileSupplyStrategy> getSupplyStrategy() {
         return supplyService.getSupplyStrategy();
     }
 
-    public void setSupplyStrategy(TileSupplyStrategy supplyStrategy) {
+    public void setSupplyStrategy(List<TileSupplyStrategy> supplyStrategy) {
         if (supplyService.setSupplyStrategy(supplyStrategy)) {
             populationService.reorganizeCitizensOnTiles();
         }

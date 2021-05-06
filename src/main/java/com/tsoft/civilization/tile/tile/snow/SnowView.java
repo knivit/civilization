@@ -16,6 +16,6 @@ public class SnowView extends AbstractTileView {
 
     @Override
     public String getStatusImageSrc() {
-        return "images/status/tiles/snow.jpg";
+        return "images/status/tiles/snow_status.png";
     }
 }

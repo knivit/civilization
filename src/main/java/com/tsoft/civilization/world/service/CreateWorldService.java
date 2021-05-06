@@ -11,10 +11,12 @@ import com.tsoft.civilization.world.*;
 import com.tsoft.civilization.world.generator.WorldGenerator;
 import com.tsoft.civilization.world.generator.WorldGeneratorFactory;
 import com.tsoft.civilization.world.scenario.BarbariansScenario;
+import lombok.extern.slf4j.Slf4j;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.BARBARIANS;
 import static com.tsoft.civilization.civilization.L10nCivilization.CIVILIZATIONS;
 
+@Slf4j
 public class CreateWorldService {
 
     public static final ActionSuccessResult CREATED = new ActionSuccessResult(L10nWorld.WORLD_CREATED);
@@ -30,31 +32,37 @@ public class CreateWorldService {
 
     public ActionAbstractResult create(CreateWorldParams request) {
         if (request.getWorldName() == null || request.getWorldName().isBlank()) {
+            log.debug("World name is blank");
             return INVALID_WORLD_NAME;
         }
 
         if (request.getMaxNumberOfCivilizations() < 1 || request.getMaxNumberOfCivilizations() > 16) {
+            log.debug("Max number of civilization = {} is invalid", request.getMaxNumberOfCivilizations());
             return INVALID_MAX_NUMBER_OF_CIVILIZATIONS;
         }
 
         DifficultyLevel difficultyLevel = DifficultyLevel.find(request.getDifficultyLevel());
         if (difficultyLevel == null) {
+            log.debug("Difficulty level = {} is invalid", request.getDifficultyLevel());
             return INVALID_DIFFICULTY_LEVEL;
         }
 
         Climate climate = Climate.find(request.getClimate());
         if (climate == null) {
+            log.debug("Climate = {} is invalid", request.getClimate());
             return INVALID_CLIMATE;
         }
 
         MapConfiguration mapConfiguration = MapConfiguration.find(request.getMapConfiguration());
         if (mapConfiguration == null) {
+            log.debug("Map configuration = {} is invalid", request.getMapConfiguration());
             return INVALID_MAP_CONFIGURATION;
         }
 
         // create a map
         TilesMap tilesMap = createTileMap(request.getMapSize(), request.getMapWidth(), request.getMapHeight());
         if (tilesMap == null) {
+            log.debug("Tiles map = {} ({}x{}) is invalid", request.getMapSize(), request.getMapWidth(), request.getMapHeight());
             return INVALID_MAP_SIZE;
         }
 

@@ -8,8 +8,27 @@ import java.util.UUID;
 
 /**
  * Fallout
- * Production Modifiers: Food -3, Production -3, Gold -3
- * Movement Cost: 2
+ * -------
+ * Terrain feature
+ * Yields
+ *   -3 Food
+ *   -3 Production
+ *   -3 Gold
+ * Unit Effects
+ *   -15 Combat modifier
+ *    2 Movement cost
+ *
+ * Game Info
+ * ---------
+ * Fallout appears in the area-of-effect of a nuclear detonation. It can be removed if scrubbed clean by a Worker.
+ *
+ * Civilopedia entry
+ * -----------------
+ * Fallout is the residual radiation left over following a nuclear explosion. The fallout "falls out" of the air as a layer
+ * of radioactive particles which are highly dangerous to plants and animals, killing them immediately or damaging their DNA,
+ * giving them cancer, other diseases, or unfortunate mutations. Depending upon the type of nuclear explosion, the land may
+ * remain poisoned for decades, possibly centuries. Cleanup requires the replacement of the contaminated buildings, soil and vegetation.
+ *
  * Fallout must be cleared by a Worker before any improvements can be built.
  */
 public class Fallout extends AbstractFeature {

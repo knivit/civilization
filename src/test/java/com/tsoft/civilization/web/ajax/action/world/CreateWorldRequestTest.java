@@ -5,6 +5,10 @@ import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
+import com.tsoft.civilization.world.Climate;
+import com.tsoft.civilization.world.DifficultyLevel;
+import com.tsoft.civilization.world.MapConfiguration;
+import com.tsoft.civilization.world.MapSize;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -17,12 +21,11 @@ public class CreateWorldRequestTest {
     public void getJson() {
         Request request = MockRequest.newInstance(
             "worldName", UUID.randomUUID().toString(),
-            "mapWidth", "10",
-            "mapHeight", "4",
-            "worldType", "0",
-            "climate", "0",
+            "mapConfiguration", MapConfiguration.AMAZON.name(),
+            "mapSize", MapSize.SMALL.name(),
+            "climate", Climate.NORMAL.name(),
             "maxNumberOfCivilizations", "2",
-            "difficultyLevel", "PRINCE"
+            "difficultyLevel", DifficultyLevel.PRINCE.name()
         );
 
         CreateWorldRequest createWorldRequest = new CreateWorldRequest();

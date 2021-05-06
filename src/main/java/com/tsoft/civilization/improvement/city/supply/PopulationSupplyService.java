@@ -14,12 +14,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.tsoft.civilization.improvement.city.supply.TileSupplyStrategy.*;
+
 @Slf4j
 public class PopulationSupplyService implements HasSupply {
 
     private final TileService tileService = new TileService();
 
-    private TileSupplyStrategy supplyStrategy = TileSupplyStrategy.MAX_FOOD;
+    private List<TileSupplyStrategy> supplyStrategy = List.of(MAX_FOOD, MAX_PRODUCTION, MAX_GOLD);
 
     private final City city;
 
@@ -58,10 +60,16 @@ public class PopulationSupplyService implements HasSupply {
 
             // in case a tile gives the same amount of needed supply,
             // do check other supplements and select the best supply
-            int cmp = supplyStrategy.compare(tileSupply, bestTileSupply);
-            if (cmp > 0) {
-                bestTile = tile;
-                bestTileSupply = tileSupply;
+            for (TileSupplyStrategy strategy : supplyStrategy) {
+                int cmp = strategy.compare(tileSupply, bestTileSupply);
+                if (cmp < 0) {
+                    break;
+                }
+                if (cmp > 0) {
+                    bestTile = tile;
+                    bestTileSupply = tileSupply;
+                    break;
+                }
             }
         }
 
@@ -80,11 +88,11 @@ public class PopulationSupplyService implements HasSupply {
             supply.getGold() == 0;
     }
 
-    public TileSupplyStrategy getSupplyStrategy() {
+    public List<TileSupplyStrategy> getSupplyStrategy() {
         return supplyStrategy;
     }
 
-    public boolean setSupplyStrategy(TileSupplyStrategy supplyStrategy) {
+    public boolean setSupplyStrategy(List<TileSupplyStrategy> supplyStrategy) {
         if (!this.supplyStrategy.equals(supplyStrategy)) {
             this.supplyStrategy = supplyStrategy;
             return true;

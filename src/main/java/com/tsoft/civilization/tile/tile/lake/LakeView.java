@@ -16,6 +16,6 @@ public class LakeView extends AbstractTileView {
 
     @Override
     public String getStatusImageSrc() {
-        return "images/status/tiles/lake.jpg";
+        return "images/status/tiles/lake_status.png";
     }
 }

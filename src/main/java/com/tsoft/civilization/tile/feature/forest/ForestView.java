@@ -16,6 +16,6 @@ public class ForestView extends AbstractFeatureView {
 
     @Override
     public String getStatusImageSrc() {
-        return "images/status/tiles/forest.jpg";
+        return "images/status/tiles/forest_status.png";
     }
 }
