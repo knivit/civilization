@@ -1,13 +1,8 @@
 package com.tsoft.civilization.tile;
 
-import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.tile.tile.AbstractTile;
-import com.tsoft.civilization.combat.MissileTilePastCostTable;
-import com.tsoft.civilization.unit.move.TilePassCostTable;
 import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.tile.feature.FeatureList;
-import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.economic.Supply;
 
 public class TileService {

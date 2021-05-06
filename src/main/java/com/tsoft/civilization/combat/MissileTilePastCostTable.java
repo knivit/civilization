@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static com.tsoft.civilization.unit.move.TilePassCostTable.UNPASSABLE;
+import static com.tsoft.civilization.unit.service.move.TilePassCostTable.UNPASSABLE;
 
 public final class MissileTilePastCostTable {
 

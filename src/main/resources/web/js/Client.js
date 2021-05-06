@@ -203,7 +203,7 @@ var client = {
         }
 
         drawMap.hideLocationsToMove();
-        if ((drawMap.selectedCol == ajaxParams.ucol) && (drawMap.selectedRow == ajaxParams.urow)) {
+        if ((drawMap.selectedCol == ajaxParams.col) && (drawMap.selectedRow == ajaxParams.row)) {
             return;
         }
 

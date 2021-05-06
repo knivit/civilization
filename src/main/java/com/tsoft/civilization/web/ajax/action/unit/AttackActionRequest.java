@@ -1,9 +1,9 @@
 package com.tsoft.civilization.web.ajax.action.unit;
 
-import com.tsoft.civilization.combat.CombatService;
+import com.tsoft.civilization.combat.service.AttackService;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.unit.action.AttackAction;
+import com.tsoft.civilization.combat.action.AttackAction;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.request.Request;
@@ -15,8 +15,8 @@ import com.tsoft.civilization.civilization.Civilization;
 
 public class AttackActionRequest extends AbstractAjaxRequest {
 
-    private final CombatService combatService = new CombatService();
-    private final AttackAction attackAction = new AttackAction(combatService);
+    private final AttackService attackService = new AttackService();
+    private final AttackAction attackAction = new AttackAction(attackService);
 
     @Override
     public Response getJson(Request request) {

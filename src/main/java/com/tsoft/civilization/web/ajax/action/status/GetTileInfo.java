@@ -1,12 +1,12 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
-import com.tsoft.civilization.unit.move.UnitMoveService;
+import com.tsoft.civilization.unit.service.move.MoveUnitService;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.tile.L10nTile;
 import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.world.L10nWorld;
-import com.tsoft.civilization.unit.move.TilePassCostTable;
+import com.tsoft.civilization.unit.service.move.TilePassCostTable;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
@@ -25,7 +25,7 @@ import static com.tsoft.civilization.web.ajax.ServerStaticResource.*;
 public class GetTileInfo extends AbstractAjaxRequest {
 
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
-    private final UnitMoveService unitMoveService = new UnitMoveService();
+    private final MoveUnitService moveUnitService = new MoveUnitService();
 
     public static StringBuilder getAjax(AbstractTile tile) {
         return Format.text("server.sendAsyncAjax('ajax/GetTileInfo', { col:'$col', row:'$row' })",
@@ -115,7 +115,7 @@ public class GetTileInfo extends AbstractAjaxRequest {
 
         UnitList units = civilization.getUnitService().getUnits().sortByName();
         for (AbstractUnit unit : units) {
-            int passCost = unitMoveService.getPassCost(civilization, unit, tile);
+            int passCost = moveUnitService.getPassCost(civilization, unit, tile);
             buf.append(Format.text("""
                 <tr>
                     <td><button onclick="$getUnitStatus">$unitName</button></td>

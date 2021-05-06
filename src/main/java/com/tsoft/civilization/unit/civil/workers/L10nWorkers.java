@@ -9,7 +9,7 @@ public class L10nWorkers {
             .put("ru", "Удалить лес");
 
     public static final L10n REMOVE_FOREST_DESCRIPTION = new L10n()
-            .put("en", "The forest will be removed from he tile")
+            .put("en", "The forest will be removed from the tile")
             .put("ru", "Лес будет удален с этой ячейки");
 
     public static final L10n REMOVE_HILL_NAME = new L10n()
@@ -17,8 +17,8 @@ public class L10nWorkers {
             .put("ru", "Удалить холм");
 
     public static final L10n REMOVE_HILL_DESCRIPTION = new L10n()
-            .put("en", "The hill will be removed. The Mining technology must be open.")
-            .put("ru", "Холм будет удален. Технология обычи должна быть исследована.");
+            .put("en", "The hill will be removed. The Mining technology must be open")
+            .put("ru", "Холм будет удален. Должна быть исследована технология добычи");
 
     /** Actions */
     public static final L10n CAN_BUILD_IMPROVEMENT = new L10n()

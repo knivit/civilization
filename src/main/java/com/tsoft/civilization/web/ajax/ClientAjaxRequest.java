@@ -46,10 +46,10 @@ public class ClientAjaxRequest {
     }
 
     public static StringBuilder moveUnitAction(AbstractUnit unit, JsonBlock locations) {
-        return Format.text("client.moveUnitAction({ unit:'$unit', ucol:'$ucol', urow:'$urow', $locations })",
+        return Format.text("client.moveUnitAction({ unit:'$unit', col:'$col', row:'$row', $locations })",
             "$unit", unit.getId(),
-            "$ucol", unit.getLocation().getX(),
-            "$urow", unit.getLocation().getY(),
+            "$col", unit.getLocation().getX(),
+            "$row", unit.getLocation().getY(),
             "$locations", locations.getValue()
         );
     }

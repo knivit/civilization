@@ -6,7 +6,7 @@ import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;
 
-import static com.tsoft.civilization.unit.move.UnitMoveService.INVALID_TARGET_LOCATION;
+import static com.tsoft.civilization.unit.service.move.MoveUnitService.INVALID_TARGET_LOCATION;
 
 // The Great General is made to generate the Citadel, which is useful when it is
 // in your lands. When the Citadel is on land that you control, the Citadel will

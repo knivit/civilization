@@ -1,6 +1,6 @@
 package com.tsoft.civilization.improvement;
 
-import com.tsoft.civilization.combat.CombatStrength;
+import com.tsoft.civilization.combat.service.CombatStrength;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.util.Point;

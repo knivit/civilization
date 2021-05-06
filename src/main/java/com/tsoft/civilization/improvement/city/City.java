@@ -4,7 +4,7 @@ import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.building.*;
 import com.tsoft.civilization.building.palace.Palace;
 import com.tsoft.civilization.civilization.population.Happiness;
-import com.tsoft.civilization.combat.CombatStrength;
+import com.tsoft.civilization.combat.service.CombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.combat.skill.AbstractSkill;
 import com.tsoft.civilization.improvement.AbstractImprovement;

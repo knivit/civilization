@@ -2,6 +2,8 @@ package com.tsoft.civilization.unit.civil.workers.action;
 
 import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
+import com.tsoft.civilization.helper.html.HtmlDocument;
+import com.tsoft.civilization.helper.html.HtmlParser;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.tile.tile.grassland.Grassland;
@@ -9,6 +11,7 @@ import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.tile.feature.hill.Hill;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.unit.civil.workers.Workers;
+import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
 import org.junit.jupiter.api.Test;
 
@@ -102,5 +105,37 @@ public class RemoveForestActionTest {
         assertThat(map.getTile(1, 1).getFeatures())
             .isNotNull()
             .returns(0, ArrayList::size);
+    }
+
+    @Test
+    public void get_html() {
+        MockTilesMap map = new MockTilesMap(3,
+            " |0 1 2 ", " |0 1 2 ", " |0 1 2 ",
+            "-+------", "-+------", "-+------",
+            "0|. . . ", "0|. . . ", "0|. . . ",
+            "1| . g .", "1| . h .", "1| . f .",
+            "2|. . . ", "2|. . . ", "2|. . . ",
+            "3| . . .", "3| . . .", "3| . . .");
+        MockWorld world = MockWorld.of(map);
+
+        Civilization civilization = world.createCivilization(RUSSIA, new MockScenario()
+            .workers("workers", new Point(1, 1))
+        );
+        civilization.addTechnology(Technology.MINING);
+
+        Workers workers = (Workers) world.unit("workers");
+        StringBuilder buf = RemoveForestAction.getHtml(workers);
+
+        HtmlDocument expected = HtmlParser.parse(Format.text("""
+            <td>
+               <button onclick="client.removeForestAction({ workers:'$workersId' })">Remove Forest</button>
+            </td>
+            <td>The forest will be removed from the tile</td>
+            """,
+
+            "$workersId", workers.getId()));
+
+        HtmlDocument actual = HtmlParser.parse(buf);
+        assertThat(actual).isEqualTo(expected);
     }
 }

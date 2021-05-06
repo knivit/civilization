@@ -2,7 +2,7 @@ package com.tsoft.civilization.unit;
 
 import com.tsoft.civilization.world.HasId;
 import com.tsoft.civilization.world.HasView;
-import com.tsoft.civilization.combat.CombatStrength;
+import com.tsoft.civilization.combat.service.CombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.combat.skill.AbstractSkill;
 import com.tsoft.civilization.improvement.city.construction.CanBeBuilt;

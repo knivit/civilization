@@ -1,5 +1,6 @@
 package com.tsoft.civilization.web.ajax.action.unit;
 
+import com.tsoft.civilization.unit.service.destroy.DestroyUnitService;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.unit.action.DestroyUnitAction;
@@ -13,6 +14,9 @@ import com.tsoft.civilization.civilization.Civilization;
 
 public class DestroyUnitActionRequest extends AbstractAjaxRequest {
 
+    private static final DestroyUnitService destroyService = new DestroyUnitService();
+    private static final DestroyUnitAction destroyAction = new DestroyUnitAction(destroyService);
+
     @Override
     public Response getJson(Request request) {
         Civilization myCivilization = getMyCivilization();
@@ -23,7 +27,7 @@ public class DestroyUnitActionRequest extends AbstractAjaxRequest {
         String unitId = request.get("unit");
         AbstractUnit unit = myCivilization.getUnitService().getUnitById(unitId);
 
-        ActionAbstractResult result = DestroyUnitAction.destroyUnit(unit);
+        ActionAbstractResult result = destroyAction.destroyUnit(unit);
         if (result.isFail()) {
             return JsonResponse.accepted(result.getMessage());
         }

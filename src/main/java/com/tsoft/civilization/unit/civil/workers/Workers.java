@@ -1,6 +1,6 @@
 package com.tsoft.civilization.unit.civil.workers;
 
-import com.tsoft.civilization.combat.CombatStrength;
+import com.tsoft.civilization.combat.service.CombatStrength;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.civilization.Civilization;

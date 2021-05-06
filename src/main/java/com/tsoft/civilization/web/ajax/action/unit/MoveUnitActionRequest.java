@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web.ajax.action.unit;
 
-import com.tsoft.civilization.unit.move.UnitMoveService;
+import com.tsoft.civilization.unit.service.move.MoveUnitService;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.unit.action.MoveUnitAction;
@@ -15,8 +15,8 @@ import com.tsoft.civilization.civilization.Civilization;
 
 public class MoveUnitActionRequest extends AbstractAjaxRequest {
 
-    private static final UnitMoveService unitMoveService = new UnitMoveService();
-    private static final MoveUnitAction moveUnitAction = new MoveUnitAction(unitMoveService);
+    private static final MoveUnitService moveUnitService = new MoveUnitService();
+    private static final MoveUnitAction moveUnitAction = new MoveUnitAction(moveUnitService);
 
     @Override
     public Response getJson(Request request) {

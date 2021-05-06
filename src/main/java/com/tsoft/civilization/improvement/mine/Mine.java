@@ -1,7 +1,7 @@
 package com.tsoft.civilization.improvement.mine;
 
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.combat.CombatStrength;
+import com.tsoft.civilization.combat.service.CombatStrength;
 import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.improvement.AbstractImprovementView;
 import com.tsoft.civilization.technology.Technology;

@@ -6,7 +6,7 @@ import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;
 
-import static com.tsoft.civilization.unit.move.UnitMoveService.INVALID_TARGET_LOCATION;
+import static com.tsoft.civilization.unit.service.move.MoveUnitService.INVALID_TARGET_LOCATION;
 
 // Combat Bonus is basically where all friendly units within 2 tiles of the
 // General gets a boost to their combat abilities, regardless of their combat

@@ -5,7 +5,7 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.event.CityDestroyedEvent;
 import com.tsoft.civilization.civilization.event.CreateCityEvent;
 import com.tsoft.civilization.civilization.population.Happiness;
-import com.tsoft.civilization.combat.CombatService;
+import com.tsoft.civilization.combat.service.AttackService;
 import com.tsoft.civilization.improvement.city.L10nCity;
 import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.building.AbstractBuilding;
@@ -26,7 +26,7 @@ import java.util.stream.Stream;
 
 public class CivilizationCityService {
 
-    private static final CombatService combatService = new CombatService();
+    private static final AttackService ATTACK_SERVICE = new AttackService();
 
     private final Civilization civilization;
     private final World world;
@@ -150,7 +150,7 @@ public class CivilizationCityService {
     }
 
     private boolean canAttack(City city) {
-        return (city.getPassScore() > 0) && !combatService.getTargetsToAttack(city).isEmpty();
+        return (city.getPassScore() > 0) && !ATTACK_SERVICE.getTargetsToAttack(city).isEmpty();
     }
 
     public Happiness calcHappiness() {

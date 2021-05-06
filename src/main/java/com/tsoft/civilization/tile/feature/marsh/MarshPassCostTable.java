@@ -1,7 +1,7 @@
 package com.tsoft.civilization.tile.feature.marsh;
 
-import com.tsoft.civilization.unit.move.PassCost;
-import com.tsoft.civilization.unit.move.PassCostList;
+import com.tsoft.civilization.unit.service.move.PassCost;
+import com.tsoft.civilization.unit.service.move.PassCostList;
 import com.tsoft.civilization.unit.civil.greatartist.GreatArtist;
 import com.tsoft.civilization.unit.civil.greatengineer.GreatEngineer;
 import com.tsoft.civilization.unit.civil.greatgeneral.GreatGeneral;

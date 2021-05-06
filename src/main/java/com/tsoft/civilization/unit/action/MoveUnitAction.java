@@ -2,7 +2,7 @@ package com.tsoft.civilization.unit.action;
 
 import com.tsoft.civilization.unit.*;
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.unit.move.UnitMoveService;
+import com.tsoft.civilization.unit.service.move.MoveUnitService;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
@@ -13,9 +13,9 @@ import java.util.UUID;
 public class MoveUnitAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    private final UnitMoveService moveService;
+    private final MoveUnitService moveService;
 
-    public MoveUnitAction(UnitMoveService moveService) {
+    public MoveUnitAction(MoveUnitService moveService) {
         this.moveService = moveService;
     }
 
@@ -48,6 +48,7 @@ public class MoveUnitAction {
 
     private StringBuilder getClientJSCode(AbstractUnit unit) {
         JsonBlock locations = new JsonBlock('\'');
+
         locations.startArray("locations");
         for (Point loc : moveService.getLocationsToMove(unit)) {
             JsonBlock location = new JsonBlock('\'');

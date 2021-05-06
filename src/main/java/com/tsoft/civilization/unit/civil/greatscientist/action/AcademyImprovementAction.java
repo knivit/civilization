@@ -6,7 +6,7 @@ import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;
 
-import static com.tsoft.civilization.unit.move.UnitMoveService.INVALID_TARGET_LOCATION;
+import static com.tsoft.civilization.unit.service.move.MoveUnitService.INVALID_TARGET_LOCATION;
 
 // The Academy is an improvement that will boost the amount of science that is
 // generated. When an academy tile is worked, it will generate 5 science points

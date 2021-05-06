@@ -6,7 +6,7 @@ import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;
 
-import static com.tsoft.civilization.unit.move.UnitMoveService.INVALID_TARGET_LOCATION;
+import static com.tsoft.civilization.unit.service.move.MoveUnitService.INVALID_TARGET_LOCATION;
 
 // The Culture Bomb ability is quite useful, where the tile that the artist is
 // standing on, as well as the 6 surrounding hex tiles, will be converted to

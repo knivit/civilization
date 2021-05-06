@@ -1,8 +1,8 @@
 package com.tsoft.civilization.improvement.city;
 
 import com.tsoft.civilization.L10n.L10n;
-import com.tsoft.civilization.combat.CombatService;
-import com.tsoft.civilization.unit.action.AttackAction;
+import com.tsoft.civilization.combat.service.AttackService;
+import com.tsoft.civilization.combat.action.AttackAction;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.improvement.AbstractImprovementView;
@@ -10,8 +10,8 @@ import lombok.Getter;
 
 public class CityView extends AbstractImprovementView {
 
-    private final CombatService combatService = new CombatService();
-    private final AttackAction attackAction = new AttackAction(combatService);
+    private final AttackService attackService = new AttackService();
+    private final AttackAction attackAction = new AttackAction(attackService);
 
     @Getter
     private final L10n name;
