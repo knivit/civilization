@@ -161,6 +161,8 @@ public class World {
     }
 
     public void stopYear() {
+        worldService.stopYear();
+
         sendEvent(WorldStopYearEvent.builder()
             .year(year.getYear())
             .build()

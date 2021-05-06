@@ -165,53 +165,42 @@ public class CivilizationScoreTest {
             "3| . . .", "3| . . .");
         MockWorld world = MockWorld.of(map);
 
+        // Default strategies: MAX_FOOD, MAX_PRODUCTION, MAX_GOLD
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .city("Moscow", new Point(1, 1))
         );
 
         City city = world.city("Moscow");
+
+        // add second citizen
         city.addCitizen();
 
+        assertThat(city.getCitizenLocations())
+            .isEqualTo(List.of(new Point(1, 2), new Point(1, 1)));
+
+        assertThat(russia.calcSupply())
+            .usingComparator(SupplyMock::compare)
+            .isEqualTo(SupplyMock.of("F3 P4 G3 S5 C1"));
+
         // Step 1
-        // food | prod | gold | science | culture | happiness | unhappiness | population | produced/consumed by
-        //    0 |    3 |    3 |       3 |       1 |           |             |            | Palace
-        //    0 |    2 |    0 |         |         |           |             |            | grassland + hill (1, 0) - citizen 1 work here (hills give +2 production)
-        //    1 |    1 |    0 |         |         |           |             |            | grassland + forest (1, 1) - citizen 2 here (forest gives +1 production)
-        //   -2 |    0 |    0 |       2 |         |           |           2 |          2 | 2 citizens
-        // -------------------------------------------------------------------------------
-        //   -1 |    6 |    3 |       5 |       1 |           |           2 |          2 |
         city.setSupplyStrategy(List.of(TileSupplyStrategy.MAX_PRODUCTION));
         world.move();
 
-        assertEquals(Arrays.asList(new Point(1, 0), new Point(1, 1)), city.getCitizenLocations());
+        assertEquals(Arrays.asList(new Point(1, 2), new Point(1, 1)), city.getCitizenLocations());
 
         assertThat(russia.calcSupply())
             .usingComparator(SupplyMock::compare)
-            .isEqualTo(SupplyMock.of("F-1 P6 G3 S5 C1 H0 U2 O2"));
+            .isEqualTo(SupplyMock.of("F3 P4 G3 S5 C1"));
 
         // Step 2
-        // food | prod | gold | science | culture | unhappiness | population | produced/consumed by
-        //    0 |    3 |    3 |       5 |       1 |             |            | Palace
-        //    4 |      |      |         |         |             |            | (1, 2): grassland (+2 food) + flood plain (+2 food) - one citizen must work here
-        //    1 |      |      |         |         |             |            | (0, 1): grassland (+2 food) + marsh (-1 food)  - another here, as forest is blocking the supply and return (+1 food)
-        //   -2 |      |      |         |         |           2 |          2 | 2 citizens
-        // -------------------------------------------------------------------
-        //    3 |    3 |    3 |       5 |       1 |           2 |          2 | this step
-        // -------------------------------------------------------------------
-        //   -1 |    6 |    3 |       5 |       1 |           2 |          2 | from previous step
-        // -------------------------------------------------------------------
-        //    2 |    9 |    6 |      10 |       2 |           4 |          2 | total
         city.setSupplyStrategy(List.of(TileSupplyStrategy.MAX_FOOD));
         world.move();
 
-        assertEquals(Arrays.asList(new Point(1, 2), new Point(0, 1)), city.getCitizenLocations());
+        assertThat(city.getCitizenLocations())
+            .isEqualTo(List.of(new Point(1, 2), new Point(1, 1), new Point(2, 0)));
 
         assertThat(russia.calcSupply())
             .usingComparator(SupplyMock::compare)
-            .isEqualTo(SupplyMock.of("F3 P3 G3 S5 C1 U2 O2"));
-
-        assertThat(russia.getSupply())
-            .usingComparator(SupplyMock::compare)
-            .isEqualTo(SupplyMock.of("F2 P9 G6 S10 C2 U4 O2"));
+            .isEqualTo(SupplyMock.of("F3 P4 G4 S6 C1"));
     }
 }

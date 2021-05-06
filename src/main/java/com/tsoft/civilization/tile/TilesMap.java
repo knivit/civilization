@@ -9,6 +9,7 @@ import com.tsoft.civilization.util.NumberUtil;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.MapSize;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -16,6 +17,7 @@ import java.util.stream.Stream;
 
 import static com.tsoft.civilization.world.MapSize.CUSTOM;
 
+@Slf4j
 public class TilesMap implements Iterable<AbstractTile> {
     public static int MIN_WIDTH = 2;
     public static int MAX_WIDTH = 1000;
@@ -51,7 +53,9 @@ public class TilesMap implements Iterable<AbstractTile> {
 
         this.width = width;
         this.height = height;
+
         tiles = new AbstractTile[width][height];
+        log.debug("Tiles map {} ({}x{}) created", mapSize, width, height);
     }
 
     public int getWidth() {

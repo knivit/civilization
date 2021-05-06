@@ -291,15 +291,13 @@ public abstract class Civilization {
     }
 
     public Supply calcSupply() {
-        Supply supply = Supply.EMPTY;
-
         // income
-        supply = supply.add(cityService.calcSupply());
+        Supply citiesSupply = cityService.calcSupply();
 
         // expenses
-        supply = supply.add(unitService.calcSupply());
+        Supply unitExpenses = unitService.calcSupply();
 
-        return supply;
+        return citiesSupply.add(unitExpenses);
     }
 
     public void startYear() {

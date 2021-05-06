@@ -1,7 +1,6 @@
 package com.tsoft.civilization.improvement.city.tile;
 
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.tile.resource.AbstractResource;
 import com.tsoft.civilization.tile.tile.AbstractTile;
@@ -13,11 +12,9 @@ import java.util.stream.Collectors;
 
 public class CityTileService implements HasHistory {
 
-    private final TileService tileService = new TileService();
-
     private final City city;
     private final TilesMap tilesMap;
-    private Set<Point> locations = new HashSet<>();
+    private final Set<Point> locations = new HashSet<>();
 
     public CityTileService(City city) {
         this.city = city;

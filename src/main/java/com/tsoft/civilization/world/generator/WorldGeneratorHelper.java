@@ -17,7 +17,6 @@ class WorldGeneratorHelper {
         // First goes a tile
         String tileClassUuid = uuids[0];
         AbstractTile tile = TileFactory.newInstance(tileClassUuid);
-
         tilesMap.setTile(location, tile);
 
         // Next may be features

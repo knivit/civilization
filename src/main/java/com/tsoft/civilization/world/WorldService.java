@@ -207,6 +207,10 @@ public class WorldService {
         civilizations.forEach(Civilization::startYear);
     }
 
+    public void stopYear() {
+        civilizations.forEach(Civilization::stopYear);
+    }
+
     public CivilizationList getMovingCivilizations() {
         return new CivilizationList(civilizations.stream()
             .filter(civ -> !MoveState.DONE.equals(civ.getMoveState()))

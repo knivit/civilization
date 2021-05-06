@@ -80,12 +80,12 @@ public class OneContinentWorldGenerator implements WorldGenerator {
 
     private void changeBaseTiles() {
         changeTiles(90, 100,
-                new TP(100, Ice.CLASS_UUID));
+                new TP(100, Ocean.CLASS_UUID, Ice.CLASS_UUID));
 
         changeTiles(80, 90,
                 new TP(70, Snow.CLASS_UUID),
                 new TP(20, Tundra.CLASS_UUID),
-                new TP(10, Ice.CLASS_UUID));
+                new TP(10, Ocean.CLASS_UUID, Ice.CLASS_UUID));
 
         changeTiles(60, 80,
                 new TP(20, Snow.CLASS_UUID),
@@ -137,7 +137,7 @@ public class OneContinentWorldGenerator implements WorldGenerator {
                 new TP(20, Tundra.CLASS_UUID, Forest.CLASS_UUID));
 
         changeTiles(90, 100,
-                new TP(100, Ice.CLASS_UUID));
+                new TP(100, Ocean.CLASS_UUID, Ice.CLASS_UUID));
     }
 
     private void changeTiles(int fromY, int toY, TP ... tps) {
@@ -213,6 +213,8 @@ public class OneContinentWorldGenerator implements WorldGenerator {
 
     public void addShallowWaterOutsideContinents(TilesMap tilesMap, Climate climate) {
         switch (climate) {
+            case COLD: break;
+
             // There always should be a path of shallow water around the continents
             case NORMAL: {
                 for (int y = 0; y < tilesMap.getHeight(); y ++) {
@@ -237,8 +239,10 @@ public class OneContinentWorldGenerator implements WorldGenerator {
                 break;
             }
 
+            case HOT: break;
+
             default: {
-                throw new IllegalArgumentException("Unknown Climate =" + climate.name());
+                throw new IllegalArgumentException("Unknown climate = " + climate.name());
             }
         }
     }

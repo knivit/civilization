@@ -23,7 +23,7 @@ public abstract class AbstractTileView {
         }
 
         if (tile.getLuxury() != null) {
-            tileBlock.addParam("luxury", tile.getResource().getClass().getSimpleName());
+            tileBlock.addParam("luxury", tile.getLuxury().getClass().getSimpleName());
         }
 
         tileBlock.stopArray();

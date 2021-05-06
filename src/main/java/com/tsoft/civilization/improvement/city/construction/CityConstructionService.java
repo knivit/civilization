@@ -100,9 +100,9 @@ public class CityConstructionService {
 
     private Supply doConstruction(int approvedProduction) {
         // At the Unhappiness level of -10 ("Very Unhappy"), you can't train Settlers anymore
-        boolean veryUnhappy = city.getCivilization().getUnhappiness().getTotal() <= -10;
+        boolean veryUnhappy = city.getCivilization().calcUnhappiness().getTotal() <= -10;
 
-        int productionCost = 0;
+        int usedProductionCost = 0;
 
         // constructions already sorted by priority
         for (Construction construction : constructions) {
@@ -111,20 +111,23 @@ public class CityConstructionService {
                 continue;
             }
 
-            if ((productionCost + cost) > approvedProduction) {
-                break;
-            }
-
             if (veryUnhappy && Settlers.CLASS_UUID.equals(construction.getObject().getClassUuid())) {
                 log.trace("Can't train Settlers, the unhappiness level is 'Very Unhappy'");
                 continue;
             }
 
-            construction.useProductionCost(cost);
-            productionCost += cost;
+            int usedConstructionCost = Math.min(cost, approvedProduction);
+            construction.useProductionCost(usedConstructionCost);
+
+            usedProductionCost += usedConstructionCost;
+            approvedProduction -= usedProductionCost;
+
+            if (approvedProduction <= 0) {
+                break;
+            }
         }
 
-        return Supply.builder().production(-productionCost).build();
+        return Supply.builder().production(-usedProductionCost).build();
     }
 
     public ConstructionList getBuiltThisYear() {

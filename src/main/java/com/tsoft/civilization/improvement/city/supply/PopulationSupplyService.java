@@ -21,12 +21,12 @@ public class PopulationSupplyService implements HasSupply {
 
     private final TileService tileService = new TileService();
 
-    private List<TileSupplyStrategy> supplyStrategy = List.of(MAX_FOOD, MAX_PRODUCTION, MAX_GOLD);
-
     private final City city;
+    private List<TileSupplyStrategy> supplyStrategy;
 
     public PopulationSupplyService(City city) {
         this.city = city;
+        this.supplyStrategy = List.of(MAX_FOOD, MAX_PRODUCTION, MAX_GOLD);
     }
 
     /* Returns NULL when a location doesn't found */

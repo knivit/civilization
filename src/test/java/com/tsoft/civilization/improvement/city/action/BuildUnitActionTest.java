@@ -9,7 +9,6 @@ import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.economic.UnhappinessMock;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.technology.Technology;
-import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.unit.military.archers.Archers;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
@@ -61,13 +60,12 @@ public class BuildUnitActionTest {
 
         // Start build Archers
         ActionAbstractResult actionResult = BuildUnitAction.buildUnit(city, Archers.CLASS_UUID);
+
         assertThat(actionResult)
             .isEqualTo(CityActionResults.UNIT_CONSTRUCTION_IS_STARTED);
 
         // Wait till it builds
-        Archers archers = UnitFactory.findByClassUuid(Archers.CLASS_UUID);
-        int neededSteps = archers.getProductionCost(russia) / 3;
-        for (int i = 0; i < neededSteps; i ++) {
+        for (int i = 0; i < 5; i ++) {
             world.move();
 
             assertThat(city.getConstructions()).isNotEmpty();
@@ -75,6 +73,7 @@ public class BuildUnitActionTest {
             assertThat(russia.getUnitService())
                 .returns(0, CivilizationUnitService::size);
         }
+
         world.move();
 
         assertThat(city.getConstructions()).isEmpty();

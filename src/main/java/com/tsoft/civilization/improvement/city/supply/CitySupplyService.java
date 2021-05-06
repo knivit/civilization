@@ -13,7 +13,6 @@ public class CitySupplyService {
     private final TileSupplyService tileSupplyService;
 
     private final BuildingSupplyService buildingSupplyService;
-    private final ConstructionSupplyService constructionSupplyService;
     private final PopulationSupplyService populationSupplyService;
 
     private final City city;
@@ -23,24 +22,21 @@ public class CitySupplyService {
 
         tileSupplyService = new TileSupplyService(city);
         buildingSupplyService = new BuildingSupplyService(city);
-        constructionSupplyService = new ConstructionSupplyService(city);
         populationSupplyService = new PopulationSupplyService(city);
     }
 
     public Supply calcIncomeSupply() {
-        return Supply.EMPTY
-            .add(tileSupplyService.calcIncomeSupply(city.getCitizenLocations()))
-            .add(buildingSupplyService.calcIncomeSupply())
-            .add(constructionSupplyService.calcIncomeSupply())
-            .add(populationSupplyService.calcIncomeSupply());
+        Supply tiles = tileSupplyService.calcIncomeSupply(city.getCitizenLocations());
+        Supply buildings = buildingSupplyService.calcIncomeSupply();
+        Supply population = populationSupplyService.calcIncomeSupply();
+        return tiles.add(buildings).add(population);
     }
 
     public Supply calcOutcomeSupply() {
-        return Supply.EMPTY
-            .add(tileSupplyService.calcOutcomeSupply(city.getCitizenLocations()))
-            .add(buildingSupplyService.calcOutcomeSupply())
-            .add(constructionSupplyService.calcOutcomeSupply())
-            .add(populationSupplyService.calcOutcomeSupply());
+        Supply tiles = tileSupplyService.calcOutcomeSupply(city.getCitizenLocations());
+        Supply buildings = buildingSupplyService.calcOutcomeSupply();
+        Supply population = populationSupplyService.calcOutcomeSupply();
+        return tiles.add(buildings).add(population);
     }
 
     public List<TileSupplyStrategy> getSupplyStrategy() {

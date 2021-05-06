@@ -138,19 +138,19 @@ var client = {
 
     onCreateWorldRequest: function() {
         var worldName = document.getElementById('worldName').value;
-        var worldType = document.getElementById('worldType').value;
-        var mapWidth = document.getElementById('mapWidth').value;
-        var mapHeight = document.getElementById('mapHeight').value;
+        var mapConfiguration = document.getElementById('mapConfiguration').value;
+        var mapSize = document.getElementById('mapSize').value;
         var climate = document.getElementById('climate').value;
         var maxNumberOfCivilizations = document.getElementById('maxNumberOfCivilizations').value;
+        var difficultyLevel = document.getElementById('difficultyLevel').value;
 
         server.sendAsyncAjax('ajax/CreateWorldRequest',
            { "worldName": worldName,
-             "worldType": worldType,
-             "mapWidth": mapWidth,
-             "mapHeight": mapHeight,
+             "mapConfiguration": mapConfiguration,
+             "mapSize": mapSize,
              "climate": climate,
-             "maxNumberOfCivilizations": maxNumberOfCivilizations
+             "maxNumberOfCivilizations": maxNumberOfCivilizations,
+             "difficultyLevel": difficultyLevel
            }, client.onGetWorldsResponse);
     },
 

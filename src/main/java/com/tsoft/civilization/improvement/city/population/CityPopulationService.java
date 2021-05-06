@@ -82,7 +82,7 @@ public class CityPopulationService {
         supply = supply.add(growthPoolSupply);
 
         // At the Unhappiness level of -10 ("Very Unhappy"), population growth stops completely
-        if (city.getCivilization().getUnhappiness().getTotal() > -10) {
+        if (city.getCivilization().calcUnhappiness().getTotal() > -10) {
             if (supply.getFood() > 0) {
                 birth();
             }

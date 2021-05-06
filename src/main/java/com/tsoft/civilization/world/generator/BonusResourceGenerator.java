@@ -55,6 +55,8 @@ public class BonusResourceGenerator {
         resourceInfoList.clear();
 
         switch (climate) {
+            case COLD: break;
+
             case NORMAL: {
                 // calculate the number of Resources depending on Map's size
                 int count = (int)(Math.sqrt(tilesMap.getWidth() * tilesMap.getHeight()));
@@ -70,8 +72,10 @@ public class BonusResourceGenerator {
                 break;
             }
 
+            case HOT: break;
+
             default: {
-                throw new IllegalArgumentException("Unknown Climate =" + climate.name());
+                throw new IllegalArgumentException("Unknown climate = " + climate.name());
             }
         }
     }

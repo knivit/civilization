@@ -110,7 +110,8 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
     public int getProductionCost(Civilization civilization) {
         DifficultyLevel difficultyLevel = civilization.getWorld().getDifficultyLevel();
         int baseProductionCost = getBaseProductionCost();
-        return (int)Math.round(baseProductionCost * CityConstructionService.UNIT_COST_PER_DIFFICULTY_LEVEL.get(difficultyLevel));
+        int productionCost = (int)Math.round(baseProductionCost * CityConstructionService.UNIT_COST_PER_DIFFICULTY_LEVEL.get(difficultyLevel));
+        return productionCost;
     }
 
     @Override
