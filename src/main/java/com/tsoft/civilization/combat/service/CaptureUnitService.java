@@ -4,6 +4,7 @@ import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.action.ActionFailureResult;
 import com.tsoft.civilization.action.ActionSuccessResult;
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.civilization.CivilizationsRelations;
 import com.tsoft.civilization.civilization.event.CityCapturedEvent;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.improvement.city.City;
@@ -33,9 +34,12 @@ public class CaptureUnitService {
 
     public AbstractUnit getTargetToCaptureAtLocation(AbstractUnit capturer, Point location) {
         UnitList foreignUnits = capturer.getWorld().getUnitsAtLocation(location, capturer.getCivilization());
+        if (foreignUnits.isEmpty()) {
+            return null;
+        }
 
         // if there are military units, protecting the civilians, then there is nothing to capture
-        if (foreignUnits.size() != 1) {
+        if (foreignUnits.getMilitaryCount() > 0) {
             return null;
         }
 
@@ -51,30 +55,13 @@ public class CaptureUnitService {
         return units.getLocations();
     }
 
-    // Do not destroy unit; remove it from it's civilization and reassign to the winner's
-    public void capture(HasCombatStrength attacker, AbstractUnit victim) {
-        victim.getCivilization().getUnitService().removeUnit(victim);
-
-        // re-create unit id so it can't be used anymore
-        victim.setId(UUID.randomUUID().toString());
-
-        // captured unit can't move
-        victim.setPassScore(0);
-
-        // reassign to the winner
-        Civilization winner = attacker.getCivilization();
-        victim.setCivilization(winner);
-        winner.getUnitService().addUnit(victim, victim.getLocation());
-    }
-
     public ActionAbstractResult capture(AbstractUnit attacker, Point location) {
-        if (location == null) {
-            return INVALID_LOCATION;
+        if (attacker == null || attacker.isDestroyed()) {
+            return ATTACKER_NOT_FOUND;
         }
 
-        ActionAbstractResult result = canCapture(attacker);
-        if (result.isFail()) {
-            return result;
+        if (location == null) {
+            return INVALID_LOCATION;
         }
 
         Collection<Point> locations = getLocationsToCapture(attacker);
@@ -109,6 +96,27 @@ public class CaptureUnitService {
         }
 
         return CAN_CAPTURE;
+    }
+
+    // Do not destroy unit; remove it from it's civilization and reassign to the winner's
+    private void capture(HasCombatStrength attacker, AbstractUnit victim) {
+        // a war started
+        attacker.getCivilization().getWorld().setCivilizationsRelations(attacker.getCivilization(), victim.getCivilization(),
+            CivilizationsRelations.war());
+
+        // remove the victim from it's civilization
+        victim.getCivilization().getUnitService().removeUnit(victim);
+
+        // re-create unit id so it can't be used anymore
+        victim.setId(UUID.randomUUID().toString());
+
+        // captured unit can't move
+        victim.setPassScore(0);
+
+        // reassign to the winner
+        Civilization winner = attacker.getCivilization();
+        victim.setCivilization(winner);
+        winner.getUnitService().addUnit(victim, victim.getLocation());
     }
 
     public void captureCity(HasCombatStrength attacker, City city) {

@@ -1,7 +1,6 @@
 package com.tsoft.civilization.civilization;
 
 import com.tsoft.civilization.world.World;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -10,10 +9,9 @@ public abstract class CivilizationBot implements Runnable {
     protected final World world;
     protected final Civilization civilization;
 
-    @Getter
-    public volatile MoveState moveState;
-
     protected abstract void calculate();
+
+    private Thread worker;
 
     protected CivilizationBot(World world, Civilization civilization) {
         this.world = world;
@@ -21,9 +19,7 @@ public abstract class CivilizationBot implements Runnable {
     }
 
     public void startYear() {
-        moveState = MoveState.IN_PROGRESS;
-
-        Thread worker = new Thread(this);
+        worker = new Thread(this);
         worker.start();
     }
 
@@ -31,12 +27,21 @@ public abstract class CivilizationBot implements Runnable {
     public void run() {
         calculate();
 
-        moveState = MoveState.DONE;
-
         // If this is a bot (fully managed civilization, not just a human's helper)
         // do a next turn
         if (PlayerType.BOT.equals(civilization.getPlayerType())) {
             civilization.stopYear();
+        }
+    }
+
+    // Use this method to wait till the helper bot is done
+    public void join() {
+        if (!PlayerType.BOT.equals(civilization.getPlayerType())) {
+            try {
+                worker.join();
+            } catch (Exception ex) {
+                throw new IllegalStateException(ex);
+            }
         }
     }
 }

@@ -1,10 +1,12 @@
-package com.tsoft.civilization.improvement.city.combat;
+package com.tsoft.civilization.combat.service;
 
 import com.tsoft.civilization.building.AbstractBuilding;
-import com.tsoft.civilization.combat.service.CombatStrength;
 import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.tile.feature.hill.Hill;
+import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.unit.UnitList;
+import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.HasHistory;
 
 import java.util.stream.Collectors;
@@ -165,6 +167,8 @@ public class CityCombatService implements HasHistory {
         .rangedAttackRadius(2)
         .build();
 
+    private static final int HILL_VANTAGE_DEFENSE_STRENGTH = 30;
+
     private final City city;
     private CombatStrength combatStrength;
 
@@ -190,6 +194,8 @@ public class CityCombatService implements HasHistory {
     }
 
     public CombatStrength calcCombatStrength() {
+        int vantageStrength = calcVantageStrength();
+        int populationStrength = calcPopulationStrength();
         int buildingsStrength = calcBuildingsStrength();
         int garrisonMeleeAttackStrength = calcGarrisonedMeleeAttackStrength();
         int garrisonRangedAttackStrength = calcGarrisonedRangedAttackStrength();
@@ -198,12 +204,27 @@ public class CityCombatService implements HasHistory {
         return combatStrength.copy()
             .meleeAttackStrength(combatStrength.getMeleeAttackStrength() + garrisonMeleeAttackStrength)
             .rangedAttackStrength(combatStrength.getRangedAttackStrength() + garrisonRangedAttackStrength)
-            .defenseStrength(combatStrength.getDefenseStrength() + buildingsStrength + garrisonDefenseStrength)
+            .defenseStrength(combatStrength.getDefenseStrength() + populationStrength + buildingsStrength + garrisonDefenseStrength)
             .build();
     }
 
     public UnitCategory getUnitCategory() {
         return com.tsoft.civilization.unit.UnitCategory.MILITARY_RANGED_CITY;
+    }
+
+    // Vantage - If the city is constructed on a Hill terrain, it has an advantage over attackers, which translates into additional defense strength
+    private int calcVantageStrength() {
+        Point cityLocation = city.getLocation();
+        AbstractTile tile = city.getTileService().getTilesMap().getTile(cityLocation);
+        if (tile.hasFeature(Hill.class)) {
+            return HILL_VANTAGE_DEFENSE_STRENGTH;
+        }
+        return 0;
+    }
+
+    // Population - Each citizen increases defense strength
+    private int calcPopulationStrength() {
+        return city.getCitizenCount();
     }
 
     // Check is this building adds defense strength

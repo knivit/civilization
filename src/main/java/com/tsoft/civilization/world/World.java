@@ -180,14 +180,14 @@ public class World {
         }
     }
 
-    public void stopYear() {
+    // Do not invoke this method directly; it is will be invoked in onCivilizationMoved()
+    // when all Civilizations done their move
+    private void stopYear() {
         if (!isYearStarted) {
             throw new IllegalStateException("This year already ended !");
         }
 
         isYearStarted = false;
-
-        worldService.stopYear();
 
         sendEvent(WorldStopYearEvent.builder()
             .year(year.getYear())

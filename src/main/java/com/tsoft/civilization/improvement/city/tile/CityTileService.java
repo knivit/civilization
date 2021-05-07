@@ -6,14 +6,17 @@ import com.tsoft.civilization.tile.resource.AbstractResource;
 import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.HasHistory;
+import lombok.Getter;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class CityTileService implements HasHistory {
 
-    private final City city;
+    @Getter
     private final TilesMap tilesMap;
+
+    private final City city;
     private final Set<Point> locations = new HashSet<>();
 
     public CityTileService(City city) {

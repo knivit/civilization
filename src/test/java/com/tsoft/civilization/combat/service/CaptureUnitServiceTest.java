@@ -43,8 +43,6 @@ public class CaptureUnitServiceTest {
         );
 
         world.startGame();
-        world.setCivilizationsRelations(russia, america, CivilizationsRelations.war());
-
         WorldRender.of(this).createHtml(world, russia);
 
         // see what we can capture
@@ -68,6 +66,9 @@ public class CaptureUnitServiceTest {
             .returns(world.unit("warriors").getLocation(), AbstractUnit::getLocation)
             .returns(world.unit("warriors").getCivilization(), AbstractUnit::getCivilization)
             .returns(0, AbstractUnit::getPassScore);
+
+        assertThat(world.getCivilizationsRelations(russia, america))
+            .isEqualTo(CivilizationsRelations.war());
     }
 
     @Test
@@ -89,7 +90,6 @@ public class CaptureUnitServiceTest {
         );
 
         world.startGame();
-        world.setCivilizationsRelations(russia, america, CivilizationsRelations.war());
 
         // see what we can capture
         List<Point> locations = captureUnitService.getLocationsToCapture(world.unit("archers"));
@@ -104,6 +104,9 @@ public class CaptureUnitServiceTest {
         assertThat(world.unit("foreignWorkers"))
             .returns(world.unit("archers").getLocation(), AbstractUnit::getLocation)
             .returns(russia, AbstractUnit::getCivilization);
+
+        assertThat(world.getCivilizationsRelations(russia, america))
+            .isEqualTo(CivilizationsRelations.war());
     }
 
     @Test
@@ -126,24 +129,10 @@ public class CaptureUnitServiceTest {
     }
 
     @Test
-    public void no_locations_to_capture() {
-        MockWorld world = MockWorld.newSimpleWorld();
-
-        world.createCivilization(RUSSIA, new MockScenario()
-            .warriors("warriors", new Point(2, 0)));
-        Warriors warriors = (Warriors) world.unit("warriors");
-
-        world.startGame();
-
-        assertThat(captureUnitService.capture(warriors, new Point(2, 1)))
-            .isEqualTo(NO_LOCATIONS_TO_CAPTURE);
-    }
-
-    @Test
     public void nothing_to_capture() {
         MockWorld world = MockWorld.newSimpleWorld();
 
-        world.createCivilization(RUSSIA, new MockScenario()
+        Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .warriors("warriors", new Point(2, 0)));
         Warriors warriors = (Warriors) world.unit("warriors");
 
@@ -152,10 +141,28 @@ public class CaptureUnitServiceTest {
         Workers foreignWorkers = (Workers) world.unit("foreignWorkers");
 
         world.startGame();
+        WorldRender.of(this).createHtml(world, russia);
 
         Point location = new Point(foreignWorkers.getLocation());
 
         assertThat(captureUnitService.capture(warriors, location))
+            .isEqualTo(NOTHING_TO_CAPTURE);
+    }
+
+    @Test
+    public void nothing_to_capture_at_location() {
+        MockWorld world = MockWorld.newSimpleWorld();
+
+        world.createCivilization(RUSSIA, new MockScenario()
+            .warriors("warriors", new Point(2, 0)));
+        Warriors warriors = (Warriors) world.unit("warriors");
+
+        world.createCivilization(AMERICA, new MockScenario()
+            .workers("foreignWorkers", new Point(2, 1)));
+
+        world.startGame();
+
+        assertThat(captureUnitService.capture(warriors, new Point(2, 2)))
             .isEqualTo(NOTHING_TO_CAPTURE);
     }
 }

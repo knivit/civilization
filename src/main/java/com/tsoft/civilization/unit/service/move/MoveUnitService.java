@@ -450,14 +450,14 @@ public class MoveUnitService {
 
         // check entering into own city
         moveResult = checkOwnCity(unit, nextLocation);
-        if (moveResult.isFail()) {
-            return moveResult;
+        if (moveResult.isSuccess()) {
+            return INVALID_TARGET_LOCATION;
         }
 
         // check is this tile belongs a civilization which is not in a war with our
         moveResult = checkForeignTile(unit, nextLocation);
-        if (moveResult.isFail()) {
-            return moveResult;
+        if (moveResult.isSuccess()) {
+            return INVALID_TARGET_LOCATION;
         }
 
         // check is there a foreign city on tile

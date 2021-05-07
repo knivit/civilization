@@ -96,8 +96,7 @@ public class MockWorld extends World {
     }
 
     public void nextYear() {
-        stopYear();
-        startYear();
+        getCivilizations().forEach(Civilization::stopYear);
     }
 
     public Point location(String name) {

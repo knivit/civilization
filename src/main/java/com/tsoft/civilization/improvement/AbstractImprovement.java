@@ -8,15 +8,21 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.economic.Supply;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 import java.util.Objects;
 import java.util.UUID;
 
 @EqualsAndHashCode(of = "id")
 public abstract class AbstractImprovement {
+
+    @Getter
     private final String id = UUID.randomUUID().toString();
 
+    @Getter
     protected Civilization civilization;
+
+    @Getter
     protected Point location;
 
     public abstract boolean acceptEraAndTechnology(Civilization civilization);
@@ -35,24 +41,12 @@ public abstract class AbstractImprovement {
         getTilesMap().getTile(location).setImprovement(this);
     }
 
-    public String getId() {
-        return id;
-    }
-
     public World getWorld() {
         return civilization.getWorld();
     }
 
-    public Civilization getCivilization() {
-        return civilization;
-    }
-
     public TilesMap getTilesMap() {
         return getWorld().getTilesMap();
-    }
-
-    public Point getLocation() {
-        return location;
     }
 
     public boolean isBlockingTileSupply() {
@@ -62,7 +56,7 @@ public abstract class AbstractImprovement {
     @Override
     public String toString() {
         return getClass().getSimpleName() + '{' +
-            ((getCivilization() == null) ? "civilization=null" : getCivilization().toString()) +
+            ((civilization == null) ? "civilization=null" : civilization.toString()) +
             ", name=" + ((getView() == null) ? "null" : getView().getLocalizedName()) +
             ", location=" + location +
         '}';

@@ -100,7 +100,9 @@ public class UnitList implements Iterable<AbstractUnit> {
     }
 
     public int getMilitaryCount() {
-        return (int)units.stream().filter(e -> e.getUnitCategory().isMilitary()).count();
+        return (int)units.stream()
+            .filter(e -> e.getUnitCategory().isMilitary())
+            .count();
     }
 
     public int getCivilCount() {
@@ -112,7 +114,9 @@ public class UnitList implements Iterable<AbstractUnit> {
     }
 
     public List<Point> getLocations() {
-        return units.stream().map(e -> e.getLocation()).collect(Collectors.toList());
+        return units.stream()
+            .map(AbstractUnit::getLocation).
+            collect(Collectors.toList());
     }
 
     public AbstractUnit getUnitById(String unitId) {

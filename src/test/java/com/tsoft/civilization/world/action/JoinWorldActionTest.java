@@ -52,9 +52,9 @@ public class JoinWorldActionTest {
         assertThat(JoinWorldAction.join(request))
             .isEqualTo(JOINED);
 
+        // A bot doesn't have a session
         assertThat(Sessions.getCurrent()).isNotNull()
-            .extracting(ClientSession::getCivilization).isNotNull()
-            .extracting(Civilization::getPlayerType).isEqualTo(PlayerType.BOT);
+            .extracting(ClientSession::getCivilization).isNull();
     }
 
     @Test

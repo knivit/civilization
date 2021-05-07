@@ -140,7 +140,7 @@ public class L10nUnit {
 
     public static final L10n NO_LOCATIONS_TO_CAPTURE = new L10n()
         .put(EN, "There is nothing to capture")
-        .put(RU, "Для захвате ничего нет");
+        .put(RU, "Для захвата в плен ничего нет");
 
     public static final L10n CAN_CAPTURE = new L10n()
         .put(EN, "There are units to capture")

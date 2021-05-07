@@ -13,7 +13,7 @@ import com.tsoft.civilization.improvement.city.population.CityHappinessService;
 import com.tsoft.civilization.improvement.city.supply.CitySupplyService;
 import com.tsoft.civilization.improvement.city.tile.CityTileService;
 import com.tsoft.civilization.improvement.city.building.CityBuildingService;
-import com.tsoft.civilization.improvement.city.combat.CityCombatService;
+import com.tsoft.civilization.combat.service.CityCombatService;
 import com.tsoft.civilization.improvement.city.construction.CityConstructionService;
 import com.tsoft.civilization.improvement.city.construction.ConstructionList;
 import com.tsoft.civilization.improvement.city.event.CityStopYearEvent;

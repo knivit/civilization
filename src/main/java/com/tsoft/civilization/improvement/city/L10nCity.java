@@ -136,8 +136,8 @@ public class L10nCity {
         .put(RU, "Был построен новый юнит $unitName");
 
     public static final L10n CITY_STOP_YEAR_EVENT = new L10n()
-        .put(EN, "City $cityName stop year: population=$populationSupply, buildings=$buildingsSupply, construction=$constructionSupply, totalSupply=$supply")
-        .put(RU, "Город $cityName завершил год: население=$populationSupply, здания=$buildingsSupply, строительство=$constructionSupply, итог=$supply");
+        .put(EN, "City $cityName stop year: originalSupply=$originalSupply, incomeSupply=$incomeSupply, outcomeSupply=$outcomeSupply, totalSupply=$totalSupply")
+        .put(RU, "Город $cityName завершил год: на начало года=$originalSupply, поступило=$incomeSupply, потрачено=$outcomeSupply, итог=$totalSupply");
 
     /** Population */
 

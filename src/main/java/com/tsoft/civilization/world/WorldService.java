@@ -79,6 +79,11 @@ public class WorldService {
         Objects.requireNonNull(rel, "rel must not be null");
 
         Pair<Civilization> key = new Pair<>(c1, c2);
+        CivilizationsRelations curr = relations.get(key);
+        if (rel.equals(curr)) {
+            return;
+        }
+
         relations.put(key, rel);
 
         // send an Event about that to all civilizations
@@ -203,10 +208,6 @@ public class WorldService {
 
     public void startYear() {
         civilizations.forEach(Civilization::startYear);
-    }
-
-    public void stopYear() {
-        civilizations.forEach(Civilization::stopYear);
     }
 
     public CivilizationList getMovingCivilizations() {

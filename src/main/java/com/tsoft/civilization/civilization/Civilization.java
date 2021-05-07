@@ -320,15 +320,13 @@ public abstract class Civilization {
     }
 
     public synchronized void stopYear() {
-        // There can be a helper bot still in progress
-        if (!MoveState.DONE.equals(getBot().getMoveState())) {
-            return;
-        }
-
         // Update state only once
         if (moveState == MoveState.DONE) {
             return;
         }
+
+        // There can be a helper bot still in progress - wait for it
+        getBot().join();
 
         moveState = MoveState.DONE;
 
