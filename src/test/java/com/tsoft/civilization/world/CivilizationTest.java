@@ -21,17 +21,17 @@ public class CivilizationTest {
     // After initialization, there must be Settlers and Warriors units
     @Test
     public void initCivilization1() {
-        MockTilesMap map = new MockTilesMap(
+        MockWorld world = MockWorld.of(new MockTilesMap(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
             "1| . g .",
             "2|. g . ",
-            "3| . . .");
-        mapRender.createPng(map);
+            "3| . . ."));
+        mapRender.createPng(world.getTilesMap());
 
-        MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
+        world.startGame();
 
         UnitList units = civilization.getUnitService().getUnits();
 
@@ -45,17 +45,16 @@ public class CivilizationTest {
     // There is only one tile available, so after initialization, there must be only Settlers unit
     @Test
     public void initCivilization2() {
-        MockTilesMap map = new MockTilesMap(
+        MockWorld world = MockWorld.of(new MockTilesMap(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
             "1| . g .",
             "2|. . . ",
-            "3| . . .");
-        mapRender.createPng(map);
+            "3| . . ."));
 
-        MockWorld world = MockWorld.of(map);
         Civilization civilization = world.createCivilization(RUSSIA);
+        world.startGame();
 
         UnitList units = civilization.getUnitService().getUnits();
         assertEquals(1, units.size());

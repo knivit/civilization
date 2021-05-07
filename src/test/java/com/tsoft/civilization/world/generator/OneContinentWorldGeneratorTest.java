@@ -1,11 +1,13 @@
 package com.tsoft.civilization.world.generator;
 
 import com.tsoft.civilization.util.Rect;
+import com.tsoft.civilization.world.generator.onecontinent.OneContinentWorldGenerator;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class OneContinentWorldGeneratorTest {
+
     @Test
     public void calcContinentDimension() {
         OneContinentWorldGenerator worldGenerator = new OneContinentWorldGenerator();

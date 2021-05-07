@@ -17,12 +17,11 @@ public class WorldViewTest {
 
     @Test
     public void worldView() throws Exception {
-        MockTilesMap map = new MockTilesMap(3,
+        MockWorld world = MockWorld.of(new MockTilesMap(3,
             " |0 1 2 ", " |0 1 2 ", " |0 1 2 ",
             "-+------", "-+------", "-+------",
             "0|g g g ", "0|h h . ", "0|f . . ",
-            "1| g g g", "1| h h .", "1| f . .");
-        MockWorld world = MockWorld.of(map);
+            "1| g g g", "1| h h .", "1| f . ."));
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .city("city1", new Point(0, 0))
@@ -30,6 +29,8 @@ public class WorldViewTest {
             .workers("workers", new Point(0, 0))
             .settlers("settlers", new Point(1, 0))
         );
+
+        world.startGame();
 
         JsonBlock worldBlock = world.getView().getJson();
         JsonNode jsonObj = new ObjectMapper().readTree(worldBlock.getText());

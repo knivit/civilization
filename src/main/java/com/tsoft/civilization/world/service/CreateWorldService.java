@@ -37,7 +37,7 @@ public class CreateWorldService {
         }
 
         if (request.getMaxNumberOfCivilizations() < 1 || request.getMaxNumberOfCivilizations() > 16) {
-            log.debug("Max number of civilization = {} is invalid", request.getMaxNumberOfCivilizations());
+            log.debug("Number of civilization = {} is invalid", request.getMaxNumberOfCivilizations());
             return INVALID_MAX_NUMBER_OF_CIVILIZATIONS;
         }
 
@@ -65,6 +65,7 @@ public class CreateWorldService {
             log.debug("Tiles map = {} ({}x{}) is invalid", request.getMapSize(), request.getMapWidth(), request.getMapHeight());
             return INVALID_MAP_SIZE;
         }
+        tilesMap.setMapConfiguration(mapConfiguration);
 
         // create a world
         World world = new World(request.getWorldName(), tilesMap, climate);
@@ -74,9 +75,6 @@ public class CreateWorldService {
         // generate landscape
         WorldGenerator generator = WorldGeneratorFactory.getGenerator(mapConfiguration);
         generator.generate(tilesMap, climate);
-
-        // start history
-        world.startYear();
 
         // add Barbarians civilization
         Civilization barbarians = world.createCivilization(PlayerType.BOT, BARBARIANS, new BarbariansScenario());

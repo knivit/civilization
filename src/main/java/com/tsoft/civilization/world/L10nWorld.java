@@ -161,13 +161,33 @@ public class L10nWorld {
         .put(EN, "World")
         .put(RU, "Мир");
 
-    public static final L10n ERA_HEADER = new L10n()
+    public static final L10n WORLD_NAME_LABEL = new L10n()
+        .put(EN, "Name")
+        .put(RU, "Название");
+
+    public static final L10n ERA_LABEL = new L10n()
         .put(EN, "Era")
         .put(RU, "Эра");
 
-    public static final L10n YEAR_HEADER = new L10n()
+    public static final L10n YEAR_LABEL = new L10n()
         .put(EN, "Year")
         .put(RU, "Год");
+
+    public static final L10n MAP_SIZE_LABEL = new L10n()
+        .put(EN, "Map size")
+        .put(RU, "Размер карты");
+
+    public static final L10n MAP_CONF_LABEL = new L10n()
+        .put(EN, "Map configuration")
+        .put(RU, "Конфигурация карты");
+
+    public static final L10n CLIMATE_LABEL = new L10n()
+        .put(EN, "Climate")
+        .put(RU, "Климат");
+
+    public static final L10n DIFFICULTY_LEVEL_LABEL = new L10n()
+        .put(EN, "Difficulty level")
+        .put(RU, "Уровень сложности");
 
     public static final L10n CIVILIZATIONS_HEADER = new L10n()
         .put(EN, "Civilizations")

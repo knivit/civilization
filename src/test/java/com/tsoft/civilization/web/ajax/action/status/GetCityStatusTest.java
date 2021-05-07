@@ -22,7 +22,7 @@ public class GetCityStatusTest {
         AbstractAjaxRequest.getInstance(GetCityStatus.class.getSimpleName());
 
     @Test
-    public void getJsonForMyCity() {
+    public void get_json_for_my_city() {
         MockWorld world = MockWorld.newSimpleWorld();
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .city("city1", new Point(2, 0))
@@ -32,6 +32,7 @@ public class GetCityStatusTest {
             .workers("foreignWarriors", new Point(2, 1))
         );
 
+        world.startGame();
         world.setCivilizationsRelations(russia, america, CivilizationsRelations.war());
 
         Sessions.getCurrent().setActiveCivilization(russia);
@@ -42,14 +43,17 @@ public class GetCityStatusTest {
     }
 
     @Test
-    public void getJsonForMyDestroyedCity() {
+    public void get_json_for_my_destroyed_city() {
         MockWorld world = MockWorld.newSimpleWorld();
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .city("city1", new Point(2, 0))
         );
+
+        world.startGame();
+        Sessions.getCurrent().setActiveCivilization(russia);
+
         world.city("city1").destroy();
 
-        Sessions.getCurrent().setActiveCivilization(russia);
         Request request = MockRequest.newInstance("city", world.city("city1").getId());
 
         Response response = getCityStatusRequest.getJson(request);
@@ -57,7 +61,7 @@ public class GetCityStatusTest {
     }
 
     @Test
-    public void getJsonForForeignCity() {
+    public void get_json_for_foreign_city() {
         MockWorld world = MockWorld.newSimpleWorld();
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
@@ -68,6 +72,7 @@ public class GetCityStatusTest {
             .city("city2", new Point(2, 2))
         );
 
+        world.startGame();
         Sessions.getCurrent().setActiveCivilization(russia);
         Request mockRequest = MockRequest.newInstance("city", world.city("city2").getId());
 

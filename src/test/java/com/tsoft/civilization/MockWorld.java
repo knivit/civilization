@@ -76,7 +76,6 @@ public class MockWorld extends World {
 
         setMaxNumberOfCivilizations(CIVILIZATIONS.size());
         setDifficultyLevel(DifficultyLevel.PRINCE);
-        startYear();
     }
 
     public Civilization createCivilization(L10n civilizationName) {
@@ -96,7 +95,7 @@ public class MockWorld extends World {
         return civilization;
     }
 
-    public void move() {
+    public void nextYear() {
         stopYear();
         startYear();
     }

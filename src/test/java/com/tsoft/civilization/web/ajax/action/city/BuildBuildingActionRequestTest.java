@@ -29,6 +29,7 @@ public class BuildBuildingActionRequestTest {
         );
         City city = world.city("city");
 
+        world.startGame();
         Sessions.getCurrent().setActiveCivilization(russia);
 
         Request request = MockRequest.newInstance(

@@ -8,31 +8,29 @@ import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.improvement.AbstractImprovementView;
 import lombok.Getter;
 
+import static com.tsoft.civilization.L10n.L10nLanguage.EN;
+import static com.tsoft.civilization.L10n.L10nLanguage.RU;
+
 public class CityView extends AbstractImprovementView {
 
     private final AttackService attackService = new AttackService();
     private final AttackAction attackAction = new AttackAction(attackService);
 
+    public static final L10n DESCRIPTION = new L10n()
+        .put(EN, "Cities are source of power of your civilization")
+        .put(RU, "Города - источник военной мощи вашей цивилизации");
+
     @Getter
     private final L10n name;
 
+    @Getter
+    public final String localizedDescription = DESCRIPTION.getLocalized();
+
+    @Getter
+    public final String statusImageSrc = "images/status/city.png";
+
     public CityView(L10n name) {
         this.name = name;
-    }
-
-    @Override
-    public String getLocalizedName() {
-        return L10nCity.CITY_NAME.getLocalized();
-    }
-
-    @Override
-    public String getLocalizedDescription() {
-        return L10nCity.CITY_DESCRIPTION.getLocalized();
-    }
-
-    @Override
-    public String getStatusImageSrc() {
-        return "images/status/city.png";
     }
 
     public String getLocalizedCityName() {

@@ -49,8 +49,6 @@ public class WorldService {
 
         civilizations.add(civilization);
 
-        civilization.startYear();
-
         // send an event to civilizations about the new one
         // clients need to update their maps to see the new civilization (settlers and warriors)
         sendEvent(NewCivilizationEvent.builder()

@@ -28,6 +28,8 @@ public class MoveUnitActionTest {
         world.createCivilization(RUSSIA, new MockScenario()
             .workers("workers", new Point(1, 1)));
 
+        world.startGame();
+
         AbstractUnit workers = world.unit("workers");
         Set<Point> locations = Set.of(new Point(2, 1), new Point(2, 0));
 

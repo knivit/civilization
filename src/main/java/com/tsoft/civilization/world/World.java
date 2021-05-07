@@ -13,9 +13,11 @@ import com.tsoft.civilization.world.event.WorldStopYearEvent;
 import com.tsoft.civilization.world.scenario.Scenario;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 
+@Slf4j
 public class World {
 
     @Getter
@@ -23,6 +25,9 @@ public class World {
 
     @Getter
     private Year year;
+
+    @Getter
+    private final Climate climate;
 
     @Getter
     private final TilesMap tilesMap;
@@ -41,12 +46,15 @@ public class World {
 
     private final List<Year> history = new ArrayList<>();
     private final WorldService worldService;
+    private volatile boolean isYearStarted;
 
     public World(String name, TilesMap tilesMap, Climate climate) {
         this.name = name;
+        this.tilesMap = tilesMap;
+        this.climate = climate;
+
         year = new Year(-3000);
         view = new WorldView(this);
-        this.tilesMap = tilesMap;
 
         worldService = new WorldService(this);
     }
@@ -138,7 +146,29 @@ public class World {
         return history;
     }
 
-    // Callback on civilizations' stopYear
+    public void startGame() {
+        startYear();
+    }
+
+    public void startYear() {
+        if (isYearStarted) {
+            throw new IllegalStateException("This year already started !");
+        }
+
+        isYearStarted = true;
+
+        history.add(year);
+        tilesMap.startYear();
+        worldService.startYear();
+
+        sendEvent(NewYearStartEvent.builder()
+            .year(year.getYear())
+            .build());
+
+        log.debug("A new year {} started", year.getYear());
+    }
+
+    // Callback on civilizations' "next turn" button
     public void onCivilizationMoved() {
         CivilizationList list = worldService.getMovingCivilizations();
 
@@ -150,17 +180,13 @@ public class World {
         }
     }
 
-    public void startYear() {
-        history.add(year);
-        tilesMap.startYear();
-        worldService.startYear();
-
-        sendEvent(NewYearStartEvent.builder()
-            .year(year.getYear())
-            .build());
-    }
-
     public void stopYear() {
+        if (!isYearStarted) {
+            throw new IllegalStateException("This year already ended !");
+        }
+
+        isYearStarted = false;
+
         worldService.stopYear();
 
         sendEvent(WorldStopYearEvent.builder()

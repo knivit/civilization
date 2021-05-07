@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GetStartStatusTest {
+
     private static final AbstractAjaxRequest getStartStatusRequest =
         AbstractAjaxRequest.getInstance(GetStartStatus.class.getSimpleName());
 

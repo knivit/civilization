@@ -26,18 +26,19 @@ public class CivilizationScoreTest {
 
     @Test
     public void noCitiesScore() {
-        MockTilesMap map = new MockTilesMap(
+        MockWorld world = MockWorld.of(new MockTilesMap(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
             "1| . g .",
             "2|. . . ",
-            "3| . . .");
-        MockWorld world = MockWorld.of(map);
+            "3| . . ."));
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario());
 
-        world.move();
+        world.startGame();
+
+        world.nextYear();
 
         assertThat(russia.calcSupply())
             .usingComparator(SupplyMock::compare)
@@ -46,18 +47,19 @@ public class CivilizationScoreTest {
 
     @Test
     public void oneCityOneTileScore() {
-        MockTilesMap map = new MockTilesMap(
+        MockWorld world = MockWorld.of(new MockTilesMap(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
             "1| . g .",
             "2|. . . ",
-            "3| . . .");
-        MockWorld world = MockWorld.of(map);
+            "3| . . ."));
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .city("Moscow", new Point(1, 1))
         );
+
+        world.startGame();
 
         // Step 1
         // food | prod | gold | science | culture | population | produced/consumed by
@@ -66,7 +68,7 @@ public class CivilizationScoreTest {
         //   -1 |      |      |       1 |         |          1 | 1 citizen
         // -----------------------------------------------------
         //    1 |    3 |    3 |       4 |       1 |          1 |
-        world.move();
+        world.nextYear();
 
         assertThat(russia.calcSupply())
             .usingComparator(SupplyMock::compare)
@@ -91,7 +93,7 @@ public class CivilizationScoreTest {
         //    1 |    3 |    3 |       4 |       1 |          1 | previous step
         // ------------------------------------------------------
         //    2 |    6 |    6 |       6 |       2 |          1 |
-        world.move();
+        world.nextYear();
 
         assertThat(russia.calcSupply())
             .usingComparator(SupplyMock::compare)
@@ -112,23 +114,23 @@ public class CivilizationScoreTest {
 
     @Test
     public void oneCityAllTypesOfTilesScore() {
-        MockTilesMap map = new MockTilesMap(3,
+        MockWorld world = MockWorld.of(new MockTilesMap(3,
             " |0 1 2 3 4 ", " |0 1 2 3 4 ", " |0 1 2 3 4 ",
             "-+----------", "-+----------", "-+----------",
             "0|. g d . . ", "0|. . . i . ", "0|. . . . . ",
             "1| l g p s t", "1| . M . . .", "1| . . . . .",
             "2|g g g g g ", "2|n f h h m ", "2|. . . f . ",
-            "3| . g p . .", "3| . j o . .", "3| . . . . .");
-        MockWorld world = MockWorld.of(map);
+            "3| . g p . .", "3| . j o . .", "3| . . . . ."));
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .city("Moscow", new Point(2, 1))
         );
 
+        world.startGame();
         City city = world.city("Moscow");
 
         // add all other tiles
-        Collection<Point> locations = map.getLocationsAround(new Point(2, 1), 3);
+        Collection<Point> locations = world.getTilesMap().getLocationsAround(new Point(2, 1), 3);
         city.getTileService().addLocations(locations);
         assertEquals(20, city.getTileService().getLocations().size());
 
@@ -140,7 +142,7 @@ public class CivilizationScoreTest {
         assertThat(city.getCitizenCount()).isEqualTo(4 * 5);
         assertThat(city.getCitizenLocations().size()).isEqualTo(4 * 5 - 3);
 
-        world.move();
+        world.nextYear();
 
         assertThat(russia.calcSupply())
             .usingComparator(SupplyMock::compare)
@@ -156,20 +158,20 @@ public class CivilizationScoreTest {
 
     @Test
     public void maxSupplyStrategies() {
-        MockTilesMap map = new MockTilesMap(2,
+        MockWorld world = MockWorld.of(new MockTilesMap(2,
             " |0 1 2 ", " |0 1 2 ",
             "-+------", "-+------",
             "0|. g . ", "0|. h . ",
             "1| g g .", "1| m f .",
             "2|. g . ", "2|. n . ",
-            "3| . . .", "3| . . .");
-        MockWorld world = MockWorld.of(map);
+            "3| . . .", "3| . . ."));
 
         // Default strategies: MAX_FOOD, MAX_PRODUCTION, MAX_GOLD
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .city("Moscow", new Point(1, 1))
         );
 
+        world.startGame();
         City city = world.city("Moscow");
 
         // add second citizen
@@ -184,7 +186,7 @@ public class CivilizationScoreTest {
 
         // Step 1
         city.setSupplyStrategy(List.of(TileSupplyStrategy.MAX_PRODUCTION));
-        world.move();
+        world.nextYear();
 
         assertEquals(Arrays.asList(new Point(1, 2), new Point(1, 1)), city.getCitizenLocations());
 
@@ -194,7 +196,7 @@ public class CivilizationScoreTest {
 
         // Step 2
         city.setSupplyStrategy(List.of(TileSupplyStrategy.MAX_FOOD));
-        world.move();
+        world.nextYear();
 
         assertThat(city.getCitizenLocations())
             .isEqualTo(List.of(new Point(1, 2), new Point(1, 1), new Point(2, 0)));

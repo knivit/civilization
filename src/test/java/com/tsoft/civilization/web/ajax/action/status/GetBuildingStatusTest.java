@@ -29,6 +29,7 @@ public class GetBuildingStatusTest {
             .city("Tula", new Point(2, 0))
         );
 
+        world.startGame();
         Sessions.getCurrent().setActiveCivilization(russia);
 
         String palaceId = world.city("Tula").getBuildings().findByClassUuid(Palace.CLASS_UUID).getId();
@@ -48,6 +49,7 @@ public class GetBuildingStatusTest {
             .city("Washington", new Point(2, 0))
         );
 
+        world.startGame();
         Sessions.getCurrent().setActiveCivilization(russia);
 
         String palaceId = world.city("Washington").getBuildings().findByClassUuid(Palace.CLASS_UUID).getId();

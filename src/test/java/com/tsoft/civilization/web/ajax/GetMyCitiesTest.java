@@ -29,6 +29,7 @@ public class GetMyCitiesTest {
             .city("city", new Point(2, 0))
         );
 
+        world.startGame();
         Sessions.getCurrent().setActiveCivilization(russia);
         Request request = MockRequest.newInstance();
 

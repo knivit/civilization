@@ -6,21 +6,20 @@ import lombok.Getter;
 
 public class WallsView extends AbstractBuildingView {
 
+    public static final L10n NAME = new L10n()
+        .put("en", "Walls")
+        .put("ru", "Стены");
+
+    public static final L10n DESCRIPTION = new L10n()
+        .put("en", "Walls increase a city's Defense Strength making the city more difficult to capture. Walls are quite useful for cities located along a civilization's frontier.")
+        .put("ru", "Стены увеличивают оборону города, усложняя его захват. Стены полезны для городов, расположенных вблизи границ цивилизации.");
+
     @Getter
-    public final L10n name = L10nWalls.NAME;
+    public final L10n name = NAME;
 
-    @Override
-    public String getLocalizedName() {
-        return name.getLocalized();
-    }
+    @Getter
+    public final String localizedDescription = DESCRIPTION.getLocalized();
 
-    @Override
-    public String getLocalizedDescription() {
-        return L10nWalls.DESCRIPTION.getLocalized();
-    }
-
-    @Override
-    public String getStatusImageSrc() {
-        return "images/status/buildings/walls.png";
-    }
+    @Getter
+    public final String statusImageSrc = "images/status/buildings/walls.png";
 }

@@ -28,18 +28,19 @@ public class RemoveForestActionTest {
 
     @Test
     public void cantRemoveForestedHill() {
-        MockTilesMap map = new MockTilesMap(3,
-                " |0 1 2 ", " |0 1 2 ", " |0 1 2 ",
-                "-+------", "-+------", "-+------",
-                "0|. . . ", "0|. . . ", "0|. . . ",
-                "1| . g .", "1| . h .", "1| . f .",
-                "2|. . . ", "2|. . . ", "2|. . . ",
-                "3| . . .", "3| . . .", "3| . . .");
-        MockWorld world = MockWorld.of(map);
+        MockWorld world = MockWorld.of(new MockTilesMap(3,
+            " |0 1 2 ", " |0 1 2 ", " |0 1 2 ",
+            "-+------", "-+------", "-+------",
+            "0|. . . ", "0|. . . ", "0|. . . ",
+            "1| . g .", "1| . h .", "1| . f .",
+            "2|. . . ", "2|. . . ", "2|. . . ",
+            "3| . . .", "3| . . .", "3| . . ."));
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .workers("workers", new Point(1, 1))
         );
+
+        world.startGame();
 
         // case 1
         // no needed technology
@@ -55,18 +56,19 @@ public class RemoveForestActionTest {
 
     @Test
     public void removeForestedHill() {
-        MockTilesMap map = new MockTilesMap(3,
-                " |0 1 2 ", " |0 1 2 ", " |0 1 2 ",
-                "-+------", "-+------", "-+------",
-                "0|. . . ", "0|. . . ", "0|. . . ",
-                "1| . g .", "1| . h .", "1| . f .",
-                "2|. . . ", "2|. . . ", "2|. . . ",
-                "3| . . .", "3| . . .", "3| . . .");
-        MockWorld world = MockWorld.of(map);
+        MockWorld world = MockWorld.of(new MockTilesMap(3,
+            " |0 1 2 ", " |0 1 2 ", " |0 1 2 ",
+            "-+------", "-+------", "-+------",
+            "0|. . . ", "0|. . . ", "0|. . . ",
+            "1| . g .", "1| . h .", "1| . f .",
+            "2|. . . ", "2|. . . ", "2|. . . ",
+            "3| . . .", "3| . . .", "3| . . ."));
 
         Civilization civilization = world.createCivilization(RUSSIA, new MockScenario()
             .workers("workers", new Point(1, 1))
         );
+
+        world.startGame();
         civilization.addTechnology(Technology.MINING);
 
         // remove a forest
@@ -79,10 +81,10 @@ public class RemoveForestActionTest {
         assertThat(RemoveForestAction.removeForest((Workers) world.unit("workers")))
             .isEqualTo(FOREST_IS_REMOVED);
 
-        assertThat(map.getTile(1, 1).getClass()).isEqualTo(Grassland.class);
+        assertThat(world.getTilesMap().getTile(1, 1).getClass()).isEqualTo(Grassland.class);
 
         // now there is a hill
-        assertThat(map.getTile(1, 1).getFeatures())
+        assertThat(world.getTilesMap().getTile(1, 1).getFeatures())
             .isNotNull()
             .returns(1, ArrayList::size)
             .extracting(list -> list.get(0))
@@ -99,28 +101,29 @@ public class RemoveForestActionTest {
         assertThat(RemoveHillAction.removeHill((Workers) world.unit("workers")))
             .isEqualTo(HILL_IS_REMOVED);
 
-        assertThat(map.getTile(1, 1).getClass()).isEqualTo(Grassland.class);
+        assertThat(world.getTilesMap().getTile(1, 1).getClass()).isEqualTo(Grassland.class);
 
         // no any features
-        assertThat(map.getTile(1, 1).getFeatures())
+        assertThat(world.getTilesMap().getTile(1, 1).getFeatures())
             .isNotNull()
             .returns(0, ArrayList::size);
     }
 
     @Test
     public void get_html() {
-        MockTilesMap map = new MockTilesMap(3,
+        MockWorld world = MockWorld.of(new MockTilesMap(3,
             " |0 1 2 ", " |0 1 2 ", " |0 1 2 ",
             "-+------", "-+------", "-+------",
             "0|. . . ", "0|. . . ", "0|. . . ",
             "1| . g .", "1| . h .", "1| . f .",
             "2|. . . ", "2|. . . ", "2|. . . ",
-            "3| . . .", "3| . . .", "3| . . .");
-        MockWorld world = MockWorld.of(map);
+            "3| . . .", "3| . . .", "3| . . ."));
 
         Civilization civilization = world.createCivilization(RUSSIA, new MockScenario()
             .workers("workers", new Point(1, 1))
         );
+
+        world.startGame();
         civilization.addTechnology(Technology.MINING);
 
         Workers workers = (Workers) world.unit("workers");

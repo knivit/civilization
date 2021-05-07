@@ -8,6 +8,9 @@ import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.CIVILIZATIONS;
+import static com.tsoft.civilization.world.Climate.NORMAL;
+import static com.tsoft.civilization.world.MapConfiguration.EARTH;
+import static com.tsoft.civilization.world.MapSize.STANDARD;
 
 public class GetCreateWorldFormRequest extends AbstractAjaxRequest {
 
@@ -86,7 +89,8 @@ public class GetCreateWorldFormRequest extends AbstractAjaxRequest {
     private StringBuilder getMapConfigurationOptions() {
         StringBuilder buf = new StringBuilder();
         for (MapConfiguration conf : MapConfiguration.values()) {
-            buf.append(Format.text("<option value='$value' description='$desc'>$text</option>",
+            buf.append(Format.text("<option $selected value='$value' description='$desc'>$text</option>",
+                "$selected", EARTH.equals(conf) ? "selected" : "",
                 "$value", conf.name(),
                 "$text", conf.name(),
                 "$desc", conf.getDescription()));
@@ -97,7 +101,8 @@ public class GetCreateWorldFormRequest extends AbstractAjaxRequest {
     private StringBuilder getMapSizeOptions() {
         StringBuilder buf = new StringBuilder();
         for (MapSize size : MapSize.values()) {
-            buf.append(Format.text("<option value='$value'>$text</option>",
+            buf.append(Format.text("<option $selected value='$value'>$text</option>",
+                "$selected", STANDARD.equals(size) ? "selected" : "",
                 "$value", size.name(),
                 "$text", size.getL10n()));
 
@@ -108,7 +113,8 @@ public class GetCreateWorldFormRequest extends AbstractAjaxRequest {
     private StringBuilder getClimateOptions() {
         StringBuilder buf = new StringBuilder();
         for (Climate climate : Climate.values()) {
-            buf.append(Format.text("<option value='$value'>$text</option>",
+            buf.append(Format.text("<option $selected value='$value'>$text</option>",
+                "$selected", NORMAL.equals(climate) ? "selected" : "",
                 "$value", climate.name(),
                 "$text", climate.getL10n()));
 

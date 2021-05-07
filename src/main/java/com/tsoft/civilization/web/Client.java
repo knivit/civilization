@@ -44,10 +44,8 @@ public class Client {
     }
 
     public void processRequest(Request request) {
-        log.info("Started to serve {}", request);
-
         if (request.getRequestType() == null) {
-            log.info("Invalid request {}", request);
+            log.debug("Invalid request {}", request);
             return;
         }
 
@@ -55,7 +53,7 @@ public class Client {
             case GET -> {
                 if ("GetNotifications".equals(request.getRequestUrl())) {
                     if (!Sessions.setCurrent(request.getSessionId())) {
-                        log.info("Invalid request {}", request);
+                        log.debug("Invalid request {}", request);
                         return;
                     }
 
@@ -68,7 +66,7 @@ public class Client {
 
             case POST -> {
                 if (!Sessions.setCurrent(request.getSessionId())) {
-                    log.info("Invalid request {}", request);
+                    log.debug("Invalid request {}", request);
                     return;
                 }
 
@@ -76,7 +74,7 @@ public class Client {
                 sendResponse(response);
             }
 
-            default -> log.info("Invalid request type {}", request.getRequestType());
+            default -> log.debug("Invalid request type {}", request.getRequestType());
         }
     }
 
@@ -100,7 +98,8 @@ public class Client {
             HTTP/1.1 $errorCode\r
             Content-Type: $contentType\r
             Content-Length: $contentLength\r
-            $additionalHeadersConnection: keep-alive\r
+            Connection: keep-alive\r
+            $additionalHeaders: $additionalHeaders\r
             \r
             """,
 

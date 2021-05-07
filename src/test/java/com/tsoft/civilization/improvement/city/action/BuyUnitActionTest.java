@@ -25,6 +25,8 @@ public class BuyUnitActionTest {
             .city("Moscow", new Point(2, 0))
         );
 
+        world.startGame();
+
         assertThat(BuyUnitAction.buyUnit(world.city("Moscow"), Archers.CLASS_UUID))
             .isEqualTo(CityActionResults.WRONG_ERA_OR_TECHNOLOGY);
     }
@@ -37,6 +39,7 @@ public class BuyUnitActionTest {
             .city("Moscow", new Point(2, 0))
         );
 
+        world.startGame();
         russia.addTechnology(Technology.ARCHERY);
         world.city("Moscow").setPassScore(1);
 

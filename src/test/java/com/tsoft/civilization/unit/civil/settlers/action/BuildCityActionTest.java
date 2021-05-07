@@ -21,18 +21,19 @@ public class BuildCityActionTest {
 
     @Test
     public void buildCity1() {
-        MockTilesMap map = new MockTilesMap(
+        MockWorld world = MockWorld.of(new MockTilesMap(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
             "1| . g .",
             "2|. . . ",
-            "3| . . .");
-        MockWorld world = MockWorld.of(map);
+            "3| . . ."));
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .settlers("settlers1", new Point(1, 1))
         );
+
+        world.startGame();
 
         // Build a city
         assertThat(BuildCityAction.buildCity((Settlers) world.unit("settlers1")))
@@ -56,18 +57,19 @@ public class BuildCityActionTest {
 
     @Test
     public void buildCity2() {
-        MockTilesMap map = new MockTilesMap(
+        MockWorld world = MockWorld.of(new MockTilesMap(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
             "1| . g .",
             "2|. . . ",
-            "3| . . g");
-        MockWorld world = MockWorld.of(map);
+            "3| . . g"));
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .settlers("settlers1", new Point(1, 1))
         );
+
+        world.startGame();
 
         // check 1
         // Build a city
@@ -83,18 +85,19 @@ public class BuildCityActionTest {
 
     @Test
     public void buildCity3() {
-        MockTilesMap map = new MockTilesMap(
+        MockWorld world = MockWorld.of(new MockTilesMap(
             " |0 1 2 3 4 5 6 7 ",
             "-+----------------",
             "0|g . . . . . . . ",
             "1| . . . . . . . .",
             "2|. . . . . . . . ",
-            "3| . . . . . . . g");
-        MockWorld world = MockWorld.of(map);
+            "3| . . . . . . . g"));
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .settlers("settlers1", new Point(0, 0))
         );
+
+        world.startGame();
 
         // check 1
         // Build a city
@@ -111,7 +114,7 @@ public class BuildCityActionTest {
 
     @Test
     public void buildCity4() {
-        MockTilesMap map = new MockTilesMap(
+        MockWorld world = MockWorld.of(new MockTilesMap(
             " |0 1 2 3 4 5 6 7 ",
             "-+----------------",
             "0|. . . . . . . . ",
@@ -121,12 +124,13 @@ public class BuildCityActionTest {
             "4|. . . . . . g . ",
             "5| . . . . . . . .",
             "6|. . . . . . . . ",
-            "7| . . . . . . . .");
-        MockWorld world = MockWorld.of(map);
+            "7| . . . . . . . ."));
 
         Civilization civilization = world.createCivilization(RUSSIA, new MockScenario()
             .settlers("settlers1", new Point(2, 2))
         );
+
+        world.startGame();
 
         // check 1
         // Build a city

@@ -28,6 +28,8 @@ public class GetCivilizationsTest {
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario());
         world.createCivilization(AMERICA, new MockScenario());
 
+        world.startGame();
+
         Sessions.getCurrent().setActiveCivilization(russia);
         Request request = MockRequest.newInstance();
 

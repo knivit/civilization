@@ -25,10 +25,13 @@ public class CityPopulationServiceTest {
             .city("city", new Point(2, 0))
         );
 
-        CityPopulationService populationService = new CityPopulationService(world.city("city"));
+        world.startGame();
+
+        CityPopulationService populationService = world.city("city").getPopulationService();
+        assertThat(populationService.getCitizenCount()).isEqualTo(1);
+
         populationService.addCitizen();
 
-        assertThat(populationService.getCitizenCount()).isEqualTo(1);
+        assertThat(populationService.getCitizenCount()).isEqualTo(2);
     }
-
 }

@@ -4,10 +4,18 @@ import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.tile.feature.FeatureFactory;
 import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.tile.tile.TileFactory;
-import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.util.Point;
 
-class WorldGeneratorHelper {
+public class WorldGeneratorHelper {
+
+    // Fill the continent with default tiles
+    public void fill(TilesMap tilesMap, String tileClassUuid) {
+        for (int y = 0; y < tilesMap.getHeight(); y ++) {
+            for (int x = 0; x < tilesMap.getWidth(); x ++) {
+                tilesMap.setTile(new Point(x, y), TileFactory.newInstance(tileClassUuid));
+            }
+        }
+    }
 
     public void addTileWithFeatures(TilesMap tilesMap, Point location, String[] uuids) {
         if (uuids == null || uuids.length == 0) {
@@ -21,7 +29,7 @@ class WorldGeneratorHelper {
 
         // Next may be features
         for (int i = 1; i < uuids.length; i ++) {
-            AbstractFeature feature = FeatureFactory.newInstance(uuids[i], tile);
+            FeatureFactory.newInstance(uuids[i], tile);
         }
     }
 }

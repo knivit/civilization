@@ -32,3 +32,12 @@
     margin-bottom: 2px;
     border-collapse: collapse;
 }
+
+#GetWorldsRequest_world_info_table {
+    table-layout: fixed;
+    width: 100%;
+    display: table;
+    margin-top: 4px;
+    margin-bottom: 2px;
+    border-collapse: collapse;
+}

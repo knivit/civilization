@@ -6,7 +6,10 @@ public interface AbstractView {
 
     L10n getName();
 
-    String getLocalizedName();
+    default String getLocalizedName() {
+        return getName().getLocalized();
+    }
+
     String getLocalizedDescription();
     String getStatusImageSrc();
 }

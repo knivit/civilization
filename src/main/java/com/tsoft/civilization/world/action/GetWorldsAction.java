@@ -62,7 +62,7 @@ public class GetWorldsAction {
         return Format.text("""
             <table id='GetWorldsRequest_action_table'>
                 <tr>
-                    <td width='80%' />
+                    <td width='75%' />
                     <td><select id='language' onchange="$selectLanguageRequest()">$languages</select></td>
                 </tr>
             </table>
@@ -73,11 +73,109 @@ public class GetWorldsAction {
         );
     }
 
+    private static StringBuilder getExistingWorlds() {
+        StringBuilder worlds = new StringBuilder();
+        worlds.append(Format.text("""
+            <tr>
+                <th>$world</td>
+                <th>$civilizations</td>
+                <th>$slotsAvailable</td>
+                <th>$action</td>
+            </tr>
+            """,
+
+            "$world", WORLD_HEADER,
+            "$civilizations", CIVILIZATIONS_HEADER,
+            "$slotsAvailable", SLOTS_AVAILABLE_HEADER,
+            "$action", ACTION_HEADER
+        ));
+
+        StringBuilder civilizations = getCivilizationsSelect();
+
+        for (World world : Worlds.getWorlds()) {
+            StringBuilder actions = new StringBuilder();
+
+            int civilizationsCount = (int)world.getCivilizations().stream()
+                .filter(e -> !BARBARIANS.equals(e.getName()))
+                .count();
+
+            int slotsAvailable = world.getMaxNumberOfCivilizations() - civilizationsCount;
+            if (slotsAvailable > 0) {
+                // add a human
+                actions.append(addPlayer(civilizations, world, PlayerType.HUMAN, L10nWorld.JOIN_WORLD_BUTTON));
+
+                // add bots for all slots (we can just view the game as a spectator)
+                for (int i = 0; i < slotsAvailable; i ++) {
+                    actions.append(addPlayer(civilizations, world, PlayerType.BOT, L10nWorld.ADD_BOT_BUTTON));
+                }
+            }
+
+            actions.append(addPlayer(civilizations, world, PlayerType.SPECTATOR, L10nWorld.SPECTATOR_WORLD_BUTTON));
+
+            worlds.append(Format.text("""
+                <tr>
+                    <td>
+                        <table id='GetWorldsRequest_world_info_table'>
+                            <tr><td>$nameLabel</td><td>$worldName</td></tr>
+                            <tr><td>$eraLabel</td><td>$era</td></tr>
+                            <tr><td>$yearLabel</td><td>$year</td></tr>
+                            <tr><td>$mapSizeLabel</td><td>$mapSize</td></tr>
+                            <tr><td>$mapConfLabel</td><td>$mapConf</td></tr>
+                            <tr><td>$climateLabel</td><td>$climate</td></tr>
+                            <tr><td>$difficultyLevelLabel</td><td>$difficultyLevel</td></tr>
+                        </table>
+                    </td>
+                    <td>$civilizations</td>
+                    <td>$slotsAvailable</td>
+                    <td><table id='GetWorldsRequest_action_table'>$actions</table></td>
+                </tr>
+                """,
+
+                "$nameLabel", WORLD_NAME_LABEL,
+                "$worldName", world.getName(),
+                "$eraLabel", ERA_LABEL,
+                "$era", world.getYear().getEraLocalized(),
+                "$yearLabel", YEAR_LABEL,
+                "$year", world.getYear().getYearLocalized(),
+                "$mapSizeLabel", MAP_SIZE_LABEL,
+                "$mapSize", world.getTilesMap().getMapSize().getL10n().getLocalized(),
+                "$mapConfLabel", MAP_CONF_LABEL,
+                "$mapConf", world.getTilesMap().getMapConfiguration().name(),
+                "$climateLabel", CLIMATE_LABEL,
+                "$climate", world.getClimate().getL10n().getLocalized(),
+                "$difficultyLevelLabel", DIFFICULTY_LEVEL_LABEL,
+                "$difficultyLevel", world.getClimate().getL10n().getLocalized(),
+                "$civilizations", getCivilizationsTable(world),
+                "$slotsAvailable", slotsAvailable,
+                "$actions", actions
+            ));
+        }
+
+        return Format.text("""
+            <table id='GetWorldsRequest_table'>
+                <colgroup>
+                    <col width='35%' />
+                    <col width='30%' />
+                    <col width='10%' />
+                    <col width='25%' />
+                  </colgroup>
+                $worlds
+            </table>
+            """,
+
+            "$worlds", worlds
+        );
+    }
+
     private static StringBuilder getCivilizationsTable(World world) {
         CivilizationList civilizations = world.getCivilizations().sortByName();
 
         StringBuilder buf = new StringBuilder();
         for (Civilization civilization : civilizations) {
+            if (BARBARIANS.equals(civilization.getName())) {
+                continue;
+            }
+
             buf.append(Format.text("""
                 <tr>
                     <td><image src='$imageSrc'/></td>
@@ -118,88 +216,6 @@ public class GetWorldsAction {
         }
         return civilizations;
     }
-
-    private static StringBuilder getExistingWorlds() {
-        StringBuilder worlds = new StringBuilder();
-        worlds.append(Format.text("""
-            <tr>
-                <th>$world</td>
-                <th>$era</td>
-                <th>$year</td>
-                <th>$civilizations</td>
-                <th>$slotsAvailable</td>
-                <th>$action</td>
-            </tr>
-            """,
-
-            "$world", WORLD_HEADER,
-            "$era", ERA_HEADER,
-            "$year", YEAR_HEADER,
-            "$civilizations", CIVILIZATIONS_HEADER,
-            "$slotsAvailable", SLOTS_AVAILABLE_HEADER,
-            "$action", ACTION_HEADER
-        ));
-
-        StringBuilder civilizations = getCivilizationsSelect();
-
-        for (World world : Worlds.getWorlds()) {
-            StringBuilder actions = new StringBuilder();
-
-            int civilizationsCount = (int)world.getCivilizations().stream()
-                .filter(e -> !BARBARIANS.equals(e.getName()))
-                .count();
-
-            int slotsAvailable = world.getMaxNumberOfCivilizations() - civilizationsCount;
-            if (slotsAvailable > 0) {
-                // add a human
-                actions.append(addPlayer(civilizations, world, PlayerType.HUMAN, L10nWorld.JOIN_WORLD_BUTTON));
-
-                // add bots for all slots (we can just view the game as a spectator)
-                for (int i = 0; i < slotsAvailable; i ++) {
-                    actions.append(addPlayer(civilizations, world, PlayerType.BOT, L10nWorld.ADD_BOT_BUTTON));
-                }
-            }
-
-            actions.append(addPlayer(civilizations, world, PlayerType.SPECTATOR, L10nWorld.SPECTATOR_WORLD_BUTTON));
-
-            worlds.append(Format.text("""
-                <tr>
-                    <td>$worldName</td>
-                    <td>$era</td>
-                    <td>$year</td>
-                    <td>$civilizations</td>
-                    <td>$slotsAvailable</td>
-                    <td><table id='GetWorldsRequest_action_table'>$actions</table></td>
-                </tr>
-                """,
-
-                "$worldName", world.getName(),
-                "$era", world.getYear().getEraLocalized(),
-                "$year", world.getYear().getYearLocalized(),
-                "$civilizations", getCivilizationsTable(world),
-                "$slotsAvailable", slotsAvailable,
-                "$actions", actions
-            ));
-        }
-
-        return Format.text("""
-            <table id='GetWorldsRequest_table'>
-                <colgroup>
-                    <col width='30%' />
-                    <col width='10%' />
-                    <col width='5%' />
-                    <col width='25%' />
-                    <col width='10%' />
-                    <col width='20%' />
-                  </colgroup>
-                $worlds
-            </table>
-            """,
-
-            "$worlds", worlds
-        );
-    }
-
     private static StringBuilder addPlayer(StringBuilder civilizations, World world, PlayerType playerType, L10n joinButtonMessage) {
         String civilizationSelector = UUID.randomUUID().toString();
 

@@ -28,6 +28,8 @@ public class BuildUnitActionTest {
             .city("Moscow", new Point(2, 0))
         );
 
+        world.startGame();
+
         assertThat(BuildUnitAction.buildUnit(world.city("Moscow"), Archers.CLASS_UUID))
             .isEqualTo(CityActionResults.WRONG_ERA_OR_TECHNOLOGY);
     }
@@ -40,6 +42,7 @@ public class BuildUnitActionTest {
             .city("Moscow", new Point(2, 0))
         );
 
+        world.startGame();
         russia.addTechnology(Technology.ARCHERY);
 
         City city = world.city("Moscow");
@@ -66,7 +69,7 @@ public class BuildUnitActionTest {
 
         // Wait till it builds
         for (int i = 0; i < 5; i ++) {
-            world.move();
+            world.nextYear();
 
             assertThat(city.getConstructions()).isNotEmpty();
 
@@ -74,7 +77,7 @@ public class BuildUnitActionTest {
                 .returns(0, CivilizationUnitService::size);
         }
 
-        world.move();
+        world.nextYear();
 
         assertThat(city.getConstructions()).isEmpty();
 

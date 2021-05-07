@@ -6,21 +6,20 @@ import lombok.Getter;
 
 public class MonumentView extends AbstractBuildingView {
 
+    public static final L10n NAME = new L10n()
+        .put("en", "Monument")
+        .put("ru", "Памятник");
+
+    public static final L10n DESCRIPTION = new L10n()
+        .put("en", "The Monument increases the Culture of a city speeding the growth of the city's territory and the civilization's acquisition of Social Policies.")
+        .put("ru", "Памятник увеличивает культуру в городе, что ускоряет рост территории города и приобретение цивилизацией социальных политик.");
+
     @Getter
-    public final L10n name = L10nMonument.NAME;
+    public final L10n name = NAME;
 
-    @Override
-    public String getLocalizedName() {
-        return name.getLocalized();
-    }
+    @Getter
+    public final String localizedDescription = DESCRIPTION.getLocalized();
 
-    @Override
-    public String getLocalizedDescription() {
-        return L10nMonument.DESCRIPTION.getLocalized();
-    }
-
-    @Override
-    public String getStatusImageSrc() {
-        return "images/status/buildings/monument.png";
-    }
+    @Getter
+    public final String statusImageSrc = "images/status/buildings/monument.png";
 }

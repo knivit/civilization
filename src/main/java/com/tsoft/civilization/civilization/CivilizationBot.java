@@ -11,7 +11,7 @@ public abstract class CivilizationBot implements Runnable {
     protected final Civilization civilization;
 
     @Getter
-    public MoveState moveState;
+    public volatile MoveState moveState;
 
     protected abstract void calculate();
 

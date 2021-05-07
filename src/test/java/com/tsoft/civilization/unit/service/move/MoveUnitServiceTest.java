@@ -47,8 +47,12 @@ public class MoveUnitServiceTest {
     public void invalid_destroyed() {
         MockWorld world = MockWorld.newSimpleWorld();
 
-        Civilization russia = world.createCivilization(RUSSIA);
-        Warriors warriors = UnitFactory.newInstance(russia, Warriors.CLASS_UUID);
+        world.createCivilization(RUSSIA, new MockScenario()
+            .warriors("warriors", new Point(2, 0)));
+        Warriors warriors = (Warriors) world.unit("warriors");
+
+        world.startGame();
+
         warriors.destroy();
 
         assertThat(moveUnitService.move(warriors, new Point(1, 1)))
@@ -61,6 +65,8 @@ public class MoveUnitServiceTest {
 
         world.createCivilization(RUSSIA, new MockScenario()
             .workers("workers", new Point(2, 0)));
+
+        world.startGame();
 
         assertThat(moveUnitService.move(world.unit("workers"), new Point(1, 1)))
             .isEqualTo(INVALID_UNIT_LOCATION);
@@ -83,6 +89,8 @@ public class MoveUnitServiceTest {
             .workers("workers", new Point(0, 0))
         );
 
+        world.startGame();
+
         assertThat(moveUnitAction.move(world.unit("workers"), new Point(1, 1)))
             .isEqualTo(NO_LOCATIONS_TO_MOVE);
     }
@@ -101,6 +109,8 @@ public class MoveUnitServiceTest {
         world.createCivilization(RUSSIA, new MockScenario()
             .settlers("settlers", new Point(1, 1))
         );
+
+        world.startGame();
 
         // try out all possible directions - it must be impossible
         for (Dir6 dir : Dir6.staticGetDirs(1)) {
@@ -126,6 +136,7 @@ public class MoveUnitServiceTest {
         MockWorld world = MockWorld.of(map);
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario());
+        world.startGame();
 
         // try out all possible directions - it must be OK
         for (Dir6 dir : Dir6.staticGetDirs(1)) {
@@ -156,6 +167,7 @@ public class MoveUnitServiceTest {
         world.createCivilization(RUSSIA, new MockScenario()
             .settlers("settlers", new Point(1, 1))
         );
+        world.startGame();
 
         // try one complex route - it must be OK
         Settlers settlers = (Settlers) world.unit("settlers");
@@ -206,6 +218,7 @@ public class MoveUnitServiceTest {
             .settlers("settlers1", new Point(1, 1))
             .settlers("settlers2", new Point(2, 1))
         );
+        world.startGame();
 
         // try one complex route - it must be OK
         Settlers settlers1 = (Settlers) world.unit("settlers1");
@@ -252,6 +265,7 @@ public class MoveUnitServiceTest {
             .settlers("settlers1", new Point(1, 1))
             .settlers("settlers2", new Point(2, 1))
         );
+        world.startGame();
 
         // try one complex route - it must be OK
         Settlers settlers1 = (Settlers) world.unit("settlers1");
@@ -287,18 +301,19 @@ public class MoveUnitServiceTest {
     // 3) they are the same unit type
     @Test
     public void fail_swapping_must_be_the_only_move() {
-        MockTilesMap map = new MockTilesMap(
+        MockWorld world = MockWorld.of(new MockTilesMap(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
             "1| . g .",
             "2|. g . ",
-            "3| . g .");
-        MockWorld world = MockWorld.of(map);
+            "3| . g ."));
+
         world.createCivilization(RUSSIA, new MockScenario()
             .settlers("settlers1", new Point(1, 1))
             .settlers("settlers2", new Point(1, 3))
         );
+        world.startGame();
 
         // try one complex route - it must be OK
         Settlers settlers1 = (Settlers) world.unit("settlers1");
@@ -334,18 +349,19 @@ public class MoveUnitServiceTest {
     // 3) they are NOT the same unit type
     @Test
     public void success_moved_two_units_on_the_same_tile() {
-        MockTilesMap map = new MockTilesMap(
+        MockWorld world = MockWorld.of(new MockTilesMap(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
             "1| . g g",
             "2|. . . ",
-            "3| . . .");
-        MockWorld world = MockWorld.of(map);
+            "3| . . ."));
         world.createCivilization(RUSSIA, new MockScenario()
             .warriors("warriors", new Point(1, 1))
             .workers("workers", new Point(2, 1))
         );
+
+        world.startGame();
 
         // try one complex route - it must be OK
         Warriors warriors = (Warriors) world.unit("warriors");
@@ -374,19 +390,20 @@ public class MoveUnitServiceTest {
 
     @Test
     public void success_entered_into_city() {
-        MockTilesMap map = new MockTilesMap(
+        MockWorld world = MockWorld.of(new MockTilesMap(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
             "1| . g g",
             "2|. . . ",
-            "3| . . .");
-        MockWorld world = MockWorld.of(map);
+            "3| . . ."));
 
         world.createCivilization(RUSSIA, new MockScenario()
             .workers("workers", new Point(1, 1))
             .city("city", new Point(2, 1))
         );
+
+        world.startGame();
 
         // try one complex route - it must be OK
         Workers workers = (Workers) world.unit("workers");
@@ -410,20 +427,21 @@ public class MoveUnitServiceTest {
     // Warriors can't enter to city because of that
     @Test
     public void fail_tile_occupied_in_city() {
-        MockTilesMap map = new MockTilesMap(
+        MockWorld world = MockWorld.of(new MockTilesMap(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
             "1| . g g",
             "2|. . . ",
-            "3| . . .");
-        MockWorld world = MockWorld.of(map);
+            "3| . . ."));
 
         Civilization civilization = world.createCivilization(RUSSIA, new MockScenario()
             .city("city", new Point(2, 1))
             .greatArtist("artist", new Point(2, 1))
             .workers("workers", new Point(1, 1))
         );
+
+        world.startGame();
 
         City city= world.city("city");
         Workers workers = (Workers) world.unit("workers");
@@ -455,7 +473,7 @@ public class MoveUnitServiceTest {
 
     @Test
     public void get_tiles_to_move() {
-        MockTilesMap map = new MockTilesMap(2,
+        MockWorld world = MockWorld.of(new MockTilesMap(2,
             " |0 1 2 3 4 ", " |0 1 2 3 4 ",
             "-+----------", "-+----------",
             "0|g g g g g ", "0|. . . . . ",
@@ -463,12 +481,13 @@ public class MoveUnitServiceTest {
             "2|g g g g g ", "2|M . . . . ",
             "3| g g g g g", "3| . M M . .",
             "4|g g g g g ", "4|M . . . . ",
-            "5| g g g g g", "5| . . . . .");
-        MockWorld world = MockWorld.of(map);
+            "5| g g g g g", "5| . . . . ."));
 
         world.createCivilization(RUSSIA, new MockScenario()
             .workers("workers1", new Point(2, 2))
         );
+        world.startGame();
+
         Workers workers1 = (Workers) world.unit("workers1");
         workers1.setPassScore(2);
 
@@ -488,7 +507,7 @@ public class MoveUnitServiceTest {
 
     @Test
     public void find_route1() {
-        MockTilesMap map = new MockTilesMap(2,
+        MockWorld world = MockWorld.of(new MockTilesMap(2,
             " |0 1 2 3 4 ", " |0 1 2 3 4 ",
             "-+----------", "-+----------",
             "0|g g g g g ", "0|. . . . . ",
@@ -496,12 +515,13 @@ public class MoveUnitServiceTest {
             "2|g g g g g ", "2|M . . M . ",
             "3| g g g g g", "3| . M M . .",
             "4|g g g g g ", "4|M . . . . ",
-            "5| g g g g g", "5| . . . . .");
-        MockWorld world = MockWorld.of(map);
+            "5| g g g g g", "5| . . . . ."));
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .workers("workers", new Point(2, 2))
         );
+
+        world.startGame();
 
         WorldRender.of(this).createHtml(world, russia);
 
@@ -514,7 +534,7 @@ public class MoveUnitServiceTest {
 
     @Test
     public void find_route2() {
-        MockTilesMap map = new MockTilesMap(2,
+        MockWorld world = MockWorld.of(new MockTilesMap(2,
             " |0 1 2 3 4 ", " |0 1 2 3 4 ",
             "-+----------", "-+----------",
             "0|g g g g g ", "0|. . . . . ",
@@ -522,12 +542,13 @@ public class MoveUnitServiceTest {
             "2|g g g g g ", "2|M . . M . ",
             "3| g g g g g", "3| . M M . .",
             "4|g g g g g ", "4|M . . . . ",
-            "5| g g g g g", "5| . . . . .");
-        MockWorld world = MockWorld.of(map);
+            "5| g g g g g", "5| . . . . ."));
 
         world.createCivilization(RUSSIA, new MockScenario()
             .workers("workers", new Point(2, 2))
         );
+
+        world.startGame();
 
         // route goes from bottom line to top (map-cyclic test)
         UnitRoute route = moveUnitService.findRoute(world.unit("workers"), new Point(1, 0));
@@ -539,7 +560,7 @@ public class MoveUnitServiceTest {
 
     @Test
     public void find_route3() {
-        MockTilesMap map = new MockTilesMap(2,
+        MockWorld world = MockWorld.of(new MockTilesMap(2,
             " |0 1 2 3 4 ", " |0 1 2 3 4 ",
             "-+----------", "-+----------",
             "0|g g g g g ", "0|. . . . . ",
@@ -547,12 +568,12 @@ public class MoveUnitServiceTest {
             "2|g g g g g ", "2|M . . M . ",
             "3| g g g g g", "3| . M M . M",
             "4|g g g g g ", "4|M . . . M ",
-            "5| g g g g g", "5| M M M M M");
-        MockWorld world = MockWorld.of(map);
+            "5| g g g g g", "5| M M M M M"));
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .workers("workers", new Point(2, 2))
         );
+        world.startGame();
 
         WorldRender.of(this).createHtml(world, russia);
 
@@ -566,7 +587,7 @@ public class MoveUnitServiceTest {
 
     @Test
     public void find_route4() {
-        MockTilesMap map = new MockTilesMap(2,
+        MockWorld world = MockWorld.of(new MockTilesMap(2,
             " |0 1 2 3 4 ", " |0 1 2 3 4 ",
             "-+----------", "-+----------",
             "0|g g g g g ", "0|. . . . . ",
@@ -574,12 +595,12 @@ public class MoveUnitServiceTest {
             "2|g g g g g ", "2|M . . M . ",
             "3| g g g g g", "3| . M M . M",
             "4|g g g g g ", "4|M . . . M ",
-            "5| g g g g g", "5| M M M M M");
-        MockWorld world = MockWorld.of(map);
+            "5| g g g g g", "5| M M M M M"));
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .workers("workers", new Point(2, 2))
         );
+        world.startGame();
 
         WorldRender.of(this).createHtml(world, russia);
 

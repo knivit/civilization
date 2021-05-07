@@ -6,10 +6,8 @@ import com.tsoft.civilization.combat.service.AttackService;
 import com.tsoft.civilization.combat.HasCombatStrengthList;
 import com.tsoft.civilization.helper.html.HtmlDocument;
 import com.tsoft.civilization.helper.html.HtmlParser;
-import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.unit.civil.workers.Workers;
 import com.tsoft.civilization.unit.military.warriors.Warriors;
-import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
 import org.assertj.core.api.AssertionsForClassTypes;
@@ -25,8 +23,6 @@ import static org.mockito.Mockito.when;
 
 public class AttackActionTest {
 
-    private final MockWorld world = MockWorld.newSimpleWorld();
-
     @Test
     public void attacker_not_found() {
         AttackService attackService = mock(AttackService.class);
@@ -40,8 +36,12 @@ public class AttackActionTest {
         AttackService attackService = mock(AttackService.class);
         AttackAction attackAction = new AttackAction(attackService);
 
-        Civilization russia = world.createCivilization(RUSSIA);
-        Warriors warriors = UnitFactory.newInstance(russia, Warriors.CLASS_UUID);
+        MockWorld world = MockWorld.newSimpleWorld();
+        world.createCivilization(RUSSIA, new MockScenario()
+            .warriors("warriors", new Point(2, 0)));
+        Warriors warriors = (Warriors) world.unit("warriors");
+        world.startGame();
+
         warriors.destroy();
 
         assertThat(attackAction.attack(warriors, null)).isEqualTo(ATTACKER_NOT_FOUND);
@@ -52,8 +52,11 @@ public class AttackActionTest {
         AttackService attackService = mock(AttackService.class);
         AttackAction attackAction = new AttackAction(attackService);
 
-        Civilization russia = world.createCivilization(RUSSIA);
-        Workers workers = UnitFactory.newInstance(russia, Workers.CLASS_UUID);
+        MockWorld world = MockWorld.newSimpleWorld();
+        world.createCivilization(RUSSIA, new MockScenario()
+            .workers("workers", new Point(2, 0)));
+        Workers workers = (Workers) world.unit("workers");
+        world.startGame();
 
         assertThat(attackAction.attack(workers, null)).isEqualTo(NOT_MILITARY_UNIT);
     }
@@ -63,8 +66,11 @@ public class AttackActionTest {
         AttackService attackService = mock(AttackService.class);
         AttackAction attackAction = new AttackAction(attackService);
 
-        Civilization russia = world.createCivilization(RUSSIA);
-        Warriors warriors = UnitFactory.newInstance(russia, Warriors.CLASS_UUID);
+        MockWorld world = MockWorld.newSimpleWorld();
+        world.createCivilization(RUSSIA, new MockScenario()
+            .warriors("warriors", new Point(2, 0)));
+        Warriors warriors = (Warriors) world.unit("warriors");
+        world.startGame();
 
         assertThat(attackAction.attack(warriors, null)).isEqualTo(NO_TARGETS_TO_ATTACK);
     }
@@ -74,6 +80,7 @@ public class AttackActionTest {
         AttackService attackService = mock(AttackService.class);
         AttackAction attackAction = new AttackAction(attackService);
 
+        MockWorld world = MockWorld.newSimpleWorld();
         world.createCivilization(RUSSIA, new MockScenario()
             .warriors("warriors", new Point(2, 0)));
         Warriors warriors = (Warriors) world.unit("warriors");
@@ -81,6 +88,7 @@ public class AttackActionTest {
         world.createCivilization(AMERICA, new MockScenario()
             .workers("foreignWorkers", new Point(2, 2)));
         Workers foreignWorkers = (Workers) world.unit("foreignWorkers");
+        world.startGame();
 
         when(attackService.getTargetsToAttack(eq(warriors))).thenReturn(HasCombatStrengthList.of(foreignWorkers));
 
@@ -93,6 +101,7 @@ public class AttackActionTest {
         AttackService attackService = mock(AttackService.class);
         AttackAction attackAction = new AttackAction(attackService);
 
+        MockWorld world = MockWorld.newSimpleWorld();
         world.createCivilization(RUSSIA, new MockScenario()
             .warriors("warriors", new Point(2, 0)));
         Warriors warriors = (Warriors) world.unit("warriors");
@@ -100,6 +109,7 @@ public class AttackActionTest {
         world.createCivilization(AMERICA, new MockScenario()
             .workers("foreignWorkers", new Point(2, 2)));
         Workers foreignWorkers = (Workers) world.unit("foreignWorkers");
+        world.startGame();
 
         when(attackService.canAttack(eq(warriors))).thenReturn(CAN_ATTACK);
         when(attackService.getTargetsToAttack(eq(warriors))).thenReturn(HasCombatStrengthList.of(foreignWorkers));

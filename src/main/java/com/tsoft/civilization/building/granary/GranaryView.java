@@ -6,21 +6,20 @@ import lombok.Getter;
 
 public class GranaryView extends AbstractBuildingView {
 
+    public static final L10n NAME = new L10n()
+        .put("en", "Granary")
+        .put("ru", "Амбар");
+
+    public static final L10n DESCRIPTION = new L10n()
+        .put("en", "Each source of Wheat Bananas and Deer worked by this City produce +1 Food.")
+        .put("ru", "Каждый источник бананов и оленей, обрабатываемый этим городом, производит +1 пищи");
+
     @Getter
-    public final L10n name = L10nGranary.NAME;
+    public final L10n name = NAME;
 
-    @Override
-    public String getLocalizedName() {
-        return name.getLocalized();
-    }
+    @Getter
+    public final String localizedDescription = DESCRIPTION.getLocalized();
 
-    @Override
-    public String getLocalizedDescription() {
-        return L10nGranary.DESCRIPTION.getLocalized();
-    }
-
-    @Override
-    public String getStatusImageSrc() {
-        return "images/status/buildings/granary.png";
-    }
+    @Getter
+    public final String statusImageSrc = "images/status/buildings/granary.png";
 }

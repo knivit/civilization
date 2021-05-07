@@ -20,8 +20,7 @@ import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
-import static com.tsoft.civilization.civilization.L10nCivilization.CIVILIZATIONS;
-import static com.tsoft.civilization.civilization.L10nCivilization.RANDOM;
+import static com.tsoft.civilization.civilization.L10nCivilization.*;
 
 public class JoinWorldAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
@@ -58,7 +57,12 @@ public class JoinWorldAction {
             return PLAYER_TYPE_MUST_BE_HUMAN_OR_BOT;
         }
 
-        int slotsAvailable = world.getMaxNumberOfCivilizations() - world.getCivilizations().size();
+        int slotsUsed = world.getCivilizations().size();
+        if (world.getCivilizations().getCivilizationByName(BARBARIANS) != null) {
+            slotsUsed --;
+        }
+
+        int slotsAvailable = world.getMaxNumberOfCivilizations() - slotsUsed;
         if (slotsAvailable == 0) {
             return WORLD_IS_FULL;
         }
@@ -82,7 +86,13 @@ public class JoinWorldAction {
             return CANT_CREATE_CIVILIZATION;
         }
 
-        Sessions.getCurrent().setActiveCivilization(civilization);
+        if (!PlayerType.BOT.equals(request.playerType)) {
+            Sessions.getCurrent().setActiveCivilization(civilization);
+
+            // Start the game
+            world.startGame();
+        }
+
         return JOINED;
     }
 

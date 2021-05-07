@@ -17,10 +17,16 @@ public class NextTurnActionTest {
         MockWorld world = MockWorld.newSimpleWorld();
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario());
 
+        world.startGame();
+        int startYear = world.getYear().getYear();
+
         assertThat(russia.getMoveState())
             .isNotEqualTo(MoveState.DONE);
 
         assertThat(NextTurnAction.nextTurn(russia))
             .isEqualTo(MOVE_DONE);
+
+        assertThat(world.getYear().getYear())
+            .isNotEqualTo(startYear);
     }
 }

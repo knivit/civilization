@@ -42,6 +42,7 @@ public class AttackServiceTest {
             .warriors("foreignWarriors", new Point(2, 1))
         );
 
+        world.startGame();
         world.setCivilizationsRelations(russia, america, CivilizationsRelations.war());
 
         // first, there is foreign workers to attack
@@ -86,6 +87,7 @@ public class AttackServiceTest {
             .archers("foreignArchers2", new Point(3, 3))
         );
 
+        world.startGame();
         world.setCivilizationsRelations(russia, america, CivilizationsRelations.war());
         WorldRender.of(this).createHtml(world, russia);
 
@@ -142,7 +144,7 @@ public class AttackServiceTest {
             .returns(false, CombatStrength::isDestroyed);
 
         // do the next step to be able to strike again
-        world.move();
+        world.nextYear();
 
         // attack the foreign warriors again
         assertThat(attackService.attack(world.unit("archers"), world.unit("foreignWarriors2")))
@@ -172,7 +174,7 @@ public class AttackServiceTest {
         assertThat(world.unit("archers").getPassScore()).isEqualTo(0);
 
         // next step
-        world.move();
+        world.nextYear();
 
         // attack the second line - archers
         assertThat(attackService.attack(world.unit("archers"), world.unit("foreignArchers1")))
@@ -200,7 +202,7 @@ public class AttackServiceTest {
             .returns(false, CombatResult::isSkippedAsMeleeNotEnoughPassScore);
 
         // next step
-        world.move();
+        world.nextYear();
 
         // attack the second line - foreign city
         assertThat(attackService.attack(world.unit("archers"), world.city("foreignCity")))
@@ -262,10 +264,10 @@ public class AttackServiceTest {
             .workers("foreignWorkers", new Point(4, 3))
         );
 
+        world.startGame();
+
         City foreignCity = world.city("foreignCity");
-
         foreignCity.setCombatStrength(foreignCity.getCombatStrength().copy().defenseStrength(30).build());
-
         world.setCivilizationsRelations(russia, america, CivilizationsRelations.war());
 
         // strike 1

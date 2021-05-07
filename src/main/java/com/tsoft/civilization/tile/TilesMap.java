@@ -7,8 +7,10 @@ import com.tsoft.civilization.util.AbstractDir;
 import com.tsoft.civilization.util.Dir6;
 import com.tsoft.civilization.util.NumberUtil;
 import com.tsoft.civilization.util.Point;
+import com.tsoft.civilization.world.MapConfiguration;
 import com.tsoft.civilization.world.MapSize;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -28,6 +30,9 @@ public class TilesMap implements Iterable<AbstractTile> {
 
     @Getter
     private final MapSize mapSize;
+
+    @Getter @Setter
+    private MapConfiguration mapConfiguration;
 
     private final int width;
     private final int height;

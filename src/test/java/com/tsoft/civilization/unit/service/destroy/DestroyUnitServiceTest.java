@@ -5,7 +5,6 @@ import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.unit.UnitFactory;
-import com.tsoft.civilization.unit.action.DestroyUnitAction;
 import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.util.Point;
 import org.junit.jupiter.api.Test;
@@ -22,18 +21,19 @@ public class DestroyUnitServiceTest {
 
     @Test
     public void buildCity1() {
-        MockTilesMap map = new MockTilesMap(
+        MockWorld world = MockWorld.of(new MockTilesMap(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
             "1| . g .",
             "2|. . g ",
-            "3| . . .");
-        MockWorld world = MockWorld.of(map);
+            "3| . . ."));
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .settlers("settlers1", new Point(1, 1))
         );
+
+        world.startGame();
 
         // The only settlers can't be destroyed
         assertThat(destroyUnitService.destroy(world.unit("settlers1")))

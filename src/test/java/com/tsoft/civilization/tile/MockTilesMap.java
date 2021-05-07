@@ -21,6 +21,7 @@ import com.tsoft.civilization.tile.feature.marsh.Marsh;
 import com.tsoft.civilization.tile.feature.mountain.Mountain;
 import com.tsoft.civilization.tile.feature.oasis.Oasis;
 import com.tsoft.civilization.util.Point;
+import com.tsoft.civilization.world.MapConfiguration;
 import com.tsoft.civilization.world.MapSize;
 
 import java.util.Collections;
@@ -66,6 +67,8 @@ public class MockTilesMap extends TilesMap {
     public MockTilesMap(int layerCount, String ... asciiLines) {
         super(MapSize.STANDARD, (asciiLines[0].length() - 2) / 2, asciiLines.length / layerCount - 2);
         setMockTiles(layerCount, asciiLines);
+
+        setMapConfiguration(MapConfiguration.EARTH);
     }
 
     // Add tiles (first layer) and tiles' features (second etc)
@@ -103,7 +106,7 @@ public class MockTilesMap extends TilesMap {
             }
 
             AbstractTile tile = getTile(x, y);
-            AbstractFeature feature = FeatureFactory.newInstance(classUuid, tile);
+            FeatureFactory.newInstance(classUuid, tile);
         }
     }
 }

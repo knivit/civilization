@@ -22,6 +22,8 @@ public class DefaultScenarioTest {
         Civilization barbarians = world.createCivilization(BARBARIANS);
         Civilization russia = world.createCivilization(RUSSIA);
 
+        world.startGame();
+
         assertThat(russia.getUnitService())
             .returns(2, CivilizationUnitService::size)
             .returns(1, e -> e.findByClassUuid(Settlers.CLASS_UUID).size())
