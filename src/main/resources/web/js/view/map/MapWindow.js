@@ -64,15 +64,15 @@ var mapWindow = {
     },
 
     // (dx, dy) is the offset in pixels where to move the left-up corner of the view area
-    moveLeftUpXY: function(dx, dy) {
+    moveLeftUpXY: function(dx, dy, canvasHeight) {
         // left-up corner of the canvas
         var nx = this.x - dx;
         if (nx < 0) nx += this.mapWidthX;
         if (nx >= this.mapWidthX) nx -= this.mapWidthX;
 
         var ny = this.y - dy;
-        if (ny < 0) ny += this.mapHeightY;
-        if (ny >= this.mapHeightY) ny -= this.mapHeightY;
+        if (ny < 0) ny = 0;
+        if (ny >= this.mapHeightY - canvasHeight) ny = this.mapHeightY - canvasHeight;
 
         this.x = nx;
         this.y = ny;
@@ -129,11 +129,12 @@ var mapWindow = {
      */
     getLeftUpColRow: function(offX, offY) {
         var x = this.x + offX;
-        var y = this.y + offY;
         if (x < 0) x = this.mapWidthX + x;
-        if (y < 0) y = this.mapHeightY + y;
         if (x >= this.mapWidthX) x = x - this.mapWidthX;
-        if (y >= this.mapHeightY) y = y - this.mapHeightY;
+
+        var y = this.y + offY;
+        if (y < 0) y = 0;
+        if (y >= this.mapHeightY) y = this.mapHeightY;
 
         var roughColRow = this.getRoughLeftUpColRow(x, y);
         var col = roughColRow.col;

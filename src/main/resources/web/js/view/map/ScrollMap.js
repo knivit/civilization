@@ -34,7 +34,7 @@ var scrollMap = {
         if (e.keyCode === 40) dy = -this.keyOffY; // Down arrow
         if (e.keyCode === 27) { dx = mapWindow.x; dy = mapWindow.y }; // Esc
 
-        mapWindow.moveLeftUpXY(dx, dy);
+        mapWindow.moveLeftUpXY(dx, dy, this.canvas.height);
         drawMap.redraw();
     },
 
@@ -75,7 +75,10 @@ var scrollMap = {
         if (!this.isMouseLeftButtonPressed) return;
 
         var offset = this.getOffset(e);
-        mapWindow.moveLeftUpXY(offset.x - this.startMouseX, offset.y - this.startMouseY);
+        var dx = offset.x - this.startMouseX;
+        var dy = offset.y - this.startMouseY;
+        mapWindow.moveLeftUpXY(dx, dy, this.canvas.height);
+
         this.startMouseX = offset.x;
         this.startMouseY = offset.y;
         this.isMoved = true;
@@ -90,7 +93,10 @@ var scrollMap = {
     },
 
     onTouchMove: function(e) {
-        mapWindow.moveLeftUpXY(e.changedTouches[0].pageX - this.startMouseX, e.changedTouches[0].pageY - this.startMouseY);
+        var dx = e.changedTouches[0].pageX - this.startMouseX;
+        var dy = e.changedTouches[0].pageY - this.startMouseY;
+        mapWindow.moveLeftUpXY(dx, dy, this.canvas.height);
+
         this.startMouseX = e.changedTouches[0].pageX;
         this.startMouseY = e.changedTouches[0].pageY;
         this.isMoved = true;

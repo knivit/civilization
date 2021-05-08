@@ -41,8 +41,8 @@ var drawMap = {
         scrollMap.init(this.canvas);
     },
 
-    onSelectTile: function(offx, offy) {
-        var selectedColRow = mapWindow.getLeftUpColRow(offx, offy);
+    onSelectTile: function(x, y) {
+        var selectedColRow = mapWindow.getLeftUpColRow(x, y);
         this.selectTile(selectedColRow.col, selectedColRow.row);
     },
 
@@ -78,7 +78,7 @@ var drawMap = {
                "Offset is [", dx, dy, "] px");
         }
 
-        mapWindow.moveLeftUpXY(dx, dy);
+        mapWindow.moveLeftUpXY(dx, dy, this.canvas.height);
         this.drawTilesMap();
     },
 
@@ -178,7 +178,7 @@ var drawMap = {
             if (y >= this.canvas.height) break;
 
             row ++;
-            if (row >= tilesMap.mapHeight) row = 0;
+            if (row >= tilesMap.mapHeight) break;
 
             rn ++;
         }
