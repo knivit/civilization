@@ -1,9 +1,13 @@
 package com.tsoft.civilization.world.generator.earth;
 
-public final class EarthDuelMap {
+import com.tsoft.civilization.world.generator.AbstractWorldMap;
+import lombok.Getter;
+
+public class EarthDuelMap implements AbstractWorldMap {
 
     // 40x24
-    public static final String[] MAP = new String[] {
+    @Getter
+    private final String[] map = new String[] {
         "   0 1 2 3 4 5 6 7 8 9|0 1 2 3 4 5 6 7 8 9|0 1 2 3 4 5 6 7 8 9|0 1 2 3 4 5 6 7 8 9",
         "----------------------------------------------------------------------------------",
         "0|. . . . . . . . . . . . g g g . . . . . . . . . . . . . . . . . . . . . . . . . ",
@@ -31,6 +35,4 @@ public final class EarthDuelMap {
         "2|. . . . . . . g g . . . . . . . . . . . . . . . . . . . . . . . . . g g . . . . ",
         "3| . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ."
     };
-
-    private EarthDuelMap() { }
 }

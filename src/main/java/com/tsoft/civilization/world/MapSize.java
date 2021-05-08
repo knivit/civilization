@@ -56,12 +56,25 @@ public enum MapSize {
         HUGE, new Point(128, 80)
     );
 
+    public static final Map<MapSize, Integer> MAX_NUMBER_OF_CIVILIZATIONS = Map.of(
+        DUEL, 2,
+        TINY, 4,
+        SMALL, 6,
+        STANDARD, 8,
+        LARGE, 10,
+        HUGE, 12
+    );
+
     public int getWidth() {
         return MAP_SIZE.get(this).getX();
     }
 
     public int getHeight() {
         return MAP_SIZE.get(this).getY();
+    }
+
+    public int getMaxNumberOfCivilizations() {
+        return MAX_NUMBER_OF_CIVILIZATIONS.get(this);
     }
 
     public static MapSize find(String name) {

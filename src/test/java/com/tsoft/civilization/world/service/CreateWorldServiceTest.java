@@ -24,7 +24,6 @@ public class CreateWorldServiceTest {
             .worldName(worldName)
             .mapConfiguration(MapConfiguration.EARTH.name())
             .mapSize(MapSize.DUEL.name())
-            .maxNumberOfCivilizations(8)
             .climate(Climate.NORMAL.name())
             .difficultyLevel(WARLORD.name())
             .build();
@@ -36,6 +35,7 @@ public class CreateWorldServiceTest {
             .filteredOn(e -> worldName.equals(e.getName()))
             .hasSize(1)
             .first()
+            .returns(2, World::getMaxNumberOfCivilizations)
 
             // check for Barbarians
             .extracting(World::getCivilizations)
@@ -49,24 +49,11 @@ public class CreateWorldServiceTest {
             .worldName("World 1")
             .mapSize("<unknown>")
             .mapConfiguration(MapConfiguration.ASIA.name())
-            .maxNumberOfCivilizations(2)
             .difficultyLevel(DifficultyLevel.SETTLER.name())
             .climate(Climate.COLD.name())
             .build();
 
         assertThat(createWorldService.create(params))
             .isEqualTo(INVALID_MAP_SIZE);
-    }
-
-    @Test
-    public void invalid_max_number_of_civilizations() {
-        CreateWorldParams params = CreateWorldParams.builder()
-            .worldName("World 1")
-            .mapWidth(10)
-            .mapHeight(10)
-            .build();
-
-        assertThat(createWorldService.create(params))
-            .isEqualTo(INVALID_MAX_NUMBER_OF_CIVILIZATIONS);
     }
 }

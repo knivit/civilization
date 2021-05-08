@@ -7,7 +7,6 @@ import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 
-import static com.tsoft.civilization.civilization.L10nCivilization.CIVILIZATIONS;
 import static com.tsoft.civilization.world.Climate.NORMAL;
 import static com.tsoft.civilization.world.MapConfiguration.EARTH;
 import static com.tsoft.civilization.world.MapSize.STANDARD;
@@ -52,10 +51,6 @@ public class GetCreateWorldFormRequest extends AbstractAjaxRequest {
                     <td><select id='climate'>$climateOptions</select>
                 </tr>
                 <tr>
-                    <td>$maxNumberOfCivilizations</td>
-                    <td><input id='maxNumberOfCivilizations' type='text' placeholder='$maxNumberOfCivilizationsPlaceHolder' /></td>
-                </tr>
-                <tr>
                     <td>$difficultyLevel</td>
                     <td><select id='difficultyLevel'>$difficultyLevelOptions</select>
                     </td>
@@ -74,8 +69,6 @@ public class GetCreateWorldFormRequest extends AbstractAjaxRequest {
             "$mapSizeOptions", getMapSizeOptions(),
             "$climate", L10nWorld.INPUT_CLIMATE,
             "$climateOptions", getClimateOptions(),
-            "$maxNumberOfCivilizations", L10nWorld.INPUT_MAX_NUMBER_OF_CIVILIZATIONS,
-            "$maxNumberOfCivilizationsPlaceHolder", Math.min(CIVILIZATIONS.size(), 8),
             "$difficultyLevel", L10nWorld.DIFFICULTY_LEVEL_NAME,
             "$difficultyLevelOptions", getDifficultyLevelOptions(),
 

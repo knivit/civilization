@@ -13,6 +13,5 @@ public class CreateWorldParams {
     private final int mapHeight;
     private final String mapConfiguration;
     private final String climate;
-    private final int maxNumberOfCivilizations;
     private final String difficultyLevel;
 }

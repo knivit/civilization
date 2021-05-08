@@ -141,7 +141,6 @@ var client = {
         var mapConfiguration = document.getElementById('mapConfiguration').value;
         var mapSize = document.getElementById('mapSize').value;
         var climate = document.getElementById('climate').value;
-        var maxNumberOfCivilizations = document.getElementById('maxNumberOfCivilizations').value;
         var difficultyLevel = document.getElementById('difficultyLevel').value;
 
         server.sendAsyncAjax('ajax/CreateWorldRequest',
@@ -149,7 +148,6 @@ var client = {
              "mapConfiguration": mapConfiguration,
              "mapSize": mapSize,
              "climate": climate,
-             "maxNumberOfCivilizations": maxNumberOfCivilizations,
              "difficultyLevel": difficultyLevel
            }, client.onGetWorldsResponse);
     },

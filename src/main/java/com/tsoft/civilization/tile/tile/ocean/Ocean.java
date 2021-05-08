@@ -3,6 +3,7 @@ package com.tsoft.civilization.tile.tile.ocean;
 import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.tile.tile.TileType;
 import com.tsoft.civilization.economic.Supply;
+import lombok.Getter;
 
 import java.util.UUID;
 
@@ -41,6 +42,9 @@ public class Ocean extends AbstractTile {
     private static final OceanView VIEW = new OceanView();
     private boolean isDeepOcean;
 
+    @Getter
+    private final boolean canBuildCity = false;
+
     public boolean isDeepOcean() {
         return isDeepOcean;
     }
@@ -57,11 +61,6 @@ public class Ocean extends AbstractTile {
     @Override
     public Supply getBaseSupply() {
         return Supply.builder().food(1).gold(1).build();
-    }
-
-    @Override
-    public boolean canBuildCity() {
-        return false;
     }
 
     @Override

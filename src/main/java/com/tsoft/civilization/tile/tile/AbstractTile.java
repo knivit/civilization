@@ -216,7 +216,7 @@ public abstract class AbstractTile {
     private final FeatureList features = new FeatureList();
 
     public abstract TileType getTileType();
-    public abstract boolean canBuildCity();
+    public abstract boolean isCanBuildCity();
 
     public abstract int getDefensiveBonusPercent();
 

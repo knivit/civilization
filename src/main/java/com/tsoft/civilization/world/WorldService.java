@@ -4,7 +4,6 @@ import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.civilization.*;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityList;
-import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
@@ -115,9 +114,15 @@ public class WorldService {
         return relations.isWar();
     }
 
-    public List<Point> getTilesToStartCivilization(TilesMap map) {
-        return map.tiles()
-            .filter(AbstractTile::canBuildCity)
+    // Find a location to place a Settlers
+    public Point getSettlersStartLocation(Civilization civ) {
+        List<Point> possibleLocations = getTilesToStartCivilization();
+        return getCivilizationStartLocation(civ, possibleLocations);
+    }
+
+    private List<Point> getTilesToStartCivilization() {
+        return world.getTilesMap().tiles()
+            .filter(AbstractTile::isCanBuildCity)
             .map(AbstractTile::getLocation)
             .collect(Collectors.toList());
     }
@@ -127,7 +132,7 @@ public class WorldService {
     //   - not less than 4 tiles from other civilizations tiles
     //   - location must be passable for the Settlers
     //   - there are must be 3 tiles of Earth around the location
-    public Point getCivilizationStartLocation(Civilization civ, List<Point> possibleLocations) {
+    private Point getCivilizationStartLocation(Civilization civ, List<Point> possibleLocations) {
         Set<Point> busyLocations = new HashSet<>();
 
         for (Civilization civilization : civilizations) {
@@ -141,9 +146,10 @@ public class WorldService {
                 busyLocations.addAll(city.getTileService().getLocations());
             }
 
-            // exclude units
+            // exclude units and locations around them as far as 4 tiles
             for (AbstractUnit unit : civilization.getUnitService().getUnits()) {
                 busyLocations.add(unit.getLocation());
+                busyLocations.addAll(world.getLocationsAround(unit.getLocation(), 4));
             }
         }
 
@@ -152,8 +158,35 @@ public class WorldService {
             return null;
         }
 
+        // must be 3 tiles of Earth around
+        possibleLocations = getLocationsWithEarthAround(possibleLocations, 3);
+        if (possibleLocations.isEmpty()) {
+            return null;
+        }
+
         int n = ThreadLocalRandom.current().nextInt(possibleLocations.size());
         return possibleLocations.get(n);
+    }
+
+    private List<Point> getLocationsWithEarthAround(List<Point> possibleLocations, int radius) {
+        Set<Point> busyLocations = new HashSet<>();
+
+        int numberOfLocationsAround = world.getLocationsAround(possibleLocations.get(0), radius).size();
+        int minRadiusWithEarthAround = numberOfLocationsAround / 2;
+
+        for (Point location : possibleLocations) {
+            List<AbstractTile> tilesAround = world.getLocationsAround(location, radius).stream()
+                .map(e -> world.getTilesMap().getTile(e))
+                .filter(AbstractTile::isCanBuildCity)
+                .collect(Collectors.toList());
+
+            if (tilesAround.size() < minRadiusWithEarthAround) {
+                busyLocations.add(location);
+            }
+        }
+
+        possibleLocations.removeAll(busyLocations);
+        return possibleLocations;
     }
 
     public Civilization getCivilizationById(String civilizationId) {

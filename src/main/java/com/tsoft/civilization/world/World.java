@@ -84,8 +84,7 @@ public class World {
 
     // Find a location to place a Settlers
     public Point getSettlersStartLocation(Civilization civ) {
-        List<Point> possibleLocations = worldService.getTilesToStartCivilization(tilesMap);
-        return worldService.getCivilizationStartLocation(civ, possibleLocations);
+        return worldService.getSettlersStartLocation(civ);
     }
 
     public Civilization getCivilizationById(String civilizationId) {

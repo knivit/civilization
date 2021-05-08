@@ -50,14 +50,14 @@ public class DefaultScenario implements Scenario {
         // find a location for the Settlers
         Point settlersLocation = world.getSettlersStartLocation(civilization);
         if (settlersLocation == null) {
-            log.warn("Can't place Settlers");
+            log.warn("No locations to place Settlers");
             return false;
         }
 
         // create the Settlers unit
         Settlers settlers = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
         if (!civilization.getUnitService().addUnit(settlers, settlersLocation)) {
-            log.warn("Can't place Settlers");
+            log.warn("Can't add Settlers to a civilization");
             return false;
         }
 

@@ -26,7 +26,6 @@ public class CreateWorldService {
     public static final ActionFailureResult INVALID_DIFFICULTY_LEVEL = new ActionFailureResult(L10nWorld.INVALID_DIFFICULTY_LEVEL);
     public static final ActionFailureResult INVALID_CLIMATE = new ActionFailureResult(L10nWorld.INVALID_CLIMATE);
     public static final ActionFailureResult INVALID_MAP_CONFIGURATION = new ActionFailureResult(L10nWorld.INVALID_MAP_CONFIGURATION);
-    public static final ActionFailureResult INVALID_MAX_NUMBER_OF_CIVILIZATIONS = new ActionFailureResult(L10nWorld.INVALID_MAX_NUMBER_OF_CIVILIZATIONS);
     public static final ActionFailureResult CANT_CREATE_WORLD = new ActionFailureResult(L10nWorld.CANT_CREATE_WORLD);
     public static final ActionFailureResult CANT_CREATE_BARBARIANS = new ActionFailureResult(L10nWorld.CANT_CREATE_BARBARIANS);
 
@@ -34,11 +33,6 @@ public class CreateWorldService {
         if (request.getWorldName() == null || request.getWorldName().isBlank()) {
             log.debug("World name is blank");
             return INVALID_WORLD_NAME;
-        }
-
-        if (request.getMaxNumberOfCivilizations() < 1 || request.getMaxNumberOfCivilizations() > 16) {
-            log.debug("Number of civilization = {} is invalid", request.getMaxNumberOfCivilizations());
-            return INVALID_MAX_NUMBER_OF_CIVILIZATIONS;
         }
 
         DifficultyLevel difficultyLevel = DifficultyLevel.find(request.getDifficultyLevel());
@@ -72,7 +66,7 @@ public class CreateWorldService {
 
         // create a world
         World world = new World(request.getWorldName(), tilesMap, climate);
-        world.setMaxNumberOfCivilizations(Math.min(CIVILIZATIONS.size(), request.getMaxNumberOfCivilizations()));
+        world.setMaxNumberOfCivilizations(Math.min(CIVILIZATIONS.size(), mapSize.getMaxNumberOfCivilizations()));
         world.setDifficultyLevel(difficultyLevel);
 
         // add Barbarians civilization

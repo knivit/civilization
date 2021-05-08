@@ -3,6 +3,7 @@ package com.tsoft.civilization.tile.tile.grassland;
 import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.tile.tile.TileType;
 import com.tsoft.civilization.economic.Supply;
+import lombok.Getter;
 
 import java.util.UUID;
 
@@ -16,6 +17,9 @@ public class Grassland extends AbstractTile {
 
     private static final GrasslandView VIEW = new GrasslandView();
 
+    @Getter
+    private final boolean canBuildCity = true;
+
     @Override
     public TileType getTileType() {
         return TileType.EARTH_PLAIN;
@@ -24,11 +28,6 @@ public class Grassland extends AbstractTile {
     @Override
     public Supply getBaseSupply() {
         return Supply.builder().food(2).build();
-    }
-
-    @Override
-    public boolean canBuildCity() {
-        return true;
     }
 
     public int getDefensiveBonusPercent() {

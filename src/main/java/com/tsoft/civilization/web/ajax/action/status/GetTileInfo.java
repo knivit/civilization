@@ -104,7 +104,7 @@ public class GetTileInfo extends AbstractAjaxRequest {
             "$food", tileSupply.getFood(),
             "$foodImage", FOOD_IMAGE,
             "$canBuildCityLabel", L10nTile.CAN_BUILD_CITY,
-            "$canBuildCity", (tile.canBuildCity() ? L10nTile.YES : L10nTile.NO),
+            "$canBuildCity", (tile.isCanBuildCity() ? L10nTile.YES : L10nTile.NO),
             "$defenseBonusLabel", L10nTile.DEFENSE_BONUS,
             "$defenseBonus", tile.getDefensiveBonusPercent()
         );

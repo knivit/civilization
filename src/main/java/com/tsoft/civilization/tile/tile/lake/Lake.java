@@ -3,6 +3,7 @@ package com.tsoft.civilization.tile.tile.lake;
 import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.tile.tile.TileType;
 import com.tsoft.civilization.economic.Supply;
+import lombok.Getter;
 
 import java.util.UUID;
 
@@ -18,6 +19,9 @@ public class Lake extends AbstractTile {
 
     private static final LakeView VIEW = new LakeView();
 
+    @Getter
+    private final boolean canBuildCity = false;
+
     @Override
     public TileType getTileType() {
         return TileType.SEA;
@@ -26,11 +30,6 @@ public class Lake extends AbstractTile {
     @Override
     public Supply getBaseSupply() {
         return Supply.builder().food(2).gold(1).build();
-    }
-
-    @Override
-    public boolean canBuildCity() {
-        return false;
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.tsoft.civilization.tile.tile.snow;
 import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.tile.tile.TileType;
 import com.tsoft.civilization.economic.Supply;
+import lombok.Getter;
 
 import java.util.UUID;
 
@@ -16,6 +17,9 @@ public class Snow extends AbstractTile {
 
     private static final SnowView VIEW = new SnowView();
 
+    @Getter
+    private final boolean canBuildCity = false;
+
     @Override
     public TileType getTileType() {
         return TileType.EARTH_PLAIN;
@@ -24,11 +28,6 @@ public class Snow extends AbstractTile {
     @Override
     public Supply getBaseSupply() {
         return Supply.EMPTY;
-    }
-
-    @Override
-    public boolean canBuildCity() {
-        return false;
     }
 
     @Override

@@ -25,7 +25,6 @@ public class CreateWorldRequest extends AbstractAjaxRequest {
             .mapSize(request.get("mapSize"))
             .mapConfiguration(request.get("mapConfiguration"))
             .climate(request.get("climate"))
-            .maxNumberOfCivilizations(NumberUtil.parseInt(request.get("maxNumberOfCivilizations"), 4))
             .difficultyLevel(request.get("difficultyLevel"))
             .build();
 
