@@ -74,7 +74,7 @@ public class MoveUnitServiceTest {
 
     @Test
     public void no_locations_to_move() {
-        MockWorld world = MockWorld.of(new MockTilesMap(
+        MockWorld world = MockWorld.of(MockTilesMap.of(
             " |0 1 2 3 ",
             "-+--------",
             "0|g . . g ",
@@ -97,14 +97,13 @@ public class MoveUnitServiceTest {
 
     @Test
     public void fail_not_enough_passing_score_trivial() {
-        MockTilesMap map = new MockTilesMap(
+        MockWorld world = MockWorld.of(MockTilesMap.of(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
             "1| . g .",
             "2|. . . ",
-            "3| . . .");
-        MockWorld world = MockWorld.of(map);
+            "3| . . ."));
 
         world.createCivilization(RUSSIA, new MockScenario()
             .settlers("settlers", new Point(1, 1))
@@ -126,14 +125,13 @@ public class MoveUnitServiceTest {
 
     @Test
     public void success_moved_trivial() {
-        MockTilesMap map = new MockTilesMap(
+        MockWorld world = MockWorld.of(MockTilesMap.of(
             " |0 1 2 ",
             "-+------",
             "0|. g g ",
             "1| g g g",
             "2|. g g ",
-            "3| . . .");
-        MockWorld world = MockWorld.of(map);
+            "3| . . ."));
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario());
         world.startGame();
@@ -155,14 +153,13 @@ public class MoveUnitServiceTest {
 
     @Test
     public void success_moved_without_obstacles() {
-        MockTilesMap map = new MockTilesMap(
+        MockWorld world = MockWorld.of(MockTilesMap.of(
             " |0 1 2 3 4 5 ",
             "-+------------",
             "0|g . . g . g ",
             "1| g g g . . .",
             "2|g . . . g g ",
-            "3| . . . g . g");
-        MockWorld world = MockWorld.of(map);
+            "3| . . . g . g"));
 
         world.createCivilization(RUSSIA, new MockScenario()
             .settlers("settlers", new Point(1, 1))
@@ -205,14 +202,13 @@ public class MoveUnitServiceTest {
     // 3) they are the same unit type
     @Test
     public void success_swapped() {
-        MockTilesMap map = new MockTilesMap(
+        MockWorld world = MockWorld.of(MockTilesMap.of(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
             "1| . g g",
             "2|. . . ",
-            "3| . . .");
-        MockWorld world = MockWorld.of(map);
+            "3| . . ."));
 
         world.createCivilization(RUSSIA, new MockScenario()
             .settlers("settlers1", new Point(1, 1))
@@ -252,14 +248,13 @@ public class MoveUnitServiceTest {
     // 3) they are the same unit type
     @Test
     public void fail_not_enough_passing_score_to_swap() {
-        MockTilesMap map = new MockTilesMap(
+        MockWorld world = MockWorld.of(MockTilesMap.of(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
             "1| . g g",
             "2|. . . ",
-            "3| . . .");
-        MockWorld world = MockWorld.of(map);
+            "3| . . ."));
 
         world.createCivilization(RUSSIA, new MockScenario()
             .settlers("settlers1", new Point(1, 1))
@@ -301,7 +296,7 @@ public class MoveUnitServiceTest {
     // 3) they are the same unit type
     @Test
     public void fail_swapping_must_be_the_only_move() {
-        MockWorld world = MockWorld.of(new MockTilesMap(
+        MockWorld world = MockWorld.of(MockTilesMap.of(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
@@ -349,7 +344,7 @@ public class MoveUnitServiceTest {
     // 3) they are NOT the same unit type
     @Test
     public void success_moved_two_units_on_the_same_tile() {
-        MockWorld world = MockWorld.of(new MockTilesMap(
+        MockWorld world = MockWorld.of(MockTilesMap.of(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
@@ -390,7 +385,7 @@ public class MoveUnitServiceTest {
 
     @Test
     public void success_entered_into_city() {
-        MockWorld world = MockWorld.of(new MockTilesMap(
+        MockWorld world = MockWorld.of(MockTilesMap.of(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
@@ -427,7 +422,7 @@ public class MoveUnitServiceTest {
     // Warriors can't enter to city because of that
     @Test
     public void fail_tile_occupied_in_city() {
-        MockWorld world = MockWorld.of(new MockTilesMap(
+        MockWorld world = MockWorld.of(MockTilesMap.of(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
@@ -473,7 +468,7 @@ public class MoveUnitServiceTest {
 
     @Test
     public void get_tiles_to_move() {
-        MockWorld world = MockWorld.of(new MockTilesMap(2,
+        MockWorld world = MockWorld.of(MockTilesMap.of(2,
             " |0 1 2 3 4 ", " |0 1 2 3 4 ",
             "-+----------", "-+----------",
             "0|g g g g g ", "0|. . . . . ",
@@ -507,7 +502,7 @@ public class MoveUnitServiceTest {
 
     @Test
     public void find_route1() {
-        MockWorld world = MockWorld.of(new MockTilesMap(2,
+        MockWorld world = MockWorld.of(MockTilesMap.of(2,
             " |0 1 2 3 4 ", " |0 1 2 3 4 ",
             "-+----------", "-+----------",
             "0|g g g g g ", "0|. . . . . ",
@@ -534,7 +529,7 @@ public class MoveUnitServiceTest {
 
     @Test
     public void find_route2() {
-        MockWorld world = MockWorld.of(new MockTilesMap(2,
+        MockWorld world = MockWorld.of(MockTilesMap.of(2,
             " |0 1 2 3 4 ", " |0 1 2 3 4 ",
             "-+----------", "-+----------",
             "0|g g g g g ", "0|. . . . . ",
@@ -560,7 +555,7 @@ public class MoveUnitServiceTest {
 
     @Test
     public void find_route3() {
-        MockWorld world = MockWorld.of(new MockTilesMap(2,
+        MockWorld world = MockWorld.of(MockTilesMap.of(2,
             " |0 1 2 3 4 ", " |0 1 2 3 4 ",
             "-+----------", "-+----------",
             "0|g g g g g ", "0|. . . . . ",
@@ -587,7 +582,7 @@ public class MoveUnitServiceTest {
 
     @Test
     public void find_route4() {
-        MockWorld world = MockWorld.of(new MockTilesMap(2,
+        MockWorld world = MockWorld.of(MockTilesMap.of(2,
             " |0 1 2 3 4 ", " |0 1 2 3 4 ",
             "-+----------", "-+----------",
             "0|g g g g g ", "0|. . . . . ",

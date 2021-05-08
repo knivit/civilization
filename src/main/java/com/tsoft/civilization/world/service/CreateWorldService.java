@@ -59,22 +59,21 @@ public class CreateWorldService {
             return INVALID_MAP_CONFIGURATION;
         }
 
-        // create a map
-        TilesMap tilesMap = createTileMap(request.getMapSize(), request.getMapWidth(), request.getMapHeight());
-        if (tilesMap == null) {
+        MapSize mapSize = MapSize.find(request.getMapSize());
+        if (mapSize == null) {
             log.debug("Tiles map = {} ({}x{}) is invalid", request.getMapSize(), request.getMapWidth(), request.getMapHeight());
             return INVALID_MAP_SIZE;
         }
+
+        // create a map and generate the landscape
+        WorldGenerator generator = WorldGeneratorFactory.getGenerator(mapConfiguration);
+        TilesMap tilesMap = generator.generate(mapSize, climate);
         tilesMap.setMapConfiguration(mapConfiguration);
 
         // create a world
         World world = new World(request.getWorldName(), tilesMap, climate);
         world.setMaxNumberOfCivilizations(Math.min(CIVILIZATIONS.size(), request.getMaxNumberOfCivilizations()));
         world.setDifficultyLevel(difficultyLevel);
-
-        // generate landscape
-        WorldGenerator generator = WorldGeneratorFactory.getGenerator(mapConfiguration);
-        generator.generate(tilesMap, climate);
 
         // add Barbarians civilization
         Civilization barbarians = world.createCivilization(PlayerType.BOT, BARBARIANS, new BarbariansScenario());
@@ -87,22 +86,5 @@ public class CreateWorldService {
         }
 
         return CREATED;
-    }
-
-    private TilesMap createTileMap(String mapSizeName, int width, int height) {
-        MapSize mapSize = MapSize.find(mapSizeName);
-        if (mapSize == null) {
-            return null;
-        }
-
-        if (MapSize.CUSTOM.equals(mapSize)) {
-            if (width < TilesMap.MIN_WIDTH || width > TilesMap.MAX_WIDTH ||
-                height < TilesMap.MIN_HEIGHT || height > TilesMap.MAX_HEIGHT) {
-                return null;
-            }
-            return new TilesMap(width, height);
-        }
-
-        return new TilesMap(mapSize);
     }
 }

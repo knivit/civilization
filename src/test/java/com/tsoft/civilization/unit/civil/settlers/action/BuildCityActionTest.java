@@ -21,7 +21,7 @@ public class BuildCityActionTest {
 
     @Test
     public void buildCity1() {
-        MockWorld world = MockWorld.of(new MockTilesMap(
+        MockWorld world = MockWorld.of(MockTilesMap.of(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
@@ -57,7 +57,7 @@ public class BuildCityActionTest {
 
     @Test
     public void buildCity2() {
-        MockWorld world = MockWorld.of(new MockTilesMap(
+        MockWorld world = MockWorld.of(MockTilesMap.of(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
@@ -85,7 +85,7 @@ public class BuildCityActionTest {
 
     @Test
     public void buildCity3() {
-        MockWorld world = MockWorld.of(new MockTilesMap(
+        MockWorld world = MockWorld.of(MockTilesMap.of(
             " |0 1 2 3 4 5 6 7 ",
             "-+----------------",
             "0|g . . . . . . . ",
@@ -114,7 +114,7 @@ public class BuildCityActionTest {
 
     @Test
     public void buildCity4() {
-        MockWorld world = MockWorld.of(new MockTilesMap(
+        MockWorld world = MockWorld.of(MockTilesMap.of(
             " |0 1 2 3 4 5 6 7 ",
             "-+----------------",
             "0|. . . . . . . . ",

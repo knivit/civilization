@@ -26,7 +26,7 @@ public class CaptureUnitServiceTest {
 
     @Test
     public void targets_for_melee_unit_to_capture() {
-        MockWorld world = MockWorld.of(new MockTilesMap(
+        MockWorld world = MockWorld.of(MockTilesMap.of(
             " |0 1 2 3 ",
             "-+--------",
             "0|. g g . ",
@@ -73,7 +73,7 @@ public class CaptureUnitServiceTest {
 
     @Test
     public void targets_for_ranged_unit_to_capture() {
-        MockWorld world = MockWorld.of(new MockTilesMap(2,
+        MockWorld world = MockWorld.of(MockTilesMap.of(2,
             " |0 1 2 3 4 5 6 ", " |0 1 2 3 4 5 6 ",
             "-+--------------", "-+--------------",
             "0|. . g g . . . ", "0|. . M M . . . ",

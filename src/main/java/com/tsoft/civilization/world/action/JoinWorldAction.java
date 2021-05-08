@@ -123,6 +123,9 @@ public class JoinWorldAction {
         }
 
         Sessions.getCurrent().setActiveCivilization(civilization);
+
+        world.startGame();
+
         return JOINED;
     }
 

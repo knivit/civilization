@@ -17,13 +17,13 @@ public class WorldViewTest {
 
     @Test
     public void worldView() throws Exception {
-        MockWorld world = MockWorld.of(new MockTilesMap(3,
+        MockWorld world = MockWorld.of(MockTilesMap.of(3,
             " |0 1 2 ", " |0 1 2 ", " |0 1 2 ",
             "-+------", "-+------", "-+------",
             "0|g g g ", "0|h h . ", "0|f . . ",
             "1| g g g", "1| h h .", "1| f . ."));
 
-        Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
+        world.createCivilization(RUSSIA, new MockScenario()
             .city("city1", new Point(0, 0))
             .warriors("warriors", new Point(0, 0))
             .workers("workers", new Point(0, 0))

@@ -28,7 +28,7 @@ public class RemoveForestActionTest {
 
     @Test
     public void cantRemoveForestedHill() {
-        MockWorld world = MockWorld.of(new MockTilesMap(3,
+        MockWorld world = MockWorld.of(MockTilesMap.of(3,
             " |0 1 2 ", " |0 1 2 ", " |0 1 2 ",
             "-+------", "-+------", "-+------",
             "0|. . . ", "0|. . . ", "0|. . . ",
@@ -56,7 +56,7 @@ public class RemoveForestActionTest {
 
     @Test
     public void removeForestedHill() {
-        MockWorld world = MockWorld.of(new MockTilesMap(3,
+        MockWorld world = MockWorld.of(MockTilesMap.of(3,
             " |0 1 2 ", " |0 1 2 ", " |0 1 2 ",
             "-+------", "-+------", "-+------",
             "0|. . . ", "0|. . . ", "0|. . . ",
@@ -111,7 +111,7 @@ public class RemoveForestActionTest {
 
     @Test
     public void get_html() {
-        MockWorld world = MockWorld.of(new MockTilesMap(3,
+        MockWorld world = MockWorld.of(MockTilesMap.of(3,
             " |0 1 2 ", " |0 1 2 ", " |0 1 2 ",
             "-+------", "-+------", "-+------",
             "0|. . . ", "0|. . . ", "0|. . . ",

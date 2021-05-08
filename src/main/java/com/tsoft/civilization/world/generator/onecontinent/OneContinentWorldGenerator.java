@@ -18,6 +18,7 @@ import com.tsoft.civilization.tile.tile.*;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.util.Rect;
 import com.tsoft.civilization.world.Climate;
+import com.tsoft.civilization.world.MapSize;
 import com.tsoft.civilization.world.generator.*;
 
 import java.util.ArrayList;
@@ -29,27 +30,23 @@ import java.util.concurrent.ThreadLocalRandom;
 */
 public class OneContinentWorldGenerator implements WorldGenerator {
 
-    private static final WorldGeneratorHelper helper = new WorldGeneratorHelper();
-
-    private TilesMap tilesMap;
-    private Climate climate;
+    private static final MapGenerator MAP_GENERATOR = new MapGenerator();
 
     @Override
-    public void generate(TilesMap tilesMap, Climate climate) {
-        this.tilesMap = tilesMap;
-        this.climate = climate;
+    public TilesMap generate(MapSize mapSize, Climate climate) {
+        TilesMap tilesMap = new TilesMap(mapSize);
 
         Rect continent = calcContinentDimension(tilesMap.getWidth(), tilesMap.getHeight());
 
-        defineContinent(continent);
+        defineContinent(tilesMap, continent);
 
         applyClimate();
 
         noiseBoundaries();
 
-        addShallowWater();
+        addShallowWater(tilesMap, climate);
 
-        changeBaseTiles();
+        changeBaseTiles(tilesMap);
 
         addMountains();
 
@@ -63,6 +60,8 @@ public class OneContinentWorldGenerator implements WorldGenerator {
 
         StrategicResourceGenerator strategicResourceGenerator = new StrategicResourceGenerator(tilesMap, climate);
         strategicResourceGenerator.addToMap();
+
+        return tilesMap;
     }
 
     private void addMountains() {
@@ -79,36 +78,36 @@ public class OneContinentWorldGenerator implements WorldGenerator {
         }
     }
 
-    private void changeBaseTiles() {
-        changeTiles(90, 100,
+    private void changeBaseTiles(TilesMap tilesMap) {
+        changeTiles(tilesMap, 90, 100,
                 new TP(100, Ocean.CLASS_UUID, Ice.CLASS_UUID));
 
-        changeTiles(80, 90,
+        changeTiles(tilesMap, 80, 90,
                 new TP(70, Snow.CLASS_UUID),
                 new TP(20, Tundra.CLASS_UUID),
                 new TP(10, Ocean.CLASS_UUID, Ice.CLASS_UUID));
 
-        changeTiles(60, 80,
+        changeTiles(tilesMap, 60, 80,
                 new TP(20, Snow.CLASS_UUID),
                 new TP(30, Tundra.CLASS_UUID),
                 new TP(20, Plain.CLASS_UUID, Marsh.CLASS_UUID),
                 new TP(10, Tundra.CLASS_UUID, Hill.CLASS_UUID),
                 new TP(20, Tundra.CLASS_UUID, Forest.CLASS_UUID));
 
-        changeTiles(30, 60,
+        changeTiles(tilesMap, 30, 60,
                 new TP(20, Grassland.CLASS_UUID),
                 new TP(20, Plain.CLASS_UUID),
                 new TP(20, Plain.CLASS_UUID, Hill.CLASS_UUID),
                 new TP(20, Grassland.CLASS_UUID, Hill.CLASS_UUID),
                 new TP(20, Grassland.CLASS_UUID, Hill.CLASS_UUID, Forest.CLASS_UUID));
 
-        changeTiles(-10, 30,
+        changeTiles(tilesMap, -10, 30,
                 new TP(40, Desert.CLASS_UUID),
                 new TP(20, Plain.CLASS_UUID),
                 new TP(20, Desert.CLASS_UUID, Hill.CLASS_UUID),
                 new TP(20, Plain.CLASS_UUID, Hill.CLASS_UUID));
 
-        changeTiles(-30, -10,
+        changeTiles(tilesMap, -30, -10,
                 new TP(20, Desert.CLASS_UUID),
                 new TP(20, Plain.CLASS_UUID),
                 new TP(10, Desert.CLASS_UUID, Oasis.CLASS_UUID),
@@ -116,14 +115,14 @@ public class OneContinentWorldGenerator implements WorldGenerator {
                 new TP(10, Desert.CLASS_UUID, Hill.CLASS_UUID),
                 new TP(10, Plain.CLASS_UUID, Hill.CLASS_UUID, Jungle.CLASS_UUID));
 
-        changeTiles(-60, -30,
+        changeTiles(tilesMap, -60, -30,
                 new TP(20, Grassland.CLASS_UUID),
                 new TP(40, Grassland.CLASS_UUID, Jungle.CLASS_UUID),
                 new TP(10, Plain.CLASS_UUID),
                 new TP(10, Plain.CLASS_UUID, Hill.CLASS_UUID),
                 new TP(20, Plain.CLASS_UUID, Hill.CLASS_UUID, Jungle.CLASS_UUID));
 
-        changeTiles(-80, -60,
+        changeTiles(tilesMap, -80, -60,
                 new TP(20, Tundra.CLASS_UUID),
                 new TP(20, Tundra.CLASS_UUID, Forest.CLASS_UUID),
                 new TP(20, Tundra.CLASS_UUID, Hill.CLASS_UUID),
@@ -131,17 +130,17 @@ public class OneContinentWorldGenerator implements WorldGenerator {
                 new TP(10, Plain.CLASS_UUID),
                 new TP(10, Snow.CLASS_UUID));
 
-        changeTiles(-90, -80,
+        changeTiles(tilesMap, -90, -80,
                 new TP(40, Snow.CLASS_UUID),
                 new TP(20, Tundra.CLASS_UUID),
                 new TP(20, Plain.CLASS_UUID),
                 new TP(20, Tundra.CLASS_UUID, Forest.CLASS_UUID));
 
-        changeTiles(90, 100,
+        changeTiles(tilesMap, 90, 100,
                 new TP(100, Ocean.CLASS_UUID, Ice.CLASS_UUID));
     }
 
-    private void changeTiles(int fromY, int toY, TP ... tps) {
+    private void changeTiles(TilesMap tilesMap, int fromY, int toY, TP ... tps) {
         // -100% (South Pole) .. +100% (North Pole)
         double onePercent = tilesMap.getHeight() / 200.0;
         int y1 = (tilesMap.getHeight() / 2) + (int)Math.round(fromY * onePercent);
@@ -161,7 +160,7 @@ public class OneContinentWorldGenerator implements WorldGenerator {
         // changing
         if (tps.length == 1) {
             for (Point point : points) {
-                helper.addTileWithFeatures(tilesMap, point, tps[0].tileClasses);
+                MAP_GENERATOR.addTileWithFeatures(tilesMap, point, tps[0].tileClasses);
             }
         } else {
             for (Point point : points) {
@@ -169,7 +168,7 @@ public class OneContinentWorldGenerator implements WorldGenerator {
                 for (TP tp : tps) {
                     random -= tp.probabilityPercent;
                     if (random < 0) {
-                        helper.addTileWithFeatures(tilesMap, point, tp.tileClasses);
+                        MAP_GENERATOR.addTileWithFeatures(tilesMap, point, tp.tileClasses);
                         break;
                     }
                 }
@@ -178,7 +177,7 @@ public class OneContinentWorldGenerator implements WorldGenerator {
     }
 
     // Fill the continent with default tiles
-    private void defineContinent(Rect continent) {
+    private void defineContinent(TilesMap tilesMap, Rect continent) {
         for (int y = 0; y < tilesMap.getHeight(); y ++) {
             for (int x = 0; x < tilesMap.getWidth(); x ++) {
                 boolean isContinent =
@@ -207,7 +206,7 @@ public class OneContinentWorldGenerator implements WorldGenerator {
 
     }
 
-    private void addShallowWater() {
+    private void addShallowWater(TilesMap tilesMap, Climate climate) {
         addShallowWaterOutsideContinents(tilesMap, climate);
         addShallowWaterInsideContinents();
     }

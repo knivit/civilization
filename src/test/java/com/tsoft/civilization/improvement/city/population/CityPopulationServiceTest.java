@@ -13,7 +13,7 @@ public class CityPopulationServiceTest {
 
     @Test
     public void add_citizen() {
-        MockWorld world = MockWorld.of(new MockTilesMap(
+        MockWorld world = MockWorld.of(MockTilesMap.of(
             " |0 1 2 3 ",
             "-+--------",
             "0|. . g . ",

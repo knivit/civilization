@@ -20,7 +20,7 @@ public class PopulationSupplyServiceTest {
 
     @Test
     public void find_location_for_citizen_with_max_food_strategy() {
-        MockWorld world = MockWorld.of(new MockTilesMap(2,
+        MockWorld world = MockWorld.of(MockTilesMap.of(2,
             " |0 1 2 3 ", " |0 1 2 3 ",
             "-+--------", "-+--------",
             "0|d g l . ", "0|. . . i ",
@@ -49,7 +49,7 @@ public class PopulationSupplyServiceTest {
 
     @Test
     public void find_location_for_citizen_with_max_production_strategy() {
-        MockWorld world = MockWorld.of(new MockTilesMap(2,
+        MockWorld world = MockWorld.of(MockTilesMap.of(2,
             " |0 1 2 3 ", " |0 1 2 3 ",
             "-+--------", "-+--------",
             "0|d g l . ", "0|. . . i ",
@@ -78,7 +78,7 @@ public class PopulationSupplyServiceTest {
 
     @Test
     public void find_location_for_citizen_with_max_gold_strategy() {
-        MockWorld world = MockWorld.of(new MockTilesMap(2,
+        MockWorld world = MockWorld.of(MockTilesMap.of(2,
             " |0 1 2 3 ", " |0 1 2 3 ",
             "-+--------", "-+--------",
             "0|d g l . ", "0|. . . i ",

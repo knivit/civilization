@@ -19,7 +19,7 @@ public class TilesMapTest {
 
     @Test
     public void getTilesAround1() {
-        MockTilesMap map = new MockTilesMap(
+        TilesMap map = MockTilesMap.of(
             " |0 1 2 3 4 5 6 7 ",
             "-+----------------",
             "0|. . . . . . . . ",
@@ -44,7 +44,7 @@ public class TilesMapTest {
 
     @Test
     public void getTilesAround2() {
-        MockTilesMap map = new MockTilesMap(
+        TilesMap map = MockTilesMap.of(
             " |0 1 2 3 4 5 6 7 ",
             "-+----------------",
             "0|. . . . . . . . ",
@@ -76,7 +76,7 @@ public class TilesMapTest {
 
     @Test
     public void getTilesAround3() {
-        MockTilesMap map = new MockTilesMap(
+        TilesMap map = MockTilesMap.of(
             " |0 1 2 3 4 5 6 7 ",
             "-+----------------",
             "0|. . . . . . . . ",
@@ -139,7 +139,8 @@ public class TilesMapTest {
             assertEquals(map.getWidth() * map.getHeight(), n);
         });
         executors.shutdown();
-        executors.awaitTermination(10, TimeUnit.SECONDS);
+
+        assertThat(executors.awaitTermination(10, TimeUnit.SECONDS)).isTrue();
     }
 
     @Test

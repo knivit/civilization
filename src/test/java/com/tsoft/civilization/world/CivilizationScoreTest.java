@@ -26,7 +26,7 @@ public class CivilizationScoreTest {
 
     @Test
     public void noCitiesScore() {
-        MockWorld world = MockWorld.of(new MockTilesMap(
+        MockWorld world = MockWorld.of(MockTilesMap.of(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
@@ -47,7 +47,7 @@ public class CivilizationScoreTest {
 
     @Test
     public void oneCityOneTileScore() {
-        MockWorld world = MockWorld.of(new MockTilesMap(
+        MockWorld world = MockWorld.of(MockTilesMap.of(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
@@ -114,7 +114,7 @@ public class CivilizationScoreTest {
 
     @Test
     public void oneCityAllTypesOfTilesScore() {
-        MockWorld world = MockWorld.of(new MockTilesMap(3,
+        MockWorld world = MockWorld.of(MockTilesMap.of(3,
             " |0 1 2 3 4 ", " |0 1 2 3 4 ", " |0 1 2 3 4 ",
             "-+----------", "-+----------", "-+----------",
             "0|. g d . . ", "0|. . . i . ", "0|. . . . . ",
@@ -158,7 +158,7 @@ public class CivilizationScoreTest {
 
     @Test
     public void maxSupplyStrategies() {
-        MockWorld world = MockWorld.of(new MockTilesMap(2,
+        MockWorld world = MockWorld.of(MockTilesMap.of(2,
             " |0 1 2 ", " |0 1 2 ",
             "-+------", "-+------",
             "0|. g . ", "0|. h . ",

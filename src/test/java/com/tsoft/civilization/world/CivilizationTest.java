@@ -21,7 +21,7 @@ public class CivilizationTest {
     // After initialization, there must be Settlers and Warriors units
     @Test
     public void initCivilization1() {
-        MockWorld world = MockWorld.of(new MockTilesMap(
+        MockWorld world = MockWorld.of(MockTilesMap.of(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",
@@ -45,7 +45,7 @@ public class CivilizationTest {
     // There is only one tile available, so after initialization, there must be only Settlers unit
     @Test
     public void initCivilization2() {
-        MockWorld world = MockWorld.of(new MockTilesMap(
+        MockWorld world = MockWorld.of(MockTilesMap.of(
             " |0 1 2 ",
             "-+------",
             "0|. . . ",

@@ -147,7 +147,9 @@ public class World {
     }
 
     public void startGame() {
-        startYear();
+        if (!isYearStarted) {
+            startYear();
+        }
     }
 
     public void startYear() {

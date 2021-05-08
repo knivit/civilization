@@ -1,7 +1,7 @@
 package com.tsoft.civilization.world;
 
 import com.tsoft.civilization.L10n.L10n;
-import com.tsoft.civilization.util.Pair;
+import com.tsoft.civilization.util.Point;
 import lombok.Getter;
 
 import java.util.Arrays;
@@ -47,14 +47,22 @@ public enum MapSize {
         this.l10n = l10n;
     }
 
-    public static final Map<MapSize, Integer[]> MAP_SIZE = Map.of(
-        DUEL, new Integer[] { 40, 24 },
-        TINY, new Integer[] { 56, 36 },
-        SMALL, new Integer[] { 66, 42 },
-        STANDARD, new Integer[] { 80, 52 },
-        LARGE, new Integer[] { 104, 64 },
-        HUGE, new Integer[] { 128, 80 }
+    public static final Map<MapSize, Point> MAP_SIZE = Map.of(
+        DUEL, new Point(40, 24),
+        TINY, new Point(56, 36),
+        SMALL, new Point(66, 42),
+        STANDARD, new Point(80, 52),
+        LARGE, new Point(104, 64),
+        HUGE, new Point(128, 80)
     );
+
+    public int getWidth() {
+        return MAP_SIZE.get(this).getX();
+    }
+
+    public int getHeight() {
+        return MAP_SIZE.get(this).getY();
+    }
 
     public static MapSize find(String name) {
         return Arrays.stream(MapSize.values())

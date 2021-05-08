@@ -16,9 +16,6 @@ public class SupplyMock {
             case 'G': return Supply.builder().gold(value).build();
             case 'S': return Supply.builder().science(value).build();
             case 'C': return Supply.builder().culture(value).build();
-            case 'H': throw new IllegalArgumentException("fix");
-            case 'U': throw new IllegalArgumentException("fix");
-            case 'O': throw new IllegalArgumentException("fix");
 
             case 'A': return Supply.builder().greatArtist(value).build();
             case 'M': return Supply.builder().greatMusician(value).build();

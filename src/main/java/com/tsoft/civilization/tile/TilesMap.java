@@ -38,7 +38,7 @@ public class TilesMap implements Iterable<AbstractTile> {
     private final int height;
 
     public TilesMap(MapSize mapSize) {
-        this(mapSize, MapSize.MAP_SIZE.get(mapSize)[0], MapSize.MAP_SIZE.get(mapSize)[1]);
+        this(mapSize, mapSize.getWidth(), mapSize.getHeight());
     }
 
     public TilesMap(int width, int height) {

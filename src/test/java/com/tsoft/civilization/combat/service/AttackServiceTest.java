@@ -24,14 +24,13 @@ public class AttackServiceTest {
 
     @Test
     public void get_targets_to_attack_for_melee_attacker() {
-        MockTilesMap map = new MockTilesMap(
+        MockWorld world = MockWorld.of(MockTilesMap.of(
             " |0 1 2 3 ",
             "-+--------",
             "0|. g g . ",
             "1| . g g .",
             "2|. . g . ",
-            "3| . . . .");
-        MockWorld world = MockWorld.of(map);
+            "3| . . . ."));
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .warriors("warriors", new Point(1, 0))
@@ -63,14 +62,13 @@ public class AttackServiceTest {
     // An archer can fire through an ocean tile but can't through a mountain
     @Test
     public void get_targets_to_attack_for_ranged_attacker() {
-        MockTilesMap map = new MockTilesMap(2,
+        MockWorld world = MockWorld.of(MockTilesMap.of(2,
             " |0 1 2 3 4 5 6 ", " |0 1 2 3 4 5 6 ",
             "-+--------------", "-+--------------",
             "0|. . g g . . . ", "0|. . M M . . . ",
             "1| . . g g . . .", "1| . . . j . . .",
             "2|. . g . g . . ", "2|. . f . . . . ",
-            "3| . g g g . . .", "3| . . . h . . .");
-        MockWorld world = MockWorld.of(map);
+            "3| . g g g . . .", "3| . . . h . . ."));
 
         // our forces
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
@@ -237,7 +235,7 @@ public class AttackServiceTest {
     // After the city is conquered, foreign workers are captured and foreign warriors are destroyed.
     @Test
     public void warriors_conquer_foreign_city() {
-        MockTilesMap map = new MockTilesMap(
+        MockWorld world = MockWorld.of(MockTilesMap.of(
             " |0 1 2 3 4 5 6 ",
             "-+--------------",
             "0|. . g . . . . ",
@@ -245,8 +243,7 @@ public class AttackServiceTest {
             "2|. . . g g g . ",
             "3| . . . g g g .",
             "4|. . . . . g . ",
-            "5| . . . . . . .");
-        MockWorld world = MockWorld.of(map);
+            "5| . . . . . . ."));
 
         // our forces
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
