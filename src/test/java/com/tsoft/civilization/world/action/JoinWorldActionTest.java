@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
+import static com.tsoft.civilization.MockWorld.GRASSLAND_MAP_10x10;
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
 import static com.tsoft.civilization.world.action.JoinWorldAction.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,7 +24,7 @@ public class JoinWorldActionTest {
 
     @Test
     public void join_as_human_with_random_civilization() {
-        MockWorld world = MockWorld.newSimpleWorld();
+        MockWorld world = MockWorld.of(GRASSLAND_MAP_10x10);
         world.setMaxNumberOfCivilizations(1);
 
         JoinWorldAction.Request request = JoinWorldAction.Request.builder()
@@ -41,7 +42,7 @@ public class JoinWorldActionTest {
 
     @Test
     public void join_as_bot_random_civilization() {
-        MockWorld world = MockWorld.newSimpleWorld();
+        MockWorld world = MockWorld.of(GRASSLAND_MAP_10x10);
         world.setMaxNumberOfCivilizations(1);
 
         JoinWorldAction.Request request = JoinWorldAction.Request.builder()
@@ -59,7 +60,7 @@ public class JoinWorldActionTest {
 
     @Test
     public void join_as_spectator() {
-        MockWorld world = MockWorld.newSimpleWorld();
+        MockWorld world = MockWorld.of(GRASSLAND_MAP_10x10);
         world.setMaxNumberOfCivilizations(1);
 
         JoinWorldAction.Request human = JoinWorldAction.Request.builder()
@@ -112,7 +113,7 @@ public class JoinWorldActionTest {
 
     @Test
     public void world_is_full() {
-        MockWorld world = MockWorld.newSimpleWorld();
+        MockWorld world = MockWorld.of(GRASSLAND_MAP_10x10);
         world.setMaxNumberOfCivilizations(1);
 
         JoinWorldAction.Request request = JoinWorldAction.Request.builder()

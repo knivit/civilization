@@ -19,9 +19,9 @@ public class DeclareWarActionTest {
     public void declare_war() {
         MockWorld world = MockWorld.of(GRASSLAND_MAP_10x10);
 
-        Civilization russia = world.createCivilization(RUSSIA);
-        Civilization america = world.createCivilization(AMERICA);
-        Civilization japan = world.createCivilization(JAPAN);
+        Civilization russia = world.createCivilization(RUSSIA, new MockScenario());
+        Civilization america = world.createCivilization(AMERICA, new MockScenario());
+        Civilization japan = world.createCivilization(JAPAN, new MockScenario());
 
         world.startGame();
 

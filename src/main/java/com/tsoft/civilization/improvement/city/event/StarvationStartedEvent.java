@@ -18,7 +18,7 @@ public final class StarvationStartedEvent implements Event {
     private final boolean updateControlPanel;
     private final boolean updateStatusPanel;
 
-    private final L10n message = L10nCity.STARVATION_STARTED;
+    private final L10n message = L10nCity.STARVATION_STARTED_EVENT;
     private final L10n cityName;
 
     public Object[] getArgs() {

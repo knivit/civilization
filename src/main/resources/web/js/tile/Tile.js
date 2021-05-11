@@ -11,6 +11,12 @@ function Tile(col, row, tile) {
         this.features[i] = feature;
     }
 
+    this.improvements = new Array(tile.improvements.length);
+    for (var i = 0; i < tile.improvements.length; i ++) {
+        var improvement = new Improvement(tile.improvements[i]);
+        this.improvements[i] = improvement;
+    }
+
     this.isOcean = (this.name === 'Ocean');
     this.isTundra = (this.name === 'Tundra');
     this.isGrassland = (this.name === 'Grassland');

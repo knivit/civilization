@@ -16,6 +16,7 @@ import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.state.Sessions;
 import org.junit.jupiter.api.Test;
 
+import static com.tsoft.civilization.MockWorld.GRASSLAND_MAP_10x10;
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,7 +24,7 @@ public class JoinWorldRequestTest {
 
     @Test
     public void getJson() {
-        MockWorld world = MockWorld.newSimpleWorld();
+        MockWorld world = MockWorld.of(GRASSLAND_MAP_10x10);
 
         Request request = MockRequest.newInstance(
             "world", world.getId(),

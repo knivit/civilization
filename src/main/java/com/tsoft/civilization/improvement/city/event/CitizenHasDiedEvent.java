@@ -18,7 +18,7 @@ public final class CitizenHasDiedEvent implements Event {
     private final boolean updateControlPanel;
     private final boolean updateStatusPanel;
 
-    private final L10n message = L10nCity.CITIZEN_HAS_DIED;
+    private final L10n message = L10nCity.CITIZEN_HAS_DIED_EVENT;
     private final L10n cityName;
 
     public Object[] getArgs() {

@@ -1,18 +1,28 @@
-package com.tsoft.civilization.combat.service;
+package com.tsoft.civilization.combat.melee;
 
 import com.tsoft.civilization.action.ActionAbstractResult;
+import com.tsoft.civilization.action.ActionFailureResult;
+import com.tsoft.civilization.action.ActionSuccessResult;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.combat.CombatResult;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrengthList;
+import com.tsoft.civilization.combat.service.BaseCombatService;
+import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.unit.AbstractUnit;
+import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.unit.service.move.MoveUnitService;
 import com.tsoft.civilization.util.AbstractDir;
+import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.World;
 
 import java.util.List;
 
 public class MeleeCombatService {
+
+    public static final ActionSuccessResult CAN_ATTACK = new ActionSuccessResult(L10nUnit.CAN_ATTACK);
+
+    public static final ActionFailureResult INVALID_ATTACK_TARGET = new ActionFailureResult(L10nUnit.INVALID_ATTACK_TARGET);
 
     private static final BaseCombatService baseCombatService = new BaseCombatService();
     private static final MoveUnitService moveUnitService = new MoveUnitService();
@@ -33,7 +43,7 @@ public class MeleeCombatService {
             }
 
             // check we can move to the location
-            ActionAbstractResult moveResult = moveUnitService.getMoveOnAttackResult((AbstractUnit)attacker, target.getLocation());
+            ActionAbstractResult moveResult = getMoveOnMeleeAttackResult((AbstractUnit)attacker, target.getLocation());
             if (moveResult.isFail()) {
                 continue;
             }
@@ -55,7 +65,7 @@ public class MeleeCombatService {
 
         // attacker must be able to pass to target's tile
         AbstractUnit unit = (AbstractUnit) attacker;
-        ActionAbstractResult moveResult = moveUnitService.getMoveOnAttackResult(unit, target.getLocation());
+        ActionAbstractResult moveResult = getMoveOnMeleeAttackResult(unit, target.getLocation());
         if (moveResult.isFail()) {
             return CombatResult.builder()
                 .skippedAsMeleeNotEnoughPassScore(true)
@@ -67,5 +77,28 @@ public class MeleeCombatService {
         int strikeStrength = baseCombatService.calcStrikeStrength(attacker, meleeAttackStrength, target);
 
         return baseCombatService.attack(attacker, target, strikeStrength);
+    }
+
+    // Check can we move there during melee attack
+    private ActionAbstractResult getMoveOnMeleeAttackResult(AbstractUnit unit, Point nextLocation) {
+        ActionAbstractResult moveResult;
+
+        // check is the passing score enough
+        moveResult = moveUnitService.canMoveOnTile(unit, nextLocation);
+        if (moveResult.isFail()) {
+            return moveResult;
+        }
+
+        // can not attack own city
+        City city = unit.getWorld().getCityAtLocation(nextLocation);
+        if (city != null) {
+            if (unit.getCivilization().equals(city.getCivilization())) {
+                return INVALID_ATTACK_TARGET;
+            }
+
+            return CAN_ATTACK;
+        }
+
+        return CAN_ATTACK;
     }
 }

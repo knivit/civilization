@@ -1,6 +1,5 @@
 package com.tsoft.civilization.combat;
 
-import com.tsoft.civilization.combat.service.CombatStrength;
 import com.tsoft.civilization.combat.skill.AbstractSkill;
 import com.tsoft.civilization.world.AbstractView;
 import com.tsoft.civilization.unit.UnitCategory;

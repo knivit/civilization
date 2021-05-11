@@ -28,7 +28,7 @@ import java.util.UUID;
  * Indicates that a given city is the Capital Capital of the empire. Built automatically in the first city you establish.
  *
  * Connecting other cities to the Capital Capital by Road will produce additional Gold Gold
- * +3 Production Production, +3 Science Science, +3 Gold Gold, +1 Culture Culture
+ * +3 Production, +3 Science, +3 Gold, +1 Culture
  * +2 Melee strength Defense
  * BNW-only.png 1 Great Work of Art or Artifact slot
  * +1 Production, Culture, Gold, Faith and Science with God King Religious Belief
@@ -58,6 +58,9 @@ public class Palace extends AbstractBuilding {
 
     @Getter
     private final int baseProductionCost = 1;
+
+    @Getter
+    private final int cityDefenseStrength = 25;
 
     @Getter
     private final int localHappiness = 0;
@@ -101,11 +104,6 @@ public class Palace extends AbstractBuilding {
     @Override
     public void stopYear() {
 
-    }
-
-    @Override
-    public int getDefenseStrength() {
-        return 25;
     }
 
     @Override

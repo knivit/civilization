@@ -3,6 +3,8 @@ package com.tsoft.civilization.improvement.city;
 import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.combat.service.AttackService;
 import com.tsoft.civilization.combat.action.AttackAction;
+import com.tsoft.civilization.improvement.city.action.BuyTileAction;
+import com.tsoft.civilization.improvement.city.tile.BuyTileService;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.improvement.AbstractImprovementView;
@@ -15,6 +17,9 @@ public class CityView extends AbstractImprovementView {
 
     private final AttackService attackService = new AttackService();
     private final AttackAction attackAction = new AttackAction(attackService);
+
+    private final BuyTileService buyTileService = new BuyTileService();
+    private final BuyTileAction buyTileAction = new BuyTileAction(buyTileService);
 
     public static final L10n DESCRIPTION = new L10n()
         .put(EN, "Cities are source of power of your civilization")
@@ -61,15 +66,18 @@ public class CityView extends AbstractImprovementView {
     }
 
     public StringBuilder getHtmlActions(City city) {
-        StringBuilder cityAttackAction = attackAction.getHtml(city);
-        if (cityAttackAction == null) {
+        StringBuilder buyTileActionHtml = buyTileAction.getHtml(city);
+        StringBuilder attackActionHtml = attackAction.getHtml(city);
+        if (attackActionHtml == null) {
             return null;
         }
 
         return Format.text(
+            "<tr>$buyTileAction</tr>",
             "<tr>$attackAction</tr>",
 
-            "$attackAction", cityAttackAction
+            "$buyTileAction", buyTileActionHtml,
+            "$attackAction", attackActionHtml
         );
     }
 }

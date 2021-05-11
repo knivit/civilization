@@ -9,6 +9,7 @@ import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.unit.military.warriors.Warriors;
 import org.junit.jupiter.api.Test;
 
+import static com.tsoft.civilization.MockWorld.GRASSLAND_MAP_10x10;
 import static com.tsoft.civilization.civilization.L10nCivilization.BARBARIANS;
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,10 +18,10 @@ public class DefaultScenarioTest {
 
     @Test
     public void default_scenario() {
-        MockWorld world = MockWorld.newSimpleWorld();
+        MockWorld world = MockWorld.of(GRASSLAND_MAP_10x10);
 
-        Civilization barbarians = world.createCivilization(BARBARIANS);
-        Civilization russia = world.createCivilization(RUSSIA);
+        Civilization barbarians = world.createCivilization(BARBARIANS, new DefaultScenario());
+        Civilization russia = world.createCivilization(RUSSIA, new DefaultScenario());
 
         world.startGame();
 

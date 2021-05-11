@@ -37,6 +37,15 @@ public class ClientAjaxRequest {
         );
     }
 
+    public static StringBuilder buyTileAction(City city, JsonBlock locations) {
+        return Format.text("client.buyTileAction({ city:'$city', col:'$col', row:'$row', $locations })",
+            "$city", city.getId(),
+            "$col", city.getLocation().getX(),
+            "$row", city.getLocation().getY(),
+            "$locations", locations.getValue()
+        );
+    }
+
     public static StringBuilder getUnitStatus(AbstractUnit unit) {
         return Format.text("client.getUnitStatus({ col:'$unitCol', row:'$unitRow', unit:'$unit' })",
             "$unitCol", unit.getLocation().getX(),

@@ -19,6 +19,9 @@ public class Settlement extends AbstractBuilding {
     private final int baseProductionCost = -1;
 
     @Getter
+    private final int cityDefenseStrength = 10;
+
+    @Getter
     private final int localHappiness = 0;
 
     @Getter
@@ -56,11 +59,6 @@ public class Settlement extends AbstractBuilding {
     @Override
     public void stopYear() {
 
-    }
-
-    @Override
-    public int getDefenseStrength() {
-        return 10;
     }
 
     @Override

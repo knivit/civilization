@@ -118,6 +118,10 @@ public class L10nUnit {
         .put(EN, "Unit can attack")
         .put(RU, "Юнит может выполнить атаку");
 
+    public static final L10n INVALID_ATTACK_TARGET = new L10n()
+        .put(EN, "Can not attack this target")
+        .put(RU, "Юнит не может атаковать эту цель");
+
     public static final L10n RANGED_UNDERSHOOT = new L10n()
         .put(EN, "Distance too long or missile can't overcome it")
         .put(RU, "Расстояние слишком большое или снаряд не может преодолеть его");
@@ -173,6 +177,10 @@ public class L10nUnit {
     public static final L10n CANT_CROSS_BORDERS = new L10n()
         .put(EN, "Can not cross borders")
         .put(RU, "Нельзя пересекать границу");
+
+    public static final L10n CANT_CAPTURE_CITY = new L10n()
+        .put(EN, "Can not capture a city")
+        .put(RU, "Нельзя захватить город");
 
     public static final L10n LAST_SETTLERS_CANT_BE_DESTROYED = new L10n()
         .put(EN, "The only settlers unit can not be destroyed")

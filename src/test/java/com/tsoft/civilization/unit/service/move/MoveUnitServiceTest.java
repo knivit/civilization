@@ -125,21 +125,23 @@ public class MoveUnitServiceTest {
 
     @Test
     public void success_moved_trivial() {
-        MockWorld world = MockWorld.of(MockTilesMap.of(
-            " |0 1 2 ",
-            "-+------",
-            "0|. g g ",
-            "1| g g g",
-            "2|. g g ",
-            "3| . . ."));
-
-        Civilization russia = world.createCivilization(RUSSIA, new MockScenario());
-        world.startGame();
-
         // try out all possible directions - it must be OK
         for (Dir6 dir : Dir6.staticGetDirs(1)) {
-            Settlers settlers = UnitFactory.newInstance(russia, Settlers.CLASS_UUID);
-            assertTrue(russia.getUnitService().addUnit(settlers, new Point(1, 1)));
+            MockWorld world = MockWorld.of(MockTilesMap.of(
+                " |0 1 2 ",
+                "-+------",
+                "0|. g g ",
+                "1| g g g",
+                "2|. g g ",
+                "3| . . ."));
+
+            world.createCivilization(RUSSIA, new MockScenario()
+                .settlers("settlers", new Point(1, 1)));
+
+            world.startGame();
+
+            Settlers settlers = (Settlers) world.unit("settlers");
+
             UnitRoute route = new UnitRoute(dir);
             settlers.setPassScore(1);
 

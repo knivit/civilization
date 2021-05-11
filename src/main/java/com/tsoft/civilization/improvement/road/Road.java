@@ -1,11 +1,10 @@
 package com.tsoft.civilization.improvement.road;
 
-import com.tsoft.civilization.combat.service.CombatStrength;
+import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.tile.tile.TileType;
-import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.improvement.AbstractImprovementView;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.economic.Supply;
@@ -43,8 +42,8 @@ public class Road extends AbstractImprovement {
 
     private static final AbstractImprovementView VIEW = new RoadView();
 
-    public Road(Civilization civilization, Point location) {
-        super(civilization, location);
+    public Road(AbstractTile tile) {
+        super(tile);
     }
 
     @Override

@@ -1,6 +1,7 @@
-package com.tsoft.civilization.combat.service;
+package com.tsoft.civilization.combat.city;
 
 import com.tsoft.civilization.building.AbstractBuilding;
+import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.feature.hill.Hill;
 import com.tsoft.civilization.tile.tile.AbstractTile;
@@ -11,9 +12,9 @@ import com.tsoft.civilization.world.HasHistory;
 
 import java.util.stream.Collectors;
 
+import static com.tsoft.civilization.world.Year.*;
+
 /**
- * https://civilization.fandom.com/wiki/City_combat_(Civ5)
- *
  * Introduction
  * ------------
  * Cities are the most important targets in the world, but they are big, and if fortified and defended by other units
@@ -160,11 +161,14 @@ import java.util.stream.Collectors;
  */
 public class CityCombatService implements HasHistory {
 
+    private static final int BASE_DEFENSE_STRENGTH = 200;
+
     private static final CombatStrength BASE_COMBAT_STRENGTH = CombatStrength.builder()
         .targetBackFireStrength(5)
-        .defenseStrength(50)
+        .defenseStrength(BASE_DEFENSE_STRENGTH)
         .rangedAttackStrength(10)
         .rangedAttackRadius(2)
+        .skills
         .build();
 
     private static final int HILL_VANTAGE_DEFENSE_STRENGTH = 30;
@@ -194,6 +198,7 @@ public class CityCombatService implements HasHistory {
     }
 
     public CombatStrength calcCombatStrength() {
+        int baseStrength = calcBaseStrength();
         int vantageStrength = calcVantageStrength();
         int populationStrength = calcPopulationStrength();
         int buildingsStrength = calcBuildingsStrength();
@@ -202,9 +207,9 @@ public class CityCombatService implements HasHistory {
         int garrisonDefenseStrength = calcGarrisonedDefenseStrength();
 
         return combatStrength.copy()
-            .meleeAttackStrength(combatStrength.getMeleeAttackStrength() + garrisonMeleeAttackStrength)
-            .rangedAttackStrength(combatStrength.getRangedAttackStrength() + garrisonRangedAttackStrength)
-            .defenseStrength(combatStrength.getDefenseStrength() + populationStrength + buildingsStrength + garrisonDefenseStrength)
+            .meleeAttackStrength(combatStrength.getMeleeAttackStrength() + (int)Math.round(baseStrength * 0.4) + garrisonMeleeAttackStrength)
+            .rangedAttackStrength(combatStrength.getRangedAttackStrength() + vantageStrength + garrisonRangedAttackStrength)
+            .defenseStrength(combatStrength.getDefenseStrength() + baseStrength + vantageStrength + populationStrength + buildingsStrength + garrisonDefenseStrength)
             .build();
     }
 
@@ -212,7 +217,24 @@ public class CityCombatService implements HasHistory {
         return com.tsoft.civilization.unit.UnitCategory.MILITARY_RANGED_CITY;
     }
 
-    // Vantage - If the city is constructed on a Hill terrain, it has an advantage over attackers, which translates into additional defense strength
+    // A basic factor, determined by the current era of the civilization. For example, while in the Ancient Era,
+    // a city has a base CS of about 9 - 10, but in the Modern Era, the base increases to 50 - 60.
+    private int calcBaseStrength() {
+        switch (city.getWorld().getYear().getEra()) {
+            case ANCIENT_ERA: return 10;
+            case CLASSICAL_ERA: return 20;
+            case MEDIEVAL_ERA: return 30;
+            case RENAISSANCE_ERA: return 40;
+            case INDUSTRIAL_ERA: return 50;
+            case MODERN_ERA: return 60;
+            case ATOMIC_ERA: return 70;
+            case INFORMATION_ERA: return 80;
+        }
+        return 100;
+    }
+
+    // Vantage - If the city is constructed on a Hill terrain, it has an advantage over attackers, which translates into additional strength
+    // (both defense and attack)
     private int calcVantageStrength() {
         Point cityLocation = city.getLocation();
         AbstractTile tile = city.getTileService().getTilesMap().getTile(cityLocation);
@@ -227,17 +249,18 @@ public class CityCombatService implements HasHistory {
         return city.getCitizenCount();
     }
 
-    // Check is this building adds defense strength
+    // Check buildings adds defense strength
     private int calcBuildingsStrength() {
         return city.getBuildings().stream()
-            .mapToInt(AbstractBuilding::getDefenseStrength)
+            .mapToInt(AbstractBuilding::getCityDefenseStrength)
             .sum();
     }
 
     // A portion of the garrisoned unit's combat strength is added to the city's total strength
+    // Only Land units may form a Garrison
     private int calcGarrisonedMeleeAttackStrength() {
         return getGarrison().stream()
-            .filter(e -> e.getUnitCategory().isMelee())
+            .filter(e -> e.getUnitCategory().isLand())
             .mapToInt(e -> (int)Math.round((double)e.getCombatStrength().getMeleeAttackStrength() * 0.4))
             .sum();
     }
@@ -273,6 +296,21 @@ public class CityCombatService implements HasHistory {
 
     @Override
     public void stopYear() {
+        repair();
+    }
 
+    // Cities heal automatically each turn (being constantly repaired by their inhabitants),
+    // making them even harder to capture. The amount healed is about 10 - 15% of its total health
+    private void repair() {
+        if (combatStrength.getDefenseStrength() < BASE_DEFENSE_STRENGTH) {
+            int repair = city.getCitizenCount();
+            if (repair + combatStrength.getDefenseStrength() > BASE_DEFENSE_STRENGTH) {
+                repair = BASE_DEFENSE_STRENGTH - combatStrength.getDefenseStrength();
+            }
+
+            combatStrength.copy()
+                .defenseStrength(combatStrength.getDefenseStrength() + repair)
+                .build();
+        }
     }
 }

@@ -18,6 +18,58 @@ import com.tsoft.civilization.world.World;
 
 import java.util.Collection;
 
+/**
+ * Attacker    |  Target              | Attacker's actions
+ * ------------|----------------------|-----------------------------------------------------------------|-------------------------
+ * Ranged Unit |  Ranged Unit         | Ranged fire (can destroy it)                                    | Ranged backFire (can destroy it, but not both)
+ *             |     with civilian    |    can destroy / capture it                                     |
+ *             |----------------------|-----------------------------------------------------------------|-------------------------
+ *             |  Melee Unit          | Ranged fire (can destroy it)                                    | Melee backfire if the Attacker on the adj tile
+ *             |     with civilian    |    can destroy / capture it                                     |
+ *             |----------------------|-----------------------------------------------------------------|-------------------------
+ *             |  City                | Ranged fire (can NOT destroy it)                                | Ranged backfire (can destroy it)
+ *             |     civilian units   |    all types of units positioned in the city's tile             |
+ *             |     military units   |    are completely invulnerable to attacks                       |
+ *             |     buildings        |    can destroy them (player can select which)                   |
+ *             |     wonders          |    can destroy them (player can select which)                   |
+ *             |     citizens         |    can destroy them till minimum (depends on Era)               |
+ *             |----------------------|-----------------------------------------------------------------|-------------------------
+ *             | City-state           | As the usual city except it can not be razed                    |
+ *             |----------------------|-----------------------------------------------------------------|-------------------------
+ *             |  Tile                | nothing                                                         |
+ *             |     with improvement | Ranged fire (can destroy it)                                    |
+ *             |     with resource    | nothing                                                         |
+ * ------------|----------------------|-----------------------------------------------------------------|-------------------------
+ * Melee Unit  |  Ranged Unit         | Attack if the Target on the route tile (before the attack moves | Ranged backfire (can destroy it, but not both)
+ *             |                      | to the adj tile)                                                |
+ *             |     with civilian    |    can destroy / capture it                                     |
+ *             |----------------------|-----------------------------------------------------------------|-------------------------
+ *             |  Melee Unit          | Attack if the Target on the route tile (moves to the adj tile)  | Backfire (can destroy it, but not both)
+ *             |     with civilian    |    can destroy / capture it                                     |
+ *             |----------------------|-----------------------------------------------------------------|-------------------------
+ *             |  City                | Attack if the city on the route tile (moves to the adj tile)    |
+ *             |                      |    All types of units positioned in the city's tile             |
+ *             |                      |    are completely invulnerable to attacks                       |
+ *             |                      |    If the attacker wins, then it moves on the City's tile       |
+ *             |                      |    (can raze / capture / annex / puppet the city)               |
+ *             |     civilian units   |    captured                                                     |
+ *             |     military units   |    destroyed  (destroyed on lose)                               |
+ *             |     buildings        |    All the defensive and some randomly selected destroyed       |
+ *             |     citizens         |    destroyed on 60%                                             |
+ *             |     great people     |    destroyed                                                    |
+ *             |----------------------|-----------------------------------------------------------------|-------------------------
+ *             | City-state           | As the usual city except it can not be razed                    |
+ *             |----------------------|-----------------------------------------------------------------|-------------------------
+ *             |  Tile                | Can capture it                                                  |
+ *             |     with improvement | Fire (can destroy it)                                           |
+ *             |     with resource    | nothing                                                         |
+ * ------------|------------------------------------------------------------------------------------------------------------------
+ * City        |  Ranged Unit         | Ranged fire (can destroy it)                                    | no backfire
+ *             |     with civilian    | nothing                                                         |
+ *             |  Melee Unit          | Ranged fire (can destroy it)                                    | no backfire
+ *             |     with civilian    | nothing                                                         |
+ * ------------|------------------------------------------------------------------------------------------------------------------
+ */
 public class BaseCombatService {
 
     private static final MoveUnitService moveService = new MoveUnitService();

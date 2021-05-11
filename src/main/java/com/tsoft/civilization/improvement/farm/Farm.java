@@ -1,7 +1,7 @@
 package com.tsoft.civilization.improvement.farm;
 
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.combat.service.CombatStrength;
+import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.improvement.AbstractImprovementView;
 import com.tsoft.civilization.tile.tile.AbstractTile;
@@ -10,7 +10,6 @@ import com.tsoft.civilization.tile.tile.grassland.Grassland;
 import com.tsoft.civilization.tile.tile.plain.Plain;
 import com.tsoft.civilization.tile.tile.tundra.Tundra;
 import com.tsoft.civilization.tile.feature.hill.Hill;
-import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.economic.Supply;
 
 import java.util.UUID;
@@ -40,8 +39,8 @@ public class Farm extends AbstractImprovement {
 
     private static final AbstractImprovementView VIEW = new FarmView();
 
-    public Farm(Civilization civilization, Point location) {
-        super(civilization, location);
+    public Farm(AbstractTile tile) {
+        super(tile);
     }
 
     @Override
@@ -53,7 +52,7 @@ public class Farm extends AbstractImprovement {
     public boolean acceptTile(AbstractTile tile) {
         if (tile.isIn(Grassland.class, Plain.class, Desert.class, Tundra.class)) {
             if (tile.hasFeature(Hill.class)) {
-                // TODO check adjacency to freah water
+                // TODO check adjacency to fresh water
                 return true;
             }
             return true;

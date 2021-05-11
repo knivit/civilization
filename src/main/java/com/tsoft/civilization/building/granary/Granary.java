@@ -53,6 +53,9 @@ public class Granary extends AbstractBuilding {
     private final int baseProductionCost = 60;
 
     @Getter
+    private final int cityDefenseStrength = 0;
+
+    @Getter
     private final int localHappiness = 0;
 
     @Getter
@@ -91,11 +94,6 @@ public class Granary extends AbstractBuilding {
     @Override
     public Supply calcOutcomeSupply() {
         return Supply.EMPTY;
-    }
-
-    @Override
-    public int getDefenseStrength() {
-        return 0;
     }
 
     @Override

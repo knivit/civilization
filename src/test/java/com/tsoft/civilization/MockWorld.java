@@ -13,7 +13,7 @@ import com.tsoft.civilization.web.state.Worlds;
 import com.tsoft.civilization.world.Climate;
 import com.tsoft.civilization.world.DifficultyLevel;
 import com.tsoft.civilization.world.World;
-import com.tsoft.civilization.world.scenario.DefaultScenario;
+import com.tsoft.civilization.world.scenario.Scenario;
 
 import java.util.*;
 
@@ -79,8 +79,8 @@ public class MockWorld extends World {
         setDifficultyLevel(DifficultyLevel.PRINCE);
     }
 
-    public Civilization createCivilization(L10n civilizationName) {
-        return super.createCivilization(PlayerType.HUMAN, civilizationName, new DefaultScenario());
+    public Civilization createCivilization(L10n civilizationName, Scenario scenario) {
+        return super.createCivilization(PlayerType.HUMAN, civilizationName, scenario);
     }
 
     public Civilization createCivilization(L10n civilizationName, MockScenario scenario) {

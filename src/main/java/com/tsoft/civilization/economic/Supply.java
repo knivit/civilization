@@ -13,13 +13,9 @@ public final class Supply {
     private final int gold;
     private final int science;
     private final int culture;
-
-    private final int greatArtist;
-    private final int greatMusician;
-    private final int greatWriter;
-    private final int greatEngineer;
-    private final int greatMerchant;
-    private final int greatScientist;
+    private final int faith;
+    private final int tourism;
+    private final int greatPerson;
 
     public Supply add(Supply other) {
         return Supply.builder()
@@ -28,14 +24,9 @@ public final class Supply {
             .gold(gold + other.gold)
             .science(science + other.science)
             .culture(culture + other.culture)
-
-            .greatArtist(greatArtist + other.greatArtist)
-            .greatMusician(greatMusician + other.greatMusician)
-            .greatWriter(greatWriter + other.greatWriter)
-            .greatEngineer(greatEngineer + other.greatEngineer)
-            .greatMerchant(greatMerchant + other.greatMerchant)
-            .greatScientist(greatScientist + other.greatScientist)
-
+            .faith(faith + other.faith)
+            .faith(tourism + other.tourism)
+            .faith(greatPerson + other.greatPerson)
             .build();
     }
 
@@ -46,13 +37,9 @@ public final class Supply {
             .gold(gold)
             .science(science)
             .culture(culture)
-
-            .greatArtist(greatArtist)
-            .greatMusician(greatMusician )
-            .greatWriter(greatWriter )
-            .greatEngineer(greatEngineer)
-            .greatMerchant(greatMerchant)
-            .greatScientist(greatScientist);
+            .faith(faith)
+            .tourism(tourism)
+            .faith(greatPerson);
     }
 
     @Override
@@ -63,13 +50,9 @@ public final class Supply {
             ", gold=" + gold +
             ", science=" + science +
             ", culture=" + culture +
-
-            ", Great Artist=" + greatArtist +
-            ", Great Musician=" + greatMusician +
-            ", Great Writer=" + greatWriter +
-            ", Great Engineer=" + greatEngineer +
-            ", Great Merchant=" + greatMerchant +
-            ", Great Scientist=" + greatScientist +
+            ", faith=" + faith +
+            ", tourism=" + tourism +
+            ", greatPerson=" + greatPerson +
         '}';
     }
 }

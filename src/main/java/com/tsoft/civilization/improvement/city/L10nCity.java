@@ -9,6 +9,7 @@ import static com.tsoft.civilization.L10n.L10nLanguage.EN;
 import static com.tsoft.civilization.L10n.L10nLanguage.RU;
 
 public class L10nCity {
+
     /** Web */
 
     public static final L10n BUSINESS_FEATURES = new L10n()
@@ -33,17 +34,29 @@ public class L10nCity {
 
     /** Actions */
 
+    public static final L10n INVALID_CITY = new L10n()
+        .put(EN, "Invalid city")
+        .put(RU, "Неверный город");
+
+    public static final L10n INVALID_LOCATION = new L10n()
+        .put(EN, "Invalid location")
+        .put(RU, "Неверная позиция на карте");
+
+    public static final L10n ALREADY_MINE = new L10n()
+        .put(EN, "The city already has this tile")
+        .put(RU, "Город уже владеет этой ячейкой");
+
+    public static final L10n NOT_ENOUGH_GOLD = new L10n()
+        .put(EN, "Not enough gold to buy the tile")
+        .put(RU, "Недостаточно золота для покупки ячейки");
+
+    public static final L10n TILE_BOUGHT = new L10n()
+        .put(EN, "The tile is bought")
+        .put(RU, "Ячейка куплена");
+
     public static final L10n NO_CITIES = new L10n()
         .put(EN, "No Cities")
         .put(RU, "Городов нет");
-
-    public static final L10n CITY_NAME = new L10n()
-        .put(EN, "City")
-        .put(RU, "Город");
-
-    public static final L10n CITY_DESCRIPTION = new L10n()
-        .put(EN, "Cities are source of power of your civilization")
-        .put(RU, "Города - источник военной мощи вашей цивилизации");
 
     public static final L10n CANT_BUILD_BUILDING_OTHER_ACTION_IN_PROGRESS = new L10n()
         .put(EN, "Can't start a building as there is other action is in progress")
@@ -141,21 +154,25 @@ public class L10nCity {
 
     /** Population */
 
-    public static final L10n STARVATION_STARTED = new L10n()
+    public static final L10n STARVATION_STARTED_EVENT = new L10n()
         .put(EN, "All food is consumed, the starvation has started in city $cityName")
         .put(RU, "Пища закончилась, начался голод в городе $cityName");
 
-    public static final L10n STARVATION_ENDED = new L10n()
+    public static final L10n STARVATION_ENDED_EVENT = new L10n()
         .put(EN, "The starvation has ended in the city $cityName")
         .put(RU, "В городе $cityName закончился голод");
 
-    public static final L10n CITIZEN_WAS_BORN = new L10n()
+    public static final L10n CITIZEN_WAS_BORN_EVENT = new L10n()
         .put(EN, "A citizen was born in city $cityName")
         .put(RU, "Родился житель in city $cityName");
 
-    public static final L10n CITIZEN_HAS_DIED = new L10n()
+    public static final L10n CITIZEN_HAS_DIED_EVENT = new L10n()
         .put(EN, "A citizen has died in city $cityName")
-        .put(RU, "Умер житель in city $cityName");
+        .put(RU, "Умер житель в городе $cityName");
+
+    public static final L10n TILE_BOUGHT_EVENT = new L10n()
+        .put(EN, "City $cityName bought a tile at price $gold")
+        .put(RU, "Город $cityName купил ячейку по цене $gold");
 
     /** Statistic */
 

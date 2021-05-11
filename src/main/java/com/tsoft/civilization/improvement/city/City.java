@@ -4,7 +4,7 @@ import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.building.*;
 import com.tsoft.civilization.building.palace.Palace;
 import com.tsoft.civilization.civilization.population.Happiness;
-import com.tsoft.civilization.combat.service.CombatStrength;
+import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.combat.skill.AbstractSkill;
 import com.tsoft.civilization.improvement.AbstractImprovement;
@@ -13,7 +13,7 @@ import com.tsoft.civilization.improvement.city.population.CityHappinessService;
 import com.tsoft.civilization.improvement.city.supply.CitySupplyService;
 import com.tsoft.civilization.improvement.city.tile.CityTileService;
 import com.tsoft.civilization.improvement.city.building.CityBuildingService;
-import com.tsoft.civilization.combat.service.CityCombatService;
+import com.tsoft.civilization.combat.city.CityCombatService;
 import com.tsoft.civilization.improvement.city.construction.CityConstructionService;
 import com.tsoft.civilization.improvement.city.construction.ConstructionList;
 import com.tsoft.civilization.improvement.city.event.CityStopYearEvent;
@@ -37,6 +37,9 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     @Getter
+    private Civilization civilization;
+
+    @Getter
     private CityTileService tileService;
 
     @Getter
@@ -48,6 +51,9 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
 
     @Getter
     private CitySupplyService supplyService;
+
+    @Getter @Setter
+    private boolean resistanceMode;
 
     @Getter
     private CityHappinessService happinessService;
@@ -68,14 +74,15 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
     @Getter
     private boolean annexed;
 
-    public City(Civilization civilization, Point location) {
-        super(civilization, location);
+    public City(AbstractTile tile, Civilization civilization) {
+        super(tile);
+        this.civilization = civilization;
     }
 
     public void init(L10n cityName, boolean isCapital) {
         // area
         tileService = new CityTileService(this);
-        tileService.addStartLocations(location);
+        tileService.addStartLocations(tile.getLocation());
 
         // population
         populationService = new CityPopulationService(this);
@@ -226,7 +233,7 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
     }
 
     public void addUnit(AbstractUnit unit) {
-        civilization.getUnitService().addUnit(unit, location);
+        civilization.getUnitService().addUnit(unit, tile.getLocation());
     }
 
     public int getUnitProductionCost(String unitClassUuid) {
@@ -272,6 +279,7 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
         populationService.startYear();
         constructionService.startYear();
         combatService.startYear();
+        supplyService.startYear();
 
         // can do actions (attack, buy, build etc)
         passScore = 1;

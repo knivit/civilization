@@ -21,7 +21,7 @@ public class CityTileService implements HasHistory {
 
     public CityTileService(City city) {
         this.city = city;
-        tilesMap = city.getTilesMap();
+        tilesMap = city.getCivilization().getWorld().getTilesMap();
     }
 
     public void addStartLocations(Point location) {

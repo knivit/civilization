@@ -63,6 +63,9 @@ public class Monument extends AbstractBuilding {
     private final int baseProductionCost = 40;
 
     @Getter
+    private final int cityDefenseStrength = 0;
+
+    @Getter
     private final int localHappiness = 0;
 
     @Getter
@@ -104,11 +107,6 @@ public class Monument extends AbstractBuilding {
     @Override
     public void stopYear() {
 
-    }
-
-    @Override
-    public int getDefenseStrength() {
-        return 0;
     }
 
     @Override

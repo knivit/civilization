@@ -18,6 +18,10 @@ public abstract class AbstractTileView {
             tileBlock.addElement(featureView.getJson(feature).getText());
         });
 
+        if (tile.getImprovement() != null) {
+            tileBlock.addParam("improvement", tile.getImprovement().getClass().getSimpleName());
+        }
+
         if (tile.getResource() != null) {
             tileBlock.addParam("resource", tile.getResource().getClass().getSimpleName());
         }

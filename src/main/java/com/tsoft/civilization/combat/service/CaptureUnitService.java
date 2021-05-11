@@ -24,13 +24,14 @@ public class CaptureUnitService {
     public static final ActionSuccessResult CAN_CAPTURE = new ActionSuccessResult(L10nUnit.CAN_CAPTURE);
     public static final ActionSuccessResult UNIT_CAPTURED = new ActionSuccessResult(L10nUnit.UNIT_CAPTURED);
 
+    public static final ActionFailureResult CANT_CAPTURE_CITY = new ActionFailureResult(L10nUnit.CANT_CAPTURE_CITY);
     public static final ActionFailureResult NO_LOCATIONS_TO_CAPTURE = new ActionFailureResult(L10nUnit.NO_LOCATIONS_TO_CAPTURE);
     public static final ActionFailureResult NOTHING_TO_CAPTURE = new ActionFailureResult(L10nUnit.NOTHING_TO_CAPTURE);
     public static final ActionFailureResult ATTACKER_NOT_FOUND = new ActionFailureResult(L10nUnit.UNIT_NOT_FOUND);
     public static final ActionFailureResult INVALID_LOCATION = new ActionFailureResult(L10nWorld.INVALID_LOCATION);
 
     private static final BaseCombatService baseCombatService = new BaseCombatService();
-    private final MoveUnitService moveService = new MoveUnitService();
+    private final MoveUnitService moveUnitService = new MoveUnitService();
 
     public AbstractUnit getTargetToCaptureAtLocation(AbstractUnit capturer, Point location) {
         UnitList foreignUnits = capturer.getWorld().getUnitsAtLocation(location, capturer.getCivilization());
@@ -75,7 +76,7 @@ public class CaptureUnitService {
         }
 
         // move unit
-        moveService.moveUnit(attacker, victim.getLocation());
+        moveUnitService.moveUnit(attacker, victim.getLocation());
 
         // capture foreign unit
         capture(attacker, victim);
@@ -154,7 +155,7 @@ public class CaptureUnitService {
         Collection<Point> locations = capturer.getTilesMap().getLocationsAround(capturer.getLocation(), 1);
         for (Point location : locations) {
             // check we can move to the location
-            ActionAbstractResult moveResult = moveService.getMoveOnCaptureResult(capturer, location);
+            ActionAbstractResult moveResult = getMoveOnCaptureResult(capturer, location);
             if (moveResult.isFail()) {
                 continue;
             }
@@ -166,5 +167,24 @@ public class CaptureUnitService {
         }
 
         return units;
+    }
+
+    // Check can we move there during a capturing
+    private ActionAbstractResult getMoveOnCaptureResult(AbstractUnit unit, Point dest) {
+        ActionAbstractResult moveResult;
+
+        // check is the passing score enough
+        moveResult = moveUnitService.canMoveOnTile(unit, dest);
+        if (moveResult.isFail()) {
+            return moveResult;
+        }
+
+        // we can't capture a city
+        City city = unit.getWorld().getCityAtLocation(dest);
+        if (city != null) {
+            return CANT_CAPTURE_CITY;
+        }
+
+        return CAN_CAPTURE;
     }
 }

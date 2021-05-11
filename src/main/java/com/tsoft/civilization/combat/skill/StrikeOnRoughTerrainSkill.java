@@ -5,9 +5,15 @@ import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.tile.tile.TileType;
 import com.tsoft.civilization.util.Point;
+import lombok.Getter;
+
+import static com.tsoft.civilization.combat.skill.L10nSkill.STRIKE_ON_ROUGH_TERRAIN;
 
 public class StrikeOnRoughTerrainSkill extends AbstractSkill {
-    @Override
+
+    @Getter
+    private final L10n localizedName = STRIKE_ON_ROUGH_TERRAIN;
+
     public int getAttackStrikePercent(HasCombatStrength attacker, HasCombatStrength defender) {
         Point attackerLocation = attacker.getLocation();
         AbstractTile tile = attacker.getCivilization().getTilesMap().getTile(attackerLocation);
@@ -18,15 +24,5 @@ public class StrikeOnRoughTerrainSkill extends AbstractSkill {
             value += 15;
         }
         return value;
-    }
-
-    @Override
-    public int getTargetStrikeOnDefensePercent(HasCombatStrength attacker, HasCombatStrength defender) {
-        return 0;
-    }
-
-    @Override
-    public L10n getLocalizedName() {
-        return null;
     }
 }

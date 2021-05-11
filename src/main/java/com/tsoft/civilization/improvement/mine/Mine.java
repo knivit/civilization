@@ -1,14 +1,15 @@
 package com.tsoft.civilization.improvement.mine;
 
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.combat.service.CombatStrength;
+import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.improvement.AbstractImprovementView;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.tile.feature.hill.Hill;
-import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.economic.Supply;
+
+import java.util.UUID;
 
 /**
  * Mine
@@ -40,8 +41,10 @@ import com.tsoft.civilization.economic.Supply;
  * but they also provide access to some of the most important resources in the game: iron, coal, and uranium, to name a few.
  */
 public class Mine extends AbstractImprovement {
-    public Mine(Civilization civilization, Point location) {
-        super(civilization, location);
+    public static final String CLASS_UUID = UUID.randomUUID().toString();
+
+    public Mine(AbstractTile tile) {
+        super(tile);
     }
 
     @Override

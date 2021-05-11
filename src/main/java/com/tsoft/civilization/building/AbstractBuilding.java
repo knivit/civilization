@@ -134,7 +134,7 @@ public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt, Ha
     public abstract String getClassUuid();
     public abstract int getGoldCost(Civilization civilization);
     public abstract int getBaseProductionCost();
-    public abstract int getDefenseStrength();
+    public abstract int getCityDefenseStrength();
     public abstract int getLocalHappiness();
     public abstract int getGlobalHappiness();
 

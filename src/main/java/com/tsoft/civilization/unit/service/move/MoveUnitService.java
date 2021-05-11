@@ -148,27 +148,25 @@ public class MoveUnitService {
         unit.setPassScore(unit.getPassScore() - tilePassCost);
     }
 
-    public ActionAbstractResult checkForeignTile(AbstractUnit unit, Point location) {
-        Civilization thisCivilization = unit.getCivilization();
-        Civilization nextCivilization = unit.getWorld().getCivilizationOnTile(location);
-        if (nextCivilization == null || thisCivilization.equals(nextCivilization)) {
-            return INVALID_TARGET_LOCATION;
+    public ActionAbstractResult canMoveOnTile(AbstractUnit unit, Point location) {
+        AbstractTile tile = unit.getTilesMap().getTile(location);
+        int tilePassCost = getPassCost(unit.getCivilization(), unit, tile);
+
+        int passScore = unit.getPassScore();
+        if (passScore < tilePassCost) {
+            return NO_PASS_SCORE;
         }
 
-        // check can we pass on it or not
-        if (!nextCivilization.canCrossBorders(thisCivilization)) {
-            return CANT_CROSS_BORDERS;
-        }
+        Civilization civilization = unit.getWorld().getCivilizationOnTile(location);
 
-        // skip the check so unit will be moved after this check
-        return CAN_MOVE;
-    }
-
-    public ActionAbstractResult checkForeignCity(AbstractUnit unit, Point location) {
-        // first, check is there a foreign city
-        City city = unit.getWorld().getCityAtLocation(location);
-        if (city == null) {
+        // The tile is nobody's or mine
+        if (civilization == null || unit.getCivilization().equals(civilization)) {
             return CAN_MOVE;
+        }
+
+        // The tile belongs to other civilization and we can't cross borders
+        if (!civilization.canCrossBorders(unit.getCivilization())) {
+            return CANT_CROSS_BORDERS;
         }
 
         return INVALID_TARGET_LOCATION;
@@ -322,27 +320,15 @@ public class MoveUnitService {
         ActionAbstractResult moveResult;
 
         // check is the passing score enough
-        moveResult = checkCanMoveOnTile(unit, nextLocation);
+        moveResult = canMoveOnTile(unit, nextLocation);
         if (moveResult.isFail()) {
             return moveResult;
         }
 
-        // check entering into own city
-        moveResult = checkOwnCity(unit, nextLocation);
-        if (moveResult.isFail()) {
-            return moveResult;
-        }
-
-        // check is this tile belongs a civilization which is not in a war with our
-        moveResult = checkForeignTile(unit, nextLocation);
-        if (moveResult.isFail()) {
-            return moveResult;
-        }
-
-        // check is there a foreign city on tile
-        moveResult = checkForeignCity(unit, nextLocation);
-        if (moveResult.isFail()) {
-            return moveResult;
+        // check entering into a city
+        City city = unit.getWorld().getCityAtLocation(nextLocation);
+        if (city != null) {
+            return canEnterCity(unit, city);
         }
 
         // check are there foreign units
@@ -359,33 +345,28 @@ public class MoveUnitService {
         return UNIT_MOVED;
     }
 
-    public ActionAbstractResult checkCanMoveOnTile(AbstractUnit unit, Point location) {
-        AbstractTile tile = unit.getTilesMap().getTile(location);
-        int tilePassCost = getPassCost(unit.getCivilization(), unit, tile);
-
-        int passScore = unit.getPassScore();
-        if (passScore < tilePassCost) {
-            return NO_PASS_SCORE;
+    private ActionAbstractResult canEnterCity(AbstractUnit unit, City city) {
+        if (unit.getCivilization().equals(city.getCivilization())) {
+            return canEnterOwnCity(unit, city);
         }
-        return CAN_MOVE;
+
+        return canEnterForeignCity(unit, city);
     }
 
-    public ActionAbstractResult checkOwnCity(AbstractUnit unit, Point location) {
-        Civilization thisCivilization = unit.getCivilization();
-        City city = thisCivilization.getCityService().getCityAtLocation(location);
-        if (city == null) {
-            return INVALID_TARGET_LOCATION;
-        }
-
+    private ActionAbstractResult canEnterOwnCity(AbstractUnit unit, City city) {
         // get units located in the city
-        UnitList units = thisCivilization.getUnitService().getUnitsAtLocation(location);
-        AbstractUnit nextUnit = units.findUnitByCategory(unit.getUnitCategory());
+        UnitList units = unit.getCivilization().getUnitService().getUnitsAtLocation(city.getLocation());
+        AbstractUnit cityUnit = units.findUnitByCategory(unit.getUnitCategory());
 
         // no units of such type, so we can enter into city
-        if (nextUnit == null) {
+        if (cityUnit == null) {
             return CAN_MOVE;
         }
 
+        return INVALID_TARGET_LOCATION;
+    }
+
+    private ActionAbstractResult canEnterForeignCity(AbstractUnit unit, City city) {
         return INVALID_TARGET_LOCATION;
     }
 
@@ -403,70 +384,14 @@ public class MoveUnitService {
 
         // next unit must have enough passing score
         Point thisLocation = unit.getLocation();
-        ActionAbstractResult moveResult = checkCanMoveOnTile(nextUnit, thisLocation);
+        ActionAbstractResult moveResult = canMoveOnTile(nextUnit, thisLocation);
         if (moveResult.isFail()) {
-            return NO_PASS_SCORE;
+            return moveResult;
         }
 
         // looks good, let's swap them
         moveUnit(nextUnit, thisLocation);
         return UNIT_SWAPPED;
-    }
-
-    // Check can we move there during melee attack
-    public ActionAbstractResult getMoveOnAttackResult(AbstractUnit unit, Point nextLocation) {
-        ActionAbstractResult moveResult;
-
-        // check is the passing score enough
-        moveResult = checkCanMoveOnTile(unit, nextLocation);
-        if (moveResult.isFail()) {
-            return moveResult;
-        }
-
-        // check entering into own city
-        moveResult = checkOwnCity(unit, nextLocation);
-        if (moveResult.isFail()) {
-            return moveResult;
-        }
-
-        // check is this tile belongs a civilization which is not in a war with our
-        moveResult = checkForeignTile(unit, nextLocation);
-        if (moveResult.isFail()) {
-            return moveResult;
-        }
-
-        return UNIT_MOVED;
-    }
-
-    // Check can we move there during a capturing
-    public ActionAbstractResult getMoveOnCaptureResult(AbstractUnit unit, Point nextLocation) {
-        ActionAbstractResult moveResult;
-
-        // check is the passing score enough
-        moveResult = checkCanMoveOnTile(unit, nextLocation);
-        if (moveResult.isFail()) {
-            return moveResult;
-        }
-
-        // check entering into own city
-        moveResult = checkOwnCity(unit, nextLocation);
-        if (moveResult.isSuccess()) {
-            return INVALID_TARGET_LOCATION;
-        }
-
-        // check is this tile belongs a civilization which is not in a war with our
-        moveResult = checkForeignTile(unit, nextLocation);
-        if (moveResult.isSuccess()) {
-            return INVALID_TARGET_LOCATION;
-        }
-
-        // check is there a foreign city on tile
-        moveResult = checkForeignCity(unit, nextLocation);
-        if (moveResult.isFail()) {
-            return moveResult;
-        }
-
-        return UNIT_MOVED;
     }
 
     public int getPassCost(Civilization civilization, AbstractUnit unit, AbstractTile tile) {
@@ -481,7 +406,7 @@ public class MoveUnitService {
         for (int i = features.size() - 1; i >= 0; i --) {
             AbstractFeature feature = features.get(i);
 
-            int featurePassCost = getPassCost(unit, feature);
+            int featurePassCost = getFeaturePassCost(unit, feature);
             if (featurePassCost == TilePassCostTable.UNPASSABLE) {
                 return TilePassCostTable.UNPASSABLE;
             }
@@ -492,12 +417,7 @@ public class MoveUnitService {
         return passCost;
     }
 
-
-    public int getPassCost(AbstractUnit unit, AbstractFeature feature) {
-        return getPassCost(unit.getCivilization(), unit, feature);
-    }
-
-    public int getPassCost(Civilization civilization, AbstractUnit unit, AbstractFeature feature) {
-        return FeaturePassCostTable.get(civilization, unit, feature);
+    private int getFeaturePassCost(AbstractUnit unit, AbstractFeature feature) {
+        return FeaturePassCostTable.get(unit.getCivilization(), unit, feature);
     }
 }

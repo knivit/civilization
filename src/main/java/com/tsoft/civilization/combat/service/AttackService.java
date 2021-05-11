@@ -5,6 +5,8 @@ import com.tsoft.civilization.action.ActionFailureResult;
 import com.tsoft.civilization.action.ActionSuccessResult;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.combat.*;
+import com.tsoft.civilization.combat.melee.MeleeCombatService;
+import com.tsoft.civilization.combat.ranged.RangedCombatService;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.L10nUnit;

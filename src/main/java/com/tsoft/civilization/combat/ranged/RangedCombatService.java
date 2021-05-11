@@ -1,7 +1,8 @@
-package com.tsoft.civilization.combat.service;
+package com.tsoft.civilization.combat.ranged;
 
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.combat.*;
+import com.tsoft.civilization.combat.service.BaseCombatService;
 import com.tsoft.civilization.tile.feature.FeatureList;
 import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.tile.feature.AbstractFeature;

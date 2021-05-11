@@ -1,5 +1,6 @@
 package com.tsoft.civilization.world;
 
+import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.civilization.Civilization;
 import org.junit.jupiter.api.Test;
@@ -14,11 +15,11 @@ public class WorldTest {
     public void can_not_create_one_civilization_twice() {
         MockWorld world = MockWorld.newSimpleWorld();
 
-        assertThat(world.createCivilization(RUSSIA))
+        assertThat(world.createCivilization(RUSSIA, new MockScenario()))
             .isNotNull()
             .returns(RUSSIA, Civilization::getName);
 
-        assertThat(world.createCivilization(RUSSIA))
+        assertThat(world.createCivilization(RUSSIA, new MockScenario()))
             .isNull();
     }
 
@@ -26,11 +27,11 @@ public class WorldTest {
     public void create_two_civilizations() {
         MockWorld world = MockWorld.newSimpleWorld();
 
-        assertThat(world.createCivilization(RUSSIA))
+        assertThat(world.createCivilization(RUSSIA, new MockScenario()))
             .isNotNull()
             .returns(RUSSIA, Civilization::getName);
 
-        assertThat(world.createCivilization(AMERICA))
+        assertThat(world.createCivilization(AMERICA, new MockScenario()))
             .isNotNull()
             .returns(AMERICA, Civilization::getName);
     }

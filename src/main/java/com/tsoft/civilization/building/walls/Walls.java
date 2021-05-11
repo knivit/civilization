@@ -47,6 +47,9 @@ public class Walls extends AbstractBuilding {
     private final int baseProductionCost = 200;
 
     @Getter
+    private final int cityDefenseStrength = 40;
+
+    @Getter
     private final int localHappiness = 0;
 
     @Getter
@@ -87,11 +90,6 @@ public class Walls extends AbstractBuilding {
 
     @Override
     public void stopYear() {
-    }
-
-    @Override
-    public int getDefenseStrength() {
-        return 40;
     }
 
     @Override

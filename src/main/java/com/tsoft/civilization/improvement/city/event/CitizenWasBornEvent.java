@@ -18,7 +18,7 @@ public final class CitizenWasBornEvent implements Event {
     private final boolean updateControlPanel;
     private final boolean updateStatusPanel;
 
-    private final L10n message = L10nCity.CITIZEN_WAS_BORN;
+    private final L10n message = L10nCity.CITIZEN_WAS_BORN_EVENT;
     private final L10n cityName;
 
     public Object[] getArgs() {

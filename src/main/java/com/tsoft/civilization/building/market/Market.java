@@ -66,6 +66,9 @@ public class Market extends AbstractBuilding {
     private final int baseProductionCost = 100;
 
     @Getter
+    private final int cityDefenseStrength = 0;
+
+    @Getter
     private final int localHappiness = 0;
 
     @Getter
@@ -116,11 +119,6 @@ public class Market extends AbstractBuilding {
     @Override
     public void stopYear() {
 
-    }
-
-    @Override
-    public int getDefenseStrength() {
-        return 0;
     }
 
     @Override
