@@ -1,4 +1,4 @@
-package com.tsoft.civilization.combat.melee;
+package com.tsoft.civilization.combat.service;
 
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.action.ActionFailureResult;
@@ -7,7 +7,6 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.combat.CombatResult;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrengthList;
-import com.tsoft.civilization.combat.service.BaseCombatService;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.L10nUnit;
@@ -73,7 +72,7 @@ public class MeleeCombatService {
         }
 
         // calc the strength of the attack
-        int meleeAttackStrength = attacker.getCombatStrength().getMeleeAttackStrength();
+        int meleeAttackStrength = attacker.calcCombatStrength().getMeleeAttackStrength();
         int strikeStrength = baseCombatService.calcStrikeStrength(attacker, meleeAttackStrength, target);
 
         return baseCombatService.attack(attacker, target, strikeStrength);

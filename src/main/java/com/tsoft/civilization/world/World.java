@@ -8,6 +8,7 @@ import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Point;
+import com.tsoft.civilization.world.event.NewEraStartedEvent;
 import com.tsoft.civilization.world.event.NewYearStartEvent;
 import com.tsoft.civilization.world.event.WorldStopYearEvent;
 import com.tsoft.civilization.world.scenario.Scenario;
@@ -25,6 +26,9 @@ public class World {
 
     @Getter
     private Year year;
+
+    @Getter
+    private int era;
 
     @Getter
     private final Climate climate;
@@ -54,6 +58,8 @@ public class World {
         this.climate = climate;
 
         year = new Year(-3000);
+        era = year.getEra();
+
         view = new WorldView(this);
 
         worldService = new WorldService(this);
@@ -157,14 +163,22 @@ public class World {
         }
 
         isYearStarted = true;
-
         history.add(year);
-        tilesMap.startYear();
+
         worldService.startYear();
 
         sendEvent(NewYearStartEvent.builder()
             .year(year.getYear())
             .build());
+
+        if (era != year.getEra()) {
+            era = year.getEra();
+            worldService.startEra();
+
+            sendEvent(NewEraStartedEvent.builder()
+                .era(era)
+                .build());
+        }
 
         log.debug("A new year {} started", year.getYear());
     }

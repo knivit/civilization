@@ -91,7 +91,6 @@ public class GetBuildingStatus extends AbstractAjaxRequest {
                 <tr><td>$goldLabel</td><td>$gold $goldImage</td>
                 <tr><td>$foodLabel</td><td>$food $foodImage</td>
                 <tr><td>$happinessLabel</td><td>$happiness $happinessImage</td>
-                <tr><td>$strengthLabel</td><td>$strength</td>
             </table>
             """,
 
@@ -107,8 +106,7 @@ public class GetBuildingStatus extends AbstractAjaxRequest {
             "$happinessLabel", L10nCity.HAPPINESS,
             "$happiness", happiness,
             "$happinessImage", HAPPINESS_IMAGE(happiness),
-            "$strengthLabel", L10nCity.DEFENSE_STRENGTH,
-            "$strength", building.getDefenseStrength()
+            "$defenseStrengthLabel", L10nCity.DEFENSE_STRENGTH
         );
     }
 

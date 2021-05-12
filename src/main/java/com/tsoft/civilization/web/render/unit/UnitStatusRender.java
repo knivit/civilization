@@ -31,7 +31,6 @@ public class UnitStatusRender {
                         buf.append("<tr>");
                         buf.append("<td>");
                         buf.append(unit.getView().getLocalizedName());
-                        buf.append(unit.getSkills());
                         buf.append("</td>");
                         buf.append("</tr>");
                     }

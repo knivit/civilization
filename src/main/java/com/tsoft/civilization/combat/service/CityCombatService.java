@@ -1,18 +1,12 @@
-package com.tsoft.civilization.combat.city;
+package com.tsoft.civilization.combat.service;
 
-import com.tsoft.civilization.building.AbstractBuilding;
+import com.tsoft.civilization.combat.CombatDamage;
 import com.tsoft.civilization.combat.CombatStrength;
+import com.tsoft.civilization.combat.skill.*;
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.tile.feature.hill.Hill;
-import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.unit.UnitCategory;
-import com.tsoft.civilization.unit.UnitList;
-import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.HasHistory;
-
-import java.util.stream.Collectors;
-
-import static com.tsoft.civilization.world.Year.*;
+import lombok.Getter;
 
 /**
  * Introduction
@@ -161,132 +155,61 @@ import static com.tsoft.civilization.world.Year.*;
  */
 public class CityCombatService implements HasHistory {
 
-    private static final int BASE_DEFENSE_STRENGTH = 200;
-
-    private static final CombatStrength BASE_COMBAT_STRENGTH = CombatStrength.builder()
-        .targetBackFireStrength(5)
-        .defenseStrength(BASE_DEFENSE_STRENGTH)
-        .rangedAttackStrength(10)
-        .rangedAttackRadius(2)
-        .skills
-        .build();
-
-    private static final int HILL_VANTAGE_DEFENSE_STRENGTH = 30;
+    private final SkillService skillService = new SkillService();
 
     private final City city;
-    private CombatStrength combatStrength;
+
+    @Getter
+    private final UnitCategory unitCategory = UnitCategory.MILITARY_RANGED_CITY;
+
+    @Getter
+    private CombatDamage combatDamage = CombatDamage.builder()
+        .damage(0)
+        .build();
+
+    private final SkillMap<AbstractCombatSkill> combatSkills;
+    private final SkillMap<AbstractHealingSkill> healingSkills;
 
     public CityCombatService(City city) {
         this.city = city;
-        this.combatStrength = BASE_COMBAT_STRENGTH;
+
+        int era = city.getCivilization().getWorld().getEra();
+        combatSkills = city.getBaseCombatSkills(era);
+        healingSkills = city.getBaseHealingSkills(era);
     }
 
-    public CombatStrength getBaseCombatStrength() {
-        return BASE_COMBAT_STRENGTH;
-    }
-
-    public CombatStrength getCombatStrength() {
-        return combatStrength;
-    }
-
-    public void setCombatStrength(CombatStrength combatStrength) {
-        this.combatStrength = combatStrength;
-    }
-
-    public boolean isDestroyed() {
-        return combatStrength.isDestroyed();
-    }
-
-    public CombatStrength calcCombatStrength() {
-        int baseStrength = calcBaseStrength();
-        int vantageStrength = calcVantageStrength();
-        int populationStrength = calcPopulationStrength();
-        int buildingsStrength = calcBuildingsStrength();
-        int garrisonMeleeAttackStrength = calcGarrisonedMeleeAttackStrength();
-        int garrisonRangedAttackStrength = calcGarrisonedRangedAttackStrength();
-        int garrisonDefenseStrength = calcGarrisonedDefenseStrength();
-
-        return combatStrength.copy()
-            .meleeAttackStrength(combatStrength.getMeleeAttackStrength() + (int)Math.round(baseStrength * 0.4) + garrisonMeleeAttackStrength)
-            .rangedAttackStrength(combatStrength.getRangedAttackStrength() + vantageStrength + garrisonRangedAttackStrength)
-            .defenseStrength(combatStrength.getDefenseStrength() + baseStrength + vantageStrength + populationStrength + buildingsStrength + garrisonDefenseStrength)
+    public CombatStrength getBaseCombatStrength(int era) {
+        return CombatStrength.builder()
+            .rangedAttackStrength(10)
+            .rangedAttackRadius(2)
+            .rangedBackFireStrength(4)
+            .defenseStrength(50)
             .build();
     }
 
-    public UnitCategory getUnitCategory() {
-        return com.tsoft.civilization.unit.UnitCategory.MILITARY_RANGED_CITY;
+    public CombatStrength calcCombatStrength() {
+        CombatStrength strength = skillService.calcCombatStrength(city, combatSkills);
+        return strength.minus(combatDamage);
     }
 
-    // A basic factor, determined by the current era of the civilization. For example, while in the Ancient Era,
-    // a city has a base CS of about 9 - 10, but in the Modern Era, the base increases to 50 - 60.
-    private int calcBaseStrength() {
-        switch (city.getWorld().getYear().getEra()) {
-            case ANCIENT_ERA: return 10;
-            case CLASSICAL_ERA: return 20;
-            case MEDIEVAL_ERA: return 30;
-            case RENAISSANCE_ERA: return 40;
-            case INDUSTRIAL_ERA: return 50;
-            case MODERN_ERA: return 60;
-            case ATOMIC_ERA: return 70;
-            case INFORMATION_ERA: return 80;
-        }
-        return 100;
+    public void addCombatDamage(CombatDamage damage) {
+        combatDamage = combatDamage.add(damage);
     }
 
-    // Vantage - If the city is constructed on a Hill terrain, it has an advantage over attackers, which translates into additional strength
-    // (both defense and attack)
-    private int calcVantageStrength() {
-        Point cityLocation = city.getLocation();
-        AbstractTile tile = city.getTileService().getTilesMap().getTile(cityLocation);
-        if (tile.hasFeature(Hill.class)) {
-            return HILL_VANTAGE_DEFENSE_STRENGTH;
-        }
-        return 0;
+    public SkillMap<AbstractCombatSkill> getCombatSkills() {
+        return combatSkills.unmodifiable();
     }
 
-    // Population - Each citizen increases defense strength
-    private int calcPopulationStrength() {
-        return city.getCitizenCount();
+    public SkillMap<AbstractHealingSkill> getHealingSkills() {
+        return healingSkills.unmodifiable();
     }
 
-    // Check buildings adds defense strength
-    private int calcBuildingsStrength() {
-        return city.getBuildings().stream()
-            .mapToInt(AbstractBuilding::getCityDefenseStrength)
-            .sum();
+    public void addCombatSkill(AbstractCombatSkill skill) {
+        combatSkills.put(skill, SkillLevel.ONE);
     }
 
-    // A portion of the garrisoned unit's combat strength is added to the city's total strength
-    // Only Land units may form a Garrison
-    private int calcGarrisonedMeleeAttackStrength() {
-        return getGarrison().stream()
-            .filter(e -> e.getUnitCategory().isLand())
-            .mapToInt(e -> (int)Math.round((double)e.getCombatStrength().getMeleeAttackStrength() * 0.4))
-            .sum();
-    }
-
-    private int calcGarrisonedRangedAttackStrength() {
-        return getGarrison().stream()
-            .filter(e -> e.getUnitCategory().isRanged())
-            .mapToInt(e -> (int)Math.round((double)e.getCombatStrength().getRangedAttackStrength() * 0.6))
-            .sum();
-    }
-
-    private int calcGarrisonedDefenseStrength() {
-        return getGarrison().stream()
-            .mapToInt(e -> (int)Math.round((double)e.getCombatStrength().getDefenseStrength() * 0.2))
-            .sum();
-    }
-
-    // Garrison - military land units stationed in the city
-    private UnitList getGarrison() {
-        UnitList unitsAround = city.getCivilization().getUnitService()
-            .getUnitsAtLocation(city.getLocation());
-
-        return new UnitList(unitsAround.stream()
-            .filter(e -> e.getUnitCategory().isMilitary())
-            .filter(e -> e.getUnitCategory().isLand())
-            .collect(Collectors.toList()));
+    public void addHealingSkill(AbstractHealingSkill skill) {
+        healingSkills.put(skill, SkillLevel.ONE);
     }
 
     @Override
@@ -294,23 +217,12 @@ public class CityCombatService implements HasHistory {
 
     }
 
-    @Override
-    public void stopYear() {
-        repair();
+    public void startEra() {
+
     }
 
-    // Cities heal automatically each turn (being constantly repaired by their inhabitants),
-    // making them even harder to capture. The amount healed is about 10 - 15% of its total health
-    private void repair() {
-        if (combatStrength.getDefenseStrength() < BASE_DEFENSE_STRENGTH) {
-            int repair = city.getCitizenCount();
-            if (repair + combatStrength.getDefenseStrength() > BASE_DEFENSE_STRENGTH) {
-                repair = BASE_DEFENSE_STRENGTH - combatStrength.getDefenseStrength();
-            }
-
-            combatStrength.copy()
-                .defenseStrength(combatStrength.getDefenseStrength() + repair)
-                .build();
-        }
+    @Override
+    public void stopYear() {
+        combatDamage = skillService.applyHealingSkills(city, healingSkills);
     }
 }

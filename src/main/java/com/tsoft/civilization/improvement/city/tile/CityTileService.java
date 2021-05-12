@@ -17,16 +17,25 @@ public class CityTileService implements HasHistory {
     private final TilesMap tilesMap;
 
     private final City city;
+
+    private Point center;
     private final Set<Point> locations = new HashSet<>();
 
     public CityTileService(City city) {
         this.city = city;
+
         tilesMap = city.getCivilization().getWorld().getTilesMap();
     }
 
     public void addStartLocations(Point location) {
+        center = location;
+
         locations.add(location);
         locations.addAll(tilesMap.getLocationsAround(location, 1));
+    }
+
+    public Point getLocation() {
+        return center;
     }
 
     public Set<Point> getLocations() {

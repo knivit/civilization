@@ -1,6 +1,7 @@
 package com.tsoft.civilization.unit.civil.greatartist;
 
 import com.tsoft.civilization.combat.CombatStrength;
+import com.tsoft.civilization.combat.skill.*;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.world.Year;
@@ -8,6 +9,9 @@ import com.tsoft.civilization.civilization.Civilization;
 import lombok.Getter;
 
 import java.util.UUID;
+
+import static com.tsoft.civilization.combat.skill.earth.heal.BaseHealingSkill.BASE_HEALING_SKILL;
+import static com.tsoft.civilization.combat.skill.earth.movement.BaseMovementSkill.BASE_MOVEMENT_SKILL;
 
 /**
  * Movement: 2;
@@ -19,14 +23,14 @@ import java.util.UUID;
  * The Culture Bomb target tile cannot be in foreign territory, though it can be in unclaimed territory.
  */
 public class GreatArtist extends AbstractUnit {
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    private static final CombatStrength COMBAT_STRENGTH = CombatStrength.builder()
-        .defenseStrength(20)
-        .build();
+    public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     @Getter
     private final int baseProductionCost = 1;
+
+    @Getter
+    private final int basePassScore = 2;
 
     private static final GreatArtistView VIEW = new GreatArtistView();
 
@@ -40,13 +44,29 @@ public class GreatArtist extends AbstractUnit {
     }
 
     @Override
-    public CombatStrength getBaseCombatStrength() {
-        return COMBAT_STRENGTH;
+    public CombatStrength getBaseCombatStrength(int era) {
+        return CombatStrength.builder()
+            .defenseStrength(20)
+            .build();
     }
 
     @Override
-    public void initPassScore() {
-        setPassScore(2);
+    public SkillMap<AbstractCombatSkill> getBaseCombatSkills(int era) {
+        return new SkillMap<>();
+    }
+
+    @Override
+    public SkillMap<AbstractHealingSkill> getBaseHealingSkills(int era) {
+        return new SkillMap<>(
+            BASE_HEALING_SKILL, SkillLevel.ONE
+        );
+    }
+
+    @Override
+    public SkillMap<AbstractMovementSkill> getBaseMovementSkills() {
+        return new SkillMap<>(
+            BASE_MOVEMENT_SKILL, SkillLevel.ONE
+        );
     }
 
     @Override

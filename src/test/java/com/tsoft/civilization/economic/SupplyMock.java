@@ -16,13 +16,9 @@ public class SupplyMock {
             case 'G': return Supply.builder().gold(value).build();
             case 'S': return Supply.builder().science(value).build();
             case 'C': return Supply.builder().culture(value).build();
-
-            case 'A': return Supply.builder().greatArtist(value).build();
-            case 'M': return Supply.builder().greatMusician(value).build();
-            case 'W': return Supply.builder().greatWriter(value).build();
-            case 'R': return Supply.builder().greatMerchant(value).build();
-            case 'E': return Supply.builder().greatEngineer(value).build();
-            case 'I': return Supply.builder().greatScientist(value).build();
+            case 'A': return Supply.builder().faith(value).build();
+            case 'T': return Supply.builder().tourism(value).build();
+            case 'E': return Supply.builder().greatPerson(value).build();
         }
 
         throw new IllegalArgumentException("Unknown type = " + type);
@@ -37,13 +33,9 @@ public class SupplyMock {
             a.getGold() == b.getGold() &&
             a.getScience() == b.getScience() &&
             a.getCulture() == b.getCulture() &&
-
-            a.getGreatArtist() == b.getGreatArtist() &&
-            a.getGreatMusician() == b.getGreatMusician() &&
-            a.getGreatWriter() == b.getGreatWriter() &&
-            a.getGreatMerchant() == b.getGreatMerchant() &&
-            a.getGreatEngineer() == b.getGreatEngineer() &&
-            a.getGreatScientist() == b.getGreatScientist();
+            a.getFaith() == b.getFaith() &&
+            a.getTourism() == b.getTourism() &&
+            a.getGreatPerson() == b.getGreatPerson();
 
         // log them out as jUnit doesn't show the values in assertTrue
         if (!isEqual) {
@@ -55,12 +47,9 @@ public class SupplyMock {
                 Gold            |     %5d  |    %5d | %s
                 Science         |     %5d  |    %5d | %s
                 Culture         |     %5d  |    %5d | %s
-                Great Artist    |     %5d  |    %5d | %s
-                Great Musicians |     %5d  |    %5d | %s
-                Great Writer    |     %5d  |    %5d | %s
-                Great Merchant  |     %5d  |    %5d | %s
-                Great Engineer  |     %5d  |    %5d | %s
-                Great Scientist |     %5d  |    %5d | %s
+                Faith           |     %5d  |    %5d | %s
+                Tourism         |     %5d  |    %5d | %s
+                Great Person    |     %5d  |    %5d | %s
                 %n""",
 
                 a.getFood(), b.getFood(), cmp(a.getFood(), b.getFood()),
@@ -69,12 +58,9 @@ public class SupplyMock {
                 a.getScience(), b.getScience(), cmp(a.getScience(), b.getScience()),
                 a.getCulture(), b.getCulture(), cmp(a.getCulture(), b.getCulture()),
 
-                a.getGreatArtist(), b.getGreatArtist(), cmp(a.getGreatArtist(), b.getGreatArtist()),
-                a.getGreatMusician(), b.getGreatMusician(), cmp(a.getGreatMusician(), b.getGreatMusician()),
-                a.getGreatWriter(), b.getGreatWriter(), cmp(a.getGreatWriter(), b.getGreatWriter()),
-                a.getGreatMerchant(), b.getGreatMerchant(), cmp(a.getGreatMerchant(), b.getGreatMerchant()),
-                a.getGreatEngineer(), b.getGreatEngineer(), cmp(a.getGreatEngineer(), b.getGreatEngineer()),
-                a.getGreatScientist(), b.getGreatScientist(), cmp(a.getGreatScientist(), b.getGreatScientist())
+                a.getFaith(), b.getFaith(), cmp(a.getFaith(), b.getFaith()),
+                a.getTourism(), b.getTourism(), cmp(a.getTourism(), b.getTourism()),
+                a.getGreatPerson(), b.getGreatPerson(), cmp(a.getGreatPerson(), b.getGreatPerson())
             );
         }
 

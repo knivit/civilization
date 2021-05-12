@@ -7,7 +7,6 @@ import com.tsoft.civilization.civilization.CivilizationsRelations;
 import com.tsoft.civilization.combat.CombatResult;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrengthList;
-import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.unit.AbstractUnit;
@@ -52,7 +51,7 @@ public class AttackServiceTest {
             .containsExactly(world.unit("foreignWorkers"));
 
         // move close the foreign warriors and now they are the target too
-        world.unit("foreignWarriors").setLocation(new Point(2, 0));
+        world.unit("foreignWarriors").getMovementService().setLocation(new Point(2, 0));
         targets = attackService.getTargetsToAttack(world.unit("warriors"));
         assertThat(targets)
             .hasSize(2)
@@ -128,18 +127,14 @@ public class AttackServiceTest {
 
         assertThat(world.unit("archers").getPassScore()).isEqualTo(0);
 
-        assertThat(world.unit("foreignWarriors2").getCombatStrength())
+        assertThat(world.unit("foreignWarriors2").calcCombatStrength())
             .isNotNull()
             .returns(10, CombatStrength::getMeleeAttackStrength)
-            .returns(5, CombatStrength::getTargetBackFireStrength)
+            .returns(5, CombatStrength::getMeleeBackFireStrength)
             .returns(0, CombatStrength::getRangedAttackStrength)
             .returns(0, CombatStrength::getRangedAttackRadius)
-            .returns(0, CombatStrength::getAttackExperience)
-
             .returns(7, CombatStrength::getDefenseStrength)
             .returns(1, CombatStrength::getDefenseExperience)
-
-            .returns(true, CombatStrength::isCanConquerCity)
             .returns(false, CombatStrength::isDestroyed);
 
         // do the next step to be able to strike again
@@ -265,7 +260,7 @@ public class AttackServiceTest {
         world.startGame();
 
         City foreignCity = world.city("foreignCity");
-        foreignCity.setCombatStrength(foreignCity.getCombatStrength().copy().defenseStrength(30).build());
+        //foreignCity.setCombatStrength(foreignCity.calcCombatStrength().copy().defenseStrength(30).build());
         world.setCivilizationsRelations(russia, america, CivilizationsRelations.war());
 
         // strike 1
@@ -274,8 +269,7 @@ public class AttackServiceTest {
 
         assertThat(world.unit("warriors1"))
             .returns(0, AbstractUnit::getPassScore)
-            .returns(15, e -> e.getCombatStrength().getDefenseStrength())
-            .returns(2, e -> e.getCombatStrength().getAttackExperience());
+            .returns(15, e -> e.calcCombatStrength().getDefenseStrength());
 
         assertThat(russia.getCityService().size()).isEqualTo(1);
 
@@ -284,10 +278,10 @@ public class AttackServiceTest {
             .returns(2, e -> e.getUnitService().size());
 
         assertThat(world.city("foreignCity"))
-            .returns(30 - 10, e -> e.getCombatStrength().getDefenseStrength());
+            .returns(30 - 10, e -> e.calcCombatStrength().getDefenseStrength());
 
         assertThat(world.unit("foreignWarriors"))
-            .returns(20, e -> e.getCombatStrength().getDefenseStrength());
+            .returns(20, e -> e.calcCombatStrength().getDefenseStrength());
 
         // strike 2
         assertThat(attackService.attack(world.unit("warriors2"), world.city("foreignCity")))
@@ -295,8 +289,7 @@ public class AttackServiceTest {
 
         assertThat(world.unit("warriors2"))
             .returns(0, AbstractUnit::getPassScore)
-            .returns(15, e -> e.getCombatStrength().getDefenseStrength())
-            .returns(2, e -> e.getCombatStrength().getAttackExperience());
+            .returns(15, e -> e.calcCombatStrength().getDefenseStrength());
 
         assertThat(russia.getCityService().size()).isEqualTo(1);
 
@@ -305,10 +298,10 @@ public class AttackServiceTest {
             .returns(2, e -> e.getUnitService().size());
 
         assertThat(world.city("foreignCity"))
-            .returns(20 - 9, e -> e.getCombatStrength().getDefenseStrength());
+            .returns(20 - 9, e -> e.calcCombatStrength().getDefenseStrength());
 
         assertThat(world.unit("foreignWarriors"))
-            .returns(20, e -> e.getCombatStrength().getDefenseStrength());
+            .returns(20, e -> e.calcCombatStrength().getDefenseStrength());
 
         // strike 3
         assertThat(attackService.attack(world.unit("warriors3"), world.city("foreignCity")))
@@ -316,8 +309,7 @@ public class AttackServiceTest {
 
         assertThat(world.unit("warriors3"))
             .returns(0, AbstractUnit::getPassScore)
-            .returns(15, e -> e.getCombatStrength().getDefenseStrength())
-            .returns(2, e -> e.getCombatStrength().getAttackExperience());
+            .returns(15, e -> e.calcCombatStrength().getDefenseStrength());
 
         assertThat(russia.getCityService().size()).isEqualTo(1);
 
@@ -326,10 +318,10 @@ public class AttackServiceTest {
             .returns(2, e -> e.getUnitService().size());
 
         assertThat(world.city("foreignCity"))
-            .returns(20 - 9 - 8, e -> e.getCombatStrength().getDefenseStrength());
+            .returns(20 - 9 - 8, e -> e.calcCombatStrength().getDefenseStrength());
 
         assertThat(world.unit("foreignWarriors"))
-            .returns(20, e -> e.getCombatStrength().getDefenseStrength());
+            .returns(20, e -> e.calcCombatStrength().getDefenseStrength());
 
         // strike 4
         assertThat(attackService.attack(world.unit("warriors4"), world.city("foreignCity")))
@@ -338,8 +330,7 @@ public class AttackServiceTest {
 
         assertThat(world.unit("warriors4"))
             .returns(0, AbstractUnit::getPassScore)
-            .returns(15, e -> e.getCombatStrength().getDefenseStrength())
-            .returns(2, e -> e.getCombatStrength().getAttackExperience());
+            .returns(15, e -> e.calcCombatStrength().getDefenseStrength());
 
         assertThat(russia.getCityService().size()).isEqualTo(2);
 
@@ -347,8 +338,8 @@ public class AttackServiceTest {
 
         // foreign city is captured
         assertThat(world.city("foreignCity"))
-            .returns(world.location("warriors4"), AbstractImprovement::getLocation)
-            .returns(russia, AbstractImprovement::getCivilization);
+            .returns(world.location("warriors4"), City::getLocation)
+            .returns(russia, City::getCivilization);
 
         // foreign warriors are destroyed and foreign workers are captured
         assertThat(russia.getUnitService().size()).isEqualTo(5);

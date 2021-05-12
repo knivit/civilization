@@ -157,7 +157,7 @@ public class CityConstructionService {
             AbstractBuilding building = BuildingFactory.newInstance(obj.getClassUuid(), city);
             city.addBuilding(building);
 
-            city.getWorld().sendEvent(NewBuildingBuiltEvent.builder()
+            city.getCivilization().getWorld().sendEvent(NewBuildingBuiltEvent.builder()
                 .buildingName(building.getView().getName())
                 .build());
 
@@ -168,7 +168,7 @@ public class CityConstructionService {
             AbstractUnit unit = (AbstractUnit)obj;
             city.addUnit(unit);
 
-            city.getWorld().sendEvent(NewUnitBuiltEvent.builder()
+            city.getCivilization().getWorld().sendEvent(NewUnitBuiltEvent.builder()
                 .unitName(unit.getView().getName())
                 .build());
 

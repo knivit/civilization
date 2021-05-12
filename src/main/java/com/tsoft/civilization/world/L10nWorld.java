@@ -275,6 +275,10 @@ public class L10nWorld {
         .put(EN, "Started a new Year $year !")
         .put(RU, "Начался новый год $year !");
 
+    public static final L10n WORLD_START_ERA_EVENT = new L10n()
+        .put(EN, "Started a new Era $era !")
+        .put(RU, "Начался новый эра $era !");
+
     public static final L10n WORLD_STOP_YEAR_EVENT = new L10n()
         .put(EN, "Year $year ended")
         .put(RU, "Год $year завершен");

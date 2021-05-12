@@ -264,7 +264,7 @@ public abstract class Civilization {
         L10n cityName = cityService.findCityName();
         boolean isCapital = cityService.size() == 0;
 
-        City city = ImprovementFactory.newInstance(City.CLASS_UUID, this, location);
+        City city = ImprovementFactory.newInstance(City.CLASS_UUID, world.getTilesMap().getTile(location));
         city.init(cityName, isCapital);
         cityService.addCity(city);
 
@@ -317,6 +317,11 @@ public abstract class Civilization {
 
         // A bot can be helping a human player
         getBot().startYear();
+    }
+
+    public void startEra() {
+        unitService.startEra();
+        cityService.startEra();
     }
 
     public synchronized void stopYear() {

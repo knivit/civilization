@@ -1,11 +1,14 @@
 package com.tsoft.civilization.unit;
 
 import com.tsoft.civilization.combat.CombatDamage;
+import com.tsoft.civilization.combat.service.UnitCombatService;
+import com.tsoft.civilization.combat.skill.AbstractMovementSkill;
+import com.tsoft.civilization.combat.skill.SkillMap;
+import com.tsoft.civilization.unit.service.UnitMovementService;
 import com.tsoft.civilization.world.HasId;
 import com.tsoft.civilization.world.HasView;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrength;
-import com.tsoft.civilization.combat.skill.AbstractSkill;
 import com.tsoft.civilization.improvement.city.construction.CanBeBuilt;
 import com.tsoft.civilization.improvement.city.construction.CityConstructionService;
 import com.tsoft.civilization.tile.TilesMap;
@@ -48,27 +51,23 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
     @Getter @Setter
     private Civilization civilization;
 
-    @Getter @Setter
-    private Point location;
+    @Getter
+    private UnitCombatService combatService;
 
-    @Getter @Setter
-    private int passScore;
+    @Getter
+    private UnitMovementService movementService;
 
-    @Getter @Setter
-    private CombatStrength combatStrength;
-
-    @Getter @Setter
-    private CombatDamage combatDamage;
-
-    private boolean isMoved;
-
-    private final ArrayList<AbstractSkill> skills = new ArrayList<>();
+    @Getter
+    private boolean isDestroyed;
 
     public abstract String getClassUuid();
     public abstract UnitCategory getUnitCategory();
-    public abstract void initPassScore();
     public abstract int getGoldCost(Civilization civilization);
     public abstract int getBaseProductionCost();
+
+    // Movements
+    public abstract int getBasePassScore();
+    public abstract SkillMap<AbstractMovementSkill> getBaseMovementSkills();
 
     public abstract AbstractUnitView getView();
     public abstract boolean checkEraAndTechnology(Civilization civilization);
@@ -79,18 +78,25 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
 
     // Initialization on create the object
     public void init() {
-        combatStrength = getBaseCombatStrength();
-        initPassScore();
+        combatService = new UnitCombatService(this);
+        movementService = new UnitMovementService(this);
     }
 
     @Override
     public void startYear() {
-        initPassScore();
-        isMoved = false;
+        combatService.startYear();
+        movementService.startYear();
+    }
+
+    public void startEra() {
+        combatService.startEra();
+        movementService.startEra();
     }
 
     @Override
     public void stopYear() {
+        combatService.stopYear();
+        movementService.stopYear();
     }
 
     public World getWorld() {
@@ -101,13 +107,36 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
         return getWorld().getTilesMap();
     }
 
+    public Point getLocation() {
+        return movementService.getLocation();
+    }
+
     public AbstractTile getTile() {
-        return getTilesMap().getTile(location);
+        return getTilesMap().getTile(getLocation());
     }
 
     @Override
     public CombatStrength calcCombatStrength() {
-        return combatStrength;
+        return combatService.calcCombatStrength();
+    }
+
+    @Override
+    public CombatDamage getCombatDamage() {
+        return combatService.getCombatDamage();
+    }
+
+    @Override
+    public void addCombatDamage(CombatDamage damage) {
+        combatService.addCombatDamage(damage);
+    }
+
+    public int getPassScore() {
+        return movementService.getPassScore();
+    }
+
+    @Override
+    public void setPassScore(int passScore) {
+        movementService.setPassScore(passScore);
     }
 
     @Override
@@ -118,11 +147,6 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
         return productionCost;
     }
 
-    @Override
-    public List<AbstractSkill> getSkills() {
-        return Collections.unmodifiableList(skills);
-    }
-
     public int getGoldUnitKeepingExpenses() {
         return 3;
     }
@@ -131,28 +155,21 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
         return !getUnitCategory().isMilitary();
     }
 
-    @Override
-    public boolean isDestroyed() {
-        return getCombatStrength().isDestroyed();
-    }
-
     public void destroy() {
-        combatStrength = combatStrength.copy()
-            .isDestroyed(true)
-            .build();
+        isDestroyed = true;
     }
 
     public boolean isActionAvailable() {
-        return !isDestroyed() && (getPassScore() > 0);
+        return !isDestroyed() && (movementService.getPassScore() > 0);
     }
 
     @Override
     public String toString() {
         return getClass().getSimpleName() + "{" +
             "civilization=" + civilization +
-            ", location=" + location +
-            ", passScore=" + passScore +
-            ", combatStrength=" + combatStrength +
+            ", location=" + getLocation() +
+            ", passScore=" + getPassScore() +
+            ", isDestroyed=" + isDestroyed +
         "}";
     }
 }

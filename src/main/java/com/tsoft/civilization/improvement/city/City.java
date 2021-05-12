@@ -4,16 +4,17 @@ import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.building.*;
 import com.tsoft.civilization.building.palace.Palace;
 import com.tsoft.civilization.civilization.population.Happiness;
+import com.tsoft.civilization.combat.CombatDamage;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrength;
-import com.tsoft.civilization.combat.skill.AbstractSkill;
+import com.tsoft.civilization.combat.skill.*;
 import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.improvement.city.construction.CanBeBuilt;
 import com.tsoft.civilization.improvement.city.population.CityHappinessService;
 import com.tsoft.civilization.improvement.city.supply.CitySupplyService;
 import com.tsoft.civilization.improvement.city.tile.CityTileService;
 import com.tsoft.civilization.improvement.city.building.CityBuildingService;
-import com.tsoft.civilization.combat.city.CityCombatService;
+import com.tsoft.civilization.combat.service.CityCombatService;
 import com.tsoft.civilization.improvement.city.construction.CityConstructionService;
 import com.tsoft.civilization.improvement.city.construction.ConstructionList;
 import com.tsoft.civilization.improvement.city.event.CityStopYearEvent;
@@ -31,6 +32,14 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
+
+import static com.tsoft.civilization.combat.skill.earth.combat.HillVantageCombatSkill.HILL_VANTAGE_COMBAT_SKILL;
+import static com.tsoft.civilization.combat.skill.earth.combat.CityBuildingsCombatSkill.CITY_BUILDINGS_COMBAT_SKILL;
+import static com.tsoft.civilization.combat.skill.earth.combat.CityGarrisonCombatSkill.CITY_GARRISON_COMBAT_SKILL;
+import static com.tsoft.civilization.combat.skill.earth.combat.CityPopulationCombatSkill.CITY_POPULATION_COMBAT_SKILL;
+import static com.tsoft.civilization.combat.skill.earth.heal.BaseHealingSkill.BASE_HEALING_SKILL;
+import static com.tsoft.civilization.world.Year.*;
+import static com.tsoft.civilization.world.Year.INFORMATION_ERA;
 
 @Slf4j
 public class City extends AbstractImprovement implements HasCombatStrength, HasHistory {
@@ -72,7 +81,10 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
     private Happiness happiness = Happiness.EMPTY;
 
     @Getter
-    private boolean annexed;
+    private boolean isAnnexed;
+
+    @Getter
+    private boolean isDestroyed;
 
     public City(AbstractTile tile, Civilization civilization) {
         super(tile);
@@ -82,7 +94,7 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
     public void init(L10n cityName, boolean isCapital) {
         // area
         tileService = new CityTileService(this);
-        tileService.addStartLocations(tile.getLocation());
+        tileService.addStartLocations(getTile().getLocation());
 
         // population
         populationService = new CityPopulationService(this);
@@ -112,18 +124,49 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
     }
 
     @Override
-    public CombatStrength getBaseCombatStrength() {
-        return combatService.getBaseCombatStrength();
+    public Point getLocation() {
+        return tileService.getLocation();
     }
 
     @Override
-    public CombatStrength getCombatStrength() {
-        return combatService.getCombatStrength();
+    public CombatStrength getBaseCombatStrength(int era) {
+        // A basic factor, determined by the current era of the civilization. For example, while in the Ancient Era,
+        // a city has a base CS of about 9 - 10, but in the Modern Era, the base increases to 50 - 60.
+        int defenseStrength = switch (civilization.getWorld().getYear().getEra()) {
+            case ANCIENT_ERA -> 10;
+            case CLASSICAL_ERA -> 20;
+            case MEDIEVAL_ERA -> 30;
+            case RENAISSANCE_ERA -> 40;
+            case INDUSTRIAL_ERA -> 50;
+            case MODERN_ERA -> 60;
+            case ATOMIC_ERA -> 70;
+            case INFORMATION_ERA -> 80;
+            default -> 100;
+        };
+
+        return CombatStrength.builder()
+            .rangedAttackStrength(7)
+            .rangedAttackRadius(2)
+            .meleeAttackStrength(0)
+            .defenseStrength(defenseStrength)
+            .build();
     }
 
     @Override
-    public void setCombatStrength(CombatStrength combatStrength) {
-        combatService.setCombatStrength(combatStrength);
+    public SkillMap<AbstractCombatSkill> getBaseCombatSkills(int era) {
+        return new SkillMap<>(
+            CITY_POPULATION_COMBAT_SKILL, SkillLevel.ONE,
+            CITY_BUILDINGS_COMBAT_SKILL, SkillLevel.ONE,
+            CITY_GARRISON_COMBAT_SKILL, SkillLevel.ONE,
+            HILL_VANTAGE_COMBAT_SKILL, SkillLevel.ONE
+        );
+    }
+
+    @Override
+    public SkillMap<AbstractHealingSkill> getBaseHealingSkills(int era) {
+        return new SkillMap<>(
+            BASE_HEALING_SKILL, SkillLevel.ONE
+        );
     }
 
     @Override
@@ -132,12 +175,17 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
     }
 
     @Override
-    public void destroy() {
-        CombatStrength destroyed = getCombatStrength().copy()
-            .isDestroyed(true)
-            .build();
+    public CombatDamage getCombatDamage() {
+        return combatService.getCombatDamage();
+    }
 
-        combatService.setCombatStrength(destroyed);
+    public void addCombatDamage(CombatDamage damage) {
+        combatService.addCombatDamage(damage);
+    }
+
+    @Override
+    public void destroy() {
+        isDestroyed = true;
     }
 
     @Override
@@ -217,23 +265,13 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
         return (tile.getTileType() != TileType.SEA) && (tile.getTileType() != TileType.EARTH_ROUGH);
     }
 
-    @Override
-    public boolean isDestroyed() {
-        return combatService.isDestroyed();
-    }
-
-    @Override
-    public List<AbstractSkill> getSkills() {
-        return Collections.emptyList();
-    }
-
     /** City has moved to another Civilization (was captured) */
     public void moveToCivilization(Civilization civilization) {
         this.civilization = civilization;
     }
 
     public void addUnit(AbstractUnit unit) {
-        civilization.getUnitService().addUnit(unit, tile.getLocation());
+        civilization.getUnitService().addUnit(unit, getTile().getLocation());
     }
 
     public int getUnitProductionCost(String unitClassUuid) {
@@ -283,6 +321,10 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
 
         // can do actions (attack, buy, build etc)
         passScore = 1;
+    }
+
+    public void startEra() {
+        combatService.startEra();
     }
 
     @Override

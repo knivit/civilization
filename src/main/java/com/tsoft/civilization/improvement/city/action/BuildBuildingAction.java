@@ -1,5 +1,6 @@
 package com.tsoft.civilization.improvement.city.action;
 
+import com.tsoft.civilization.L10n.L10n;
 import com.tsoft.civilization.building.BuildingFactory;
 import com.tsoft.civilization.improvement.city.L10nCity;
 import com.tsoft.civilization.building.L10nBuilding;
@@ -14,7 +15,10 @@ import java.util.UUID;
 
 @Slf4j
 public class BuildBuildingAction {
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
+
+    private static final L10n localizedDescription = L10nBuilding.BUILD_DESCRIPTION;
 
     public static ActionAbstractResult buildBuilding(City city, String buildingClassUuid) {
         ActionAbstractResult result = canBuildBuilding(city, buildingClassUuid);
@@ -60,14 +64,6 @@ public class BuildBuildingAction {
         return CityActionResults.CAN_START_CONSTRUCTION;
     }
 
-    private static String getLocalizedName() {
-        return L10nBuilding.BUILD.getLocalized();
-    }
-
-    private static String getLocalizedDescription() {
-        return L10nBuilding.BUILD_DESCRIPTION.getLocalized();
-    }
-
     public static StringBuilder getHtml(City city, String buildingClassUuid) {
         if (canBuildBuilding(city, buildingClassUuid).isFail()) {
             return null;
@@ -78,7 +74,7 @@ public class BuildBuildingAction {
             """,
 
             "$buttonOnClick", ClientAjaxRequest.buildBuildingAction(city, buildingClassUuid),
-            "$buttonLabel", getLocalizedName(),
+            "$buttonLabel", L10nBuilding.BUILD.getLocalized(),
             "$productionCost", city.getBuildingProductionCost(buildingClassUuid),
             "$production", L10nCity.PRODUCTION
         );

@@ -1,8 +1,7 @@
-package com.tsoft.civilization.combat.ranged;
+package com.tsoft.civilization.combat.service;
 
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.combat.*;
-import com.tsoft.civilization.combat.service.BaseCombatService;
 import com.tsoft.civilization.tile.feature.FeatureList;
 import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.tile.feature.AbstractFeature;
@@ -22,7 +21,7 @@ public class RangedCombatService {
         HasCombatStrengthList targets = new HasCombatStrengthList();
 
         // Add foreign units/cities if its civilization is in war with our
-        int attackRadius = attacker.getCombatStrength().getRangedAttackRadius();
+        int attackRadius = attacker.calcCombatStrength().getRangedAttackRadius();
         HasCombatStrengthList targetsAround = baseCombatService.getPossibleTargetsAround(attacker, attackRadius);
         Civilization myCivilization = attacker.getCivilization();
         World world = myCivilization.getWorld();
@@ -52,7 +51,7 @@ public class RangedCombatService {
     }
 
     private int getMissileStrength(HasCombatStrength attacker, HasCombatStrength target) {
-        int rangedAttackStrength = attacker.getCombatStrength().getRangedAttackStrength();
+        int rangedAttackStrength = attacker.calcCombatStrength().getRangedAttackStrength();
 
         // add all bonuses
         int missileStrength = baseCombatService.calcStrikeStrength(attacker, rangedAttackStrength, target);

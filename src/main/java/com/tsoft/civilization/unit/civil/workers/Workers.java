@@ -1,12 +1,16 @@
 package com.tsoft.civilization.unit.civil.workers;
 
 import com.tsoft.civilization.combat.CombatStrength;
+import com.tsoft.civilization.combat.skill.*;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.civilization.Civilization;
 import lombok.Getter;
 
 import java.util.UUID;
+
+import static com.tsoft.civilization.combat.skill.earth.heal.BaseHealingSkill.BASE_HEALING_SKILL;
+import static com.tsoft.civilization.combat.skill.earth.movement.BaseMovementSkill.BASE_MOVEMENT_SKILL;
 
 /**
  * Movement: 2;
@@ -25,14 +29,14 @@ import java.util.UUID;
  * As civilian units, Workers have no defense and so are captured if attacked by an enemy unit.
  */
 public class Workers extends AbstractUnit {
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    private static final CombatStrength COMBAT_STRENGTH = CombatStrength.builder()
-        .defenseStrength(0)
-        .build();
+    public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     @Getter
     private final int baseProductionCost = 40;
+
+    @Getter
+    private final int basePassScore = 5;
 
     private static final WorkersView VIEW = new WorkersView();
 
@@ -46,13 +50,29 @@ public class Workers extends AbstractUnit {
     }
 
     @Override
-    public CombatStrength getBaseCombatStrength() {
-        return COMBAT_STRENGTH;
+    public CombatStrength getBaseCombatStrength(int era) {
+        return CombatStrength.builder()
+            .defenseStrength(0)
+            .build();
     }
 
     @Override
-    public void initPassScore() {
-        setPassScore(5);
+    public SkillMap<AbstractCombatSkill> getBaseCombatSkills(int era) {
+        return new SkillMap<>();
+    }
+
+    @Override
+    public SkillMap<AbstractHealingSkill> getBaseHealingSkills(int era) {
+        return new SkillMap<>(
+            BASE_HEALING_SKILL, SkillLevel.ONE
+        );
+    }
+
+    @Override
+    public SkillMap<AbstractMovementSkill> getBaseMovementSkills() {
+        return new SkillMap<>(
+            BASE_MOVEMENT_SKILL, SkillLevel.ONE
+        );
     }
 
     @Override

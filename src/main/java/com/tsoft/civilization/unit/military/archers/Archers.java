@@ -1,6 +1,7 @@
 package com.tsoft.civilization.unit.military.archers;
 
 import com.tsoft.civilization.combat.CombatStrength;
+import com.tsoft.civilization.combat.skill.*;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitCategory;
@@ -9,6 +10,10 @@ import com.tsoft.civilization.civilization.Civilization;
 import lombok.Getter;
 
 import java.util.UUID;
+
+import static com.tsoft.civilization.combat.skill.earth.combat.HillVantageCombatSkill.HILL_VANTAGE_COMBAT_SKILL;
+import static com.tsoft.civilization.combat.skill.earth.heal.BaseHealingSkill.BASE_HEALING_SKILL;
+import static com.tsoft.civilization.combat.skill.earth.movement.BaseMovementSkill.BASE_MOVEMENT_SKILL;
 
 /**
  * Archer
@@ -49,20 +54,14 @@ import java.util.UUID;
  * dominated the European battlefields during the 14th and 15th centuries.
  */
 public class Archers extends AbstractUnit {
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     @Getter
-    private final CombatStrength baseCombatStrength = CombatStrength.builder()
-        .meleeAttackStrength(0)
-        .targetBackFireStrength(5)
-        .defenseStrength(5)
-        .rangedAttackStrength(7)
-        .rangedAttackRadius(2)
-        .canConquerCity(false)
-        .build();
+    private final int baseProductionCost = 40;
 
     @Getter
-    private final int baseProductionCost = 40;
+    private final int basePassScore = 5;
 
     @Getter
     private final ArchersView view = new ArchersView();
@@ -80,11 +79,6 @@ public class Archers extends AbstractUnit {
     }
 
     @Override
-    public void initPassScore() {
-        setPassScore(5);
-    }
-
-    @Override
     public int getGoldCost(Civilization civilization) {
         return 200;
     }
@@ -93,5 +87,36 @@ public class Archers extends AbstractUnit {
     public boolean checkEraAndTechnology(Civilization civilization) {
         return (civilization.getYear().getEra() == Year.ANCIENT_ERA) &&
             (civilization.isResearched(Technology.ARCHERY));
+    }
+
+    @Override
+    public CombatStrength getBaseCombatStrength(int era) {
+        return CombatStrength.builder()
+            .rangedAttackStrength(7)
+            .rangedAttackRadius(2)
+            .meleeAttackStrength(0)
+            .defenseStrength(5)
+            .build();
+    }
+
+    @Override
+    public SkillMap<AbstractCombatSkill> getBaseCombatSkills(int era) {
+        return new SkillMap<>(
+            HILL_VANTAGE_COMBAT_SKILL, SkillLevel.ONE
+        );
+    }
+
+    @Override
+    public SkillMap<AbstractHealingSkill> getBaseHealingSkills(int era) {
+        return new SkillMap<>(
+            BASE_HEALING_SKILL, SkillLevel.ONE
+        );
+    }
+
+    @Override
+    public SkillMap<AbstractMovementSkill> getBaseMovementSkills() {
+        return new SkillMap<>(
+            BASE_MOVEMENT_SKILL, SkillLevel.ONE
+        );
     }
 }

@@ -1,6 +1,7 @@
 package com.tsoft.civilization.improvement.city.action;
 
 import com.tsoft.civilization.action.ActionAbstractResult;
+import com.tsoft.civilization.building.L10nBuilding;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.tile.BuyTileService;
 import com.tsoft.civilization.util.Format;
@@ -21,6 +22,14 @@ public class BuyTileAction {
 
     public ActionAbstractResult buyTile(City city, Point location, int price) {
         return buyTileService.buyTile(city, location, price);
+    }
+
+    private static String getLocalizedName() {
+        return L10nBuilding.BUILD.getLocalized();
+    }
+
+    private static String getLocalizedDescription() {
+        return L10nBuilding.BUILD_DESCRIPTION.getLocalized();
     }
 
     public StringBuilder getHtml(City city) {

@@ -240,7 +240,12 @@ public class WorldService {
     }
 
     public void startYear() {
+        world.getTilesMap().startYear();
         civilizations.forEach(Civilization::startYear);
+    }
+
+    public void startEra() {
+        civilizations.forEach(Civilization::startEra);
     }
 
     public CivilizationList getMovingCivilizations() {

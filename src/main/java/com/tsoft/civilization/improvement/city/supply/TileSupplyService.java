@@ -49,7 +49,7 @@ public class TileSupplyService {
             return Supply.EMPTY;
         }
 
-        AbstractTile tile = city.getTilesMap().getTile(location);
+        AbstractTile tile = city.getCivilization().getTilesMap().getTile(location);
         AbstractImprovement improvement = tile.getImprovement();
         if (improvement == null || !improvement.isBlockingTileSupply()) {
             return tileService.calcSupply(tile);
@@ -64,7 +64,7 @@ public class TileSupplyService {
             return Supply.EMPTY;
         }
 
-        AbstractTile tile = city.getTilesMap().getTile(location);
+        AbstractTile tile = city.getCivilization().getTilesMap().getTile(location);
         AbstractImprovement improvement = tile.getImprovement();
         if (improvement != null && !(improvement instanceof City)) {
             return improvement.getSupply();

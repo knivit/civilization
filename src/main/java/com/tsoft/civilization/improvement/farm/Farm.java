@@ -33,10 +33,6 @@ import java.util.UUID;
 public class Farm extends AbstractImprovement {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    private static final CombatStrength COMBAT_STRENGTH = CombatStrength.builder()
-        .defenseStrength(0)
-        .build();
-
     private static final AbstractImprovementView VIEW = new FarmView();
 
     public Farm(AbstractTile tile) {
@@ -71,7 +67,9 @@ public class Farm extends AbstractImprovement {
     }
 
     @Override
-    public CombatStrength getBaseCombatStrength() {
-        return COMBAT_STRENGTH;
+    public CombatStrength getBaseCombatStrength(int era) {
+        return CombatStrength.builder()
+            .defenseStrength(0)
+            .build();
     }
 }

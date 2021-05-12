@@ -66,9 +66,9 @@ public class GetMyUnits extends AbstractAjaxRequest {
                 "$getUnitStatus", ClientAjaxRequest.getUnitStatus(unit),
                 "$unitName", unit.getView().getLocalizedName(),
                 "$passScore", unit.getPassScore(),
-                "$meleeAttackStrength", unit.getCombatStrength().getMeleeAttackStrength(),
-                "$rangedAttackStrength", unit.getCombatStrength().getRangedAttackStrength(),
-                "$strength", unit.getCombatStrength().getDefenseStrength()
+                "$meleeAttackStrength", unit.calcCombatStrength().getMeleeAttackStrength(),
+                "$rangedAttackStrength", unit.calcCombatStrength().getRangedAttackStrength(),
+                "$strength", unit.calcCombatStrength().getDefenseStrength()
             ));
         }
 

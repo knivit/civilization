@@ -110,8 +110,10 @@ public class AncientRuins extends AbstractImprovement {
     }
 
     @Override
-    public CombatStrength getBaseCombatStrength() {
-        return null;
+    public CombatStrength getBaseCombatStrength(int era) {
+        return CombatStrength.builder()
+            .defenseStrength(0)
+            .build();
     }
 
     @Override

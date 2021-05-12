@@ -37,7 +37,7 @@ public class PopulationSupplyService implements HasSupply {
         AbstractTile bestTile = null;
         Supply bestTileSupply = null;
         for (Point location : locations) {
-            AbstractTile tile = city.getTilesMap().getTile(location);
+            AbstractTile tile = city.getCivilization().getTilesMap().getTile(location);
             Supply tileSupply = tileService.calcSupply(tile);
 
             // don't place a citizen on harsh tiles (terrain features)

@@ -63,8 +63,8 @@ public class Mine extends AbstractImprovement {
     }
 
     @Override
-    public CombatStrength getBaseCombatStrength() {
-        return null;
+    public CombatStrength getBaseCombatStrength(int era) {
+        return CombatStrength.ZERO;
     }
 
     @Override

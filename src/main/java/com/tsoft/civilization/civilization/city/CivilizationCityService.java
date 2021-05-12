@@ -126,6 +126,10 @@ public class CivilizationCityService {
         cities.forEach(City::startYear);
     }
 
+    public void startEra() {
+        cities.forEach(City::startEra);
+    }
+
     public void stopYear() {
         cities.forEach(City::stopYear);
         supply = calcSupply();

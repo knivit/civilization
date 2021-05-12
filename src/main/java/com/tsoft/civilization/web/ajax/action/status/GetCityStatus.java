@@ -125,25 +125,17 @@ public class GetCityStatus extends AbstractAjaxRequest {
         return Format.text("""
             <table id='info_table'>
                 <tr><th colspan='2'>$features</th>
-                <tr><td>$meleeAttackStrengthLabel</td><td>$meleeAttackStrength</td>
-                <tr><td>$canConquerCityLabel</td><td>$canConquerCity</td>
-                <tr><td>$attackExperienceLabel</td><td>$attackExperience</td>
-                <tr><td>$defenseExperienceLabel</td><td>$defenseExperience</td>
                 <tr><td>$rangedAttackStrengthLabel</td><td>$rangedAttackStrength</td>
                 <tr><td>$rangedAttackRadiusLabel</td><td>$rangedAttackRadius</td>
-                <tr><td>$strengthLabel</td><td>$strength</td>
+                <tr><td>$defenseStrengthLabel</td><td>$defenseStrength</td>
             </table>
             """,
 
             "$features", L10nCity.COMBAT_FEATURES,
 
-            "$meleeAttackStrengthLabel", L10nUnit.MELEE_ATTACK_STRENGTH, "$meleeAttackStrength", city.getCombatStrength().getMeleeAttackStrength(),
-            "$canConquerCityLabel", L10nUnit.CAN_CONQUER_CITY, "$canConquerCity", city.getCombatStrength().isCanConquerCity(),
-            "$attackExperienceLabel", L10nUnit.ATTACK_EXPERIENCE, "$attackExperience", city.getCombatStrength().getAttackExperience(),
-            "$defenseExperienceLabel", L10nUnit.DEFENSE_EXPERIENCE, "$defenseExperience", city.getCombatStrength().getDefenseExperience(),
-            "$rangedAttackStrengthLabel", L10nUnit.RANGED_ATTACK_STRENGTH, "$rangedAttackStrength", city.getCombatStrength().getRangedAttackStrength(),
-            "$rangedAttackRadiusLabel", L10nUnit.RANGED_ATTACK_RADIUS, "$rangedAttackRadius", city.getCombatStrength().getRangedAttackRadius(),
-            "$strengthLabel", L10nUnit.STRENGTH, "$strength", city.getCombatStrength().getDefenseStrength()
+            "$rangedAttackStrengthLabel", L10nUnit.RANGED_ATTACK_STRENGTH, "$rangedAttackStrength", city.calcCombatStrength().getRangedAttackStrength(),
+            "$rangedAttackRadiusLabel", L10nUnit.RANGED_ATTACK_RADIUS, "$rangedAttackRadius", city.calcCombatStrength().getRangedAttackRadius(),
+            "$defenseStrengthLabel", L10nUnit.STRENGTH, "$defenseStrength", city.calcCombatStrength().getDefenseStrength()
         );
     }
 

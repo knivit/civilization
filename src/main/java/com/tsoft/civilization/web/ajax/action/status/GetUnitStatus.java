@@ -1,5 +1,9 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
+import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.combat.skill.AbstractSkill;
+import com.tsoft.civilization.combat.skill.SkillLevel;
+import com.tsoft.civilization.combat.skill.SkillMap;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.unit.AbstractUnit;
@@ -11,6 +15,8 @@ import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
+
+import java.util.Map;
 
 public class GetUnitStatus extends AbstractAjaxRequest {
 
@@ -72,24 +78,55 @@ public class GetUnitStatus extends AbstractAjaxRequest {
             <table id='info_table'>
                 <tr><th colspan='2'>$features</th>
                 <tr><td>$meleeAttackStrengthLabel</td><td>$meleeAttackStrength</td>
-                <tr><td>$canConquerCityLabel</td><td>$canConquerCity</td>
-                <tr><td>$attackExperienceLabel</td><td>$attackExperience</td>
-                <tr><td>$defenseExperienceLabel</td><td>$defenseExperience</td>
                 <tr><td>$rangedAttackStrengthLabel</td><td>$rangedAttackStrength</td>
                 <tr><td>$rangedAttackRadiusLabel</td><td>$rangedAttackRadius</td>
-                <tr><td>$strengthLabel</td><td>$strength</td>
+                <tr><td>$defenseStrengthLabel</td><td>$defenseStrength</td>
             </table>
+            $combatSkills
+            $healingSkills
+            $movementSkills
             """,
 
             "$features", L10nUnit.FEATURES,
 
-            "$meleeAttackStrengthLabel", L10nUnit.MELEE_ATTACK_STRENGTH, "$meleeAttackStrength", unit.getCombatStrength().getMeleeAttackStrength(),
-            "$canConquerCityLabel", L10nUnit.CAN_CONQUER_CITY, "$canConquerCity", unit.getCombatStrength().isCanConquerCity(),
-            "$attackExperienceLabel", L10nUnit.ATTACK_EXPERIENCE, "$attackExperience", unit.getCombatStrength().getAttackExperience(),
-            "$defenseExperienceLabel", L10nUnit.DEFENSE_EXPERIENCE, "$defenseExperience", unit.getCombatStrength().getDefenseExperience(),
-            "$rangedAttackStrengthLabel", L10nUnit.RANGED_ATTACK_STRENGTH, "$rangedAttackStrength", unit.getCombatStrength().getRangedAttackStrength(),
-            "$rangedAttackRadiusLabel", L10nUnit.RANGED_ATTACK_RADIUS, "$rangedAttackRadius", unit.getCombatStrength().getRangedAttackRadius(),
-            "$strengthLabel", L10nUnit.STRENGTH, "$strength", unit.getCombatStrength().getDefenseStrength()
+            "$meleeAttackStrengthLabel", L10nUnit.MELEE_ATTACK_STRENGTH, "$meleeAttackStrength", unit.calcCombatStrength().getMeleeAttackStrength(),
+            "$rangedAttackStrengthLabel", L10nUnit.RANGED_ATTACK_STRENGTH, "$rangedAttackStrength", unit.calcCombatStrength().getRangedAttackStrength(),
+            "$rangedAttackRadiusLabel", L10nUnit.RANGED_ATTACK_RADIUS, "$rangedAttackRadius", unit.calcCombatStrength().getRangedAttackRadius(),
+            "$defenseStrengthLabel", L10nUnit.STRENGTH, "$defenseStrength", unit.calcCombatStrength().getDefenseStrength(),
+
+            "$combatSkills", getUnitSkills(unit, unit.getCombatService().getCombatSkills(), L10nUnit.COMBAT_SKILLS_HEADER),
+            "$healingSkills", getUnitSkills(unit, unit.getCombatService().getHealingSkills(), L10nUnit.HEALING_SKILLS_HEADER),
+            "$movementSkills", getUnitSkills(unit, unit.getCombatService().getCombatSkills(), L10nUnit.MOVEMENT_SKILLS_HEADER)
+        );
+    }
+
+    private StringBuilder getUnitSkills(AbstractUnit unit, SkillMap<? extends AbstractSkill> unitSkills, L10n header) {
+        Civilization myCivilization = getMyCivilization();
+        if (!myCivilization.equals(unit.getCivilization())) {
+            return null;
+        }
+
+        StringBuilder skills = new StringBuilder();
+        for (Map.Entry<? extends AbstractSkill, SkillLevel> skill : unitSkills) {
+            skills.append(Format.text("""
+                <tr><td>$skillName</td><td>$skillLevel</td></tr>
+                """,
+
+                "$skillName", skill.getKey().getLocalizedName(),
+                "$skillLevel", skill.getValue().getValue()
+            ));
+        }
+
+        return Format.text("""
+            <table id='info_table'>
+                <tr><th>$skillNameHeader</th><th>$skillLevelHeader</th></tr>
+                $skills
+            </table>
+            """,
+
+            "$skillNameHeader", header,
+            "$skillLevelHeader", L10nUnit.SKILL_LEVEL_HEADER,
+            "$skills", skills
         );
     }
 

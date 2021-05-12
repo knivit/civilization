@@ -9,6 +9,7 @@ import com.tsoft.civilization.improvement.city.L10nCity;
 import com.tsoft.civilization.improvement.city.event.TileBoughtEvent;
 import com.tsoft.civilization.util.Point;
 
+import java.util.Collections;
 import java.util.List;
 
 public class BuyTileService {
@@ -46,5 +47,13 @@ public class BuyTileService {
             .build());
         
         return TILE_BOUGHT;
+    }
+
+    public ActionAbstractResult canBuyTile(City city) {
+        return NOT_ENOUGH_GOLD;
+    }
+
+    public List<Point> getLocationsToBuy(City city) {
+        return Collections.emptyList();
     }
 }

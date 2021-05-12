@@ -157,11 +157,11 @@ public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt, Ha
     }
 
     public AbstractTile getTile(Point location) {
-        return city.getTilesMap().getTile(location);
+        return city.getCivilization().getTilesMap().getTile(location);
     }
 
     public World getWorld() {
-        return city.getWorld();
+        return city.getCivilization().getWorld();
     }
 
     public Civilization getCivilization() {

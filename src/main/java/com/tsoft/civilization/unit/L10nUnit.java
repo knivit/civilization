@@ -200,6 +200,22 @@ public class L10nUnit {
         .put(EN, "Features")
         .put(RU, "Характеристики");
 
+    public static final L10n COMBAT_SKILLS_HEADER = new L10n()
+        .put(EN, "Combat skills")
+        .put(RU, "Военные навыки");
+
+    public static final L10n HEALING_SKILLS_HEADER = new L10n()
+        .put(EN, "Healing skills")
+        .put(RU, "Лечебные навыки");
+
+    public static final L10n MOVEMENT_SKILLS_HEADER = new L10n()
+        .put(EN, "Movement skills")
+        .put(RU, "Навыки передвижения");
+
+    public static final L10n SKILL_LEVEL_HEADER = new L10n()
+        .put(EN, "Level")
+        .put(RU, "Уровень");
+
     public static final L10n BUILD = new L10n()
         .put(EN, "Build")
         .put(RU, "Построить");

@@ -141,7 +141,7 @@ public class MoveUnitService {
 
     // All the checks was made - just do the move
     private void doMoveUnit(AbstractUnit unit, Point location) {
-        unit.setLocation(location);
+        unit.getMovementService().setLocation(location);
 
         AbstractTile tile = unit.getCivilization().getTilesMap().getTile(location);
         int tilePassCost = getPassCost(unit.getCivilization(), unit, tile);

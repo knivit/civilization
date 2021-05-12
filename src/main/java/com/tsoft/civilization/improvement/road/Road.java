@@ -36,10 +36,6 @@ import java.util.UUID;
 public class Road extends AbstractImprovement {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    private static final CombatStrength COMBAT_STRENGTH = CombatStrength.builder()
-        .defenseStrength(10)
-        .build();
-
     private static final AbstractImprovementView VIEW = new RoadView();
 
     public Road(AbstractTile tile) {
@@ -67,7 +63,9 @@ public class Road extends AbstractImprovement {
     }
 
     @Override
-    public CombatStrength getBaseCombatStrength() {
-        return COMBAT_STRENGTH;
+    public CombatStrength getBaseCombatStrength(int era) {
+        return CombatStrength.builder()
+            .defenseStrength(10)
+            .build();
     }
 }

@@ -1,5 +1,6 @@
 package com.tsoft.civilization.improvement;
 
+import com.tsoft.civilization.combat.CombatDamage;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.civilization.Civilization;
@@ -17,12 +18,17 @@ public abstract class AbstractImprovement {
     private final String id = UUID.randomUUID().toString();
 
     @Getter
-    protected AbstractTile tile;
+    private AbstractTile tile;
+
+    @Getter
+    private CombatDamage combatDamage = CombatDamage.builder()
+        .damage(0)
+        .build();
 
     public abstract boolean acceptEraAndTechnology(Civilization civilization);
     public abstract boolean acceptTile(AbstractTile tile);
     public abstract Supply getSupply();
-    public abstract CombatStrength getBaseCombatStrength();
+    public abstract CombatStrength getBaseCombatStrength(int era);
     public abstract AbstractImprovementView getView();
 
     public AbstractImprovement(AbstractTile tile) {
@@ -30,6 +36,10 @@ public abstract class AbstractImprovement {
 
         this.tile = tile;
         tile.setImprovement(this);
+    }
+
+    public void addCombatDamage(CombatDamage damage) {
+        combatDamage = combatDamage.add(damage);
     }
 
     public boolean isBlockingTileSupply() {

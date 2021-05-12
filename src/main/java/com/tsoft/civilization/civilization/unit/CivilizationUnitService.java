@@ -129,7 +129,7 @@ public class CivilizationUnitService {
     public boolean addUnit(AbstractUnit unit, Point location) {
         if (canBePlaced(unit, location)) {
             units.add(unit);
-            unit.setLocation(location);
+            unit.getMovementService().setLocation(location);
             return true;
         }
 
@@ -190,6 +190,10 @@ public class CivilizationUnitService {
     public void startYear() {
         destroyedUnits = new UnitList();
         units.stream().forEach(AbstractUnit::startYear);
+    }
+
+    public void startEra() {
+        units.stream().forEach(AbstractUnit::startEra);
     }
 
     public void stopYear() {
