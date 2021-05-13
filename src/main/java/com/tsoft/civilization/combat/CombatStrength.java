@@ -48,7 +48,7 @@ public class CombatStrength {
     }
 
     public CombatStrength minus(CombatDamage damage) {
-        return CombatStrength.builder()
+        return copy()
             .defenseStrength(defenseStrength - damage.getDamage())
             .build();
     }

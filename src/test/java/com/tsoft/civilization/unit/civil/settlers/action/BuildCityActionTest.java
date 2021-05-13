@@ -52,6 +52,8 @@ public class BuildCityActionTest {
         // A city can't be build on a tile where another city is built
         Settlers settlers2 = UnitFactory.newInstance(russia, Settlers.CLASS_UUID);
         assertTrue(russia.getUnitService().addUnit(settlers2, new Point(1, 1)));
+        world.nextYear();
+
         assertEquals(CANT_BUILD_CITY_THERE_IS_ANOTHER_CITY_NEARBY, BuildCityAction.buildCity(settlers2));
     }
 
@@ -80,6 +82,8 @@ public class BuildCityActionTest {
         // A city can not be build less than 4 tiles away from other city
         Settlers settlers2 = UnitFactory.newInstance(russia, Settlers.CLASS_UUID);
         assertTrue(russia.getUnitService().addUnit(settlers2, new Point(2, 3)));
+        world.nextYear();
+
         assertEquals(CANT_BUILD_CITY_THERE_IS_ANOTHER_CITY_NEARBY, BuildCityAction.buildCity(settlers2));
     }
 
@@ -109,6 +113,8 @@ public class BuildCityActionTest {
         // (cities looks like far away, but don't forget - the map is cyclic)
         Settlers settlers2 = UnitFactory.newInstance(russia, Settlers.CLASS_UUID);
         assertTrue(russia.getUnitService().addUnit(settlers2, new Point(7, 3)));
+        world.nextYear();
+
         assertEquals(CANT_BUILD_CITY_THERE_IS_ANOTHER_CITY_NEARBY, BuildCityAction.buildCity(settlers2));
     }
 
@@ -141,6 +147,8 @@ public class BuildCityActionTest {
         // Build a city - it's OK now
         Settlers settlers2 = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
         assertTrue(civilization.getUnitService().addUnit(settlers2, new Point(6, 4)));
+        world.nextYear();
+
         assertEquals(CITY_BUILT, BuildCityAction.buildCity(settlers2));
     }
 }

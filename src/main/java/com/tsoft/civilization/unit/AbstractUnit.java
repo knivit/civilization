@@ -77,7 +77,7 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
     }
 
     // Initialization on create the object
-    public void init() {
+    protected void init() {
         combatService = new UnitCombatService(this);
         movementService = new UnitMovementService(this);
     }

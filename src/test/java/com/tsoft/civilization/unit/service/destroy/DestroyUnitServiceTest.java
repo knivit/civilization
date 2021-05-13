@@ -42,6 +42,7 @@ public class DestroyUnitServiceTest {
         // Add another settlers
         Settlers settlers2 = UnitFactory.newInstance(russia, Settlers.CLASS_UUID);
         assertTrue(russia.getUnitService().addUnit(settlers2, new Point(2, 2)));
+        world.nextYear();
 
         // Destroy the first ones
         assertTrue(destroyUnitService.destroy(world.unit("settlers1")).isSuccess());

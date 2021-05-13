@@ -7,7 +7,6 @@ import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.view.JsonBlock;
-import com.tsoft.civilization.civilization.Civilization;
 import org.junit.jupiter.api.Test;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;

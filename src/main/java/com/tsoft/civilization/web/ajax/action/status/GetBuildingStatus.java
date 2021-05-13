@@ -105,8 +105,7 @@ public class GetBuildingStatus extends AbstractAjaxRequest {
             "$foodImage", FOOD_IMAGE,
             "$happinessLabel", L10nCity.HAPPINESS,
             "$happiness", happiness,
-            "$happinessImage", HAPPINESS_IMAGE(happiness),
-            "$defenseStrengthLabel", L10nCity.DEFENSE_STRENGTH
+            "$happinessImage", HAPPINESS_IMAGE(happiness)
         );
     }
 

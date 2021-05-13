@@ -10,13 +10,16 @@ import com.tsoft.civilization.combat.HasCombatStrengthList;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.unit.AbstractUnit;
+import com.tsoft.civilization.unit.civil.workers.Workers;
+import com.tsoft.civilization.unit.military.warriors.Warriors;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.render.WorldRender;
 import org.junit.jupiter.api.Test;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.AMERICA;
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
-import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static com.tsoft.civilization.combat.service.AttackService.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class AttackServiceTest {
 
@@ -101,7 +104,7 @@ public class AttackServiceTest {
             );
 
         // attack one of foreign warriors
-        assertThat(attackService.attack(world.unit("archers"), world.unit("foreignWarriors2")))
+        assertThat(attackService.attackTarget(world.unit("archers"), world.unit("foreignWarriors2")))
             .isNotNull()
             .returns(30, CombatResult::getAttackerDefenseStrength)
             .returns(25, CombatResult::getAttackerDefenseStrengthAfterAttack)
@@ -141,7 +144,7 @@ public class AttackServiceTest {
         world.nextYear();
 
         // attack the foreign warriors again
-        assertThat(attackService.attack(world.unit("archers"), world.unit("foreignWarriors2")))
+        assertThat(attackService.attackTarget(world.unit("archers"), world.unit("foreignWarriors2")))
             .isNotNull()
             .returns(25, CombatResult::getAttackerDefenseStrength)
             .returns(20, CombatResult::getAttackerDefenseStrengthAfterAttack)
@@ -171,7 +174,7 @@ public class AttackServiceTest {
         world.nextYear();
 
         // attack the second line - archers
-        assertThat(attackService.attack(world.unit("archers"), world.unit("foreignArchers1")))
+        assertThat(attackService.attackTarget(world.unit("archers"), world.unit("foreignArchers1")))
             .isNotNull()
             .returns(20, CombatResult::getAttackerDefenseStrength)
             .returns(15, CombatResult::getAttackerDefenseStrengthAfterAttack)
@@ -199,7 +202,7 @@ public class AttackServiceTest {
         world.nextYear();
 
         // attack the second line - foreign city
-        assertThat(attackService.attack(world.unit("archers"), world.city("foreignCity")))
+        assertThat(attackService.attackTarget(world.unit("archers"), world.city("foreignCity")))
             .isNotNull()
             .returns(15, CombatResult::getAttackerDefenseStrength)
             .returns(10, CombatResult::getAttackerDefenseStrengthAfterAttack)
@@ -260,11 +263,10 @@ public class AttackServiceTest {
         world.startGame();
 
         City foreignCity = world.city("foreignCity");
-        //foreignCity.setCombatStrength(foreignCity.calcCombatStrength().copy().defenseStrength(30).build());
         world.setCivilizationsRelations(russia, america, CivilizationsRelations.war());
 
         // strike 1
-        assertThat(attackService.attack(world.unit("warriors1"), world.city("foreignCity")))
+        assertThat(attackService.attackTarget(world.unit("warriors1"), foreignCity))
             .returns(true, CombatResult::isDone);
 
         assertThat(world.unit("warriors1"))
@@ -284,7 +286,7 @@ public class AttackServiceTest {
             .returns(20, e -> e.calcCombatStrength().getDefenseStrength());
 
         // strike 2
-        assertThat(attackService.attack(world.unit("warriors2"), world.city("foreignCity")))
+        assertThat(attackService.attackTarget(world.unit("warriors2"), foreignCity))
             .returns(true, CombatResult::isDone);
 
         assertThat(world.unit("warriors2"))
@@ -304,7 +306,7 @@ public class AttackServiceTest {
             .returns(20, e -> e.calcCombatStrength().getDefenseStrength());
 
         // strike 3
-        assertThat(attackService.attack(world.unit("warriors3"), world.city("foreignCity")))
+        assertThat(attackService.attackTarget(world.unit("warriors3"), foreignCity))
             .returns(true, CombatResult::isDone);
 
         assertThat(world.unit("warriors3"))
@@ -324,7 +326,7 @@ public class AttackServiceTest {
             .returns(20, e -> e.calcCombatStrength().getDefenseStrength());
 
         // strike 4
-        assertThat(attackService.attack(world.unit("warriors4"), world.city("foreignCity")))
+        assertThat(attackService.attackTarget(world.unit("warriors4"), foreignCity))
             .returns(true, CombatResult::isDone)
             .returns(true, CombatResult::isTargetDestroyed);
 
@@ -348,5 +350,63 @@ public class AttackServiceTest {
         assertThat(world.unit("foreignWorkers"))
             .returns(world.location("foreignCity"), AbstractUnit::getLocation)
             .returns(russia, AbstractUnit::getCivilization);
+    }
+
+    @Test
+    public void attacker_not_military() {
+        MockWorld world = MockWorld.newSimpleWorld();
+
+        world.createCivilization(RUSSIA, new MockScenario()
+            .workers("workers", new Point(2, 0)));
+        Workers workers = (Workers) world.unit("workers");
+        world.startGame();
+
+        assertThat(attackService.attack(workers, null)).isEqualTo(NOT_MILITARY_UNIT);
+    }
+
+    @Test
+    public void no_targets_to_attack() {
+        MockWorld world = MockWorld.newSimpleWorld();
+
+        world.createCivilization(RUSSIA, new MockScenario()
+            .warriors("warriors", new Point(2, 0)));
+        Warriors warriors = (Warriors) world.unit("warriors");
+        world.startGame();
+
+        assertThat(attackService.attack(warriors, null)).isEqualTo(NO_TARGETS_TO_ATTACK);
+    }
+
+    @Test
+    public void no_targets_to_attack_within_reach() {
+        MockWorld world = MockWorld.newSimpleWorld();
+
+        world.createCivilization(RUSSIA, new MockScenario()
+            .warriors("warriors", new Point(2, 0)));
+        Warriors warriors = (Warriors) world.unit("warriors");
+
+        world.createCivilization(AMERICA, new MockScenario()
+            .workers("foreignWorkers", new Point(2, 2)));
+        world.startGame();
+
+        assertThat(attackService.attack(warriors, null)).isEqualTo(NO_TARGETS_TO_ATTACK);
+    }
+
+    @Test
+    public void attacker_not_found() {
+        assertThat(attackService.attack(null, null)).isEqualTo(ATTACKER_NOT_FOUND);
+    }
+
+    @Test
+    public void destroyed_attacker_not_found() {
+        MockWorld world = MockWorld.newSimpleWorld();
+
+        world.createCivilization(RUSSIA, new MockScenario()
+            .warriors("warriors", new Point(2, 0)));
+        Warriors warriors = (Warriors) world.unit("warriors");
+        world.startGame();
+
+        warriors.destroy();
+
+        assertThat(attackService.attack(warriors, null)).isEqualTo(ATTACKER_NOT_FOUND);
     }
 }

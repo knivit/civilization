@@ -8,8 +8,6 @@ import com.tsoft.civilization.building.settlement.Settlement;
 import com.tsoft.civilization.building.walls.Walls;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.UnitList;
 
 import java.util.HashMap;
 import java.util.Map;

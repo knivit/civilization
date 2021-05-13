@@ -8,7 +8,6 @@ import com.tsoft.civilization.economic.Supply;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
-import java.util.Objects;
 import java.util.UUID;
 
 @EqualsAndHashCode(of = "id")
@@ -18,7 +17,7 @@ public abstract class AbstractImprovement {
     private final String id = UUID.randomUUID().toString();
 
     @Getter
-    private AbstractTile tile;
+    private final AbstractTile tile;
 
     @Getter
     private CombatDamage combatDamage = CombatDamage.builder()
@@ -31,10 +30,11 @@ public abstract class AbstractImprovement {
     public abstract CombatStrength getBaseCombatStrength(int era);
     public abstract AbstractImprovementView getView();
 
-    public AbstractImprovement(AbstractTile tile) {
-        Objects.requireNonNull(tile, "tile can't be null");
-
+    protected AbstractImprovement(AbstractTile tile) {
         this.tile = tile;
+    }
+
+    protected void init() {
         tile.setImprovement(this);
     }
 

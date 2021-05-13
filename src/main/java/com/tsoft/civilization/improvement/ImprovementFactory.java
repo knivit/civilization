@@ -12,28 +12,29 @@ import java.util.function.Function;
 
 public final class ImprovementFactory {
 
+    private static final Map<String, AbstractImprovement> CATALOG = new HashMap<>();
+    private static final Map<String, Function<AbstractTile, AbstractImprovement>> FACTORY = new HashMap<>();
+
+    static {
+        FACTORY.put(AncientRuins.CLASS_UUID, AncientRuins::new);
+        FACTORY.put(Road.CLASS_UUID, Road::new);
+        FACTORY.put(Farm.CLASS_UUID, Farm::new);
+        FACTORY.put(Mine.CLASS_UUID, Mine::new);
+
+        FACTORY.forEach((k, v) -> CATALOG.put(k, v.apply(null)));
+    }
+
     private ImprovementFactory() { }
 
     public static <T extends AbstractImprovement> T newInstance(String classUuid, AbstractTile tile) {
-        return (T)createImprovement(classUuid, tile);
-    }
-
-    private static final Map<String, Function<AbstractTile, AbstractImprovement>> CATALOG = new HashMap<>();
-
-    static {
-        CATALOG.put(Road.CLASS_UUID, Road::new);
-        CATALOG.put(Farm.CLASS_UUID, Farm::new);
-        CATALOG.put(Mine.CLASS_UUID, Mine::new);
-        CATALOG.put(AncientRuins.CLASS_UUID, AncientRuins::new);
-    }
-
-    private static AbstractImprovement createImprovement(String classUuid, AbstractTile tile) {
-        Function<AbstractTile, AbstractImprovement> supplier = CATALOG.get(classUuid);
+        Function<AbstractTile, AbstractImprovement> supplier = FACTORY.get(classUuid);
         if (supplier == null) {
             throw new IllegalArgumentException("Unknown improvement classUuid = " + classUuid);
         }
 
-        return supplier.apply(tile);
+        T improvement = (T)supplier.apply(tile);
+        improvement.init();
+        return improvement;
     }
 
     public static <T extends AbstractImprovement> T findByClassUuid(String classUuid) {

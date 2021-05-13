@@ -72,9 +72,10 @@ public class CityView extends AbstractImprovementView {
             return null;
         }
 
-        return Format.text(
-            "<tr>$buyTileAction</tr>",
-            "<tr>$attackAction</tr>",
+        return Format.text("""
+            <tr>$buyTileAction</tr>
+            <tr>$attackAction</tr>
+            """,
 
             "$buyTileAction", buyTileActionHtml,
             "$attackAction", attackActionHtml

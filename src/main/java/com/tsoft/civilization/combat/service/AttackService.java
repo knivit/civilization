@@ -45,7 +45,7 @@ public class AttackService {
             return NO_TARGETS_TO_ATTACK;
         }
 
-        CombatResult combatResult = attack(attacker, target);
+        CombatResult combatResult = attackTarget(attacker, target);
         if (combatResult.isSkippedAsNoTargetsToAttack()) {
             return NO_TARGETS_TO_ATTACK;
         }
@@ -71,6 +71,15 @@ public class AttackService {
         }
 
         return ATTACKED;
+    }
+
+    public CombatResult attackTarget(HasCombatStrength attacker, HasCombatStrength target) {
+        if (attacker.getUnitCategory().isRanged()) {
+            return rangedCombatService.attack(attacker, target);
+        }
+
+        // For a melee unit, move to the target first, then attack
+        return meleeCombatService.attack(attacker, target);
     }
 
     public ActionAbstractResult canAttack(HasCombatStrength attacker) {
@@ -118,14 +127,5 @@ public class AttackService {
         }
 
         return foreignUnits.getAny();
-    }
-
-    public CombatResult attack(HasCombatStrength attacker, HasCombatStrength target) {
-        if (attacker.getUnitCategory().isRanged()) {
-            return rangedCombatService.attack(attacker, target);
-        }
-
-        // For a melee unit, move to the target first, then attack
-        return meleeCombatService.attack(attacker, target);
     }
 }

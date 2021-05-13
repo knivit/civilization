@@ -17,6 +17,7 @@ public abstract class AbstractTileView {
             AbstractFeatureView featureView = feature.getView();
             tileBlock.addElement(featureView.getJson(feature).getText());
         });
+        tileBlock.stopArray();
 
         if (tile.getImprovement() != null) {
             tileBlock.addParam("improvement", tile.getImprovement().getClass().getSimpleName());
@@ -30,7 +31,6 @@ public abstract class AbstractTileView {
             tileBlock.addParam("luxury", tile.getLuxury().getClass().getSimpleName());
         }
 
-        tileBlock.stopArray();
         return tileBlock;
     }
 }

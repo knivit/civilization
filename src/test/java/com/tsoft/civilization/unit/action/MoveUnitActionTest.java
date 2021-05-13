@@ -10,6 +10,8 @@ import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
 import org.junit.jupiter.api.Test;
 
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
@@ -31,7 +33,7 @@ public class MoveUnitActionTest {
         world.startGame();
 
         AbstractUnit workers = world.unit("workers");
-        Set<Point> locations = Set.of(new Point(2, 1), new Point(2, 0));
+        Set<Point> locations = new LinkedHashSet<>(List.of(new Point(2, 1), new Point(2, 0)));
 
         MoveUnitService moveUnitService = mock(MoveUnitService.class);
         when(moveUnitService.canMove(any())).thenReturn(CAN_MOVE);

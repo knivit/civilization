@@ -169,7 +169,8 @@ public class MoveUnitService {
             return CANT_CROSS_BORDERS;
         }
 
-        return INVALID_TARGET_LOCATION;
+        // The relations allow to move on the foreign tile
+        return CAN_MOVE;
     }
 
     private static ActionAbstractResult checkForeignUnits(AbstractUnit unit, Point location) {

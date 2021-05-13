@@ -14,7 +14,6 @@ import com.tsoft.civilization.civilization.unit.CivilizationUnitService;
 import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.building.BuildingFactory;
-import com.tsoft.civilization.improvement.ImprovementFactory;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.tile.TilesMap;
@@ -264,7 +263,7 @@ public abstract class Civilization {
         L10n cityName = cityService.findCityName();
         boolean isCapital = cityService.size() == 0;
 
-        City city = ImprovementFactory.newInstance(City.CLASS_UUID, world.getTilesMap().getTile(location));
+        City city = new City(world.getTilesMap().getTile(location), this);
         city.init(cityName, isCapital);
         cityService.addCity(city);
 

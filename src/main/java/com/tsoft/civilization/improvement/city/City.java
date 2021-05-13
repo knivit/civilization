@@ -112,6 +112,9 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
 
         // media
         view = new CityView(cityName);
+
+        // add on the tile
+        super.init();
     }
 
     @Override
