@@ -28,7 +28,7 @@ public class UnitMovementService {
         movementSkills = unit.getBaseMovementSkills();
     }
 
-    public SkillMap<AbstractMovementSkill> getHealingSkills() {
+    public SkillMap<AbstractMovementSkill> getMovementSkills() {
         return movementSkills.unmodifiable();
     }
 

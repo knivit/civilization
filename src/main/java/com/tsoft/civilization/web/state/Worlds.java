@@ -3,14 +3,13 @@ package com.tsoft.civilization.web.state;
 import com.tsoft.civilization.world.World;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 public class Worlds {
     private static final int MAX_WORLDS_COUNT = 16;
+
+    private static final Comparator<World> CREATED_AT_WORLDS_COMPARATOR = Comparator.comparing(World::getCreatedAt);
 
     private static final Map<String, World> worlds = new HashMap<>();
 
@@ -37,7 +36,9 @@ public class Worlds {
     }
 
     public static synchronized List<World> getWorlds() {
-        return new ArrayList<>(worlds.values());
+        List<World> list = new ArrayList<>(worlds.values());
+        list.sort(CREATED_AT_WORLDS_COMPARATOR);
+        return list;
     }
 
     public static synchronized void remove(String worldId) {

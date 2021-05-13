@@ -2,6 +2,7 @@ package com.tsoft.civilization.improvement;
 
 import com.tsoft.civilization.combat.CombatDamage;
 import com.tsoft.civilization.combat.CombatStrength;
+import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.economic.Supply;
@@ -37,6 +38,8 @@ public abstract class AbstractImprovement {
     protected void init() {
         tile.setImprovement(this);
     }
+
+    TODO find out which (city) this improvement belongs
 
     public void addCombatDamage(CombatDamage damage) {
         combatDamage = combatDamage.add(damage);

@@ -16,10 +16,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Slf4j
 public class World {
+
+    @Getter
+    private final LocalDateTime createdAt = LocalDateTime.now();
 
     @Getter
     private final String id = UUID.randomUUID().toString();

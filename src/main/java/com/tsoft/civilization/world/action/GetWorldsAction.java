@@ -91,7 +91,6 @@ public class GetWorldsAction {
         ));
 
         StringBuilder civilizations = getCivilizationsSelect();
-
         for (World world : Worlds.getWorlds()) {
             StringBuilder actions = new StringBuilder();
 

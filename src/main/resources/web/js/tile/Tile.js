@@ -11,10 +11,11 @@ function Tile(col, row, tile) {
         this.features[i] = feature;
     }
 
-    this.improvements = new Array(tile.improvements.length);
-    for (var i = 0; i < tile.improvements.length; i ++) {
-        var improvement = new Improvement(tile.improvements[i]);
-        this.improvements[i] = improvement;
+    if (tile.improvement != undefined) {
+        // Cities has specific render
+        if (tile.improvement != 'City') {
+            this.improvement = new Improvement(tile.improvement);
+        }
     }
 
     this.isOcean = (this.name === 'Ocean');
@@ -33,5 +34,9 @@ function Tile(col, row, tile) {
 
     this.draw = function(x, y) {
         this.drawTile.draw(x, y, this);
+
+        if (this.improvement != undefined) {
+            this.improvement.draw(x, y, this);
+        }
     }
 };

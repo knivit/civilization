@@ -49,4 +49,8 @@ public class SkillMap<T> implements Iterable<Map.Entry<T, SkillLevel>> {
     public Stream<Map.Entry<T, SkillLevel>> stream() {
         return map.entrySet().stream();
     }
+
+    public boolean isEmpty() {
+        return map.isEmpty();
+    }
 }

@@ -5,7 +5,7 @@ import com.tsoft.civilization.L10n.L10n;
 public class L10nFeature {
     public static final L10n FEATURE_NOT_FOUND = new L10n()
             .put("en", "Feature not found")
-            .put("ru", "Улучшение не найдено");
+            .put("ru", "Свойство не найдено");
 
     public static final L10n FEATURE_PRODUCTION = new L10n()
             .put("en", "Production")

@@ -43,6 +43,7 @@ public class RequestsMap {
         requests.put(GetTileStatus.class.getSimpleName(), new GetTileStatus());
         requests.put(GetTileInfo.class.getSimpleName(), new GetTileInfo());
         requests.put(GetFeatureInfo.class.getSimpleName(), new GetFeatureInfo());
+        requests.put(GetImprovementInfo.class.getSimpleName(), new GetImprovementInfo());
         requests.put(GetUnitStatus.class.getSimpleName(), new GetUnitStatus());
         requests.put(GetCityStatus.class.getSimpleName(), new GetCityStatus());
         requests.put(GetMyCities.class.getSimpleName(), new GetMyCities());

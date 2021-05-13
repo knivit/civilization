@@ -6,6 +6,10 @@ import static com.tsoft.civilization.L10n.L10nLanguage.EN;
 import static com.tsoft.civilization.L10n.L10nLanguage.RU;
 
 public class L10nImprovement {
+    public static final L10n IMPROVEMENT_NOT_FOUND = new L10n()
+        .put("en", "Improvement not found")
+        .put("ru", "Улучшение не найдено");
+
     public static final L10n ANCIENT_RUINS = new L10n()
         .put(EN, "Ancient Ruins")
         .put(RU, "Древние руины");

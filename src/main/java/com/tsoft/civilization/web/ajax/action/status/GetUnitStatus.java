@@ -96,13 +96,17 @@ public class GetUnitStatus extends AbstractAjaxRequest {
 
             "$combatSkills", getUnitSkills(unit, unit.getCombatService().getCombatSkills(), L10nUnit.COMBAT_SKILLS_HEADER),
             "$healingSkills", getUnitSkills(unit, unit.getCombatService().getHealingSkills(), L10nUnit.HEALING_SKILLS_HEADER),
-            "$movementSkills", getUnitSkills(unit, unit.getCombatService().getCombatSkills(), L10nUnit.MOVEMENT_SKILLS_HEADER)
+            "$movementSkills", getUnitSkills(unit, unit.getMovementService().getMovementSkills(), L10nUnit.MOVEMENT_SKILLS_HEADER)
         );
     }
 
     private StringBuilder getUnitSkills(AbstractUnit unit, SkillMap<? extends AbstractSkill> unitSkills, L10n header) {
         Civilization myCivilization = getMyCivilization();
         if (!myCivilization.equals(unit.getCivilization())) {
+            return null;
+        }
+
+        if (unitSkills.isEmpty()) {
             return null;
         }
 

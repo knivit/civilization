@@ -1,5 +1,6 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
+import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.improvement.city.L10nCity;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.tile.L10nTile;
@@ -221,6 +222,7 @@ public class GetTileStatus extends AbstractAjaxRequest {
                 $feature1
                 $feature2
                 $total
+                $improvement
             </table>
             """,
 
@@ -238,7 +240,27 @@ public class GetTileStatus extends AbstractAjaxRequest {
 
             "$feature1", getFeatureInfo(feature1),
             "$feature2", getFeatureInfo(feature2),
-            "$total", getTotalInfo(tile, (feature1 != null || feature2 != null))
+            "$total", getTotalInfo(tile, (feature1 != null || feature2 != null)),
+            "$improvement", getImprovementInfo(tile.getImprovement())
+        );
+    }
+
+    private StringBuilder getImprovementInfo(AbstractImprovement improvement) {
+        if (improvement == null) {
+            return null;
+        }
+
+        return Format.text("""
+            <tr>
+                <td><button onclick="$getImprovementInfo">$improvementName</button></td>
+                <td>$production</td>
+                <td>$gold</td>
+                <td>$food</td>
+            </tr>
+            """,
+
+            "$getImprovementInfo", GetImprovementInfo.getAjax(improvement),
+            "$improvementName", improvement.getView().getLocalizedName()
         );
     }
 

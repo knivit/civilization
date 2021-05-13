@@ -196,12 +196,18 @@ import java.util.stream.Collectors;
  *
  * Brave New World changes
  * -----------------------
- * In the Brave New World expansion pack, Gold Gold potential has been removed from almost all terrain types, with the exception of the oasis. This was probably done to shift the gold-producing process away from terrain and more towards the new Trade Routes system. This makes conquering land with resources and/or Natural Wonders even more important in the early game, and you also need to develop your trading network really quickly, or you'll find yourself running in the red.
+ * In the Brave New World expansion pack, Gold Gold potential has been removed from almost all terrain types, with the exception of the oasis.
+ * This was probably done to shift the gold-producing process away from terrain and more towards the new Trade Routes system.
+ * This makes conquering land with resources and/or Natural Wonders even more important in the early game, and you also need
+ * to develop your trading network really quickly, or you'll find yourself running in the red.
  *
  * Natural Wonders
- * There are some unique, incredible terrain features spread across the world. They are known as Natural Wonders and are special in every sense of the word!
+ * ---------------
+ * There are some unique, incredible terrain features spread across the world. They are known as Natural Wonders and are special
+ * in every sense of the word!
  *
- * Each Natural Wonder is available only once in the world and provides unique benefits to whoever controls it, or even discovers its location, so send out your explorers in search for these features as soon as you're able!
+ * Each Natural Wonder is available only once in the world and provides unique benefits to whoever controls it, or even
+ * discovers its location, so send out your explorers in search for these features as soon as you're able!
  */
 @Slf4j
 @EqualsAndHashCode(of = "location")

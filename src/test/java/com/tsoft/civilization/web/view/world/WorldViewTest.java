@@ -1,6 +1,5 @@
 package com.tsoft.civilization.web.view.world;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
@@ -10,9 +9,11 @@ import com.tsoft.civilization.web.view.JsonBlock;
 import org.junit.jupiter.api.Test;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class WorldViewTest {
+
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
     public void worldView() throws Exception {
@@ -31,38 +32,33 @@ public class WorldViewTest {
 
         world.startGame();
 
+        String expected = """
+            {
+                "width":"3","height":"2",
+                "tiles":[
+                    {"name":"Grassland","features":[{"name":"Hill"},{"name":"Forest"}],"improvement":"City"},
+                    {"name":"Grassland","features":[{"name":"Hill"}]},
+                    {"name":"Grassland","features":[]},
+                    {"name":"Grassland","features":[{"name":"Hill"},{"name":"Forest"}]},
+                    {"name":"Grassland","features":[{"name":"Hill"}]},
+                    {"name":"Grassland","features":[]}],
+                "civilizations":[{"name":"Russia"}],
+                "units":[
+                    {"col":"0","row":"0","name":"Warriors","civ":"Russia"},
+                    {"col":"0","row":"0","name":"Workers","civ":"Russia"},
+                    {"col":"1","row":"0","name":"Settlers","civ":"Russia"}],
+                "cities":[
+                    {"col":"0","row":"0","name":"Moscow","civilization":"Russia","isCapital":"true","locations":[
+                        {"col":"0","row":"0"},
+                        {"col":"0","row":"1"},
+                        {"col":"1","row":"0"},
+                        {"col":"2","row":"0"},
+                        {"col":"2","row":"1"}]}]
+            }
+            """;
+
         JsonBlock worldBlock = world.getView().getJson();
-        JsonNode jsonObj = new ObjectMapper().readTree(worldBlock.getText());
-        assertNotNull(jsonObj);
-        assertEquals(3 * 2, jsonObj.size());
-        assertEquals(3, jsonObj.get("width").asInt());
-        assertEquals(2, jsonObj.get("height").asInt());
-
-        JsonNode tilesObj = jsonObj.get("tiles");
-        assertEquals(3 * 2, tilesObj.size());
-        assertEquals("Grassland", tilesObj.get(0).get("name").asText());
-        assertEquals(2, tilesObj.get(0).get("features").size()); // h + f
-        assertEquals("Grassland", tilesObj.get(1).get("name").asText());
-        assertEquals(1, tilesObj.get(1).get("features").size()); // h
-        assertEquals("Grassland", tilesObj.get(2).get("name").asText());
-        assertEquals(0, tilesObj.get(2).get("features").size()); // <empty>
-        assertEquals("Grassland", tilesObj.get(3).get("name").asText());
-        assertEquals(2, tilesObj.get(3).get("features").size()); // h + f
-        assertEquals("Grassland", tilesObj.get(4).get("name").asText());
-        assertEquals(1, tilesObj.get(4).get("features").size()); // h
-        assertEquals("Grassland", tilesObj.get(5).get("name").asText());
-        assertEquals(0, tilesObj.get(5).get("features").size()); // <empty>
-
-        JsonNode civilizationsObj = jsonObj.get("civilizations");
-        assertEquals(1, civilizationsObj.size());
-        assertEquals("Russia", civilizationsObj.get(0).get("name").asText());
-
-        JsonNode unitsObj = jsonObj.get("units");
-        assertEquals(3, unitsObj.size());
-        assertEquals("Warriors", unitsObj.get(0).get("name").asText());
-        assertEquals("Russia", unitsObj.get(0).get("civ").asText());
-
-        JsonNode citiesObj = jsonObj.get("cities");
-        assertEquals(1, citiesObj.size());
+        assertThat(objectMapper.readTree(expected))
+            .isEqualTo(objectMapper.readTree(worldBlock.getText()));
     }
 }

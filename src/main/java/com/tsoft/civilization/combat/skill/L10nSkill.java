@@ -8,8 +8,8 @@ import static com.tsoft.civilization.L10n.L10nLanguage.RU;
 public class L10nSkill {
 
     public static final L10n BASE_MOVEMENT_SKILL = new L10n()
-        .put(EN, "Movement skill")
-        .put(RU, "Способность перемещения");
+        .put(EN, "Base movement skill")
+        .put(RU, "Базовое перемещение");
 
     public static final L10n CITY_GARRISON_COMBAT_SKILL = new L10n()
         .put(EN, "City's garrison combat skill")
@@ -25,7 +25,7 @@ public class L10nSkill {
 
     public static final L10n BASE_HEALING_SKILL = new L10n()
         .put(EN, "Base healing skill")
-        .put(RU, "Базовый навык восстановления");
+        .put(RU, "Базовое восстановление");
 
     public static final L10n HILL_VANTAGE_COMBAT_SKILL = new L10n()
         .put(EN, "Bonus for hill-stationed units")
