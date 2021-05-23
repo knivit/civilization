@@ -260,7 +260,10 @@ public class GetTileStatus extends AbstractAjaxRequest {
             """,
 
             "$getImprovementInfo", GetImprovementInfo.getAjax(improvement),
-            "$improvementName", improvement.getView().getLocalizedName()
+            "$improvementName", improvement.getView().getLocalizedName(),
+            "$production", improvement.getSupply().getProduction(),
+            "$gold", improvement.getSupply().getGold(),
+            "$food", improvement.getSupply().getFood()
         );
     }
 

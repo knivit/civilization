@@ -118,6 +118,10 @@ public class L10nCivilization {
         .put(EN, "Happiness")
         .put(RU, "Настроение");
 
+    public static final L10n UNHAPPINESS = new L10n()
+        .put(EN, "Unhappiness")
+        .put(RU, "Недовольство");
+
     /** Economic */
 
     public static final L10n UNIT_BOUGHT_EVENT = new L10n()

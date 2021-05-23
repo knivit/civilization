@@ -12,12 +12,10 @@ import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.UUID;
 
-@Slf4j
 public class BuildCityAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
@@ -33,7 +31,6 @@ public class BuildCityAction {
 
     public static ActionAbstractResult buildCity(Settlers settlers) {
         ActionAbstractResult result = canBuildCity(settlers);
-        log.debug("{}", result.getLocalized());
 
         if (result.isFail()) {
             return result;

@@ -10,6 +10,7 @@ import com.tsoft.civilization.tile.feature.L10nFeature;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
+import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.web.response.JsonResponse;
@@ -22,6 +23,10 @@ public class GetImprovementInfo extends AbstractAjaxRequest {
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
 
     public static StringBuilder getAjax(AbstractImprovement improvement) {
+        if (improvement instanceof City) {
+            return ClientAjaxRequest.getCityStatus((City)improvement);
+        }
+
         return Format.text("server.sendAsyncAjax('ajax/GetImprovementInfo', { id:'$improvement' })",
             "$improvement", improvement.getId()
         );

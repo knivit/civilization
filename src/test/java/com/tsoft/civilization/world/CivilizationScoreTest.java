@@ -11,6 +11,7 @@ import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.economic.SupplyMock;
 import com.tsoft.civilization.util.Point;
+import com.tsoft.civilization.web.render.WorldRender;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -135,23 +136,26 @@ public class CivilizationScoreTest {
         assertEquals(20, city.getTileService().getLocations().size());
 
         // add citizens to work on the tiles
-        // three of them will be unemployed (ice, mountain and jungle)
+        // five of them will be unemployed (desert, ice, mountain, snow and jungle)
         for (int i = 0; i < 4 * 5 - 1; i ++) {
             city.addCitizen();
         }
-        assertThat(city.getCitizenCount()).isEqualTo(4 * 5);
-        assertThat(city.getCitizenLocations().size()).isEqualTo(4 * 5 - 3);
+        WorldRender.of(this).createHtml(world, russia);
+        assertThat(city.getCitizenCount()).isEqualTo(20);
+        assertThat(city.getCitizenLocations().size()).isEqualTo(15);
 
         world.nextYear();
 
         assertThat(russia.calcSupply())
             .usingComparator(SupplyMock::compare)
-            .isEqualTo(SupplyMock.of("F2 P12 G10 S20 C1 H0 U17 O20"));
+            .isEqualTo(SupplyMock.of("F2 P14 G10 S18 C1 A0 T0 E0"));
 
         // check the citizens don't work on tiles with empty supply
         assertTrue(Collections.disjoint(city.getCitizenLocations(), Arrays.asList(
+            new Point(2, 0), // desert
             new Point(3, 0), // ice
             new Point(1, 1), // mountain
+            new Point(3, 1), // snow
             new Point(1, 3)  // jungle
         )));
     }

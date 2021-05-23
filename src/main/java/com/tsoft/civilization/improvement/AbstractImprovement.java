@@ -54,7 +54,7 @@ public abstract class AbstractImprovement {
     @Override
     public String toString() {
         return getClass().getSimpleName() + '{' +
-            ", name=" + ((getView() == null) ? "null" : getView().getLocalizedName()) +
+            "name=" + ((getView() == null) ? "null" : getView().getLocalizedName()) +
             ", location=" + tile.getLocation() +
         '}';
     }

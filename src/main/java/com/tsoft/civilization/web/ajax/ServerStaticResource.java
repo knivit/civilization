@@ -66,11 +66,11 @@ public class ServerStaticResource {
         "$text", FOOD
     );
 
-    public static final String HAPPINESS_IMAGE_SRC(int happiness) {
+    public static String HAPPINESS_IMAGE_SRC(int happiness) {
         return (happiness < 0) ? "images/status/unhappiness.png" : "images/status/happiness.png";
     }
 
-    public static final StringBuilder HAPPINESS_IMAGE(int happiness) {
+    public static StringBuilder HAPPINESS_IMAGE(int happiness) {
         return Format.text("""
             <image src="$happinessImage"/>
             """,
@@ -79,7 +79,7 @@ public class ServerStaticResource {
         );
     }
 
-    public static final StringBuilder HAPPINESS_IMAGE_WITH_TOOLTIP(int happiness) {
+    public static StringBuilder HAPPINESS_IMAGE_WITH_TOOLTIP(int happiness) {
         return Format.text("""
             <div class="tooltip"><image src="$happinessImage"/><span class="tooltiptext">$text</span></div>
             """,

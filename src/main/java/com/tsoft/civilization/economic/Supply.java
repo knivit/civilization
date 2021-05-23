@@ -25,8 +25,8 @@ public final class Supply {
             .science(science + other.science)
             .culture(culture + other.culture)
             .faith(faith + other.faith)
-            .faith(tourism + other.tourism)
-            .faith(greatPerson + other.greatPerson)
+            .tourism(tourism + other.tourism)
+            .greatPerson(greatPerson + other.greatPerson)
             .build();
     }
 
@@ -39,7 +39,7 @@ public final class Supply {
             .culture(culture)
             .faith(faith)
             .tourism(tourism)
-            .faith(greatPerson);
+            .greatPerson(greatPerson);
     }
 
     @Override
