@@ -5,6 +5,7 @@ import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.improvement.AbstractImprovementView;
 import com.tsoft.civilization.improvement.L10nImprovement;
+import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.feature.L10nFeature;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.L10nServer;
@@ -33,7 +34,7 @@ public class GetImprovementInfo extends AbstractAjaxRequest {
             return JsonResponse.badRequest(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
-        String id = request.get("id");
+        String id = request.get("improvement");
         AbstractImprovement improvement = civilization.getTileService().findImprovementById(id);
         if (improvement == null) {
             return JsonResponse.badRequest(L10nImprovement.IMPROVEMENT_NOT_FOUND);
@@ -70,7 +71,8 @@ public class GetImprovementInfo extends AbstractAjaxRequest {
     private StringBuilder getImprovementSupplyInfo(AbstractImprovement improvement) {
         // Do not show supply info for foreign improvements
         Civilization civilization = getMyCivilization();
-        if (!improvement.getCity().getCivilization().equals(civilization)) {
+        City improvementCity = improvement.getCity();
+        if (improvementCity == null || !improvementCity.getCivilization().equals(civilization)) {
             return null;
         }
 

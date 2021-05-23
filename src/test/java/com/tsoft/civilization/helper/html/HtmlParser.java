@@ -2,6 +2,7 @@ package com.tsoft.civilization.helper.html;
 
 import org.junit.jupiter.api.Test;
 
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,6 +17,10 @@ public class HtmlParser {
 
     public static HtmlDocument parse(StringBuilder data) {
         return HtmlParser.parse(data.toString());
+    }
+
+    public static HtmlDocument parse(byte[] data) {
+        return HtmlParser.parse(new String(data, StandardCharsets.UTF_8));
     }
 
     public static HtmlDocument parse(String data) {
@@ -66,7 +71,7 @@ public class HtmlParser {
         return attrs;
     }
 
-    private static HtmlTag readTag(HtmlInput input) {
+    static HtmlTag readTag(HtmlInput input) {
         input.skipBlank();
 
         Character ch = input.readChar();
@@ -89,6 +94,7 @@ public class HtmlParser {
                 if (input.readChar() != '>') {
                     throw new IllegalStateException("Char '>' expected at position = " + input.getPos());
                 }
+
                 return HtmlTag.builder()
                     .name(name)
                     .attributes(attrs)
@@ -109,6 +115,7 @@ public class HtmlParser {
                 if (!input.closeTag(name)) {
                     throw new IllegalStateException("Close tag </" + name + "> expected at position = " + input.getPos());
                 }
+
                 return HtmlTag.builder()
                     .name(name)
                     .attributes(attrs)
@@ -117,11 +124,11 @@ public class HtmlParser {
                     .build();
             }
 
-            String text = input.readText();
-            //String closeTag = "</" + name + ">";
-            if (!input.closeTag(name)) {
+            HtmlText text = input.readText(HtmlParser::readTag);
+            if (input.getLevel() == 0 && !input.closeTag(name)) {
                 throw new IllegalStateException("Close tag </" + name + "> expected at position = " + input.getPos());
             }
+
             return HtmlTag.builder()
                 .name(name)
                 .attributes(attrs)
@@ -149,7 +156,7 @@ public class HtmlParser {
             .returns(1, e -> e.getTags().size())
             .extracting(e -> e.getTags().get(0))
             .returns("button", HtmlTag::getName)
-            .returns("Click", HtmlTag::getText)
+            .returns(HtmlText.builder().text("Click").tags(Collections.emptyList()).build(), HtmlTag::getText)
             .returns(Collections.emptyList(), HtmlTag::getTags)
             .returns(1, e -> e.getAttributes().size())
             .extracting(e -> e.getAttributes().get(0))

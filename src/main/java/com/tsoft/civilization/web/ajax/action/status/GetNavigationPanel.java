@@ -7,11 +7,13 @@ public class GetNavigationPanel {
 
     public StringBuilder getContent() {
         return Format.text("""
-            <table id='navigation_panel'><tr>
-                <td><button onclick="$getMyCities">$citiesButton</button></td>
-                <td><button onclick="$getMyUnits">$unitsButton</button></td>
-                <td><button onclick="$getEvents">$showEventsButton</button></td>
-            </tr></table>
+            <table id='navigation_panel'>
+                <tr>
+                    <td><button onclick="$getMyCities">$citiesButton</button></td>
+                    <td><button onclick="$getMyUnits">$unitsButton</button></td>
+                    <td><button onclick="$getEvents">$showEventsButton</button></td>
+                </tr>
+            </table>
             """,
 
             "$getMyCities", GetMyCities.getAjax(),

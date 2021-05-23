@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
-public class RequestsMap {
+class RequestsMap {
     private static final Map<String, AbstractAjaxRequest> REQUESTS;
 
     static {

@@ -60,7 +60,7 @@ public class EarthWorldGenerator implements WorldGenerator {
 
             AbstractTile tile = tiles.get(n);
             if (tile.getImprovement() == null) {
-                ImprovementFactory.newInstance(AncientRuins.CLASS_UUID, tile);
+                ImprovementFactory.newInstance(AncientRuins.CLASS_UUID, tile, null);
             }
         }
     }

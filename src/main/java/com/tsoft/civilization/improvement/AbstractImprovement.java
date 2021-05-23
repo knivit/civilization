@@ -21,6 +21,9 @@ public abstract class AbstractImprovement {
     private final AbstractTile tile;
 
     @Getter
+    private City city;
+
+    @Getter
     private CombatDamage combatDamage = CombatDamage.builder()
         .damage(0)
         .build();
@@ -35,11 +38,10 @@ public abstract class AbstractImprovement {
         this.tile = tile;
     }
 
-    protected void init() {
+    protected void init(City city) {
         tile.setImprovement(this);
+        this.city = city;
     }
-
-    TODO find out which (city) this improvement belongs
 
     public void addCombatDamage(CombatDamage damage) {
         combatDamage = combatDamage.add(damage);

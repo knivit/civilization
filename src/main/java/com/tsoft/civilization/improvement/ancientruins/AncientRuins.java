@@ -90,6 +90,8 @@ public class AncientRuins extends AbstractImprovement {
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
+    private static final AbstractImprovementView VIEW = new AncientRuinsView();
+
     public AncientRuins(AbstractTile tile) {
         super(tile);
     }
@@ -118,6 +120,6 @@ public class AncientRuins extends AbstractImprovement {
 
     @Override
     public AbstractImprovementView getView() {
-        return null;
+        return VIEW;
     }
 }

@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
 import static com.tsoft.civilization.unit.service.destroy.DestroyUnitService.LAST_SETTLERS_CANT_BE_DESTROYED;
 import static com.tsoft.civilization.unit.service.destroy.DestroyUnitService.UNIT_NOT_FOUND;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DestroyUnitServiceTest {

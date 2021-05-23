@@ -41,7 +41,9 @@ public class GetTileInfo extends AbstractAjaxRequest {
             return JsonResponse.badRequest(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
-        Point location = civilization.getTilesMap().getLocation(request.get("col"), request.get("row"));
+        String col = request.get("col");
+        String row = request.get("row");
+        Point location = civilization.getTilesMap().getLocation(col, row);
         if (location == null) {
             return JsonResponse.badRequest(L10nWorld.INVALID_LOCATION);
         }

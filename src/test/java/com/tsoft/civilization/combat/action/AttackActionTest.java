@@ -10,7 +10,6 @@ import com.tsoft.civilization.unit.civil.workers.Workers;
 import com.tsoft.civilization.unit.military.warriors.Warriors;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.Test;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.AMERICA;
@@ -53,6 +52,6 @@ public class AttackActionTest {
             "$warriorsId", warriors.getId()));
 
         HtmlDocument actual = HtmlParser.parse(buf);
-        AssertionsForClassTypes.assertThat(actual).isEqualTo(expected);
+        assertThat(actual).isEqualTo(expected);
     }
 }

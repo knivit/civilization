@@ -14,4 +14,15 @@ import java.util.List;
 public class HtmlDocument {
 
     private final List<HtmlTag> tags;
+
+    public HtmlTag findById(String id) {
+        if (tags == null) {
+            return null;
+        }
+
+        return tags.stream()
+            .filter(e -> e.attributeExists("id", id))
+            .findAny()
+            .orElse(null);
+    }
 }

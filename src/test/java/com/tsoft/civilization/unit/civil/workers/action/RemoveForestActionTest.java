@@ -138,6 +138,7 @@ public class RemoveForestActionTest {
 
             "$workersId", workers.getId()));
 
+        assertThat(buf).isNotNull();
         HtmlDocument actual = HtmlParser.parse(buf);
         assertThat(actual).isEqualTo(expected);
     }

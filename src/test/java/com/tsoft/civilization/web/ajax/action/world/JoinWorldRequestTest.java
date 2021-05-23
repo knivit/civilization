@@ -8,7 +8,7 @@ import com.tsoft.civilization.civilization.PlayerType;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.web.MockRequest;
-import com.tsoft.civilization.web.ajax.RequestsMap;
+import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.web.response.Response;
@@ -32,7 +32,8 @@ public class JoinWorldRequestTest {
             "playerType", PlayerType.HUMAN.name()
         );
 
-        Response response = RequestsMap.get(JoinWorldRequest.class.getSimpleName()).getJson(request);
+        Response response = AbstractAjaxRequest.getInstance(JoinWorldRequest.class.getSimpleName())
+            .getJson(request);
 
         assertThat(response).isNotNull()
             .returns(ResponseCode.OK, Response::getResponseCode)

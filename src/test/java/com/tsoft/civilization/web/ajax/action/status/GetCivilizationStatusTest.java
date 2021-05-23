@@ -17,11 +17,12 @@ import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 public class GetCivilizationStatusTest {
+
     private static final AbstractAjaxRequest getCivilizationStatusRequest =
         AbstractAjaxRequest.getInstance(GetCivilizationStatus.class.getSimpleName());
 
     @Test
-    public void getJsonForMyCivilization() {
+    public void get_json_for_my_civilization() {
         MockWorld world = MockWorld.newSimpleWorld();
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()

@@ -1,6 +1,7 @@
 package com.tsoft.civilization.improvement;
 
 import com.tsoft.civilization.improvement.ancientruins.AncientRuins;
+import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.farm.Farm;
 import com.tsoft.civilization.improvement.mine.Mine;
 import com.tsoft.civilization.improvement.road.Road;
@@ -26,14 +27,14 @@ public final class ImprovementFactory {
 
     private ImprovementFactory() { }
 
-    public static <T extends AbstractImprovement> T newInstance(String classUuid, AbstractTile tile) {
+    public static <T extends AbstractImprovement> T newInstance(String classUuid, AbstractTile tile, City city) {
         Function<AbstractTile, AbstractImprovement> supplier = FACTORY.get(classUuid);
         if (supplier == null) {
             throw new IllegalArgumentException("Unknown improvement classUuid = " + classUuid);
         }
 
         T improvement = (T)supplier.apply(tile);
-        improvement.init();
+        improvement.init(city);
         return improvement;
     }
 
