@@ -2,10 +2,7 @@ package com.tsoft.civilization.combat.service;
 
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.population.Happiness;
-import com.tsoft.civilization.combat.CombatDamage;
-import com.tsoft.civilization.combat.CombatResult;
-import com.tsoft.civilization.combat.HasCombatStrength;
-import com.tsoft.civilization.combat.HasCombatStrengthList;
+import com.tsoft.civilization.combat.*;
 import com.tsoft.civilization.combat.event.AttackDoneEvent;
 import com.tsoft.civilization.combat.event.UnitHasWonAttackEvent;
 import com.tsoft.civilization.improvement.city.City;
@@ -92,26 +89,27 @@ public class BaseCombatService {
         //
         // PREPARE THE ATTACK
         //
-        CombatResult.CombatResultBuilder result = CombatResult.builder();
-        result.originalStrikeStrength(strikeStrength);
+        CombatantState.CombatantStateBuilder attackerState = CombatantState.builder()
+            .strikeStrength(strikeStrength);
 
         World world = attacker.getCivilization().getWorld();
 
         int targetDefenseStrength = target.calcCombatStrength().getDefenseStrength();
-        result.targetDefenseStrength(targetDefenseStrength);
+        CombatantState.CombatantStateBuilder targetState = CombatantState.builder()
+            .defenseStrength(targetDefenseStrength);
 
         // before the attack calculate target's backfire strength
         int targetBackFireStrength = calcTargetBackFireStrength(attacker, target);
-        result.targetBackFireStrength(targetBackFireStrength);
+        targetState.strikeStrength(targetBackFireStrength);
 
         // get target's defense experience
         int targetDefenseExperience = target.calcCombatStrength().getDefenseExperience();
-        result.targetDefenseExperience(targetDefenseExperience);
+        targetState.experience(targetDefenseExperience);
 
-        // attacker's strike will be discounted on target's defense experience
+        // attacker's strike strength will be discounted on target's defense experience
         strikeStrength -= targetDefenseExperience;
         if (strikeStrength <= 0) strikeStrength = 1;
-        result.appliedStrikeStrength(strikeStrength);
+        attackerState.appliedStrikeStrength(strikeStrength);
 
         //
         // ATTACK
@@ -126,11 +124,11 @@ public class BaseCombatService {
 
         // decrease target's defense strength
         targetDefenseStrength -= strikeStrength;
-        result.targetDefenseStrengthAfterAttack(targetDefenseStrength);
+        targetState.defenseStrengthAfterAttack(targetDefenseStrength);
 
         // increase target's defense experience after the attack
         int targetDefenseExperienceAfterAttack = targetDefenseExperience + 1;
-        result.targetDefenseExperienceAfterAttack(targetDefenseExperienceAfterAttack);
+        targetState.experienceAfterAttack(targetDefenseExperienceAfterAttack);
 
         // update target's combat damage after the attack
         CombatDamage combatDamage = CombatDamage.builder()
@@ -146,7 +144,7 @@ public class BaseCombatService {
         //    .build());
 
         boolean targetDestroyed = (targetDefenseStrength <= 0);
-        result.targetDestroyed(targetDestroyed);
+        targetState.isDestroyed(targetDestroyed);
 
         if (targetDestroyed) {
             destroy(attacker, target);
@@ -158,7 +156,7 @@ public class BaseCombatService {
 
         // the target backfired the attacker
         int attackerDefenseStrength = attacker.calcCombatStrength().getDefenseStrength();
-        result.attackerDefenseStrength(attackerDefenseStrength);
+        attackerState.defenseStrength(attackerDefenseStrength);
 
         int attackerDefenseStrengthAfterAttack = attackerDefenseStrength - targetBackFireStrength;
 
@@ -166,14 +164,14 @@ public class BaseCombatService {
         if (attackerDefenseStrengthAfterAttack <= 0 && targetDestroyed) {
             attackerDefenseStrengthAfterAttack = 1;
         }
-        result.attackerDefenseStrengthAfterAttack(attackerDefenseStrengthAfterAttack);
+        attackerState.defenseStrengthAfterAttack(attackerDefenseStrengthAfterAttack);
 
         // attacker's attack experience increase
         int attackerAttackExperience = 0;//attacker.calcCombatStrength().getAttackExperience();
-        result.attackerAttackExperience(attackerAttackExperience);
+        attackerState.experience(attackerAttackExperience);
 
         int attackerAttackExperienceAfterAttack = attackerAttackExperience + 2;
-        result.attackerAttackExperienceAfterAttack(attackerAttackExperienceAfterAttack);
+        attackerState.experienceAfterAttack(attackerAttackExperienceAfterAttack);
 
         // update attacker's combat strength after the attack
         CombatDamage attackerDamage = CombatDamage.builder().build();
@@ -185,7 +183,7 @@ public class BaseCombatService {
 
         // is the attacker destroyed
         boolean attackerDestroyed = (attackerDefenseStrengthAfterAttack <= 0);
-        result.attackerDestroyed(attackerDestroyed);
+        attackerState.isDestroyed(attackerDestroyed);
 
         if (attackerDestroyed) {
             destroy(target, attacker);
@@ -193,14 +191,17 @@ public class BaseCombatService {
 
         // set to 0 attacker's passScore - it can't action (move, attack, capture etc) anymore
         attacker.setPassScore(0);
-        result.done(true);
 
         // send the event about the attack
         world.sendEvent(AttackDoneEvent.builder()
             .build());
 
         // return the result
-        return result.build();
+        return CombatResult.builder()
+            .attackerState(attackerState.build())
+            .targetState(targetState.build())
+            .status(CombatStatus.DONE)
+            .build();
     }
 
     private void destroyUnit(HasCombatStrength attacker, HasCombatStrength victim) {

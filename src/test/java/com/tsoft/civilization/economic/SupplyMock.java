@@ -26,6 +26,10 @@ public class SupplyMock {
 
     private static final Comparator<Supply> comparator = (a, b) -> equals(a, b) ? 0 : 1;
 
+    public static int compare(Supply a, Supply b) {
+        return comparator.compare(a, b);
+    }
+
     public static boolean equals(Supply a, Supply b) {
         boolean isEqual =
             a.getFood() == b.getFood() &&
@@ -69,9 +73,5 @@ public class SupplyMock {
 
     private static String cmp(int a, int b) {
         return (a == b) ? "" : "*";
-    }
-
-    public static int compare(Supply a, Supply b) {
-        return comparator.compare(a, b);
     }
 }

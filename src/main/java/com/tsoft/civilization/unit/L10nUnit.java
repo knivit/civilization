@@ -102,7 +102,7 @@ public class L10nUnit {
         .put(EN, "There are no targets to attack")
         .put(RU, "Нет целей для атаки");
 
-    public static final L10n ATTACK_SKIPPED = new L10n()
+    public static final L10n ATTACK_FAILED = new L10n()
         .put(EN, "The attack did not take place")
         .put(RU, "Атака не состоялась");
 

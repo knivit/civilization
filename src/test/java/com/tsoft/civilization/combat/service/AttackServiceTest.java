@@ -4,7 +4,7 @@ import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationsRelations;
-import com.tsoft.civilization.combat.CombatResult;
+import com.tsoft.civilization.combat.CombatResultMock;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrengthList;
 import com.tsoft.civilization.improvement.city.City;
@@ -62,7 +62,7 @@ public class AttackServiceTest {
     }
 
     // Scenario:
-    // An archer can fire through an ocean tile but can't through a mountain
+    // An archer can fire over an ocean tile but can't over a mountain
     @Test
     public void get_targets_to_attack_for_ranged_attacker() {
         MockWorld world = MockWorld.of(MockTilesMap.of(2,
@@ -105,68 +105,37 @@ public class AttackServiceTest {
 
         // attack one of foreign warriors
         assertThat(attackService.attackTarget(world.unit("archers"), world.unit("foreignWarriors2")))
-            .isNotNull()
-            .returns(30, CombatResult::getAttackerDefenseStrength)
-            .returns(25, CombatResult::getAttackerDefenseStrengthAfterAttack)
-            .returns(0, CombatResult::getAttackerAttackExperience)
-            .returns(2, CombatResult::getAttackerAttackExperienceAfterAttack)
-            .returns(false, CombatResult::isAttackerDestroyed)
-
-            .returns(13, CombatResult::getOriginalStrikeStrength)
-            .returns(13, CombatResult::getAppliedStrikeStrength)
-
-            .returns(20, CombatResult::getTargetDefenseStrength)
-            .returns(7, CombatResult::getTargetDefenseStrengthAfterAttack)
-            .returns(0, CombatResult::getTargetDefenseExperience)
-            .returns(1, CombatResult::getTargetDefenseExperienceAfterAttack)
-            .returns(false, CombatResult::isTargetDestroyed)
-
-            .returns(5, CombatResult::getTargetBackFireStrength)
-
-            .returns(true, CombatResult::isDone)
-            .returns(false, CombatResult::isSkippedAsRangedUndershoot)
-            .returns(false, CombatResult::isSkippedAsNoTargetsToAttack)
-            .returns(false, CombatResult::isSkippedAsMeleeNotEnoughPassScore);
+            .usingComparator(CombatResultMock::compare)
+            .isEqualTo(CombatResultMock.done(
+                "SS:13 AS:23 DS:30 DSA:25 E:0 EA:2 D:0",
+                "SS:5 AS:5 DS:20 DSA:7 E:0 EA:1 D:0"
+            ));
 
         assertThat(world.unit("archers").getPassScore()).isEqualTo(0);
 
+        CombatStrength expectedStrength = CombatStrength.builder()
+            .meleeAttackStrength(10)
+            .meleeBackFireStrength(5)
+            .rangedAttackStrength(0)
+            .rangedAttackRadius(0)
+            .defenseStrength(7)
+            .defenseExperience(1)
+            .isDestroyed(false)
+            .build();
+
         assertThat(world.unit("foreignWarriors2").calcCombatStrength())
-            .isNotNull()
-            .returns(10, CombatStrength::getMeleeAttackStrength)
-            .returns(5, CombatStrength::getMeleeBackFireStrength)
-            .returns(0, CombatStrength::getRangedAttackStrength)
-            .returns(0, CombatStrength::getRangedAttackRadius)
-            .returns(7, CombatStrength::getDefenseStrength)
-            .returns(1, CombatStrength::getDefenseExperience)
-            .returns(false, CombatStrength::isDestroyed);
+            .isEqualTo(expectedStrength);
 
         // do the next step to be able to strike again
         world.nextYear();
 
         // attack the foreign warriors again
         assertThat(attackService.attackTarget(world.unit("archers"), world.unit("foreignWarriors2")))
-            .isNotNull()
-            .returns(25, CombatResult::getAttackerDefenseStrength)
-            .returns(20, CombatResult::getAttackerDefenseStrengthAfterAttack)
-            .returns(2, CombatResult::getAttackerAttackExperience)
-            .returns(4, CombatResult::getAttackerAttackExperienceAfterAttack)
-            .returns(false, CombatResult::isAttackerDestroyed)
-
-            .returns(15, CombatResult::getOriginalStrikeStrength)
-            .returns(14, CombatResult::getAppliedStrikeStrength)
-
-            .returns(7, CombatResult::getTargetDefenseStrength)
-            .returns(-7, CombatResult::getTargetDefenseStrengthAfterAttack)
-            .returns(1, CombatResult::getTargetDefenseExperience)
-            .returns(2, CombatResult::getTargetDefenseExperienceAfterAttack)
-            .returns(true, CombatResult::isTargetDestroyed)
-
-            .returns(5, CombatResult::getTargetBackFireStrength)
-
-            .returns(true, CombatResult::isDone)
-            .returns(false, CombatResult::isSkippedAsRangedUndershoot)
-            .returns(false, CombatResult::isSkippedAsNoTargetsToAttack)
-            .returns(false, CombatResult::isSkippedAsMeleeNotEnoughPassScore);
+            .usingComparator(CombatResultMock::compare)
+            .isEqualTo(CombatResultMock.done(
+                "SS:15 AS:14 DS:25 DSA:20 E:2 EA:4 D:0",
+                "SS:5 AS:5 DS:7 DSA:-7 E:1 EA:2 D:1"
+            ));
 
         assertThat(world.unit("archers").getPassScore()).isEqualTo(0);
 
@@ -175,56 +144,22 @@ public class AttackServiceTest {
 
         // attack the second line - archers
         assertThat(attackService.attackTarget(world.unit("archers"), world.unit("foreignArchers1")))
-            .isNotNull()
-            .returns(20, CombatResult::getAttackerDefenseStrength)
-            .returns(15, CombatResult::getAttackerDefenseStrengthAfterAttack)
-            .returns(4, CombatResult::getAttackerAttackExperience)
-            .returns(6, CombatResult::getAttackerAttackExperienceAfterAttack)
-            .returns(false, CombatResult::isAttackerDestroyed)
-
-            .returns(14, CombatResult::getOriginalStrikeStrength)
-            .returns(14, CombatResult::getAppliedStrikeStrength)
-
-            .returns(30, CombatResult::getTargetDefenseStrength)
-            .returns(16, CombatResult::getTargetDefenseStrengthAfterAttack)
-            .returns(0, CombatResult::getTargetDefenseExperience)
-            .returns(1, CombatResult::getTargetDefenseExperienceAfterAttack)
-            .returns(false, CombatResult::isTargetDestroyed)
-
-            .returns(5, CombatResult::getTargetBackFireStrength)
-
-            .returns(true, CombatResult::isDone)
-            .returns(false, CombatResult::isSkippedAsRangedUndershoot)
-            .returns(false, CombatResult::isSkippedAsNoTargetsToAttack)
-            .returns(false, CombatResult::isSkippedAsMeleeNotEnoughPassScore);
+            .usingComparator(CombatResultMock::compare)
+            .isEqualTo(CombatResultMock.done(
+                "SS:14 AS:14 DS:20 DSA:15 E:4 EA:6 D:0",
+                "SS:5 AS:5 DS:30 DSA:16 E:0 EA:1 D:0"
+            ));
 
         // next step
         world.nextYear();
 
         // attack the second line - foreign city
         assertThat(attackService.attackTarget(world.unit("archers"), world.city("foreignCity")))
-            .isNotNull()
-            .returns(15, CombatResult::getAttackerDefenseStrength)
-            .returns(10, CombatResult::getAttackerDefenseStrengthAfterAttack)
-            .returns(6, CombatResult::getAttackerAttackExperience)
-            .returns(8, CombatResult::getAttackerAttackExperienceAfterAttack)
-            .returns(false, CombatResult::isAttackerDestroyed)
-
-            .returns(16, CombatResult::getOriginalStrikeStrength)
-            .returns(16, CombatResult::getAppliedStrikeStrength)
-
-            .returns(50, CombatResult::getTargetDefenseStrength)
-            .returns(34, CombatResult::getTargetDefenseStrengthAfterAttack)
-            .returns(0, CombatResult::getTargetDefenseExperience)
-            .returns(1, CombatResult::getTargetDefenseExperienceAfterAttack)
-            .returns(false, CombatResult::isTargetDestroyed)
-
-            .returns(5, CombatResult::getTargetBackFireStrength)
-
-            .returns(true, CombatResult::isDone)
-            .returns(false, CombatResult::isSkippedAsRangedUndershoot)
-            .returns(false, CombatResult::isSkippedAsNoTargetsToAttack)
-            .returns(false, CombatResult::isSkippedAsMeleeNotEnoughPassScore);
+            .usingComparator(CombatResultMock::compare)
+            .isEqualTo(CombatResultMock.done(
+                "SS:16 AS:16 DS:15 DSA:10 E:6 EA:8 D:0",
+                "SS:5 AS:5 DS:50 DSA:34 E:0 EA:1 D:0"
+            ));
     }
 
     // Scenario:
@@ -267,11 +202,14 @@ public class AttackServiceTest {
 
         // strike 1
         assertThat(attackService.attackTarget(world.unit("warriors1"), foreignCity))
-            .returns(true, CombatResult::isDone);
+            .usingComparator(CombatResultMock::compare)
+            .isEqualTo(CombatResultMock.done(
+                "SS:16 AS:16 DS:15 DSA:10 E:6 EA:8 D:0",
+                "SS:5 AS:5 DS:20 DSA:34 E:0 EA:1 D:0"
+            ));
 
         assertThat(world.unit("warriors1"))
-            .returns(0, AbstractUnit::getPassScore)
-            .returns(15, e -> e.calcCombatStrength().getDefenseStrength());
+            .returns(0, AbstractUnit::getPassScore);
 
         assertThat(russia.getCityService().size()).isEqualTo(1);
 
@@ -279,15 +217,16 @@ public class AttackServiceTest {
             .returns(1, e -> e.getCityService().size())
             .returns(2, e -> e.getUnitService().size());
 
-        assertThat(world.city("foreignCity"))
-            .returns(30 - 10, e -> e.calcCombatStrength().getDefenseStrength());
-
         assertThat(world.unit("foreignWarriors"))
             .returns(20, e -> e.calcCombatStrength().getDefenseStrength());
 
         // strike 2
         assertThat(attackService.attackTarget(world.unit("warriors2"), foreignCity))
-            .returns(true, CombatResult::isDone);
+            .usingComparator(CombatResultMock::compare)
+            .isEqualTo(CombatResultMock.done(
+                "SS:16 AS:16 DS:15 DSA:10 E:6 EA:8 D:0",
+                "SS:5 AS:5 DS:11 DSA:34 E:0 EA:1 D:0"
+            ));
 
         assertThat(world.unit("warriors2"))
             .returns(0, AbstractUnit::getPassScore)
@@ -299,19 +238,19 @@ public class AttackServiceTest {
             .returns(1, e -> e.getCityService().size())
             .returns(2, e -> e.getUnitService().size());
 
-        assertThat(world.city("foreignCity"))
-            .returns(20 - 9, e -> e.calcCombatStrength().getDefenseStrength());
-
         assertThat(world.unit("foreignWarriors"))
             .returns(20, e -> e.calcCombatStrength().getDefenseStrength());
 
         // strike 3
         assertThat(attackService.attackTarget(world.unit("warriors3"), foreignCity))
-            .returns(true, CombatResult::isDone);
+            .usingComparator(CombatResultMock::compare)
+            .isEqualTo(CombatResultMock.done(
+                "SS:16 AS:16 DS:15 DSA:10 E:6 EA:8 D:0",
+                "SS:5 AS:5 DS:3 DSA:34 E:0 EA:1 D:0"
+            ));
 
         assertThat(world.unit("warriors3"))
-            .returns(0, AbstractUnit::getPassScore)
-            .returns(15, e -> e.calcCombatStrength().getDefenseStrength());
+            .returns(0, AbstractUnit::getPassScore);
 
         assertThat(russia.getCityService().size()).isEqualTo(1);
 
@@ -319,16 +258,16 @@ public class AttackServiceTest {
             .returns(1, e -> e.getCityService().size())
             .returns(2, e -> e.getUnitService().size());
 
-        assertThat(world.city("foreignCity"))
-            .returns(20 - 9 - 8, e -> e.calcCombatStrength().getDefenseStrength());
-
         assertThat(world.unit("foreignWarriors"))
             .returns(20, e -> e.calcCombatStrength().getDefenseStrength());
 
-        // strike 4
+        // strike 4 - city and foreign warriors in it are captured
         assertThat(attackService.attackTarget(world.unit("warriors4"), foreignCity))
-            .returns(true, CombatResult::isDone)
-            .returns(true, CombatResult::isTargetDestroyed);
+            .usingComparator(CombatResultMock::compare)
+            .isEqualTo(CombatResultMock.done(
+                "SS:16 AS:16 DS:15 DSA:10 E:6 EA:8 D:0",
+                "SS:5 AS:5 DS:3 DSA:34 E:0 EA:1 D:1"
+            ));
 
         assertThat(world.unit("warriors4"))
             .returns(0, AbstractUnit::getPassScore)

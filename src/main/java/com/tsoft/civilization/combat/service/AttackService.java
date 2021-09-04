@@ -20,7 +20,7 @@ public class AttackService {
     public static final ActionSuccessResult ATTACKED = new ActionSuccessResult(L10nUnit.ATTACKED);
     public static final ActionSuccessResult ATTACKER_IS_DESTROYED_DURING_ATTACK = new ActionSuccessResult(L10nUnit.ATTACKER_IS_DESTROYED_DURING_ATTACK);
 
-    public static final ActionFailureResult ATTACK_SKIPPED = new ActionFailureResult(L10nUnit.ATTACK_SKIPPED);
+    public static final ActionFailureResult ATTACK_FAILED = new ActionFailureResult(L10nUnit.ATTACK_FAILED);
     public static final ActionFailureResult NO_TARGETS_TO_ATTACK = new ActionFailureResult(L10nUnit.NO_TARGETS_TO_ATTACK);
     public static final ActionFailureResult MELEE_NOT_ENOUGH_PASS_SCORE = new ActionFailureResult(L10nUnit.MELEE_NOT_ENOUGH_PASS_SCORE);
     public static final ActionFailureResult ATTACKER_NOT_FOUND = new ActionFailureResult(L10nUnit.UNIT_NOT_FOUND);
@@ -46,27 +46,27 @@ public class AttackService {
         }
 
         CombatResult combatResult = attackTarget(attacker, target);
-        if (combatResult.isSkippedAsNoTargetsToAttack()) {
+        if (CombatStatus.FAILED_NO_TARGETS.equals(combatResult.getStatus())) {
             return NO_TARGETS_TO_ATTACK;
         }
 
-        if (combatResult.isSkippedAsMeleeNotEnoughPassScore()) {
+        if (CombatStatus.FAILED_MELEE_NOT_ENOUGH_PASS_SCORE.equals(combatResult.getStatus())) {
             return MELEE_NOT_ENOUGH_PASS_SCORE;
         }
 
-        if (combatResult.isSkippedAsRangedUndershoot()) {
+        if (CombatStatus.FAILED_RANGED_UNDERSHOOT.equals(combatResult.getStatus())) {
             return RANGED_UNDERSHOOT;
         }
 
-        if (!combatResult.isDone()) {
-            return ATTACK_SKIPPED;
+        if (!CombatStatus.DONE.equals(combatResult.getStatus())) {
+            return ATTACK_FAILED;
         }
 
-        if (combatResult.isTargetDestroyed()) {
+        if (combatResult.getTargetState().isDestroyed()) {
             return TARGET_DESTROYED;
         }
 
-        if (combatResult.isAttackerDestroyed()) {
+        if (combatResult.getAttackerState().isDestroyed()) {
             return ATTACKER_IS_DESTROYED_DURING_ATTACK;
         }
 

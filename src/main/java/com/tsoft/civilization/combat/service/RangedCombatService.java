@@ -43,7 +43,7 @@ public class RangedCombatService {
         int strikeStrength = getMissileStrength(attacker, target);
         if (strikeStrength <= 0) {
             return CombatResult.builder()
-                .skippedAsRangedUndershoot(true)
+                .status(CombatStatus.FAILED_RANGED_UNDERSHOOT)
                 .build();
         }
 

@@ -5,6 +5,7 @@ import com.tsoft.civilization.action.ActionFailureResult;
 import com.tsoft.civilization.action.ActionSuccessResult;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.combat.CombatResult;
+import com.tsoft.civilization.combat.CombatStatus;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrengthList;
 import com.tsoft.civilization.improvement.city.City;
@@ -60,7 +61,7 @@ public class MeleeCombatService {
         AbstractDir dir = attacker.getCivilization().getTilesMap().getDirToLocation(attacker.getLocation(), target.getLocation());
         if (dir == null) {
             return CombatResult.builder()
-                .skippedAsNoTargetsToAttack(true)
+                .status(CombatStatus.FAILED_NO_TARGETS)
                 .build();
         }
 
@@ -69,7 +70,7 @@ public class MeleeCombatService {
         ActionAbstractResult moveResult = getMoveOnMeleeAttackResult(unit, target.getLocation());
         if (moveResult.isFail()) {
             return CombatResult.builder()
-                .skippedAsMeleeNotEnoughPassScore(true)
+                .status(CombatStatus.FAILED_MELEE_NOT_ENOUGH_PASS_SCORE)
                 .build();
         }
 
