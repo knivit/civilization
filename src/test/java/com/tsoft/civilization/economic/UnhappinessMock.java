@@ -1,26 +1,43 @@
 package com.tsoft.civilization.economic;
 
+import com.tsoft.civilization.StringParser;
 import com.tsoft.civilization.civilization.population.Unhappiness;
 
 import java.util.Comparator;
+import java.util.Map;
+import java.util.Set;
 
 public class UnhappinessMock {
 
+    private static final String FROM_MY_CITIES = "C";
+    private static final String FROM_ANNEXED_CITIES = "A";
+    private static final String FROM_PUPPET_CITIES = "U";
+    private static final String FROM_POPULATION = "P";
+    private static final String TOTAL = "T";
+
+    private static final Set<String> AVAILABLE_IDENTIFIERS = Set.of(
+        FROM_MY_CITIES, FROM_ANNEXED_CITIES, FROM_PUPPET_CITIES, FROM_POPULATION, TOTAL
+    );
+
     public static Unhappiness of(String str) {
-        StringParser<Unhappiness> parser = new StringParser<>();
-        return parser.parse(str, Unhappiness.EMPTY, UnhappinessMock::getUnhappiness, Unhappiness::add);
+        StringParser parser = new StringParser();
+        return build(parser.parse(str, AVAILABLE_IDENTIFIERS));
     }
 
-    private static Unhappiness getUnhappiness(Character type, Integer value) {
-        switch (type) {
-            case 'C': return Unhappiness.builder().inMyCities(value).build();
-            case 'A': return Unhappiness.builder().inAnnexedCities(value).build();
-            case 'U': return Unhappiness.builder().inPuppetCities(value).build();
-            case 'P': return Unhappiness.builder().population(value).build();
-            case 'T': return Unhappiness.builder().total(value).build();
-        }
+    private static Unhappiness build(Map<String, Integer> map) {
+        int fromMyCities = map.getOrDefault(FROM_MY_CITIES, 0);
+        int fromAnnexedCities = map.getOrDefault(FROM_ANNEXED_CITIES, 0);
+        int fromPuppetCities = map.getOrDefault(FROM_PUPPET_CITIES, 0);
+        int fromPopulation = map.getOrDefault(FROM_POPULATION, 0);
+        int total = map.getOrDefault(TOTAL, 0);
 
-        throw new IllegalArgumentException("Unknown type = " + type);
+        return Unhappiness.builder()
+            .inMyCities(fromMyCities)
+            .inAnnexedCities(fromAnnexedCities)
+            .inPuppetCities(fromPuppetCities)
+            .population(fromPopulation)
+            .total(total)
+            .build();
     }
 
     private static final Comparator<Unhappiness> comparator = (a, b) -> equals(a, b) ? 0 : 1;

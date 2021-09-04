@@ -1,5 +1,7 @@
 package com.tsoft.civilization.combat;
 
+import com.tsoft.civilization.StringParser;
+
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Set;
@@ -39,8 +41,8 @@ public class CombatResultMock {
     private static CombatResult of(String attacker, String target, CombatStatus combatStatus) {
         StringParser parser = new StringParser();
 
-        CombatantState attackerState = buildState(parser.parse(attacker, AVAILABLE_IDENTIFIERS));
-        CombatantState targetState = buildState(parser.parse(target, AVAILABLE_IDENTIFIERS));
+        CombatantState attackerState = build(parser.parse(attacker, AVAILABLE_IDENTIFIERS));
+        CombatantState targetState = build(parser.parse(target, AVAILABLE_IDENTIFIERS));
 
         return CombatResult.builder()
             .attackerState(attackerState)
@@ -49,13 +51,13 @@ public class CombatResultMock {
             .build();
     }
 
-    private static CombatantState buildState(Map<String, Integer> state) {
-        int defenseStrength = state.getOrDefault(DEFENSE_STRENGTH, 0);
-        int defenseStrengthAfterAttack = state.getOrDefault(DEFENSE_STRENGTH_AFTER_ATTACK, 0);
-        int experience = state.getOrDefault(EXPERIENCE, 0);
-        int experienceAfterAttack = state.getOrDefault(EXPERIENCE_AFTER_ATTACK, 0);
-        int strikeStrength = state.getOrDefault(STRIKE_STRENGTH, 0);
-        int isDestroyed = state.getOrDefault(IS_DESTROYED, 0);
+    private static CombatantState build(Map<String, Integer> map) {
+        int defenseStrength = map.getOrDefault(DEFENSE_STRENGTH, 0);
+        int defenseStrengthAfterAttack = map.getOrDefault(DEFENSE_STRENGTH_AFTER_ATTACK, 0);
+        int experience = map.getOrDefault(EXPERIENCE, 0);
+        int experienceAfterAttack = map.getOrDefault(EXPERIENCE_AFTER_ATTACK, 0);
+        int strikeStrength = map.getOrDefault(STRIKE_STRENGTH, 0);
+        int isDestroyed = map.getOrDefault(IS_DESTROYED, 0);
 
         return CombatantState.builder()
             .defenseStrength(defenseStrength)

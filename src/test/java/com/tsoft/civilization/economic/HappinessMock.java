@@ -1,28 +1,49 @@
 package com.tsoft.civilization.economic;
 
+import com.tsoft.civilization.StringParser;
 import com.tsoft.civilization.civilization.population.Happiness;
 
 import java.util.Comparator;
+import java.util.Map;
+import java.util.Set;
 
 public class HappinessMock {
 
+    private static final String BASE_HAPPINESS = "D";
+    private static final String LUXURY_RESOURCES = "L";
+    private static final String BUILDINGS = "B";
+    private static final String WONDERS = "W";
+    private static final String NATURAL_WONDERS = "N";
+    private static final String SOCIAL_POLICIES = "P";
+    private static final String GARRISONED_UNITS = "G";
+
+    private static final Set<String> AVAILABLE_IDENTIFIERS = Set.of(
+        BASE_HAPPINESS, LUXURY_RESOURCES, BUILDINGS, WONDERS, NATURAL_WONDERS, SOCIAL_POLICIES, GARRISONED_UNITS
+    );
+
     public static Happiness of(String str) {
-        StringParser<Happiness> parser = new StringParser<>();
-        return parser.parse(str, Happiness.EMPTY, HappinessMock::getHappiness, Happiness::add);
+        StringParser parser = new StringParser();
+        return build(parser.parse(str, AVAILABLE_IDENTIFIERS));
     }
 
-    private static Happiness getHappiness(Character type, Integer value) {
-        switch (type) {
-            case 'D': return Happiness.builder().baseHappiness(value).build();
-            case 'L': return Happiness.builder().luxuryResources(value).build();
-            case 'B': return Happiness.builder().buildings(value).build();
-            case 'W': return Happiness.builder().wonders(value).build();
-            case 'N': return Happiness.builder().naturalWonders(value).build();
-            case 'P': return Happiness.builder().socialPolicies(value).build();
-            case 'G': return Happiness.builder().garrisonedUnits(value).build();
-        }
+    private static Happiness build(Map<String, Integer> map) {
+        int baseHappiness = map.getOrDefault(BASE_HAPPINESS, 0);
+        int luxuryResources = map.getOrDefault(LUXURY_RESOURCES, 0);
+        int buildings = map.getOrDefault(BUILDINGS, 0);
+        int wonders = map.getOrDefault(WONDERS, 0);
+        int naturalWonders = map.getOrDefault(NATURAL_WONDERS, 0);
+        int socialPolicies = map.getOrDefault(SOCIAL_POLICIES, 0);
+        int garrisonedUnits = map.getOrDefault(GARRISONED_UNITS, 0);
 
-        throw new IllegalArgumentException("Unknown type = " + type);
+        return Happiness.builder()
+            .baseHappiness(baseHappiness)
+            .luxuryResources(luxuryResources)
+            .buildings(buildings)
+            .wonders(wonders)
+            .naturalWonders(naturalWonders)
+            .socialPolicies(socialPolicies)
+            .garrisonedUnits(garrisonedUnits)
+            .build();
     }
 
     private static final Comparator<Happiness> comparator = (a, b) -> equals(a, b) ? 0 : 1;

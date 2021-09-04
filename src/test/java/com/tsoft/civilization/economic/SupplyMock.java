@@ -1,27 +1,51 @@
 package com.tsoft.civilization.economic;
 
+import com.tsoft.civilization.StringParser;
+
 import java.util.Comparator;
+import java.util.Map;
+import java.util.Set;
 
 public class SupplyMock {
 
+    private static final String FOOD = "F";
+    private static final String PRODUCTION = "P";
+    private static final String GOLD = "G";
+    private static final String SCIENCE = "S";
+    private static final String CULTURE = "C";
+    private static final String FAITH = "A";
+    private static final String TOURISM = "T";
+    private static final String GREAT_PERSON = "E";
+
+    private static final Set<String> AVAILABLE_IDENTIFIERS = Set.of(
+        FOOD, PRODUCTION, GOLD, SCIENCE, CULTURE, FAITH, TOURISM, GREAT_PERSON
+    );
+
     public static Supply of(String str) {
-        StringParser<Supply> parser = new StringParser<>();
-        return parser.parse(str, Supply.EMPTY, SupplyMock::getSupply, Supply::add);
+        StringParser parser = new StringParser();
+        return build(parser.parse(str, AVAILABLE_IDENTIFIERS));
     }
 
-    private static Supply getSupply(char type, int value) {
-        switch (type) {
-            case 'F': return Supply.builder().food(value).build();
-            case 'P': return Supply.builder().production(value).build();
-            case 'G': return Supply.builder().gold(value).build();
-            case 'S': return Supply.builder().science(value).build();
-            case 'C': return Supply.builder().culture(value).build();
-            case 'A': return Supply.builder().faith(value).build();
-            case 'T': return Supply.builder().tourism(value).build();
-            case 'E': return Supply.builder().greatPerson(value).build();
-        }
+    private static Supply build(Map<String, Integer> map) {
+        int food = map.getOrDefault(FOOD, 0);
+        int production = map.getOrDefault(PRODUCTION, 0);
+        int gold = map.getOrDefault(GOLD, 0);
+        int science = map.getOrDefault(SCIENCE, 0);
+        int culture = map.getOrDefault(CULTURE, 0);
+        int faith = map.getOrDefault(FAITH, 0);
+        int tourism = map.getOrDefault(TOURISM, 0);
+        int greatPerson = map.getOrDefault(GREAT_PERSON, 0);
 
-        throw new IllegalArgumentException("Unknown type = " + type);
+        return Supply.builder()
+            .food(food)
+            .production(production)
+            .gold(gold)
+            .science(science)
+            .culture(culture)
+            .faith(faith)
+            .tourism(tourism)
+            .greatPerson(greatPerson)
+            .build();
     }
 
     private static final Comparator<Supply> comparator = (a, b) -> equals(a, b) ? 0 : 1;

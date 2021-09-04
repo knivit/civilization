@@ -1,11 +1,11 @@
-package com.tsoft.civilization.combat;
+package com.tsoft.civilization;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
-class StringParser {
+public class StringParser {
 
     public Map<String, Integer> parse(String str, Set<String> availableIdentifiers) {
         Map<String, Integer> result = new HashMap<>();
