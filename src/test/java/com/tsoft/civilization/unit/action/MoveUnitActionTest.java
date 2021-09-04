@@ -5,6 +5,7 @@ import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.helper.html.HtmlDocument;
 import com.tsoft.civilization.helper.html.HtmlParser;
 import com.tsoft.civilization.unit.AbstractUnit;
+import com.tsoft.civilization.unit.civil.workers.Workers;
 import com.tsoft.civilization.unit.service.move.MoveUnitService;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
@@ -32,7 +33,7 @@ public class MoveUnitActionTest {
 
         world.startGame();
 
-        AbstractUnit workers = world.unit("workers");
+        Workers workers = world.get("workers");
         Set<Point> locations = new LinkedHashSet<>(List.of(new Point(2, 1), new Point(2, 0)));
 
         MoveUnitService moveUnitService = mock(MoveUnitService.class);

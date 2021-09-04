@@ -17,28 +17,31 @@ import lombok.Getter;
 import static com.tsoft.civilization.world.Year.*;
 
 /**
- * For melee units +15% to attack strength when the attacker is placed on a plain terrain
+ * For ranged units +15% to attack strength when the attacker is placed on a rough terrain
  */
-public class OnPlainTerrainAttackSkill implements AbstractCombatSkill {
+public class AttackOnRoughTerrainSkill implements AbstractCombatSkill {
 
-    public static final AbstractCombatSkill ON_PLAIN_TERRAIN_ATTACK_SKILL = new OnPlainTerrainAttackSkill();
+    public static final AbstractCombatSkill ATTACK_ON_ROUGH_TERRAIN_SKILL = new AttackOnRoughTerrainSkill();
 
     @Getter
-    private final L10n localizedName = L10nSkill.STRIKE_ON_PLAIN_TERRAIN;
+    private final L10n localizedName = L10nSkill.ATTACK_ON_ROUGH_TERRAIN;
 
     @Getter
     private final SkillType skillType = SkillType.ACCUMULATOR;
 
+    private AttackOnRoughTerrainSkill() { }
+
+    @Override
     public CombatStrength getCombatStrength(HasCombatStrength unit, SkillLevel level) {
         Point attackerLocation = unit.getLocation();
         AbstractTile tile = unit.getCivilization().getTilesMap().getTile(attackerLocation);
         TileType tileType = tile.getTileType();
 
-        if (TileType.EARTH_PLAIN.equals(tileType)) {
+        if (TileType.EARTH_ROUGH.equals(tileType)) {
             if (tile.hasFeature(Hill.class)) {
                 UnitCategory category = unit.getUnitCategory();
-                if (category.isMelee()) {
-                    return getMeleeUnitAttackStrength(unit, level);
+                if (category.isRanged() && !category.isCity()) {
+                    return getRangedUnitAttackStrength(unit, level);
                 }
             }
         }
@@ -46,7 +49,7 @@ public class OnPlainTerrainAttackSkill implements AbstractCombatSkill {
         return CombatStrength.ZERO;
     }
 
-    private CombatStrength getMeleeUnitAttackStrength(HasCombatStrength unit, SkillLevel level) {
+    private CombatStrength getRangedUnitAttackStrength(HasCombatStrength unit, SkillLevel level) {
         int era = unit.getCivilization().getWorld().getEra();
         CombatStrength combatStrength = unit.getBaseCombatStrength(era);
 
@@ -55,6 +58,6 @@ public class OnPlainTerrainAttackSkill implements AbstractCombatSkill {
             default -> 0;
         };
 
-        return CombatStrength.builder().meleeAttackStrength(strength * level.getValue()).build();
+        return CombatStrength.builder().rangedAttackStrength(strength * level.getValue()).build();
     }
 }

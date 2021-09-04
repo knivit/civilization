@@ -111,6 +111,10 @@ public class MockWorld extends World {
         throw new IllegalStateException("Object '" + name + "' doesn't have a location");
     }
 
+    public <T> T get(String name) {
+        return Optional.of((T)objects.get(name)).orElseThrow();
+    }
+
     public AbstractUnit unit(String name) {
         return Optional.of((AbstractUnit)objects.get(name)).orElseThrow();
     }

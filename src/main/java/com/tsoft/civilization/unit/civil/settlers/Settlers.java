@@ -10,6 +10,10 @@ import lombok.Getter;
 
 import java.util.UUID;
 
+import static com.tsoft.civilization.combat.skill.earth.combat.AttackOnPlainTerrainSkill.ATTACK_ON_PLAIN_TERRAIN_SKILL;
+import static com.tsoft.civilization.combat.skill.earth.combat.AttackOnRoughTerrainSkill.ATTACK_ON_ROUGH_TERRAIN_SKILL;
+import static com.tsoft.civilization.combat.skill.earth.combat.DefenseAgainstRangedAttackSkill.DEFENSE_AGAINST_RANGED_ATTACK_SKILL;
+import static com.tsoft.civilization.combat.skill.earth.combat.HillVantageCombatSkill.HILL_VANTAGE_COMBAT_SKILL;
 import static com.tsoft.civilization.combat.skill.earth.heal.BaseHealingSkill.BASE_HEALING_SKILL;
 import static com.tsoft.civilization.combat.skill.earth.movement.BaseMovementSkill.BASE_MOVEMENT_SKILL;
 
@@ -57,7 +61,13 @@ public class Settlers extends AbstractUnit {
 
     @Override
     public SkillMap<AbstractCombatSkill> getBaseCombatSkills(int era) {
-        return new SkillMap<>();
+        return new SkillMap<>(
+            ATTACK_ON_PLAIN_TERRAIN_SKILL, SkillLevel.ONE,
+            ATTACK_ON_ROUGH_TERRAIN_SKILL, SkillLevel.ONE,
+            HILL_VANTAGE_COMBAT_SKILL, SkillLevel.ONE,
+
+            DEFENSE_AGAINST_RANGED_ATTACK_SKILL, SkillLevel.ONE
+        );
     }
 
     @Override

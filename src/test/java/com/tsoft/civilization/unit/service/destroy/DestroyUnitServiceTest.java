@@ -36,7 +36,7 @@ public class DestroyUnitServiceTest {
         world.startGame();
 
         // The only settlers can't be destroyed
-        assertThat(destroyUnitService.destroy(world.unit("settlers1")))
+        assertThat(destroyUnitService.destroy(world.get("settlers1")))
             .isEqualTo(LAST_SETTLERS_CANT_BE_DESTROYED);
 
         // Add another settlers
@@ -45,8 +45,8 @@ public class DestroyUnitServiceTest {
         world.nextYear();
 
         // Destroy the first ones
-        assertTrue(destroyUnitService.destroy(world.unit("settlers1")).isSuccess());
-        assertThat(destroyUnitService.destroy(world.unit("settlers1")))
+        assertTrue(destroyUnitService.destroy(world.get("settlers1")).isSuccess());
+        assertThat(destroyUnitService.destroy(world.get("settlers1")))
             .isEqualTo(UNIT_NOT_FOUND);
 
         // The only settlers can't be destroyed

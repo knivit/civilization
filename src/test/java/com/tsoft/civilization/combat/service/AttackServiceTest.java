@@ -5,7 +5,7 @@ import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationsRelations;
 import com.tsoft.civilization.combat.CombatResultMock;
-import com.tsoft.civilization.combat.CombatStrength;
+import com.tsoft.civilization.combat.CombatStrengthMock;
 import com.tsoft.civilization.combat.HasCombatStrengthList;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.MockTilesMap;
@@ -48,17 +48,17 @@ public class AttackServiceTest {
         world.setCivilizationsRelations(russia, america, CivilizationsRelations.war());
 
         // first, there is foreign workers to attack
-        HasCombatStrengthList targets = attackService.getTargetsToAttack(world.unit("warriors"));
+        HasCombatStrengthList targets = attackService.getTargetsToAttack(world.get("warriors"));
         assertThat(targets)
             .hasSize(1)
             .containsExactly(world.unit("foreignWorkers"));
 
         // move close the foreign warriors and now they are the target too
         world.unit("foreignWarriors").getMovementService().setLocation(new Point(2, 0));
-        targets = attackService.getTargetsToAttack(world.unit("warriors"));
+        targets = attackService.getTargetsToAttack(world.get("warriors"));
         assertThat(targets)
             .hasSize(2)
-            .containsExactly(world.unit("foreignWorkers"), world.unit("foreignWarriors"));
+            .containsExactly(world.get("foreignWorkers"), world.get("foreignWarriors"));
     }
 
     // Scenario:
@@ -93,48 +93,44 @@ public class AttackServiceTest {
         WorldRender.of(this).createHtml(world, russia);
 
         // look for targets
-        HasCombatStrengthList targets = attackService.getTargetsToAttack(world.unit("archers"));
+        HasCombatStrengthList targets = attackService.getTargetsToAttack(world.get("archers"));
         assertThat(targets)
             .hasSize(6)
             .containsExactlyInAnyOrder(
-                world.unit("foreignWorkers"),
-                world.unit("foreignWarriors1"), world.unit("foreignWarriors2"),
-                world.unit("foreignArchers1"), world.unit("foreignArchers2"),
-                world.city("foreignCity")
+                world.get("foreignWorkers"),
+                world.get("foreignWarriors1"), world.get("foreignWarriors2"),
+                world.get("foreignArchers1"), world.get("foreignArchers2"),
+                world.get("foreignCity")
             );
 
         // attack one of foreign warriors
-        assertThat(attackService.attackTarget(world.unit("archers"), world.unit("foreignWarriors2")))
+        assertThat(attackService.attackTarget(world.get("archers"), world.get("foreignWarriors2")))
             .usingComparator(CombatResultMock::compare)
             .isEqualTo(CombatResultMock.done(
-                "SS:13 AS:23 DS:30 DSA:25 E:0 EA:2 D:0",
-                "SS:5 AS:5 DS:20 DSA:7 E:0 EA:1 D:0"
+                "SS:5 AS:5 DS:5 DSA:5 E:0 EA:2 D:0",
+                "SS:0 AS:0 DS:20 DSA:15 E:0 EA:1 D:0"
             ));
 
         assertThat(world.unit("archers").getPassScore()).isEqualTo(0);
 
-        CombatStrength expectedStrength = CombatStrength.builder()
-            .meleeAttackStrength(10)
-            .meleeBackFireStrength(5)
-            .rangedAttackStrength(0)
-            .rangedAttackRadius(0)
-            .defenseStrength(7)
-            .defenseExperience(1)
-            .isDestroyed(false)
-            .build();
-
         assertThat(world.unit("foreignWarriors2").calcCombatStrength())
-            .isEqualTo(expectedStrength);
+            .usingComparator(CombatStrengthMock::compare)
+            .isEqualTo(CombatStrengthMock.of(
+                "RAL:0 RAS:0 RAR:0 RAE:0 RBS:0",
+                "MAL:0 MAS:10 MAE:0 MBS:5",
+                "DL:0 DS:15 DE:0",
+                "D:0"
+            ));
 
         // do the next step to be able to strike again
         world.nextYear();
 
         // attack the foreign warriors again
-        assertThat(attackService.attackTarget(world.unit("archers"), world.unit("foreignWarriors2")))
+        assertThat(attackService.attackTarget(world.get("archers"), world.get("foreignWarriors2")))
             .usingComparator(CombatResultMock::compare)
             .isEqualTo(CombatResultMock.done(
-                "SS:15 AS:14 DS:25 DSA:20 E:2 EA:4 D:0",
-                "SS:5 AS:5 DS:7 DSA:-7 E:1 EA:2 D:1"
+                "SS:5 AS:5 DS:5 DSA:5 E:0 EA:2 D:0",
+                "SS:0 AS:0 DS:16 DSA:11 E:0 EA:1 D:0"
             ));
 
         assertThat(world.unit("archers").getPassScore()).isEqualTo(0);
@@ -143,22 +139,22 @@ public class AttackServiceTest {
         world.nextYear();
 
         // attack the second line - archers
-        assertThat(attackService.attackTarget(world.unit("archers"), world.unit("foreignArchers1")))
+        assertThat(attackService.attackTarget(world.get("archers"), world.get("foreignArchers1")))
             .usingComparator(CombatResultMock::compare)
             .isEqualTo(CombatResultMock.done(
-                "SS:14 AS:14 DS:20 DSA:15 E:4 EA:6 D:0",
-                "SS:5 AS:5 DS:30 DSA:16 E:0 EA:1 D:0"
+                "SS:2 AS:2 DS:5 DSA:5 E:0 EA:2 D:0",
+                "SS:0 AS:0 DS:5 DSA:3 E:0 EA:1 D:0"
             ));
 
         // next step
         world.nextYear();
 
         // attack the second line - foreign city
-        assertThat(attackService.attackTarget(world.unit("archers"), world.city("foreignCity")))
+        assertThat(attackService.attackTarget(world.get("archers"), world.get("foreignCity")))
             .usingComparator(CombatResultMock::compare)
             .isEqualTo(CombatResultMock.done(
-                "SS:16 AS:16 DS:15 DSA:10 E:6 EA:8 D:0",
-                "SS:5 AS:5 DS:50 DSA:34 E:0 EA:1 D:0"
+                "SS:2 AS:2 DS:5 DSA:5 E:0 EA:2 D:0",
+                "SS:0 AS:0 DS:37 DSA:35 E:0 EA:1 D:0"
             ));
     }
 
@@ -201,11 +197,11 @@ public class AttackServiceTest {
         world.setCivilizationsRelations(russia, america, CivilizationsRelations.war());
 
         // strike 1
-        assertThat(attackService.attackTarget(world.unit("warriors1"), foreignCity))
+        assertThat(attackService.attackTarget(world.get("warriors1"), foreignCity))
             .usingComparator(CombatResultMock::compare)
             .isEqualTo(CombatResultMock.done(
-                "SS:16 AS:16 DS:15 DSA:10 E:6 EA:8 D:0",
-                "SS:5 AS:5 DS:20 DSA:34 E:0 EA:1 D:0"
+                "SS:10 AS:10 DS:20 DSA:20 E:0 EA:2 D:0",
+                "SS:0 AS:0 DS:40 DSA:30 E:0 EA:1 D:0"
             ));
 
         assertThat(world.unit("warriors1"))
@@ -221,16 +217,16 @@ public class AttackServiceTest {
             .returns(20, e -> e.calcCombatStrength().getDefenseStrength());
 
         // strike 2
-        assertThat(attackService.attackTarget(world.unit("warriors2"), foreignCity))
+        assertThat(attackService.attackTarget(world.get("warriors2"), foreignCity))
             .usingComparator(CombatResultMock::compare)
             .isEqualTo(CombatResultMock.done(
-                "SS:16 AS:16 DS:15 DSA:10 E:6 EA:8 D:0",
-                "SS:5 AS:5 DS:11 DSA:34 E:0 EA:1 D:0"
+                "SS:10 AS:10 DS:20 DSA:20 E:0 EA:2 D:0",
+                "SS:0 AS:0 DS:30 DSA:20 E:0 EA:1 D:0"
             ));
 
         assertThat(world.unit("warriors2"))
             .returns(0, AbstractUnit::getPassScore)
-            .returns(15, e -> e.calcCombatStrength().getDefenseStrength());
+            .returns(20, e -> e.calcCombatStrength().getDefenseStrength());
 
         assertThat(russia.getCityService().size()).isEqualTo(1);
 
@@ -242,11 +238,11 @@ public class AttackServiceTest {
             .returns(20, e -> e.calcCombatStrength().getDefenseStrength());
 
         // strike 3
-        assertThat(attackService.attackTarget(world.unit("warriors3"), foreignCity))
+        assertThat(attackService.attackTarget(world.get("warriors3"), foreignCity))
             .usingComparator(CombatResultMock::compare)
             .isEqualTo(CombatResultMock.done(
-                "SS:16 AS:16 DS:15 DSA:10 E:6 EA:8 D:0",
-                "SS:5 AS:5 DS:3 DSA:34 E:0 EA:1 D:0"
+                "SS:10 AS:10 DS:20 DSA:20 E:0 EA:2 D:0",
+                "SS:0 AS:0 DS:20 DSA:10 E:0 EA:1 D:0"
             ));
 
         assertThat(world.unit("warriors3"))
@@ -262,7 +258,7 @@ public class AttackServiceTest {
             .returns(20, e -> e.calcCombatStrength().getDefenseStrength());
 
         // strike 4 - city and foreign warriors in it are captured
-        assertThat(attackService.attackTarget(world.unit("warriors4"), foreignCity))
+        assertThat(attackService.attackTarget(world.get("warriors4"), foreignCity))
             .usingComparator(CombatResultMock::compare)
             .isEqualTo(CombatResultMock.done(
                 "SS:16 AS:16 DS:15 DSA:10 E:6 EA:8 D:0",
@@ -297,7 +293,7 @@ public class AttackServiceTest {
 
         world.createCivilization(RUSSIA, new MockScenario()
             .workers("workers", new Point(2, 0)));
-        Workers workers = (Workers) world.unit("workers");
+        Workers workers = world.get("workers");
         world.startGame();
 
         assertThat(attackService.attack(workers, null)).isEqualTo(NOT_MILITARY_UNIT);
@@ -309,7 +305,7 @@ public class AttackServiceTest {
 
         world.createCivilization(RUSSIA, new MockScenario()
             .warriors("warriors", new Point(2, 0)));
-        Warriors warriors = (Warriors) world.unit("warriors");
+        Warriors warriors = world.get("warriors");
         world.startGame();
 
         assertThat(attackService.attack(warriors, null)).isEqualTo(NO_TARGETS_TO_ATTACK);
@@ -321,7 +317,7 @@ public class AttackServiceTest {
 
         world.createCivilization(RUSSIA, new MockScenario()
             .warriors("warriors", new Point(2, 0)));
-        Warriors warriors = (Warriors) world.unit("warriors");
+        Warriors warriors = world.get("warriors");
 
         world.createCivilization(AMERICA, new MockScenario()
             .workers("foreignWorkers", new Point(2, 2)));
@@ -341,7 +337,7 @@ public class AttackServiceTest {
 
         world.createCivilization(RUSSIA, new MockScenario()
             .warriors("warriors", new Point(2, 0)));
-        Warriors warriors = (Warriors) world.unit("warriors");
+        Warriors warriors = world.get("warriors");
         world.startGame();
 
         warriors.destroy();

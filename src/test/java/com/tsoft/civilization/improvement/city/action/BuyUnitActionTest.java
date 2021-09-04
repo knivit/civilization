@@ -48,7 +48,7 @@ public class BuyUnitActionTest {
             .archers("foreignArchers", new Point(2, 2))
         );
 
-        AbstractUnit foreignArchers = world.unit("foreignArchers");
+        AbstractUnit foreignArchers = world.get("foreignArchers");
         Supply gift = Supply.builder().gold(foreignArchers.getGoldCost(russia)).build();
         russia.giftReceived(puppet, gift);
 

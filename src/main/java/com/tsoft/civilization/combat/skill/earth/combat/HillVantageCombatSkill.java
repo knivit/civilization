@@ -29,6 +29,8 @@ public class HillVantageCombatSkill implements AbstractCombatSkill {
     @Getter
     private final SkillType skillType = SkillType.ACCUMULATOR;
 
+    private HillVantageCombatSkill() { }
+
     @Override
     public CombatStrength getCombatStrength(HasCombatStrength unit, SkillLevel level) {
         Point location = unit.getLocation();
@@ -97,9 +99,8 @@ public class HillVantageCombatSkill implements AbstractCombatSkill {
             default -> 0;
         };
 
-        return CombatStrength.builder().rangedAttackStrength(strength).build();
+        return CombatStrength.builder().meleeAttackStrength(strength).build();
     }
-
 
     private CombatStrength getCityDefenseStrength(HasCombatStrength unit) {
         int era = unit.getCivilization().getWorld().getEra();

@@ -29,7 +29,7 @@ public class CivilizationCityServiceTest {
         assertThat(cityService.getCitiesWithAvailableActions()).isEmpty();
 
         // add a city
-        russia.createCity((Settlers) world.unit("settlers"));
+        russia.createCity(world.get("settlers"));
 
         // a new city can't do anything in this move
         assertThat(cityService.getCitiesWithAvailableActions()).isEmpty();

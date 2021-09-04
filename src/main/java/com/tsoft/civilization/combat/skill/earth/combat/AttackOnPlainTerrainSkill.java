@@ -7,7 +7,6 @@ import com.tsoft.civilization.combat.skill.AbstractCombatSkill;
 import com.tsoft.civilization.combat.skill.L10nSkill;
 import com.tsoft.civilization.combat.skill.SkillLevel;
 import com.tsoft.civilization.combat.skill.SkillType;
-import com.tsoft.civilization.tile.feature.hill.Hill;
 import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.tile.tile.TileType;
 import com.tsoft.civilization.unit.UnitCategory;
@@ -17,17 +16,19 @@ import lombok.Getter;
 import static com.tsoft.civilization.world.Year.*;
 
 /**
- * For ranged units +15% to attack strength when the attacker is placed on a rough terrain
+ * For melee units +15% to attack strength when the attacker is placed on a plain terrain
  */
-public class OnRoughTerrainAttackSkill implements AbstractCombatSkill {
+public class AttackOnPlainTerrainSkill implements AbstractCombatSkill {
 
-    public static final AbstractCombatSkill ON_ROUGH_TERRAIN_ATTACK_SKILL = new OnRoughTerrainAttackSkill();
+    public static final AbstractCombatSkill ATTACK_ON_PLAIN_TERRAIN_SKILL = new AttackOnPlainTerrainSkill();
 
     @Getter
-    private final L10n localizedName = L10nSkill.STRIKE_ON_ROUGH_TERRAIN;
+    private final L10n localizedName = L10nSkill.ATTACK_ON_PLAIN_TERRAIN;
 
     @Getter
     private final SkillType skillType = SkillType.ACCUMULATOR;
+
+    private AttackOnPlainTerrainSkill() { }
 
     @Override
     public CombatStrength getCombatStrength(HasCombatStrength unit, SkillLevel level) {
@@ -35,19 +36,17 @@ public class OnRoughTerrainAttackSkill implements AbstractCombatSkill {
         AbstractTile tile = unit.getCivilization().getTilesMap().getTile(attackerLocation);
         TileType tileType = tile.getTileType();
 
-        if (TileType.EARTH_ROUGH.equals(tileType)) {
-            if (tile.hasFeature(Hill.class)) {
-                UnitCategory category = unit.getUnitCategory();
-                if (category.isRanged() && !category.isCity()) {
-                    return getRangedUnitAttackStrength(unit, level);
-                }
+        if (TileType.EARTH_PLAIN.equals(tileType)) {
+            UnitCategory category = unit.getUnitCategory();
+            if (category.isMelee()) {
+                return getMeleeUnitAttackStrength(unit, level);
             }
         }
 
         return CombatStrength.ZERO;
     }
 
-    private CombatStrength getRangedUnitAttackStrength(HasCombatStrength unit, SkillLevel level) {
+    private CombatStrength getMeleeUnitAttackStrength(HasCombatStrength unit, SkillLevel level) {
         int era = unit.getCivilization().getWorld().getEra();
         CombatStrength combatStrength = unit.getBaseCombatStrength(era);
 
@@ -56,6 +55,6 @@ public class OnRoughTerrainAttackSkill implements AbstractCombatSkill {
             default -> 0;
         };
 
-        return CombatStrength.builder().rangedAttackStrength(strength * level.getValue()).build();
+        return CombatStrength.builder().meleeAttackStrength(strength * level.getValue()).build();
     }
 }

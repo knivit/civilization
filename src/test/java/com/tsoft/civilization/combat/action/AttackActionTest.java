@@ -30,11 +30,11 @@ public class AttackActionTest {
         MockWorld world = MockWorld.newSimpleWorld();
         world.createCivilization(RUSSIA, new MockScenario()
             .warriors("warriors", new Point(2, 0)));
-        Warriors warriors = (Warriors) world.unit("warriors");
+        Warriors warriors = world.get("warriors");
 
         world.createCivilization(AMERICA, new MockScenario()
             .workers("foreignWorkers", new Point(2, 2)));
-        Workers foreignWorkers = (Workers) world.unit("foreignWorkers");
+        Workers foreignWorkers = world.get("foreignWorkers");
         world.startGame();
 
         when(attackService.canAttack(eq(warriors))).thenReturn(CAN_ATTACK);

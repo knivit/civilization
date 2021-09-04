@@ -52,19 +52,21 @@ public class CombatResultMock {
     }
 
     private static CombatantState build(Map<String, Integer> map) {
+        int strikeStrength = map.getOrDefault(STRIKE_STRENGTH, 0);
+        int appliedStrikeStrength = map.getOrDefault(APPLIED_STRIKE_STRENGTH, 0);
         int defenseStrength = map.getOrDefault(DEFENSE_STRENGTH, 0);
         int defenseStrengthAfterAttack = map.getOrDefault(DEFENSE_STRENGTH_AFTER_ATTACK, 0);
         int experience = map.getOrDefault(EXPERIENCE, 0);
         int experienceAfterAttack = map.getOrDefault(EXPERIENCE_AFTER_ATTACK, 0);
-        int strikeStrength = map.getOrDefault(STRIKE_STRENGTH, 0);
         int isDestroyed = map.getOrDefault(IS_DESTROYED, 0);
 
         return CombatantState.builder()
+            .strikeStrength(strikeStrength)
+            .appliedStrikeStrength(appliedStrikeStrength)
             .defenseStrength(defenseStrength)
             .defenseStrengthAfterAttack(defenseStrengthAfterAttack)
             .experience(experience)
             .experienceAfterAttack(experienceAfterAttack)
-            .strikeStrength(strikeStrength)
             .isDestroyed(isDestroyed == 1)
             .build();
     }
@@ -84,6 +86,7 @@ public class CombatResultMock {
             a.getAttackerState().getDefenseStrengthAfterAttack() == b.getAttackerState().getDefenseStrengthAfterAttack() &&
             a.getAttackerState().getExperience() == b.getAttackerState().getExperience() &&
             a.getAttackerState().getExperienceAfterAttack() == b.getAttackerState().getExperienceAfterAttack() &&
+            a.getAttackerState().isDestroyed() == b.getAttackerState().isDestroyed() &&
 
             // target
             a.getTargetState().getStrikeStrength() == b.getTargetState().getStrikeStrength() &&
@@ -92,6 +95,7 @@ public class CombatResultMock {
             a.getTargetState().getDefenseStrengthAfterAttack() == b.getTargetState().getDefenseStrengthAfterAttack() &&
             a.getTargetState().getExperience() == b.getTargetState().getExperience() &&
             a.getTargetState().getExperienceAfterAttack() == b.getTargetState().getExperienceAfterAttack() &&
+            a.getTargetState().isDestroyed() == b.getTargetState().isDestroyed() &&
 
             // status
             a.getStatus() == b.getStatus();
@@ -109,6 +113,7 @@ public class CombatResultMock {
                 DefenseStrengthAfterAttack |     %5d  |    %5d | %s
                 Experience                 |     %5d  |    %5d | %s
                 ExperienceAfterAttack      |     %5d  |    %5d | %s
+                Destroyed                  |     %5b  |    %5b | %s
                 ----------------------------------------------------
                 Target
                 ----------------------------------------------------
@@ -118,6 +123,7 @@ public class CombatResultMock {
                 DefenseStrengthAfterAttack |     %5d  |    %5d | %s
                 Experience                 |     %5d  |    %5d | %s
                 ExperienceAfterAttack      |     %5d  |    %5d | %s
+                Destroyed                  |     %5b  |    %5b | %s
                 ----------------------------------------------------
                 Status                     |     %5d  |    %5d | %s
                 %n""",
@@ -128,6 +134,7 @@ public class CombatResultMock {
                 a.getAttackerState().getDefenseStrengthAfterAttack(), b.getAttackerState().getDefenseStrengthAfterAttack(), cmp(a.getAttackerState().getDefenseStrengthAfterAttack(), b.getAttackerState().getDefenseStrengthAfterAttack()),
                 a.getAttackerState().getExperience(), b.getAttackerState().getExperience(), cmp(a.getAttackerState().getExperience(), b.getAttackerState().getExperience()),
                 a.getAttackerState().getExperienceAfterAttack(), b.getAttackerState().getExperienceAfterAttack(), cmp(a.getAttackerState().getExperienceAfterAttack(), b.getAttackerState().getExperienceAfterAttack()),
+                a.getAttackerState().isDestroyed(), b.getAttackerState().isDestroyed(), cmp(a.getAttackerState().isDestroyed() ? 1 : 0, b.getAttackerState().isDestroyed() ? 1 : 0),
 
                 a.getTargetState().getStrikeStrength(), b.getTargetState().getStrikeStrength(), cmp(a.getTargetState().getStrikeStrength(), b.getTargetState().getStrikeStrength()),
                 a.getTargetState().getAppliedStrikeStrength(), b.getTargetState().getAppliedStrikeStrength(), cmp(a.getTargetState().getAppliedStrikeStrength(), b.getTargetState().getAppliedStrikeStrength()),
@@ -135,6 +142,7 @@ public class CombatResultMock {
                 a.getTargetState().getDefenseStrengthAfterAttack(), b.getTargetState().getDefenseStrengthAfterAttack(), cmp(a.getTargetState().getDefenseStrengthAfterAttack(), b.getTargetState().getDefenseStrengthAfterAttack()),
                 a.getTargetState().getExperience(), b.getTargetState().getExperience(), cmp(a.getTargetState().getExperience(), b.getTargetState().getExperience()),
                 a.getTargetState().getExperienceAfterAttack(), b.getTargetState().getExperienceAfterAttack(), cmp(a.getTargetState().getExperienceAfterAttack(), b.getTargetState().getExperienceAfterAttack()),
+                a.getTargetState().isDestroyed(), b.getTargetState().isDestroyed(), cmp(a.getTargetState().isDestroyed() ? 1 : 0, b.getTargetState().isDestroyed() ? 1 : 0),
 
                 a.getStatus().ordinal(), b.getStatus().ordinal(), cmp(a.getStatus().ordinal(), b.getStatus().ordinal())
             );

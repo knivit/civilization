@@ -16,7 +16,7 @@ public class StringParser {
 
             String identifier = readIdentifier(str, pos);
             if (!availableIdentifiers.contains(identifier)) {
-                throw new IllegalArgumentException("Unknown identifier " + identifier);
+                throw new IllegalArgumentException("Unknown identifier '" + identifier + "'");
             }
 
             skipBlank(str, pos);
@@ -47,7 +47,11 @@ public class StringParser {
     }
 
     private boolean isSign(String str, AtomicInteger pos) {
-        return pos.get() < str.length() && str.charAt(pos.get()) == '-';
+        boolean found = pos.get() < str.length() && str.charAt(pos.get()) == '-';
+        if (found) {
+            pos.incrementAndGet();
+        }
+        return found;
     }
 
     private String readIdentifier(String str, AtomicInteger pos) {

@@ -35,11 +35,11 @@ public class L10nSkill {
         .put(EN, "Can conquer a city")
         .put(RU, "Может захватить город");
 
-    public static final L10n STRIKE_ON_PLAIN_TERRAIN = new L10n()
+    public static final L10n ATTACK_ON_PLAIN_TERRAIN = new L10n()
         .put(EN, "Strike on a plain terrain")
         .put(RU, "Удар на плоской местности");
 
-    public static final L10n STRIKE_ON_ROUGH_TERRAIN = new L10n()
+    public static final L10n ATTACK_ON_ROUGH_TERRAIN = new L10n()
         .put(EN, "Strike on a rough terrain")
         .put(RU, "Удар на пересеченной местности");
 

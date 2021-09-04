@@ -46,16 +46,16 @@ public class CaptureUnitServiceTest {
         WorldRender.of(this).createHtml(world, russia);
 
         // see what we can capture
-        List<Point> locations = captureUnitService.getLocationsToCapture(world.unit("warriors"));
+        List<Point> locations = captureUnitService.getLocationsToCapture(world.get("warriors"));
         assertThat(locations)
             .isNotNull()
             .hasSize(1);
 
-        assertThat(captureUnitService.getTargetToCaptureAtLocation(world.unit("warriors"), locations.get(0)))
+        assertThat(captureUnitService.getTargetToCaptureAtLocation(world.get("warriors"), locations.get(0)))
             .isEqualTo(world.unit("foreignWorkers"));
 
         // capture the foreign workers and move on it's tile
-        assertThat(captureUnitService.capture(world.unit("warriors"), world.location("foreignWorkers")))
+        assertThat(captureUnitService.capture(world.get("warriors"), world.location("foreignWorkers")))
             .isEqualTo(UNIT_CAPTURED);
 
         assertThat(world.unit("warriors"))
@@ -92,9 +92,9 @@ public class CaptureUnitServiceTest {
         world.startGame();
 
         // see what we can capture
-        List<Point> locations = captureUnitService.getLocationsToCapture(world.unit("archers"));
+        List<Point> locations = captureUnitService.getLocationsToCapture(world.get("archers"));
         assertThat(locations).hasSize(1);
-        assertThat(captureUnitService.getTargetToCaptureAtLocation(world.unit("archers"), locations.get(0)))
+        assertThat(captureUnitService.getTargetToCaptureAtLocation(world.get("archers"), locations.get(0)))
             .isEqualTo(world.unit("foreignWorkers"));
 
         // capture the foreign workers
@@ -115,12 +115,12 @@ public class CaptureUnitServiceTest {
 
         world.createCivilization(RUSSIA, new MockScenario()
             .warriors("warriors", new Point(1, 1)));
-        AbstractUnit warriors = world.unit("warriors");
+        Warriors warriors = world.get("warriors");
         warriors.destroy();
 
         world.createCivilization(AMERICA, new MockScenario()
             .workers("workers", new Point(2, 1)));
-        AbstractUnit workers = world.unit("workers");
+        Workers workers = world.get("workers");
 
         world.startGame();
 
@@ -134,11 +134,11 @@ public class CaptureUnitServiceTest {
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .warriors("warriors", new Point(2, 0)));
-        Warriors warriors = (Warriors) world.unit("warriors");
+        Warriors warriors = world.get("warriors");
 
         world.createCivilization(AMERICA, new MockScenario()
             .workers("foreignWorkers", new Point(2, 2)));
-        Workers foreignWorkers = (Workers) world.unit("foreignWorkers");
+        Workers foreignWorkers = world.get("foreignWorkers");
 
         world.startGame();
         WorldRender.of(this).createHtml(world, russia);
@@ -155,7 +155,7 @@ public class CaptureUnitServiceTest {
 
         world.createCivilization(RUSSIA, new MockScenario()
             .warriors("warriors", new Point(2, 0)));
-        Warriors warriors = (Warriors) world.unit("warriors");
+        Warriors warriors = world.get("warriors");
 
         world.createCivilization(AMERICA, new MockScenario()
             .workers("foreignWorkers", new Point(2, 1)));

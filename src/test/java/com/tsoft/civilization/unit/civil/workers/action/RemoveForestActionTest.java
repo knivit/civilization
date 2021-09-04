@@ -44,13 +44,13 @@ public class RemoveForestActionTest {
 
         // case 1
         // no needed technology
-        assertThat(RemoveForestAction.removeForest((Workers) world.unit("workers")))
+        assertThat(RemoveForestAction.removeForest(world.get("workers")))
             .isEqualTo(WorkersActionResults.FAIL_NO_MINING_TECHNOLOGY);
 
         // case 2
         // we must remove forest before hill's removal
         russia.addTechnology(Technology.MINING);
-        assertThat(RemoveHillAction.removeHill((Workers) world.unit("workers")))
+        assertThat(RemoveHillAction.removeHill(world.get("workers")))
             .isEqualTo(WorkersActionResults.FAIL_FOREST_MUST_BE_REMOVED_FIRST);
     }
 
@@ -73,12 +73,12 @@ public class RemoveForestActionTest {
 
         // remove a forest
         for (int i = 0; i < 4; i ++) {
-            assertThat(RemoveForestAction.removeForest((Workers) world.unit("workers")))
+            assertThat(RemoveForestAction.removeForest(world.get("workers")))
                 .isEqualTo(REMOVING_FOREST);
         }
 
         // forest removed
-        assertThat(RemoveForestAction.removeForest((Workers) world.unit("workers")))
+        assertThat(RemoveForestAction.removeForest(world.get("workers")))
             .isEqualTo(FOREST_IS_REMOVED);
 
         assertThat(world.getTilesMap().getTile(1, 1).getClass()).isEqualTo(Grassland.class);
@@ -93,12 +93,12 @@ public class RemoveForestActionTest {
 
         // remove a hill
         for (int i = 0; i < 4; i ++) {
-            assertThat(RemoveHillAction.removeHill((Workers) world.unit("workers")))
+            assertThat(RemoveHillAction.removeHill(world.get("workers")))
                 .isEqualTo(REMOVING_HILL);
         }
 
         // hill removed
-        assertThat(RemoveHillAction.removeHill((Workers) world.unit("workers")))
+        assertThat(RemoveHillAction.removeHill(world.get("workers")))
             .isEqualTo(HILL_IS_REMOVED);
 
         assertThat(world.getTilesMap().getTile(1, 1).getClass()).isEqualTo(Grassland.class);
@@ -126,7 +126,7 @@ public class RemoveForestActionTest {
         world.startGame();
         civilization.addTechnology(Technology.MINING);
 
-        Workers workers = (Workers) world.unit("workers");
+        Workers workers = world.get("workers");
         StringBuilder buf = RemoveForestAction.getHtml(workers);
 
         HtmlDocument expected = HtmlParser.parse(Format.text("""

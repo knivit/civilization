@@ -5,6 +5,7 @@ import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.helper.html.HtmlDocument;
 import com.tsoft.civilization.helper.html.HtmlParser;
 import com.tsoft.civilization.unit.AbstractUnit;
+import com.tsoft.civilization.unit.civil.workers.Workers;
 import com.tsoft.civilization.unit.service.destroy.DestroyUnitService;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
@@ -29,7 +30,7 @@ public class DestroyUnitActionTest {
 
         world.startGame();
 
-        AbstractUnit workers = world.unit("workers");
+        Workers workers = world.get("workers");
 
         DestroyUnitService destroyUnitService = mock(DestroyUnitService.class);
         when(destroyUnitService.canDestroy(any())).thenReturn(CAN_DESTROY_UNIT);

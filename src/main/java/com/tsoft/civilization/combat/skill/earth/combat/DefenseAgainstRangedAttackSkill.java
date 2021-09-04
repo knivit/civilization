@@ -13,15 +13,17 @@ import lombok.Getter;
 /**
  * Minus 15% to ranged attacker's attack strength
  */
-public class AgainstRangedAttackDefenseSkill implements AbstractCombatSkill {
+public class DefenseAgainstRangedAttackSkill implements AbstractCombatSkill {
 
-    public static final AbstractCombatSkill AGAINST_RANGED_ATTACK_DEFENSE_SKILL = new AgainstRangedAttackDefenseSkill();
+    public static final AbstractCombatSkill DEFENSE_AGAINST_RANGED_ATTACK_SKILL = new DefenseAgainstRangedAttackSkill();
 
     @Getter
     private final L10n localizedName = L10nSkill.DEFENSE_AGAINST_RANGED_ATTACK;
 
     @Getter
     private final SkillType skillType = SkillType.ATTACKER_MODIFIER;
+
+    private DefenseAgainstRangedAttackSkill() { }
 
     @Override
     public CombatStrength getCombatStrength(HasCombatStrength attacker, CombatStrength attackerCombatStrength, SkillLevel level) {

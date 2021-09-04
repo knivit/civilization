@@ -28,11 +28,11 @@ public class CaptureUnitActionTest {
 
         world.createCivilization(RUSSIA, new MockScenario()
             .warriors("warriors", new Point(1, 1)));
-        AbstractUnit warriors = world.unit("warriors");
+        AbstractUnit warriors = world.get("warriors");
 
         world.createCivilization(AMERICA, new MockScenario()
             .workers("workers", new Point(2, 1)));
-        AbstractUnit workers = world.unit("workers");
+        AbstractUnit workers = world.get("workers");
 
         world.startGame();
 

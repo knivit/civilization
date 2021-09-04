@@ -36,7 +36,7 @@ public class BuildCityActionTest {
         world.startGame();
 
         // Build a city
-        assertThat(BuildCityAction.buildCity((Settlers) world.unit("settlers1")))
+        assertThat(BuildCityAction.buildCity(world.get("settlers1")))
             .isEqualTo(CITY_BUILT);
 
         // check the city
@@ -75,7 +75,7 @@ public class BuildCityActionTest {
 
         // check 1
         // Build a city
-        assertThat(BuildCityAction.buildCity((Settlers) world.unit("settlers1")))
+        assertThat(BuildCityAction.buildCity(world.get("settlers1")))
             .isEqualTo(CITY_BUILT);
 
         // check 2
@@ -105,7 +105,7 @@ public class BuildCityActionTest {
 
         // check 1
         // Build a city
-        assertThat(BuildCityAction.buildCity((Settlers) world.unit("settlers1")))
+        assertThat(BuildCityAction.buildCity(world.get("settlers1")))
             .isEqualTo(CITY_BUILT);
 
         // check 2
@@ -140,7 +140,7 @@ public class BuildCityActionTest {
 
         // check 1
         // Build a city
-        assertThat(BuildCityAction.buildCity((Settlers) world.unit("settlers1")))
+        assertThat(BuildCityAction.buildCity(world.get("settlers1")))
             .isEqualTo(CITY_BUILT);
 
         // check 2

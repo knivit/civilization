@@ -45,7 +45,7 @@ public class MoveUnitServiceTest {
 
         world.createCivilization(RUSSIA, new MockScenario()
             .warriors("warriors", new Point(2, 0)));
-        Warriors warriors = (Warriors) world.unit("warriors");
+        Warriors warriors = world.get("warriors");
 
         world.startGame();
 
@@ -71,7 +71,7 @@ public class MoveUnitServiceTest {
 
         world.startGame();
 
-        assertThat(moveUnitService.move(world.unit("workers"), new Point(1, 1)))
+        assertThat(moveUnitService.move(world.get("workers"), new Point(1, 1)))
             .isEqualTo(NO_LOCATIONS_TO_MOVE);
     }
 
@@ -95,7 +95,7 @@ public class MoveUnitServiceTest {
         for (Dir6 dir : Dir6.staticGetDirs(1)) {
             UnitRoute route = new UnitRoute(dir);
 
-            ArrayList<ActionAbstractResult> moveResults = moveUnitService.moveByRoute(world.unit("settlers"), route);
+            ArrayList<ActionAbstractResult> moveResults = moveUnitService.moveByRoute(world.get("settlers"), route);
 
             assertThat(moveResults)
                 .hasSize(1)
@@ -120,7 +120,7 @@ public class MoveUnitServiceTest {
 
             world.startGame();
 
-            Settlers settlers = (Settlers) world.unit("settlers");
+            Settlers settlers = world.get("settlers");
 
             UnitRoute route = new UnitRoute(dir);
             settlers.setPassScore(1);
@@ -149,7 +149,7 @@ public class MoveUnitServiceTest {
         world.startGame();
 
         // try one complex route - it must be OK
-        Settlers settlers = (Settlers) world.unit("settlers");
+        Settlers settlers = world.get("settlers");
         settlers.setPassScore(10);
 
         UnitRoute route = new UnitRoute();
@@ -199,10 +199,10 @@ public class MoveUnitServiceTest {
         world.startGame();
 
         // try one complex route - it must be OK
-        Settlers settlers1 = (Settlers) world.unit("settlers1");
+        Settlers settlers1 = world.get("settlers1");
         settlers1.setPassScore(1);
 
-        Settlers settlers2 = (Settlers) world.unit("settlers2");
+        Settlers settlers2 = world.get("settlers2");
         settlers2.setPassScore(1);
 
         UnitRoute route = new UnitRoute(new Dir6(1, 0));
@@ -244,10 +244,10 @@ public class MoveUnitServiceTest {
         );
         world.startGame();
 
-        Settlers settlers1 = (Settlers) world.unit("settlers1");
+        Settlers settlers1 = world.get("settlers1");
         settlers1.setPassScore(1);
 
-        Settlers settlers2 = (Settlers) world.unit("settlers2");
+        Settlers settlers2 = world.get("settlers2");
         settlers2.setPassScore(0);
 
         UnitRoute route = new UnitRoute(new Dir6(1, 0));
@@ -292,10 +292,10 @@ public class MoveUnitServiceTest {
         world.startGame();
 
         // try one complex route - it must be OK
-        Settlers settlers1 = (Settlers) world.unit("settlers1");
+        Settlers settlers1 = world.get("settlers1");
         settlers1.setPassScore(2);
 
-        Settlers settlers2 = (Settlers) world.unit("settlers2");
+        Settlers settlers2 = world.get("settlers2");
         settlers2.setPassScore(1);
 
         UnitRoute route = new UnitRoute(new Dir6(0, 1), new Dir6(0, 1));
@@ -340,10 +340,10 @@ public class MoveUnitServiceTest {
         world.startGame();
 
         // try one complex route - it must be OK
-        Warriors warriors = (Warriors) world.unit("warriors");
+        Warriors warriors = world.get("warriors");
         warriors.setPassScore(1);
 
-        Workers workers = (Workers) world.unit("workers");
+        Workers workers = world.get("workers");
         workers.setPassScore(1);
 
         UnitRoute route = new UnitRoute(new Dir6(1, 0));
@@ -382,7 +382,7 @@ public class MoveUnitServiceTest {
         world.startGame();
 
         // try one complex route - it must be OK
-        Workers workers = (Workers) world.unit("workers");
+        Workers workers = world.get("workers");
         workers.setPassScore(1);
 
         UnitRoute route = new UnitRoute(new Dir6(1, 0));
@@ -420,8 +420,8 @@ public class MoveUnitServiceTest {
         world.startGame();
 
         City city= world.city("city");
-        Workers workers = (Workers) world.unit("workers");
-        GreatArtist artist = (GreatArtist) world.unit("artist");
+        Workers workers = world.get("workers");
+        GreatArtist artist = world.get("artist");
 
         Set<Point> locations = moveUnitService.getLocationsToMove(workers);
 
@@ -464,7 +464,7 @@ public class MoveUnitServiceTest {
         );
         world.startGame();
 
-        Workers workers1 = (Workers) world.unit("workers1");
+        Workers workers1 = world.get("workers1");
         workers1.setPassScore(2);
 
         world.createCivilization(AMERICA, new MockScenario()
@@ -501,7 +501,7 @@ public class MoveUnitServiceTest {
 
         WorldRender.of(this).createHtml(world, russia);
 
-        UnitRoute route = moveUnitService.findRoute(world.unit("workers"), new Point(1, 0));
+        UnitRoute route = moveUnitService.findRoute(world.get("workers"), new Point(1, 0));
 
         assertThat(route)
             .hasSize(3)
@@ -527,7 +527,7 @@ public class MoveUnitServiceTest {
         world.startGame();
 
         // route goes from bottom line to top (map-cyclic test)
-        UnitRoute route = moveUnitService.findRoute(world.unit("workers"), new Point(1, 0));
+        UnitRoute route = moveUnitService.findRoute(world.get("workers"), new Point(1, 0));
 
         assertThat(route)
             .hasSize(5)
@@ -553,7 +553,7 @@ public class MoveUnitServiceTest {
 
         WorldRender.of(this).createHtml(world, russia);
 
-        UnitRoute route = moveUnitService.findRoute(world.unit("workers"), new Point(1, 0));
+        UnitRoute route = moveUnitService.findRoute(world.get("workers"), new Point(1, 0));
 
         assertThat(route)
             .hasSize(11)
@@ -581,7 +581,7 @@ public class MoveUnitServiceTest {
         WorldRender.of(this).createHtml(world, russia);
 
         // there is no route here
-        UnitRoute route = moveUnitService.findRoute(world.unit("workers"), new Point(1, 0));
+        UnitRoute route = moveUnitService.findRoute(world.get("workers"), new Point(1, 0));
 
         assertThat(route).isEmpty();
     }

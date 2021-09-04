@@ -19,6 +19,8 @@ public class CityPopulationCombatSkill implements AbstractCombatSkill {
 
     @Getter final L10n localizedName = L10nSkill.CITY_POPULATION_COMBAT_SKILL;
 
+    private CityPopulationCombatSkill() { }
+
     @Override
     public CombatStrength getCombatStrength(HasCombatStrength unit, SkillLevel level) {
         if (unit.getUnitCategory().isCity()) {

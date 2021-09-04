@@ -23,7 +23,7 @@ public class SkillMap<T> implements Iterable<Map.Entry<T, SkillLevel>> {
     public SkillMap<T> put(Object ... kv) {
         checkIsUnmodifiable();
 
-        for (int i = 0; i < kv.length / 2; i += 2) {
+        for (int i = 0; i < kv.length; i += 2) {
             map.put((T) kv[i], (SkillLevel) kv[i + 1]);
         }
         return this;

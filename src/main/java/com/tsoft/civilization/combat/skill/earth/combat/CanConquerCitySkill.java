@@ -19,6 +19,8 @@ public class CanConquerCitySkill implements AbstractCombatSkill {
     @Getter
     private final SkillType skillType = SkillType.ACCUMULATOR;
 
+    private CanConquerCitySkill() { }
+
     @Override
     public CombatStrength getCombatStrength(HasCombatStrength unit, SkillLevel level) {
         return CombatStrength.ZERO;

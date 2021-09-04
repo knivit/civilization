@@ -22,6 +22,8 @@ public class CityGarrisonCombatSkill implements AbstractCombatSkill {
 
     @Getter final L10n localizedName = L10nSkill.CITY_GARRISON_COMBAT_SKILL;
 
+    private CityGarrisonCombatSkill() { }
+
     // A portion of the garrisoned unit's combat strength is added to the city's total strength
     // Only Land units may form a Garrison
     @Override
