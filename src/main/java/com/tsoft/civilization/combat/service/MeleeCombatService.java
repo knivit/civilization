@@ -8,6 +8,7 @@ import com.tsoft.civilization.combat.CombatResult;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrengthList;
 import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.unit.service.move.MoveUnitService;
@@ -21,6 +22,7 @@ public class MeleeCombatService {
 
     public static final ActionSuccessResult CAN_ATTACK = new ActionSuccessResult(L10nUnit.CAN_ATTACK);
 
+    public static final ActionFailureResult NO_PASS_SCORE = new ActionFailureResult(L10nUnit.NO_PASS_SCORE);
     public static final ActionFailureResult INVALID_ATTACK_TARGET = new ActionFailureResult(L10nUnit.INVALID_ATTACK_TARGET);
 
     private static final BaseCombatService baseCombatService = new BaseCombatService();
@@ -80,12 +82,13 @@ public class MeleeCombatService {
 
     // Check can we move there during melee attack
     private ActionAbstractResult getMoveOnMeleeAttackResult(AbstractUnit unit, Point nextLocation) {
-        ActionAbstractResult moveResult;
-
         // check is the passing score enough
-        moveResult = moveUnitService.canMoveOnTile(unit, nextLocation);
-        if (moveResult.isFail()) {
-            return moveResult;
+        AbstractTile tile = unit.getTilesMap().getTile(nextLocation);
+        int tilePassCost = moveUnitService.getPassCost(unit.getCivilization(), unit, tile);
+
+        int passScore = unit.getPassScore();
+        if (passScore < tilePassCost) {
+            return NO_PASS_SCORE;
         }
 
         // can not attack own city

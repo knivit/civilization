@@ -14,13 +14,13 @@ public class CombatStrength {
     private final int rangedAttackStrength;   // Unit's ranged attack strength
     private final int rangedAttackRadius;     // Ranged attack radius
     private final int rangedAttackExperience; // Experience during an attack
-    private final int rangedBackFireStrength; // Back fire strength
+    private final int rangedBackFireStrength; // Backfire strength
 
     // Melee attack
     private final int meleeAttackLevel;       // Unit's level in melee attacks
     private final int meleeAttackStrength;    // Unit's ranged attack strength
     private final int meleeAttackExperience;  // Experience during an attack
-    private final int meleeBackFireStrength;  // Back fire strength
+    private final int meleeBackFireStrength;  // Backfire strength
 
     // Defense
     private final int defenseLevel;           // Unit's defense level

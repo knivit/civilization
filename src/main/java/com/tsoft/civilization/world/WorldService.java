@@ -250,7 +250,7 @@ public class WorldService {
 
     public CivilizationList getMovingCivilizations() {
         return new CivilizationList(civilizations.stream()
-            .filter(civ -> !MoveState.DONE.equals(civ.getMoveState()))
+            .filter(civ -> !CivilizationMoveState.DONE.equals(civ.getCivilizationMoveState()))
             .collect(Collectors.toList()));
     }
 }

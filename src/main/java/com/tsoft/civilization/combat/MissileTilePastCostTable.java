@@ -24,7 +24,7 @@ public final class MissileTilePastCostTable {
 
     private MissileTilePastCostTable() { }
 
-    private static Map<String, Integer> table = new HashMap<>();
+    private static final Map<String, Integer> table = new HashMap<>();
 
     static {
         table.put(Archers.CLASS_UUID + Coast.CLASS_UUID, 1);

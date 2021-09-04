@@ -3,7 +3,7 @@ package com.tsoft.civilization.civilization.action;
 import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.civilization.MoveState;
+import com.tsoft.civilization.civilization.CivilizationMoveState;
 import org.junit.jupiter.api.Test;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
@@ -20,8 +20,8 @@ public class NextTurnActionTest {
         world.startGame();
         int startYear = world.getYear().getYear();
 
-        assertThat(russia.getMoveState())
-            .isNotEqualTo(MoveState.DONE);
+        assertThat(russia.getCivilizationMoveState())
+            .isNotEqualTo(CivilizationMoveState.DONE);
 
         assertThat(NextTurnAction.nextTurn(russia))
             .isEqualTo(MOVE_DONE);

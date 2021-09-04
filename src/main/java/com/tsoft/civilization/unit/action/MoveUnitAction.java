@@ -32,7 +32,7 @@ public class MoveUnitAction {
     }
 
     public StringBuilder getHtml(AbstractUnit unit) {
-        if (moveService.canMove(unit).isFail()) {
+        if (moveService.checkCanMove(unit).isFail()) {
             return null;
         }
 

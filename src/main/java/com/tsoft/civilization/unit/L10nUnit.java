@@ -90,6 +90,14 @@ public class L10nUnit {
         .put(EN, "There are no locations to move in")
         .put(RU, "Нет возможных ячеек для перемещения");
 
+    public static final L10n CANT_SWAP_DIFFERENT_CIVILIZATIONS = new L10n()
+        .put(EN, "Swapped units must be in the same civilization")
+        .put(RU, "Меняемые юниты должны принадлежать одной цивилизации");
+
+    public static final L10n CANT_SWAP_OTHER_UNIT_NO_ACTIONS_AVAILABLE = new L10n()
+        .put(EN, "Other unit has no action available")
+        .put(RU, "Другой юнит не имеет хода");
+
     public static final L10n NO_TARGETS_TO_ATTACK = new L10n()
         .put(EN, "There are no targets to attack")
         .put(RU, "Нет целей для атаки");
@@ -113,6 +121,10 @@ public class L10nUnit {
     public static final L10n CAN_MOVE = new L10n()
         .put(EN, "Unit can move there")
         .put(RU, "Юнит может быть перемещен");
+
+    public static final L10n CAN_SWAP = new L10n()
+        .put(EN, "Unit can swap places with other unit")
+        .put(RU, "Юнит может поменяться местами с другим юнитом");
 
     public static final L10n CAN_ATTACK = new L10n()
         .put(EN, "Unit can attack")
@@ -177,6 +189,10 @@ public class L10nUnit {
     public static final L10n CANT_CROSS_BORDERS = new L10n()
         .put(EN, "Can not cross borders")
         .put(RU, "Нельзя пересекать границу");
+
+    public static final L10n CANT_MOVE_FOREIGN_UNIT_ON_TILE = new L10n()
+        .put(EN, "Foreign unit is on the tile")
+        .put(RU, "Место занято иностранным юнитом");
 
     public static final L10n CANT_CAPTURE_CITY = new L10n()
         .put(EN, "Can not capture a city")

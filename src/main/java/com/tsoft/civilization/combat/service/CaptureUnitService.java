@@ -8,6 +8,7 @@ import com.tsoft.civilization.civilization.CivilizationsRelations;
 import com.tsoft.civilization.civilization.event.CityCapturedEvent;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.unit.UnitList;
@@ -24,6 +25,7 @@ public class CaptureUnitService {
     public static final ActionSuccessResult CAN_CAPTURE = new ActionSuccessResult(L10nUnit.CAN_CAPTURE);
     public static final ActionSuccessResult UNIT_CAPTURED = new ActionSuccessResult(L10nUnit.UNIT_CAPTURED);
 
+    public static final ActionFailureResult NO_PASS_SCORE = new ActionFailureResult(L10nUnit.NO_PASS_SCORE);
     public static final ActionFailureResult CANT_CAPTURE_CITY = new ActionFailureResult(L10nUnit.CANT_CAPTURE_CITY);
     public static final ActionFailureResult NO_LOCATIONS_TO_CAPTURE = new ActionFailureResult(L10nUnit.NO_LOCATIONS_TO_CAPTURE);
     public static final ActionFailureResult NOTHING_TO_CAPTURE = new ActionFailureResult(L10nUnit.NOTHING_TO_CAPTURE);
@@ -76,7 +78,7 @@ public class CaptureUnitService {
         }
 
         // move unit
-        moveUnitService.moveUnit(attacker, victim.getLocation());
+        moveUnitService.doMoveUnit(attacker, victim.getLocation());
 
         // capture foreign unit
         capture(attacker, victim);
@@ -171,12 +173,12 @@ public class CaptureUnitService {
 
     // Check can we move there during a capturing
     private ActionAbstractResult getMoveOnCaptureResult(AbstractUnit unit, Point dest) {
-        ActionAbstractResult moveResult;
-
         // check is the passing score enough
-        moveResult = moveUnitService.canMoveOnTile(unit, dest);
-        if (moveResult.isFail()) {
-            return moveResult;
+        AbstractTile tile = unit.getTilesMap().getTile(dest);
+        int tilePassCost = moveUnitService.getPassCost(unit.getCivilization(), unit, tile);
+        int passScore = unit.getPassScore();
+        if (passScore < tilePassCost) {
+            return NO_PASS_SCORE;
         }
 
         // we can't capture a city

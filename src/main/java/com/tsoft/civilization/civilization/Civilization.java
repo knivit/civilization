@@ -81,7 +81,7 @@ public abstract class Civilization {
     private final PlayerType playerType;
 
     @Getter
-    private volatile MoveState moveState;
+    private volatile CivilizationMoveState civilizationMoveState;
 
     @Getter
     private final CivilizationView view;
@@ -304,7 +304,7 @@ public abstract class Civilization {
             return;
         }
 
-        moveState = MoveState.IN_PROGRESS;
+        civilizationMoveState = CivilizationMoveState.IN_PROGRESS;
 
         addEvent(StartYearEvent.builder()
             .civilizationName(getName())
@@ -325,14 +325,14 @@ public abstract class Civilization {
 
     public synchronized void stopYear() {
         // Update state only once
-        if (moveState == MoveState.DONE) {
+        if (civilizationMoveState == CivilizationMoveState.DONE) {
             return;
         }
 
         // There can be a helper bot still in progress - wait for it
         getBot().join();
 
-        moveState = MoveState.DONE;
+        civilizationMoveState = CivilizationMoveState.DONE;
 
         cityService.stopYear();
         unitService.stopYear();

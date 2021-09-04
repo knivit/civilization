@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 /*
  * Move Directions for 4x4 Map
- * Possible values:
- * 1) For non-even rows
+ *
+ * 1) For odd rows:
  *  +---+---+---+--       +---+---+---+
  *  |   | * | * |         |   | * | * |
  *  --+---+---+---+       +---+---+---+
@@ -14,8 +14,7 @@ import java.util.ArrayList;
  *  |   | * | * |         |   | * | * |
  *  +---+---+---+--       +---+---+---+
  *
- * 2) For even rows
- *
+ * 2) For even rows:
  *  --+---+---+---+       +---+---+---+
  *    | * | * |   |  -->  | * | * |   |
  *  --+---+---+---+       +---+---+---+
@@ -26,6 +25,7 @@ import java.util.ArrayList;
  *
  */
 public class Dir6 extends AbstractDir {
+
     private static final ArrayList<Dir6> evenDirs = new ArrayList<>();
     private static final ArrayList<Dir6> inverseEvenDirs = new ArrayList<>();
     private static final ArrayList<Dir6> oddDirs = new ArrayList<>();

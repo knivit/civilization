@@ -208,7 +208,7 @@ public class BaseCombatService {
 
         if (attacker.getUnitCategory().isRanged()) {
             // if the attacker is a ranged unit
-            // the destroy the target only
+            // then destroy the target only
             destroy(attacker, victim);
         } else {
             // if attacker is a melee unit
@@ -216,7 +216,7 @@ public class BaseCombatService {
             destroyAllUnitsAtLocation(attacker, victim.getLocation());
 
             // move the attacker there
-            moveService.moveUnit((AbstractUnit) attacker, location);
+            moveService.doMoveUnit((AbstractUnit) attacker, location);
         }
     }
 
@@ -242,10 +242,10 @@ public class BaseCombatService {
         // A city may be destroyed only during a melee attack
         if (victim instanceof City) {
             throw new IllegalArgumentException("FIXME: find out the calling method and use CaptureService#captureCity(); A city may be destroyed only during a melee attack");
-        } else {
-            Civilization loser = victim.getCivilization();
-            loser.getUnitService().destroyUnit((AbstractUnit) victim);
         }
+
+        Civilization loser = victim.getCivilization();
+        loser.getUnitService().destroyUnit((AbstractUnit) victim);
     }
 
     /** Calc the strike strength */
@@ -257,11 +257,10 @@ public class BaseCombatService {
         int strikeHappinessPercent = calcAttackerStrikeHappinessPercent(attacker);
 
         return strikeStrength + //attacker.calcCombatStrength().getAttackExperience() +
-            (int)Math.round(((double)strikeStrength * (double)strikeSkillsPercent ) / 100.0) +
-            (int)Math.round(((double)strikeStrength * (double)strikeGeneralsPercent ) / 100.0) +
-            (int)Math.round(((double)strikeStrength * (double)strikeTerrainPercent ) / 100.0) +
-            (int)Math.round(((double)strikeStrength * (double)strikeAgainstThatTypePercent ) / 100.0) +
-            (int)Math.round(((double)strikeStrength * (double)strikeHappinessPercent ) / 100.0);
+            (int)Math.round(((double)strikeStrength * (double)strikeSkillsPercent ) / 100.0 +
+                ((double)strikeStrength * (double)strikeGeneralsPercent ) / 100.0 +
+                ((double)strikeStrength * (double)strikeTerrainPercent ) / 100.0 +
+                ((double)strikeStrength * (double)strikeAgainstThatTypePercent ) / 100.0);
     }
 
     private int calcAttackerStrikeSkillsPercent(HasCombatStrength attacker, HasCombatStrength target) {
@@ -301,10 +300,11 @@ public class BaseCombatService {
 
         int targetBackFireStrength = 0;//target.getCombatStrength().getTargetBackFireStrength();
         return targetBackFireStrength +
-            (int)Math.round(((double) targetBackFireStrength * (double)strikeOnDefenseSkillPercent ) / 100.0) +
-            (int)Math.round(((double) targetBackFireStrength * (double)strikeOnDefenseGeneralsPercent ) / 100.0) +
-            (int)Math.round(((double) targetBackFireStrength * (double)strikeOnDefenseTerrainPercent ) / 100.0) +
-            (int)Math.round(((double) targetBackFireStrength * (double)strikeOnDefenseAgainstThatTypePercent ) / 100.0);
+            (int)Math.round(
+                ((double) targetBackFireStrength * (double)strikeOnDefenseSkillPercent ) / 100.0 +
+                ((double) targetBackFireStrength * (double)strikeOnDefenseGeneralsPercent ) / 100.0 +
+                ((double) targetBackFireStrength * (double)strikeOnDefenseTerrainPercent ) / 100.0 +
+                ((double) targetBackFireStrength * (double)strikeOnDefenseAgainstThatTypePercent ) / 100.0);
     }
 
     private int calcTargetStrikeOnDefenseSkillsPercent(HasCombatStrength attacker, HasCombatStrength target) {

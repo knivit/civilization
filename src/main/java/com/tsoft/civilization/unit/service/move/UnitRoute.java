@@ -9,10 +9,8 @@ import java.util.stream.Stream;
  * Unit's route is an array of directions
  */
 public class UnitRoute implements Iterable<AbstractDir> {
-    private final ArrayList<AbstractDir> dirs = new ArrayList<>();
 
-    // size of the route before unit's movement
-    private int originalSize;
+    private final ArrayList<AbstractDir> dirs = new ArrayList<>();
 
     public UnitRoute(AbstractDir ... dirs) {
         if (dirs != null) {
@@ -39,14 +37,6 @@ public class UnitRoute implements Iterable<AbstractDir> {
 
     public ArrayList<AbstractDir> getDirs() {
         return dirs;
-    }
-
-    public int getOriginalSize() {
-        return originalSize;
-    }
-
-    public void saveOriginalSize() {
-        originalSize = getDirs().size();
     }
 
     public boolean isEmpty() {

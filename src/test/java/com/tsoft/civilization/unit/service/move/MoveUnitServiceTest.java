@@ -6,8 +6,6 @@ import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.MockTilesMap;
-import com.tsoft.civilization.unit.UnitFactory;
-import com.tsoft.civilization.unit.action.MoveUnitAction;
 import com.tsoft.civilization.unit.civil.greatartist.GreatArtist;
 import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.unit.civil.workers.Workers;
@@ -24,8 +22,6 @@ import static com.tsoft.civilization.civilization.L10nCivilization.AMERICA;
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
 import static com.tsoft.civilization.unit.service.move.MoveUnitService.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
 
 public class MoveUnitServiceTest {
 
@@ -60,19 +56,6 @@ public class MoveUnitServiceTest {
     }
 
     @Test
-    public void invalid_unit_location() {
-        MockWorld world = MockWorld.newSimpleWorld();
-
-        world.createCivilization(RUSSIA, new MockScenario()
-            .workers("workers", new Point(2, 0)));
-
-        world.startGame();
-
-        assertThat(moveUnitService.move(world.unit("workers"), new Point(1, 1)))
-            .isEqualTo(INVALID_UNIT_LOCATION);
-    }
-
-    @Test
     public void no_locations_to_move() {
         MockWorld world = MockWorld.of(MockTilesMap.of(
             " |0 1 2 3 ",
@@ -82,16 +65,13 @@ public class MoveUnitServiceTest {
             "2|g . . g ",
             "3| . g . ."));
 
-        MoveUnitService moveUnitService = mock(MoveUnitService.class);
-        MoveUnitAction moveUnitAction = new MoveUnitAction(moveUnitService);
-
         world.createCivilization(RUSSIA, new MockScenario()
             .workers("workers", new Point(0, 0))
         );
 
         world.startGame();
 
-        assertThat(moveUnitAction.move(world.unit("workers"), new Point(1, 1)))
+        assertThat(moveUnitService.move(world.unit("workers"), new Point(1, 1)))
             .isEqualTo(NO_LOCATIONS_TO_MOVE);
     }
 
@@ -249,7 +229,7 @@ public class MoveUnitServiceTest {
     // 2) they are located near each other
     // 3) they are the same unit type
     @Test
-    public void fail_not_enough_passing_score_to_swap() {
+    public void swap_fails_other_unit_has_not_enough_passing_score() {
         MockWorld world = MockWorld.of(MockTilesMap.of(
             " |0 1 2 ",
             "-+------",
@@ -264,7 +244,6 @@ public class MoveUnitServiceTest {
         );
         world.startGame();
 
-        // try one complex route - it must be OK
         Settlers settlers1 = (Settlers) world.unit("settlers1");
         settlers1.setPassScore(1);
 
@@ -276,7 +255,7 @@ public class MoveUnitServiceTest {
 
         assertThat(moveResults)
             .hasSize(1)
-            .containsExactly(NO_PASS_SCORE);
+            .containsExactly(CANT_SWAP_OTHER_UNIT_NO_ACTIONS_AVAILABLE);
 
         assertThat(settlers1)
             .returns(new Point(1, 1), Settlers::getLocation)
@@ -503,7 +482,7 @@ public class MoveUnitServiceTest {
     }
 
     @Test
-    public void find_route1() {
+    public void find_route_success_around_mountains() {
         MockWorld world = MockWorld.of(MockTilesMap.of(2,
             " |0 1 2 3 4 ", " |0 1 2 3 4 ",
             "-+----------", "-+----------",
@@ -530,7 +509,7 @@ public class MoveUnitServiceTest {
     }
 
     @Test
-    public void find_route2() {
+    public void find_route_success_for_cyclic_map() {
         MockWorld world = MockWorld.of(MockTilesMap.of(2,
             " |0 1 2 3 4 ", " |0 1 2 3 4 ",
             "-+----------", "-+----------",
@@ -556,7 +535,7 @@ public class MoveUnitServiceTest {
     }
 
     @Test
-    public void find_route3() {
+    public void find_route_success_for_complex_route() {
         MockWorld world = MockWorld.of(MockTilesMap.of(2,
             " |0 1 2 3 4 ", " |0 1 2 3 4 ",
             "-+----------", "-+----------",
@@ -583,7 +562,7 @@ public class MoveUnitServiceTest {
     }
 
     @Test
-    public void find_route4() {
+    public void find_route_fails_no_possible_routes() {
         MockWorld world = MockWorld.of(MockTilesMap.of(2,
             " |0 1 2 3 4 ", " |0 1 2 3 4 ",
             "-+----------", "-+----------",

@@ -75,7 +75,7 @@ public class GetCivilizations extends AbstractAjaxRequest {
                 "$getCivilizationStatus", GetCivilizationStatus.getAjax(civilization),
                 "$civilizationName", civilization.getView().getLocalizedCivilizationName(),
                 "$relations", relations.getDescription(),
-                "$moveState", civilization.getMoveState().getDescription()
+                "$moveState", civilization.getCivilizationMoveState().getDescription()
             ));
         }
 

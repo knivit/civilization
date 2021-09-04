@@ -4,7 +4,7 @@ import com.tsoft.civilization.civilization.L10nCivilization;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.action.ActionFailureResult;
 import com.tsoft.civilization.action.ActionSuccessResult;
-import com.tsoft.civilization.civilization.MoveState;
+import com.tsoft.civilization.civilization.CivilizationMoveState;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
@@ -34,7 +34,7 @@ public class NextTurnAction {
     }
 
     private static ActionAbstractResult canNextTurn(Civilization civilization) {
-        if (civilization.getMoveState() == MoveState.DONE) {
+        if (civilization.getCivilizationMoveState() == CivilizationMoveState.DONE) {
             return NO_ACTIONS_AVAILABLE;
         }
 

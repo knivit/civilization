@@ -36,7 +36,7 @@ public class MoveUnitActionTest {
         Set<Point> locations = new LinkedHashSet<>(List.of(new Point(2, 1), new Point(2, 0)));
 
         MoveUnitService moveUnitService = mock(MoveUnitService.class);
-        when(moveUnitService.canMove(any())).thenReturn(CAN_MOVE);
+        when(moveUnitService.checkCanMove(any())).thenReturn(CAN_MOVE);
         when(moveUnitService.getLocationsToMove(any())).thenReturn(locations);
 
         MoveUnitAction moveUnitAction = new MoveUnitAction(moveUnitService);
