@@ -7,6 +7,7 @@ import com.tsoft.civilization.combat.event.AttackDoneEvent;
 import com.tsoft.civilization.combat.event.UnitHasWonAttackEvent;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityList;
+import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.unit.service.move.MoveUnitService;
@@ -89,9 +90,8 @@ public class BaseCombatService {
     CombatResult attack(HasCombatStrength attacker, HasCombatStrength target, int strikeStrength) {
         World world = attacker.getCivilization().getWorld();
 
-        //
-        // PREPARE THE ATTACK
-        //
+        /** PREPARE THE ATTACK */
+
         CombatantState.CombatantStateBuilder attackerState = CombatantState.builder()
             .strikeStrength(strikeStrength);
 
@@ -112,10 +112,6 @@ public class BaseCombatService {
         if (strikeStrength <= 0) strikeStrength = 1;
         attackerState.appliedStrikeStrength(strikeStrength);
 
-        //
-        // ATTACK
-        //
-
         // a ranged attack can't destroy a city
         if (attacker.getUnitCategory().isRanged() && target.getUnitCategory().isCity()) {
             if (targetDefenseStrength <= strikeStrength) {
@@ -123,8 +119,16 @@ public class BaseCombatService {
             }
         }
 
-        // target's defense strength decrease
+        /** ATTACK */
+
+        // fire !
         targetDefenseStrength -= strikeStrength;
+
+        //
+        // TARGET UPDATE
+        //
+
+        // target's defense strength decrease
         targetState.defenseStrengthAfterAttack(targetDefenseStrength);
 
         // target's damage update after the attack
@@ -154,31 +158,15 @@ public class BaseCombatService {
             .meleeAttackExperience(targetMeleeAttackExperienceAfterAttack)
             .defenseExperience(targetDefenseExperienceAfterAttack)
             .build();
-        attacker.addCombatExperience(targetExperience);
+        target.addCombatExperience(targetExperience);
 
         // target's status
         boolean targetDestroyed = (targetDefenseStrength <= 0);
         targetState.isDestroyed(targetDestroyed);
 
         //
-        // BACKFIRE
+        // ATTACKER UPDATE
         //
-
-        // the target backfired the attacker
-        int attackerDefenseStrength = attacker.calcCombatStrength().getDefenseStrength();
-        attackerState.defenseStrength(attackerDefenseStrength);
-
-        int attackerDefenseStrengthAfterAttack = attackerDefenseStrength - targetBackFireStrength;
-
-        // fighting units can't be destroyed simultaneously
-        if (attackerDefenseStrengthAfterAttack <= 0 && targetDestroyed) {
-            attackerDefenseStrengthAfterAttack = 1;
-        }
-        attackerState.defenseStrengthAfterAttack(attackerDefenseStrengthAfterAttack);
-
-        // attacker's backfire damage
-        CombatDamage attackerDamage = CombatDamage.builder().damage(targetBackFireStrength).build();
-        attacker.addCombatDamage(attackerDamage);
 
         // attacker's ranged attack experience increase
         int attackerRangedAttackExperience = attacker.calcCombatStrength().getRangedAttackExperience();
@@ -198,9 +186,30 @@ public class BaseCombatService {
         }
         attackerState.meleeExperienceAfterAttack(attackerMeleeAttackExperienceAfterAttack);
 
+        /** BACKFIRE */
+
+        // the target backfired the attacker
+        int attackerDefenseStrength = attacker.calcCombatStrength().getDefenseStrength();
+        attackerState.defenseStrength(attackerDefenseStrength);
+
+        int attackerDefenseStrengthAfterAttack = attackerDefenseStrength - targetBackFireStrength;
+
+        // fighting units can't be destroyed simultaneously
+        if (attackerDefenseStrengthAfterAttack <= 0 && targetDestroyed) {
+            attackerDefenseStrengthAfterAttack = 1;
+        }
+        attackerState.defenseStrengthAfterAttack(attackerDefenseStrengthAfterAttack);
+
+        // attacker's backfire damage
+        CombatDamage attackerDamage = CombatDamage.builder().damage(targetBackFireStrength).build();
+        attacker.addCombatDamage(attackerDamage);
+
         // attacker's defense experience increase
         int attackerDefenseExperience = attacker.calcCombatStrength().getDefenseExperience();
-        int attackerDefenseExperienceAfterAttack = attackerDefenseExperience + 1;
+        int attackerDefenseExperienceAfterAttack = attackerDefenseExperience;
+        if (targetBackFireStrength > 0) {
+            attackerDefenseExperienceAfterAttack = attackerDefenseExperience + 1;
+        }
         attackerState.defenseExperience(attackerDefenseExperience);
         attackerState.defenseExperienceAfterAttack(attackerDefenseExperienceAfterAttack);
 
@@ -219,9 +228,8 @@ public class BaseCombatService {
         // set to 0 attacker's passScore - it can't action (move, attack, capture etc) anymore
         attacker.setPassScore(0);
 
-        //
-        // SUMMARY
-        //
+        /** SUMMARY */
+
         if (targetDestroyed) {
             destroyTarget(attacker, target);
             moveAttacker(attacker, target);
@@ -344,12 +352,28 @@ public class BaseCombatService {
 
     /** Calc the target's back strike strength (strike strength on defense) */
     private int calcTargetBackFireStrength(HasCombatStrength attacker, HasCombatStrength target) {
+        int targetBackFireStrength = 0;
+
+        if (target.getUnitCategory().isRanged()) {
+            targetBackFireStrength = target.calcCombatStrength().getRangedBackFireStrength();
+        }
+
+        // Melee unit must be on adjacent tile to fire back
+        if (target.getUnitCategory().isMelee()) {
+            Point attackerLocation = attacker.getLocation();
+            Point targetLocation = target.getLocation();
+            if (!attacker.getCivilization().getTilesMap().isTilesNearby(attackerLocation, targetLocation)) {
+                return 0;
+            }
+
+            targetBackFireStrength = target.calcCombatStrength().getMeleeBackFireStrength();
+        }
+
         int strikeOnDefenseSkillPercent = calcTargetStrikeOnDefenseSkillsPercent(attacker, target);
         int strikeOnDefenseGeneralsPercent = getGreatGeneralCount(attacker) * 10;
         int strikeOnDefenseTerrainPercent = 0;
         int strikeOnDefenseAgainstThatTypePercent = 0;
 
-        int targetBackFireStrength = 0;//target.getCombatStrength().getTargetBackFireStrength();
         return targetBackFireStrength +
             (int)Math.round(
                 ((double) targetBackFireStrength * (double)strikeOnDefenseSkillPercent ) / 100.0 +
