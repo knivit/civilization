@@ -5,30 +5,33 @@ import com.tsoft.civilization.action.ActionFailureResult;
 import com.tsoft.civilization.action.ActionSuccessResult;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.combat.*;
+import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.tile.resource.AbstractResource;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.world.L10nWorld;
 
 public class AttackService {
 
-    public static final ActionSuccessResult CAN_ATTACK = new ActionSuccessResult(L10nUnit.CAN_ATTACK);
-    public static final ActionSuccessResult RANGED_UNDERSHOOT = new ActionSuccessResult(L10nUnit.RANGED_UNDERSHOOT);
-    public static final ActionSuccessResult TARGET_DESTROYED = new ActionSuccessResult(L10nUnit.TARGET_DESTROYED);
-    public static final ActionSuccessResult ATTACKED = new ActionSuccessResult(L10nUnit.ATTACKED);
-    public static final ActionSuccessResult ATTACKER_IS_DESTROYED_DURING_ATTACK = new ActionSuccessResult(L10nUnit.ATTACKER_IS_DESTROYED_DURING_ATTACK);
+    public static final ActionSuccessResult CAN_ATTACK = new ActionSuccessResult(L10nCombat.CAN_ATTACK);
+    public static final ActionSuccessResult RANGED_UNDERSHOOT = new ActionSuccessResult(L10nCombat.RANGED_UNDERSHOOT);
+    public static final ActionSuccessResult TARGET_DESTROYED = new ActionSuccessResult(L10nCombat.TARGET_DESTROYED);
+    public static final ActionSuccessResult ATTACKED = new ActionSuccessResult(L10nCombat.ATTACKED);
+    public static final ActionSuccessResult ATTACKER_IS_DESTROYED_DURING_ATTACK = new ActionSuccessResult(L10nCombat.ATTACKER_IS_DESTROYED_DURING_ATTACK);
 
-    public static final ActionFailureResult ATTACK_FAILED = new ActionFailureResult(L10nUnit.ATTACK_FAILED);
-    public static final ActionFailureResult NO_TARGETS_TO_ATTACK = new ActionFailureResult(L10nUnit.NO_TARGETS_TO_ATTACK);
+    public static final ActionFailureResult ATTACK_FAILED = new ActionFailureResult(L10nCombat.ATTACK_FAILED);
+    public static final ActionFailureResult NO_TARGETS_TO_ATTACK = new ActionFailureResult(L10nCombat.NO_TARGETS_TO_ATTACK);
     public static final ActionFailureResult MELEE_NOT_ENOUGH_PASS_SCORE = new ActionFailureResult(L10nUnit.MELEE_NOT_ENOUGH_PASS_SCORE);
     public static final ActionFailureResult ATTACKER_NOT_FOUND = new ActionFailureResult(L10nUnit.UNIT_NOT_FOUND);
     public static final ActionFailureResult NOT_MILITARY_UNIT = new ActionFailureResult(L10nUnit.NOT_MILITARY_UNIT);
-    public static final ActionFailureResult INVALID_LOCATION = new ActionFailureResult(L10nWorld.INVALID_LOCATION);
+    public static final ActionFailureResult INVALID_TARGET_LOCATION = new ActionFailureResult(L10nCombat.INVALID_TARGET_LOCATION);
 
     private static final MeleeCombatService meleeCombatService = new MeleeCombatService();
     private static final RangedCombatService rangedCombatService = new RangedCombatService();
+    private static final ImprovementCombatService improvementCombatService = new ImprovementCombatService();
+    private static final ResourceCombatService resourceCombatService = new ResourceCombatService();
 
     public ActionAbstractResult attack(HasCombatStrength attacker, Point location) {
         ActionAbstractResult result = canAttack(attacker);
@@ -36,8 +39,8 @@ public class AttackService {
             return result;
         }
 
-        if (location == null) {
-            return INVALID_LOCATION;
+        if (location == null || location.equals(attacker.getLocation())) {
+            return INVALID_TARGET_LOCATION;
         }
 
         HasCombatStrength target = getTargetToAttackAtLocation(attacker, location);
@@ -73,13 +76,21 @@ public class AttackService {
         return ATTACKED;
     }
 
-    public CombatResult attackTarget(HasCombatStrength attacker, HasCombatStrength target) {
+    CombatResult attackTarget(HasCombatStrength attacker, HasCombatStrength target) {
         if (attacker.getUnitCategory().isRanged()) {
             return rangedCombatService.attack(attacker, target);
         }
 
         // For a melee unit, move to the target first, then attack
         return meleeCombatService.attack(attacker, target);
+    }
+
+    CombatResult attackImprovement(HasCombatStrength attacker, AbstractImprovement improvement) {
+        return improvementCombatService.attack(attacker, improvement);
+    }
+
+    CombatResult attackResource(HasCombatStrength attacker, AbstractResource resource) {
+        return resourceCombatService.attack(attacker, resource);
     }
 
     public ActionAbstractResult canAttack(HasCombatStrength attacker) {
@@ -110,7 +121,7 @@ public class AttackService {
         return meleeCombatService.getTargetsToAttack(attacker);
     }
 
-    public HasCombatStrength getTargetToAttackAtLocation(HasCombatStrength attacker, Point location) {
+    private HasCombatStrength getTargetToAttackAtLocation(HasCombatStrength attacker, Point location) {
         Civilization civilization = attacker.getCivilization();
 
         // first, if there is a city then attack it
@@ -126,6 +137,7 @@ public class AttackService {
             return militaryUnit;
         }
 
+        // no military enemy, get any civilian
         return foreignUnits.getAny();
     }
 }

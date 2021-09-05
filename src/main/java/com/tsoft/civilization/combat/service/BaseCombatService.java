@@ -70,6 +70,7 @@ import java.util.Collection;
 public class BaseCombatService {
 
     private static final MoveUnitService moveService = new MoveUnitService();
+    private static final CaptureUnitService captureService = new CaptureUnitService();
 
     HasCombatStrengthList getPossibleTargetsAround(HasCombatStrength attacker, int radius) {
         World world = attacker.getCivilization().getWorld();
@@ -86,13 +87,13 @@ public class BaseCombatService {
     }
 
     CombatResult attack(HasCombatStrength attacker, HasCombatStrength target, int strikeStrength) {
+        World world = attacker.getCivilization().getWorld();
+
         //
         // PREPARE THE ATTACK
         //
         CombatantState.CombatantStateBuilder attackerState = CombatantState.builder()
             .strikeStrength(strikeStrength);
-
-        World world = attacker.getCivilization().getWorld();
 
         int targetDefenseStrength = target.calcCombatStrength().getDefenseStrength();
         CombatantState.CombatantStateBuilder targetState = CombatantState.builder()
@@ -104,7 +105,7 @@ public class BaseCombatService {
 
         // get target's defense experience
         int targetDefenseExperience = target.calcCombatStrength().getDefenseExperience();
-        targetState.experience(targetDefenseExperience);
+        targetState.defenseExperience(targetDefenseExperience);
 
         // attacker's strike strength will be discounted on target's defense experience
         strikeStrength -= targetDefenseExperience;
@@ -122,33 +123,42 @@ public class BaseCombatService {
             }
         }
 
-        // decrease target's defense strength
+        // target's defense strength decrease
         targetDefenseStrength -= strikeStrength;
         targetState.defenseStrengthAfterAttack(targetDefenseStrength);
 
-        // increase target's defense experience after the attack
+        // target's damage update after the attack
+        CombatDamage targetDamage = CombatDamage.builder().damage(strikeStrength).build();
+        target.addCombatDamage(targetDamage);
+
+        // target's ranged attack experience won't change
+        int targetRangedAttackExperience = target.calcCombatStrength().getRangedAttackExperience();
+        targetState.rangedExperience(targetRangedAttackExperience);
+        int targetRangedAttackExperienceAfterAttack = targetRangedAttackExperience;
+        targetState.rangedExperienceAfterAttack(targetRangedAttackExperienceAfterAttack);
+
+        // target's melee attack experience won't change
+        int targetMeleeAttackExperience = target.calcCombatStrength().getMeleeAttackExperience();
+        targetState.meleeExperience(targetMeleeAttackExperience);
+        int targetMeleeAttackExperienceAfterAttack = targetMeleeAttackExperience;
+        targetState.meleeExperienceAfterAttack(targetMeleeAttackExperienceAfterAttack);
+
+        // target's defense experience increase
         int targetDefenseExperienceAfterAttack = targetDefenseExperience + 1;
-        targetState.experienceAfterAttack(targetDefenseExperienceAfterAttack);
+        targetState.defenseExperience(targetDefenseExperience);
+        targetState.defenseExperienceAfterAttack(targetDefenseExperienceAfterAttack);
 
-        // update target's combat damage after the attack
-        CombatDamage combatDamage = CombatDamage.builder()
-            .damage(strikeStrength)
+        // target's experience update after the attack
+        CombatExperience targetExperience = CombatExperience.builder()
+            .rangedAttackExperience(targetRangedAttackExperienceAfterAttack)
+            .meleeAttackExperience(targetMeleeAttackExperienceAfterAttack)
+            .defenseExperience(targetDefenseExperienceAfterAttack)
             .build();
-        target.addCombatDamage(combatDamage);
+        attacker.addCombatExperience(targetExperience);
 
-        // update target's combat experience after the attack
-        // TODO
-        //target.setc(target.getCombatStrength().copy()
-        //    .defenseStrength(targetDefenseStrength)
-        //    .defenseExperience(targetDefenseExperienceAfterAttack)
-        //    .build());
-
+        // target's status
         boolean targetDestroyed = (targetDefenseStrength <= 0);
         targetState.isDestroyed(targetDestroyed);
-
-        if (targetDestroyed) {
-            destroy(attacker, target);
-        }
 
         //
         // BACKFIRE
@@ -166,31 +176,61 @@ public class BaseCombatService {
         }
         attackerState.defenseStrengthAfterAttack(attackerDefenseStrengthAfterAttack);
 
-        // attacker's attack experience increase
-        int attackerAttackExperience = 0;//attacker.calcCombatStrength().getAttackExperience();
-        attackerState.experience(attackerAttackExperience);
-
-        int attackerAttackExperienceAfterAttack = attackerAttackExperience + 2;
-        attackerState.experienceAfterAttack(attackerAttackExperienceAfterAttack);
-
-        // update attacker's combat strength after the attack
-        CombatDamage attackerDamage = CombatDamage.builder().build();
+        // attacker's backfire damage
+        CombatDamage attackerDamage = CombatDamage.builder().damage(targetBackFireStrength).build();
         attacker.addCombatDamage(attackerDamage);
-        //attacker.setCombatStrength(attacker.getCombatStrength().copy()
-        //    .defenseStrength(attackerDefenseStrengthAfterAttack)
-        //    .attackExperience(attackerAttackExperienceAfterAttack)
-        //    .build());
 
-        // is the attacker destroyed
+        // attacker's ranged attack experience increase
+        int attackerRangedAttackExperience = attacker.calcCombatStrength().getRangedAttackExperience();
+        attackerState.rangedExperience(attackerRangedAttackExperience);
+        int attackerRangedAttackExperienceAfterAttack = attackerRangedAttackExperience;
+        if (attacker.getUnitCategory().isRanged()) {
+            attackerRangedAttackExperienceAfterAttack = attackerRangedAttackExperienceAfterAttack + 2;
+        }
+        attackerState.rangedExperienceAfterAttack(attackerRangedAttackExperienceAfterAttack);
+
+        // attacker's melee attack experience increase
+        int attackerMeleeAttackExperience = attacker.calcCombatStrength().getMeleeAttackExperience();
+        attackerState.meleeExperience(attackerMeleeAttackExperience);
+        int attackerMeleeAttackExperienceAfterAttack = attackerMeleeAttackExperience;
+        if (attacker.getUnitCategory().isMelee()) {
+            attackerMeleeAttackExperienceAfterAttack = attackerMeleeAttackExperience + 2;
+        }
+        attackerState.meleeExperienceAfterAttack(attackerMeleeAttackExperienceAfterAttack);
+
+        // attacker's defense experience increase
+        int attackerDefenseExperience = attacker.calcCombatStrength().getDefenseExperience();
+        int attackerDefenseExperienceAfterAttack = attackerDefenseExperience + 1;
+        attackerState.defenseExperience(attackerDefenseExperience);
+        attackerState.defenseExperienceAfterAttack(attackerDefenseExperienceAfterAttack);
+
+        // attacker's experience update after the attack
+        CombatExperience attackerExperience = CombatExperience.builder()
+            .rangedAttackExperience(attackerRangedAttackExperienceAfterAttack)
+            .meleeAttackExperience(attackerMeleeAttackExperienceAfterAttack)
+            .defenseExperience(attackerDefenseExperienceAfterAttack)
+            .build();
+        attacker.addCombatExperience(attackerExperience);
+
+        // attacker's state
         boolean attackerDestroyed = (attackerDefenseStrengthAfterAttack <= 0);
         attackerState.isDestroyed(attackerDestroyed);
 
-        if (attackerDestroyed) {
-            destroy(target, attacker);
-        }
-
         // set to 0 attacker's passScore - it can't action (move, attack, capture etc) anymore
         attacker.setPassScore(0);
+
+        //
+        // SUMMARY
+        //
+        if (targetDestroyed) {
+            destroyTarget(attacker, target);
+            moveAttacker(attacker, target);
+        }
+
+        if (attackerDestroyed) {
+            destroyTarget(target, attacker);
+            moveAttacker(target, attacker);
+        }
 
         // send the event about the attack
         world.sendEvent(AttackDoneEvent.builder()
@@ -204,20 +244,29 @@ public class BaseCombatService {
             .build();
     }
 
-    private void destroyUnit(HasCombatStrength attacker, HasCombatStrength victim) {
-        Point location = victim.getLocation();
+    // City can't be destroyed during an attack
+    // It can be only captured (and destroyed later in a separate action)
+    private void destroyTarget(HasCombatStrength attacker, HasCombatStrength victim) {
+        if (victim instanceof City) {
+            captureService.captureCity(attacker, (City)victim);
+            return;
+        }
 
+        // if the attacker is a ranged unit
+        // then destroy the target only
         if (attacker.getUnitCategory().isRanged()) {
-            // if the attacker is a ranged unit
-            // then destroy the target only
             destroy(attacker, victim);
-        } else {
-            // if attacker is a melee unit
-            // then destroy all units on that location
-            destroyAllUnitsAtLocation(attacker, victim.getLocation());
+            return;
+        }
 
-            // move the attacker there
-            moveService.doMoveUnit((AbstractUnit) attacker, location);
+        // if attacker is a melee unit
+        // then destroy all units on that location
+        destroyAllUnitsAtLocation(attacker, victim.getLocation());
+    }
+
+    private void moveAttacker(HasCombatStrength attacker, HasCombatStrength victim) {
+        if (attacker.getUnitCategory().isMelee()) {
+            moveService.doMoveUnit((AbstractUnit) attacker, victim.getLocation());
         }
     }
 
@@ -240,9 +289,10 @@ public class BaseCombatService {
             .build()
         );
 
-        // A city may be destroyed only during a melee attack
+        // A city can be only captured (and destroyed later)
+        // This solution lets do not use a dialog with a player
         if (victim instanceof City) {
-            throw new IllegalArgumentException("FIXME: find out the calling method and use CaptureService#captureCity(); A city may be destroyed only during a melee attack");
+            throw new IllegalArgumentException("A city can only be captured, FIXME: use CaptureService#captureCity()");
         }
 
         Civilization loser = victim.getCivilization();

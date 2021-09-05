@@ -5,6 +5,7 @@ import com.tsoft.civilization.building.*;
 import com.tsoft.civilization.building.palace.Palace;
 import com.tsoft.civilization.civilization.population.Happiness;
 import com.tsoft.civilization.combat.CombatDamage;
+import com.tsoft.civilization.combat.CombatExperience;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.combat.skill.*;
@@ -182,8 +183,14 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
         return combatService.getCombatDamage();
     }
 
+    @Override
     public void addCombatDamage(CombatDamage damage) {
         combatService.addCombatDamage(damage);
+    }
+
+    @Override
+    public void addCombatExperience(CombatExperience experience) {
+        combatService.addCombatExperience(experience);
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationsRelations;
 import com.tsoft.civilization.civilization.event.CityCapturedEvent;
 import com.tsoft.civilization.combat.HasCombatStrength;
+import com.tsoft.civilization.combat.L10nCombat;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.unit.AbstractUnit;
@@ -14,7 +15,6 @@ import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.unit.service.move.MoveUnitService;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.world.L10nWorld;
 
 import java.util.Collection;
 import java.util.List;
@@ -22,15 +22,15 @@ import java.util.UUID;
 
 public class CaptureUnitService {
 
-    public static final ActionSuccessResult CAN_CAPTURE = new ActionSuccessResult(L10nUnit.CAN_CAPTURE);
-    public static final ActionSuccessResult UNIT_CAPTURED = new ActionSuccessResult(L10nUnit.UNIT_CAPTURED);
+    public static final ActionSuccessResult CAN_CAPTURE = new ActionSuccessResult(L10nCombat.CAN_CAPTURE);
+    public static final ActionSuccessResult UNIT_CAPTURED = new ActionSuccessResult(L10nCombat.UNIT_CAPTURED);
 
     public static final ActionFailureResult NO_PASS_SCORE = new ActionFailureResult(L10nUnit.NO_PASS_SCORE);
     public static final ActionFailureResult CANT_CAPTURE_CITY = new ActionFailureResult(L10nUnit.CANT_CAPTURE_CITY);
-    public static final ActionFailureResult NO_LOCATIONS_TO_CAPTURE = new ActionFailureResult(L10nUnit.NO_LOCATIONS_TO_CAPTURE);
-    public static final ActionFailureResult NOTHING_TO_CAPTURE = new ActionFailureResult(L10nUnit.NOTHING_TO_CAPTURE);
+    public static final ActionFailureResult NO_LOCATIONS_TO_CAPTURE = new ActionFailureResult(L10nCombat.NO_LOCATIONS_TO_CAPTURE);
+    public static final ActionFailureResult NOTHING_TO_CAPTURE = new ActionFailureResult(L10nCombat.NOTHING_TO_CAPTURE);
     public static final ActionFailureResult ATTACKER_NOT_FOUND = new ActionFailureResult(L10nUnit.UNIT_NOT_FOUND);
-    public static final ActionFailureResult INVALID_LOCATION = new ActionFailureResult(L10nWorld.INVALID_LOCATION);
+    public static final ActionFailureResult INVALID_TARGET_LOCATION = new ActionFailureResult(L10nCombat.INVALID_TARGET_LOCATION);
 
     private static final BaseCombatService baseCombatService = new BaseCombatService();
     private final MoveUnitService moveUnitService = new MoveUnitService();
@@ -64,7 +64,7 @@ public class CaptureUnitService {
         }
 
         if (location == null) {
-            return INVALID_LOCATION;
+            return INVALID_TARGET_LOCATION;
         }
 
         Collection<Point> locations = getLocationsToCapture(attacker);

@@ -53,6 +53,14 @@ public class CombatStrength {
             .build();
     }
 
+    public CombatStrength add(CombatExperience experience) {
+        return copy()
+            .rangedAttackExperience(rangedAttackExperience + experience.getRangedAttackExperience())
+            .meleeAttackExperience(meleeAttackExperience + experience.getMeleeAttackExperience())
+            .defenseExperience(defenseExperience + experience.getDefenseExperience())
+            .build();
+    }
+
     public CombatStrength.CombatStrengthBuilder copy() {
         return CombatStrength.builder()
             .rangedAttackStrength(rangedAttackStrength)

@@ -1,6 +1,7 @@
 package com.tsoft.civilization.unit;
 
 import com.tsoft.civilization.combat.CombatDamage;
+import com.tsoft.civilization.combat.CombatExperience;
 import com.tsoft.civilization.combat.service.UnitCombatService;
 import com.tsoft.civilization.combat.skill.AbstractMovementSkill;
 import com.tsoft.civilization.combat.skill.SkillMap;
@@ -128,6 +129,11 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
     @Override
     public void addCombatDamage(CombatDamage damage) {
         combatService.addCombatDamage(damage);
+    }
+
+    @Override
+    public void addCombatExperience(CombatExperience experience) {
+        combatService.addCombatExperience(experience);
     }
 
     public int getPassScore() {

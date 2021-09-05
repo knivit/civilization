@@ -9,6 +9,8 @@ import lombok.ToString;
 @ToString
 public class CombatDamage {
 
+    public static final CombatDamage ZERO = CombatDamage.builder().damage(0).build();
+
     private final int damage;
 
     public CombatDamage add(CombatDamage other) {

@@ -1,6 +1,7 @@
 package com.tsoft.civilization.combat.service;
 
 import com.tsoft.civilization.combat.CombatDamage;
+import com.tsoft.civilization.combat.CombatExperience;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.combat.skill.*;
 import com.tsoft.civilization.unit.AbstractUnit;
@@ -13,9 +14,10 @@ public class UnitCombatService {
     private final AbstractUnit unit;
 
     @Getter
-    private CombatDamage combatDamage = CombatDamage.builder()
-        .damage(0)
-        .build();
+    private CombatDamage combatDamage = CombatDamage.ZERO;
+
+    @Getter
+    private CombatExperience combatExperience = CombatExperience.ZERO;
 
     private final SkillMap<AbstractCombatSkill> combatSkills;
     private final SkillMap<AbstractHealingSkill> healingSkills;
@@ -30,11 +32,18 @@ public class UnitCombatService {
 
     public CombatStrength calcCombatStrength() {
         CombatStrength strength = skillService.calcCombatStrength(unit, combatSkills);
-        return strength.minus(combatDamage);
+
+        return strength
+            .minus(combatDamage)
+            .add(combatExperience);
     }
 
     public void addCombatDamage(CombatDamage damage) {
         combatDamage = combatDamage.add(damage);
+    }
+
+    public void addCombatExperience(CombatExperience experience) {
+        combatExperience = combatExperience.add(experience);
     }
 
     public SkillMap<AbstractCombatSkill> getCombatSkills() {

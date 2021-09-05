@@ -4,10 +4,7 @@ import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.action.ActionFailureResult;
 import com.tsoft.civilization.action.ActionSuccessResult;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.combat.CombatResult;
-import com.tsoft.civilization.combat.CombatStatus;
-import com.tsoft.civilization.combat.HasCombatStrength;
-import com.tsoft.civilization.combat.HasCombatStrengthList;
+import com.tsoft.civilization.combat.*;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.unit.AbstractUnit;
@@ -21,10 +18,10 @@ import java.util.List;
 
 public class MeleeCombatService {
 
-    public static final ActionSuccessResult CAN_ATTACK = new ActionSuccessResult(L10nUnit.CAN_ATTACK);
+    public static final ActionSuccessResult CAN_ATTACK = new ActionSuccessResult(L10nCombat.CAN_ATTACK);
 
     public static final ActionFailureResult NO_PASS_SCORE = new ActionFailureResult(L10nUnit.NO_PASS_SCORE);
-    public static final ActionFailureResult INVALID_ATTACK_TARGET = new ActionFailureResult(L10nUnit.INVALID_ATTACK_TARGET);
+    public static final ActionFailureResult INVALID_ATTACK_TARGET = new ActionFailureResult(L10nCombat.INVALID_ATTACK_TARGET);
 
     private static final BaseCombatService baseCombatService = new BaseCombatService();
     private static final MoveUnitService moveUnitService = new MoveUnitService();

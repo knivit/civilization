@@ -118,6 +118,10 @@ public class MoveUnitService {
 
     // All the checks was made - just do the swap
     private void doSwapUnits(AbstractUnit unit, Point location) {
+        if (unit.isDestroyed()) {
+            return;
+        }
+
         UnitList other = unit.getCivilization().getUnitService().getUnitsAtLocation(location);
         AbstractUnit swapUnit = other.findUnitByCategory(unit.getUnitCategory());
 
@@ -127,6 +131,10 @@ public class MoveUnitService {
 
     // All the checks was made - just do the move
     public void doMoveUnit(AbstractUnit unit, Point location) {
+        if (unit.isDestroyed()) {
+            return;
+        }
+
         unit.getMovementService().setLocation(location);
 
         AbstractTile tile = unit.getCivilization().getTilesMap().getTile(location);

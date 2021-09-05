@@ -107,8 +107,8 @@ public class AttackServiceTest {
         assertThat(attackService.attackTarget(world.get("archers"), world.get("foreignWarriors2")))
             .usingComparator(CombatResultMock::compare)
             .isEqualTo(CombatResultMock.done(
-                "SS:5 AS:5 DS:5 DSA:5 E:0 EA:2 D:0",
-                "SS:0 AS:0 DS:20 DSA:15 E:0 EA:1 D:0"
+                "SS:5 AS:5 DS:5 DSA:5 RE:0 REA:2 ME:0 MEA:0 DE:1 DEA:2 D:0",
+                "SS:0 AS:0 DS:20 DSA:15 RE:0 REA:0 ME:0 MEA:0 DE:0 DEA:1 D:0"
             ));
 
         assertThat(world.unit("archers").getPassScore()).isEqualTo(0);
@@ -129,8 +129,8 @@ public class AttackServiceTest {
         assertThat(attackService.attackTarget(world.get("archers"), world.get("foreignWarriors2")))
             .usingComparator(CombatResultMock::compare)
             .isEqualTo(CombatResultMock.done(
-                "SS:5 AS:5 DS:5 DSA:5 E:0 EA:2 D:0",
-                "SS:0 AS:0 DS:16 DSA:11 E:0 EA:1 D:0"
+                "SS:5 AS:5 DS:5 DSA:5 RE:2 REA:4 ME:0 MEA:0 DE:4 DEA:5 D:0",
+                "SS:0 AS:0 DS:16 DSA:11 RE:0 REA:0 ME:0 MEA:0 DE:0 DEA:1 D:0"
             ));
 
         assertThat(world.unit("archers").getPassScore()).isEqualTo(0);
@@ -142,8 +142,8 @@ public class AttackServiceTest {
         assertThat(attackService.attackTarget(world.get("archers"), world.get("foreignArchers1")))
             .usingComparator(CombatResultMock::compare)
             .isEqualTo(CombatResultMock.done(
-                "SS:2 AS:2 DS:5 DSA:5 E:0 EA:2 D:0",
-                "SS:0 AS:0 DS:5 DSA:3 E:0 EA:1 D:0"
+                "SS:2 AS:2 DS:5 DSA:5 RE:6 REA:8 ME:0 MEA:0 DE:10 DEA:11 D:0",
+                "SS:0 AS:0 DS:5 DSA:3 RE:0 REA:0 ME:0 MEA:0 DE:0 DEA:1 D:0"
             ));
 
         // next step
@@ -153,8 +153,8 @@ public class AttackServiceTest {
         assertThat(attackService.attackTarget(world.get("archers"), world.get("foreignCity")))
             .usingComparator(CombatResultMock::compare)
             .isEqualTo(CombatResultMock.done(
-                "SS:2 AS:2 DS:5 DSA:5 E:0 EA:2 D:0",
-                "SS:0 AS:0 DS:37 DSA:35 E:0 EA:1 D:0"
+                "SS:2 AS:2 DS:5 DSA:5 RE:14 REA:16 ME:0 MEA:0 DE:22 DEA:23 D:0",
+                "SS:0 AS:0 DS:37 DSA:35 RE:0 REA:0 ME:0 MEA:0 DE:0 DEA:1 D:0"
             ));
     }
 
@@ -200,8 +200,8 @@ public class AttackServiceTest {
         assertThat(attackService.attackTarget(world.get("warriors1"), foreignCity))
             .usingComparator(CombatResultMock::compare)
             .isEqualTo(CombatResultMock.done(
-                "SS:10 AS:10 DS:20 DSA:20 E:0 EA:2 D:0",
-                "SS:0 AS:0 DS:40 DSA:30 E:0 EA:1 D:0"
+                "SS:10 AS:10 DS:20 DSA:20 RE:0 REA:0 ME:0 MEA:2 DE:1 DEA:2 D:0",
+                "SS:0 AS:0 DS:40 DSA:30 RE:0 REA:0 ME:0 MEA:0 DE:0 DEA:1 D:0"
             ));
 
         assertThat(world.unit("warriors1"))
@@ -220,8 +220,8 @@ public class AttackServiceTest {
         assertThat(attackService.attackTarget(world.get("warriors2"), foreignCity))
             .usingComparator(CombatResultMock::compare)
             .isEqualTo(CombatResultMock.done(
-                "SS:10 AS:10 DS:20 DSA:20 E:0 EA:2 D:0",
-                "SS:0 AS:0 DS:30 DSA:20 E:0 EA:1 D:0"
+                "SS:10 AS:10 DS:20 DSA:20 REA:0 ME:0 MEA:2 DE:1 DEA:2 D:0",
+                "SS:0 AS:0 DS:30 DSA:20 REA:0 ME:0 MEA:0 DE:0 DEA:1 D:0"
             ));
 
         assertThat(world.unit("warriors2"))
@@ -241,8 +241,8 @@ public class AttackServiceTest {
         assertThat(attackService.attackTarget(world.get("warriors3"), foreignCity))
             .usingComparator(CombatResultMock::compare)
             .isEqualTo(CombatResultMock.done(
-                "SS:10 AS:10 DS:20 DSA:20 E:0 EA:2 D:0",
-                "SS:0 AS:0 DS:20 DSA:10 E:0 EA:1 D:0"
+                "SS:10 AS:10 DS:20 DSA:20 REA:0 ME:0 MEA:2 DE:1 DEA:2 D:0",
+                "SS:0 AS:0 DS:20 DSA:10 REA:0 ME:0 MEA:0 DE:0 DEA:1 D:0"
             ));
 
         assertThat(world.unit("warriors3"))
@@ -261,13 +261,9 @@ public class AttackServiceTest {
         assertThat(attackService.attackTarget(world.get("warriors4"), foreignCity))
             .usingComparator(CombatResultMock::compare)
             .isEqualTo(CombatResultMock.done(
-                "SS:16 AS:16 DS:15 DSA:10 E:6 EA:8 D:0",
-                "SS:5 AS:5 DS:3 DSA:34 E:0 EA:1 D:1"
+                "SS:10 AS:10 DS:20 DSA:20 REA:0 ME:0 MEA:2 DE:1 DEA:2 D:0",
+                "SS:0 AS:0 DS:10 DSA:0 REA:0 ME:0 MEA:0 DE:0 DEA:1 D:1"
             ));
-
-        assertThat(world.unit("warriors4"))
-            .returns(0, AbstractUnit::getPassScore)
-            .returns(15, e -> e.calcCombatStrength().getDefenseStrength());
 
         assertThat(russia.getCityService().size()).isEqualTo(2);
 

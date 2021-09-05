@@ -32,6 +32,8 @@ public interface HasCombatStrength {
 
     void addCombatDamage(CombatDamage damage);
 
+    void addCombatExperience(CombatExperience experience);
+
     void setPassScore(int passScore);
 
     String getClassUuid();
