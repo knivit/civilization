@@ -93,7 +93,6 @@ public class GetCityStatus extends AbstractAjaxRequest {
                 <tr><td>$goldLabel</td><td>$gold $goldImage</td>
                 <tr><td>$foodLabel</td><td>$food $foodImage</td>
                 <tr><td>$happinessLabel</td><td>$happiness $happinessImage</td>
-                <tr><td>$unhappinessLabel</td><td>$unhappiness $unhappinessImage</td>
             </table>
             """,
 
