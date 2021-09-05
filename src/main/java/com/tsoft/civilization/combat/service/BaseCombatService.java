@@ -7,7 +7,6 @@ import com.tsoft.civilization.combat.event.AttackDoneEvent;
 import com.tsoft.civilization.combat.event.UnitHasWonAttackEvent;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityList;
-import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.unit.service.move.MoveUnitService;
@@ -87,7 +86,7 @@ public class BaseCombatService {
         return targets;
     }
 
-    CombatResult attack(HasCombatStrength attacker, HasCombatStrength target, int strikeStrength) {
+    CombatResult attack(HasCombatStrength attacker, HasCombatStrength target, double strikeStrength) {
         World world = attacker.getCivilization().getWorld();
 
         /** PREPARE THE ATTACK */
@@ -95,16 +94,16 @@ public class BaseCombatService {
         CombatantState.CombatantStateBuilder attackerState = CombatantState.builder()
             .strikeStrength(strikeStrength);
 
-        int targetDefenseStrength = target.calcCombatStrength().getDefenseStrength();
+        double targetDefenseStrength = target.calcCombatStrength().getDefenseStrength();
         CombatantState.CombatantStateBuilder targetState = CombatantState.builder()
             .defenseStrength(targetDefenseStrength);
 
         // before the attack calculate target's backfire strength
-        int targetBackFireStrength = calcTargetBackFireStrength(attacker, target);
+        double targetBackFireStrength = calcTargetBackFireStrength(attacker, target);
         targetState.strikeStrength(targetBackFireStrength);
 
         // get target's defense experience
-        int targetDefenseExperience = target.calcCombatStrength().getDefenseExperience();
+        double targetDefenseExperience = target.calcCombatStrength().getDefenseExperience();
         targetState.defenseExperience(targetDefenseExperience);
 
         // attacker's strike strength will be discounted on target's defense experience
@@ -136,19 +135,19 @@ public class BaseCombatService {
         target.addCombatDamage(targetDamage);
 
         // target's ranged attack experience won't change
-        int targetRangedAttackExperience = target.calcCombatStrength().getRangedAttackExperience();
+        double targetRangedAttackExperience = target.calcCombatStrength().getRangedAttackExperience();
         targetState.rangedExperience(targetRangedAttackExperience);
-        int targetRangedAttackExperienceAfterAttack = targetRangedAttackExperience;
+        double targetRangedAttackExperienceAfterAttack = targetRangedAttackExperience;
         targetState.rangedExperienceAfterAttack(targetRangedAttackExperienceAfterAttack);
 
         // target's melee attack experience won't change
-        int targetMeleeAttackExperience = target.calcCombatStrength().getMeleeAttackExperience();
+        double targetMeleeAttackExperience = target.calcCombatStrength().getMeleeAttackExperience();
         targetState.meleeExperience(targetMeleeAttackExperience);
-        int targetMeleeAttackExperienceAfterAttack = targetMeleeAttackExperience;
+        double targetMeleeAttackExperienceAfterAttack = targetMeleeAttackExperience;
         targetState.meleeExperienceAfterAttack(targetMeleeAttackExperienceAfterAttack);
 
         // target's defense experience increase
-        int targetDefenseExperienceAfterAttack = targetDefenseExperience + 1;
+        double targetDefenseExperienceAfterAttack = targetDefenseExperience + 1;
         targetState.defenseExperience(targetDefenseExperience);
         targetState.defenseExperienceAfterAttack(targetDefenseExperienceAfterAttack);
 
@@ -169,18 +168,18 @@ public class BaseCombatService {
         //
 
         // attacker's ranged attack experience increase
-        int attackerRangedAttackExperience = attacker.calcCombatStrength().getRangedAttackExperience();
+        double attackerRangedAttackExperience = attacker.calcCombatStrength().getRangedAttackExperience();
         attackerState.rangedExperience(attackerRangedAttackExperience);
-        int attackerRangedAttackExperienceAfterAttack = attackerRangedAttackExperience;
+        double attackerRangedAttackExperienceAfterAttack = attackerRangedAttackExperience;
         if (attacker.getUnitCategory().isRanged()) {
             attackerRangedAttackExperienceAfterAttack = attackerRangedAttackExperienceAfterAttack + 2;
         }
         attackerState.rangedExperienceAfterAttack(attackerRangedAttackExperienceAfterAttack);
 
         // attacker's melee attack experience increase
-        int attackerMeleeAttackExperience = attacker.calcCombatStrength().getMeleeAttackExperience();
+        double attackerMeleeAttackExperience = attacker.calcCombatStrength().getMeleeAttackExperience();
         attackerState.meleeExperience(attackerMeleeAttackExperience);
-        int attackerMeleeAttackExperienceAfterAttack = attackerMeleeAttackExperience;
+        double attackerMeleeAttackExperienceAfterAttack = attackerMeleeAttackExperience;
         if (attacker.getUnitCategory().isMelee()) {
             attackerMeleeAttackExperienceAfterAttack = attackerMeleeAttackExperience + 2;
         }
@@ -189,10 +188,10 @@ public class BaseCombatService {
         /** BACKFIRE */
 
         // the target backfired the attacker
-        int attackerDefenseStrength = attacker.calcCombatStrength().getDefenseStrength();
+        double attackerDefenseStrength = attacker.calcCombatStrength().getDefenseStrength();
         attackerState.defenseStrength(attackerDefenseStrength);
 
-        int attackerDefenseStrengthAfterAttack = attackerDefenseStrength - targetBackFireStrength;
+        double attackerDefenseStrengthAfterAttack = attackerDefenseStrength - targetBackFireStrength;
 
         // fighting units can't be destroyed simultaneously
         if (attackerDefenseStrengthAfterAttack <= 0 && targetDestroyed) {
@@ -205,8 +204,8 @@ public class BaseCombatService {
         attacker.addCombatDamage(attackerDamage);
 
         // attacker's defense experience increase
-        int attackerDefenseExperience = attacker.calcCombatStrength().getDefenseExperience();
-        int attackerDefenseExperienceAfterAttack = attackerDefenseExperience;
+        double attackerDefenseExperience = attacker.calcCombatStrength().getDefenseExperience();
+        double attackerDefenseExperienceAfterAttack = attackerDefenseExperience;
         if (targetBackFireStrength > 0) {
             attackerDefenseExperienceAfterAttack = attackerDefenseExperience + 1;
         }
@@ -225,7 +224,7 @@ public class BaseCombatService {
         boolean attackerDestroyed = (attackerDefenseStrengthAfterAttack <= 0);
         attackerState.isDestroyed(attackerDestroyed);
 
-        // set to 0 attacker's passScore - it can't action (move, attack, capture etc) anymore
+        // set to 0 attacker's passScore - it can't action (move, attack, capture etc.) anymore
         attacker.setPassScore(0);
 
         /** SUMMARY */
@@ -308,18 +307,27 @@ public class BaseCombatService {
     }
 
     /** Calc the strike strength */
-    int calcStrikeStrength(HasCombatStrength attacker, int strikeStrength, HasCombatStrength target) {
-        int strikeSkillsPercent = calcAttackerStrikeSkillsPercent(attacker, target);
-        int strikeGeneralsPercent = getGreatGeneralCount(attacker) * 33;
-        int strikeTerrainPercent = 0;
-        int strikeAgainstThatTypePercent = 0;
-        int strikeHappinessPercent = calcAttackerStrikeHappinessPercent(attacker);
+    double calcStrikeStrength(HasCombatStrength attacker, double strikeStrength, HasCombatStrength target) {
+        double strikeSkillsPercent = calcAttackerStrikeSkillsPercent(attacker, target);
+        double strikeGeneralsPercent = getGreatGeneralCount(attacker) * 33;
+        double strikeTerrainPercent = 0;
+        double strikeAgainstThatTypePercent = 0;
+        double strikeHappinessPercent = calcAttackerStrikeHappinessPercent(attacker);
 
-        return strikeStrength + //attacker.calcCombatStrength().getAttackExperience() +
-            (int)Math.round(((double)strikeStrength * (double)strikeSkillsPercent ) / 100.0 +
-                ((double)strikeStrength * (double)strikeGeneralsPercent ) / 100.0 +
-                ((double)strikeStrength * (double)strikeTerrainPercent ) / 100.0 +
-                ((double)strikeStrength * (double)strikeAgainstThatTypePercent ) / 100.0);
+        double attackerExperience = 0;
+        if (attacker.getUnitCategory().isRanged()) {
+            attackerExperience = attacker.calcCombatStrength().getRangedAttackExperience();
+        }
+
+        if (attacker.getUnitCategory().isMelee()) {
+            attackerExperience = attacker.calcCombatStrength().getMeleeAttackExperience();
+        }
+
+        return strikeStrength + attackerExperience +
+            (strikeStrength * strikeSkillsPercent ) / 100.0 +
+            (strikeStrength * strikeGeneralsPercent ) / 100.0 +
+            (strikeStrength * strikeTerrainPercent ) / 100.0 +
+            (strikeStrength * strikeAgainstThatTypePercent ) / 100.0;
     }
 
     private int calcAttackerStrikeSkillsPercent(HasCombatStrength attacker, HasCombatStrength target) {
@@ -351,8 +359,8 @@ public class BaseCombatService {
     }
 
     /** Calc the target's back strike strength (strike strength on defense) */
-    private int calcTargetBackFireStrength(HasCombatStrength attacker, HasCombatStrength target) {
-        int targetBackFireStrength = 0;
+    private double calcTargetBackFireStrength(HasCombatStrength attacker, HasCombatStrength target) {
+        double targetBackFireStrength = 0;
 
         if (target.getUnitCategory().isRanged()) {
             targetBackFireStrength = target.calcCombatStrength().getRangedBackFireStrength();
@@ -369,17 +377,16 @@ public class BaseCombatService {
             targetBackFireStrength = target.calcCombatStrength().getMeleeBackFireStrength();
         }
 
-        int strikeOnDefenseSkillPercent = calcTargetStrikeOnDefenseSkillsPercent(attacker, target);
-        int strikeOnDefenseGeneralsPercent = getGreatGeneralCount(attacker) * 10;
-        int strikeOnDefenseTerrainPercent = 0;
-        int strikeOnDefenseAgainstThatTypePercent = 0;
+        double strikeOnDefenseSkillPercent = calcTargetStrikeOnDefenseSkillsPercent(attacker, target);
+        double strikeOnDefenseGeneralsPercent = getGreatGeneralCount(attacker) * 10;
+        double strikeOnDefenseTerrainPercent = 0;
+        double strikeOnDefenseAgainstThatTypePercent = 0;
 
         return targetBackFireStrength +
-            (int)Math.round(
-                ((double) targetBackFireStrength * (double)strikeOnDefenseSkillPercent ) / 100.0 +
-                ((double) targetBackFireStrength * (double)strikeOnDefenseGeneralsPercent ) / 100.0 +
-                ((double) targetBackFireStrength * (double)strikeOnDefenseTerrainPercent ) / 100.0 +
-                ((double) targetBackFireStrength * (double)strikeOnDefenseAgainstThatTypePercent ) / 100.0);
+            (targetBackFireStrength * strikeOnDefenseSkillPercent) / 100.0 +
+            (targetBackFireStrength * strikeOnDefenseGeneralsPercent) / 100.0 +
+            (targetBackFireStrength * strikeOnDefenseTerrainPercent) / 100.0 +
+            (targetBackFireStrength * strikeOnDefenseAgainstThatTypePercent) / 100.0;
     }
 
     private int calcTargetStrikeOnDefenseSkillsPercent(HasCombatStrength attacker, HasCombatStrength target) {

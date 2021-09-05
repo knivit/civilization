@@ -13,9 +13,9 @@ public class CombatExperience {
         .defenseExperience(0)
         .build();
 
-    private final int rangedAttackExperience;
-    private final int meleeAttackExperience;
-    private final int defenseExperience;
+    private final double rangedAttackExperience;
+    private final double meleeAttackExperience;
+    private final double defenseExperience;
 
     public CombatExperience add(CombatExperience other) {
         return CombatExperience.builder()

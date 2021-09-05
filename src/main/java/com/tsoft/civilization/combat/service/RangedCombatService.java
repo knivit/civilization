@@ -29,7 +29,7 @@ public class RangedCombatService {
         for (HasCombatStrength target : targetsAround) {
             Civilization otherCivilization = target.getCivilization();
             if (world.isWar(myCivilization, otherCivilization)) {
-                int missileStrength = getMissileStrength(attacker, target);
+                double missileStrength = getMissileStrength(attacker, target);
                 if (missileStrength > 0) {
                     targets.add(target);
                 }
@@ -40,7 +40,7 @@ public class RangedCombatService {
     }
 
     public CombatResult attack(HasCombatStrength attacker, HasCombatStrength target) {
-        int strikeStrength = getMissileStrength(attacker, target);
+        double strikeStrength = getMissileStrength(attacker, target);
         if (strikeStrength <= 0) {
             return CombatResult.builder()
                 .status(CombatStatus.FAILED_RANGED_UNDERSHOOT)
@@ -50,14 +50,14 @@ public class RangedCombatService {
         return baseCombatService.attack(attacker, target, strikeStrength);
     }
 
-    private int getMissileStrength(HasCombatStrength attacker, HasCombatStrength target) {
-        int rangedAttackStrength = attacker.calcCombatStrength().getRangedAttackStrength();
+    private double getMissileStrength(HasCombatStrength attacker, HasCombatStrength target) {
+        double rangedAttackStrength = attacker.calcCombatStrength().getRangedAttackStrength();
 
         // add all bonuses
-        int missileStrength = baseCombatService.calcStrikeStrength(attacker, rangedAttackStrength, target);
+        double missileStrength = baseCombatService.calcStrikeStrength(attacker, rangedAttackStrength, target);
 
         // calc path cost
-        int missilePathCost = 0;
+        double missilePathCost = 0;
         List<Point> path = getMissilePath(attacker.getLocation(), target.getLocation());
         for (Point loc : path) {
             AbstractTile tile = attacker.getCivilization().getTilesMap().getTile(loc);

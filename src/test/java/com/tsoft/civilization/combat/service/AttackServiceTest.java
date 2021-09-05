@@ -139,8 +139,8 @@ public class AttackServiceTest {
         assertThat(attackService.attackTarget(world.get("archers"), world.get("foreignWarriors2")))
             .usingComparator(CombatResultMock::compare)
             .isEqualTo(CombatResultMock.done(
-                "SS:5 AS:4 DS:5 DSA:5 RE:2 REA:4 ME:0 MEA:0 DE:0 DEA:0 D:0",
-                "SS:0 AS:0 DS:16 DSA:12 RE:0 REA:0 ME:0 MEA:0 DE:1 DEA:2 D:0"
+                "SS:7 AS:6 DS:5 DSA:5 RE:2 REA:4 ME:0 MEA:0 DE:0 DEA:0 D:0",
+                "SS:0 AS:0 DS:16 DSA:10 RE:0 REA:0 ME:0 MEA:0 DE:1 DEA:2 D:0"
             ));
 
         assertThat(world.unit("archers").getPassScore()).isEqualTo(0);
@@ -152,9 +152,11 @@ public class AttackServiceTest {
         assertThat(attackService.attackTarget(world.get("archers"), world.get("foreignArchers1")))
             .usingComparator(CombatResultMock::compare)
             .isEqualTo(CombatResultMock.done(
-                "SS:2 AS:2 DS:5 DSA:5 RE:6 REA:8 ME:0 MEA:0 DE:0 DEA:0 D:0",
-                "SS:0 AS:0 DS:5 DSA:3 RE:0 REA:0 ME:0 MEA:0 DE:0 DEA:1 D:0"
+                "SS:8 AS:8 DS:5 DSA:5 RE:6 REA:8 ME:0 MEA:0 DE:0 DEA:0 D:0",
+                "SS:0 AS:0 DS:5 DSA:-3 RE:0 REA:0 ME:0 MEA:0 DE:0 DEA:1 D:1"
             ));
+
+        assertThat(world.unit("foreignArchers1").isDestroyed()).isTrue();
 
         // next step
         world.nextYear();
@@ -163,8 +165,8 @@ public class AttackServiceTest {
         assertThat(attackService.attackTarget(world.get("archers"), world.get("foreignCity")))
             .usingComparator(CombatResultMock::compare)
             .isEqualTo(CombatResultMock.done(
-                "SS:2 AS:2 DS:5 DSA:5 RE:14 REA:16 ME:0 MEA:0 DE:0 DEA:0 D:0",
-                "SS:0 AS:0 DS:37 DSA:35 RE:0 REA:0 ME:0 MEA:0 DE:0 DEA:1 D:0"
+                "SS:16 AS:16 DS:5 DSA:5 RE:14 REA:16 ME:0 MEA:0 DE:0 DEA:0 D:0",
+                "SS:0 AS:0 DS:37 DSA:21 RE:0 REA:0 ME:0 MEA:0 DE:0 DEA:1 D:0"
             ));
     }
 
@@ -223,8 +225,14 @@ public class AttackServiceTest {
             .returns(1, e -> e.getCityService().size())
             .returns(2, e -> e.getUnitService().size());
 
-        assertThat(world.unit("foreignWarriors"))
-            .returns(20, e -> e.calcCombatStrength().getDefenseStrength());
+        assertThat(world.unit("foreignWarriors").calcCombatStrength())
+            .usingComparator(CombatStrengthMock::compare)
+            .isEqualTo(CombatStrengthMock.of(
+                "RAL:0 RAS:0 RAR:0 RAE:0 RBS:0",
+                "MAL:0 MAS:10 MAE:0 MBS:5",
+                "DL:0 DS:20 DE:0",
+                "D:0"
+            ));
 
         // strike 2
         assertThat(attackService.attackTarget(world.get("warriors2"), foreignCity))
@@ -243,8 +251,14 @@ public class AttackServiceTest {
             .returns(1, e -> e.getCityService().size())
             .returns(2, e -> e.getUnitService().size());
 
-        assertThat(world.unit("foreignWarriors"))
-            .returns(20, e -> e.calcCombatStrength().getDefenseStrength());
+        assertThat(world.unit("foreignWarriors").calcCombatStrength())
+            .usingComparator(CombatStrengthMock::compare)
+            .isEqualTo(CombatStrengthMock.of(
+                "RAL:0 RAS:0 RAR:0 RAE:0 RBS:0",
+                "MAL:0 MAS:10 MAE:0 MBS:5",
+                "DL:0 DS:20 DE:0",
+                "D:0"
+            ));
 
         // strike 3
         assertThat(attackService.attackTarget(world.get("warriors3"), foreignCity))
@@ -263,8 +277,14 @@ public class AttackServiceTest {
             .returns(1, e -> e.getCityService().size())
             .returns(2, e -> e.getUnitService().size());
 
-        assertThat(world.unit("foreignWarriors"))
-            .returns(20, e -> e.calcCombatStrength().getDefenseStrength());
+        assertThat(world.unit("foreignWarriors").calcCombatStrength())
+            .usingComparator(CombatStrengthMock::compare)
+            .isEqualTo(CombatStrengthMock.of(
+                "RAL:0 RAS:0 RAR:0 RAE:0 RBS:0",
+                "MAL:0 MAS:10 MAE:0 MBS:5",
+                "DL:0 DS:20 DE:0",
+                "D:0"
+            ));
 
         // strike 4 - city and foreign warriors in it are captured
         assertThat(attackService.attackTarget(world.get("warriors4"), foreignCity))
@@ -278,8 +298,8 @@ public class AttackServiceTest {
         assertThat(attackService.attackTarget(world.get("warriors5"), foreignCity))
             .usingComparator(CombatResultMock::compare)
             .isEqualTo(CombatResultMock.done(
-                "SS:10 AS:3 DS:20 DSA:20 REA:0 ME:0 MEA:2 DE:0 DEA:0 D:0",
-                "SS:0 AS:0 DS:14 DSA:11 REA:0 ME:0 MEA:0 DE:7 DEA:8 D:1"
+                "SS:10 AS:1 DS:20 DSA:20 REA:0 ME:0 MEA:2 DE:0 DEA:0 D:0",
+                "SS:0 AS:0 DS:11 DSA:10 REA:0 ME:0 MEA:0 DE:15 DEA:16 D:0"
             ));
 
         assertThat(russia.getCityService().size()).isEqualTo(2);
@@ -292,8 +312,7 @@ public class AttackServiceTest {
             .returns(russia, City::getCivilization);
 
         // foreign warriors destroyed
-        assertThat(world.unit("foreignWorkers"))
-            .returns(true, AbstractUnit::isDestroyed);
+        assertThat(world.unit("foreignWorkers").isDestroyed()).isTrue();
         assertThat(russia.getUnitService().size()).isEqualTo(5);
         assertThat(america.getUnitService().size()).isEqualTo(0);
 

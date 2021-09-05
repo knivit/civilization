@@ -35,8 +35,8 @@ public class BaseHealingSkill implements AbstractHealingSkill {
         return heal(level.getValue(), combatDamage);
     }
 
-    private CombatDamage heal(int heal, CombatDamage combatDamage) {
-        int damage = combatDamage.getDamage();
+    private CombatDamage heal(double heal, CombatDamage combatDamage) {
+        double damage = combatDamage.getDamage();
 
         if (damage > 0) {
             if (heal > damage) {

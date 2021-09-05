@@ -7,20 +7,20 @@ import lombok.Getter;
 @Builder
 public class CombatantState {
 
-    private final int strikeStrength;
-    private final int appliedStrikeStrength;
+    private final double strikeStrength;
+    private final double appliedStrikeStrength;
 
-    private final int rangedExperience;
-    private final int rangedExperienceAfterAttack;
+    private final double rangedExperience;
+    private final double rangedExperienceAfterAttack;
 
-    private final int meleeExperience;
-    private final int meleeExperienceAfterAttack;
+    private final double meleeExperience;
+    private final double meleeExperienceAfterAttack;
 
-    private final int defenseStrength;
-    private final int defenseStrengthAfterAttack;
+    private final double defenseStrength;
+    private final double defenseStrengthAfterAttack;
 
-    private final int defenseExperience;
-    private final int defenseExperienceAfterAttack;
+    private final double defenseExperience;
+    private final double defenseExperienceAfterAttack;
 
     private final boolean isDestroyed;
 

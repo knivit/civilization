@@ -72,8 +72,8 @@ public class MeleeCombatService {
         }
 
         // calc the strength of the attack
-        int meleeAttackStrength = attacker.calcCombatStrength().getMeleeAttackStrength();
-        int strikeStrength = baseCombatService.calcStrikeStrength(attacker, meleeAttackStrength, target);
+        double meleeAttackStrength = attacker.calcCombatStrength().getMeleeAttackStrength();
+        double strikeStrength = baseCombatService.calcStrikeStrength(attacker, meleeAttackStrength, target);
 
         return baseCombatService.attack(attacker, target, strikeStrength);
     }

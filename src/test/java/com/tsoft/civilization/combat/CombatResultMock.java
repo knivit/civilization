@@ -95,29 +95,29 @@ public class CombatResultMock {
     public static boolean equals(CombatResult a, CombatResult b) {
         boolean isEqual =
             // attacker
-            a.getAttackerState().getStrikeStrength() == b.getAttackerState().getStrikeStrength() &&
-            a.getAttackerState().getAppliedStrikeStrength() == b.getAttackerState().getAppliedStrikeStrength() &&
-            a.getAttackerState().getDefenseStrength() == b.getAttackerState().getDefenseStrength() &&
-            a.getAttackerState().getDefenseStrengthAfterAttack() == b.getAttackerState().getDefenseStrengthAfterAttack() &&
-            a.getAttackerState().getRangedExperience() == b.getAttackerState().getRangedExperience() &&
-            a.getAttackerState().getRangedExperienceAfterAttack() == b.getAttackerState().getRangedExperienceAfterAttack() &&
-            a.getAttackerState().getMeleeExperience() == b.getAttackerState().getMeleeExperience() &&
-            a.getAttackerState().getMeleeExperienceAfterAttack() == b.getAttackerState().getMeleeExperienceAfterAttack() &&
-            a.getAttackerState().getDefenseExperience() == b.getAttackerState().getDefenseExperience() &&
-            a.getAttackerState().getDefenseExperienceAfterAttack() == b.getAttackerState().getDefenseExperienceAfterAttack() &&
+            eq(a.getAttackerState().getStrikeStrength(), b.getAttackerState().getStrikeStrength()) &&
+            eq(a.getAttackerState().getAppliedStrikeStrength(), b.getAttackerState().getAppliedStrikeStrength()) &&
+            eq(a.getAttackerState().getDefenseStrength(), b.getAttackerState().getDefenseStrength()) &&
+            eq(a.getAttackerState().getDefenseStrengthAfterAttack(), b.getAttackerState().getDefenseStrengthAfterAttack()) &&
+            eq(a.getAttackerState().getRangedExperience(), b.getAttackerState().getRangedExperience()) &&
+            eq(a.getAttackerState().getRangedExperienceAfterAttack(), b.getAttackerState().getRangedExperienceAfterAttack()) &&
+            eq(a.getAttackerState().getMeleeExperience(), b.getAttackerState().getMeleeExperience()) &&
+            eq(a.getAttackerState().getMeleeExperienceAfterAttack(), b.getAttackerState().getMeleeExperienceAfterAttack()) &&
+            eq(a.getAttackerState().getDefenseExperience(), b.getAttackerState().getDefenseExperience()) &&
+            eq(a.getAttackerState().getDefenseExperienceAfterAttack(), b.getAttackerState().getDefenseExperienceAfterAttack()) &&
             a.getAttackerState().isDestroyed() == b.getAttackerState().isDestroyed() &&
 
             // target
-            a.getTargetState().getStrikeStrength() == b.getTargetState().getStrikeStrength() &&
-            a.getTargetState().getAppliedStrikeStrength() == b.getTargetState().getAppliedStrikeStrength() &&
-            a.getTargetState().getDefenseStrength() == b.getTargetState().getDefenseStrength() &&
-            a.getTargetState().getDefenseStrengthAfterAttack() == b.getTargetState().getDefenseStrengthAfterAttack() &&
-            a.getTargetState().getRangedExperience() == b.getTargetState().getRangedExperience() &&
-            a.getTargetState().getRangedExperienceAfterAttack() == b.getTargetState().getRangedExperienceAfterAttack() &&
-            a.getTargetState().getMeleeExperience() == b.getTargetState().getMeleeExperience() &&
-            a.getTargetState().getMeleeExperienceAfterAttack() == b.getTargetState().getMeleeExperienceAfterAttack() &&
-            a.getTargetState().getDefenseExperience() == b.getTargetState().getDefenseExperience() &&
-            a.getTargetState().getDefenseExperienceAfterAttack() == b.getTargetState().getDefenseExperienceAfterAttack() &&
+            eq(a.getTargetState().getStrikeStrength(), b.getTargetState().getStrikeStrength()) &&
+            eq(a.getTargetState().getAppliedStrikeStrength(), b.getTargetState().getAppliedStrikeStrength()) &&
+            eq(a.getTargetState().getDefenseStrength(), b.getTargetState().getDefenseStrength()) &&
+            eq(a.getTargetState().getDefenseStrengthAfterAttack(), b.getTargetState().getDefenseStrengthAfterAttack()) &&
+            eq(a.getTargetState().getRangedExperience(), b.getTargetState().getRangedExperience()) &&
+            eq(a.getTargetState().getRangedExperienceAfterAttack(), b.getTargetState().getRangedExperienceAfterAttack()) &&
+            eq(a.getTargetState().getMeleeExperience(), b.getTargetState().getMeleeExperience()) &&
+            eq(a.getTargetState().getMeleeExperienceAfterAttack(), b.getTargetState().getMeleeExperienceAfterAttack()) &&
+            eq(a.getTargetState().getDefenseExperience(), b.getTargetState().getDefenseExperience()) &&
+            eq(a.getTargetState().getDefenseExperienceAfterAttack(), b.getTargetState().getDefenseExperienceAfterAttack()) &&
             a.getTargetState().isDestroyed() == b.getTargetState().isDestroyed() &&
 
             // status
@@ -130,30 +130,30 @@ public class CombatResultMock {
                 -----------------------------------------------------
                 Attacker
                 -----------------------------------------------------
-                StrikeStrength              |     %5d  |    %5d | %s
-                AppliedStrikeStrength       |     %5d  |    %5d | %s
-                DefenseStrength             |     %5d  |    %5d | %s
-                DefenseStrengthAfterAttack  |     %5d  |    %5d | %s
-                RangedExperience            |     %5d  |    %5d | %s
-                RangedExperienceAfterAttack |     %5d  |    %5d | %s
-                MeleeExperience             |     %5d  |    %5d | %s
-                MeleeExperienceAfterAttack  |     %5d  |    %5d | %s
-                DefenseExperience           |     %5d  |    %5d | %s
-                DefenseExperienceAfterAttack|     %5d  |    %5d | %s
+                StrikeStrength              |     %5.0f  |    %5.0f | %s
+                AppliedStrikeStrength       |     %5.0f  |    %5.0f | %s
+                DefenseStrength             |     %5.0f  |    %5.0f | %s
+                DefenseStrengthAfterAttack  |     %5.0f  |    %5.0f | %s
+                RangedExperience            |     %5.0f  |    %5.0f | %s
+                RangedExperienceAfterAttack |     %5.0f  |    %5.0f | %s
+                MeleeExperience             |     %5.0f  |    %5.0f | %s
+                MeleeExperienceAfterAttack  |     %5.0f  |    %5.0f | %s
+                DefenseExperience           |     %5.0f  |    %5.0f | %s
+                DefenseExperienceAfterAttack|     %5.0f  |    %5.0f | %s
                 Destroyed                   |     %5b  |    %5b | %s
                 -----------------------------------------------------
                 Target
                 -----------------------------------------------------
-                StrikeStrength              |     %5d  |    %5d | %s
-                AppliedStrikeStrength       |     %5d  |    %5d | %s
-                DefenseStrength             |     %5d  |    %5d | %s
-                DefenseStrengthAfterAttack  |     %5d  |    %5d | %s
-                RangedExperience            |     %5d  |    %5d | %s
-                RangedExperienceAfterAttack |     %5d  |    %5d | %s
-                MeleeExperience             |     %5d  |    %5d | %s
-                MeleeExperienceAfterAttack  |     %5d  |    %5d | %s
-                DefenseExperience           |     %5d  |    %5d | %s
-                DefenseExperienceAfterAttack|     %5d  |    %5d | %s
+                StrikeStrength              |     %5.0f  |    %5.0f | %s
+                AppliedStrikeStrength       |     %5.0f  |    %5.0f | %s
+                DefenseStrength             |     %5.0f  |    %5.0f | %s
+                DefenseStrengthAfterAttack  |     %5.0f  |    %5.0f | %s
+                RangedExperience            |     %5.0f  |    %5.0f | %s
+                RangedExperienceAfterAttack |     %5.0f  |    %5.0f | %s
+                MeleeExperience             |     %5.0f  |    %5.0f | %s
+                MeleeExperienceAfterAttack  |     %5.0f  |    %5.0f | %s
+                DefenseExperience           |     %5.0f  |    %5.0f | %s
+                DefenseExperienceAfterAttack|     %5.0f  |    %5.0f | %s
                 Destroyed                   |     %5b  |    %5b | %s
                 -----------------------------------------------------
                 Status                      |     %5d  |    %5d | %s
@@ -190,7 +190,11 @@ public class CombatResultMock {
         return isEqual;
     }
 
-    private static String cmp(int a, int b) {
-        return (a == b) ? "" : "*";
+    private static boolean eq(double a, double b) {
+        return Math.round(a) == Math.round(b);
+    }
+
+    private static String cmp(double a, double b) {
+        return (Math.round(a) == Math.round(b)) ? "" : "*";
     }
 }

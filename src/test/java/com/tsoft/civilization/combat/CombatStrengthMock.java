@@ -113,19 +113,19 @@ public class CombatStrengthMock {
                 Type                       |   Actual   | Expected
                 ---------------------------------------------------
                 RangedAttackLevel         |     %5d  |    %5d | %s
-                RangedAttackStrength      |     %5d  |    %5d | %s
+                RangedAttackStrength      |     %5.0f  |    %5.0f | %s
                 RangedAttackRadius        |     %5d  |    %5d | %s
-                RangedAttackExperience    |     %5d  |    %5d | %s
-                RangedBackFireStrength    |     %5d  |    %5d | %s
+                RangedAttackExperience    |     %5.0f  |    %5.0f | %s
+                RangedBackFireStrength    |     %5.0f  |    %5.0f | %s
                 ---------------------------------------------------
                 MeleeAttackLevel          |     %5d  |    %5d | %s
-                MeleeAttackStrength       |     %5d  |    %5d | %s
-                MeleeAttackExperience     |     %5d  |    %5d | %s
-                MeleeBackFireStrength     |     %5d  |    %5d | %s
+                MeleeAttackStrength       |     %5.0f  |    %5.0f | %s
+                MeleeAttackExperience     |     %5.0f  |    %5.0f | %s
+                MeleeBackFireStrength     |     %5.0f  |    %5.0f | %s
                 ---------------------------------------------------
                 DefenseLevel              |     %5d  |    %5d | %s
-                DefenseStrength           |     %5d  |    %5d | %s
-                DefenseExperience         |     %5d  |    %5d | %s
+                DefenseStrength           |     %5.0f  |    %5.0f | %s
+                DefenseExperience         |     %5.0f  |    %5.0f | %s
                 ---------------------------------------------------
                 Destroyed                 |     %5b  |    %5b | %s
                 %n""",
@@ -152,7 +152,7 @@ public class CombatStrengthMock {
         return isEqual;
     }
 
-    private static String cmp(int a, int b) {
-        return (a == b) ? "" : "*";
+    private static String cmp(double a, double b) {
+        return (Math.round(a) == Math.round(b)) ? "" : "*";
     }
 }
