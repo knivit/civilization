@@ -5,7 +5,7 @@ public class Response {
     private final String contentType;
     private final AbstractResponseContent content;
 
-    private final StringBuilder additionalHeaders = new StringBuilder();
+    private final StringBuilder headers = new StringBuilder();
 
     public Response(String responseCode, String value, String contentType) {
         this.responseCode = responseCode;
@@ -37,12 +37,12 @@ public class Response {
 
     public void addHeader(String header) {
         if (header != null) {
-            additionalHeaders.append(header);
-            additionalHeaders.append("\r\n");
+            headers.append(header);
+            headers.append("\r\n");
         }
     }
 
-    public StringBuilder getAdditionalHeaders() {
-        return additionalHeaders;
+    public StringBuilder getHeaders() {
+        return headers;
     }
 }

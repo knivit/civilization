@@ -78,35 +78,19 @@ public class Client {
         }
     }
 
-    private boolean sendBytes(byte[] bytes) {
-        try {
-            outputStream.write(bytes);
-            outputStream.flush();
-            return true;
-        } catch (IOException ex) {
-            log.warn("An error occurred during sending a response", ex);
-        }
-        return false;
-    }
-
-    public boolean sendText(String text) {
-        return sendBytes(text.getBytes(StandardCharsets.UTF_8));
-    }
-
     private void sendResponse(Response response) {
         StringBuilder buf = Format.text("""
             HTTP/1.1 $errorCode\r
             Content-Type: $contentType\r
             Content-Length: $contentLength\r
             Connection: keep-alive\r
-            $additionalHeaders: $additionalHeaders\r
-            \r
+            $headers\r
             """,
 
             "$errorCode", response.getResponseCode(),
             "$contentType", response.getContentType(),
             "$contentLength", response.getContentLength(),
-            "$additionalHeaders", response.getAdditionalHeaders()
+            "$headers", response.getHeaders()
         );
 
         if (sendText(buf.toString())) {
@@ -117,5 +101,20 @@ public class Client {
     /** Send a error message */
     public void sendError(L10n messages) {
         sendResponse(JsonResponse.badRequest(messages));
+    }
+
+    public boolean sendText(String text) {
+        return sendBytes(text.getBytes(StandardCharsets.UTF_8));
+    }
+
+    private boolean sendBytes(byte[] bytes) {
+        try {
+            outputStream.write(bytes);
+            outputStream.flush();
+            return true;
+        } catch (IOException ex) {
+            log.warn("An error occurred during sending a response", ex);
+        }
+        return false;
     }
 }
