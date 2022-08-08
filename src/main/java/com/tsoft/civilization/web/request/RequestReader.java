@@ -14,7 +14,7 @@ public class RequestReader {
     private static final int MAX_POST_DATA = 8192;
 
     public Request readRequest(String clientIp, int clientPort, BufferedReader inputStream) {
-        Map<String, String> headers = readHeaders(inputStream);
+        RequestHeadersMap headers = readHeaders(inputStream);
 
         String requestUrl = getRequestUrl(headers);
         RequestType requestType = getRequestType(headers);
@@ -37,8 +37,8 @@ public class RequestReader {
     // Read headers until an empty line
     // For GET requests, that's the end of a request
     // For POST requests, the post data will be after that
-    private Map<String, String> readHeaders(BufferedReader inputStream) {
-        Map<String, String> headers = new HashMap<>();
+    private RequestHeadersMap readHeaders(BufferedReader inputStream) {
+        RequestHeadersMap headers = new RequestHeadersMap();
 
         while (true) {
             try {
@@ -62,16 +62,17 @@ public class RequestReader {
                 if (n != -1) {
                     String name = line.substring(0, n).trim();
                     String value = line.substring(n + 1).trim();
-                    headers.put(name, value);
+                    headers.add(name, value);
                 }
             } catch (IOException ex) {
                 log.error("Can't read headers", ex);
             }
         }
+
         return headers;
     }
 
-    private String getRequestUrl(Map<String, String> headers) {
+    private String getRequestUrl(RequestHeadersMap headers) {
         String requestUrl = headers.get("GET");
         if (requestUrl == null) {
             requestUrl = headers.get("POST");
@@ -93,19 +94,19 @@ public class RequestReader {
         return requestUrl;
     }
 
-    private RequestType getRequestType(Map<String, String> headers) {
-        if (headers.containsKey("GET")) {
+    private RequestType getRequestType(RequestHeadersMap headers) {
+        if (headers.contains("GET")) {
             return RequestType.GET;
         }
 
-        if (headers.containsKey("POST")) {
+        if (headers.contains("POST")) {
             return RequestType.POST;
         }
 
         return null;
     }
 
-    private String getSessionId(Map<String, String> headers) {
+    private String getSessionId(RequestHeadersMap headers) {
         String cookies = headers.get("Cookie");
         if (cookies == null) {
             return null;
@@ -126,12 +127,12 @@ public class RequestReader {
         return null;
     }
 
-    private String getUserAgent(Map<String, String> headers) {
+    private String getUserAgent(RequestHeadersMap headers) {
         return headers.get("User-Agent");
     }
 
     /** Read parameters from the headers */
-    private Map<String, String> readPostData(Map<String, String> headers, BufferedReader inputStream) {
+    private Map<String, String> readPostData(RequestHeadersMap headers, BufferedReader inputStream) {
         int contentLength = NumberUtil.parseInt(headers.get("Content-Length"), -1);
         if (contentLength <= 0 || contentLength >= MAX_POST_DATA) {
             return Collections.emptyMap();

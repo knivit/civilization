@@ -24,7 +24,7 @@ public final class Request {
     @Getter
     private final String userAgent;
 
-    private final Map<String, String> headers;
+    private final RequestHeadersMap headers;
     private final Map<String, String> params;
 
     public static class RequestBuilder {

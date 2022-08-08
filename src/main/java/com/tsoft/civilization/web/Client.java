@@ -36,7 +36,7 @@ public class Client {
         Request request = requestReader.readRequest(clientIp, clientPort, inputStream);
 
         // Set properties as a client is needed
-        if ("keep-alive".equals(request.getHeader("Connection"))) {
+        if ("keep-alive".equalsIgnoreCase(request.getHeader("Connection"))) {
             socket.setKeepAlive(true);
         }
 
