@@ -1,6 +1,6 @@
 package com.tsoft.civilization.improvement.city.building;
 
-import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.building.L10nBuilding;
 import com.tsoft.civilization.world.Event;
 import lombok.Builder;

@@ -1,6 +1,6 @@
 package com.tsoft.civilization.unit.service.move;
 
-import com.tsoft.civilization.util.AbstractDir;
+import com.tsoft.civilization.util.dir.AbstractDir;
 
 import java.util.*;
 import java.util.stream.Stream;

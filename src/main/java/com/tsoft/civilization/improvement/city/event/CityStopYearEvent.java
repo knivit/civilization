@@ -1,6 +1,6 @@
 package com.tsoft.civilization.improvement.city.event;
 
-import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.improvement.city.L10nCity;
 import com.tsoft.civilization.world.Event;

@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 import java.util.Date;
 import java.util.UUID;
 
-import static com.tsoft.civilization.L10n.L10n.DEFAULT_LANGUAGE;
+import static com.tsoft.civilization.util.l10n.L10n.DEFAULT_LANGUAGE;
 
 @EqualsAndHashCode(of = "sessionId")
 public class ClientSession {

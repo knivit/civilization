@@ -53,6 +53,7 @@ class RequestsMap {
         requests.put(GetCivilizationStatus.class.getSimpleName(), new GetCivilizationStatus());
         requests.put(GetConstructionStatus.class.getSimpleName(), new GetConstructionStatus());
         requests.put(GetBuildingStatus.class.getSimpleName(), new GetBuildingStatus());
+        requests.put(GetBuildingInfo.class.getSimpleName(), new GetBuildingInfo());
         requests.put(GetControlPanel.class.getSimpleName(), new GetControlPanel());
 
         // Unit's Common

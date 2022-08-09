@@ -29,7 +29,7 @@ public class GetImprovementInfoTest {
     private static final AbstractAjaxRequest getImprovementInfoRequest =
         AbstractAjaxRequest.getInstance(GetImprovementInfo.class.getSimpleName());
 
-    // Get improvement's info for mine civilization - must be shown info about it's supply
+    // Get improvement's info for mine civilization - must be shown info about its supply
     @Test
     public void get_json_for_my_civilization() {
         MockWorld world = MockWorld.newSimpleWorld();
@@ -44,7 +44,7 @@ public class GetImprovementInfoTest {
         Farm farm = ImprovementFactory.newInstance(Farm.CLASS_UUID, tile, world.city("city1"));
 
         Sessions.getCurrent().setActiveCivilization(russia);
-        Request request = MockRequest.newInstance("improvement", farm.getId());
+        Request request = MockRequest.newInstance("id", farm.getId());
 
         Response response = getImprovementInfoRequest.getJson(request);
 
@@ -83,7 +83,7 @@ public class GetImprovementInfoTest {
         Farm farm = ImprovementFactory.newInstance(Farm.CLASS_UUID, tile, world.city("city1"));
 
         Sessions.getCurrent().setActiveCivilization(america);
-        Request request = MockRequest.newInstance("improvement", farm.getId());
+        Request request = MockRequest.newInstance("id", farm.getId());
 
         Response response = getImprovementInfoRequest.getJson(request);
 
@@ -111,7 +111,7 @@ public class GetImprovementInfoTest {
         AncientRuins ancientRuins = ImprovementFactory.newInstance(AncientRuins.CLASS_UUID, tile, null);
 
         Sessions.getCurrent().setActiveCivilization(russia);
-        Request request = MockRequest.newInstance("improvement", ancientRuins.getId());
+        Request request = MockRequest.newInstance("id", ancientRuins.getId());
 
         Response response = getImprovementInfoRequest.getJson(request);
 

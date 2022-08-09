@@ -1,8 +1,9 @@
 package com.tsoft.civilization;
 
+import com.tsoft.civilization.util.SystemProperties;
 import com.tsoft.civilization.web.Server;
 
-import static com.tsoft.civilization.SystemProperties.SERVER_PORT;
+import static com.tsoft.civilization.util.SystemProperties.SERVER_PORT;
 
 public class Main {
     public static void main(String[] args) throws Throwable {

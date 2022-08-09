@@ -1,6 +1,6 @@
 package com.tsoft.civilization.improvement.city.action;
 
-import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.building.BuildingFactory;
 import com.tsoft.civilization.improvement.city.L10nCity;
 import com.tsoft.civilization.building.L10nBuilding;
@@ -70,13 +70,13 @@ public class BuildBuildingAction {
         }
 
         return Format.text("""
-            <button onclick="$buttonOnClick">$buttonLabel: $productionCost $production</button>
+            <button onclick="$buttonOnClick">$buttonLabel: $productionCost<image src='$productionImage'/></button>
             """,
 
             "$buttonOnClick", ClientAjaxRequest.buildBuildingAction(city, buildingClassUuid),
             "$buttonLabel", L10nBuilding.BUILD.getLocalized(),
             "$productionCost", city.getBuildingProductionCost(buildingClassUuid),
-            "$production", L10nCity.PRODUCTION
+            "$productionImage", "images/status/production.png"
         );
     }
 }

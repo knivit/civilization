@@ -1,6 +1,6 @@
 package com.tsoft.civilization.tile.feature;
 
-import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.util.l10n.L10n;
 
 public class L10nFeature {
     public static final L10n FEATURE_NOT_FOUND = new L10n()

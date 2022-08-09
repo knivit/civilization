@@ -1,23 +1,29 @@
 package com.tsoft.civilization.improvement.mine;
 
-import com.tsoft.civilization.L10n.L10n;
-import com.tsoft.civilization.improvement.L10nImprovement;
+import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.improvement.AbstractImprovementView;
-import lombok.Getter;
+
+import static com.tsoft.civilization.util.l10n.L10nLanguage.EN;
+import static com.tsoft.civilization.util.l10n.L10nLanguage.RU;
 
 public class MineView extends AbstractImprovementView {
 
-    @Getter
-    private final L10n name = L10nImprovement.MINE_NAME;
+    private static final L10n MINE_NAME = new L10n()
+        .put(EN, "Mine")
+        .put(RU, "Рудник");
+
+    private static final L10n MINE_DESCRIPTION = new L10n()
+        .put(EN, "The Mine grants access to several strategic and luxury resources. It can also be built on hills near cities to improve their Production potential.")
+        .put(RU, "Рудник дает доступ к некоторым стратегическим ресурсам и ресурсам роскоши.");
 
     @Override
-    public String getLocalizedName() {
-        return name.getLocalized();
+    public L10n getName() {
+        return MINE_NAME;
     }
 
     @Override
     public String getLocalizedDescription() {
-        return L10nImprovement.MINE_DESCRIPTION.getLocalized();
+        return MINE_DESCRIPTION.getLocalized();
     }
 
     @Override

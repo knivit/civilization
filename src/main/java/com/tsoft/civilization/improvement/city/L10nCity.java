@@ -1,12 +1,12 @@
 package com.tsoft.civilization.improvement.city;
 
-import com.tsoft.civilization.L10n.L10n;
-import com.tsoft.civilization.L10n.L10nList;
-import com.tsoft.civilization.L10n.L10nMap;
+import com.tsoft.civilization.util.l10n.L10n;
+import com.tsoft.civilization.util.l10n.L10nList;
+import com.tsoft.civilization.util.l10n.L10nMap;
 import com.tsoft.civilization.civilization.L10nCivilization;
 
-import static com.tsoft.civilization.L10n.L10nLanguage.EN;
-import static com.tsoft.civilization.L10n.L10nLanguage.RU;
+import static com.tsoft.civilization.util.l10n.L10nLanguage.EN;
+import static com.tsoft.civilization.util.l10n.L10nLanguage.RU;
 
 public class L10nCity {
 

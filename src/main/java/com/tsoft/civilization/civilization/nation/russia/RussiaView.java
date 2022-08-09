@@ -1,6 +1,6 @@
 package com.tsoft.civilization.civilization.nation.russia;
 
-import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.civilization.CivilizationView;
 import com.tsoft.civilization.civilization.L10nCivilization;
 import lombok.Getter;

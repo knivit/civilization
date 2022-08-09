@@ -1,6 +1,6 @@
 package com.tsoft.civilization;
 
-import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.PlayerType;
 import com.tsoft.civilization.improvement.city.City;

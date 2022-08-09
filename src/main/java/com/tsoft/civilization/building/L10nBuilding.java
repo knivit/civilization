@@ -1,9 +1,9 @@
 package com.tsoft.civilization.building;
 
-import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.util.l10n.L10n;
 
-import static com.tsoft.civilization.L10n.L10nLanguage.EN;
-import static com.tsoft.civilization.L10n.L10nLanguage.RU;
+import static com.tsoft.civilization.util.l10n.L10nLanguage.EN;
+import static com.tsoft.civilization.util.l10n.L10nLanguage.RU;
 
 public class L10nBuilding {
     public static final L10n CAN_DESTROY = new L10n()

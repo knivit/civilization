@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
-import static com.tsoft.civilization.L10n.L10nLanguage.EN;
-import static com.tsoft.civilization.L10n.L10nLanguage.RU;
+import static com.tsoft.civilization.util.l10n.L10nLanguage.EN;
+import static com.tsoft.civilization.util.l10n.L10nLanguage.RU;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SelectLanguageRequestTest {

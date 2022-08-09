@@ -1,6 +1,6 @@
 package com.tsoft.civilization.action;
 
-import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.util.l10n.L10n;
 
 public class ActionFailureResult extends ActionAbstractResult {
     public ActionFailureResult(L10n message) {

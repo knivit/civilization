@@ -19,14 +19,14 @@ public class GetFeatureInfo extends AbstractAjaxRequest {
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
 
     public static StringBuilder getAjax(AbstractFeature feature) {
-        return Format.text("server.sendAsyncAjax('ajax/GetFeatureInfo', { feature:'$feature' })",
+        return Format.text("server.sendAsyncAjax('ajax/GetFeatureInfo', { id:'$feature' })",
             "$feature", feature.getClassUuid()
         );
     }
 
     @Override
     public Response getJson(Request request) {
-        String featureClassUuid = request.get("feature");
+        String featureClassUuid = request.get("id");
         AbstractFeature feature = FeatureFactory.findByClassUuid(featureClassUuid);
         if (feature == null) {
             return JsonResponse.badRequest(L10nFeature.FEATURE_NOT_FOUND);

@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
-import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.util.l10n.L10n;
 
 public class L10nStatus {
     public static final L10n AVAILABLE_ACTIONS = new L10n()

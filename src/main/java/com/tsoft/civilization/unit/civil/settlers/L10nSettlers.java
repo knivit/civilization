@@ -1,6 +1,6 @@
 package com.tsoft.civilization.unit.civil.settlers;
 
-import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.util.l10n.L10n;
 
 public class L10nSettlers {
     public static final L10n BUILD_CITY_NAME = new L10n()

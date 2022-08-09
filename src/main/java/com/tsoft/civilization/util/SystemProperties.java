@@ -1,4 +1,6 @@
-package com.tsoft.civilization;
+package com.tsoft.civilization.util;
+
+import com.tsoft.civilization.Main;
 
 import java.io.InputStream;
 import java.util.Collections;

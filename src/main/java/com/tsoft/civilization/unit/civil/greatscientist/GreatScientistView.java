@@ -1,6 +1,6 @@
 package com.tsoft.civilization.unit.civil.greatscientist;
 
-import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.unit.AbstractUnitView;
 import lombok.Getter;

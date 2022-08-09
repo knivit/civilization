@@ -1,4 +1,4 @@
-package com.tsoft.civilization.L10n;
+package com.tsoft.civilization.util.l10n;
 
 import java.util.HashMap;
 import java.util.Map;

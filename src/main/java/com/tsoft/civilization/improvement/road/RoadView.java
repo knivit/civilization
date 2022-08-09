@@ -1,23 +1,29 @@
 package com.tsoft.civilization.improvement.road;
 
-import com.tsoft.civilization.L10n.L10n;
-import com.tsoft.civilization.improvement.L10nImprovement;
+import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.improvement.AbstractImprovementView;
-import lombok.Getter;
+
+import static com.tsoft.civilization.util.l10n.L10nLanguage.EN;
+import static com.tsoft.civilization.util.l10n.L10nLanguage.RU;
 
 public class RoadView extends AbstractImprovementView {
 
-    @Getter
-    private final L10n name = L10nImprovement.ROAD_NAME;
+    private static final L10n ROAD_NAME = new L10n()
+        .put(EN, "Road")
+        .put(RU, "Дорога");
+
+    private static final L10n ROAD_DESCRIPTION = new L10n()
+        .put(EN, "Road links cities that gives economical burst")
+        .put(RU, "Дороги связывают города приводя к экономическому взрыву");
 
     @Override
-    public String getLocalizedName() {
-        return name.getLocalized();
+    public L10n getName() {
+        return ROAD_NAME;
     }
 
     @Override
     public String getLocalizedDescription() {
-        return L10nImprovement.ROAD_DESCRIPTION.getLocalized();
+        return ROAD_DESCRIPTION.getLocalized();
     }
 
     @Override

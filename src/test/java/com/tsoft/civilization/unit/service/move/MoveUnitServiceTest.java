@@ -10,7 +10,7 @@ import com.tsoft.civilization.unit.civil.greatartist.GreatArtist;
 import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.unit.civil.workers.Workers;
 import com.tsoft.civilization.unit.military.warriors.Warriors;
-import com.tsoft.civilization.util.Dir6;
+import com.tsoft.civilization.util.dir.Dir6;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.render.WorldRender;
 import org.junit.jupiter.api.Test;

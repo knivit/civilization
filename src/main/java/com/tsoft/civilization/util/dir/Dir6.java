@@ -1,4 +1,4 @@
-package com.tsoft.civilization.util;
+package com.tsoft.civilization.util.dir;
 
 import java.util.ArrayList;
 

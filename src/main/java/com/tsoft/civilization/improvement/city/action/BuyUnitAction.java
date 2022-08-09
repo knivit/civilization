@@ -78,13 +78,13 @@ public class BuyUnitAction {
         }
 
         return Format.text("""
-            <button onclick="$buttonOnClick">$buttonLabel: $buyCost $gold</button>
+            <button onclick="$buttonOnClick">$buttonLabel: $buyCost<image src='$goldImage'/></button>
             """,
 
             "$buttonOnClick", ClientAjaxRequest.buyUnitAction(city, unitClassUuid),
             "$buttonLabel", getLocalizedName(),
             "$buyCost", city.getUnitBuyCost(unitClassUuid),
-            "$gold", L10nCity.GOLD
+            "$goldImage", "images/status/gold.png"
         );
     }
 }

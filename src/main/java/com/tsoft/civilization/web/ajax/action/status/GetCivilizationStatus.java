@@ -74,7 +74,6 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
                 <tr><td>$goldImage</td><td>$goldLabel</td><td>$gold</td>
                 <tr><td>$foodImage</td><td>$foodLabel</td><td>$food</td>
                 <tr><td>$happinessImage</td><td>$happinessLabel</td><td>$happiness</td>
-                <tr><td>$unhappinessImage</td><td>$unhappinessLabel</td><td>$unhappiness</td>
                 <tr><td></td><td>$militaryUnitsLabel</td><td>$militaryUnits</td>
                 <tr><td></td><td>$civilUnitsLabel</td><td>$civilUnits</td>
                 <tr><td></td><td>$citiesLabel</td><td>$cities</td>

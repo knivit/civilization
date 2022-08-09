@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web;
 
-import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.util.l10n.L10n;
 
 public class L10nClient {
     public static final L10n CIVILIZATIONS_BUTTON = new L10n()

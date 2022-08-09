@@ -1,6 +1,6 @@
 package com.tsoft.civilization.improvement.city;
 
-import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.building.*;
 import com.tsoft.civilization.building.palace.Palace;
 import com.tsoft.civilization.civilization.population.Happiness;

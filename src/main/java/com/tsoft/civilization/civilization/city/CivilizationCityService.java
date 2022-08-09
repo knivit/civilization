@@ -1,13 +1,13 @@
 package com.tsoft.civilization.civilization.city;
 
-import com.tsoft.civilization.L10n.L10nList;
+import com.tsoft.civilization.util.l10n.L10nList;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.event.CityDestroyedEvent;
 import com.tsoft.civilization.civilization.event.CreateCityEvent;
 import com.tsoft.civilization.civilization.population.Happiness;
 import com.tsoft.civilization.combat.service.AttackService;
 import com.tsoft.civilization.improvement.city.L10nCity;
-import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityList;

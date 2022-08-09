@@ -43,7 +43,7 @@ import java.util.UUID;
  *   reward becomes possible and that it stops occurring after you've founded a religion.
  * On the easier difficulties, two additional awards are possible:
  *  * A Settler to settle another city.
- *  *  A Worker to build improvements to terrain.
+ *  * A Worker to build improvements to terrain.
  * If the game pace is set on Marathon, the amount of Culture and Faith found is greatly increased, but not the Gold.
  *
  * The choice of reward is always random, but it seems that sometimes some ruins are bound to a particular benefit - for example,
@@ -108,7 +108,7 @@ public class AncientRuins extends AbstractImprovement {
 
     @Override
     public Supply getSupply() {
-        return null;
+        return Supply.EMPTY;
     }
 
     @Override

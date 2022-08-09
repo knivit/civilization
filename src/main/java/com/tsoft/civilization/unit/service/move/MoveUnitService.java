@@ -13,8 +13,8 @@ import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.unit.UnitList;
-import com.tsoft.civilization.util.AbstractDir;
-import com.tsoft.civilization.util.Dir6;
+import com.tsoft.civilization.util.dir.AbstractDir;
+import com.tsoft.civilization.util.dir.Dir6;
 import com.tsoft.civilization.util.Point;
 
 import java.util.*;

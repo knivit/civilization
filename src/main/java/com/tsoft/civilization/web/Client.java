@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web;
 
-import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.RequestReader;
 import com.tsoft.civilization.web.response.JsonResponse;

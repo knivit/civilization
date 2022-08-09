@@ -1,4 +1,4 @@
-package com.tsoft.civilization.L10n;
+package com.tsoft.civilization.util.l10n;
 
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.state.ClientSession;

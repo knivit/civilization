@@ -1,6 +1,6 @@
 package com.tsoft.civilization.combat.skill.earth.movement;
 
-import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.combat.skill.AbstractMovementSkill;
 import com.tsoft.civilization.combat.skill.L10nSkill;
 import com.tsoft.civilization.combat.skill.SkillLevel;

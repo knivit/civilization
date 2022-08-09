@@ -1,6 +1,6 @@
 package com.tsoft.civilization.world.action;
 
-import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.civilization.*;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.ajax.action.world.GetCreateWorldFormRequest;
@@ -17,8 +17,8 @@ import com.tsoft.civilization.world.World;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.tsoft.civilization.L10n.L10nLanguage.EN;
-import static com.tsoft.civilization.L10n.L10nLanguage.LANGUAGES;
+import static com.tsoft.civilization.util.l10n.L10nLanguage.EN;
+import static com.tsoft.civilization.util.l10n.L10nLanguage.LANGUAGES;
 import static com.tsoft.civilization.civilization.L10nCivilization.*;
 import static com.tsoft.civilization.world.L10nWorld.*;
 

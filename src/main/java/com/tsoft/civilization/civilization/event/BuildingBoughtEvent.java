@@ -1,6 +1,6 @@
 package com.tsoft.civilization.civilization.event;
 
-import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.civilization.L10nCivilization;
 import com.tsoft.civilization.world.Event;
 import lombok.Builder;

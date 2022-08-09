@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
-import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.combat.skill.AbstractSkill;
 import com.tsoft.civilization.combat.skill.SkillLevel;
 import com.tsoft.civilization.combat.skill.SkillMap;

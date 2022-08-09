@@ -1,6 +1,6 @@
 package com.tsoft.civilization.civilization;
 
-import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.civilization.nation.america.America;
 import com.tsoft.civilization.civilization.nation.barbarians.Barbarians;
 import com.tsoft.civilization.civilization.nation.japan.Japan;

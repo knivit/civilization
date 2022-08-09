@@ -1,6 +1,6 @@
 package com.tsoft.civilization.world;
 
-import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.util.l10n.L10n;
 
 public interface AbstractView {
 

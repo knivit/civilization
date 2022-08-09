@@ -10,7 +10,7 @@ import com.tsoft.civilization.tile.tile.AbstractTile;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.unit.service.move.MoveUnitService;
-import com.tsoft.civilization.util.AbstractDir;
+import com.tsoft.civilization.util.dir.AbstractDir;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.World;
 

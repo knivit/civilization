@@ -6,7 +6,7 @@ import com.tsoft.civilization.civilization.population.CivilizationHappinessServi
 import com.tsoft.civilization.civilization.population.CivilizationUnhappinessService;
 import com.tsoft.civilization.civilization.population.Happiness;
 import com.tsoft.civilization.civilization.population.Unhappiness;
-import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.civilization.population.CivilizationPopulationService;
 import com.tsoft.civilization.civilization.social.CivilizationSocialPolicyService;
 import com.tsoft.civilization.civilization.tile.CivilizationTileService;

@@ -1,6 +1,6 @@
 package com.tsoft.civilization.improvement.city;
 
-import com.tsoft.civilization.L10n.L10n;
+import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.combat.service.AttackService;
 import com.tsoft.civilization.combat.action.AttackAction;
 import com.tsoft.civilization.improvement.city.action.BuyTileAction;
@@ -10,8 +10,8 @@ import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.improvement.AbstractImprovementView;
 import lombok.Getter;
 
-import static com.tsoft.civilization.L10n.L10nLanguage.EN;
-import static com.tsoft.civilization.L10n.L10nLanguage.RU;
+import static com.tsoft.civilization.util.l10n.L10nLanguage.EN;
+import static com.tsoft.civilization.util.l10n.L10nLanguage.RU;
 
 public class CityView extends AbstractImprovementView {
 
