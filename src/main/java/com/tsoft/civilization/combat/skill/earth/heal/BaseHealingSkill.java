@@ -6,7 +6,7 @@ import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.combat.skill.AbstractHealingSkill;
 import com.tsoft.civilization.combat.skill.L10nSkill;
 import com.tsoft.civilization.combat.skill.SkillLevel;
-import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.civilization.city.City;
 import lombok.Getter;
 
 public class BaseHealingSkill implements AbstractHealingSkill {

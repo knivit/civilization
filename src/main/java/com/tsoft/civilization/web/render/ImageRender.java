@@ -2,7 +2,7 @@ package com.tsoft.civilization.web.render;
 
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationList;
-import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.AbstractUnit;

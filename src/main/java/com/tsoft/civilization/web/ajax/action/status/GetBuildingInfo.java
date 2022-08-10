@@ -1,9 +1,9 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
-import com.tsoft.civilization.building.AbstractBuilding;
-import com.tsoft.civilization.building.AbstractBuildingView;
-import com.tsoft.civilization.building.BuildingFactory;
-import com.tsoft.civilization.building.L10nBuilding;
+import com.tsoft.civilization.civilization.building.AbstractBuilding;
+import com.tsoft.civilization.civilization.building.AbstractBuildingView;
+import com.tsoft.civilization.civilization.building.BuildingFactory;
+import com.tsoft.civilization.civilization.building.L10nBuilding;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.l10n.L10n;

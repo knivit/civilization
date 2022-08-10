@@ -1,6 +1,6 @@
 package com.tsoft.civilization.unit.civil.workers.action;
 
-import com.tsoft.civilization.improvement.L10nImprovement;
+import com.tsoft.civilization.tile.improvement.L10nImprovement;
 import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.unit.civil.workers.L10nWorkers;
 import com.tsoft.civilization.action.ActionFailureResult;

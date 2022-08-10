@@ -1,17 +1,19 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
-import com.tsoft.civilization.improvement.city.L10nCity;
+import com.tsoft.civilization.civilization.building.AbstractBuilding;
+import com.tsoft.civilization.civilization.building.BuildingFactory;
+import com.tsoft.civilization.civilization.building.BuildingList;
+import com.tsoft.civilization.civilization.city.L10nCity;
 import com.tsoft.civilization.unit.*;
 import com.tsoft.civilization.web.L10nServer;
-import com.tsoft.civilization.building.L10nBuilding;
-import com.tsoft.civilization.building.*;
-import com.tsoft.civilization.improvement.city.construction.Construction;
-import com.tsoft.civilization.improvement.city.construction.ConstructionList;
-import com.tsoft.civilization.improvement.city.action.BuildBuildingAction;
-import com.tsoft.civilization.improvement.city.action.BuildUnitAction;
-import com.tsoft.civilization.improvement.city.action.BuyBuildingAction;
-import com.tsoft.civilization.improvement.city.action.BuyUnitAction;
-import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.civilization.building.L10nBuilding;
+import com.tsoft.civilization.civilization.city.construction.Construction;
+import com.tsoft.civilization.civilization.city.construction.ConstructionList;
+import com.tsoft.civilization.civilization.city.action.BuildBuildingAction;
+import com.tsoft.civilization.civilization.city.action.BuildUnitAction;
+import com.tsoft.civilization.civilization.city.action.BuyBuildingAction;
+import com.tsoft.civilization.civilization.city.action.BuyUnitAction;
+import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.HtmlResponse;
@@ -20,7 +22,7 @@ import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
 
-import static com.tsoft.civilization.building.L10nBuilding.CONSTRUCTION_PRIORITY_LABEL;
+import static com.tsoft.civilization.civilization.building.L10nBuilding.CONSTRUCTION_PRIORITY_LABEL;
 import static com.tsoft.civilization.web.ajax.ServerStaticResource.*;
 
 public class GetCityStatus extends AbstractAjaxRequest {

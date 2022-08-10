@@ -4,7 +4,7 @@ import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.web.view.JsonBlock;
-import com.tsoft.civilization.improvement.city.CityView;
+import com.tsoft.civilization.civilization.city.CityView;
 import com.tsoft.civilization.tile.terrain.AbstractTerrainView;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationView;

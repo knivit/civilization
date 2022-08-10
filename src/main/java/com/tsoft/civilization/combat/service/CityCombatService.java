@@ -4,7 +4,7 @@ import com.tsoft.civilization.combat.CombatDamage;
 import com.tsoft.civilization.combat.CombatExperience;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.combat.skill.*;
-import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.world.HasHistory;
 import lombok.Getter;

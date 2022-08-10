@@ -7,7 +7,7 @@ import com.tsoft.civilization.civilization.CivilizationsRelations;
 import com.tsoft.civilization.combat.CombatResultMock;
 import com.tsoft.civilization.combat.CombatStrengthMock;
 import com.tsoft.civilization.combat.HasCombatStrengthList;
-import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.civil.workers.Workers;

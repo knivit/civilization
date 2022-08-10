@@ -1,8 +1,8 @@
 package com.tsoft.civilization.civilization;
 
 import com.tsoft.civilization.util.l10n.L10n;
-import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.improvement.city.CityList;
+import com.tsoft.civilization.civilization.city.City;
+import com.tsoft.civilization.civilization.city.CityList;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Point;

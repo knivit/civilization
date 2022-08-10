@@ -1,7 +1,7 @@
 package com.tsoft.civilization.unit.civil.citizen;
 
 import com.tsoft.civilization.economic.HasSupply;
-import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.unit.civil.citizen.view.LaborerView;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.economic.Supply;

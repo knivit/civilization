@@ -4,7 +4,7 @@ import com.tsoft.civilization.civilization.L10nCivilization;
 import com.tsoft.civilization.web.L10nClient;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.civilization.action.NextTurnAction;
-import com.tsoft.civilization.improvement.city.CityList;
+import com.tsoft.civilization.civilization.city.CityList;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;

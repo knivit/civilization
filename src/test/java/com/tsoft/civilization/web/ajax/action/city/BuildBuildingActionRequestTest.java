@@ -2,9 +2,9 @@ package com.tsoft.civilization.web.ajax.action.city;
 
 import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
-import com.tsoft.civilization.building.monument.Monument;
+import com.tsoft.civilization.civilization.building.monument.Monument;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.MockRequest;
 import com.tsoft.civilization.web.request.Request;

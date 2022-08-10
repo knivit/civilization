@@ -5,7 +5,7 @@ import com.tsoft.civilization.action.ActionSuccessResult;
 import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.unit.civil.settlers.L10nSettlers;
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.util.Format;

@@ -1,11 +1,11 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
 import com.tsoft.civilization.civilization.population.CivilizationHappinessService;
-import com.tsoft.civilization.improvement.city.L10nCity;
+import com.tsoft.civilization.civilization.city.L10nCity;
 import com.tsoft.civilization.web.L10nServer;
-import com.tsoft.civilization.building.L10nBuilding;
-import com.tsoft.civilization.building.AbstractBuilding;
-import com.tsoft.civilization.building.BuildingActions;
+import com.tsoft.civilization.civilization.building.L10nBuilding;
+import com.tsoft.civilization.civilization.building.AbstractBuilding;
+import com.tsoft.civilization.civilization.building.BuildingActions;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import com.tsoft.civilization.web.request.Request;

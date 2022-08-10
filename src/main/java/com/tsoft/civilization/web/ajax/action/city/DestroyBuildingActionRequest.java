@@ -2,8 +2,8 @@ package com.tsoft.civilization.web.ajax.action.city;
 
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.improvement.city.action.DestroyBuildingAction;
-import com.tsoft.civilization.building.AbstractBuilding;
+import com.tsoft.civilization.civilization.city.action.DestroyBuildingAction;
+import com.tsoft.civilization.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.web.response.Response;

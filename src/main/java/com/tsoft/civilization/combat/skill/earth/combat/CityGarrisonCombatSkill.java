@@ -7,7 +7,7 @@ import com.tsoft.civilization.combat.skill.AbstractCombatSkill;
 import com.tsoft.civilization.combat.skill.L10nSkill;
 import com.tsoft.civilization.combat.skill.SkillLevel;
 import com.tsoft.civilization.combat.skill.SkillType;
-import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.unit.UnitList;
 import lombok.Getter;
 

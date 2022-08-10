@@ -2,7 +2,7 @@ package com.tsoft.civilization.civilization.unit;
 
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.combat.HasCombatStrength;
-import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitFactory;

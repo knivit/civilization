@@ -1,8 +1,8 @@
 package com.tsoft.civilization.unit.civil.workers.action;
 
-import com.tsoft.civilization.improvement.L10nImprovement;
+import com.tsoft.civilization.tile.improvement.L10nImprovement;
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.improvement.AbstractImprovement;
+import com.tsoft.civilization.tile.improvement.AbstractImprovement;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.civil.workers.Workers;
 import com.tsoft.civilization.util.Format;

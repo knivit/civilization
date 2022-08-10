@@ -1,14 +1,14 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
-import com.tsoft.civilization.improvement.AbstractImprovement;
-import com.tsoft.civilization.improvement.city.L10nCity;
+import com.tsoft.civilization.tile.improvement.AbstractImprovement;
+import com.tsoft.civilization.civilization.city.L10nCity;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.tile.L10nTile;
 import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.world.L10nWorld;
 import com.tsoft.civilization.unit.L10nUnit;
-import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Format;

@@ -8,7 +8,7 @@ import com.tsoft.civilization.civilization.CivilizationsRelations;
 import com.tsoft.civilization.civilization.event.CityCapturedEvent;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.combat.L10nCombat;
-import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.L10nUnit;

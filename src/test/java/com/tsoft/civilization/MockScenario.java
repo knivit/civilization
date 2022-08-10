@@ -2,7 +2,7 @@ package com.tsoft.civilization;
 
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationsRelations;
-import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.unit.civil.greatartist.GreatArtist;

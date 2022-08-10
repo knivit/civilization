@@ -2,10 +2,10 @@ package com.tsoft.civilization.web.ajax.action.status;
 
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.economic.Supply;
-import com.tsoft.civilization.improvement.AbstractImprovement;
-import com.tsoft.civilization.improvement.AbstractImprovementView;
-import com.tsoft.civilization.improvement.L10nImprovement;
-import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.tile.improvement.AbstractImprovement;
+import com.tsoft.civilization.tile.improvement.AbstractImprovementView;
+import com.tsoft.civilization.tile.improvement.L10nImprovement;
+import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;

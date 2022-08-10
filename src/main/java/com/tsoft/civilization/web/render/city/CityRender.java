@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web.render.city;
 
-import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.web.render.GraphicsContext;
 import com.tsoft.civilization.web.render.RenderContext;
 import com.tsoft.civilization.web.render.RenderTileInfo;

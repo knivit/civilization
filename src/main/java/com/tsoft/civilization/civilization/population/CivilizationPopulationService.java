@@ -1,7 +1,7 @@
 package com.tsoft.civilization.civilization.population;
 
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.civilization.city.City;
 
 public class CivilizationPopulationService {
 

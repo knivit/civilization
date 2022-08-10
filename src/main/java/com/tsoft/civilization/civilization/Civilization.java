@@ -12,9 +12,9 @@ import com.tsoft.civilization.civilization.social.CivilizationSocialPolicyServic
 import com.tsoft.civilization.civilization.tile.CivilizationTileService;
 import com.tsoft.civilization.civilization.unit.CivilizationUnitService;
 import com.tsoft.civilization.unit.UnitFactory;
-import com.tsoft.civilization.building.AbstractBuilding;
-import com.tsoft.civilization.building.BuildingFactory;
-import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.civilization.building.AbstractBuilding;
+import com.tsoft.civilization.civilization.building.BuildingFactory;
+import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.unit.AbstractUnit;

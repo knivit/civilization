@@ -1,10 +1,10 @@
 package com.tsoft.civilization.web.ajax;
 
-import com.tsoft.civilization.building.AbstractBuilding;
+import com.tsoft.civilization.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.L10nCivilization;
 import com.tsoft.civilization.combat.HasCombatStrength;
-import com.tsoft.civilization.improvement.city.City;
+import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.unit.civil.workers.Workers;

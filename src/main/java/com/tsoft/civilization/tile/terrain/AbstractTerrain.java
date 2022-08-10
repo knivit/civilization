@@ -1,6 +1,6 @@
 package com.tsoft.civilization.tile.terrain;
 
-import com.tsoft.civilization.improvement.AbstractImprovement;
+import com.tsoft.civilization.tile.improvement.AbstractImprovement;
 import com.tsoft.civilization.tile.terrain.grassland.Grassland;
 import com.tsoft.civilization.tile.terrain.ocean.Ocean;
 import com.tsoft.civilization.tile.terrain.tundra.Tundra;

@@ -1,12 +1,12 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
-import com.tsoft.civilization.improvement.city.L10nCity;
+import com.tsoft.civilization.civilization.city.L10nCity;
 import com.tsoft.civilization.civilization.L10nCivilization;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.civilization.action.DeclareWarAction;
-import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.improvement.city.CityList;
+import com.tsoft.civilization.civilization.city.City;
+import com.tsoft.civilization.civilization.city.CityList;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Format;

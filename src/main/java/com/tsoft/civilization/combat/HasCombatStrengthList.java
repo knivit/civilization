@@ -1,7 +1,7 @@
 package com.tsoft.civilization.combat;
 
-import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.improvement.city.CityList;
+import com.tsoft.civilization.civilization.city.City;
+import com.tsoft.civilization.civilization.city.CityList;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Point;

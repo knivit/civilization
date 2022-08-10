@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web.render.improvement.ancientruins;
 
-import com.tsoft.civilization.improvement.ancientruins.AncientRuins;
+import com.tsoft.civilization.tile.improvement.ancientruins.AncientRuins;
 import com.tsoft.civilization.web.render.*;
 
 public class AncientRuinsRender implements Render<AncientRuins> {
