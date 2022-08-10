@@ -4,11 +4,11 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.improvement.AbstractImprovementView;
-import com.tsoft.civilization.tile.tile.AbstractTile;
-import com.tsoft.civilization.tile.tile.desert.Desert;
-import com.tsoft.civilization.tile.tile.grassland.Grassland;
-import com.tsoft.civilization.tile.tile.plain.Plain;
-import com.tsoft.civilization.tile.tile.tundra.Tundra;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
+import com.tsoft.civilization.tile.terrain.desert.Desert;
+import com.tsoft.civilization.tile.terrain.grassland.Grassland;
+import com.tsoft.civilization.tile.terrain.plains.Plains;
+import com.tsoft.civilization.tile.terrain.tundra.Tundra;
 import com.tsoft.civilization.tile.feature.hill.Hill;
 import com.tsoft.civilization.economic.Supply;
 
@@ -35,7 +35,7 @@ public class Farm extends AbstractImprovement {
 
     private static final AbstractImprovementView VIEW = new FarmView();
 
-    public Farm(AbstractTile tile) {
+    public Farm(AbstractTerrain tile) {
         super(tile);
     }
 
@@ -45,8 +45,8 @@ public class Farm extends AbstractImprovement {
     }
 
     @Override
-    public boolean acceptTile(AbstractTile tile) {
-        if (tile.isIn(Grassland.class, Plain.class, Desert.class, Tundra.class)) {
+    public boolean acceptTile(AbstractTerrain tile) {
+        if (tile.isIn(Grassland.class, Plains.class, Desert.class, Tundra.class)) {
             if (tile.hasFeature(Hill.class)) {
                 // TODO check adjacency to fresh water
                 return true;

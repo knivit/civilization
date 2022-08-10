@@ -9,7 +9,7 @@ import com.tsoft.civilization.civilization.event.CityCapturedEvent;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.combat.L10nCombat;
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.unit.UnitList;
@@ -174,7 +174,7 @@ public class CaptureUnitService {
     // Check can we move there during a capturing
     private ActionAbstractResult getMoveOnCaptureResult(AbstractUnit unit, Point dest) {
         // check is the passing score enough
-        AbstractTile tile = unit.getTilesMap().getTile(dest);
+        AbstractTerrain tile = unit.getTilesMap().getTile(dest);
         int tilePassCost = moveUnitService.getPassCost(unit.getCivilization(), unit, tile);
         int passScore = unit.getPassScore();
         if (passScore < tilePassCost) {

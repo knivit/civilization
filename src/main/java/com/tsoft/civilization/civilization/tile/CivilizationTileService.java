@@ -2,7 +2,7 @@ package com.tsoft.civilization.civilization.tile;
 
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.improvement.AbstractImprovement;
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.HasHistory;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +43,7 @@ public class CivilizationTileService implements HasHistory {
     // Look for tile's improvement by its Id
     public AbstractImprovement findImprovementById(String id) {
         return civilization.getTilesMap().tiles()
-            .map(AbstractTile::getImprovement)
+            .map(AbstractTerrain::getImprovement)
             .filter(Objects::nonNull)
             .filter(e -> id.equals(e.getId()))
             .findFirst()

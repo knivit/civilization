@@ -1,6 +1,6 @@
 package com.tsoft.civilization.tile.feature;
 
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.tile.feature.atoll.Atoll;
 import com.tsoft.civilization.tile.feature.coast.Coast;
 import com.tsoft.civilization.tile.feature.fallout.Fallout;
@@ -43,7 +43,7 @@ public final class FeatureFactory {
 
     private FeatureFactory() { }
 
-    public static <T extends AbstractFeature> T newInstance(String classUuid, AbstractTile tile) {
+    public static <T extends AbstractFeature> T newInstance(String classUuid, AbstractTerrain tile) {
         Supplier<? extends AbstractFeature> creator = FACTORY.get(classUuid);
         if (creator == null) {
             throw new IllegalArgumentException("Unknown terrain feature classUuid = " + classUuid);

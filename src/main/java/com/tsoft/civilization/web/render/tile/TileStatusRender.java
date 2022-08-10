@@ -1,13 +1,13 @@
 package com.tsoft.civilization.web.render.tile;
 
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.web.render.StatusContext;
 import com.tsoft.civilization.economic.Supply;
 
 public class TileStatusRender {
 
-    public String render(StatusContext statusContext, AbstractTile tile) {
+    public String render(StatusContext statusContext, AbstractTerrain tile) {
         StringBuilder buf = new StringBuilder();
         buf.append("<table>");
         buf.append("<tr>")

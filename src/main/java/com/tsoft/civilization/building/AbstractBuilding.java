@@ -6,7 +6,7 @@ import com.tsoft.civilization.economic.HasSupply;
 import com.tsoft.civilization.improvement.city.construction.CanBeBuilt;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.construction.CityConstructionService;
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.DifficultyLevel;
@@ -156,7 +156,7 @@ public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt, Ha
         return city;
     }
 
-    public AbstractTile getTile(Point location) {
+    public AbstractTerrain getTile(Point location) {
         return city.getCivilization().getTilesMap().getTile(location);
     }
 

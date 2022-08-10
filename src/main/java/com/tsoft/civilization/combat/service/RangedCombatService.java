@@ -3,7 +3,7 @@ package com.tsoft.civilization.combat.service;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.combat.*;
 import com.tsoft.civilization.tile.feature.FeatureList;
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.unit.service.move.TilePassCostTable;
 import com.tsoft.civilization.util.Point;
@@ -60,7 +60,7 @@ public class RangedCombatService {
         double missilePathCost = 0;
         List<Point> path = getMissilePath(attacker.getLocation(), target.getLocation());
         for (Point loc : path) {
-            AbstractTile tile = attacker.getCivilization().getTilesMap().getTile(loc);
+            AbstractTerrain tile = attacker.getCivilization().getTilesMap().getTile(loc);
             missilePathCost += getMissilePastCost(attacker, tile);
         }
 
@@ -99,7 +99,7 @@ public class RangedCombatService {
     }
 
     // Returns passing (or flying) cost for attacker's missile
-    public int getMissilePastCost(HasCombatStrength attacker, AbstractTile tile) {
+    public int getMissilePastCost(HasCombatStrength attacker, AbstractTerrain tile) {
         int passCost = MissileTilePastCostTable.get(attacker, tile);
 
         FeatureList features = tile.getFeatures();

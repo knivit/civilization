@@ -2,7 +2,7 @@ package com.tsoft.civilization.tile.feature.forest;
 
 import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.economic.Supply;
-import com.tsoft.civilization.tile.tile.TileType;
+import com.tsoft.civilization.tile.terrain.TerrainType;
 
 import java.util.UUID;
 
@@ -19,8 +19,8 @@ public class Forest extends AbstractFeature {
     private static final ForestView VIEW = new ForestView();
 
     @Override
-    public TileType getTileType() {
-        return TileType.EARTH_ROUGH;
+    public TerrainType getTileType() {
+        return TerrainType.EARTH_ROUGH;
     }
 
     @Override

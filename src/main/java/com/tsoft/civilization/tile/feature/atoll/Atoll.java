@@ -2,7 +2,7 @@ package com.tsoft.civilization.tile.feature.atoll;
 
 import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.economic.Supply;
-import com.tsoft.civilization.tile.tile.TileType;
+import com.tsoft.civilization.tile.terrain.TerrainType;
 
 import java.util.UUID;
 
@@ -48,8 +48,8 @@ public class Atoll extends AbstractFeature {
     private static final AtollView VIEW = new AtollView();
 
     @Override
-    public TileType getTileType() {
-        return TileType.EARTH_PLAIN;
+    public TerrainType getTileType() {
+        return TerrainType.EARTH_PLAIN;
     }
 
     @Override

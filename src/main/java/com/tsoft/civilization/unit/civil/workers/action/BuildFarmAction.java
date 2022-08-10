@@ -3,7 +3,7 @@ package com.tsoft.civilization.unit.civil.workers.action;
 import com.tsoft.civilization.improvement.L10nImprovement;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.improvement.AbstractImprovement;
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.civil.workers.Workers;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
@@ -27,7 +27,7 @@ public class BuildFarmAction {
             return WorkersActionResults.UNIT_NOT_FOUND;
         }
 
-        AbstractTile tile = workers.getTile();
+        AbstractTerrain tile = workers.getTile();
         AbstractImprovement improvement = tile.getImprovement();
         if (improvement != null) {
             return WorkersActionResults.IMPROVEMENT_ALREADY_EXISTS;

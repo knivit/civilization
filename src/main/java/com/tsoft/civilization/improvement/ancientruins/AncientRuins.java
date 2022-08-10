@@ -5,10 +5,10 @@ import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.improvement.AbstractImprovementView;
-import com.tsoft.civilization.tile.tile.AbstractTile;
-import com.tsoft.civilization.tile.tile.desert.Desert;
-import com.tsoft.civilization.tile.tile.grassland.Grassland;
-import com.tsoft.civilization.tile.tile.plain.Plain;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
+import com.tsoft.civilization.tile.terrain.desert.Desert;
+import com.tsoft.civilization.tile.terrain.grassland.Grassland;
+import com.tsoft.civilization.tile.terrain.plains.Plains;
 
 import java.util.UUID;
 
@@ -92,7 +92,7 @@ public class AncientRuins extends AbstractImprovement {
 
     private static final AbstractImprovementView VIEW = new AncientRuinsView();
 
-    public AncientRuins(AbstractTile tile) {
+    public AncientRuins(AbstractTerrain tile) {
         super(tile);
     }
 
@@ -102,8 +102,8 @@ public class AncientRuins extends AbstractImprovement {
     }
 
     @Override
-    public boolean acceptTile(AbstractTile tile) {
-        return tile.isIn(Desert.class, Grassland.class, Plain.class);
+    public boolean acceptTile(AbstractTerrain tile) {
+        return tile.isIn(Desert.class, Grassland.class, Plains.class);
     }
 
     @Override

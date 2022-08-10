@@ -4,7 +4,7 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationList;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.TilesMap;
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.web.render.city.CityRender;
 import com.tsoft.civilization.web.render.civilization.BorderRender;
@@ -43,15 +43,15 @@ public class ImageRender {
         BorderRender borderRender = new BorderRender();
 
         boolean[] sides = new boolean[6];
-        for (AbstractTile tile : map) {
+        for (AbstractTerrain tile : map) {
             Civilization civ = civilizations.getCivilizationOnTile(tile.getLocation());
             if (civ == null) {
                 continue;
             }
 
             int side = 0;
-            List<AbstractTile> tilesAround = map.getTilesAround(tile.getLocation(), 1);
-            for (AbstractTile neighborTile : tilesAround) {
+            List<AbstractTerrain> tilesAround = map.getTilesAround(tile.getLocation(), 1);
+            for (AbstractTerrain neighborTile : tilesAround) {
                 Civilization neighborCiv = civilizations.getCivilizationOnTile(neighborTile.getLocation());
                 sides[side] = (neighborCiv == null) || !neighborCiv.equals(civ);
             }

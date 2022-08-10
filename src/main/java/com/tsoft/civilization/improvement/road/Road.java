@@ -3,8 +3,8 @@ package com.tsoft.civilization.improvement.road;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.technology.Technology;
-import com.tsoft.civilization.tile.tile.AbstractTile;
-import com.tsoft.civilization.tile.tile.TileType;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
+import com.tsoft.civilization.tile.terrain.TerrainType;
 import com.tsoft.civilization.improvement.AbstractImprovementView;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.economic.Supply;
@@ -38,7 +38,7 @@ public class Road extends AbstractImprovement {
 
     private static final AbstractImprovementView VIEW = new RoadView();
 
-    public Road(AbstractTile tile) {
+    public Road(AbstractTerrain tile) {
         super(tile);
     }
 
@@ -48,8 +48,8 @@ public class Road extends AbstractImprovement {
     }
 
     @Override
-    public boolean acceptTile(AbstractTile tile) {
-        return tile.getTileType() != TileType.SEA;
+    public boolean acceptTile(AbstractTerrain tile) {
+        return tile.getTileType() != TerrainType.SEA;
     }
 
     @Override

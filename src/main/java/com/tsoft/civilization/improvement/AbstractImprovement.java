@@ -3,7 +3,7 @@ package com.tsoft.civilization.improvement;
 import com.tsoft.civilization.combat.CombatDamage;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.economic.Supply;
 import lombok.EqualsAndHashCode;
@@ -18,7 +18,7 @@ public abstract class AbstractImprovement {
     private final String id = UUID.randomUUID().toString();
 
     @Getter
-    private final AbstractTile tile;
+    private final AbstractTerrain tile;
 
     @Getter
     private City city;
@@ -29,12 +29,12 @@ public abstract class AbstractImprovement {
         .build();
 
     public abstract boolean acceptEraAndTechnology(Civilization civilization);
-    public abstract boolean acceptTile(AbstractTile tile);
+    public abstract boolean acceptTile(AbstractTerrain tile);
     public abstract Supply getSupply();
     public abstract CombatStrength getBaseCombatStrength(int era);
     public abstract AbstractImprovementView getView();
 
-    protected AbstractImprovement(AbstractTile tile) {
+    protected AbstractImprovement(AbstractTerrain tile) {
         this.tile = tile;
     }
 

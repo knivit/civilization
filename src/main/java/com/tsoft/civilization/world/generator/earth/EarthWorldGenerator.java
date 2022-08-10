@@ -3,7 +3,7 @@ package com.tsoft.civilization.world.generator.earth;
 import com.tsoft.civilization.improvement.ImprovementFactory;
 import com.tsoft.civilization.improvement.ancientruins.AncientRuins;
 import com.tsoft.civilization.tile.TilesMap;
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.world.Climate;
 import com.tsoft.civilization.world.MapSize;
 import com.tsoft.civilization.world.generator.AbstractWorldMap;
@@ -47,7 +47,7 @@ public class EarthWorldGenerator implements WorldGenerator {
     private void addAncientRuins(TilesMap map) {
         AncientRuins catalogEntry = ImprovementFactory.findByClassUuid(AncientRuins.CLASS_UUID);
 
-        List<AbstractTile> tiles = map.tiles()
+        List<AbstractTerrain> tiles = map.tiles()
             .filter(catalogEntry::acceptTile)
             .collect(Collectors.toList());
 
@@ -58,7 +58,7 @@ public class EarthWorldGenerator implements WorldGenerator {
         for (int i = 0; i < count; i ++) {
             int n = random.nextInt(tiles.size());
 
-            AbstractTile tile = tiles.get(n);
+            AbstractTerrain tile = tiles.get(n);
             if (tile.getImprovement() == null) {
                 ImprovementFactory.newInstance(AncientRuins.CLASS_UUID, tile, null);
             }

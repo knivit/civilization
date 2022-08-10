@@ -5,11 +5,10 @@ import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.helper.html.HtmlDocument;
 import com.tsoft.civilization.helper.html.HtmlParser;
-import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.improvement.ImprovementFactory;
 import com.tsoft.civilization.improvement.ancientruins.AncientRuins;
 import com.tsoft.civilization.improvement.farm.Farm;
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.MockRequest;
@@ -40,7 +39,7 @@ public class GetImprovementInfoTest {
 
         world.startGame();
 
-        AbstractTile tile = world.getTilesMap().getTile(new Point(1, 1));
+        AbstractTerrain tile = world.getTilesMap().getTile(new Point(1, 1));
         Farm farm = ImprovementFactory.newInstance(Farm.CLASS_UUID, tile, world.city("city1"));
 
         Sessions.getCurrent().setActiveCivilization(russia);
@@ -79,7 +78,7 @@ public class GetImprovementInfoTest {
 
         world.startGame();
 
-        AbstractTile tile = world.getTilesMap().getTile(new Point(1, 1));
+        AbstractTerrain tile = world.getTilesMap().getTile(new Point(1, 1));
         Farm farm = ImprovementFactory.newInstance(Farm.CLASS_UUID, tile, world.city("city1"));
 
         Sessions.getCurrent().setActiveCivilization(america);
@@ -107,7 +106,7 @@ public class GetImprovementInfoTest {
 
         world.startGame();
 
-        AbstractTile tile = world.getTilesMap().getTile(new Point(1, 1));
+        AbstractTerrain tile = world.getTilesMap().getTile(new Point(1, 1));
         AncientRuins ancientRuins = ImprovementFactory.newInstance(AncientRuins.CLASS_UUID, tile, null);
 
         Sessions.getCurrent().setActiveCivilization(russia);

@@ -1,6 +1,6 @@
 package com.tsoft.civilization.tile.feature.mountain;
 
-import com.tsoft.civilization.tile.tile.TileType;
+import com.tsoft.civilization.tile.terrain.TerrainType;
 import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.economic.Supply;
 
@@ -17,8 +17,8 @@ public class Mountain extends AbstractFeature {
     private static final MountainView VIEW = new MountainView();
 
     @Override
-    public TileType getTileType() {
-        return TileType.EARTH_ROUGH;
+    public TerrainType getTileType() {
+        return TerrainType.EARTH_ROUGH;
     }
 
     @Override

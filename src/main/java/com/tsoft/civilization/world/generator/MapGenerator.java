@@ -13,15 +13,15 @@ import com.tsoft.civilization.tile.feature.jungle.Jungle;
 import com.tsoft.civilization.tile.feature.marsh.Marsh;
 import com.tsoft.civilization.tile.feature.mountain.Mountain;
 import com.tsoft.civilization.tile.feature.oasis.Oasis;
-import com.tsoft.civilization.tile.tile.AbstractTile;
-import com.tsoft.civilization.tile.tile.TileFactory;
-import com.tsoft.civilization.tile.tile.desert.Desert;
-import com.tsoft.civilization.tile.tile.grassland.Grassland;
-import com.tsoft.civilization.tile.tile.lake.Lake;
-import com.tsoft.civilization.tile.tile.ocean.Ocean;
-import com.tsoft.civilization.tile.tile.plain.Plain;
-import com.tsoft.civilization.tile.tile.snow.Snow;
-import com.tsoft.civilization.tile.tile.tundra.Tundra;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
+import com.tsoft.civilization.tile.terrain.TerrainFactory;
+import com.tsoft.civilization.tile.terrain.desert.Desert;
+import com.tsoft.civilization.tile.terrain.grassland.Grassland;
+import com.tsoft.civilization.tile.terrain.lake.Lake;
+import com.tsoft.civilization.tile.terrain.ocean.Ocean;
+import com.tsoft.civilization.tile.terrain.plains.Plains;
+import com.tsoft.civilization.tile.terrain.snow.Snow;
+import com.tsoft.civilization.tile.terrain.tundra.Tundra;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.MapSize;
 
@@ -39,7 +39,7 @@ public class MapGenerator {
         TILE_CODES.put('g', Grassland.CLASS_UUID);
         TILE_CODES.put('i', Ice.CLASS_UUID);
         TILE_CODES.put('l', Lake.CLASS_UUID);
-        TILE_CODES.put('p', Plain.CLASS_UUID);
+        TILE_CODES.put('p', Plains.CLASS_UUID);
         TILE_CODES.put('s', Snow.CLASS_UUID);
         TILE_CODES.put('t', Tundra.CLASS_UUID);
 
@@ -86,7 +86,7 @@ public class MapGenerator {
             }
 
             if (isTile) {
-                AbstractTile tile = TileFactory.newInstance(classUuid);
+                AbstractTerrain tile = TerrainFactory.newInstance(classUuid);
                 map.setTile(new Point(x, y), tile);
                 continue;
             }
@@ -96,7 +96,7 @@ public class MapGenerator {
                 continue;
             }
 
-            AbstractTile tile = map.getTile(x, y);
+            AbstractTerrain tile = map.getTile(x, y);
             FeatureFactory.newInstance(classUuid, tile);
         }
     }
@@ -105,7 +105,7 @@ public class MapGenerator {
     public void fill(TilesMap tilesMap, String tileClassUuid) {
         for (int y = 0; y < tilesMap.getHeight(); y ++) {
             for (int x = 0; x < tilesMap.getWidth(); x ++) {
-                tilesMap.setTile(new Point(x, y), TileFactory.newInstance(tileClassUuid));
+                tilesMap.setTile(new Point(x, y), TerrainFactory.newInstance(tileClassUuid));
             }
         }
     }
@@ -117,7 +117,7 @@ public class MapGenerator {
 
         // First goes a tile
         String tileClassUuid = uuids[0];
-        AbstractTile tile = TileFactory.newInstance(tileClassUuid);
+        AbstractTerrain tile = TerrainFactory.newInstance(tileClassUuid);
         tilesMap.setTile(location, tile);
 
         // Next may be features

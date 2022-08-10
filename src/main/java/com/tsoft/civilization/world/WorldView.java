@@ -1,11 +1,11 @@
 package com.tsoft.civilization.world;
 
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.improvement.city.CityView;
-import com.tsoft.civilization.tile.tile.AbstractTileView;
+import com.tsoft.civilization.tile.terrain.AbstractTerrainView;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationView;
 
@@ -29,8 +29,8 @@ public class WorldView {
         worldBlock.startArray("tiles");
         for (int y = 0; y < height; y ++) {
             for (int x = 0; x < width; x ++) {
-                AbstractTile tile = world.getTilesMap().getTile(x, y);
-                AbstractTileView tileView = tile.getView();
+                AbstractTerrain tile = world.getTilesMap().getTile(x, y);
+                AbstractTerrainView tileView = tile.getView();
                 worldBlock.addElement(tileView.getJson(tile).getText());
             }
         }
@@ -48,7 +48,7 @@ public class WorldView {
         worldBlock.startArray("units");
         for (int y = 0; y < height; y ++) {
             for (int x = 0; x < width; x ++) {
-                AbstractTile tile = world.getTilesMap().getTile(x, y);
+                AbstractTerrain tile = world.getTilesMap().getTile(x, y);
                 UnitList units = world.getUnitsAtLocation(tile.getLocation());
                 for (AbstractUnit unit : units) {
                     JsonBlock unitBlock = unit.getView().getJson(unit);

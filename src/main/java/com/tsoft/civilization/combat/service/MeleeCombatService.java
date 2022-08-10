@@ -6,7 +6,7 @@ import com.tsoft.civilization.action.ActionSuccessResult;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.combat.*;
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.unit.service.move.MoveUnitService;
@@ -81,7 +81,7 @@ public class MeleeCombatService {
     // Check can we move there during melee attack
     private ActionAbstractResult getMoveOnMeleeAttackResult(AbstractUnit unit, Point nextLocation) {
         // check is the passing score enough
-        AbstractTile tile = unit.getTilesMap().getTile(nextLocation);
+        AbstractTerrain tile = unit.getTilesMap().getTile(nextLocation);
         int tilePassCost = moveUnitService.getPassCost(unit.getCivilization(), unit, tile);
 
         int passScore = unit.getPassScore();

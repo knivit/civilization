@@ -6,7 +6,7 @@ import com.tsoft.civilization.helper.html.HtmlDocument;
 import com.tsoft.civilization.helper.html.HtmlParser;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.tile.MockTilesMap;
-import com.tsoft.civilization.tile.tile.grassland.Grassland;
+import com.tsoft.civilization.tile.terrain.grassland.Grassland;
 import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.tile.feature.hill.Hill;
 import com.tsoft.civilization.civilization.Civilization;

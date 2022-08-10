@@ -1,10 +1,9 @@
 package com.tsoft.civilization.civilization.unit;
 
-import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.unit.UnitList;
@@ -117,7 +116,7 @@ public class CivilizationUnitService {
 
     // This is not a move (or a swap), just a check, can be a unit placed here, or not
     public boolean canBePlaced(AbstractUnit unit, Point location) {
-        AbstractTile tile = world.getTilesMap().getTile(location);
+        AbstractTerrain tile = world.getTilesMap().getTile(location);
         if (moveUnitService.getPassCost(civilization, unit, tile) == TilePassCostTable.UNPASSABLE) {
             return false;
         }

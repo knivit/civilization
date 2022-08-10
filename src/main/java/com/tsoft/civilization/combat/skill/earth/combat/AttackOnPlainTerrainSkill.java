@@ -7,8 +7,8 @@ import com.tsoft.civilization.combat.skill.AbstractCombatSkill;
 import com.tsoft.civilization.combat.skill.L10nSkill;
 import com.tsoft.civilization.combat.skill.SkillLevel;
 import com.tsoft.civilization.combat.skill.SkillType;
-import com.tsoft.civilization.tile.tile.AbstractTile;
-import com.tsoft.civilization.tile.tile.TileType;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
+import com.tsoft.civilization.tile.terrain.TerrainType;
 import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.util.Point;
 import lombok.Getter;
@@ -33,10 +33,10 @@ public class AttackOnPlainTerrainSkill implements AbstractCombatSkill {
     @Override
     public CombatStrength getCombatStrength(HasCombatStrength unit, SkillLevel level) {
         Point attackerLocation = unit.getLocation();
-        AbstractTile tile = unit.getCivilization().getTilesMap().getTile(attackerLocation);
-        TileType tileType = tile.getTileType();
+        AbstractTerrain tile = unit.getCivilization().getTilesMap().getTile(attackerLocation);
+        TerrainType terrainType = tile.getTileType();
 
-        if (TileType.EARTH_PLAIN.equals(tileType)) {
+        if (TerrainType.EARTH_PLAIN.equals(terrainType)) {
             UnitCategory category = unit.getUnitCategory();
             if (category.isMelee()) {
                 return getMeleeUnitAttackStrength(unit, level);

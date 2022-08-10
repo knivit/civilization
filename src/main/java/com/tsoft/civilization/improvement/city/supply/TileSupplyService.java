@@ -4,7 +4,7 @@ import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.TileService;
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.util.Point;
 
 import java.util.List;
@@ -49,7 +49,7 @@ public class TileSupplyService {
             return Supply.EMPTY;
         }
 
-        AbstractTile tile = city.getCivilization().getTilesMap().getTile(location);
+        AbstractTerrain tile = city.getCivilization().getTilesMap().getTile(location);
         AbstractImprovement improvement = tile.getImprovement();
         if (improvement == null || !improvement.isBlockingTileSupply()) {
             return tileService.calcSupply(tile);
@@ -64,7 +64,7 @@ public class TileSupplyService {
             return Supply.EMPTY;
         }
 
-        AbstractTile tile = city.getCivilization().getTilesMap().getTile(location);
+        AbstractTerrain tile = city.getCivilization().getTilesMap().getTile(location);
         AbstractImprovement improvement = tile.getImprovement();
         if (improvement != null && !(improvement instanceof City)) {
             return improvement.getSupply();

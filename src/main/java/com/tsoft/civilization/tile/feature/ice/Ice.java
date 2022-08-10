@@ -1,6 +1,6 @@
 package com.tsoft.civilization.tile.feature.ice;
 
-import com.tsoft.civilization.tile.tile.TileType;
+import com.tsoft.civilization.tile.terrain.TerrainType;
 import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.economic.Supply;
 
@@ -16,8 +16,8 @@ public class Ice extends AbstractFeature {
     private static final IceView VIEW = new IceView();
 
     @Override
-    public TileType getTileType() {
-        return TileType.SEA;
+    public TerrainType getTileType() {
+        return TerrainType.SEA;
     }
 
     @Override

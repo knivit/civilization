@@ -5,7 +5,7 @@ import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.improvement.AbstractImprovementView;
 import com.tsoft.civilization.technology.Technology;
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.tile.feature.hill.Hill;
 import com.tsoft.civilization.economic.Supply;
 
@@ -43,7 +43,7 @@ import java.util.UUID;
 public class Mine extends AbstractImprovement {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    public Mine(AbstractTile tile) {
+    public Mine(AbstractTerrain tile) {
         super(tile);
     }
 
@@ -53,7 +53,7 @@ public class Mine extends AbstractImprovement {
     }
 
     @Override
-    public boolean acceptTile(AbstractTile tile) {
+    public boolean acceptTile(AbstractTerrain tile) {
         return tile.hasFeature(Hill.class);
     }
 

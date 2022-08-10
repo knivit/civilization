@@ -1,13 +1,13 @@
 package com.tsoft.civilization.unit.civil.citizen;
 
-import com.tsoft.civilization.tile.tile.*;
-import com.tsoft.civilization.tile.tile.desert.Desert;
-import com.tsoft.civilization.tile.tile.grassland.Grassland;
-import com.tsoft.civilization.tile.tile.lake.Lake;
-import com.tsoft.civilization.tile.tile.ocean.Ocean;
-import com.tsoft.civilization.tile.tile.plain.Plain;
-import com.tsoft.civilization.tile.tile.snow.Snow;
-import com.tsoft.civilization.tile.tile.tundra.Tundra;
+import com.tsoft.civilization.tile.terrain.*;
+import com.tsoft.civilization.tile.terrain.desert.Desert;
+import com.tsoft.civilization.tile.terrain.grassland.Grassland;
+import com.tsoft.civilization.tile.terrain.lake.Lake;
+import com.tsoft.civilization.tile.terrain.ocean.Ocean;
+import com.tsoft.civilization.tile.terrain.plains.Plains;
+import com.tsoft.civilization.tile.terrain.snow.Snow;
+import com.tsoft.civilization.tile.terrain.tundra.Tundra;
 import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.tile.feature.atoll.Atoll;
 import com.tsoft.civilization.tile.feature.coast.Coast;
@@ -28,14 +28,14 @@ public final class CitizenPlacementTable {
 
     private CitizenPlacementTable() { }
 
-    private static final Map<Class<? extends AbstractTile>, Boolean> tiles = new HashMap<>();
+    private static final Map<Class<? extends AbstractTerrain>, Boolean> tiles = new HashMap<>();
 
     static {
         tiles.put(Desert.class, true);
         tiles.put(Grassland.class, true);
         tiles.put(Lake.class, true);
         tiles.put(Ocean.class, true);
-        tiles.put(Plain.class, true);
+        tiles.put(Plains.class, true);
         tiles.put(Snow.class, true);
         tiles.put(Tundra.class, true);
     }
@@ -56,7 +56,7 @@ public final class CitizenPlacementTable {
         features.put(Oasis.class, true);
     }
 
-    public static boolean canPlaceCitizen(AbstractTile tile) {
+    public static boolean canPlaceCitizen(AbstractTerrain tile) {
         if (!tiles.get(tile.getClass())) {
             return false;
         }

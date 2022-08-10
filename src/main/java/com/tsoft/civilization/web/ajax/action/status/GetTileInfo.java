@@ -14,10 +14,10 @@ import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.economic.Supply;
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.web.response.Response;
-import com.tsoft.civilization.tile.tile.AbstractTileView;
+import com.tsoft.civilization.tile.terrain.AbstractTerrainView;
 import com.tsoft.civilization.civilization.Civilization;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.*;
@@ -28,7 +28,7 @@ public class GetTileInfo extends AbstractAjaxRequest {
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
     private final MoveUnitService moveUnitService = new MoveUnitService();
 
-    public static StringBuilder getAjax(AbstractTile tile) {
+    public static StringBuilder getAjax(AbstractTerrain tile) {
         return Format.text("server.sendAsyncAjax('ajax/GetTileInfo', { col:'$col', row:'$row' })",
             "$col", tile.getLocation().getX(),
             "$row", tile.getLocation().getY()
@@ -49,7 +49,7 @@ public class GetTileInfo extends AbstractAjaxRequest {
             return JsonResponse.badRequest(L10nWorld.INVALID_LOCATION);
         }
 
-        AbstractTile tile = civilization.getTilesMap().getTile(location);
+        AbstractTerrain tile = civilization.getTilesMap().getTile(location);
 
         StringBuilder value = Format.text("""
             $navigationPanel
@@ -66,8 +66,8 @@ public class GetTileInfo extends AbstractAjaxRequest {
         return HtmlResponse.ok(value);
     }
 
-    private StringBuilder getTileInfo(AbstractTile tile) {
-        AbstractTileView view = tile.getView();
+    private StringBuilder getTileInfo(AbstractTerrain tile) {
+        AbstractTerrainView view = tile.getView();
         return Format.text("""
             <table id='title_table'>
                 <tr><td>$name</td></tr>
@@ -82,7 +82,7 @@ public class GetTileInfo extends AbstractAjaxRequest {
         );
     }
 
-    private StringBuilder getTileDetailInfo(AbstractTile tile) {
+    private StringBuilder getTileDetailInfo(AbstractTerrain tile) {
         Supply tileSupply = tile.getBaseSupply();
         return Format.text("""
             <table id='info_table'>
@@ -113,7 +113,7 @@ public class GetTileInfo extends AbstractAjaxRequest {
         );
     }
 
-    private StringBuilder getTilePassInfo(AbstractTile tile, Civilization civilization) {
+    private StringBuilder getTilePassInfo(AbstractTerrain tile, Civilization civilization) {
         StringBuilder buf = new StringBuilder();
 
         UnitList units = civilization.getUnitService().getUnits().sortByName();

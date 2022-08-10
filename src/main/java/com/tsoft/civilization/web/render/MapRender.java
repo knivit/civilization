@@ -1,7 +1,7 @@
 package com.tsoft.civilization.web.render;
 
 import com.tsoft.civilization.tile.TilesMap;
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.web.render.tile.HexagonRender;
 import com.tsoft.civilization.web.render.tile.TerrainFeatureRenderCatalog;
@@ -15,7 +15,7 @@ public class MapRender {
 
     private RenderFileNameGenerator fileNameGenerator;
 
-    private final RenderCatalog<AbstractTile> tileRenderCatalog = new TileRenderCatalog();
+    private final RenderCatalog<AbstractTerrain> tileRenderCatalog = new TileRenderCatalog();
     private final RenderCatalog<AbstractFeature> terrainFeatureRenderCatalog = new TerrainFeatureRenderCatalog();
 
     public MapRender() { }
@@ -39,17 +39,17 @@ public class MapRender {
 
     public void drawTiles(RenderContext renderContext, GraphicsContext graphicsContext, TilesMap map) {
         for (RenderTileInfo tileInfo : renderContext.getTilesInfo()) {
-            AbstractTile tile = map.getTile(tileInfo.col, tileInfo.row);
+            AbstractTerrain tile = map.getTile(tileInfo.col, tileInfo.row);
             drawTile(renderContext, graphicsContext, tileInfo, tile);
         }
     }
 
-    private void drawTile(RenderContext renderContext, GraphicsContext graphicsContext, RenderTileInfo tileInfo, AbstractTile tile) {
+    private void drawTile(RenderContext renderContext, GraphicsContext graphicsContext, RenderTileInfo tileInfo, AbstractTerrain tile) {
         tileRenderCatalog.render(renderContext, graphicsContext, tileInfo, tile);
         drawTerrainFeatures(renderContext, graphicsContext, tileInfo, tile);
     }
 
-    private void drawTerrainFeatures(RenderContext renderContext, GraphicsContext graphicsContext, RenderTileInfo tileInfo, AbstractTile tile) {
+    private void drawTerrainFeatures(RenderContext renderContext, GraphicsContext graphicsContext, RenderTileInfo tileInfo, AbstractTerrain tile) {
         for (AbstractFeature feature : tile.getFeatures()) {
             drawTerrainFeature(renderContext, graphicsContext, tileInfo, feature);
         }

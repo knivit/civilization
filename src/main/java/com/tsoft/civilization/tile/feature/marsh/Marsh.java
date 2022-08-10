@@ -2,7 +2,7 @@ package com.tsoft.civilization.tile.feature.marsh;
 
 import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.economic.Supply;
-import com.tsoft.civilization.tile.tile.TileType;
+import com.tsoft.civilization.tile.terrain.TerrainType;
 
 import java.util.UUID;
 
@@ -20,8 +20,8 @@ public class Marsh extends AbstractFeature {
     private static final MarshView VIEW = new MarshView();
 
     @Override
-    public TileType getTileType() {
-        return TileType.EARTH_MARSH;
+    public TerrainType getTileType() {
+        return TerrainType.EARTH_MARSH;
     }
 
     @Override

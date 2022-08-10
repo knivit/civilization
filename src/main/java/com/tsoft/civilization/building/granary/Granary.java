@@ -5,7 +5,7 @@ import com.tsoft.civilization.building.BuildingType;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.tile.resource.bonus.Bananas;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.Year;
@@ -82,7 +82,7 @@ public class Granary extends AbstractBuilding {
     public Supply calcIncomeSupply() {
         int food = 2;
         for (Point location : getCity().getCitizenLocations()) {
-            AbstractTile tile = getTile(location);
+            AbstractTerrain tile = getTile(location);
             if (Bananas.class.equals(tile.getLuxury().getClass())) {
                 food ++;
             }

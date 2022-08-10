@@ -7,8 +7,8 @@ import com.tsoft.civilization.tile.resource.AbstractResource;
 import com.tsoft.civilization.tile.resource.ResourceFactory;
 import com.tsoft.civilization.tile.resource.ResourceType;
 import com.tsoft.civilization.tile.resource.strategic.*;
-import com.tsoft.civilization.tile.tile.AbstractTile;
-import com.tsoft.civilization.tile.tile.grassland.Grassland;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
+import com.tsoft.civilization.tile.terrain.grassland.Grassland;
 import com.tsoft.civilization.world.Climate;
 import com.tsoft.civilization.util.Point;
 import lombok.Getter;
@@ -88,7 +88,7 @@ public class StrategicResourceGenerator {
         addResource(featureClass.getSimpleName(), tilesMap.getTerrainFeatureClassLocations(featureClass), resourceType);
     }
 
-    private void addResourcesOnTile(Class<? extends AbstractTile> tileClass, ResourceType resourceType) {
+    private void addResourcesOnTile(Class<? extends AbstractTerrain> tileClass, ResourceType resourceType) {
         addResource(tileClass.getSimpleName(), tilesMap.getTileClassLocations(tileClass), resourceType);
     }
 
@@ -109,7 +109,7 @@ public class StrategicResourceGenerator {
 
                 int index = ThreadLocalRandom.current().nextInt(locations.size());
                 Point point = locations.get(index);
-                AbstractTile tile = tilesMap.getTile(point);
+                AbstractTerrain tile = tilesMap.getTile(point);
                 if (tile.setResource(resource)) {
                     count ++;
                 }

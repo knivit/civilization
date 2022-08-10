@@ -1,7 +1,7 @@
 package com.tsoft.civilization.tile;
 
-import com.tsoft.civilization.tile.tile.AbstractTile;
-import com.tsoft.civilization.tile.tile.ocean.Ocean;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
+import com.tsoft.civilization.tile.terrain.ocean.Ocean;
 import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.util.dir.AbstractDir;
 import com.tsoft.civilization.util.dir.Dir6;
@@ -20,13 +20,13 @@ import java.util.stream.Stream;
 import static com.tsoft.civilization.world.MapSize.CUSTOM;
 
 @Slf4j
-public class TilesMap implements Iterable<AbstractTile> {
+public class TilesMap implements Iterable<AbstractTerrain> {
     public static int MIN_WIDTH = 2;
     public static int MAX_WIDTH = 1000;
     public static int MIN_HEIGHT = 2;
     public static int MAX_HEIGHT = 1000;
 
-    private final AbstractTile[][] tiles;
+    private final AbstractTerrain[][] tiles;
 
     @Getter
     private final MapSize mapSize;
@@ -59,7 +59,7 @@ public class TilesMap implements Iterable<AbstractTile> {
         this.width = width;
         this.height = height;
 
-        tiles = new AbstractTile[width][height];
+        tiles = new AbstractTerrain[width][height];
         log.debug("Tiles map {} ({}x{}) created", mapSize, width, height);
     }
 
@@ -71,18 +71,18 @@ public class TilesMap implements Iterable<AbstractTile> {
         return height;
     }
 
-    public AbstractTile getTile(int x, int y) {
+    public AbstractTerrain getTile(int x, int y) {
         assert (x >= 0 && x < getWidth()) : "x = " + x + " is not in range [0.." + (width - 1) + "]";
         assert (y >= 0 && y < getHeight()) : "y = " + y + " is not in range [0.." + (height - 1) + "]";
 
         return tiles[x][y];
     }
 
-    public AbstractTile getTile(Point location) {
+    public AbstractTerrain getTile(Point location) {
         return getTile(location.getX(), location.getY());
     }
 
-    public void setTile(Point location, AbstractTile tile) {
+    public void setTile(Point location, AbstractTerrain tile) {
         assert (location.getX() >= 0 && location.getX() < getWidth()) : "Location = " + location + " is not in range [0.." + (width - 1) + "][0.." + (width - 1) + "]";
         assert (location.getY() >= 0 && location.getY() < getHeight()) : "Location = " + location + " is not in range [0.." + (height - 1) + "][0.." + (height - 1) + "]";
         assert (tile != null) : "Tile must be not null";
@@ -96,7 +96,7 @@ public class TilesMap implements Iterable<AbstractTile> {
     }
 
     @Override
-    public Iterator<AbstractTile> iterator() {
+    public Iterator<AbstractTerrain> iterator() {
         return new Iterator<>() {
             private int n = 0;
 
@@ -106,7 +106,7 @@ public class TilesMap implements Iterable<AbstractTile> {
             }
 
             @Override
-            public AbstractTile next() {
+            public AbstractTerrain next() {
                 int x = n % width;
                 int y = n / width;
                 n ++;
@@ -115,7 +115,7 @@ public class TilesMap implements Iterable<AbstractTile> {
         };
     }
 
-    public Stream<AbstractTile> tiles() {
+    public Stream<AbstractTerrain> tiles() {
         return Stream.of(tiles).flatMap(Stream::of);
     }
 
@@ -164,7 +164,7 @@ public class TilesMap implements Iterable<AbstractTile> {
             .anyMatch(p -> p.equals(loc2));
     }
 
-    public List<AbstractTile> getTilesAround(Point location, int radius) {
+    public List<AbstractTerrain> getTilesAround(Point location, int radius) {
         return getLocationsAround(location, radius).stream()
             .map(this::getTile)
             .collect(Collectors.toList());
@@ -254,12 +254,12 @@ public class TilesMap implements Iterable<AbstractTile> {
         return locations;
     }
 
-    public List<Point> getTileClassLocations(Class<? extends AbstractTile> tileClass) {
+    public List<Point> getTileClassLocations(Class<? extends AbstractTerrain> tileClass) {
         Objects.requireNonNull(tileClass, "Tile class must be not null");
 
         return tiles()
             .filter(t -> t.getClass().equals(tileClass))
-            .map(AbstractTile::getLocation)
+            .map(AbstractTerrain::getLocation)
             .collect(Collectors.toList());
     }
 
@@ -268,7 +268,7 @@ public class TilesMap implements Iterable<AbstractTile> {
 
         return tiles()
             .filter(t -> t.hasFeature(featureClass))
-            .map(AbstractTile::getLocation)
+            .map(AbstractTerrain::getLocation)
             .collect(Collectors.toList());
     }
 
@@ -286,13 +286,13 @@ public class TilesMap implements Iterable<AbstractTile> {
     /** Start a new year, refresh tiles' properties */
     public void startYear() {
         tiles()
-            .filter(AbstractTile::isOcean)
+            .filter(AbstractTerrain::isOcean)
             .filter(this::isDeepOcean)
             .forEach(t -> ((Ocean) t).setDeepOcean(true));
     }
 
     // If as far as 3 tiles around is ocean, then this tile is deep ocean
-    private boolean isDeepOcean(AbstractTile tile) {
+    private boolean isDeepOcean(AbstractTerrain tile) {
         return getTilesAround(tile.getLocation(), 2).stream()
             .anyMatch(t -> !t.isOcean());
     }

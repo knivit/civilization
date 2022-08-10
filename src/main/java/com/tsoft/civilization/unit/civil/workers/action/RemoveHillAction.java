@@ -5,7 +5,7 @@ import com.tsoft.civilization.action.ActionSuccessResult;
 import com.tsoft.civilization.unit.civil.workers.L10nWorkers;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.technology.Technology;
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.tile.feature.hill.Hill;
 import com.tsoft.civilization.unit.civil.workers.Workers;
 import com.tsoft.civilization.util.Format;
@@ -28,7 +28,7 @@ public class RemoveHillAction {
             return result;
         }
 
-        AbstractTile tile = workers.getTile();
+        AbstractTerrain tile = workers.getTile();
         Hill hill = tile.getFeature(Hill.class);
         if (hill == null) {
             return FAIL_NO_HILL_HERE;
@@ -43,7 +43,7 @@ public class RemoveHillAction {
             return WorkersActionResults.UNIT_NOT_FOUND;
         }
 
-        AbstractTile tile = workers.getTile();
+        AbstractTerrain tile = workers.getTile();
         if (!tile.hasFeature(Hill.class)) {
             return FAIL_NO_HILL_HERE;
         }

@@ -6,7 +6,7 @@ import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.unit.civil.settlers.L10nSettlers;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.civil.settlers.Settlers;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
@@ -66,7 +66,7 @@ public class BuildCityAction {
         List<Point> locations = settlers.getTilesMap().getLocationsAround(location, 4);
         locations.add(location);
         for (Point loc : locations) {
-            AbstractTile tile = settlers.getTilesMap().getTile(loc);
+            AbstractTerrain tile = settlers.getTilesMap().getTile(loc);
             if (tile.getImprovement() != null && City.class.equals(tile.getImprovement().getClass())) {
                 return CANT_BUILD_CITY_THERE_IS_ANOTHER_CITY_NEARBY;
             }

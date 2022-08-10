@@ -17,7 +17,7 @@ import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.economic.Supply;
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.util.Point;
@@ -44,7 +44,7 @@ public class GetTileStatus extends AbstractAjaxRequest {
             return JsonResponse.badRequest(L10nWorld.INVALID_LOCATION);
         }
 
-        AbstractTile tile = myCivilization.getTilesMap().getTile(location);
+        AbstractTerrain tile = myCivilization.getTilesMap().getTile(location);
 
         StringBuilder value = Format.text("""
             $navigationPanel
@@ -119,7 +119,7 @@ public class GetTileStatus extends AbstractAjaxRequest {
         );
     }
 
-    private StringBuilder getCityInfo(World world, AbstractTile tile) {
+    private StringBuilder getCityInfo(World world, AbstractTerrain tile) {
         City city = world.getCityAtLocation(tile.getLocation());
         if (city == null) {
             return null;
@@ -174,7 +174,7 @@ public class GetTileStatus extends AbstractAjaxRequest {
         );
     }
 
-    private StringBuilder getTileTitle(World world, AbstractTile tile) {
+    private StringBuilder getTileTitle(World world, AbstractTerrain tile) {
         Civilization civilization = world.getCivilizationOnTile(tile.getLocation());
         if (civilization == null) {
             return null;
@@ -202,7 +202,7 @@ public class GetTileStatus extends AbstractAjaxRequest {
     // +-------+---+---+---+
     // | Total | 0 | 0 | 0 |
     // +-------+---+---+---+
-    private StringBuilder getTileInfo(AbstractTile tile) {
+    private StringBuilder getTileInfo(AbstractTerrain tile) {
         AbstractFeature feature1 = (tile.getFeatures().size() > 0 ? tile.getFeatures().get(0) : null);
         AbstractFeature feature2 = (tile.getFeatures().size() > 1 ? tile.getFeatures().get(1) : null);
 
@@ -291,7 +291,7 @@ public class GetTileStatus extends AbstractAjaxRequest {
         );
     }
 
-    private StringBuilder getTotalInfo(AbstractTile tile, boolean isVisible) {
+    private StringBuilder getTotalInfo(AbstractTerrain tile, boolean isVisible) {
         if (!isVisible) {
             return null;
         }

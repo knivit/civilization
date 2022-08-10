@@ -9,7 +9,7 @@ import com.tsoft.civilization.improvement.city.CityList;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.tile.feature.FeatureList;
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.unit.UnitList;
@@ -137,7 +137,7 @@ public class MoveUnitService {
 
         unit.getMovementService().setLocation(location);
 
-        AbstractTile tile = unit.getCivilization().getTilesMap().getTile(location);
+        AbstractTerrain tile = unit.getCivilization().getTilesMap().getTile(location);
         int tilePassCost = getPassCost(unit.getCivilization(), unit, tile);
         unit.setPassScore(unit.getPassScore() - tilePassCost);
     }
@@ -195,7 +195,7 @@ public class MoveUnitService {
                 // look around
                 for (Dir6 dir : Dir6.staticGetDirs(currLocation.getY())) {
                     Point nextLocation = tilesMap.addDirToLocation(currLocation, dir);
-                    AbstractTile nextTile = tilesMap.getTile(nextLocation);
+                    AbstractTerrain nextTile = tilesMap.getTile(nextLocation);
 
                     int nextPassScore = passScore - getPassCost(unit.getCivilization(), unit, nextTile);
                     if (nextPassScore >= 0) {
@@ -317,7 +317,7 @@ public class MoveUnitService {
     }
 
     private ActionAbstractResult canMoveOnAdjacentTile(AbstractUnit unit, Point location) {
-        AbstractTile tile = unit.getTilesMap().getTile(location);
+        AbstractTerrain tile = unit.getTilesMap().getTile(location);
         int tilePassCost = getPassCost(unit.getCivilization(), unit, tile);
 
         int passScore = unit.getPassScore();
@@ -400,7 +400,7 @@ public class MoveUnitService {
         return CAN_SWAP;
     }
 
-    public int getPassCost(Civilization civilization, AbstractUnit unit, AbstractTile tile) {
+    public int getPassCost(Civilization civilization, AbstractUnit unit, AbstractTerrain tile) {
         int passCost = TilePassCostTable.get(civilization, unit, tile);
 
         FeatureList features = tile.getFeatures();

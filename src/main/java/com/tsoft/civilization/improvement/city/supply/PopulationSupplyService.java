@@ -4,7 +4,7 @@ import com.tsoft.civilization.economic.HasSupply;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.tile.TileService;
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.civil.citizen.Citizen;
 import com.tsoft.civilization.unit.civil.citizen.CitizenPlacementTable;
 import com.tsoft.civilization.util.Point;
@@ -34,10 +34,10 @@ public class PopulationSupplyService implements HasSupply {
         Set<Point> locations = new HashSet<>(city.getTileService().getLocations());
         usedLocations.forEach(locations::remove);
 
-        AbstractTile bestTile = null;
+        AbstractTerrain bestTile = null;
         Supply bestTileSupply = null;
         for (Point location : locations) {
-            AbstractTile tile = city.getCivilization().getTilesMap().getTile(location);
+            AbstractTerrain tile = city.getCivilization().getTilesMap().getTile(location);
             Supply tileSupply = tileService.calcSupply(tile);
 
             // don't place a citizen on harsh tiles (terrain features)

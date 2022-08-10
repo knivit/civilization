@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web.render.tile.base;
 
-import com.tsoft.civilization.tile.tile.lake.Lake;
+import com.tsoft.civilization.tile.terrain.lake.Lake;
 import com.tsoft.civilization.web.render.*;
 import com.tsoft.civilization.web.render.tile.HexagonRender;
 

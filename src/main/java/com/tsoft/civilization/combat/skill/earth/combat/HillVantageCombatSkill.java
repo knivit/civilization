@@ -8,7 +8,7 @@ import com.tsoft.civilization.combat.skill.L10nSkill;
 import com.tsoft.civilization.combat.skill.SkillLevel;
 import com.tsoft.civilization.combat.skill.SkillType;
 import com.tsoft.civilization.tile.feature.hill.Hill;
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.util.Point;
 import lombok.Getter;
@@ -34,7 +34,7 @@ public class HillVantageCombatSkill implements AbstractCombatSkill {
     @Override
     public CombatStrength getCombatStrength(HasCombatStrength unit, SkillLevel level) {
         Point location = unit.getLocation();
-        AbstractTile tile = unit.getCivilization().getWorld().getTilesMap().getTile(location);
+        AbstractTerrain tile = unit.getCivilization().getWorld().getTilesMap().getTile(location);
 
         if (tile.hasFeature(Hill.class)) {
             UnitCategory category = unit.getUnitCategory();

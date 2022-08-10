@@ -1,11 +1,11 @@
 package com.tsoft.civilization.world.generator.onecontinent;
 
-import com.tsoft.civilization.tile.tile.desert.Desert;
-import com.tsoft.civilization.tile.tile.grassland.Grassland;
-import com.tsoft.civilization.tile.tile.ocean.Ocean;
-import com.tsoft.civilization.tile.tile.plain.Plain;
-import com.tsoft.civilization.tile.tile.snow.Snow;
-import com.tsoft.civilization.tile.tile.tundra.Tundra;
+import com.tsoft.civilization.tile.terrain.desert.Desert;
+import com.tsoft.civilization.tile.terrain.grassland.Grassland;
+import com.tsoft.civilization.tile.terrain.ocean.Ocean;
+import com.tsoft.civilization.tile.terrain.plains.Plains;
+import com.tsoft.civilization.tile.terrain.snow.Snow;
+import com.tsoft.civilization.tile.terrain.tundra.Tundra;
 import com.tsoft.civilization.tile.feature.coast.Coast;
 import com.tsoft.civilization.tile.feature.forest.Forest;
 import com.tsoft.civilization.tile.feature.hill.Hill;
@@ -14,7 +14,7 @@ import com.tsoft.civilization.tile.feature.jungle.Jungle;
 import com.tsoft.civilization.tile.feature.marsh.Marsh;
 import com.tsoft.civilization.tile.feature.oasis.Oasis;
 import com.tsoft.civilization.tile.TilesMap;
-import com.tsoft.civilization.tile.tile.*;
+import com.tsoft.civilization.tile.terrain.*;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.util.Rect;
 import com.tsoft.civilization.world.Climate;
@@ -90,50 +90,50 @@ public class OneContinentWorldGenerator implements WorldGenerator {
         changeTiles(tilesMap, 60, 80,
                 new TP(20, Snow.CLASS_UUID),
                 new TP(30, Tundra.CLASS_UUID),
-                new TP(20, Plain.CLASS_UUID, Marsh.CLASS_UUID),
+                new TP(20, Plains.CLASS_UUID, Marsh.CLASS_UUID),
                 new TP(10, Tundra.CLASS_UUID, Hill.CLASS_UUID),
                 new TP(20, Tundra.CLASS_UUID, Forest.CLASS_UUID));
 
         changeTiles(tilesMap, 30, 60,
                 new TP(20, Grassland.CLASS_UUID),
-                new TP(20, Plain.CLASS_UUID),
-                new TP(20, Plain.CLASS_UUID, Hill.CLASS_UUID),
+                new TP(20, Plains.CLASS_UUID),
+                new TP(20, Plains.CLASS_UUID, Hill.CLASS_UUID),
                 new TP(20, Grassland.CLASS_UUID, Hill.CLASS_UUID),
                 new TP(20, Grassland.CLASS_UUID, Hill.CLASS_UUID, Forest.CLASS_UUID));
 
         changeTiles(tilesMap, -10, 30,
                 new TP(40, Desert.CLASS_UUID),
-                new TP(20, Plain.CLASS_UUID),
+                new TP(20, Plains.CLASS_UUID),
                 new TP(20, Desert.CLASS_UUID, Hill.CLASS_UUID),
-                new TP(20, Plain.CLASS_UUID, Hill.CLASS_UUID));
+                new TP(20, Plains.CLASS_UUID, Hill.CLASS_UUID));
 
         changeTiles(tilesMap, -30, -10,
                 new TP(20, Desert.CLASS_UUID),
-                new TP(20, Plain.CLASS_UUID),
+                new TP(20, Plains.CLASS_UUID),
                 new TP(10, Desert.CLASS_UUID, Oasis.CLASS_UUID),
-                new TP(30, Plain.CLASS_UUID, Jungle.CLASS_UUID),
+                new TP(30, Plains.CLASS_UUID, Jungle.CLASS_UUID),
                 new TP(10, Desert.CLASS_UUID, Hill.CLASS_UUID),
-                new TP(10, Plain.CLASS_UUID, Hill.CLASS_UUID, Jungle.CLASS_UUID));
+                new TP(10, Plains.CLASS_UUID, Hill.CLASS_UUID, Jungle.CLASS_UUID));
 
         changeTiles(tilesMap, -60, -30,
                 new TP(20, Grassland.CLASS_UUID),
                 new TP(40, Grassland.CLASS_UUID, Jungle.CLASS_UUID),
-                new TP(10, Plain.CLASS_UUID),
-                new TP(10, Plain.CLASS_UUID, Hill.CLASS_UUID),
-                new TP(20, Plain.CLASS_UUID, Hill.CLASS_UUID, Jungle.CLASS_UUID));
+                new TP(10, Plains.CLASS_UUID),
+                new TP(10, Plains.CLASS_UUID, Hill.CLASS_UUID),
+                new TP(20, Plains.CLASS_UUID, Hill.CLASS_UUID, Jungle.CLASS_UUID));
 
         changeTiles(tilesMap, -80, -60,
                 new TP(20, Tundra.CLASS_UUID),
                 new TP(20, Tundra.CLASS_UUID, Forest.CLASS_UUID),
                 new TP(20, Tundra.CLASS_UUID, Hill.CLASS_UUID),
                 new TP(20, Tundra.CLASS_UUID, Hill.CLASS_UUID, Forest.CLASS_UUID),
-                new TP(10, Plain.CLASS_UUID),
+                new TP(10, Plains.CLASS_UUID),
                 new TP(10, Snow.CLASS_UUID));
 
         changeTiles(tilesMap, -90, -80,
                 new TP(40, Snow.CLASS_UUID),
                 new TP(20, Tundra.CLASS_UUID),
-                new TP(20, Plain.CLASS_UUID),
+                new TP(20, Plains.CLASS_UUID),
                 new TP(20, Tundra.CLASS_UUID, Forest.CLASS_UUID));
 
         changeTiles(tilesMap, 90, 100,
@@ -150,7 +150,7 @@ public class OneContinentWorldGenerator implements WorldGenerator {
         List<Point> points = new ArrayList<>();
         for (int y = y1; y < y2; y ++) {
             for (int x = 0; x < tilesMap.getWidth(); x ++) {
-                AbstractTile tile = tilesMap.getTile(x, y);
+                AbstractTerrain tile = tilesMap.getTile(x, y);
                 if (tile.getTileType().isEarth()) {
                     points.add(tile.getLocation());
                 }
@@ -185,9 +185,9 @@ public class OneContinentWorldGenerator implements WorldGenerator {
                     (y >= continent.getY1() && y < continent.getY2());
 
                 if (isContinent) {
-                    tilesMap.setTile(new Point(x, y), TileFactory.newInstance(Grassland.CLASS_UUID));
+                    tilesMap.setTile(new Point(x, y), TerrainFactory.newInstance(Grassland.CLASS_UUID));
                 } else {
-                    tilesMap.setTile(new Point(x, y), TileFactory.newInstance(Ocean.CLASS_UUID));
+                    tilesMap.setTile(new Point(x, y), TerrainFactory.newInstance(Ocean.CLASS_UUID));
                 }
             }
         }
@@ -228,7 +228,7 @@ public class OneContinentWorldGenerator implements WorldGenerator {
 
                         List<Point> locations = tilesMap.getLocationsAround(new Point(x, y), 1);
                         for (Point loc : locations) {
-                            AbstractTile tile = tilesMap.getTile(loc);
+                            AbstractTerrain tile = tilesMap.getTile(loc);
                             if (tile.getTileType().isEarth()) {
                                 tile.addFeature(new Coast());
                                 break;

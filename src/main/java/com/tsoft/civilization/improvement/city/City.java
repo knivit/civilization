@@ -21,8 +21,8 @@ import com.tsoft.civilization.improvement.city.construction.ConstructionList;
 import com.tsoft.civilization.improvement.city.event.CityStopYearEvent;
 import com.tsoft.civilization.improvement.city.population.CityPopulationService;
 import com.tsoft.civilization.improvement.city.supply.TileSupplyStrategy;
-import com.tsoft.civilization.tile.tile.AbstractTile;
-import com.tsoft.civilization.tile.tile.TileType;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
+import com.tsoft.civilization.tile.terrain.TerrainType;
 import com.tsoft.civilization.unit.*;
 import com.tsoft.civilization.economic.*;
 import com.tsoft.civilization.util.Point;
@@ -87,7 +87,7 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
     @Getter
     private boolean isDestroyed;
 
-    public City(AbstractTile tile, Civilization civilization) {
+    public City(AbstractTerrain tile, Civilization civilization) {
         super(tile);
         this.civilization = civilization;
     }
@@ -271,8 +271,8 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
     }
 
     @Override
-    public boolean acceptTile(AbstractTile tile) {
-        return (tile.getTileType() != TileType.SEA) && (tile.getTileType() != TileType.EARTH_ROUGH);
+    public boolean acceptTile(AbstractTerrain tile) {
+        return (tile.getTileType() != TerrainType.SEA) && (tile.getTileType() != TerrainType.EARTH_ROUGH);
     }
 
     /** City has moved to another Civilization (was captured) */

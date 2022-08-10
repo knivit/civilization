@@ -4,7 +4,7 @@ import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.civilization.*;
 import com.tsoft.civilization.improvement.city.City;
 import com.tsoft.civilization.improvement.city.CityList;
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Pair;
@@ -122,8 +122,8 @@ public class WorldService {
 
     private List<Point> getTilesToStartCivilization() {
         return world.getTilesMap().tiles()
-            .filter(AbstractTile::isCanBuildCity)
-            .map(AbstractTile::getLocation)
+            .filter(AbstractTerrain::isCanBuildCity)
+            .map(AbstractTerrain::getLocation)
             .collect(Collectors.toList());
     }
 
@@ -175,9 +175,9 @@ public class WorldService {
         int minRadiusWithEarthAround = numberOfLocationsAround / 2;
 
         for (Point location : possibleLocations) {
-            List<AbstractTile> tilesAround = world.getLocationsAround(location, radius).stream()
+            List<AbstractTerrain> tilesAround = world.getLocationsAround(location, radius).stream()
                 .map(e -> world.getTilesMap().getTile(e))
-                .filter(AbstractTile::isCanBuildCity)
+                .filter(AbstractTerrain::isCanBuildCity)
                 .collect(Collectors.toList());
 
             if (tilesAround.size() < minRadiusWithEarthAround) {

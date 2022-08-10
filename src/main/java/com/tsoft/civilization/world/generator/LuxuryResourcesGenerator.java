@@ -7,9 +7,9 @@ import com.tsoft.civilization.tile.resource.AbstractResource;
 import com.tsoft.civilization.tile.resource.ResourceFactory;
 import com.tsoft.civilization.tile.resource.ResourceType;
 import com.tsoft.civilization.tile.resource.luxury.*;
-import com.tsoft.civilization.tile.tile.AbstractTile;
-import com.tsoft.civilization.tile.tile.grassland.Grassland;
-import com.tsoft.civilization.tile.tile.plain.Plain;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
+import com.tsoft.civilization.tile.terrain.grassland.Grassland;
+import com.tsoft.civilization.tile.terrain.plains.Plains;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.Climate;
 import lombok.Getter;
@@ -82,14 +82,14 @@ public class LuxuryResourcesGenerator {
     private void addLuxuriesToMap() {
         addLuxuryOnFeature(Coast.class, ResourceType.LUXURY_SEA_FOOD);
         addLuxuryOnTile(Grassland.class, ResourceType.LUXURY_FOOD);
-        addLuxuryOnTile(Plain.class, ResourceType.LUXURY_PRODUCTION);
+        addLuxuryOnTile(Plains.class, ResourceType.LUXURY_PRODUCTION);
     }
 
     private void addLuxuryOnFeature(Class<? extends AbstractFeature> featureClass, ResourceType luxuryType) {
         addLuxury(featureClass.getSimpleName(), tilesMap.getTerrainFeatureClassLocations(featureClass), luxuryType);
     }
 
-    private void addLuxuryOnTile(Class<? extends AbstractTile> tileClass, ResourceType luxuryType) {
+    private void addLuxuryOnTile(Class<? extends AbstractTerrain> tileClass, ResourceType luxuryType) {
         addLuxury(tileClass.getSimpleName(), tilesMap.getTileClassLocations(tileClass), luxuryType);
     }
 
@@ -110,7 +110,7 @@ public class LuxuryResourcesGenerator {
 
                 int index = ThreadLocalRandom.current().nextInt(locations.size());
                 Point point = locations.get(index);
-                AbstractTile tile = tilesMap.getTile(point);
+                AbstractTerrain tile = tilesMap.getTile(point);
                 if (tile.setLuxury(luxury)) {
                     count ++;
                 }

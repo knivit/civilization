@@ -1,7 +1,7 @@
 package com.tsoft.civilization.tile;
 
 import com.tsoft.civilization.MockWorld;
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.util.Point;
 import org.junit.jupiter.api.Test;
 
@@ -118,7 +118,7 @@ public class TilesMapTest {
     public void testIterator() {
         TilesMap map = MockWorld.SIMPLE_TILES_MAP;
 
-        Iterator<AbstractTile> tiles = map.iterator();
+        Iterator<AbstractTerrain> tiles = map.iterator();
         for (int y = 0; y < map.getHeight(); y ++) {
             for (int x = 0; x < map.getWidth(); x ++) {
                 assertEquals(map.getTile(x, y), tiles.next());
@@ -135,7 +135,7 @@ public class TilesMapTest {
         ExecutorService executors = Executors.newFixedThreadPool(16);
         executors.submit(() -> {
             int n = 0;
-            for (AbstractTile tile : map) n++;
+            for (AbstractTerrain tile : map) n++;
             assertEquals(map.getWidth() * map.getHeight(), n);
         });
         executors.shutdown();

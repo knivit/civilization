@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web.render.tile.base;
 
-import com.tsoft.civilization.tile.tile.snow.Snow;
+import com.tsoft.civilization.tile.terrain.snow.Snow;
 import com.tsoft.civilization.web.render.*;
 import com.tsoft.civilization.web.render.tile.HexagonRender;
 

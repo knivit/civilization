@@ -13,7 +13,7 @@ import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.improvement.city.construction.CanBeBuilt;
 import com.tsoft.civilization.improvement.city.construction.CityConstructionService;
 import com.tsoft.civilization.tile.TilesMap;
-import com.tsoft.civilization.tile.tile.AbstractTile;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.DifficultyLevel;
@@ -112,7 +112,7 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
         return movementService.getLocation();
     }
 
-    public AbstractTile getTile() {
+    public AbstractTerrain getTile() {
         return getTilesMap().getTile(getLocation());
     }
 
