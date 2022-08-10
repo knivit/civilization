@@ -5,17 +5,17 @@ import com.tsoft.civilization.building.AbstractBuildingView;
 import com.tsoft.civilization.building.BuildingFactory;
 import com.tsoft.civilization.building.L10nBuilding;
 import com.tsoft.civilization.economic.Supply;
-import com.tsoft.civilization.tile.feature.AbstractFeature;
-import com.tsoft.civilization.tile.feature.AbstractFeatureView;
-import com.tsoft.civilization.tile.feature.FeatureFactory;
-import com.tsoft.civilization.tile.feature.L10nFeature;
 import com.tsoft.civilization.util.Format;
+import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.web.response.Response;
 
+import static com.tsoft.civilization.civilization.L10nCivilization.*;
+import static com.tsoft.civilization.util.l10n.L10nLanguage.EN;
+import static com.tsoft.civilization.util.l10n.L10nLanguage.RU;
 import static com.tsoft.civilization.web.ajax.ServerStaticResource.*;
 
 public class GetBuildingInfo extends AbstractAjaxRequest {
@@ -64,27 +64,32 @@ public class GetBuildingInfo extends AbstractAjaxRequest {
         );
     }
 
+    private static final L10n BUILDING_INFO = new L10n()
+        .put(EN, "Building's info")
+        .put(RU, "Информация о здании");
+
+
     private StringBuilder getBuildingSupplyInfo(AbstractBuilding building) {
-        Supply supply = building.getSupply();
+        Supply supply = building.calcIncomeSupply();
         return Format.text("""
             <table id='info_table'>
-                <tr><th colspan='2'>$features</th></tr>
+                <tr><th colspan='2'>$buildingInfo</th></tr>
                 <tr><td>$productionLabel</td><td>$production $productionImage</td></tr>
                 <tr><td>$goldLabel</td><td>$gold $goldImage</td></tr>
                 <tr><td>$foodLabel</td><td>$food $foodImage</td></tr>
             </table>
             """,
 
-            "$features", L10nFeature.FEATURES,
+            "$buildingInfo", BUILDING_INFO,
 
-            "$productionLabel", L10nFeature.FEATURE_PRODUCTION,
-            "$production", featureSupply.getProduction(),
+            "$productionLabel", PRODUCTION,
+            "$production", supply.getProduction(),
             "$productionImage", PRODUCTION_IMAGE,
-            "$goldLabel", L10nFeature.FEATURE_GOLD,
-            "$gold", featureSupply.getGold(),
+            "$goldLabel", GOLD,
+            "$gold", supply.getGold(),
             "$goldImage", GOLD_IMAGE,
-            "$foodLabel", L10nFeature.FEATURE_FOOD,
-            "$food", featureSupply.getFood(),
+            "$foodLabel", FOOD,
+            "$food", supply.getFood(),
             "$foodImage", FOOD_IMAGE
         );
     }

@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.UUID;
 
+import static com.tsoft.civilization.web.ajax.ServerStaticResource.PRODUCTION_IMAGE;
+
 @Slf4j
 public class BuildBuildingAction {
 
@@ -70,13 +72,13 @@ public class BuildBuildingAction {
         }
 
         return Format.text("""
-            <button onclick="$buttonOnClick">$buttonLabel: $productionCost<image src='$productionImage'/></button>
+            <button onclick="$buttonOnClick">$buttonLabel: $productionCost $productionImage</button>
             """,
 
             "$buttonOnClick", ClientAjaxRequest.buildBuildingAction(city, buildingClassUuid),
             "$buttonLabel", L10nBuilding.BUILD.getLocalized(),
             "$productionCost", city.getBuildingProductionCost(buildingClassUuid),
-            "$productionImage", "images/status/production.png"
+            "$productionImage", PRODUCTION_IMAGE
         );
     }
 }

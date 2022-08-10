@@ -6,7 +6,6 @@ import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.improvement.AbstractImprovementView;
 import com.tsoft.civilization.improvement.L10nImprovement;
 import com.tsoft.civilization.improvement.city.City;
-import com.tsoft.civilization.tile.feature.L10nFeature;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
@@ -16,6 +15,7 @@ import com.tsoft.civilization.web.response.HtmlResponse;
 import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.web.response.Response;
 
+import static com.tsoft.civilization.civilization.L10nCivilization.*;
 import static com.tsoft.civilization.web.ajax.ServerStaticResource.*;
 
 public class GetImprovementInfo extends AbstractAjaxRequest {
@@ -90,13 +90,13 @@ public class GetImprovementInfo extends AbstractAjaxRequest {
             </table>
             """,
 
-            "$productionLabel", L10nFeature.FEATURE_PRODUCTION,
+            "$productionLabel", PRODUCTION,
             "$production", featureSupply.getProduction(),
             "$productionImage", PRODUCTION_IMAGE,
-            "$goldLabel", L10nFeature.FEATURE_GOLD,
+            "$goldLabel", GOLD,
             "$gold", featureSupply.getGold(),
             "$goldImage", GOLD_IMAGE,
-            "$foodLabel", L10nFeature.FEATURE_FOOD,
+            "$foodLabel", FOOD,
             "$food", featureSupply.getFood(),
             "$foodImage", FOOD_IMAGE
         );

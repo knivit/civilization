@@ -12,6 +12,7 @@ import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.tile.feature.AbstractFeatureView;
 
+import static com.tsoft.civilization.civilization.L10nCivilization.*;
 import static com.tsoft.civilization.web.ajax.ServerStaticResource.*;
 
 public class GetFeatureInfo extends AbstractAjaxRequest {
@@ -73,13 +74,13 @@ public class GetFeatureInfo extends AbstractAjaxRequest {
 
             "$features", L10nFeature.FEATURES,
 
-            "$productionLabel", L10nFeature.FEATURE_PRODUCTION,
+            "$productionLabel", PRODUCTION,
             "$production", featureSupply.getProduction(),
             "$productionImage", PRODUCTION_IMAGE,
-            "$goldLabel", L10nFeature.FEATURE_GOLD,
+            "$goldLabel", GOLD,
             "$gold", featureSupply.getGold(),
             "$goldImage", GOLD_IMAGE,
-            "$foodLabel", L10nFeature.FEATURE_FOOD,
+            "$foodLabel", FOOD,
             "$food", featureSupply.getFood(),
             "$foodImage", FOOD_IMAGE
         );

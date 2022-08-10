@@ -27,30 +27,6 @@ public class L10nTile {
             .put("en", "Defense Bonus, %")
             .put("ru", "Бонус к защите, %");
 
-    public static final L10n PRODUCTION_HEADER = new L10n()
-            .put("en", "PP")
-            .put("ru", "П");
-
-    public static final L10n GOLD_HEADER = new L10n()
-            .put("en", "G")
-            .put("ru", "З");
-
-    public static final L10n FOOD_HEADER = new L10n()
-            .put("en", "F")
-            .put("ru", "Е");
-
-    public static final L10n PRODUCTION = new L10n()
-            .put("en", "Production")
-            .put("ru", "Производство");
-
-    public static final L10n GOLD = new L10n()
-            .put("en", "Gold")
-            .put("ru", "Золото");
-
-    public static final L10n FOOD = new L10n()
-            .put("en", "Food")
-            .put("ru", "Пища");
-
     public static final L10n TOTAL = new L10n()
             .put("en", "Total")
             .put("ru", "Итого");
@@ -89,14 +65,6 @@ public class L10nTile {
             .put("en", "It is easy to live here")
             .put("ru", "Здесь легко жить");
 
-    public static final L10n ICE_NAME = new L10n()
-            .put("en", "Ice")
-            .put("ru", "Лед");
-
-    public static final L10n ICE_DESCRIPTION = new L10n()
-            .put("en", "It is cold and windy here")
-            .put("ru", "Здесь холодно и ветренно");
-
     public static final L10n LAKE_NAME = new L10n()
             .put("en", "Lake")
             .put("ru", "Озеро");
@@ -112,22 +80,6 @@ public class L10nTile {
     public static final L10n OCEAN_DESCRIPTION = new L10n()
             .put("en", "Astronomy must be opened to allow Embarked Units enter the Ocean")
             .put("ru", "Должна быть открыта Астрономиа, чтобы юниты могли пересекать океан");
-
-    public static final L10n COAST_NAME = new L10n()
-            .put("en", "Coast")
-            .put("ru", "Побережье");
-
-    public static final L10n COAST_DESCRIPTION = new L10n()
-            .put("en", "Coastal tiles now often go several hexes out into the water, allowing for better freedom of movement for ancient units that are restricted from deep ocean")
-            .put("ru", "Ячейки побережья сейчас выходят на несколько ячеек в океан, позволяя древним юнитам, которые не могут выйти в океан, чуствовать себя свободнее");
-
-    public static final L10n MOUNTAIN_NAME = new L10n()
-            .put("en", "Mountain")
-            .put("ru", "Высокая гора");
-
-    public static final L10n MOUNTAIN_DESCRIPTION = new L10n()
-            .put("en", "Mountains are impassable for any units except an aerial")
-            .put("ru", "Горы могут пересекать только воздушные юниты");
 
     public static final L10n PLAIN_NAME = new L10n()
             .put("en", "Plain")

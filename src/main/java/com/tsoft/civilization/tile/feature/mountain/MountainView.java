@@ -1,17 +1,29 @@
 package com.tsoft.civilization.tile.feature.mountain;
 
-import com.tsoft.civilization.tile.L10nTile;
 import com.tsoft.civilization.tile.feature.AbstractFeatureView;
+import com.tsoft.civilization.util.l10n.L10n;
+
+import static com.tsoft.civilization.util.l10n.L10nLanguage.EN;
+import static com.tsoft.civilization.util.l10n.L10nLanguage.RU;
 
 public class MountainView extends AbstractFeatureView {
+
+    private static final L10n MOUNTAIN_NAME = new L10n()
+        .put(EN, "Mountain")
+        .put(RU, "Высокая гора");
+
+    private static final L10n MOUNTAIN_DESCRIPTION = new L10n()
+        .put(EN, "Mountains are impassable for any units except an aerial")
+        .put(RU, "Горы могут пересекать только воздушные юниты");
+
     @Override
     public String getLocalizedName() {
-        return L10nTile.MOUNTAIN_NAME.getLocalized();
+        return MOUNTAIN_NAME.getLocalized();
     }
 
     @Override
     public String getLocalizedDescription() {
-        return L10nTile.MOUNTAIN_DESCRIPTION.getLocalized();
+        return MOUNTAIN_DESCRIPTION.getLocalized();
     }
 
     @Override

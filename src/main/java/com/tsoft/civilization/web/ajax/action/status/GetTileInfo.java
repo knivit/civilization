@@ -20,6 +20,7 @@ import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.tile.tile.AbstractTileView;
 import com.tsoft.civilization.civilization.Civilization;
 
+import static com.tsoft.civilization.civilization.L10nCivilization.*;
 import static com.tsoft.civilization.web.ajax.ServerStaticResource.*;
 
 public class GetTileInfo extends AbstractAjaxRequest {
@@ -96,13 +97,13 @@ public class GetTileInfo extends AbstractAjaxRequest {
 
             "$features", L10nTile.FEATURES,
 
-            "$productionLabel", L10nTile.PRODUCTION,
+            "$productionLabel", PRODUCTION,
             "$production", tileSupply.getProduction(),
             "$productionImage", PRODUCTION_IMAGE,
-            "$goldLabel", L10nTile.GOLD,
+            "$goldLabel", GOLD,
             "$gold", tileSupply.getGold(),
             "$goldImage", GOLD_IMAGE,
-            "$foodLabel", L10nTile.FOOD,
+            "$foodLabel", FOOD,
             "$food", tileSupply.getFood(),
             "$foodImage", FOOD_IMAGE,
             "$canBuildCityLabel", L10nTile.CAN_BUILD_CITY,

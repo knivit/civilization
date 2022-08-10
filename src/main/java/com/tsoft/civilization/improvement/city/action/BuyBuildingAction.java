@@ -1,7 +1,6 @@
 package com.tsoft.civilization.improvement.city.action;
 
 import com.tsoft.civilization.building.BuildingFactory;
-import com.tsoft.civilization.improvement.city.L10nCity;
 import com.tsoft.civilization.building.L10nBuilding;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.building.AbstractBuilding;
@@ -11,6 +10,8 @@ import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.UUID;
+
+import static com.tsoft.civilization.web.ajax.ServerStaticResource.GOLD_IMAGE;
 
 @Slf4j
 public class BuyBuildingAction {
@@ -64,12 +65,12 @@ public class BuyBuildingAction {
         }
 
         return Format.text(
-            "<button onclick=\"$buttonOnClick\">$buttonLabel: $buyCost<image src='$goldImage'/></button>",
+            "<button onclick=\"$buttonOnClick\">$buttonLabel: $buyCost $goldImage</button>",
 
             "$buttonOnClick", ClientAjaxRequest.buyBuildingAction(city, buildingClassUuid),
             "$buttonLabel", getLocalizedName(),
             "$buyCost", city.getBuildingBuyCost(buildingClassUuid),
-            "$goldImage", "images/status/gold.png"
+            "$goldImage", GOLD_IMAGE
         );
     }
 }

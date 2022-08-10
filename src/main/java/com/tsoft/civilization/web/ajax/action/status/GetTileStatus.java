@@ -24,6 +24,7 @@ import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.civilization.Civilization;
 
+import static com.tsoft.civilization.civilization.L10nCivilization.*;
 import static com.tsoft.civilization.web.ajax.ServerStaticResource.*;
 
 public class GetTileStatus extends AbstractAjaxRequest {
@@ -227,11 +228,11 @@ public class GetTileStatus extends AbstractAjaxRequest {
             """,
 
             "$productionImage", PRODUCTION_IMAGE,
-            "$productionLabel", L10nTile.PRODUCTION,
+            "$productionLabel", PRODUCTION,
             "$goldImage", GOLD_IMAGE,
-            "$goldLabel", L10nTile.GOLD,
+            "$goldLabel", GOLD,
             "$foodImage", FOOD_IMAGE,
-            "$foodLabel", L10nTile.FOOD,
+            "$foodLabel", FOOD,
             "$getTileInfo", GetTileInfo.getAjax(tile),
             "$tileName", tile.getView().getLocalizedName(),
             "$production", tile.getBaseSupply().getProduction(),

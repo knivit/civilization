@@ -10,6 +10,8 @@ import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 
 import java.util.UUID;
 
+import static com.tsoft.civilization.web.ajax.ServerStaticResource.PRODUCTION_IMAGE;
+
 public class BuildUnitAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
@@ -64,13 +66,13 @@ public class BuildUnitAction {
         }
 
         return Format.text("""
-            <button onclick="$buttonOnClick">$buttonLabel: $productionCost<image src='$productionImage'/></button>
+            <button onclick="$buttonOnClick">$buttonLabel: $productionCost $productionImage</button>
             """,
 
             "$buttonOnClick", ClientAjaxRequest.buildUnitAction(city, unitClassUuid),
             "$buttonLabel", getLocalizedName(),
             "$productionCost", city.getUnitProductionCost(unitClassUuid),
-            "$productionImage", "images/status/production.png"
+            "$productionImage", PRODUCTION_IMAGE
         );
     }
 }

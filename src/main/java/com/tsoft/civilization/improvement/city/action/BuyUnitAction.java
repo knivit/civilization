@@ -14,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.UUID;
 
+import static com.tsoft.civilization.web.ajax.ServerStaticResource.GOLD_IMAGE;
+
 @Slf4j
 public class BuyUnitAction {
 
@@ -78,13 +80,13 @@ public class BuyUnitAction {
         }
 
         return Format.text("""
-            <button onclick="$buttonOnClick">$buttonLabel: $buyCost<image src='$goldImage'/></button>
+            <button onclick="$buttonOnClick">$buttonLabel: $buyCost $goldImage</button>
             """,
 
             "$buttonOnClick", ClientAjaxRequest.buyUnitAction(city, unitClassUuid),
             "$buttonLabel", getLocalizedName(),
             "$buyCost", city.getUnitBuyCost(unitClassUuid),
-            "$goldImage", "images/status/gold.png"
+            "$goldImage", GOLD_IMAGE
         );
     }
 }
