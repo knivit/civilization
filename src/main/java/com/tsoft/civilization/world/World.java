@@ -8,9 +8,6 @@ import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.world.event.NewEraStartedEvent;
-import com.tsoft.civilization.world.event.NewYearStartEvent;
-import com.tsoft.civilization.world.event.WorldStopYearEvent;
 import com.tsoft.civilization.world.scenario.Scenario;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,16 +20,13 @@ import java.util.*;
 public class World {
 
     @Getter
-    private final LocalDateTime createdAt = LocalDateTime.now();
-
-    @Getter
     private final String id = UUID.randomUUID().toString();
 
     @Getter
-    private Year year;
+    private final LocalDateTime createdAt = LocalDateTime.now();
 
     @Getter
-    private int era;
+    private Year year = Year.NOT_STARTED;
 
     @Getter
     private final Climate climate;
@@ -52,17 +46,12 @@ public class World {
     @Getter @Setter
     private DifficultyLevel difficultyLevel;
 
-    private final List<Year> history = new ArrayList<>();
     private final WorldService worldService;
-    private volatile boolean isYearStarted;
 
     public World(String name, TilesMap tilesMap, Climate climate) {
         this.name = name;
         this.tilesMap = tilesMap;
         this.climate = climate;
-
-        year = new Year(-3000);
-        era = year.getEra();
 
         view = new WorldView(this);
 
@@ -151,40 +140,14 @@ public class World {
         return worldService.getCityById(cityId);
     }
 
-    public List<Year> getHistory() {
-        return history;
+    public Year getHistory(int stepNo) {
+        return worldService.getHistory(stepNo);
     }
 
     public void startGame() {
-        if (!isYearStarted) {
-            startYear();
-        }
-    }
+        year = new Year(-3000);
 
-    public void startYear() {
-        if (isYearStarted) {
-            throw new IllegalStateException("This year already started !");
-        }
-
-        isYearStarted = true;
-        history.add(year);
-
-        worldService.startYear();
-
-        sendEvent(NewYearStartEvent.builder()
-            .year(year.getYear())
-            .build());
-
-        if (era != year.getEra()) {
-            era = year.getEra();
-            worldService.startEra();
-
-            sendEvent(NewEraStartedEvent.builder()
-                .era(era)
-                .build());
-        }
-
-        log.debug("A new year {} started", year.getYear());
+        worldService.startYear(year);
     }
 
     // Callback on civilizations' "next turn" button
@@ -192,27 +155,15 @@ public class World {
         CivilizationList list = worldService.getMovingCivilizations();
 
         if (list.isEmpty()) {
-            stopYear();
-
-            // Start a new year !
-            startYear();
+            nextYear();
         }
     }
 
-    // Do not invoke this method directly; it is will be invoked in onCivilizationMoved()
-    // when all Civilizations done their move
-    private void stopYear() {
-        if (!isYearStarted) {
-            throw new IllegalStateException("This year already ended !");
-        }
-
-        isYearStarted = false;
-
-        sendEvent(WorldStopYearEvent.builder()
-            .year(year.getYear())
-            .build()
-        );
+    private void nextYear() {
+        worldService.stopYear(year);
 
         year = year.nextYear();
+
+        worldService.startYear(year);
     }
 }

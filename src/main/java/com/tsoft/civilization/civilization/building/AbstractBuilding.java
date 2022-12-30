@@ -13,6 +13,7 @@ import com.tsoft.civilization.world.DifficultyLevel;
 import com.tsoft.civilization.world.HasHistory;
 import com.tsoft.civilization.world.World;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.UUID;
@@ -133,7 +134,13 @@ public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt, Ha
 
     public abstract String getClassUuid();
     public abstract int getGoldCost(Civilization civilization);
-    public abstract int getBaseProductionCost();
+
+    @Getter
+    public int baseProductionCost = 0;
+
+    @Getter
+    public int goldMaintenance = 0;
+
     public abstract int getCityDefenseStrength();
     public abstract int getLocalHappiness();
     public abstract int getGlobalHappiness();
@@ -169,7 +176,7 @@ public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt, Ha
     }
 
     @Override
-    public int getProductionCost(Civilization civilization) {
+    public int getBaseProductionCost(Civilization civilization) {
         DifficultyLevel difficultyLevel = civilization.getWorld().getDifficultyLevel();
         int baseProductionCost = getBaseProductionCost();
         return (int)Math.round(baseProductionCost * CityConstructionService.BUILDING_COST_PER_DIFFICULTY_LEVEL.get(difficultyLevel));

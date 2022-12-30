@@ -3,20 +3,18 @@ package com.tsoft.civilization.unit;
 import com.tsoft.civilization.combat.CombatDamage;
 import com.tsoft.civilization.combat.CombatExperience;
 import com.tsoft.civilization.combat.service.UnitCombatService;
-import com.tsoft.civilization.combat.skill.AbstractMovementSkill;
-import com.tsoft.civilization.combat.skill.SkillMap;
-import com.tsoft.civilization.unit.service.UnitMovementService;
+import com.tsoft.civilization.combat.skill.*;
+import com.tsoft.civilization.unit.service.movement.UnitMovementService;
+import com.tsoft.civilization.unit.service.production.UnitProductionService;
 import com.tsoft.civilization.world.HasId;
 import com.tsoft.civilization.world.HasView;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.civilization.city.construction.CanBeBuilt;
-import com.tsoft.civilization.civilization.city.construction.CityConstructionService;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.world.DifficultyLevel;
 import com.tsoft.civilization.world.HasHistory;
 import com.tsoft.civilization.world.World;
 import lombok.EqualsAndHashCode;
@@ -46,11 +44,15 @@ import java.util.*;
 @Slf4j
 @EqualsAndHashCode(of = "id")
 public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength, HasHistory, CanBeBuilt {
+
     @Getter @Setter
     private String id = UUID.randomUUID().toString();
 
     @Getter @Setter
     private Civilization civilization;
+
+    @Getter
+    private UnitProductionService productionService;
 
     @Getter
     private UnitCombatService combatService;
@@ -62,14 +64,7 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
     private boolean isDestroyed;
 
     public abstract String getClassUuid();
-    public abstract UnitCategory getUnitCategory();
-    public abstract int getGoldCost(Civilization civilization);
-    public abstract int getBaseProductionCost();
-
-    // Movements
-    public abstract int getBasePassScore();
-    public abstract SkillMap<AbstractMovementSkill> getBaseMovementSkills();
-
+    public abstract UnitBaseState getBaseState();
     public abstract AbstractUnitView getView();
     public abstract boolean checkEraAndTechnology(Civilization civilization);
 
@@ -79,8 +74,86 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
 
     // Initialization on create the object
     protected void init() {
+        productionService = new UnitProductionService(this);
         combatService = new UnitCombatService(this);
         movementService = new UnitMovementService(this);
+    }
+
+    public UnitCategory getUnitCategory() {
+        return getBaseState().getCategory();
+    }
+
+    public int getGoldCost(Civilization civilization) {
+        double modifier = UnitBaseModifiers.getEconomicModifier(civilization);
+        int goldCost = getBaseState().getGoldCost();
+        return (int)Math.round(goldCost * modifier);
+    }
+
+    public int getGoldUnitKeepingExpenses() {
+        double modifier = UnitBaseModifiers.getEconomicModifier(civilization);
+        int expenses = getBaseState().getGoldUnitKeepingExpenses();
+        return (int)Math.round(expenses * modifier);
+    }
+
+    public int getBaseProductionCost(Civilization civilization) {
+        double modifier = UnitBaseModifiers.getProductionCostModifier(civilization);
+        int goldCost = getBaseState().getProductionCost();
+        return (int)Math.round(goldCost * modifier);
+    }
+
+    public int getBasePassScore(Civilization civilization) {
+        double modifier = UnitBaseModifiers.getCombatStrengthModifier(civilization);
+        int goldCost = getBaseState().getPassScore();
+        return (int)Math.round(goldCost * modifier);
+    }
+
+    public CombatStrength getBaseCombatStrength(Civilization civilization) {
+        UnitBaseState baseState = getBaseState();
+        CombatStrength baseCombatStrength = baseState.getCombatStrength();
+
+        double modifier = UnitBaseModifiers.getCombatStrengthModifier(civilization);
+
+        return CombatStrength.builder()
+            .rangedAttackRadius(baseCombatStrength.getRangedAttackRadius())
+            .rangedAttackStrength(baseCombatStrength.getRangedAttackStrength() * modifier)
+            .rangedBackFireStrength(baseCombatStrength.getRangedBackFireStrength() * modifier)
+            .meleeAttackStrength(baseCombatStrength.getMeleeAttackStrength() * modifier)
+            .meleeBackFireStrength(baseCombatStrength.getMeleeBackFireStrength() * modifier)
+            .defenseStrength(baseCombatStrength.getDefenseStrength() * modifier)
+            .build();
+    }
+
+    public SkillMap<AbstractMovementSkill> getBaseMovementSkills(Civilization civilization) {
+        UnitBaseState baseState = getBaseState();
+
+        SkillMap<AbstractMovementSkill> skills = new SkillMap<>();
+        for (AbstractMovementSkill skill : baseState.getMovementSkills()) {
+            skills.put(skill, SkillLevel.ONE);
+        }
+
+        return skills;
+    }
+
+    public SkillMap<AbstractCombatSkill> getBaseCombatSkills(Civilization civilization) {
+        UnitBaseState baseState = getBaseState();
+
+        SkillMap<AbstractCombatSkill> skills = new SkillMap<>();
+        for (AbstractCombatSkill skill : baseState.getCombatSkills()) {
+            skills.put(skill, SkillLevel.ONE);
+        }
+
+        return skills;
+    }
+
+    public SkillMap<AbstractHealingSkill> getBaseHealingSkills(Civilization civilization) {
+        UnitBaseState baseState = getBaseState();
+
+        SkillMap<AbstractHealingSkill> skills = new SkillMap<>();
+        for (AbstractHealingSkill skill : baseState.getHealingSkills()) {
+            skills.put(skill, SkillLevel.ONE);
+        }
+
+        return skills;
     }
 
     @Override
@@ -143,18 +216,6 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
     @Override
     public void setPassScore(int passScore) {
         movementService.setPassScore(passScore);
-    }
-
-    @Override
-    public int getProductionCost(Civilization civilization) {
-        DifficultyLevel difficultyLevel = civilization.getWorld().getDifficultyLevel();
-        int baseProductionCost = getBaseProductionCost();
-        int productionCost = (int)Math.round(baseProductionCost * CityConstructionService.UNIT_COST_PER_DIFFICULTY_LEVEL.get(difficultyLevel));
-        return productionCost;
-    }
-
-    public int getGoldUnitKeepingExpenses() {
-        return 3;
     }
 
     public boolean canBeCaptured() {

@@ -67,7 +67,7 @@ public class NotificationRequestProcessor {
                 sentEventId++;
 
                 Event event = myCivilization.getEvents().get(sentEventId);
-                log.debug("{}: notifying the client with event = {}", sentEventId, event);
+                log.debug("{}: notifying the client with event '{}'", sentEventId, event.getMessage().getLocalized(event.getArgs()));
 
                 needWorldUpdate = needWorldUpdate || event.isUpdateWorldMap();
                 needControlPanelUpdate = needControlPanelUpdate || event.isUpdateControlPanel();

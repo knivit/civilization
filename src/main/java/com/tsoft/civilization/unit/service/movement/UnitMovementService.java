@@ -1,4 +1,4 @@
-package com.tsoft.civilization.unit.service;
+package com.tsoft.civilization.unit.service.movement;
 
 import com.tsoft.civilization.combat.skill.*;
 import com.tsoft.civilization.unit.AbstractUnit;
@@ -25,7 +25,7 @@ public class UnitMovementService {
     public UnitMovementService(AbstractUnit unit) {
         this.unit = unit;
 
-        movementSkills = unit.getBaseMovementSkills();
+        movementSkills = unit.getBaseMovementSkills(unit.getCivilization());
     }
 
     public SkillMap<AbstractMovementSkill> getMovementSkills() {

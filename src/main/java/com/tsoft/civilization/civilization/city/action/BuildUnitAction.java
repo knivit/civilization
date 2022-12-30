@@ -37,7 +37,7 @@ public class BuildUnitAction {
 
         AbstractUnit unit = UnitFactory.findByClassUuid(unitClassUuid);
 
-        if (unit.getProductionCost(city.getCivilization()) < 0) {
+        if (unit.getBaseProductionCost(city.getCivilization()) < 0) {
             return CityActionResults.INVALID_UNIT;
         }
 

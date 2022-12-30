@@ -123,6 +123,10 @@ public class L10nWorld {
 
     /** Era */
 
+    public static final L10n NOT_STARTED = new L10n()
+        .put(EN, "Not started")
+        .put(RU, "Не запущено");
+
     public static final L10n ANCIENT_ERA = new L10n()
         .put(EN, "Ancient")
         .put(RU, "Древняя");

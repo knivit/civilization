@@ -31,7 +31,7 @@ public abstract class AbstractImprovement {
     public abstract boolean acceptEraAndTechnology(Civilization civilization);
     public abstract boolean acceptTile(AbstractTerrain tile);
     public abstract Supply getSupply();
-    public abstract CombatStrength getBaseCombatStrength(int era);
+    public abstract CombatStrength getBaseCombatStrength(Civilization civilization);
     public abstract AbstractImprovementView getView();
 
     protected AbstractImprovement(AbstractTerrain tile) {

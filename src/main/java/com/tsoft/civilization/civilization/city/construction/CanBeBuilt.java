@@ -7,5 +7,5 @@ import com.tsoft.civilization.world.HasView;
 public interface CanBeBuilt extends HasId, HasView {
     String getClassUuid();
 
-    int getProductionCost(Civilization civilization);
+    int getBaseProductionCost(Civilization civilization);
 }

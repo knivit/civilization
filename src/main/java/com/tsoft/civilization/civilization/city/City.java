@@ -135,7 +135,7 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
     }
 
     @Override
-    public CombatStrength getBaseCombatStrength(int era) {
+    public CombatStrength getBaseCombatStrength(Civilization civilization) {
         // A basic factor, determined by the current era of the civilization. For example, while in the Ancient Era,
         // a city has a base CS of about 9 - 10, but in the Modern Era, the base increases to 50 - 60.
         int defenseStrength = switch (civilization.getWorld().getYear().getEra()) {
@@ -159,7 +159,7 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
     }
 
     @Override
-    public SkillMap<AbstractCombatSkill> getBaseCombatSkills(int era) {
+    public SkillMap<AbstractCombatSkill> getBaseCombatSkills(Civilization civilization) {
         return new SkillMap<>(
             CITY_POPULATION_COMBAT_SKILL, SkillLevel.ONE,
             CITY_BUILDINGS_COMBAT_SKILL, SkillLevel.ONE,
@@ -169,7 +169,7 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
     }
 
     @Override
-    public SkillMap<AbstractHealingSkill> getBaseHealingSkills(int era) {
+    public SkillMap<AbstractHealingSkill> getBaseHealingSkills(Civilization civilization) {
         return new SkillMap<>(
             BASE_HEALING_SKILL, SkillLevel.ONE
         );
@@ -288,7 +288,7 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
 
     public int getUnitProductionCost(String unitClassUuid) {
         AbstractUnit unit = UnitFactory.findByClassUuid(unitClassUuid);
-        return unit.getProductionCost(civilization);
+        return unit.getBaseProductionCost(civilization);
     }
 
     public int getUnitBuyCost(String unitClassUuid) {
@@ -298,7 +298,7 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
 
     public int getBuildingProductionCost(String buildingClassUuid) {
         AbstractBuilding building = BuildingFactory.findByClassUuid(buildingClassUuid);
-        return building.getProductionCost(civilization);
+        return building.getBaseProductionCost(civilization);
     }
 
     public int getBuildingBuyCost(String buildingClassUuid) {

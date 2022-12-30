@@ -24,4 +24,19 @@ public class CombatantState {
 
     private final boolean isDestroyed;
 
+    @Override
+    public String toString() {
+        return
+            "SS:" + strikeStrength + ' ' +
+            "AS:" + appliedStrikeStrength + ' ' +
+            "RE:" + rangedExperience + ' ' +
+            "REA:" + rangedExperienceAfterAttack + ' ' +
+            "ME:" + meleeExperience + ' ' +
+            "MEA:" + meleeExperienceAfterAttack + ' ' +
+            "DS:" + defenseStrength + ' ' +
+            "DSA:" + defenseStrengthAfterAttack + ' ' +
+            "DE:" + defenseExperience + ' ' +
+            "DEA:" + defenseExperienceAfterAttack + ' ' +
+            "D:" + (isDestroyed ? 1 : 0);
+    }
 }

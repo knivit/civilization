@@ -63,7 +63,7 @@ public class Road extends AbstractImprovement {
     }
 
     @Override
-    public CombatStrength getBaseCombatStrength(int era) {
+    public CombatStrength getBaseCombatStrength(Civilization civilization) {
         return CombatStrength.builder()
             .defenseStrength(10)
             .build();

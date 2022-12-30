@@ -10,25 +10,25 @@ public class CombatStrength {
     public static final CombatStrength ZERO = CombatStrength.builder().build();
 
     // Ranged attack
-    private final int rangedAttackLevel;      // Unit's level in ranged attacks
+    private final int rangedAttackLevel;         // Unit's level in ranged attacks
     private final double rangedAttackStrength;   // Unit's ranged attack strength
-    private final int rangedAttackRadius;     // Ranged attack radius
+    private final int rangedAttackRadius;        // Ranged attack radius
     private final double rangedAttackExperience; // Experience during an attack
     private final double rangedBackFireStrength; // Backfire strength
 
     // Melee attack
-    private final int meleeAttackLevel;       // Unit's level in melee attacks
+    private final int meleeAttackLevel;          // Unit's level in melee attacks
     private final double meleeAttackStrength;    // Unit's ranged attack strength
     private final double meleeAttackExperience;  // Experience during an attack
     private final double meleeBackFireStrength;  // Backfire strength
 
     // Defense
-    private final int defenseLevel;           // Unit's defense level
+    private final int defenseLevel;              // Unit's defense level
     private final double defenseStrength;        // Unit's defense strength
     private final double defenseExperience;      // Experience during a defense
 
     // Options
-    private final boolean isDestroyed;        // Was destroyed during a step
+    private final boolean isDestroyed;           // Was destroyed during a step
 
     public CombatStrength add(CombatStrength other) {
         return CombatStrength.builder()
@@ -76,5 +76,23 @@ public class CombatStrength {
             .defenseExperience(defenseExperience)
 
             .isDestroyed(isDestroyed);
+    }
+
+    @Override
+    public String toString() {
+        return
+            "RAL:" + rangedAttackLevel + ' ' +
+            "RAS:" + rangedAttackStrength + ' ' +
+            "RAR:" + rangedAttackRadius + ' ' +
+            "RAE:" + rangedAttackExperience + ' ' +
+            "RBS:" + rangedBackFireStrength + ' ' +
+            "MAL:" + meleeAttackLevel + ' ' +
+            "MAS:" + meleeAttackStrength + ' ' +
+            "MAE:" + meleeAttackExperience + ' ' +
+            "MBS:" + meleeBackFireStrength + ' ' +
+            "DL:" + defenseLevel + ' ' +
+            "DS:" + defenseStrength + ' ' +
+            "DE:" + defenseExperience + ' ' +
+            "D:" + (isDestroyed ? 1 : 0);
     }
 }

@@ -14,7 +14,7 @@ public class Construction implements HasView, HasId {
     public Construction(Civilization civilization, CanBeBuilt object) {
         this.object = object;
 
-        totalProductionCost = object.getProductionCost(civilization);
+        totalProductionCost = object.getBaseProductionCost(civilization);
         usedProductionCost = 0;
     }
 

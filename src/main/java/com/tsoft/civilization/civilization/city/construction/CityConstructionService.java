@@ -22,17 +22,6 @@ import static com.tsoft.civilization.world.DifficultyLevel.DEITY;
 @Slf4j
 public class CityConstructionService {
 
-    public static final Map<DifficultyLevel, Double> UNIT_COST_PER_DIFFICULTY_LEVEL = Map.of(
-        SETTLER, 0.5,
-        CHIEFTAIN, 0.67,
-        WARLORD, 0.85,
-        PRINCE, 1.0,
-        KING, 1.0,
-        EMPEROR, 1.0,
-        IMMORTAL, 1.0,
-        DEITY, 1.0
-    );
-
     public static final Map<DifficultyLevel, Double> BUILDING_COST_PER_DIFFICULTY_LEVEL = Map.of(
         SETTLER, 0.5,
         CHIEFTAIN, 0.67,

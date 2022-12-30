@@ -48,7 +48,8 @@ public class GetEvents extends AbstractAjaxRequest {
         if (stepNo > civilization.getYear().getStepNo()) {
             stepNo = civilization.getStartYear().getStepNo();
         }
-        Year year = civilization.getWorld().getHistory().get(stepNo);
+
+        Year year = civilization.getWorld().getHistory(stepNo);
 
         StringBuilder value = Format.text("""
             $navigationPanel

@@ -9,9 +9,7 @@ import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Pair;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.world.event.DeclareFriendsEvent;
-import com.tsoft.civilization.world.event.DeclareWarEvent;
-import com.tsoft.civilization.world.event.NewCivilizationEvent;
+import com.tsoft.civilization.world.event.*;
 import com.tsoft.civilization.world.scenario.Scenario;
 import com.tsoft.civilization.world.scenario.ScenarioApplyResult;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +24,7 @@ public class WorldService {
 
     private final CivilizationList civilizations;
     private final HashMap<Pair<Civilization>, CivilizationsRelations> relations = new HashMap<>();
+    private final List<Year> history = new ArrayList<>();
 
     public WorldService(World world) {
         this.world = world;
@@ -48,8 +47,8 @@ public class WorldService {
 
         civilizations.add(civilization);
 
-        // send an event to civilizations about the new one
-        // clients need to update their maps to see the new civilization (settlers and warriors)
+        // Send an event to civilizations about the new one.
+        // Clients need to update their maps to see the new civilization (settlers and warriors)
         sendEvent(NewCivilizationEvent.builder()
             .civilizationName(civilizationName)
             .build());
@@ -60,6 +59,14 @@ public class WorldService {
     public void sendEvent(Event event) {
         Objects.requireNonNull(event, "event can't be null");
         civilizations.forEach(e -> e.addEvent(event));
+    }
+
+    public Year getHistory(int stepNo) {
+        if (stepNo < 0 || stepNo >= history.size()) {
+            throw new IllegalArgumentException("stepNo must be between [0.." + history.size() + ")");
+        }
+
+        return history.get(stepNo);
     }
 
     // Returns NULL when relations can not be found
@@ -239,13 +246,38 @@ public class WorldService {
         return civilizations.getCityById(cityId);
     }
 
-    public void startYear() {
+    public void startYear(Year year) {
         world.getTilesMap().startYear();
         civilizations.forEach(Civilization::startYear);
+
+        sendEvent(NewYearStartEvent.builder()
+            .year(year.getYear())
+            .build());
+
+        log.debug("A new year {} started", year.getYearLocalized());
+
+        if (year.isNewEra()) {
+            startEra(year);
+        }
     }
 
-    public void startEra() {
+    public void startEra(Year year) {
         civilizations.forEach(Civilization::startEra);
+
+        sendEvent(NewEraStartedEvent.builder()
+            .era(year.getEra())
+            .build());
+
+        log.debug("A new {} era started", year.getEraLocalized());
+    }
+
+    public void stopYear(Year year) {
+        sendEvent(WorldStopYearEvent.builder()
+            .year(year.getYear())
+            .build()
+        );
+
+        history.add(year);
     }
 
     public CivilizationList getMovingCivilizations() {

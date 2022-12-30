@@ -67,7 +67,7 @@ public class Farm extends AbstractImprovement {
     }
 
     @Override
-    public CombatStrength getBaseCombatStrength(int era) {
+    public CombatStrength getBaseCombatStrength(Civilization civilization) {
         return CombatStrength.builder()
             .defenseStrength(0)
             .build();

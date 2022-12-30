@@ -47,9 +47,9 @@ public class AttackOnPlainTerrainSkill implements AbstractCombatSkill {
     }
 
     private CombatStrength getMeleeUnitAttackStrength(HasCombatStrength unit, SkillLevel level) {
-        int era = unit.getCivilization().getWorld().getEra();
-        CombatStrength combatStrength = unit.getBaseCombatStrength(era);
+        CombatStrength combatStrength = unit.getBaseCombatStrength(unit.getCivilization());
 
+        int era = unit.getCivilization().getYear().getEra();
         int strength = switch (era) {
             case ANCIENT_ERA, CLASSICAL_ERA, MEDIEVAL_ERA, RENAISSANCE_ERA -> (int)Math.round(combatStrength.getRangedAttackStrength() * 1.15);
             default -> 0;

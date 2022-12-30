@@ -10,8 +10,8 @@ import java.util.Map;
 public class SkillService {
 
     public CombatStrength calcCombatStrength(HasCombatStrength unit, SkillMap<AbstractCombatSkill> skills) {
-        int era = unit.getCivilization().getWorld().getEra();
-        CombatStrength strength = unit.getBaseCombatStrength(era);
+        int era = unit.getCivilization().getYear().getEra();
+        CombatStrength strength = unit.getBaseCombatStrength(unit.getCivilization());
 
         for (Map.Entry<AbstractCombatSkill, SkillLevel> skill : skills) {
             if (SkillType.ACCUMULATOR.equals(skill.getKey().getSkillType())) {
@@ -53,7 +53,7 @@ public class SkillService {
     }
 
     public int calcPassScore(AbstractUnit unit, SkillMap<AbstractMovementSkill> skills) {
-        int passScore = unit.getBasePassScore();
+        int passScore = unit.getBasePassScore(unit.getCivilization());
 
         for (Map.Entry<AbstractMovementSkill, SkillLevel> skill : skills) {
             SkillLevel level = skill.getValue();

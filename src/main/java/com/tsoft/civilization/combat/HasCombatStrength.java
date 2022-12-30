@@ -20,13 +20,13 @@ public interface HasCombatStrength {
 
     UnitCategory getUnitCategory();
 
-    CombatStrength getBaseCombatStrength(int era);
+    CombatStrength getBaseCombatStrength(Civilization civilization);
 
-    SkillMap<AbstractCombatSkill> getBaseCombatSkills(int era);
+    SkillMap<AbstractCombatSkill> getBaseCombatSkills(Civilization civilization);
 
     CombatStrength calcCombatStrength();
 
-    SkillMap<AbstractHealingSkill> getBaseHealingSkills(int era);
+    SkillMap<AbstractHealingSkill> getBaseHealingSkills(Civilization civilization);
 
     CombatDamage getCombatDamage();
 

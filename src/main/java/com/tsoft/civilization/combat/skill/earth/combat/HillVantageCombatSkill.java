@@ -55,7 +55,7 @@ public class HillVantageCombatSkill implements AbstractCombatSkill {
     }
 
     private CombatStrength getCityAttackStrength(HasCombatStrength unit) {
-        int era = unit.getCivilization().getWorld().getEra();
+        int era = unit.getCivilization().getYear().getEra();
 
         int strength = switch (era) {
             case ANCIENT_ERA -> 20;
@@ -71,7 +71,7 @@ public class HillVantageCombatSkill implements AbstractCombatSkill {
     }
 
     private CombatStrength getRangedUnitAttackStrength(HasCombatStrength unit) {
-        int era = unit.getCivilization().getWorld().getEra();
+        int era = unit.getCivilization().getYear().getEra();
 
         int strength = switch (era) {
             case ANCIENT_ERA -> 6;
@@ -87,7 +87,7 @@ public class HillVantageCombatSkill implements AbstractCombatSkill {
     }
 
     private CombatStrength getMeleeUnitAttackStrength(HasCombatStrength unit) {
-        int era = unit.getCivilization().getWorld().getEra();
+        int era = unit.getCivilization().getYear().getEra();
 
         int strength = switch (era) {
             case ANCIENT_ERA -> 2;
@@ -103,7 +103,7 @@ public class HillVantageCombatSkill implements AbstractCombatSkill {
     }
 
     private CombatStrength getCityDefenseStrength(HasCombatStrength unit) {
-        int era = unit.getCivilization().getWorld().getEra();
+        int era = unit.getCivilization().getYear().getEra();
 
         int strength = switch (era) {
             case ANCIENT_ERA -> 10;
@@ -121,7 +121,7 @@ public class HillVantageCombatSkill implements AbstractCombatSkill {
     }
 
     private CombatStrength getRangedUnitDefenseStrength(HasCombatStrength unit) {
-        int era = unit.getCivilization().getWorld().getEra();
+        int era = unit.getCivilization().getYear().getEra();
 
         int strength = switch (era) {
             case ANCIENT_ERA -> 2;
@@ -139,7 +139,7 @@ public class HillVantageCombatSkill implements AbstractCombatSkill {
     }
 
     private CombatStrength getMeleeUnitDefenseStrength(HasCombatStrength unit) {
-        int era = unit.getCivilization().getWorld().getEra();
+        int era = unit.getCivilization().getYear().getEra();
 
         int strength = switch (era) {
             case ANCIENT_ERA -> 2;

@@ -1,5 +1,6 @@
 package com.tsoft.civilization.combat.service;
 
+import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.combat.CombatDamage;
 import com.tsoft.civilization.combat.CombatExperience;
 import com.tsoft.civilization.combat.CombatStrength;
@@ -25,9 +26,9 @@ public class UnitCombatService {
     public UnitCombatService(AbstractUnit unit) {
         this.unit = unit;
 
-        int era = unit.getWorld().getEra();
-        combatSkills = unit.getBaseCombatSkills(era);
-        healingSkills = unit.getBaseHealingSkills(era);
+        Civilization civilization = unit.getCivilization();
+        combatSkills = unit.getBaseCombatSkills(civilization);
+        healingSkills = unit.getBaseHealingSkills(civilization);
     }
 
     public CombatStrength calcCombatStrength() {

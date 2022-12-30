@@ -1,5 +1,6 @@
 package com.tsoft.civilization.combat.service;
 
+import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.combat.CombatDamage;
 import com.tsoft.civilization.combat.CombatExperience;
 import com.tsoft.civilization.combat.CombatStrength;
@@ -175,9 +176,9 @@ public class CityCombatService implements HasHistory {
     public CityCombatService(City city) {
         this.city = city;
 
-        int era = city.getCivilization().getWorld().getEra();
-        combatSkills = city.getBaseCombatSkills(era);
-        healingSkills = city.getBaseHealingSkills(era);
+        Civilization civilization = city.getCivilization();
+        combatSkills = city.getBaseCombatSkills(civilization);
+        healingSkills = city.getBaseHealingSkills(civilization);
     }
 
     public CombatStrength getBaseCombatStrength(int era) {

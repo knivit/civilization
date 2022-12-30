@@ -77,33 +77,34 @@ import java.util.Arrays;
  *
  * In Brave New World
  * ------------------
- * Players receive gameplay bonuses that diminish as the chosen difficulty level increases. The AI plays on a special difficulty level (as detailed under "AI" in the table below) and receives all of the appropriate bonuses.
+ * Players receive gameplay bonuses that diminish as the chosen difficulty level increases.
+ * The AI plays on a special difficulty level (as detailed under "AI" in the table below) and receives all of the appropriate bonuses.
  *
- * Element	Settler	Chieftain	Warlord	Prince	King	Emperor	Immortal	Deity	AI
- * Advanced Start Points*	150%	130%	110%	100%	90%	85%	80%	75%	100%
- * Base Happiness	15	12	12	9	9	9	9	9	15
- * Extra Happiness Per Luxury	1	1	0	0	0	0	0	0	0
- * Unhappiness Per City	40%	60%	75%	100%	100%	100%	100%	100%	90%
- * Unhappiness Per Population	40%	60%	75%	100%	100%	100%	100%	100%	90%
- * Production Free Units	10	7	7	5	5	5	5	5	7
- * Production Free Units Per City	3	3	2	2	2	2	2	2	3
- * Route Cost	34%	50%	75%	100%	100%	100%	100%	100%	50%
- * Unit Cost	50%	67%	85%	100%	100%	100%	100%	100%	75%
- * Building Cost	50%	67%	85%	100%	100%	100%	100%	100%	75%
- * Research Cost	90%	95%	100%	100%	100%	100%	100%	100%	85%
- * Policy Cost	50%	67%	85%	100%	100%	100%	100%	100%	75%
- * City Production Num Options Considered	10	4	3	2	2	2	2	2	2
- * Tech Num Options Considered	10	4	3	2	2	2	2	2	2
- * Policy Num Options Considered	10	4	3	2	2	2	2	2	2
- * Attitude Change*	2	1	0	-1	-1	-1	-1	-1	-1
- * No Tech Trade Modifier*	100%	90%	80%	70%	50%	40%	30%	20%	70%
- * Tech Trade Known Modifier*	-100%	-50%	-25%	0%	0%	0%	0%	0%	0%
- * Barb Camp Gold	50	40	30	25	25	25	25	25	25
- * Barb Spawn Mod	8	5	3	0	0	0	0	0	0
- * Barbarian Bonus	70	60	50	40	30	20	10	0	40
- * Turn Barbarians Can Enter Player Land	10,000	60	20	0	0	0	0	0	0
- * Barbarian Land Target Range	2	3	4	5	5	6	7	8	5
- * Barbarian Sea Target Range	4	6	8	10	12	15	18	20	10
+ * Element	                                Settler	Chief	Warlord	Prince	King	Emperor	Immortal	Deity	AI
+ * Advanced Start Points*	                150%	130%	110%	100%	90%	    85%	    80%	        75%	    100%
+ * Base Happiness	                        15	    12	    12	    9	    9	    9	    9	        9	    15
+ * Extra Happiness Per Luxury	            1	    1	    0	    0	    0	    0	    0	        0	    0
+ * Unhappiness Per City	                    40%	    60%	    75%	    100%	100%	100%	100%	    100%	90%
+ * Unhappiness Per Population	            40%	    60%	    75%	    100%	100%	100%	100%	    100%	90%
+ * Production Free Units	                10	    7	    7	    5	    5	    5	    5	        5	    7
+ * Production Free Units Per City	        3	    3	    2	    2	    2	    2	    2	        2	    3
+ * Route Cost	                            34%	    50%	    75%	    100%	100%	100%	100%	    100%	50%
+ * Unit Cost	                            50%	    67%	    85%	    100%	100%	100%	100%	    100%	75%
+ * Building Cost	                        50%	    67%	    85%	    100%	100%	100%	100%	    100%	75%
+ * Research Cost	                        90%	    95%	    100%	100%	100%	100%	100%	    100%	85%
+ * Policy Cost	                            50%	    67%	    85%	    100%	100%	100%	100%	    100%	75%
+ * City Production Num Options Considered	10	    4	    3	    2	    2	    2	    2	        2	    2
+ * Tech Num Options Considered	            10	    4	    3	    2	    2	    2	    2	        2	    2
+ * Policy Num Options Considered	        10	    4	    3	    2	    2	    2	    2	        2	    2
+ * Attitude Change*	                        2	    1	    0	    -1	    -1	    -1	    -1	        -1	    -1
+ * No Tech Trade Modifier*	                100%	90%	    80%	    70%	    50%	    40%	    30%	        20%	    70%
+ * Tech Trade Known Modifier*	            -100%	-50%	-25%	0%	    0%	    0%	    0%	        0%	    0%
+ * Barb Camp Gold	                        50	    40	    30	    25	    25	    25	    25	        25	    25
+ * Barb Spawn Mod	                        8	    5	    3	    0	    0	    0	    0	        0	    0
+ * Barbarian Bonus	                        70	    60	    50	    40	    30	    20	    10	        0	    40
+ * Turn Barbarians Can Enter Player Land	10,000	60	    20	    0	    0	    0	    0	        0	    0
+ * Barbarian Land Target Range	            2	    3	    4	    5	    5	    6	    7	        8	    5
+ * Barbarian Sea Target Range	            4	    6	    8	    10	    12	    15	    18	        20	    10
  * * This element is either a holdover from Civilization IV or is never used in the code, so it has no effect on gameplay.
  *
  * AI Bonuses
@@ -133,14 +134,14 @@ import java.util.Arrays;
  * Advanced Start Points*	100%	100%	100%	100%	120%	135%	150%	170%
  * Free XP9	0	0	0	0	10	10	30	30
  * Free XP Percent10	0%	0%	0%	0%	0%	25%	50%	100%
- * 1 This element applies to the amount of Food Food that cities must store to increase their 20xPopulation5.png Population.
- * 2 This element applies to the Production Production and Faith Faith costs of units.
- * 3 This element applies to the Production Production costs of buildings.
- * 4 This element applies to the Production Production costs of wonders.
- * 5 This element applies to the Production Production costs of national projects, such as the Manhattan Project.
- * 6 This element applies to the amount of Production Production that must be contributed to complete international projects, such as the World's Fair.
- * 7 This element applies to the Gold Gold maintenance costs of buildings.
- * 8 This element applies to the Gold Gold maintenance costs of units.
+ * 1 This element applies to the amount of Food that cities must store to increase their Population.
+ * 2 This element applies to the Production and Faith costs of units.
+ * 3 This element applies to the Production costs of buildings.
+ * 4 This element applies to the Production costs of wonders.
+ * 5 This element applies to the Production costs of national projects, such as the Manhattan Project.
+ * 6 This element applies to the amount of Production that must be contributed to complete international projects, such as the World's Fair.
+ * 7 This element applies to the Gold maintenance costs of buildings.
+ * 8 This element applies to the Gold maintenance costs of units.
  * 9 This element applies to the starting XP of military units.
  * 10 This element applies to the number of XP that military units earn from combat.
  * * This element is either a holdover from Civilization IV or is never used in the code, so it has no effect on gameplay.
