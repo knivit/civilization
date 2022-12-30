@@ -4,7 +4,7 @@ import com.tsoft.civilization.util.l10n.L10nList;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.event.CityDestroyedEvent;
 import com.tsoft.civilization.civilization.event.CreateCityEvent;
-import com.tsoft.civilization.civilization.population.Happiness;
+import com.tsoft.civilization.civilization.happiness.Happiness;
 import com.tsoft.civilization.combat.service.AttackService;
 import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.civilization.building.AbstractBuilding;

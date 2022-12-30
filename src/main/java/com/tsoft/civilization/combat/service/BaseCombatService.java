@@ -1,7 +1,7 @@
 package com.tsoft.civilization.combat.service;
 
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.civilization.population.Happiness;
+import com.tsoft.civilization.civilization.happiness.Happiness;
 import com.tsoft.civilization.combat.*;
 import com.tsoft.civilization.combat.event.AttackDoneEvent;
 import com.tsoft.civilization.combat.event.UnitHasWonAttackEvent;

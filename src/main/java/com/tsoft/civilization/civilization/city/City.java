@@ -8,14 +8,15 @@ import com.tsoft.civilization.civilization.city.construction.CanBeBuilt;
 import com.tsoft.civilization.civilization.city.construction.CityConstructionService;
 import com.tsoft.civilization.civilization.city.construction.ConstructionList;
 import com.tsoft.civilization.civilization.city.event.CityStopYearEvent;
-import com.tsoft.civilization.civilization.city.population.CityHappinessService;
-import com.tsoft.civilization.civilization.city.population.CityPopulationService;
+import com.tsoft.civilization.civilization.city.happiness.CityHappinessService;
+import com.tsoft.civilization.civilization.city.citizen.CityCitizenService;
+import com.tsoft.civilization.civilization.city.specialist.CitySpecialistService;
 import com.tsoft.civilization.civilization.city.supply.CitySupplyService;
 import com.tsoft.civilization.civilization.city.supply.TileSupplyStrategy;
 import com.tsoft.civilization.civilization.city.tile.CityTileService;
 import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.civilization.building.palace.Palace;
-import com.tsoft.civilization.civilization.population.Happiness;
+import com.tsoft.civilization.civilization.happiness.Happiness;
 import com.tsoft.civilization.combat.CombatDamage;
 import com.tsoft.civilization.combat.CombatExperience;
 import com.tsoft.civilization.combat.CombatStrength;
@@ -55,7 +56,10 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
     private CityTileService tileService;
 
     @Getter
-    private CityPopulationService populationService;
+    private CityCitizenService populationService;
+
+    @Getter
+    private CitySpecialistService specialistService;
 
     private CityBuildingService buildingService;
     private CityConstructionService constructionService;
@@ -99,9 +103,12 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
         tileService = new CityTileService(this);
         tileService.addStartLocations(getTile().getLocation());
 
-        // population
-        populationService = new CityPopulationService(this);
+        // citizen
+        populationService = new CityCitizenService(this);
         populationService.addCitizen();
+
+        // specialists
+        specialistService = new CitySpecialistService(this);
 
         // buildings & construction
         buildingService = new CityBuildingService(this);
@@ -223,6 +230,10 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
         return populationService.getCitizenCount();
     }
 
+    public int getSpecialistCount() {
+        return specialistService.getSpecialistCount();
+    }
+
     public BuildingList getBuildings() {
         return buildingService.getBuildings();
     }
@@ -327,6 +338,7 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
         tileService.startYear();
         buildingService.startYear();
         populationService.startYear();
+        specialistService.startYear();
         constructionService.startYear();
         combatService.startYear();
         supplyService.startYear();
@@ -348,8 +360,11 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
 
         tileService.stopYear();
 
-        Supply populationSupplyChanges = populationService.stopYear(supply);
-        supply = supply.add(populationSupplyChanges);
+        Supply populationSupplyChange = populationService.stopYear(supply);
+        supply = supply.add(populationSupplyChange);
+
+        Supply specialistsSupplyChange = specialistService.stopYear(supply);
+        supply = supply.add(specialistsSupplyChange);
 
         buildingService.stopYear();
 

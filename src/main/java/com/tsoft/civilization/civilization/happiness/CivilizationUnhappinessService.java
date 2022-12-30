@@ -1,4 +1,4 @@
-package com.tsoft.civilization.civilization.population;
+package com.tsoft.civilization.civilization.happiness;
 
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.city.City;

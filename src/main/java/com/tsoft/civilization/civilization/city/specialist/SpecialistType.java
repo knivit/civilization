@@ -1,12 +1,13 @@
-package com.tsoft.civilization.unit.civil.citizen;
+package com.tsoft.civilization.civilization.city.specialist;
 
-import com.tsoft.civilization.unit.civil.citizen.view.*;
+import com.tsoft.civilization.civilization.city.citizen.CitizenView;
+import com.tsoft.civilization.civilization.city.specialist.view.*;
 
 /**
  * Specialists are citizens of your cities which, instead of trudging in the fields and mines around the cities,
  * dedicate themselves to more refined work in your special buildings' specialist slots.
  * Despite the fact that in this way less land is being taken advantage of, Specialists are very important for your civilization,
- * because they are the main source of GreatPeople5 Great People Points (GPPs) and are thus central to your Great People generation!
+ * because they are the main source of GreatPeople Points (GPPs) and are thus central to your Great People generation!
  *
  * Specialists are divided into several types, depending on the building they're assigned to.
  * Besides certain types of GPPs, each type will also produce some stat - Production, Gold, Culture or Science.

@@ -1,13 +1,13 @@
-package com.tsoft.civilization.unit.civil.citizen.view;
+package com.tsoft.civilization.civilization.city.specialist.view;
 
-import com.tsoft.civilization.unit.civil.citizen.L10nCitizen;
-import com.tsoft.civilization.unit.civil.citizen.CitizenView;
+import com.tsoft.civilization.civilization.city.citizen.CitizenView;
+import com.tsoft.civilization.civilization.city.specialist.L10nSpecialist;
 
 public class MerchantView extends CitizenView {
 
     @Override
     public String getLocalizedName() {
-        return L10nCitizen.MERCHANT.getLocalized();
+        return L10nSpecialist.MERCHANT.getLocalized();
     }
 
     @Override

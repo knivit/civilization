@@ -5,8 +5,8 @@ import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
-import com.tsoft.civilization.unit.civil.citizen.Citizen;
-import com.tsoft.civilization.unit.civil.citizen.CitizenPlacementTable;
+import com.tsoft.civilization.civilization.city.citizen.Citizen;
+import com.tsoft.civilization.civilization.city.citizen.CitizenPlacementTable;
 import com.tsoft.civilization.util.Point;
 import lombok.extern.slf4j.Slf4j;
 

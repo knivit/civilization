@@ -1,8 +1,8 @@
-package com.tsoft.civilization.unit.civil.citizen;
+package com.tsoft.civilization.civilization.city.citizen;
 
+import com.tsoft.civilization.civilization.city.citizen.view.LaborerView;
 import com.tsoft.civilization.economic.HasSupply;
 import com.tsoft.civilization.civilization.city.City;
-import com.tsoft.civilization.unit.civil.citizen.view.LaborerView;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.world.HasHistory;
@@ -35,13 +35,13 @@ import java.util.UUID;
  */
 @EqualsAndHashCode(of = "id")
 public class Citizen implements HasSupply, HasHistory {
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private final String id = UUID.randomUUID().toString();
 
     private final City city;
     private Point location;
-    private SpecialistType specialistType;
 
     private static final CitizenView VIEW = new LaborerView();
 
@@ -65,12 +65,8 @@ public class Citizen implements HasSupply, HasHistory {
         return location == null;
     }
 
-    public boolean isSpecialist() {
-        return specialistType != null;
-    }
-
     public CitizenView getView() {
-        return isSpecialist() ? specialistType.getView() : VIEW;
+        return VIEW;
     }
 
     @Override
@@ -82,10 +78,6 @@ public class Citizen implements HasSupply, HasHistory {
         // The number of slots for Unemployed citizens is unlimited.
         if (isUnemployed()) {
             return Supply.builder().production(1).build();
-        }
-
-        if (isSpecialist()) {
-            return SpecialistSupplyTable.get(specialistType);
         }
 
         // Base supply from an employed citizen

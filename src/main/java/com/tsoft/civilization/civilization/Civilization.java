@@ -2,10 +2,10 @@ package com.tsoft.civilization.civilization;
 
 import com.tsoft.civilization.civilization.city.CivilizationCityService;
 import com.tsoft.civilization.civilization.event.*;
-import com.tsoft.civilization.civilization.population.CivilizationHappinessService;
-import com.tsoft.civilization.civilization.population.CivilizationUnhappinessService;
-import com.tsoft.civilization.civilization.population.Happiness;
-import com.tsoft.civilization.civilization.population.Unhappiness;
+import com.tsoft.civilization.civilization.happiness.CivilizationHappinessService;
+import com.tsoft.civilization.civilization.happiness.CivilizationUnhappinessService;
+import com.tsoft.civilization.civilization.happiness.Happiness;
+import com.tsoft.civilization.civilization.happiness.Unhappiness;
 import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.civilization.population.CivilizationPopulationService;
 import com.tsoft.civilization.civilization.social.CivilizationSocialPolicyService;

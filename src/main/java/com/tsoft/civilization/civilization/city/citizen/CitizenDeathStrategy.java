@@ -1,9 +1,7 @@
-package com.tsoft.civilization.civilization.city.population;
+package com.tsoft.civilization.civilization.city.citizen;
 
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.civilization.city.supply.CitySupplyService;
-import com.tsoft.civilization.unit.civil.citizen.Citizen;
-import com.tsoft.civilization.unit.civil.citizen.CitizenList;
 
 import java.util.Comparator;
 import java.util.function.BiFunction;

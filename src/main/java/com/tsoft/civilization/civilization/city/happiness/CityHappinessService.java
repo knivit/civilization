@@ -1,12 +1,12 @@
-package com.tsoft.civilization.civilization.city.population;
+package com.tsoft.civilization.civilization.city.happiness;
 
 import com.tsoft.civilization.civilization.building.AbstractBuilding;
-import com.tsoft.civilization.civilization.population.Happiness;
+import com.tsoft.civilization.civilization.happiness.Happiness;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.tile.resource.AbstractResource;
 import com.tsoft.civilization.world.DifficultyLevel;
 
-import static com.tsoft.civilization.civilization.population.CivilizationHappinessService.EXTRA_HAPPINESS_PER_LUXURY;
+import static com.tsoft.civilization.civilization.happiness.CivilizationHappinessService.EXTRA_HAPPINESS_PER_LUXURY;
 
 public class CityHappinessService {
 

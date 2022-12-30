@@ -1,4 +1,4 @@
-package com.tsoft.civilization.civilization.city.population;
+package com.tsoft.civilization.civilization.city.citizen;
 
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.civilization.city.event.CitizenHasDiedEvent;
@@ -6,8 +6,6 @@ import com.tsoft.civilization.civilization.city.event.CitizenWasBornEvent;
 import com.tsoft.civilization.civilization.city.event.StarvationEndedEvent;
 import com.tsoft.civilization.civilization.city.event.StarvationStartedEvent;
 import com.tsoft.civilization.civilization.city.supply.PopulationSupplyService;
-import com.tsoft.civilization.unit.civil.citizen.Citizen;
-import com.tsoft.civilization.unit.civil.citizen.CitizenList;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.economic.Supply;
 import lombok.Getter;
@@ -27,7 +25,7 @@ import java.util.*;
  * will die of starvation.
  */
 @Slf4j
-public class CityPopulationService {
+public class CityCitizenService {
     private final PopulationSupplyService populationSupplyService;
 
     private final City city;
@@ -40,7 +38,7 @@ public class CityPopulationService {
     private int growthPool = 0;
     private boolean isStarvation = false;
 
-    public CityPopulationService(City city) {
+    public CityCitizenService(City city) {
         Objects.requireNonNull(city, "city can't be null");
 
         this.city = city;

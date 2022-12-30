@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public final class Supply {
+
     public static final Supply EMPTY = Supply.builder().build();
 
     private final int food;

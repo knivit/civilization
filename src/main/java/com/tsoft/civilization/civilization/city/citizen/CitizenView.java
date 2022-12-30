@@ -1,4 +1,4 @@
-package com.tsoft.civilization.unit.civil.citizen;
+package com.tsoft.civilization.civilization.city.citizen;
 
 public abstract class CitizenView {
 

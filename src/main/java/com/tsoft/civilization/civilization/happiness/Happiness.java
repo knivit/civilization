@@ -1,4 +1,4 @@
-package com.tsoft.civilization.civilization.population;
+package com.tsoft.civilization.civilization.happiness;
 
 import lombok.Builder;
 import lombok.Getter;

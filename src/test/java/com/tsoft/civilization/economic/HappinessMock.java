@@ -1,7 +1,7 @@
 package com.tsoft.civilization.economic;
 
 import com.tsoft.civilization.StringParser;
-import com.tsoft.civilization.civilization.population.Happiness;
+import com.tsoft.civilization.civilization.happiness.Happiness;
 
 import java.util.Comparator;
 import java.util.Map;

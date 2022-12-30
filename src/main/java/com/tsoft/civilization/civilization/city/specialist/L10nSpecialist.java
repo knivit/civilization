@@ -1,12 +1,8 @@
-package com.tsoft.civilization.unit.civil.citizen;
+package com.tsoft.civilization.civilization.city.specialist;
 
 import com.tsoft.civilization.util.l10n.L10n;
 
-public class L10nCitizen {
-
-    public static final L10n LABORER = new L10n()
-        .put("en", "Laborer")
-        .put("ru", "Рабочий");
+public class L10nSpecialist {
 
     public static final L10n ARTIST = new L10n()
         .put("en", "Artist")
