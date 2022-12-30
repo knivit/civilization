@@ -205,8 +205,8 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
     }
 
     @Override
-    public void addCombatExperience(CombatExperience experience) {
-        combatService.addCombatExperience(experience);
+    public void setCombatExperience(CombatExperience experience) {
+        combatService.setCombatExperience(experience);
     }
 
     public int getPassScore() {

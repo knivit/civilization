@@ -198,8 +198,8 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
     }
 
     @Override
-    public void addCombatExperience(CombatExperience experience) {
-        combatService.addCombatExperience(experience);
+    public void setCombatExperience(CombatExperience experience) {
+        combatService.setCombatExperience(experience);
     }
 
     @Override

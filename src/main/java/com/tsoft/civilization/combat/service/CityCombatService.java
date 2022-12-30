@@ -202,8 +202,8 @@ public class CityCombatService implements HasHistory {
         combatDamage = combatDamage.add(damage);
     }
 
-    public void addCombatExperience(CombatExperience experience) {
-        combatExperience = combatExperience.add(experience);
+    public void setCombatExperience(CombatExperience combatExperience) {
+        this.combatExperience = combatExperience;
     }
 
     public SkillMap<AbstractCombatSkill> getCombatSkills() {

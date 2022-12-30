@@ -10,7 +10,6 @@ import java.util.Map;
 public class SkillService {
 
     public CombatStrength calcCombatStrength(HasCombatStrength unit, SkillMap<AbstractCombatSkill> skills) {
-        int era = unit.getCivilization().getYear().getEra();
         CombatStrength strength = unit.getBaseCombatStrength(unit.getCivilization());
 
         for (Map.Entry<AbstractCombatSkill, SkillLevel> skill : skills) {

@@ -157,7 +157,7 @@ public class BaseCombatService {
             .meleeAttackExperience(targetMeleeAttackExperienceAfterAttack)
             .defenseExperience(targetDefenseExperienceAfterAttack)
             .build();
-        target.addCombatExperience(targetExperience);
+        target.setCombatExperience(targetExperience);
 
         // target's status
         boolean targetDestroyed = (targetDefenseStrength <= 0);
@@ -218,7 +218,7 @@ public class BaseCombatService {
             .meleeAttackExperience(attackerMeleeAttackExperienceAfterAttack)
             .defenseExperience(attackerDefenseExperienceAfterAttack)
             .build();
-        attacker.addCombatExperience(attackerExperience);
+        attacker.setCombatExperience(attackerExperience);
 
         // attacker's state
         boolean attackerDestroyed = (attackerDefenseStrengthAfterAttack <= 0);

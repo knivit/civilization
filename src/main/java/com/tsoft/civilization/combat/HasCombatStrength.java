@@ -32,7 +32,7 @@ public interface HasCombatStrength {
 
     void addCombatDamage(CombatDamage damage);
 
-    void addCombatExperience(CombatExperience experience);
+    void setCombatExperience(CombatExperience experience);
 
     void setPassScore(int passScore);
 
