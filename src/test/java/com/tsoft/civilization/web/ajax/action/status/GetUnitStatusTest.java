@@ -28,7 +28,6 @@ public class GetUnitStatusTest {
             .warriors("warriors", new Point(2, 0))
         );
 
-        world.startGame();
         Sessions.getCurrent().setActiveCivilization(c1);
         Request request = MockRequest.newInstance("unit", world.unit("warriors").getId());
 

@@ -33,8 +33,6 @@ public class DestroyUnitServiceTest {
             .settlers("settlers1", new Point(1, 1))
         );
 
-        world.startGame();
-
         // The only settlers can't be destroyed
         assertThat(destroyUnitService.destroy(world.get("settlers1")))
             .isEqualTo(LAST_SETTLERS_CANT_BE_DESTROYED);

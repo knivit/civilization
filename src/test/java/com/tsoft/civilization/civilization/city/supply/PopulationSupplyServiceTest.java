@@ -32,7 +32,6 @@ public class PopulationSupplyServiceTest {
         world.createCivilization(RUSSIA, new MockScenario()
             .city("city", new Point(0, 0))
         );
-        world.startGame();
 
         City city = world.city("city");
         addCityLocations(world, city);
@@ -61,7 +60,6 @@ public class PopulationSupplyServiceTest {
         world.createCivilization(RUSSIA, new MockScenario()
             .city("city", new Point(0, 0))
         );
-        world.startGame();
 
         City city = world.city("city");
         addCityLocations(world, city);
@@ -90,7 +88,6 @@ public class PopulationSupplyServiceTest {
         world.createCivilization(RUSSIA, new MockScenario()
             .city("city", new Point(0, 0))
         );
-        world.startGame();
 
         City city = world.city("city");
         addCityLocations(world, city);

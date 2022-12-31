@@ -29,7 +29,6 @@ public class GetTileStatusTest {
             .workers("workers1", new Point(2, 0))
         );
 
-        world.startGame();
         Sessions.getCurrent().setActiveCivilization(russia);
         Request request = MockRequest.newInstance("col", "2", "row", "0");
 
@@ -50,7 +49,6 @@ public class GetTileStatusTest {
 
         Civilization america = world.createCivilization(AMERICA, new MockScenario());
 
-        world.startGame();
         Sessions.getCurrent().setActiveCivilization(america);
         Request request = MockRequest.newInstance("col", "2", "row", "0");
 

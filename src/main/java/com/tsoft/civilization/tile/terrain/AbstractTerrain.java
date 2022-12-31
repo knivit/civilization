@@ -1,5 +1,6 @@
 package com.tsoft.civilization.tile.terrain;
 
+import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.tile.improvement.AbstractImprovement;
 import com.tsoft.civilization.tile.terrain.grassland.Grassland;
 import com.tsoft.civilization.tile.terrain.ocean.Ocean;
@@ -215,53 +216,28 @@ public abstract class AbstractTerrain {
 
     @Getter @Setter
     private Point location;
+
+    @Getter @Setter
+    private City city;
+
+    @Getter @Setter
     private AbstractResource luxury;
+
+    @Getter @Setter
     private AbstractResource resource;
+
+    @Getter @Setter
     private AbstractImprovement improvement;
 
     private final FeatureList features = new FeatureList();
 
-    public abstract TerrainType getTileType();
-    public abstract boolean isCanBuildCity();
-
-    public abstract int getDefensiveBonusPercent();
-
     public abstract String getClassUuid();
     public abstract AbstractTerrainView getView();
 
+    public abstract TerrainType getTileType();
+    public abstract boolean isCanBuildCity();
+    public abstract int getDefensiveBonusPercent();
     public abstract Supply getBaseSupply();
-
-    public AbstractResource getLuxury() {
-        return luxury;
-    }
-
-    public boolean setLuxury(AbstractResource luxury) {
-        if (resource == null) {
-            this.luxury = luxury;
-            return true;
-        }
-        return false;
-    }
-
-    public AbstractResource getResource() {
-        return resource;
-    }
-
-    public boolean setResource(AbstractResource resource) {
-        if (luxury == null) {
-            this.resource = resource;
-            return true;
-        }
-        return false;
-    }
-
-    public AbstractImprovement getImprovement() {
-        return improvement;
-    }
-
-    public void setImprovement(AbstractImprovement improvement) {
-        this.improvement = improvement;
-    }
 
     public FeatureList getFeatures() {
         return features;

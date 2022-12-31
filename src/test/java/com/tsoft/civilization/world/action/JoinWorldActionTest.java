@@ -5,6 +5,7 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.PlayerType;
 import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.state.Sessions;
+import com.tsoft.civilization.world.Year;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -38,6 +39,30 @@ public class JoinWorldActionTest {
         assertThat(Sessions.getCurrent()).isNotNull()
             .extracting(ClientSession::getCivilization).isNotNull()
             .extracting(Civilization::getPlayerType).isEqualTo(PlayerType.HUMAN);
+
+        assertThat(world.getYear()).isNotEqualTo(Year.NOT_STARTED);
+    }
+
+    @Test
+    public void join_two_random_civilizations() {
+        MockWorld world = MockWorld.of(GRASSLAND_MAP_10x10);
+        world.setMaxNumberOfCivilizations(2);
+
+        for (int i = 0; i < 2; i ++) {
+            JoinWorldAction.Request request = JoinWorldAction.Request.builder()
+                .worldId(world.getId())
+                .playerType(PlayerType.HUMAN)
+                .build();
+
+            assertThat(JoinWorldAction.join(request))
+                .isEqualTo(JOINED);
+
+            assertThat(Sessions.getCurrent()).isNotNull()
+                .extracting(ClientSession::getCivilization).isNotNull()
+                .extracting(Civilization::getPlayerType).isEqualTo(PlayerType.HUMAN);
+        }
+
+        assertThat(world.getYear()).isNotEqualTo(Year.NOT_STARTED);
     }
 
     @Test
@@ -56,6 +81,8 @@ public class JoinWorldActionTest {
         // A bot doesn't have a session
         assertThat(Sessions.getCurrent()).isNotNull()
             .extracting(ClientSession::getCivilization).isNull();
+
+        assertThat(world.getYear()).isEqualTo(Year.NOT_STARTED);
     }
 
     @Test
@@ -84,6 +111,8 @@ public class JoinWorldActionTest {
         assertThat(Sessions.getCurrent()).isNotNull()
             .extracting(ClientSession::getCivilization).isNotNull()
             .extracting(Civilization::getName).isEqualTo(RUSSIA);
+
+        assertThat(world.getYear()).isNotEqualTo(Year.NOT_STARTED);
     }
 
     @Test
@@ -126,5 +155,7 @@ public class JoinWorldActionTest {
 
         assertThat(JoinWorldAction.join(request))
             .isEqualTo(WORLD_IS_FULL);
+
+        assertThat(world.getYear()).isNotEqualTo(Year.NOT_STARTED);
     }
 }

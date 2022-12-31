@@ -112,7 +112,10 @@ public class BonusResourceGenerator {
                 int index = ThreadLocalRandom.current().nextInt(locations.size());
                 Point point = locations.get(index);
                 AbstractTerrain tile = tilesMap.getTile(point);
-                if (tile.setResource(resource)) {
+                boolean hasLuxury = (tile.getLuxury() != null);
+                boolean hasResource = (tile.getResource() != null);
+                if (!hasResource && !hasLuxury) {
+                    tile.setResource(resource);
                     count ++;
                 }
             }

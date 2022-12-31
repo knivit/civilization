@@ -23,8 +23,6 @@ public class DeclareWarActionTest {
         Civilization america = world.createCivilization(AMERICA, new MockScenario());
         Civilization japan = world.createCivilization(JAPAN, new MockScenario());
 
-        world.startGame();
-
         assertThat(world.getCivilizationsRelations(russia, america)).isEqualTo(CivilizationsRelations.neutral());
         assertThat(world.getCivilizationsRelations(russia, japan)).isEqualTo(CivilizationsRelations.neutral());
         assertThat(world.getCivilizationsRelations(america, japan)).isEqualTo(CivilizationsRelations.neutral());
@@ -41,8 +39,6 @@ public class DeclareWarActionTest {
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario());
 
-        world.startGame();
-
         assertThat(DeclareWarAction.declareWar(russia, russia))
             .isEqualTo(WRONG_CIVILIZATION);
     }
@@ -54,7 +50,6 @@ public class DeclareWarActionTest {
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario());
         Civilization america = world.createCivilization(AMERICA, new MockScenario());
 
-        world.startGame();
         world.setCivilizationsRelations(russia, america, CivilizationsRelations.war());
 
         assertThat(DeclareWarAction.declareWar(russia, america))

@@ -67,7 +67,7 @@ public class BuildCityAction {
         locations.add(location);
         for (Point loc : locations) {
             AbstractTerrain tile = settlers.getTilesMap().getTile(loc);
-            if (tile.getImprovement() != null && City.class.equals(tile.getImprovement().getClass())) {
+            if (tile.getCity() != null) {
                 return CANT_BUILD_CITY_THERE_IS_ANOTHER_CITY_NEARBY;
             }
         }

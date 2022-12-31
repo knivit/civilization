@@ -22,7 +22,6 @@ import com.tsoft.civilization.combat.CombatExperience;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.combat.skill.*;
-import com.tsoft.civilization.tile.improvement.AbstractImprovement;
 import com.tsoft.civilization.combat.service.CityCombatService;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.tile.terrain.TerrainType;
@@ -46,8 +45,15 @@ import static com.tsoft.civilization.world.Year.*;
 import static com.tsoft.civilization.world.Year.INFORMATION_ERA;
 
 @Slf4j
-public class City extends AbstractImprovement implements HasCombatStrength, HasHistory {
+public class City implements HasCombatStrength, HasHistory {
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
+
+    @Getter
+    private final String id = UUID.randomUUID().toString();
+
+    @Getter
+    private final AbstractTerrain tile;
 
     @Getter
     private Civilization civilization;
@@ -94,12 +100,13 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
     private boolean isDestroyed;
 
     public City(AbstractTerrain tile, Civilization civilization) {
-        super(tile);
+        this.tile = tile;
         this.civilization = civilization;
     }
 
     public void init(L10n cityName, boolean isCapital) {
         // area
+        tile.setCity(this);
         tileService = new CityTileService(this);
         tileService.addStartLocations(getTile().getLocation());
 
@@ -122,9 +129,6 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
 
         // media
         view = new CityView(cityName);
-
-        // add the city on the tile
-        super.init(this);
     }
 
     @Override
@@ -207,6 +211,10 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
         isDestroyed = true;
     }
 
+    public void erase() {
+        tile.setCity(null);
+    }
+
     @Override
     public UnitCategory getUnitCategory() {
         return combatService.getUnitCategory();
@@ -278,12 +286,6 @@ public class City extends AbstractImprovement implements HasCombatStrength, HasH
         constructionService.startConstruction(obj);
     }
 
-    @Override
-    public boolean acceptEraAndTechnology(Civilization civilization) {
-        return true;
-    }
-
-    @Override
     public boolean acceptTile(AbstractTerrain tile) {
         return (tile.getTileType() != TerrainType.SEA) && (tile.getTileType() != TerrainType.EARTH_ROUGH);
     }

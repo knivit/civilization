@@ -31,8 +31,6 @@ public class MoveUnitActionTest {
         world.createCivilization(RUSSIA, new MockScenario()
             .workers("workers", new Point(1, 1)));
 
-        world.startGame();
-
         Workers workers = world.get("workers");
         Set<Point> locations = new LinkedHashSet<>(List.of(new Point(2, 1), new Point(2, 0)));
 

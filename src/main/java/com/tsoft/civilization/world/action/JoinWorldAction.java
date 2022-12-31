@@ -88,9 +88,6 @@ public class JoinWorldAction {
 
         if (!PlayerType.BOT.equals(request.playerType)) {
             Sessions.getCurrent().setActiveCivilization(civilization);
-
-            // Start the game
-            world.startGame();
         }
 
         return JOINED;

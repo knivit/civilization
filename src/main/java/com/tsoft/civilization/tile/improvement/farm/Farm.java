@@ -1,7 +1,6 @@
 package com.tsoft.civilization.tile.improvement.farm;
 
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.tile.improvement.AbstractImprovement;
 import com.tsoft.civilization.tile.improvement.AbstractImprovementView;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
@@ -64,12 +63,5 @@ public class Farm extends AbstractImprovement {
     @Override
     public AbstractImprovementView getView() {
         return VIEW;
-    }
-
-    @Override
-    public CombatStrength getBaseCombatStrength(Civilization civilization) {
-        return CombatStrength.builder()
-            .defenseStrength(0)
-            .build();
     }
 }

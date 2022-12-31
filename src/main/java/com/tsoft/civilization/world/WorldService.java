@@ -53,6 +53,17 @@ public class WorldService {
             .civilizationName(civilizationName)
             .build());
 
+        // start the game automatically (if it is not started) for human player
+        // if it is already started then start a new year for the civilization
+        boolean started = false;
+        if (!PlayerType.BOT.equals(playerType)) {
+            started = world.startGame();
+        }
+
+        if (!started) {
+            civilization.startYear(world.getYear());
+        }
+
         return civilization;
     }
 
@@ -247,30 +258,29 @@ public class WorldService {
     }
 
     public void startYear(Year year) {
-        world.getTilesMap().startYear();
-        civilizations.forEach(Civilization::startYear);
+        log.debug("A new year {} started", year.getYearLocalized());
 
         sendEvent(NewYearStartEvent.builder()
             .year(year.getYear())
             .build());
 
-        log.debug("A new year {} started", year.getYearLocalized());
-
         if (year.isNewEra()) {
-            startEra(year);
+            log.debug("A new {} era started", year.getEraLocalized());
+
+            sendEvent(NewEraStartedEvent.builder()
+                .era(year.getEra())
+                .build());
+        }
+
+        world.getTilesMap().startYear();
+
+        for (Civilization civilization : civilizations) {
+            civilization.startYear(year);
         }
     }
 
-    public void startEra(Year year) {
-        civilizations.forEach(Civilization::startEra);
-
-        sendEvent(NewEraStartedEvent.builder()
-            .era(year.getEra())
-            .build());
-
-        log.debug("A new {} era started", year.getEraLocalized());
-    }
-
+    // Do not call stopYear() for Civilizations
+    // It'll be called in "next turn" action
     public void stopYear(Year year) {
         sendEvent(WorldStopYearEvent.builder()
             .year(year.getYear())

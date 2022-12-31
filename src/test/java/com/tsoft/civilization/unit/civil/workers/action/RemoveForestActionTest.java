@@ -40,8 +40,6 @@ public class RemoveForestActionTest {
             .workers("workers", new Point(1, 1))
         );
 
-        world.startGame();
-
         // case 1
         // no needed technology
         assertThat(RemoveForestAction.removeForest(world.get("workers")))
@@ -68,7 +66,6 @@ public class RemoveForestActionTest {
             .workers("workers", new Point(1, 1))
         );
 
-        world.startGame();
         civilization.addTechnology(Technology.MINING);
 
         // remove a forest
@@ -123,7 +120,6 @@ public class RemoveForestActionTest {
             .workers("workers", new Point(1, 1))
         );
 
-        world.startGame();
         civilization.addTechnology(Technology.MINING);
 
         Workers workers = world.get("workers");

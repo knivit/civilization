@@ -44,8 +44,10 @@ public class Client {
     }
 
     public void processRequest(Request request) {
+        log.debug("Processing request: {}", request);
+
         if (request.getRequestType() == null) {
-            log.debug("Invalid request {}", request);
+            log.warn("Invalid request {}", request);
             return;
         }
 
@@ -53,7 +55,7 @@ public class Client {
             case GET -> {
                 if ("GetNotifications".equals(request.getRequestUrl())) {
                     if (!Sessions.setCurrent(request.getSessionId())) {
-                        log.debug("Invalid request {}", request);
+                        log.warn("Invalid request {}", request);
                         return;
                     }
 
@@ -66,7 +68,7 @@ public class Client {
 
             case POST -> {
                 if (!Sessions.setCurrent(request.getSessionId())) {
-                    log.debug("Invalid request {}", request);
+                    log.warn("Invalid request {}", request);
                     return;
                 }
 
@@ -74,7 +76,7 @@ public class Client {
                 sendResponse(response);
             }
 
-            default -> log.debug("Invalid request type {}", request.getRequestType());
+            default -> log.warn("Invalid request type {}", request.getRequestType());
         }
     }
 

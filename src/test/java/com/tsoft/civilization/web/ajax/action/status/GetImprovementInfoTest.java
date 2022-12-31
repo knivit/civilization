@@ -37,8 +37,6 @@ public class GetImprovementInfoTest {
             .city("city1", new Point(2, 2))
         );
 
-        world.startGame();
-
         AbstractTerrain tile = world.getTilesMap().getTile(new Point(1, 1));
         Farm farm = ImprovementFactory.newInstance(Farm.CLASS_UUID, tile, world.city("city1"));
 
@@ -76,8 +74,6 @@ public class GetImprovementInfoTest {
 
         Civilization america = world.createCivilization(AMERICA, new MockScenario());
 
-        world.startGame();
-
         AbstractTerrain tile = world.getTilesMap().getTile(new Point(1, 1));
         Farm farm = ImprovementFactory.newInstance(Farm.CLASS_UUID, tile, world.city("city1"));
 
@@ -103,8 +99,6 @@ public class GetImprovementInfoTest {
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .city("city1", new Point(2, 2))
         );
-
-        world.startGame();
 
         AbstractTerrain tile = world.getTilesMap().getTile(new Point(1, 1));
         AncientRuins ancientRuins = ImprovementFactory.newInstance(AncientRuins.CLASS_UUID, tile, null);

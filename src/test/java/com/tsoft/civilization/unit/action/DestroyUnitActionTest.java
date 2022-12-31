@@ -28,8 +28,6 @@ public class DestroyUnitActionTest {
         world.createCivilization(RUSSIA, new MockScenario()
             .workers("workers", new Point(1, 1)));
 
-        world.startGame();
-
         Workers workers = world.get("workers");
 
         DestroyUnitService destroyUnitService = mock(DestroyUnitService.class);

@@ -50,7 +50,8 @@ public class NotificationRequestProcessor {
         }
 
         // Change the name of this thread
-        Thread.currentThread().setName("Notifications for " + request.toString());
+        Thread thread = Thread.currentThread();
+        thread.setName("Notifications-" + thread.getId());
 
         World world = myCivilization.getWorld();
 

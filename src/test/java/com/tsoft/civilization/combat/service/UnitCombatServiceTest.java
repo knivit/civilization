@@ -26,8 +26,6 @@ public class UnitCombatServiceTest {
             .settlers("settlers", new Point(2, 0))
         );
 
-        world.startGame();
-
         Settlers settlers = world.get("settlers");
 
         assertThat(settlers.getCombatService().calcCombatStrength())
@@ -51,8 +49,6 @@ public class UnitCombatServiceTest {
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .archers("archers", new Point(2, 0))
         );
-
-        world.startGame();
 
         Archers archers = world.get("archers");
 

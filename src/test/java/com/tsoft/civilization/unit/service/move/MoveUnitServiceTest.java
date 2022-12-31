@@ -47,8 +47,6 @@ public class MoveUnitServiceTest {
             .warriors("warriors", new Point(2, 0)));
         Warriors warriors = world.get("warriors");
 
-        world.startGame();
-
         warriors.destroy();
 
         assertThat(moveUnitService.move(warriors, new Point(1, 1)))
@@ -69,8 +67,6 @@ public class MoveUnitServiceTest {
             .workers("workers", new Point(0, 0))
         );
 
-        world.startGame();
-
         assertThat(moveUnitService.move(world.get("workers"), new Point(1, 1)))
             .isEqualTo(NO_LOCATIONS_TO_MOVE);
     }
@@ -88,8 +84,6 @@ public class MoveUnitServiceTest {
         world.createCivilization(RUSSIA, new MockScenario()
             .settlers("settlers", new Point(1, 1))
         );
-
-        world.startGame();
 
         // try out all possible directions - it must be impossible
         for (Dir6 dir : Dir6.staticGetDirs(1)) {
@@ -118,8 +112,6 @@ public class MoveUnitServiceTest {
             world.createCivilization(RUSSIA, new MockScenario()
                 .settlers("settlers", new Point(1, 1)));
 
-            world.startGame();
-
             Settlers settlers = world.get("settlers");
 
             UnitRoute route = new UnitRoute(dir);
@@ -146,7 +138,6 @@ public class MoveUnitServiceTest {
         world.createCivilization(RUSSIA, new MockScenario()
             .settlers("settlers", new Point(1, 1))
         );
-        world.startGame();
 
         // try one complex route - it must be OK
         Settlers settlers = world.get("settlers");
@@ -196,7 +187,6 @@ public class MoveUnitServiceTest {
             .settlers("settlers1", new Point(1, 1))
             .settlers("settlers2", new Point(2, 1))
         );
-        world.startGame();
 
         // try one complex route - it must be OK
         Settlers settlers1 = world.get("settlers1");
@@ -242,7 +232,6 @@ public class MoveUnitServiceTest {
             .settlers("settlers1", new Point(1, 1))
             .settlers("settlers2", new Point(2, 1))
         );
-        world.startGame();
 
         Settlers settlers1 = world.get("settlers1");
         settlers1.setPassScore(1);
@@ -289,7 +278,6 @@ public class MoveUnitServiceTest {
             .settlers("settlers1", new Point(1, 1))
             .settlers("settlers2", new Point(1, 3))
         );
-        world.startGame();
 
         // try one complex route - it must be OK
         Settlers settlers1 = world.get("settlers1");
@@ -337,8 +325,6 @@ public class MoveUnitServiceTest {
             .workers("workers", new Point(2, 1))
         );
 
-        world.startGame();
-
         // try one complex route - it must be OK
         Warriors warriors = world.get("warriors");
         warriors.setPassScore(1);
@@ -379,8 +365,6 @@ public class MoveUnitServiceTest {
             .city("city", new Point(2, 1))
         );
 
-        world.startGame();
-
         // try one complex route - it must be OK
         Workers workers = world.get("workers");
         workers.setPassScore(1);
@@ -416,8 +400,6 @@ public class MoveUnitServiceTest {
             .greatArtist("artist", new Point(2, 1))
             .workers("workers", new Point(1, 1))
         );
-
-        world.startGame();
 
         City city= world.city("city");
         Workers workers = world.get("workers");
@@ -462,7 +444,6 @@ public class MoveUnitServiceTest {
         world.createCivilization(RUSSIA, new MockScenario()
             .workers("workers1", new Point(2, 2))
         );
-        world.startGame();
 
         Workers workers1 = world.get("workers1");
         workers1.setPassScore(2);
@@ -497,8 +478,6 @@ public class MoveUnitServiceTest {
             .workers("workers", new Point(2, 2))
         );
 
-        world.startGame();
-
         WorldRender.of(this).createHtml(world, russia);
 
         UnitRoute route = moveUnitService.findRoute(world.get("workers"), new Point(1, 0));
@@ -524,8 +503,6 @@ public class MoveUnitServiceTest {
             .workers("workers", new Point(2, 2))
         );
 
-        world.startGame();
-
         // route goes from bottom line to top (map-cyclic test)
         UnitRoute route = moveUnitService.findRoute(world.get("workers"), new Point(1, 0));
 
@@ -549,7 +526,6 @@ public class MoveUnitServiceTest {
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .workers("workers", new Point(2, 2))
         );
-        world.startGame();
 
         WorldRender.of(this).createHtml(world, russia);
 
@@ -576,7 +552,6 @@ public class MoveUnitServiceTest {
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .workers("workers", new Point(2, 2))
         );
-        world.startGame();
 
         WorldRender.of(this).createHtml(world, russia);
 

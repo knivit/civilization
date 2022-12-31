@@ -34,8 +34,6 @@ public class CaptureUnitActionTest {
             .workers("workers", new Point(2, 1)));
         AbstractUnit workers = world.get("workers");
 
-        world.startGame();
-
         CaptureUnitService captureUnitService = mock(CaptureUnitService.class);
         when(captureUnitService.canCapture(eq(warriors))).thenReturn(CAN_CAPTURE);
         when(captureUnitService.getLocationsToCapture(eq(warriors))).thenReturn(List.of(workers.getLocation()));

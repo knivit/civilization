@@ -30,7 +30,6 @@ public class GetMyUnitsTest {
             .workers("workers", new Point(2, 0))
         );
 
-        world.startGame();
         Sessions.getCurrent().setActiveCivilization(russia);
         Request request = MockRequest.newInstance();
 

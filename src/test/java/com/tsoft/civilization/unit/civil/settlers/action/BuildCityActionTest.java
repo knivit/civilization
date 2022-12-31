@@ -33,8 +33,6 @@ public class BuildCityActionTest {
             .settlers("settlers1", new Point(1, 1))
         );
 
-        world.startGame();
-
         // Build a city
         assertThat(BuildCityAction.buildCity(world.get("settlers1")))
             .isEqualTo(CITY_BUILT);
@@ -71,8 +69,6 @@ public class BuildCityActionTest {
             .settlers("settlers1", new Point(1, 1))
         );
 
-        world.startGame();
-
         // check 1
         // Build a city
         assertThat(BuildCityAction.buildCity(world.get("settlers1")))
@@ -100,8 +96,6 @@ public class BuildCityActionTest {
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .settlers("settlers1", new Point(0, 0))
         );
-
-        world.startGame();
 
         // check 1
         // Build a city
@@ -135,8 +129,6 @@ public class BuildCityActionTest {
         Civilization civilization = world.createCivilization(RUSSIA, new MockScenario()
             .settlers("settlers1", new Point(2, 2))
         );
-
-        world.startGame();
 
         // check 1
         // Build a city

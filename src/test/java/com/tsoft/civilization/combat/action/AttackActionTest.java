@@ -35,7 +35,6 @@ public class AttackActionTest {
         world.createCivilization(AMERICA, new MockScenario()
             .workers("foreignWorkers", new Point(2, 2)));
         Workers foreignWorkers = world.get("foreignWorkers");
-        world.startGame();
 
         when(attackService.canAttack(eq(warriors))).thenReturn(CAN_ATTACK);
         when(attackService.getTargetsToAttack(eq(warriors))).thenReturn(HasCombatStrengthList.of(foreignWorkers));

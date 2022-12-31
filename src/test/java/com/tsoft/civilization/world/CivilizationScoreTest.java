@@ -37,8 +37,6 @@ public class CivilizationScoreTest {
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario());
 
-        world.startGame();
-
         world.nextYear();
 
         assertThat(russia.calcSupply())
@@ -59,8 +57,6 @@ public class CivilizationScoreTest {
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .city("Moscow", new Point(1, 1))
         );
-
-        world.startGame();
 
         // Step 1
         // food | prod | gold | science | culture | population | produced/consumed by
@@ -127,7 +123,6 @@ public class CivilizationScoreTest {
             .city("Moscow", new Point(2, 1))
         );
 
-        world.startGame();
         City city = world.city("Moscow");
 
         // add all other tiles
@@ -175,7 +170,6 @@ public class CivilizationScoreTest {
             .city("Moscow", new Point(1, 1))
         );
 
-        world.startGame();
         City city = world.city("Moscow");
 
         // add second citizen

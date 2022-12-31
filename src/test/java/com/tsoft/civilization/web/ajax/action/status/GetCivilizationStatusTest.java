@@ -31,7 +31,6 @@ public class GetCivilizationStatusTest {
             .city("city1", new Point(2, 2))
         );
 
-        world.startGame();
         Sessions.getCurrent().setActiveCivilization(russia);
         Request request = MockRequest.newInstance("civilization", russia.getId());
 
@@ -53,7 +52,6 @@ public class GetCivilizationStatusTest {
             .city("city1", new Point(2, 2))
         );
 
-        world.startGame();
         Sessions.getCurrent().setActiveCivilization(russia);
         Request mockRequest = MockRequest.newInstance("civilization", russia.getId());
 

@@ -66,7 +66,7 @@ public class TileSupplyService {
 
         AbstractTerrain tile = city.getCivilization().getTilesMap().getTile(location);
         AbstractImprovement improvement = tile.getImprovement();
-        if (improvement != null && !(improvement instanceof City)) {
+        if (improvement != null) {
             return improvement.getSupply();
         }
 

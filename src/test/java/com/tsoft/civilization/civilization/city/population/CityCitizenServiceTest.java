@@ -26,8 +26,6 @@ public class CityCitizenServiceTest {
             .city("city", new Point(2, 0))
         );
 
-        world.startGame();
-
         CityCitizenService populationService = world.city("city").getPopulationService();
         assertThat(populationService.getCitizenCount()).isEqualTo(1);
 

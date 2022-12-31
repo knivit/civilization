@@ -111,7 +111,10 @@ public class LuxuryResourcesGenerator {
                 int index = ThreadLocalRandom.current().nextInt(locations.size());
                 Point point = locations.get(index);
                 AbstractTerrain tile = tilesMap.getTile(point);
-                if (tile.setLuxury(luxury)) {
+                boolean hasResource = (tile.getResource() != null);
+                boolean hasLuxury = (tile.getLuxury() != null);
+                if (!hasResource && !hasLuxury) {
+                    tile.setLuxury(luxury);
                     count ++;
                 }
             }

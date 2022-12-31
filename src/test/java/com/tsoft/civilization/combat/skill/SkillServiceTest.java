@@ -21,8 +21,6 @@ public class SkillServiceTest {
             .settlers("settlers", new Point(2, 0))
         );
 
-        world.startGame();
-
         assertThat(skillService.calcPassScore(world.get("settlers"), new SkillMap<>()))
             .isEqualTo(5);
     }

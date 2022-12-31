@@ -30,13 +30,11 @@ public class WorldViewTest {
             .settlers("settlers", new Point(1, 0))
         );
 
-        world.startGame();
-
         String expected = """
             {
                 "width":"3","height":"2",
                 "tiles":[
-                    {"name":"Grassland","features":[{"name":"Hill"},{"name":"Forest"}],"improvement":"City"},
+                    {"name":"Grassland","features":[{"name":"Hill"},{"name":"Forest"}]},
                     {"name":"Grassland","features":[{"name":"Hill"}]},
                     {"name":"Grassland","features":[]},
                     {"name":"Grassland","features":[{"name":"Hill"},{"name":"Forest"}]},
@@ -58,7 +56,8 @@ public class WorldViewTest {
             """;
 
         JsonBlock worldBlock = world.getView().getJson();
-        assertThat(objectMapper.readTree(expected))
-            .isEqualTo(objectMapper.readTree(worldBlock.getText()));
+
+        assertThat(objectMapper.readTree(worldBlock.getText()))
+            .isEqualTo(objectMapper.readTree(expected));
     }
 }

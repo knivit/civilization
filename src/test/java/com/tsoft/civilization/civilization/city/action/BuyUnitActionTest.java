@@ -3,8 +3,6 @@ package com.tsoft.civilization.civilization.city.action;
 import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.technology.Technology;
-import com.tsoft.civilization.civilization.city.action.BuyUnitAction;
-import com.tsoft.civilization.civilization.city.action.CityActionResults;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.military.archers.Archers;
 import com.tsoft.civilization.util.Point;
@@ -24,10 +22,7 @@ public class BuyUnitActionTest {
         MockWorld world = MockWorld.newSimpleWorld();
 
         world.createCivilization(RUSSIA, new MockScenario()
-            .city("Moscow", new Point(2, 0))
-        );
-
-        world.startGame();
+            .city("Moscow", new Point(2, 0)));
 
         assertThat(BuyUnitAction.buyUnit(world.city("Moscow"), Archers.CLASS_UUID))
             .isEqualTo(CityActionResults.WRONG_ERA_OR_TECHNOLOGY);
@@ -38,17 +33,14 @@ public class BuyUnitActionTest {
         MockWorld world = MockWorld.newSimpleWorld();
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
-            .city("Moscow", new Point(2, 0))
-        );
+            .city("Moscow", new Point(2, 0)));
 
-        world.startGame();
         russia.addTechnology(Technology.ARCHERY);
         world.city("Moscow").setPassScore(1);
 
         Civilization puppet = world.createCivilization(AMERICA, new MockScenario()
             .city("Columbus", new Point(2, 2))
-            .archers("foreignArchers", new Point(2, 2))
-        );
+            .archers("foreignArchers", new Point(2, 2)));
 
         AbstractUnit foreignArchers = world.get("foreignArchers");
         Supply gift = Supply.builder().gold(foreignArchers.getGoldCost(russia)).build();

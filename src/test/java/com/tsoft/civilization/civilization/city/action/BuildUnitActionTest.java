@@ -9,8 +9,6 @@ import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.economic.UnhappinessMock;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.technology.Technology;
-import com.tsoft.civilization.civilization.city.action.BuildUnitAction;
-import com.tsoft.civilization.civilization.city.action.CityActionResults;
 import com.tsoft.civilization.unit.military.archers.Archers;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
@@ -30,8 +28,6 @@ public class BuildUnitActionTest {
             .city("Moscow", new Point(2, 0))
         );
 
-        world.startGame();
-
         assertThat(BuildUnitAction.buildUnit(world.city("Moscow"), Archers.CLASS_UUID))
             .isEqualTo(CityActionResults.WRONG_ERA_OR_TECHNOLOGY);
     }
@@ -44,13 +40,13 @@ public class BuildUnitActionTest {
             .city("Moscow", new Point(2, 0))
         );
 
-        world.startGame();
         russia.addTechnology(Technology.ARCHERY);
 
         City city = world.city("Moscow");
         city.setPassScore(1);
 
         Supply s = russia.calcSupply();
+
         assertThat(s)
             .usingComparator(SupplyMock::compare)
             .isEqualTo(SupplyMock.of("F1 P3 G3 S4 C1"));

@@ -1,7 +1,6 @@
 package com.tsoft.civilization.tile.improvement.mine;
 
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.tile.improvement.AbstractImprovement;
 import com.tsoft.civilization.tile.improvement.AbstractImprovementView;
 import com.tsoft.civilization.technology.Technology;
@@ -60,11 +59,6 @@ public class Mine extends AbstractImprovement {
     @Override
     public Supply getSupply() {
         return null;
-    }
-
-    @Override
-    public CombatStrength getBaseCombatStrength(Civilization civilization) {
-        return CombatStrength.ZERO;
     }
 
     @Override

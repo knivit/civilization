@@ -144,14 +144,19 @@ public class World {
         return worldService.getHistory(stepNo);
     }
 
-    public void startGame() {
-        year = new Year(-3000);
+    // Returns false if the game already started
+    public synchronized boolean startGame() {
+        if (Year.NOT_STARTED.equals(year)) {
+            year = new Year(-3000);
+            worldService.startYear(year);
+            return true;
+        }
 
-        worldService.startYear(year);
+        return false;
     }
 
-    // Callback on civilizations' "next turn" button
-    public void onCivilizationMoved() {
+    // Callback on civilizations "next turn" button
+    public synchronized void onCivilizationMoved() {
         CivilizationList list = worldService.getMovingCivilizations();
 
         if (list.isEmpty()) {

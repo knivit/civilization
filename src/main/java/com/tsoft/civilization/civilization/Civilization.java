@@ -299,7 +299,7 @@ public abstract class Civilization {
         return citiesSupply.add(unitExpenses);
     }
 
-    public void startYear() {
+    public void startYear(Year year) {
         if (isDestroyed()) {
             return;
         }
@@ -315,12 +315,13 @@ public abstract class Civilization {
         tileService.startYear();
 
         // A bot can be helping a human player
-        getBot().startYear();
-    }
+        bot.startYear();
 
-    public void startEra() {
-        unitService.startEra();
-        cityService.startEra();
+        // check for a new era
+        if (year.isNewEra()) {
+            unitService.startEra();
+            cityService.startEra();
+        }
     }
 
     public synchronized void stopYear() {
@@ -330,7 +331,7 @@ public abstract class Civilization {
         }
 
         // There can be a helper bot still in progress - wait for it
-        getBot().join();
+        bot.join();
 
         civilizationMoveState = CivilizationMoveState.DONE;
 

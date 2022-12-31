@@ -1,6 +1,5 @@
 package com.tsoft.civilization.tile.improvement.road;
 
-import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.tile.improvement.AbstractImprovement;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
@@ -19,7 +18,7 @@ import java.util.UUID;
  * Constructed on: Any passable land tile; may pass through tiles containing other improvements
  * Effect
  * Faster movement for friendly or neutral units.
- * Creates trade route (vanilla and GodsKings5 clear.png) or 20xCityConnection5.png City Connection (BNW-only.png).
+ * Creates trade route (vanilla and GodsKings5 clear.png) or City Connection (BNW-only.png).
  *   -1 Gold per turn as a maintenance cost.
  * Faster road movement with Machinery.
  * Bridges enabled with Engineering.
@@ -60,12 +59,5 @@ public class Road extends AbstractImprovement {
     @Override
     public AbstractImprovementView getView() {
         return VIEW;
-    }
-
-    @Override
-    public CombatStrength getBaseCombatStrength(Civilization civilization) {
-        return CombatStrength.builder()
-            .defenseStrength(10)
-            .build();
     }
 }

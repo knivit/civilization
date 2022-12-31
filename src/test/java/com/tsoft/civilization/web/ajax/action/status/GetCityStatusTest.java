@@ -32,7 +32,6 @@ public class GetCityStatusTest {
             .workers("foreignWarriors", new Point(2, 1))
         );
 
-        world.startGame();
         world.setCivilizationsRelations(russia, america, CivilizationsRelations.war());
 
         Sessions.getCurrent().setActiveCivilization(russia);
@@ -49,7 +48,6 @@ public class GetCityStatusTest {
             .city("city1", new Point(2, 0))
         );
 
-        world.startGame();
         Sessions.getCurrent().setActiveCivilization(russia);
 
         world.city("city1").destroy();
@@ -72,7 +70,6 @@ public class GetCityStatusTest {
             .city("city2", new Point(2, 2))
         );
 
-        world.startGame();
         Sessions.getCurrent().setActiveCivilization(russia);
         Request mockRequest = MockRequest.newInstance("city", world.city("city2").getId());
 

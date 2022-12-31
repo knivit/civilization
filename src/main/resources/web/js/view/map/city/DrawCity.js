@@ -56,4 +56,3 @@ var drawCity = {
 
 drawCity.capitalImg.src = "images/map/capital.png";
 drawCity.tradeImg.src = "images/map/trade.png";
-

@@ -112,13 +112,6 @@ public class AncientRuins extends AbstractImprovement {
     }
 
     @Override
-    public CombatStrength getBaseCombatStrength(Civilization civilization) {
-        return CombatStrength.builder()
-            .defenseStrength(0)
-            .build();
-    }
-
-    @Override
     public AbstractImprovementView getView() {
         return VIEW;
     }

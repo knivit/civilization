@@ -42,7 +42,6 @@ public class CaptureUnitServiceTest {
             .workers("foreignWorkers", new Point(1, 1))
         );
 
-        world.startGame();
         WorldRender.of(this).createHtml(world, russia);
 
         // see what we can capture
@@ -89,8 +88,6 @@ public class CaptureUnitServiceTest {
             .workers("foreignWorkers", new Point(3, 1))
         );
 
-        world.startGame();
-
         // see what we can capture
         List<Point> locations = captureUnitService.getLocationsToCapture(world.get("archers"));
         assertThat(locations).hasSize(1);
@@ -122,8 +119,6 @@ public class CaptureUnitServiceTest {
             .workers("workers", new Point(2, 1)));
         Workers workers = world.get("workers");
 
-        world.startGame();
-
         assertThat(captureUnitService.capture(warriors, workers.getLocation()))
             .isEqualTo(ATTACKER_NOT_FOUND);
     }
@@ -140,7 +135,6 @@ public class CaptureUnitServiceTest {
             .workers("foreignWorkers", new Point(2, 2)));
         Workers foreignWorkers = world.get("foreignWorkers");
 
-        world.startGame();
         WorldRender.of(this).createHtml(world, russia);
 
         Point location = new Point(foreignWorkers.getLocation());
@@ -159,8 +153,6 @@ public class CaptureUnitServiceTest {
 
         world.createCivilization(AMERICA, new MockScenario()
             .workers("foreignWorkers", new Point(2, 1)));
-
-        world.startGame();
 
         assertThat(captureUnitService.capture(warriors, new Point(2, 2)))
             .isEqualTo(NOTHING_TO_CAPTURE);
