@@ -1,15 +1,64 @@
 package com.tsoft.civilization.tile.resource.bonus;
 
-import com.tsoft.civilization.tile.resource.AbstractResource;
-import com.tsoft.civilization.tile.resource.ResourceType;
-import lombok.Getter;
+import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.technology.Technology;
+import com.tsoft.civilization.tile.resource.*;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
+import com.tsoft.civilization.tile.terrain.grassland.Grassland;
+import com.tsoft.civilization.tile.terrain.plains.Plains;
 
-import java.util.UUID;
-
+/**
+ * Game Info
+ *
+ * Bonus resource from Conquest of the New World Deluxe scenario. Added to main game in a patch released on 27 October 2014.[1]
+ *
+ *     Base yield:
+ *         1 Food
+ *     Modifiers:
+ *         +1 Production from Camp improvement
+ *
+ * Strategy
+ *
+ * Bison are found in plains and grassland regions, providing Food that allows cities in these regions
+ * to grow even more rapidly. Improve them with Camps as soon as you're able, and you'll turn nearby cities into
+ * Population and Production centers.
+ *
+ * Civilopedia entry
+ *
+ * The North American bison, which once covered the Great Plains in massive herds, was the primary source for the meat,
+ * sinew, hide and bone necessary for survival by many native tribes. Hunted to near extinction by Americans in the late 1800s,
+ * in recent years the buffalo has made a comeback due to federal and state wildlife programs.
+ */
 public class Bison extends AbstractResource {
 
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
+    public static final ResourceType RESOURCE_TYPE = ResourceType.BISON;
 
-    @Getter
-    private final ResourceType resourceType = ResourceType.EARTH;
+    private static final ResourceBaseState BASE_STATE = ResourceCatalog.getBaseState(ResourceType.BISON);
+
+    private static final ResourceCategory RESOURCE_CATEGORY = ResourceCategory.BONUS;
+
+    @Override
+    public ResourceType getType() {
+        return RESOURCE_TYPE;
+    }
+
+    @Override
+    public ResourceCategory getCategory() {
+        return RESOURCE_CATEGORY;
+    }
+
+    @Override
+    public ResourceBaseState getBaseState() {
+        return BASE_STATE;
+    }
+
+    @Override
+    public boolean acceptTile(AbstractTerrain tile) {
+        return tile.isIn(Grassland.class, Plains.class);
+    }
+
+    @Override
+    public boolean acceptEraAndTechnology(Civilization civilization) {
+        return civilization.isResearched(Technology.TRAPPING);
+    }
 }

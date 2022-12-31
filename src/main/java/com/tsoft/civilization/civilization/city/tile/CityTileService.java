@@ -3,6 +3,7 @@ package com.tsoft.civilization.civilization.city.tile;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.tile.resource.AbstractResource;
+import com.tsoft.civilization.tile.resource.ResourceCategory;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.HasHistory;
@@ -53,8 +54,9 @@ public class CityTileService implements HasHistory {
     public List<AbstractResource> getLuxuryResources() {
         return locations.stream()
             .map(tilesMap::getTile)
-            .map(AbstractTerrain::getLuxury)
+            .map(AbstractTerrain::getResource)
             .filter(Objects::nonNull)
+            .filter(e -> ResourceCategory.LUXURY.equals(e.getCategory()))
             .collect(Collectors.toList());
     }
 

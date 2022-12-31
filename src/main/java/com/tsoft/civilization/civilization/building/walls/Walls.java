@@ -74,12 +74,12 @@ public class Walls extends AbstractBuilding {
      * Walls are quite useful for cities located along a civilization's frontier.
      */
     @Override
-    public Supply calcIncomeSupply() {
+    public Supply calcIncomeSupply(Civilization civilization) {
         return Supply.builder().gold(-1).build();
     }
 
     @Override
-    public Supply calcOutcomeSupply() {
+    public Supply calcOutcomeSupply(Civilization civilization) {
         return Supply.EMPTY;
     }
 

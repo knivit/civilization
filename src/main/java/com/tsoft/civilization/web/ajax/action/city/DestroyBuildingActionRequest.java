@@ -27,7 +27,7 @@ public class DestroyBuildingActionRequest extends AbstractAjaxRequest {
         }
 
         // return the map
-        JsonBlock response = myCivilization.getWorld().getView().getJson();
+        JsonBlock response = myCivilization.getWorld().getView().getJson(myCivilization);
         return JsonResponse.ok(response);
     }
 }

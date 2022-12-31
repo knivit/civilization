@@ -19,7 +19,7 @@ public class LoadWorldRequest extends AbstractAjaxRequest {
         }
 
         // map
-        JsonBlock response = myCivilization.getWorld().getView().getJson();
+        JsonBlock response = myCivilization.getWorld().getView().getJson(myCivilization);
 
         // starting point
         Point startPoint = myCivilization.getStartPoint();

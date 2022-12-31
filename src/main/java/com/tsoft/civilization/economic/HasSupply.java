@@ -1,8 +1,13 @@
 package com.tsoft.civilization.economic;
 
+import com.tsoft.civilization.civilization.Civilization;
+
 public interface HasSupply {
 
-    Supply calcIncomeSupply(); // Dynamically calculated during a year; doesn't change anybody's state; invoked at the end of a year an stored to the supply variable
+    Supply getBaseSupply(Civilization civilization);
 
-    Supply calcOutcomeSupply();
+    // Dynamically calculated during a year; doesn't change anybody's state; invoked at the end of a year and stored to the supply variable
+    Supply calcIncomeSupply(Civilization civilization);
+
+    Supply calcOutcomeSupply(Civilization civilization);
 }

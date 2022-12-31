@@ -1,6 +1,7 @@
 package com.tsoft.civilization.world.generator.onecontinent;
 
 import com.tsoft.civilization.util.Rect;
+import com.tsoft.civilization.world.generator.map.onecontinent.OneContinentWorldGenerator;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;

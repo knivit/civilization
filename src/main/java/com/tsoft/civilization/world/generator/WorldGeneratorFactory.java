@@ -1,8 +1,8 @@
 package com.tsoft.civilization.world.generator;
 
 import com.tsoft.civilization.world.MapConfiguration;
-import com.tsoft.civilization.world.generator.earth.EarthWorldGenerator;
-import com.tsoft.civilization.world.generator.onecontinent.OneContinentWorldGenerator;
+import com.tsoft.civilization.world.generator.map.earth.EarthWorldGenerator;
+import com.tsoft.civilization.world.generator.map.onecontinent.OneContinentWorldGenerator;
 
 import java.util.*;
 

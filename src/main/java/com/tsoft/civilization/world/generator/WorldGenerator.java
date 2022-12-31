@@ -6,5 +6,5 @@ import com.tsoft.civilization.world.MapSize;
 
 public interface WorldGenerator {
 
-    TilesMap  generate(MapSize mapSize, Climate climate);
+    TilesMap generate(MapSize mapSize, Climate climate);
 }

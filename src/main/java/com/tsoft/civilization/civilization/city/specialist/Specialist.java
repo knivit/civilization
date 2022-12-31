@@ -1,5 +1,6 @@
 package com.tsoft.civilization.civilization.city.specialist;
 
+import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.economic.HasSupply;
 import com.tsoft.civilization.economic.Supply;
@@ -28,12 +29,17 @@ public class Specialist implements HasSupply, HasHistory {
     }
 
     @Override
-    public Supply calcIncomeSupply() {
+    public Supply getBaseSupply(Civilization civilization) {
+        return Supply.EMPTY;
+    }
+
+    @Override
+    public Supply calcIncomeSupply(Civilization civilization) {
         return SpecialistSupplyTable.get(specialistType);
     }
 
     @Override
-    public Supply calcOutcomeSupply() {
+    public Supply calcOutcomeSupply(Civilization civilization) {
         // 1 citizen consumes 1 food
         return Supply.builder().food(-1).build();
     }

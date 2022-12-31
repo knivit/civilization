@@ -2,7 +2,7 @@ package com.tsoft.civilization.combat.service;
 
 import com.tsoft.civilization.combat.CombatResult;
 import com.tsoft.civilization.combat.HasCombatStrength;
-import com.tsoft.civilization.tile.improvement.AbstractImprovement;
+import com.tsoft.civilization.improvement.AbstractImprovement;
 
 public class ImprovementCombatService {
 

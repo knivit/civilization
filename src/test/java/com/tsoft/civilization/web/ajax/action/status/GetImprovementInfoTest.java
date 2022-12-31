@@ -5,9 +5,9 @@ import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.helper.html.HtmlDocument;
 import com.tsoft.civilization.helper.html.HtmlParser;
-import com.tsoft.civilization.tile.improvement.ImprovementFactory;
-import com.tsoft.civilization.tile.improvement.ancientruins.AncientRuins;
-import com.tsoft.civilization.tile.improvement.farm.Farm;
+import com.tsoft.civilization.improvement.ImprovementFactory;
+import com.tsoft.civilization.improvement.ancientruins.AncientRuins;
+import com.tsoft.civilization.improvement.farm.Farm;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
@@ -51,8 +51,8 @@ public class GetImprovementInfoTest {
         HtmlDocument expected = HtmlParser.parse(Format.text("""
             <table id='info_table'>
                 <tr><td>Production</td><td>0 <image src="images/status/production.png"/></td></tr>
-                <tr><td>Gold</td><td>-2 <image src="images/status/gold.png"/></td></tr>
-                <tr><td>Food</td><td>0 <image src="images/status/food.png"/></td></tr>
+                <tr><td>Gold</td><td>0 <image src="images/status/gold.png"/></td></tr>
+                <tr><td>Food</td><td>2 <image src="images/status/food.png"/></td></tr>
             </table>
             """));
 

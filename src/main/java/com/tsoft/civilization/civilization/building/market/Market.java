@@ -95,7 +95,7 @@ public class Market extends AbstractBuilding {
      * The Market significantly increases a city's output of gold.
      */
     @Override
-    public Supply calcIncomeSupply() {
+    public Supply calcIncomeSupply(Civilization civilization) {
         Supply tileScore = getCity().calcTilesSupply();
         int gold = tileScore.getGold();
         if (gold > 0) {
@@ -107,7 +107,7 @@ public class Market extends AbstractBuilding {
     }
 
     @Override
-    public Supply calcOutcomeSupply() {
+    public Supply calcOutcomeSupply(Civilization civilization) {
         return Supply.EMPTY;
     }
 

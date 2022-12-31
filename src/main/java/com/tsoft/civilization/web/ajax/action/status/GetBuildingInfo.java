@@ -1,5 +1,6 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
+import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.civilization.building.AbstractBuildingView;
 import com.tsoft.civilization.civilization.building.BuildingFactory;
@@ -70,7 +71,9 @@ public class GetBuildingInfo extends AbstractAjaxRequest {
 
 
     private StringBuilder getBuildingSupplyInfo(AbstractBuilding building) {
-        Supply supply = building.calcIncomeSupply();
+        Civilization civilization = building.getCivilization();
+        Supply supply = building.calcIncomeSupply(civilization);
+
         return Format.text("""
             <table id='info_table'>
                 <tr><th colspan='2'>$buildingInfo</th></tr>

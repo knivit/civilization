@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
-import com.tsoft.civilization.tile.improvement.AbstractImprovement;
+import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.civilization.city.L10nCity;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.tile.L10nTile;
@@ -56,7 +56,7 @@ public class GetTileStatus extends AbstractAjaxRequest {
 
             "$navigationPanel", navigationPanel.getContent(),
             "$tileTitle", getTileTitle(myCivilization.getWorld(), tile),
-            "$tileInfo", getTileInfo(tile),
+            "$tileInfo", getTileInfo(myCivilization, tile),
             "$cityInfo", getCityInfo(myCivilization.getWorld(), tile),
             "$units", getUnitsInfo(tile.getLocation(), myCivilization.getWorld()));
         return HtmlResponse.ok(value);
@@ -202,7 +202,7 @@ public class GetTileStatus extends AbstractAjaxRequest {
     // +-------+---+---+---+
     // | Total | 0 | 0 | 0 |
     // +-------+---+---+---+
-    private StringBuilder getTileInfo(AbstractTerrain tile) {
+    private StringBuilder getTileInfo(Civilization civilization, AbstractTerrain tile) {
         AbstractFeature feature1 = (tile.getFeatures().size() > 0 ? tile.getFeatures().get(0) : null);
         AbstractFeature feature2 = (tile.getFeatures().size() > 1 ? tile.getFeatures().get(1) : null);
 
@@ -242,15 +242,16 @@ public class GetTileStatus extends AbstractAjaxRequest {
             "$feature1", getFeatureInfo(feature1),
             "$feature2", getFeatureInfo(feature2),
             "$total", getTotalInfo(tile, (feature1 != null || feature2 != null)),
-            "$improvement", getImprovementInfo(tile.getImprovement())
+            "$improvement", getImprovementInfo(civilization, tile.getImprovement())
         );
     }
 
-    private StringBuilder getImprovementInfo(AbstractImprovement improvement) {
+    private StringBuilder getImprovementInfo(Civilization civilization, AbstractImprovement improvement) {
         if (improvement == null) {
             return null;
         }
 
+        Supply baseSupply = improvement.getBaseSupply(civilization);
         return Format.text("""
             <tr>
                 <td><button onclick="$getImprovementInfo">$improvementName</button></td>
@@ -262,9 +263,9 @@ public class GetTileStatus extends AbstractAjaxRequest {
 
             "$getImprovementInfo", GetImprovementInfo.getAjax(improvement),
             "$improvementName", improvement.getView().getLocalizedName(),
-            "$production", improvement.getSupply().getProduction(),
-            "$gold", improvement.getSupply().getGold(),
-            "$food", improvement.getSupply().getFood()
+            "$production", baseSupply.getProduction(),
+            "$gold", baseSupply.getGold(),
+            "$food", baseSupply.getFood()
         );
     }
 

@@ -16,7 +16,7 @@ public class WorldView {
         this.world = world;
     }
 
-    public JsonBlock getJson() {
+    public JsonBlock getJson(Civilization myCivilization) {
         JsonBlock worldBlock = new JsonBlock();
 
         // map definition
@@ -31,7 +31,7 @@ public class WorldView {
             for (int x = 0; x < width; x ++) {
                 AbstractTerrain tile = world.getTilesMap().getTile(x, y);
                 AbstractTerrainView tileView = tile.getView();
-                worldBlock.addElement(tileView.getJson(tile).getText());
+                worldBlock.addElement(tileView.getJson(tile, myCivilization).getText());
             }
         }
         worldBlock.stopArray();

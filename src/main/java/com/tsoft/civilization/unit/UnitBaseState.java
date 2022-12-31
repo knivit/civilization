@@ -13,13 +13,13 @@ import java.util.List;
 @Builder
 public class UnitBaseState {
 
-    private UnitCategory category;
-    private int goldCost;
-    private int goldUnitKeepingExpenses;
-    private int productionCost;
-    private int passScore;
-    private CombatStrength combatStrength;
-    private List<AbstractMovementSkill> movementSkills;
-    private List<AbstractCombatSkill> combatSkills;
-    private List<AbstractHealingSkill> healingSkills;
+    private final UnitCategory category;
+    private final int goldCost;
+    private final int goldUnitKeepingExpenses;
+    private final int productionCost;
+    private final int passScore;
+    private final CombatStrength combatStrength;
+    private final List<AbstractMovementSkill> movementSkills;
+    private final List<AbstractCombatSkill> combatSkills;
+    private final List<AbstractHealingSkill> healingSkills;
 }

@@ -3,6 +3,7 @@ package com.tsoft.civilization.web.view.world;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
+import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.view.JsonBlock;
@@ -23,7 +24,7 @@ public class WorldViewTest {
             "0|g g g ", "0|h h . ", "0|f . . ",
             "1| g g g", "1| h h .", "1| f . ."));
 
-        world.createCivilization(RUSSIA, new MockScenario()
+        Civilization myCivilization = world.createCivilization(RUSSIA, new MockScenario()
             .city("city1", new Point(0, 0))
             .warriors("warriors", new Point(0, 0))
             .workers("workers", new Point(0, 0))
@@ -55,7 +56,7 @@ public class WorldViewTest {
             }
             """;
 
-        JsonBlock worldBlock = world.getView().getJson();
+        JsonBlock worldBlock = world.getView().getJson(myCivilization);
 
         assertThat(objectMapper.readTree(worldBlock.getText()))
             .isEqualTo(objectMapper.readTree(expected));

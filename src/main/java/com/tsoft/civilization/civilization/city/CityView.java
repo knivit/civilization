@@ -1,6 +1,5 @@
 package com.tsoft.civilization.civilization.city;
 
-import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.civilization.city.action.BuyTileAction;
 import com.tsoft.civilization.civilization.city.tile.BuyTileService;
 import com.tsoft.civilization.util.l10n.L10n;
@@ -8,7 +7,7 @@ import com.tsoft.civilization.combat.service.AttackService;
 import com.tsoft.civilization.combat.action.AttackAction;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.view.JsonBlock;
-import com.tsoft.civilization.tile.improvement.AbstractImprovementView;
+import com.tsoft.civilization.improvement.AbstractImprovementView;
 import lombok.Getter;
 
 import static com.tsoft.civilization.util.l10n.L10nLanguage.EN;

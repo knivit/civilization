@@ -1,5 +1,6 @@
 package com.tsoft.civilization.civilization.city.citizen;
 
+import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.civilization.city.supply.CitySupplyService;
 
@@ -24,27 +25,30 @@ public enum CitizenDeathStrategy {
 
     // A citizen with minimal food produce will die
     private static Citizen minFood(CitizenList citizens, CitySupplyService supplyService) {
-        return min(citizens, supplyService, Comparator.comparingInt(Supply::getFood));
+        Civilization civilization = supplyService.getCity().getCivilization();
+        return min(civilization, citizens, supplyService, Comparator.comparingInt(Supply::getFood));
     }
 
     private static Citizen minProduction(CitizenList citizens, CitySupplyService supplyService) {
-        return min(citizens, supplyService, Comparator.comparingInt(Supply::getProduction));
+        Civilization civilization = supplyService.getCity().getCivilization();
+        return min(civilization, citizens, supplyService, Comparator.comparingInt(Supply::getProduction));
     }
 
     private static Citizen minGold(CitizenList citizens, CitySupplyService supplyService) {
-        return min(citizens, supplyService, Comparator.comparingInt(Supply::getGold));
+        Civilization civilization = supplyService.getCity().getCivilization();
+        return min(civilization, citizens, supplyService, Comparator.comparingInt(Supply::getGold));
     }
 
-    private static Citizen min(CitizenList citizens, CitySupplyService supplyService, Comparator<Supply> comparator) {
+    private static Citizen min(Civilization civilization, CitizenList citizens, CitySupplyService supplyService, Comparator<Supply> comparator) {
         return citizens.stream()
             .min((a, b) -> {
-                Supply asIncome = a.calcIncomeSupply();
-                Supply asOutcome = a.calcOutcomeSupply();
+                Supply asIncome = a.calcIncomeSupply(civilization);
+                Supply asOutcome = a.calcOutcomeSupply(civilization);
                 Supply asTileIncome = supplyService.calcTilesSupply(a.getLocation());
                 Supply as = asIncome.add(asOutcome).add(asTileIncome);
 
-                Supply bsIncome = b.calcIncomeSupply();
-                Supply bsOutcome = b.calcOutcomeSupply();
+                Supply bsIncome = b.calcIncomeSupply(civilization);
+                Supply bsOutcome = b.calcOutcomeSupply(civilization);
                 Supply bsTileIncome = supplyService.calcTilesSupply(b.getLocation());
                 Supply bs = bsIncome.add(bsOutcome).add(bsTileIncome);
 

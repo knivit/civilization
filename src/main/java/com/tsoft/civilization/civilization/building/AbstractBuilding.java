@@ -1,5 +1,6 @@
 package com.tsoft.civilization.civilization.building;
 
+import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.world.HasId;
 import com.tsoft.civilization.world.HasView;
 import com.tsoft.civilization.economic.HasSupply;
@@ -141,6 +142,9 @@ public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt, Ha
     @Getter
     public int goldMaintenance = 0;
 
+    // TODO
+    public BuildingBaseState getBaseState() { return null; }
+
     public abstract int getCityDefenseStrength();
     public abstract int getLocalHappiness();
     public abstract int getGlobalHappiness();
@@ -173,6 +177,23 @@ public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt, Ha
 
     public Civilization getCivilization() {
         return city.getCivilization();
+    }
+
+    @Override
+    public Supply getBaseSupply(Civilization civilization) {
+        Supply baseSupply = getBaseState().getSupply();
+        double modifier = BuildingBaseModifiers.getModifier(civilization);
+
+        return Supply.builder()
+            .food((int)Math.round(baseSupply.getFood() * modifier))
+            .production((int)Math.round(baseSupply.getProduction() * modifier))
+            .gold((int)Math.round(baseSupply.getGold() * modifier))
+            .science((int)Math.round(baseSupply.getScience() * modifier))
+            .culture((int)Math.round(baseSupply.getCulture() * modifier))
+            .faith((int)Math.round(baseSupply.getFaith() * modifier))
+            .tourism((int)Math.round(baseSupply.getTourism() * modifier))
+            .greatPerson((int)Math.round(baseSupply.getGreatPerson() * modifier))
+            .build();
     }
 
     @Override

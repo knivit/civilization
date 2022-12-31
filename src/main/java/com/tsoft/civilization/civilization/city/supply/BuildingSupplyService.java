@@ -1,5 +1,6 @@
 package com.tsoft.civilization.civilization.city.supply;
 
+import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.economic.HasSupply;
 import com.tsoft.civilization.economic.Supply;
@@ -14,19 +15,24 @@ public class BuildingSupplyService implements HasSupply {
     }
 
     @Override
-    public Supply calcIncomeSupply() {
+    public Supply getBaseSupply(Civilization civilization) {
+        return Supply.EMPTY;
+    }
+
+    @Override
+    public Supply calcIncomeSupply(Civilization civilization) {
         Supply supply = Supply.EMPTY;
         for (AbstractBuilding building : city.getBuildings()) {
-            supply = supply.add(building.calcIncomeSupply());
+            supply = supply.add(building.calcIncomeSupply(civilization));
         }
         return supply;
     }
 
     @Override
-    public Supply calcOutcomeSupply() {
+    public Supply calcOutcomeSupply(Civilization civilization) {
         Supply supply = Supply.EMPTY;
         for (AbstractBuilding building : city.getBuildings()) {
-            supply = supply.add(building.calcOutcomeSupply());
+            supply = supply.add(building.calcOutcomeSupply(civilization));
         }
         return supply;
     }

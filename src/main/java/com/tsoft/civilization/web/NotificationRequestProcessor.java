@@ -7,7 +7,6 @@ import com.tsoft.civilization.web.state.ClientSession;
 import com.tsoft.civilization.web.response.ContentType;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.web.state.Sessions;
-import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.world.Event;
 import com.tsoft.civilization.world.EventService;
 import lombok.extern.slf4j.Slf4j;
@@ -53,8 +52,6 @@ public class NotificationRequestProcessor {
         Thread thread = Thread.currentThread();
         thread.setName("Notifications-" + thread.getId());
 
-        World world = myCivilization.getWorld();
-
         int sentEventId = NumberUtil.parseInt(request.getHeader(LAST_EVENT_ID_HEADER), -1);
         log.debug("Notifications for {} are started from eventId = {}",  request, sentEventId);
 
@@ -80,7 +77,7 @@ public class NotificationRequestProcessor {
             }
 
             // Send an update of the World's state
-            if (needWorldUpdate && !sendUpdateWorldEvent(client, world)) {
+            if (needWorldUpdate && !sendUpdateWorldEvent(client, myCivilization)) {
                 return;
             }
 
@@ -117,16 +114,16 @@ public class NotificationRequestProcessor {
             "$lastEventId", lastEventId
         );
 
-        // If the client doesn't listening, stop the pushing
+        // If the client doesn't listen, stop the pushing
         return client.sendText(msg.toString());
     }
 
-    private static boolean sendUpdateWorldEvent(Client client, World world) {
+    private static boolean sendUpdateWorldEvent(Client client, Civilization myCivilization) {
         StringBuilder msg = Format.text(
             "event: updateWorld\n" +
             "data: $data\n\n",
 
-            "$data", world.getView().getJson().getText()
+            "$data", myCivilization.getWorld().getView().getJson(myCivilization).getText()
         );
 
         return client.sendText(msg.toString());

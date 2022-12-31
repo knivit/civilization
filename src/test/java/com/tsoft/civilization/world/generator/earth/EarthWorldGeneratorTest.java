@@ -2,6 +2,7 @@ package com.tsoft.civilization.world.generator.earth;
 
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.web.render.MapRender;
+import com.tsoft.civilization.world.generator.map.earth.EarthDuelMap;
 import org.junit.jupiter.api.Test;
 
 public class EarthWorldGeneratorTest {

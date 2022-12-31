@@ -2,7 +2,7 @@ package com.tsoft.civilization.tile;
 
 import com.tsoft.civilization.world.MapConfiguration;
 import com.tsoft.civilization.world.MapSize;
-import com.tsoft.civilization.world.generator.MapGenerator;
+import com.tsoft.civilization.world.generator.map.MapGenerator;
 
 public class MockTilesMap {
 

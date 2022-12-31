@@ -1,7 +1,8 @@
 package com.tsoft.civilization.civilization.city.supply;
 
+import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.economic.Supply;
-import com.tsoft.civilization.tile.improvement.AbstractImprovement;
+import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
@@ -19,19 +20,19 @@ public class TileSupplyService {
         this.city = city;
     }
 
-    public Supply calcIncomeSupply(List<Point> locations) {
+    public Supply calcIncomeSupply(Civilization civilization, List<Point> locations) {
         Supply supply = Supply.EMPTY;
 
         for (Point location : locations) {
-            supply = supply.add(calcIncomeSupply(location));
+            supply = supply.add(calcIncomeSupply(civilization, location));
         }
 
         return supply;
     }
 
-    public Supply calcIncomeSupply(Point location) {
+    public Supply calcIncomeSupply(Civilization civilization, Point location) {
         Supply tileSupply = calcTileSupply(location);
-        Supply improvementSupply = calcImprovementsSupply(location);
+        Supply improvementSupply = calcImprovementsSupply(civilization, location);
         return tileSupply.add(improvementSupply);
     }
 
@@ -51,7 +52,8 @@ public class TileSupplyService {
 
         AbstractTerrain tile = city.getCivilization().getTilesMap().getTile(location);
         AbstractImprovement improvement = tile.getImprovement();
-        if (improvement == null || !improvement.isBlockingTileSupply()) {
+
+        if (improvement == null || !improvement.getBaseState().isBlockingTileSupply()) {
             return tileService.calcSupply(tile);
         }
 
@@ -59,7 +61,7 @@ public class TileSupplyService {
     }
 
     // Calc supply from improvements
-    private Supply calcImprovementsSupply(Point location) {
+    private Supply calcImprovementsSupply(Civilization civilization, Point location) {
         if (location == null) {
             return Supply.EMPTY;
         }
@@ -67,7 +69,7 @@ public class TileSupplyService {
         AbstractTerrain tile = city.getCivilization().getTilesMap().getTile(location);
         AbstractImprovement improvement = tile.getImprovement();
         if (improvement != null) {
-            return improvement.getSupply();
+            return improvement.calcIncomeSupply(civilization);
         }
 
         return Supply.EMPTY;

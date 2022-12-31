@@ -90,12 +90,12 @@ public class Monument extends AbstractBuilding {
      * and the civilization's acquisition of Social Policies.
      */
     @Override
-    public Supply calcIncomeSupply() {
+    public Supply calcIncomeSupply(Civilization civilization) {
         return Supply.builder().gold(-1).culture(2).build();
     }
 
     @Override
-    public Supply calcOutcomeSupply() {
+    public Supply calcOutcomeSupply(Civilization civilization) {
         return Supply.EMPTY;
     }
 

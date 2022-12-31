@@ -1,7 +1,8 @@
 package com.tsoft.civilization.tile.terrain;
 
 import com.tsoft.civilization.civilization.city.City;
-import com.tsoft.civilization.tile.improvement.AbstractImprovement;
+import com.tsoft.civilization.improvement.AbstractImprovement;
+import com.tsoft.civilization.tile.resource.ResourceType;
 import com.tsoft.civilization.tile.terrain.grassland.Grassland;
 import com.tsoft.civilization.tile.terrain.ocean.Ocean;
 import com.tsoft.civilization.tile.terrain.tundra.Tundra;
@@ -221,9 +222,6 @@ public abstract class AbstractTerrain {
     private City city;
 
     @Getter @Setter
-    private AbstractResource luxury;
-
-    @Getter @Setter
     private AbstractResource resource;
 
     @Getter @Setter
@@ -247,13 +245,26 @@ public abstract class AbstractTerrain {
         return features.getByClass(featureClass);
     }
 
-    @SafeVarargs
-    public final boolean hasFeature(Class<? extends AbstractFeature> ... features) {
+    public boolean hasFeature(Class<? extends AbstractFeature> ... features) {
         if (features != null) {
             for (Class<? extends AbstractFeature> feature : features) {
                 if (this.features.getByClass(feature) != null) {
                     return true;
                 }
+            }
+        }
+
+        return false;
+    }
+
+    public boolean hasResources(ResourceType ... resourceTypes) {
+        if (resource == null) {
+            return false;
+        }
+
+        for (ResourceType resourceType : resourceTypes) {
+            if (resource.getType().equals(resourceType)) {
+                return true;
             }
         }
 
@@ -280,8 +291,7 @@ public abstract class AbstractTerrain {
         return isIn(Grassland.class);
     }
 
-    @SafeVarargs
-    public final boolean isIn(Class<? extends AbstractTerrain> ... classes) {
+    public boolean isIn(Class<? extends AbstractTerrain> ... classes) {
         if (classes != null) {
             for (Class<? extends AbstractTerrain> clazz : classes) {
                 if (clazz.equals(getClass())) {
@@ -299,7 +309,6 @@ public abstract class AbstractTerrain {
         return getClass().getSimpleName() + location +
             ", features=[" + features + "]" +
             ", improvement=" + improvement +
-            ", luxury=" + luxury +
             ", resource=" + resource;
     }
 }

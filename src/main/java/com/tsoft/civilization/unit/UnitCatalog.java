@@ -134,7 +134,7 @@ public final class UnitCatalog {
 
     private UnitCatalog() { }
 
-    public static UnitBaseState getBaseState(UnitType unit) {
-        return UNITS.get(unit);
+    public static UnitBaseState getBaseState(UnitType type) {
+        return UNITS.get(type);
     }
 }

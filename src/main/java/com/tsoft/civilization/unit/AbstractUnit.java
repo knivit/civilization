@@ -79,6 +79,7 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
         movementService = new UnitMovementService(this);
     }
 
+    @Override
     public UnitCategory getUnitCategory() {
         return getBaseState().getCategory();
     }
@@ -95,6 +96,7 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
         return (int)Math.round(expenses * modifier);
     }
 
+    @Override
     public int getBaseProductionCost(Civilization civilization) {
         double modifier = UnitBaseModifiers.getProductionCostModifier(civilization);
         int goldCost = getBaseState().getProductionCost();
@@ -107,6 +109,7 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
         return (int)Math.round(goldCost * modifier);
     }
 
+    @Override
     public CombatStrength getBaseCombatStrength(Civilization civilization) {
         UnitBaseState baseState = getBaseState();
         CombatStrength baseCombatStrength = baseState.getCombatStrength();
@@ -134,6 +137,7 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
         return skills;
     }
 
+    @Override
     public SkillMap<AbstractCombatSkill> getBaseCombatSkills(Civilization civilization) {
         UnitBaseState baseState = getBaseState();
 
@@ -145,6 +149,7 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
         return skills;
     }
 
+    @Override
     public SkillMap<AbstractHealingSkill> getBaseHealingSkills(Civilization civilization) {
         UnitBaseState baseState = getBaseState();
 
@@ -181,6 +186,7 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
         return getWorld().getTilesMap();
     }
 
+    @Override
     public Point getLocation() {
         return movementService.getLocation();
     }
@@ -222,6 +228,7 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
         return !getUnitCategory().isMilitary();
     }
 
+    @Override
     public void destroy() {
         isDestroyed = true;
     }

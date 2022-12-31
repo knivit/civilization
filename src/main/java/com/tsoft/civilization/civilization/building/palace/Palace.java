@@ -87,12 +87,12 @@ public class Palace extends AbstractBuilding {
      * Connecting other Cities to the Capital by Road will produce additional Gold.
      */
     @Override
-    public Supply calcIncomeSupply() {
+    public Supply calcIncomeSupply(Civilization civilization) {
         return Supply.builder().production(3).gold(3).science(3).culture(1).build();
     }
 
     @Override
-    public Supply calcOutcomeSupply() {
+    public Supply calcOutcomeSupply(Civilization civilization) {
         return Supply.EMPTY;
     }
 

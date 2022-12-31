@@ -42,12 +42,12 @@ public class Settlement extends AbstractBuilding {
     }
 
     @Override
-    public Supply calcIncomeSupply() {
+    public Supply calcIncomeSupply(Civilization civilization) {
         return Supply.builder().production(1).gold(1).culture(1).build();
     }
 
     @Override
-    public Supply calcOutcomeSupply() {
+    public Supply calcOutcomeSupply(Civilization civilization) {
         return Supply.EMPTY;
     }
 

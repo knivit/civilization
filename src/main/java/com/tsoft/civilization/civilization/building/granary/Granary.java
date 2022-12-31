@@ -5,8 +5,9 @@ import com.tsoft.civilization.civilization.building.BuildingType;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.tile.resource.AbstractResource;
+import com.tsoft.civilization.tile.resource.ResourceType;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
-import com.tsoft.civilization.tile.resource.bonus.Bananas;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.economic.Supply;
@@ -76,14 +77,15 @@ public class Granary extends AbstractBuilding {
     }
 
     /**
-     * Each source of Wheat Bananas and Deer worked by this City produce +1 Food.
+     * Each source of Wheat, Bananas and Deer worked by this City produce +1 Food.
      */
     @Override
-    public Supply calcIncomeSupply() {
+    public Supply calcIncomeSupply(Civilization civilization) {
         int food = 2;
         for (Point location : getCity().getCitizenLocations()) {
             AbstractTerrain tile = getTile(location);
-            if (Bananas.class.equals(tile.getLuxury().getClass())) {
+            AbstractResource resource = tile.getResource();
+            if (tile.hasResources(ResourceType.WHEAT, ResourceType.BANANAS, ResourceType.DEER)) {
                 food ++;
             }
         }
@@ -92,7 +94,7 @@ public class Granary extends AbstractBuilding {
     }
 
     @Override
-    public Supply calcOutcomeSupply() {
+    public Supply calcOutcomeSupply(Civilization civilization) {
         return Supply.EMPTY;
     }
 

@@ -5,7 +5,7 @@ import com.tsoft.civilization.action.ActionFailureResult;
 import com.tsoft.civilization.action.ActionSuccessResult;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.combat.*;
-import com.tsoft.civilization.tile.improvement.AbstractImprovement;
+import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.tile.resource.AbstractResource;
 import com.tsoft.civilization.unit.AbstractUnit;

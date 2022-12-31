@@ -1,5 +1,6 @@
 package com.tsoft.civilization.civilization.city.citizen;
 
+import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.city.citizen.view.LaborerView;
 import com.tsoft.civilization.economic.HasSupply;
 import com.tsoft.civilization.civilization.city.City;
@@ -70,7 +71,12 @@ public class Citizen implements HasSupply, HasHistory {
     }
 
     @Override
-    public Supply calcIncomeSupply() {
+    public Supply getBaseSupply(Civilization civilization) {
+        return Supply.EMPTY;
+    }
+
+    @Override
+    public Supply calcIncomeSupply(Civilization civilization) {
         // +1 Production
         // In a few ways, Unemployed citizens behave as specialists.
         // They do not work a tile, and receive the bonus from the Statue of Liberty, as though they were specialists,
@@ -85,7 +91,7 @@ public class Citizen implements HasSupply, HasHistory {
     }
 
     @Override
-    public Supply calcOutcomeSupply() {
+    public Supply calcOutcomeSupply(Civilization civilization) {
         // 1 citizen consumes 1 food
         return Supply.builder().food(-1).build();
     }

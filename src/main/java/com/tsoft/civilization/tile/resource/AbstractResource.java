@@ -1,6 +1,15 @@
 package com.tsoft.civilization.tile.resource;
 
+import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.economic.HasSupply;
+import com.tsoft.civilization.economic.Supply;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.UUID;
 
 /**
  * Basics
@@ -96,10 +105,10 @@ import lombok.extern.slf4j.Slf4j;
  * Again, you don't need to work an improved luxury resource tile in order to gain the resource, but you do need to work it (i.e. send a 20xPopulation5.png Citizen to the tile) to gain its output bonuses. Unlike other resources, Luxury resources add Gold Gold yield to tiles, which makes them even more important strategically, allowing you to gain Gold Gold directly from terrain (and not having to trade for it). Note that luxury resources may be traded to other empires, if they're produced by you; however, in the event that you've gained them via trading or from a CityStateIcon5.png City-State ally, you can't trade them away.
  *
  * Luxury resources	Output bonus
- * Cotton Cotton	Spices Spices	Sugar Sugar	GoldGold
- * Furs Furs	Ivory Ivory	Silk Silk	GoldGold
- * Dyes Dyes	Incense Incense	Wine Wine	GoldGold
- * Copper Copper GodsKings5 clear.png	Gold Gold	Silver Silver	GoldGold
+ * Cotton	Spices	Sugar	GoldGold
+ * Furs	Ivory	Silk	GoldGold
+ * Dyes	Incense	Wine	GoldGold
+ * Copper GodsKings5 clear.png	Gold Gold	Silver Silver	GoldGold
  * Marble Marble†	Pearls Pearls	Truffles Truffles GodsKings5 clear.png	GoldGold
  * Jewelry Jewelry* GodsKings5 clear.png		Porcelain Porcelain* GodsKings5 clear.png	GoldGold
  * Nutmeg Nutmeg** BNW-only.png	Cloves Cloves** BNW-only.png	Pepper Pepper** BNW-only.png	GoldGold
@@ -134,10 +143,10 @@ import lombok.extern.slf4j.Slf4j;
  *
  * As an example, consider some Coal Coal resources on hills in the Modern Era:
  *
- * Hills have a base terrain yield of 2 Production Production and Coal Coal provides 1 Production Production. This gives a total of 3 Production without improvements.
- * A Mine provides 1 Production Production, the resource-dependent combination of mine and Coal Coal provides an additional Production unit, and it receives another Production unit from Chemistry technology. Thus the Mine provides 3 Production Production.
- * An Academy provides Science Science, but it will connect the Coal Coal to the empire. Moreover, it doesn't get any boosts. Therefore, it does not provide any production at all.
- * When the Coal Coal is improved with a Mine, the total production yield is 6 Production. When an Academy is placed, the total yield is 3 Production Production and some Science Science.
+ * Hills have a base terrain yield of 2 Production and Coal provides 1 Production. This gives a total of 3 Production without improvements.
+ * A Mine provides 1 Production, the resource-dependent combination of mine and Coal provides an additional Production unit, and it receives another Production unit from Chemistry technology. Thus the Mine provides 3 Production Production.
+ * An Academy provides Science, but it will connect the Coal to the empire. Moreover, it doesn't get any boosts. Therefore, it does not provide any production at all.
+ * When the Coal Coal is improved with a Mine, the total production yield is 6 Production. When an Academy is placed, the total yield is 3 Production and some Science Science.
  * Therefore, intentionally placing an Great Tile Improvement on a strategic resource can be a waste of yields. However, there may be situations where it is advantageous to connect the resource with a Great improvement, such as obtaining Iron Iron or Horses Horses to rush units into production, or maximizing yield given a small 20xPopulation5.png Population. Furthermore, resource-dependent yields only appear on later strategic resources such as Uranium Uranium and Oil Oil that are revealed much later. Generally,
  *
  * Workers are more readily available and a few turns of construction is less consequential; and
@@ -145,11 +154,51 @@ import lombok.extern.slf4j.Slf4j;
  * Hence while a good exercise in understanding the process of calculating and understanding tile yields, the distinction between the types of improvements tends to be more academic in nature, and have less practical applications than it may appear to.
  */
 @Slf4j
-public abstract class AbstractResource {
+@EqualsAndHashCode(of = "id")
+public abstract class AbstractResource implements HasSupply {
 
-    public abstract ResourceType getResourceType();
+    @Getter
+    @Setter
+    private String id = UUID.randomUUID().toString();
+
+    public abstract ResourceType getType();
+    public abstract ResourceCategory getCategory();
+    public abstract ResourceBaseState getBaseState();
+    public abstract boolean acceptEraAndTechnology(Civilization civilization);
+    public abstract boolean acceptTile(AbstractTerrain tile);
+
+    public String getClassUuid() {
+        return getType().name();
+    }
 
     public String getName() {
         return getClass().getName();
+    }
+
+    @Override
+    public Supply getBaseSupply(Civilization civilization) {
+        Supply baseSupply = getBaseState().getSupply();
+        double modifier = ResourceBaseModifiers.getModifier(civilization);
+
+        return Supply.builder()
+            .food((int)Math.round(baseSupply.getFood() * modifier))
+            .production((int)Math.round(baseSupply.getProduction() * modifier))
+            .gold((int)Math.round(baseSupply.getGold() * modifier))
+            .science((int)Math.round(baseSupply.getScience() * modifier))
+            .culture((int)Math.round(baseSupply.getCulture() * modifier))
+            .faith((int)Math.round(baseSupply.getFaith() * modifier))
+            .tourism((int)Math.round(baseSupply.getTourism() * modifier))
+            .greatPerson((int)Math.round(baseSupply.getGreatPerson() * modifier))
+            .build();
+    }
+
+    @Override
+    public Supply calcIncomeSupply(Civilization civilization) {
+        return getBaseSupply(civilization);
+    }
+
+    @Override
+    public Supply calcOutcomeSupply(Civilization civilization) {
+        return Supply.EMPTY;
     }
 }

@@ -1,11 +1,28 @@
 package com.tsoft.civilization.tile.resource;
 
 public enum ResourceType {
-    EARTH,
-    SEA,
-    EARTH_SEA,
 
-    LUXURY_FOOD,
-    LUXURY_SEA_FOOD,
-    LUXURY_PRODUCTION
+    BANANAS,
+    BISON,
+    CATTLE,
+    DEER,
+    FISH,
+    SHEEP,
+    STONE,
+    WHEAT,
+
+    COTTON,
+    SALT,
+    SILK,
+    SPICES,
+    SUGAR,
+    WHALES,
+    WINE,
+
+    ALUMINIUM,
+    COAL,
+    HORSES,
+    IRON,
+    OIL,
+    URANIUM
 }

@@ -2,9 +2,9 @@ package com.tsoft.civilization.web.ajax.action.status;
 
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.economic.Supply;
-import com.tsoft.civilization.tile.improvement.AbstractImprovement;
-import com.tsoft.civilization.tile.improvement.AbstractImprovementView;
-import com.tsoft.civilization.tile.improvement.L10nImprovement;
+import com.tsoft.civilization.improvement.AbstractImprovement;
+import com.tsoft.civilization.improvement.AbstractImprovementView;
+import com.tsoft.civilization.improvement.L10nImprovement;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.L10nServer;
@@ -76,7 +76,7 @@ public class GetImprovementInfo extends AbstractAjaxRequest {
             return null;
         }
 
-        Supply featureSupply = improvement.getSupply();
+        Supply featureSupply = improvement.getBaseSupply(civilization);
         return Format.text("""
             <table id='info_table'>
                 <tr><td>$productionLabel</td><td>$production $productionImage</td></tr>
