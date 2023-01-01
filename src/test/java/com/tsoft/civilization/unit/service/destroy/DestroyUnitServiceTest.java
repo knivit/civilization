@@ -5,7 +5,7 @@ import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.unit.UnitFactory;
-import com.tsoft.civilization.unit.civil.settlers.Settlers;
+import com.tsoft.civilization.unit.catalog.settlers.Settlers;
 import com.tsoft.civilization.util.Point;
 import org.junit.jupiter.api.Test;
 

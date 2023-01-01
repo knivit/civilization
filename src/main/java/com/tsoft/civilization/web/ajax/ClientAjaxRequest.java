@@ -6,8 +6,8 @@ import com.tsoft.civilization.civilization.L10nCivilization;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.civil.settlers.Settlers;
-import com.tsoft.civilization.unit.civil.workers.Workers;
+import com.tsoft.civilization.unit.catalog.settlers.Settlers;
+import com.tsoft.civilization.unit.catalog.workers.Workers;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.view.JsonBlock;
 

@@ -4,7 +4,7 @@ import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.military.archers.Archers;
+import com.tsoft.civilization.unit.catalog.archers.Archers;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.economic.Supply;

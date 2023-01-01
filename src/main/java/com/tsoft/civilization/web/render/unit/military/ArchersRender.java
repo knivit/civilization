@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web.render.unit.military;
 
-import com.tsoft.civilization.unit.military.archers.Archers;
+import com.tsoft.civilization.unit.catalog.archers.Archers;
 import com.tsoft.civilization.web.render.*;
 
 public class ArchersRender implements Render<Archers> {

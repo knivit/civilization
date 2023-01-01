@@ -5,8 +5,8 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.city.CivilizationCityService;
 import com.tsoft.civilization.civilization.unit.CivilizationUnitService;
 import com.tsoft.civilization.civilization.CivilizationsRelations;
-import com.tsoft.civilization.unit.civil.settlers.Settlers;
-import com.tsoft.civilization.unit.military.warriors.Warriors;
+import com.tsoft.civilization.unit.catalog.settlers.Settlers;
+import com.tsoft.civilization.unit.catalog.warriors.Warriors;
 import org.junit.jupiter.api.Test;
 
 import static com.tsoft.civilization.MockWorld.GRASSLAND_MAP_10x10;

@@ -2,15 +2,15 @@ package com.tsoft.civilization.tile.feature.marsh;
 
 import com.tsoft.civilization.unit.service.move.PassCost;
 import com.tsoft.civilization.unit.service.move.PassCostList;
-import com.tsoft.civilization.unit.civil.greatartist.GreatArtist;
-import com.tsoft.civilization.unit.civil.greatengineer.GreatEngineer;
-import com.tsoft.civilization.unit.civil.greatgeneral.GreatGeneral;
-import com.tsoft.civilization.unit.civil.greatmerchant.GreatMerchant;
-import com.tsoft.civilization.unit.civil.greatscientist.GreatScientist;
-import com.tsoft.civilization.unit.civil.settlers.Settlers;
-import com.tsoft.civilization.unit.civil.workers.Workers;
-import com.tsoft.civilization.unit.military.archers.Archers;
-import com.tsoft.civilization.unit.military.warriors.Warriors;
+import com.tsoft.civilization.unit.catalog.greatartist.GreatArtist;
+import com.tsoft.civilization.unit.catalog.greatengineer.GreatEngineer;
+import com.tsoft.civilization.unit.catalog.greatgeneral.GreatGeneral;
+import com.tsoft.civilization.unit.catalog.greatmerchant.GreatMerchant;
+import com.tsoft.civilization.unit.catalog.greatscientist.GreatScientist;
+import com.tsoft.civilization.unit.catalog.settlers.Settlers;
+import com.tsoft.civilization.unit.catalog.workers.Workers;
+import com.tsoft.civilization.unit.catalog.archers.Archers;
+import com.tsoft.civilization.unit.catalog.warriors.Warriors;
 
 import java.util.HashMap;
 import java.util.Map;

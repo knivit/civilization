@@ -4,8 +4,8 @@ import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.combat.CombatStrengthMock;
-import com.tsoft.civilization.unit.civil.settlers.Settlers;
-import com.tsoft.civilization.unit.military.archers.Archers;
+import com.tsoft.civilization.unit.catalog.settlers.Settlers;
+import com.tsoft.civilization.unit.catalog.archers.Archers;
 import com.tsoft.civilization.util.Point;
 import org.junit.jupiter.api.Test;
 

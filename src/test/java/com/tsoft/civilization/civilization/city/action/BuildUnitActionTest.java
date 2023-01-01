@@ -9,7 +9,7 @@ import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.economic.UnhappinessMock;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.technology.Technology;
-import com.tsoft.civilization.unit.military.archers.Archers;
+import com.tsoft.civilization.unit.catalog.archers.Archers;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.economic.SupplyMock;

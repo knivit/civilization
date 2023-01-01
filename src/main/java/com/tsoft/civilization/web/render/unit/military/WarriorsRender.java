@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web.render.unit.military;
 
-import com.tsoft.civilization.unit.military.warriors.Warriors;
+import com.tsoft.civilization.unit.catalog.warriors.Warriors;
 import com.tsoft.civilization.web.render.*;
 
 public class WarriorsRender implements Render<Warriors> {

@@ -19,7 +19,7 @@ import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
-import com.tsoft.civilization.unit.civil.settlers.Settlers;
+import com.tsoft.civilization.unit.catalog.settlers.Settlers;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.technology.TechnologySet;

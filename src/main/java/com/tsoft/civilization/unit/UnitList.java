@@ -1,6 +1,6 @@
 package com.tsoft.civilization.unit;
 
-import com.tsoft.civilization.unit.civil.greatgeneral.GreatGeneral;
+import com.tsoft.civilization.unit.catalog.greatgeneral.GreatGeneral;
 import com.tsoft.civilization.util.Point;
 
 import java.util.*;

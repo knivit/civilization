@@ -6,7 +6,7 @@ import com.tsoft.civilization.action.ActionSuccessResult;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.L10nUnit;
-import com.tsoft.civilization.unit.civil.settlers.Settlers;
+import com.tsoft.civilization.unit.catalog.settlers.Settlers;
 
 public class DestroyUnitService {
 

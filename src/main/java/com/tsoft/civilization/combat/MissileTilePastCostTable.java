@@ -12,7 +12,7 @@ import com.tsoft.civilization.tile.feature.coast.Coast;
 import com.tsoft.civilization.tile.terrain.desert.Desert;
 import com.tsoft.civilization.tile.feature.ice.Ice;
 import com.tsoft.civilization.tile.feature.mountain.Mountain;
-import com.tsoft.civilization.unit.military.archers.Archers;
+import com.tsoft.civilization.unit.catalog.archers.Archers;
 
 import java.util.HashMap;
 import java.util.Map;

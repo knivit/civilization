@@ -3,7 +3,7 @@ package com.tsoft.civilization.world.scenario;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationsRelations;
 import com.tsoft.civilization.unit.UnitFactory;
-import com.tsoft.civilization.unit.civil.settlers.Settlers;
+import com.tsoft.civilization.unit.catalog.settlers.Settlers;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.World;
 import lombok.extern.slf4j.Slf4j;

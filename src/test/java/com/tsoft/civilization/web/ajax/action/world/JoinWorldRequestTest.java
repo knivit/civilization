@@ -6,7 +6,7 @@ import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.PlayerType;
 import com.tsoft.civilization.unit.UnitList;
-import com.tsoft.civilization.unit.civil.settlers.Settlers;
+import com.tsoft.civilization.unit.catalog.settlers.Settlers;
 import com.tsoft.civilization.web.MockRequest;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.web.request.Request;

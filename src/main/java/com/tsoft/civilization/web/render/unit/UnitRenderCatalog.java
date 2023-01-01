@@ -1,10 +1,10 @@
 package com.tsoft.civilization.web.render.unit;
 
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.civil.settlers.Settlers;
-import com.tsoft.civilization.unit.civil.workers.Workers;
-import com.tsoft.civilization.unit.military.archers.Archers;
-import com.tsoft.civilization.unit.military.warriors.Warriors;
+import com.tsoft.civilization.unit.catalog.settlers.Settlers;
+import com.tsoft.civilization.unit.catalog.workers.Workers;
+import com.tsoft.civilization.unit.catalog.archers.Archers;
+import com.tsoft.civilization.unit.catalog.warriors.Warriors;
 import com.tsoft.civilization.web.render.Render;
 import com.tsoft.civilization.web.render.RenderCatalog;
 import com.tsoft.civilization.web.render.unit.civil.SettlersRender;

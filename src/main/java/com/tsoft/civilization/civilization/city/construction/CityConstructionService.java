@@ -7,7 +7,7 @@ import com.tsoft.civilization.civilization.city.event.NewBuildingBuiltEvent;
 import com.tsoft.civilization.civilization.city.event.NewUnitBuiltEvent;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.economic.Supply;
-import com.tsoft.civilization.unit.civil.settlers.Settlers;
+import com.tsoft.civilization.unit.catalog.settlers.Settlers;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

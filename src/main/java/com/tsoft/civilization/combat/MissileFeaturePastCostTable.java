@@ -11,7 +11,7 @@ import com.tsoft.civilization.tile.feature.ice.Ice;
 import com.tsoft.civilization.tile.feature.jungle.Jungle;
 import com.tsoft.civilization.tile.feature.marsh.Marsh;
 import com.tsoft.civilization.tile.feature.oasis.Oasis;
-import com.tsoft.civilization.unit.military.archers.Archers;
+import com.tsoft.civilization.unit.catalog.archers.Archers;
 
 import java.util.HashMap;
 import java.util.Map;

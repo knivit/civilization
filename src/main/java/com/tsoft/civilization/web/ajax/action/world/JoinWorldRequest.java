@@ -4,7 +4,7 @@ import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.PlayerType;
 import com.tsoft.civilization.unit.UnitList;
-import com.tsoft.civilization.unit.civil.settlers.Settlers;
+import com.tsoft.civilization.unit.catalog.settlers.Settlers;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.web.request.Request;

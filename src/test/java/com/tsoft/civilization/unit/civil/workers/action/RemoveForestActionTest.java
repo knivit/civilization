@@ -10,7 +10,10 @@ import com.tsoft.civilization.tile.terrain.grassland.Grassland;
 import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.tile.feature.hill.Hill;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.unit.civil.workers.Workers;
+import com.tsoft.civilization.unit.catalog.workers.Workers;
+import com.tsoft.civilization.unit.catalog.workers.action.RemoveForestAction;
+import com.tsoft.civilization.unit.catalog.workers.action.RemoveHillAction;
+import com.tsoft.civilization.unit.catalog.workers.action.WorkersActionResults;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
 import org.junit.jupiter.api.Test;
@@ -18,10 +21,10 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
-import static com.tsoft.civilization.unit.civil.workers.action.RemoveForestAction.FOREST_IS_REMOVED;
-import static com.tsoft.civilization.unit.civil.workers.action.RemoveForestAction.REMOVING_FOREST;
-import static com.tsoft.civilization.unit.civil.workers.action.RemoveHillAction.HILL_IS_REMOVED;
-import static com.tsoft.civilization.unit.civil.workers.action.RemoveHillAction.REMOVING_HILL;
+import static com.tsoft.civilization.unit.catalog.workers.action.RemoveForestAction.FOREST_IS_REMOVED;
+import static com.tsoft.civilization.unit.catalog.workers.action.RemoveForestAction.REMOVING_FOREST;
+import static com.tsoft.civilization.unit.catalog.workers.action.RemoveHillAction.HILL_IS_REMOVED;
+import static com.tsoft.civilization.unit.catalog.workers.action.RemoveHillAction.REMOVING_HILL;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class RemoveForestActionTest {

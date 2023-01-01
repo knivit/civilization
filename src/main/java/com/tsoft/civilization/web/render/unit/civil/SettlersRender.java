@@ -1,6 +1,6 @@
 package com.tsoft.civilization.web.render.unit.civil;
 
-import com.tsoft.civilization.unit.civil.settlers.Settlers;
+import com.tsoft.civilization.unit.catalog.settlers.Settlers;
 import com.tsoft.civilization.web.render.*;
 
 public class SettlersRender implements Render<Settlers> {

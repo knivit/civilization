@@ -7,7 +7,7 @@ import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.unit.UnitList;
-import com.tsoft.civilization.unit.military.warriors.Warriors;
+import com.tsoft.civilization.unit.catalog.warriors.Warriors;
 import com.tsoft.civilization.unit.service.move.MoveUnitService;
 import com.tsoft.civilization.unit.service.move.TilePassCostTable;
 import com.tsoft.civilization.util.Point;
