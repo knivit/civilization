@@ -2,5 +2,6 @@ package com.tsoft.civilization.civilization.building;
 
 public enum BuildingCategory {
     BUILDING,
-    NATIONAL_WONDER
+    NATIONAL_WONDER,
+    WORLD_WONDER
 }

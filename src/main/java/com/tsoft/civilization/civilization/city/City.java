@@ -15,7 +15,7 @@ import com.tsoft.civilization.civilization.city.supply.CitySupplyService;
 import com.tsoft.civilization.civilization.city.supply.TileSupplyStrategy;
 import com.tsoft.civilization.civilization.city.tile.CityTileService;
 import com.tsoft.civilization.util.l10n.L10n;
-import com.tsoft.civilization.civilization.building.palace.Palace;
+import com.tsoft.civilization.civilization.building.catalog.palace.Palace;
 import com.tsoft.civilization.civilization.happiness.Happiness;
 import com.tsoft.civilization.combat.CombatDamage;
 import com.tsoft.civilization.combat.CombatExperience;

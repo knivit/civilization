@@ -3,8 +3,8 @@ package com.tsoft.civilization.civilization.city.action;
 import com.tsoft.civilization.civilization.building.L10nBuilding;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.civilization.building.AbstractBuilding;
-import com.tsoft.civilization.civilization.building.palace.Palace;
-import com.tsoft.civilization.civilization.building.settlement.Settlement;
+import com.tsoft.civilization.civilization.building.catalog.palace.Palace;
+import com.tsoft.civilization.civilization.building.catalog.settlement.Settlement;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 

@@ -1,11 +1,11 @@
 package com.tsoft.civilization.civilization.building;
 
-import com.tsoft.civilization.civilization.building.granary.Granary;
-import com.tsoft.civilization.civilization.building.market.Market;
-import com.tsoft.civilization.civilization.building.monument.Monument;
-import com.tsoft.civilization.civilization.building.palace.Palace;
-import com.tsoft.civilization.civilization.building.settlement.Settlement;
-import com.tsoft.civilization.civilization.building.walls.Walls;
+import com.tsoft.civilization.civilization.building.catalog.granary.Granary;
+import com.tsoft.civilization.civilization.building.catalog.market.Market;
+import com.tsoft.civilization.civilization.building.catalog.monument.Monument;
+import com.tsoft.civilization.civilization.building.catalog.palace.Palace;
+import com.tsoft.civilization.civilization.building.catalog.settlement.Settlement;
+import com.tsoft.civilization.civilization.building.catalog.walls.Walls;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.city.City;
 

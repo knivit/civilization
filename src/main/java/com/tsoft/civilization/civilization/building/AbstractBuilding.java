@@ -1,6 +1,5 @@
 package com.tsoft.civilization.civilization.building;
 
-import com.tsoft.civilization.civilization.building.catalog.AbstractBuildingSkill;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.world.HasId;
 import com.tsoft.civilization.world.HasView;
