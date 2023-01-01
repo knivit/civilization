@@ -27,7 +27,7 @@ public class Workers extends AbstractUnit {
 
     private static final UnitBaseState BASE_STATE = UnitCatalog.getBaseState(UnitType.WORKERS);
 
-    private static final WorkersView VIEW = new WorkersView();
+    private static final AbstractUnitView VIEW = new WorkersView();
 
     public Workers(Civilization civilization) {
         super(civilization);
@@ -44,7 +44,7 @@ public class Workers extends AbstractUnit {
     }
 
     @Override
-    public WorkersView getView() {
+    public AbstractUnitView getView() {
         return VIEW;
     }
 

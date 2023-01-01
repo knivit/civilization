@@ -6,6 +6,8 @@ import com.tsoft.civilization.civilization.city.event.CitizenWasBornEvent;
 import com.tsoft.civilization.civilization.city.event.StarvationEndedEvent;
 import com.tsoft.civilization.civilization.city.event.StarvationStartedEvent;
 import com.tsoft.civilization.civilization.city.supply.PopulationSupplyService;
+import com.tsoft.civilization.tile.TilesMap;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.economic.Supply;
 import lombok.Getter;
@@ -13,6 +15,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Excess food above the 2 per citizen required to feed the existing population goes
@@ -64,6 +67,13 @@ public class CityCitizenService {
 
     public List<Point> getCitizenLocations() {
         return citizens.getLocations();
+    }
+
+    public List<AbstractTerrain> getCitizenTiles() {
+        TilesMap map = city.getCivilization().getTilesMap();
+        return citizens.stream()
+            .map(e -> map.getTile(e.getLocation()))
+            .collect(Collectors.toList());
     }
 
     public CitizenList getCitizens() {

@@ -3,7 +3,6 @@ package com.tsoft.civilization.unit;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.DifficultyLevel;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static com.tsoft.civilization.world.DifficultyLevel.*;
@@ -13,27 +12,27 @@ public final class UnitBaseModifiers {
 
     private UnitBaseModifiers() { }
 
-    private static final Map<DifficultyLevel, Double> BASE_ECONOMIC_MODIFIERS = new HashMap<>() {{
-        put(SETTLER, 1.5);
-        put(CHIEFTAIN, 1.3);
-        put(WARLORD, 1.1);
-        put(PRINCE, 1.0);
-        put(KING, 0.9);
-        put(EMPEROR, 0.85);
-        put(IMMORTAL, 0.8);
-        put(DEITY, 0.75);
-    }};
+    private static final Map<DifficultyLevel, Double> BASE_ECONOMIC_MODIFIERS = Map.of(
+        SETTLER, 1.5,
+        CHIEFTAIN, 1.3,
+        WARLORD, 1.1,
+        PRINCE, 1.0,
+        KING, 0.9,
+        EMPEROR, 0.85,
+        IMMORTAL, 0.8,
+        DEITY, 0.75
+    );
 
-    private static final Map<DifficultyLevel, Double> BASE_COMBAT_STRENGTH_MODIFIERS = new HashMap<>() {{
-        put(SETTLER, 1.5);
-        put(CHIEFTAIN, 1.3);
-        put(WARLORD, 1.1);
-        put(PRINCE, 1.0);
-        put(KING, 0.9);
-        put(EMPEROR, 0.85);
-        put(IMMORTAL, 0.8);
-        put(DEITY, 0.75);
-    }};
+    private static final Map<DifficultyLevel, Double> BASE_COMBAT_STRENGTH_MODIFIERS = Map.of(
+        SETTLER, 1.5,
+        CHIEFTAIN, 1.3,
+        WARLORD, 1.1,
+        PRINCE, 1.0,
+        KING, 0.9,
+        EMPEROR, 0.85,
+        IMMORTAL, 0.8,
+        DEITY, 0.75
+    );
 
     private static final Map<DifficultyLevel, Double> UNIT_PRODUCTION_COST_MODIFIERS = Map.of(
         SETTLER, 0.5,

@@ -24,7 +24,7 @@ public class CityBuildingService implements HasHistory {
     public void addFirstBuilding(boolean isCapital) {
         if (isCapital) {
             AbstractBuilding palace = BuildingFactory.newInstance(Palace.CLASS_UUID, city);
-            add(palace); // A capital
+            add(palace);
         } else {
             AbstractBuilding settlement = BuildingFactory.newInstance(Settlement.CLASS_UUID, city);
             add(settlement);

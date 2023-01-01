@@ -8,30 +8,14 @@ import com.tsoft.civilization.civilization.city.event.NewUnitBuiltEvent;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.unit.civil.settlers.Settlers;
-import com.tsoft.civilization.world.DifficultyLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Map;
 import java.util.stream.Collectors;
-
-import static com.tsoft.civilization.world.DifficultyLevel.*;
-import static com.tsoft.civilization.world.DifficultyLevel.DEITY;
 
 @Slf4j
 public class CityConstructionService {
-
-    public static final Map<DifficultyLevel, Double> BUILDING_COST_PER_DIFFICULTY_LEVEL = Map.of(
-        SETTLER, 0.5,
-        CHIEFTAIN, 0.67,
-        WARLORD, 0.85,
-        PRINCE, 1.0,
-        KING, 1.0,
-        EMPEROR, 1.0,
-        IMMORTAL, 1.0,
-        DEITY, 1.0
-    );
 
     private final City city;
 

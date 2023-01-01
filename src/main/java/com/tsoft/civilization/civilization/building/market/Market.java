@@ -1,15 +1,10 @@
 package com.tsoft.civilization.civilization.building.market;
 
-import com.tsoft.civilization.civilization.building.AbstractBuilding;
-import com.tsoft.civilization.civilization.building.BuildingType;
+import com.tsoft.civilization.civilization.building.*;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.Year;
-import com.tsoft.civilization.economic.Supply;
-import lombok.Getter;
-
-import java.util.UUID;
 
 /**
  * Market
@@ -33,8 +28,8 @@ import java.util.UUID;
  *   +25% Gold
  *   +2 Gold
  *    1 Merchant specialist slot
- *   +1 Gold Gold per incoming Trade Route (also +1 Gold Gold for the owner of the route)
- *   +1 Science Science with Mercantilism Social policy
+ *   +1 Gold per incoming Trade Route (also +1 Gold Gold for the owner of the route)
+ *   +1 Science with Mercantilism Social policy
  *
  * Strategy
  * The Market is the first money-boosting building, significantly increasing a city's output of gold.
@@ -43,7 +38,7 @@ import java.util.UUID;
  * with other civilizations much yet) so it is important to research Currency and start building it in your
  * cities to overcome the shortage.
  *
- * Build it first in cities with good Gold Gold output - this way the 25% boost will have greater effect earlier on.
+ * Build it first in cities with good Gold output - this way the 25% boost will have greater effect earlier on.
  * It also allows the creation of one Merchant specialist, increasing the speed at which Great Merchants appear.
  * You need a Market in every city to unlock the National Treasury (a Wonder which is replaced by the East India Company in Brave New World).
  * In Brave New World the Market's general purpose changes a bit, becoming a booster for international trade.
@@ -51,6 +46,7 @@ import java.util.UUID;
  * so when prioritizing where to build it first, check and see which of your cities have the most Trade Routes with other civilizations.
  *
  * Civilopedia entry
+ *
  * A market is a location where farmers and tradesmen and merchants bring their wares to sell. While the earliest
  * and most primitive markets may have operated under a barter system, a truly successful market requires a working
  * trusted currency to allow for the free exchange of goods and services. For obvious reasons, markets are located
@@ -59,31 +55,29 @@ import java.util.UUID;
  */
 public class Market extends AbstractBuilding {
 
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
-    private static final MarketView VIEW = new MarketView();
+    public static final String CLASS_UUID = BuildingType.MARKET.name();
 
-    @Getter
-    private int baseProductionCost = 120;
+    private static final BuildingBaseState BASE_STATE = BuildingCatalog.getBaseState(BuildingType.MARKET);
 
-    @Getter
-    private final int cityDefenseStrength = 0;
-
-    @Getter
-    private final int localHappiness = 0;
-
-    @Getter
-    private final int globalHappiness = 0;
-
-    @Getter
-    private Supply supply = Supply.EMPTY;
-
-    @Override
-    public BuildingType getBuildingType() {
-        return BuildingType.BUILDING;
-    }
+    private static final AbstractBuildingView VIEW = new MarketView();
 
     public Market(City city) {
         super(city);
+    }
+
+    @Override
+    public String getClassUuid() {
+        return CLASS_UUID;
+    }
+
+    @Override
+    public BuildingBaseState getBaseState() {
+        return BASE_STATE;
+    }
+
+    @Override
+    public AbstractBuildingView getView() {
+        return VIEW;
     }
 
     @Override
@@ -91,54 +85,9 @@ public class Market extends AbstractBuilding {
         return civilization.getYear().getEra() == Year.ANCIENT_ERA;
     }
 
-    /**
-     * The Market significantly increases a city's output of gold.
-     */
-    @Override
-    public Supply calcIncomeSupply(Civilization civilization) {
-        Supply tileScore = getCity().calcTilesSupply();
-        int gold = tileScore.getGold();
-        if (gold > 0) {
-            gold = (int) Math.round(gold * 0.25);
-            if (gold == 0) gold = 1;
-        }
-
-        return Supply.builder().gold(2 + gold).build();
-    }
-
-    @Override
-    public Supply calcOutcomeSupply(Civilization civilization) {
-        return Supply.EMPTY;
-    }
-
-    @Override
-    public void startYear() {
-
-    }
-
-    @Override
-    public void stopYear() {
-
-    }
-
     @Override
     public boolean requiresEraAndTechnology(Civilization civilization) {
         return civilization.getYear().isAfter(Year.CLASSICAL_ERA) &&
             civilization.isResearched(Technology.CURRENCY);
-    }
-
-    @Override
-    public int getGoldCost(Civilization civilization) {
-        return 580;
-    }
-
-    @Override
-    public MarketView getView() {
-        return VIEW;
-    }
-
-    @Override
-    public String getClassUuid() {
-        return CLASS_UUID;
     }
 }

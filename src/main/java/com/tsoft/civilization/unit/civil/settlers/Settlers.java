@@ -27,7 +27,7 @@ public class Settlers extends AbstractUnit {
 
     private static final UnitBaseState BASE_STATE = UnitCatalog.getBaseState(UnitType.SETTLERS);
 
-    private static final SettlersView VIEW = new SettlersView();
+    private static final AbstractUnitView VIEW = new SettlersView();
 
     public Settlers(Civilization civilization) {
         super(civilization);
@@ -44,7 +44,7 @@ public class Settlers extends AbstractUnit {
     }
 
     @Override
-    public SettlersView getView() {
+    public AbstractUnitView getView() {
         return VIEW;
     }
 

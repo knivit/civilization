@@ -1,6 +1,5 @@
 package com.tsoft.civilization.civilization.city.happiness;
 
-import com.tsoft.civilization.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.civilization.happiness.Happiness;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.tile.resource.AbstractResource;
@@ -52,11 +51,11 @@ public class CityHappinessService {
     // that will be contributed to your empire's Happiness will be 5, not 8.
     private int calcBuildingsHappiness() {
         int localHappiness = city.getBuildings().stream()
-            .mapToInt(AbstractBuilding::getLocalHappiness)
+            .mapToInt(e -> e.getLocalHappiness(city.getCivilization()))
             .sum();
 
         int globalHappiness = city.getBuildings().stream()
-            .mapToInt(AbstractBuilding::getGlobalHappiness)
+            .mapToInt(e -> e.getGlobalHappiness(city.getCivilization()))
             .sum();
 
         int citizenCount = city.getCitizenCount();

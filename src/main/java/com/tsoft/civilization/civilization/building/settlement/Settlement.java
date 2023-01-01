@@ -1,39 +1,35 @@
 package com.tsoft.civilization.civilization.building.settlement;
 
-import com.tsoft.civilization.civilization.building.AbstractBuilding;
-import com.tsoft.civilization.civilization.building.BuildingType;
+import com.tsoft.civilization.civilization.building.*;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.world.Year;
-import lombok.Getter;
-
-import java.util.UUID;
 
 public class Settlement extends AbstractBuilding {
 
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
-    private static final SettlementView VIEW = new SettlementView();
+    public static final String CLASS_UUID = BuildingType.SETTLEMENT.name();
 
-    @Getter
-    private final int baseProductionCost = -1;
+    private static final BuildingBaseState BASE_STATE = BuildingCatalog.getBaseState(BuildingType.SETTLEMENT);
 
-    @Getter
-    private final int cityDefenseStrength = 10;
-
-    @Getter
-    private final int localHappiness = 0;
-
-    @Getter
-    private final int globalHappiness = 0;
+    private static final AbstractBuildingView VIEW = new SettlementView();
 
     public Settlement(City city) {
         super(city);
     }
 
     @Override
-    public BuildingType getBuildingType() {
-        return BuildingType.BUILDING;
+    public String getClassUuid() {
+        return CLASS_UUID;
+    }
+
+    @Override
+    public BuildingBaseState getBaseState() {
+        return BASE_STATE;
+    }
+
+    @Override
+    public AbstractBuildingView getView() {
+        return VIEW;
     }
 
     @Override
@@ -42,42 +38,7 @@ public class Settlement extends AbstractBuilding {
     }
 
     @Override
-    public Supply calcIncomeSupply(Civilization civilization) {
-        return Supply.builder().production(1).gold(1).culture(1).build();
-    }
-
-    @Override
-    public Supply calcOutcomeSupply(Civilization civilization) {
-        return Supply.EMPTY;
-    }
-
-    @Override
-    public void startYear() {
-
-    }
-
-    @Override
-    public void stopYear() {
-
-    }
-
-    @Override
     public boolean requiresEraAndTechnology(Civilization civilization) {
         return true;
-    }
-
-    @Override
-    public int getGoldCost(Civilization civilization) {
-        return -1;
-    }
-
-    @Override
-    public SettlementView getView() {
-        return VIEW;
-    }
-
-    @Override
-    public String getClassUuid() {
-        return CLASS_UUID;
     }
 }

@@ -262,6 +262,10 @@ public class City implements HasCombatStrength, HasHistory {
         return populationService.getCitizenLocations();
     }
 
+    public List<AbstractTerrain> getCitizenTiles() {
+        return populationService.getCitizenTiles();
+    }
+
     public AbstractBuilding findBuildingByClassUuid(String classUuid) {
         return buildingService.findByClassUuid(classUuid);
     }

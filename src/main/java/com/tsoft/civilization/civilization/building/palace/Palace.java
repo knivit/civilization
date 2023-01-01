@@ -1,14 +1,9 @@
 package com.tsoft.civilization.civilization.building.palace;
 
-import com.tsoft.civilization.civilization.building.AbstractBuilding;
-import com.tsoft.civilization.civilization.building.BuildingType;
+import com.tsoft.civilization.civilization.building.*;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.world.Year;
-import lombok.Getter;
-
-import java.util.UUID;
 
 /**
  * Palace
@@ -25,15 +20,17 @@ import java.util.UUID;
  * Cities connected by a road to the capital produce additional gold
  *
  * Game Info
- * Indicates that a given city is the Capital Capital of the empire. Built automatically in the first city you establish.
  *
- * Connecting other cities to the Capital Capital by Road will produce additional Gold Gold
+ * Indicates that a given city is the Capital of the empire. Built automatically in the first city you establish.
+ *
+ * Connecting other cities to the Capital by Road will produce additional Gold
  * +3 Production, +3 Science, +3 Gold, +1 Culture
  * +2 Melee strength Defense
  * BNW-only.png 1 Great Work of Art or Artifact slot
  * +1 Production, Culture, Gold, Faith and Science with God King Religious Belief
  *
  * Strategy
+ *
  * Your Palace is the seat of your government. In the very beginning of the game it provides a significant portion
  * of your capital city's Gold and Production, boosts Science output, and is the only
  * source of Culture. It also forms the heart of your empire's trading network.
@@ -44,6 +41,7 @@ import java.util.UUID;
  * Protect your Palace well!
  *
  * Civilopedia entry
+ *
  * A palace is the residence of a civilization's ruler. The term is somewhat anachronistic, dating back to a time when
  * most countries were ruled by kings or other hereditary leaders. Nowadays modern rulers live in ornate buildings
  * called something like "the People's House" or "the Place of Justice," but the effect is the same.
@@ -53,28 +51,29 @@ import java.util.UUID;
  */
 public class Palace extends AbstractBuilding {
 
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
-    private static final PalaceView VIEW = new PalaceView();
+    public static final String CLASS_UUID = BuildingType.PALACE.name();
 
-    @Getter
-    private final int baseProductionCost = 1;
+    private static final BuildingBaseState BASE_STATE = BuildingCatalog.getBaseState(BuildingType.PALACE);
 
-    @Getter
-    private final int cityDefenseStrength = 25;
-
-    @Getter
-    private final int localHappiness = 0;
-
-    @Getter
-    private final int globalHappiness = 0;
+    private static final AbstractBuildingView VIEW = new PalaceView();
 
     public Palace(City city) {
         super(city);
     }
 
     @Override
-    public BuildingType getBuildingType() {
-        return BuildingType.BUILDING;
+    public String getClassUuid() {
+        return CLASS_UUID;
+    }
+
+    @Override
+    public BuildingBaseState getBaseState() {
+        return BASE_STATE;
+    }
+
+    @Override
+    public AbstractBuildingView getView() {
+        return VIEW;
     }
 
     @Override
@@ -82,47 +81,8 @@ public class Palace extends AbstractBuilding {
         return civilization.getYear().getEra() == Year.ANCIENT_ERA;
     }
 
-    /**
-     * Indicates this City is the Capital of the empire.
-     * Connecting other Cities to the Capital by Road will produce additional Gold.
-     */
-    @Override
-    public Supply calcIncomeSupply(Civilization civilization) {
-        return Supply.builder().production(3).gold(3).science(3).culture(1).build();
-    }
-
-    @Override
-    public Supply calcOutcomeSupply(Civilization civilization) {
-        return Supply.EMPTY;
-    }
-
-    @Override
-    public void startYear() {
-
-    }
-
-    @Override
-    public void stopYear() {
-
-    }
-
     @Override
     public boolean requiresEraAndTechnology(Civilization civilization) {
         return true;
-    }
-
-    @Override
-    public int getGoldCost(Civilization civilization) {
-        return -1;
-    }
-
-    @Override
-    public PalaceView getView() {
-        return VIEW;
-    }
-
-    @Override
-    public String getClassUuid() {
-        return CLASS_UUID;
     }
 }

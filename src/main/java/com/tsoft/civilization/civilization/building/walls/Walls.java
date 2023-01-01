@@ -1,15 +1,10 @@
 package com.tsoft.civilization.civilization.building.walls;
 
-import com.tsoft.civilization.civilization.building.AbstractBuilding;
-import com.tsoft.civilization.civilization.building.BuildingType;
+import com.tsoft.civilization.civilization.building.*;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.economic.Supply;
-import lombok.Getter;
-
-import java.util.UUID;
 
 /**
  * Walls
@@ -18,6 +13,7 @@ import java.util.UUID;
  * Cost
  * Production	Maintenance
  * 75 Production	0 Gold
+ *
  * Required Technology: Masonry
  * Effects
  *   +5 Melee strength
@@ -31,6 +27,7 @@ import java.util.UUID;
  * Walls are quite useful for cities located along a civilization's frontier.
  *
  * Civilopedia entry
+ *
  * Ever since people have gathered together in groups - towns, cities, whatever - other people have wanted
  * to steal their stuff. From earliest history people have constructed defensive works of mud, wood or stone
  * to keep their enemies away from their food, wealth, and women and children.
@@ -40,28 +37,29 @@ import java.util.UUID;
  */
 public class Walls extends AbstractBuilding {
 
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
-    private static final WallsView VIEW = new WallsView();
+    public static final String CLASS_UUID = BuildingType.WALLS.name();
 
-    @Getter
-    private final int baseProductionCost = 200;
+    private static final BuildingBaseState BASE_STATE = BuildingCatalog.getBaseState(BuildingType.WALLS);
 
-    @Getter
-    private final int cityDefenseStrength = 40;
-
-    @Getter
-    private final int localHappiness = 0;
-
-    @Getter
-    private final int globalHappiness = 0;
+    private static final AbstractBuildingView VIEW = new WallsView();
 
     public Walls(City city) {
         super(city);
     }
 
     @Override
-    public BuildingType getBuildingType() {
-        return BuildingType.BUILDING;
+    public String getClassUuid() {
+        return CLASS_UUID;
+    }
+
+    @Override
+    public BuildingBaseState getBaseState() {
+        return BASE_STATE;
+    }
+
+    @Override
+    public AbstractBuildingView getView() {
+        return VIEW;
     }
 
     @Override
@@ -69,47 +67,9 @@ public class Walls extends AbstractBuilding {
         return civilization.getYear().getEra() == Year.ANCIENT_ERA;
     }
 
-    /**
-     * Walls increase a city's Defense Strength making the city more difficult to capture.
-     * Walls are quite useful for cities located along a civilization's frontier.
-     */
-    @Override
-    public Supply calcIncomeSupply(Civilization civilization) {
-        return Supply.builder().gold(-1).build();
-    }
-
-    @Override
-    public Supply calcOutcomeSupply(Civilization civilization) {
-        return Supply.EMPTY;
-    }
-
-    @Override
-    public void startYear() {
-
-    }
-
-    @Override
-    public void stopYear() {
-    }
-
     @Override
     public boolean requiresEraAndTechnology(Civilization civilization) {
         return civilization.getYear().isAfter(Year.ANCIENT_ERA) &&
             civilization.isResearched(Technology.MASONRY);
-    }
-
-    @Override
-    public int getGoldCost(Civilization civilization) {
-        return 400;
-    }
-
-    @Override
-    public WallsView getView() {
-        return VIEW;
-    }
-
-    @Override
-    public String getClassUuid() {
-        return CLASS_UUID;
     }
 }

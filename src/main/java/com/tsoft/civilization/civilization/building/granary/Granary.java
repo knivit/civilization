@@ -1,19 +1,10 @@
 package com.tsoft.civilization.civilization.building.granary;
 
-import com.tsoft.civilization.civilization.building.AbstractBuilding;
-import com.tsoft.civilization.civilization.building.BuildingType;
+import com.tsoft.civilization.civilization.building.*;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.tile.resource.AbstractResource;
-import com.tsoft.civilization.tile.resource.ResourceType;
-import com.tsoft.civilization.tile.terrain.AbstractTerrain;
-import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.Year;
-import com.tsoft.civilization.economic.Supply;
-import lombok.Getter;
-
-import java.util.UUID;
 
 /**
  * Granary
@@ -47,71 +38,14 @@ import java.util.UUID;
  */
 public class Granary extends AbstractBuilding {
 
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
-    private static final GranaryView VIEW = new GranaryView();
+    public static final String CLASS_UUID = BuildingType.GRANARY.name();
 
-    @Getter
-    private final int baseProductionCost = 60;
+    private static final BuildingBaseState BASE_STATE = BuildingCatalog.getBaseState(BuildingType.GRANARY);
 
-    @Getter
-    private final int cityDefenseStrength = 0;
-
-    @Getter
-    private final int localHappiness = 0;
-
-    @Getter
-    private final int globalHappiness = 0;
+    private static final AbstractBuildingView VIEW = new GranaryView();
 
     public Granary(City city) {
         super(city);
-    }
-
-    @Override
-    public BuildingType getBuildingType() {
-        return BuildingType.BUILDING;
-    }
-
-    @Override
-    public boolean checkEraAndTechnology(Civilization civilization) {
-        return civilization.getYear().getEra() == Year.ANCIENT_ERA;
-    }
-
-    /**
-     * Each source of Wheat, Bananas and Deer worked by this City produce +1 Food.
-     */
-    @Override
-    public Supply calcIncomeSupply(Civilization civilization) {
-        int food = 2;
-        for (Point location : getCity().getCitizenLocations()) {
-            AbstractTerrain tile = getTile(location);
-            AbstractResource resource = tile.getResource();
-            if (tile.hasResources(ResourceType.WHEAT, ResourceType.BANANAS, ResourceType.DEER)) {
-                food ++;
-            }
-        }
-
-        return Supply.builder().food(food).production(2).gold(-1).build();
-    }
-
-    @Override
-    public Supply calcOutcomeSupply(Civilization civilization) {
-        return Supply.EMPTY;
-    }
-
-    @Override
-    public int getGoldCost(Civilization civilization) {
-        return 340;
-    }
-
-    @Override
-    public boolean requiresEraAndTechnology(Civilization civilization) {
-        return civilization.getYear().isAfter(Year.ANCIENT_ERA) &&
-            civilization.isResearched(Technology.POTTERY);
-    }
-
-    @Override
-    public GranaryView getView() {
-        return VIEW;
     }
 
     @Override
@@ -120,12 +54,23 @@ public class Granary extends AbstractBuilding {
     }
 
     @Override
-    public void startYear() {
-
+    public BuildingBaseState getBaseState() {
+        return BASE_STATE;
     }
 
     @Override
-    public void stopYear() {
+    public AbstractBuildingView getView() {
+        return VIEW;
+    }
 
+    @Override
+    public boolean checkEraAndTechnology(Civilization civilization) {
+        return civilization.getYear().getEra() == Year.ANCIENT_ERA;
+    }
+
+    @Override
+    public boolean requiresEraAndTechnology(Civilization civilization) {
+        return civilization.getYear().isAfter(Year.ANCIENT_ERA) &&
+            civilization.isResearched(Technology.POTTERY);
     }
 }

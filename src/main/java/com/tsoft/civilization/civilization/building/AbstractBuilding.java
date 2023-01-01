@@ -1,22 +1,21 @@
 package com.tsoft.civilization.civilization.building;
 
+import com.tsoft.civilization.civilization.building.catalog.AbstractBuildingSkill;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.world.HasId;
 import com.tsoft.civilization.world.HasView;
 import com.tsoft.civilization.economic.HasSupply;
 import com.tsoft.civilization.civilization.city.construction.CanBeBuilt;
 import com.tsoft.civilization.civilization.city.City;
-import com.tsoft.civilization.civilization.city.construction.CityConstructionService;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.world.DifficultyLevel;
 import com.tsoft.civilization.world.HasHistory;
 import com.tsoft.civilization.world.World;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -131,32 +130,15 @@ public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt, Ha
     private final City city;
     private boolean isDestroyed;
 
-    public abstract BuildingType getBuildingType();
-
     public abstract String getClassUuid();
-    public abstract int getGoldCost(Civilization civilization);
-
-    @Getter
-    public int baseProductionCost = 0;
-
-    @Getter
-    public int goldMaintenance = 0;
-
-    // TODO
-    public BuildingBaseState getBaseState() { return null; }
-
-    public abstract int getCityDefenseStrength();
-    public abstract int getLocalHappiness();
-    public abstract int getGlobalHappiness();
-
+    public abstract BuildingBaseState getBaseState();
     public abstract AbstractBuildingView getView();
     public abstract boolean checkEraAndTechnology(Civilization civilization);
+    public abstract boolean requiresEraAndTechnology(Civilization civilization);
 
     protected AbstractBuilding(City city) {
         this.city = city;
     }
-
-    public abstract boolean requiresEraAndTechnology(Civilization civilization);
 
     @Override
     public String getId() {
@@ -179,28 +161,95 @@ public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt, Ha
         return city.getCivilization();
     }
 
-    @Override
-    public Supply getBaseSupply(Civilization civilization) {
-        Supply baseSupply = getBaseState().getSupply();
-        double modifier = BuildingBaseModifiers.getModifier(civilization);
-
-        return Supply.builder()
-            .food((int)Math.round(baseSupply.getFood() * modifier))
-            .production((int)Math.round(baseSupply.getProduction() * modifier))
-            .gold((int)Math.round(baseSupply.getGold() * modifier))
-            .science((int)Math.round(baseSupply.getScience() * modifier))
-            .culture((int)Math.round(baseSupply.getCulture() * modifier))
-            .faith((int)Math.round(baseSupply.getFaith() * modifier))
-            .tourism((int)Math.round(baseSupply.getTourism() * modifier))
-            .greatPerson((int)Math.round(baseSupply.getGreatPerson() * modifier))
-            .build();
+    public BuildingCategory getBuildingCategory() {
+        return getBaseState().getCategory();
     }
 
     @Override
     public int getBaseProductionCost(Civilization civilization) {
-        DifficultyLevel difficultyLevel = civilization.getWorld().getDifficultyLevel();
-        int baseProductionCost = getBaseProductionCost();
-        return (int)Math.round(baseProductionCost * CityConstructionService.BUILDING_COST_PER_DIFFICULTY_LEVEL.get(difficultyLevel));
+        int cost = getBaseState().getProductionCost();
+        double modifier = BuildingBaseModifiers.getModifier(civilization);
+        return (int)Math.round(cost * modifier);
+    }
+
+    public int getGoldCost(Civilization civilization) {
+        int cost = getBaseState().getGoldCost();
+        double modifier = BuildingBaseModifiers.getModifier(civilization);
+        return (int)Math.round(cost * modifier);
+    }
+
+    public int getDefenseStrength(Civilization civilization) {
+        int value = getBaseState().getDefenseStrength();
+        double modifier = BuildingBaseModifiers.getModifier(civilization);
+        return (int)Math.round(value * modifier);
+    }
+
+    public int getLocalHappiness(Civilization civilization) {
+        int value = getBaseState().getLocalHappiness();
+        double modifier = BuildingBaseModifiers.getModifier(civilization);
+        return (int)Math.round(value * modifier);
+    }
+
+    public int getGlobalHappiness(Civilization civilization) {
+        int value = getBaseState().getGlobalHappiness();
+        double modifier = BuildingBaseModifiers.getModifier(civilization);
+        return (int)Math.round(value * modifier);
+    }
+
+    @Override
+    public Supply getBaseSupply(Civilization civilization) {
+        return getBaseIncomeSupply(civilization).add(getBaseOutcomeSupply(civilization));
+    }
+
+    public Supply getBaseIncomeSupply(Civilization civilization) {
+        Supply supply = getBaseState().getIncomeSupply();
+        return applyBaseModifiers(civilization, supply);
+    }
+
+    public Supply getBaseOutcomeSupply(Civilization civilization) {
+        Supply supply = getBaseState().getOutcomeSupply();
+        return applyBaseModifiers(civilization, supply);
+    }
+
+    private Supply applyBaseModifiers(Civilization civilization, Supply supply) {
+        if (supply == null) {
+            return Supply.EMPTY;
+        }
+
+        double modifier = BuildingBaseModifiers.getModifier(civilization);
+        return supply.applyModifier(modifier);
+    }
+
+    @Override
+    public Supply calcIncomeSupply(Civilization civilization) {
+        Supply supply = getBaseIncomeSupply(civilization);
+        List<AbstractBuildingSkill> supplySkills = getBaseState().getSupplySkills();
+        return applySkills(supply, supplySkills);
+    }
+
+    @Override
+    public Supply calcOutcomeSupply(Civilization civilization) {
+        return getBaseOutcomeSupply(civilization);
+    }
+
+    public Supply applySkills(Supply supply, List<AbstractBuildingSkill> skills) {
+        if (skills != null) {
+            for (AbstractBuildingSkill skill : skills) {
+                Supply skillSupply = skill.calcSupply(this);
+                supply = supply.add(skillSupply);
+            }
+        }
+        return supply;
+    }
+
+    @Override
+    public void startYear() {
+
+    }
+
+    @Override
+    public void stopYear() {
+
     }
 
     public boolean isDestroyed() {

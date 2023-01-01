@@ -51,7 +51,7 @@ public class Archers extends AbstractUnit {
 
     private static final UnitBaseState BASE_STATE = UnitCatalog.getBaseState(UnitType.ARCHERS);
 
-    private static final ArchersView VIEW = new ArchersView();
+    private static final AbstractUnitView VIEW = new ArchersView();
 
     public Archers(Civilization civilization) {
         super(civilization);
@@ -68,7 +68,7 @@ public class Archers extends AbstractUnit {
     }
 
     @Override
-    public ArchersView getView() {
+    public AbstractUnitView getView() {
         return VIEW;
     }
 

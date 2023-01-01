@@ -179,17 +179,7 @@ public abstract class AbstractResource implements HasSupply {
     public Supply getBaseSupply(Civilization civilization) {
         Supply baseSupply = getBaseState().getSupply();
         double modifier = ResourceBaseModifiers.getModifier(civilization);
-
-        return Supply.builder()
-            .food((int)Math.round(baseSupply.getFood() * modifier))
-            .production((int)Math.round(baseSupply.getProduction() * modifier))
-            .gold((int)Math.round(baseSupply.getGold() * modifier))
-            .science((int)Math.round(baseSupply.getScience() * modifier))
-            .culture((int)Math.round(baseSupply.getCulture() * modifier))
-            .faith((int)Math.round(baseSupply.getFaith() * modifier))
-            .tourism((int)Math.round(baseSupply.getTourism() * modifier))
-            .greatPerson((int)Math.round(baseSupply.getGreatPerson() * modifier))
-            .build();
+        return baseSupply.applyModifier(modifier);
     }
 
     @Override

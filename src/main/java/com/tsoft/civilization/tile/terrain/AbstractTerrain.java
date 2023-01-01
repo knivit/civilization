@@ -1,5 +1,6 @@
 package com.tsoft.civilization.tile.terrain;
 
+import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.tile.resource.ResourceType;
@@ -230,12 +231,26 @@ public abstract class AbstractTerrain {
     private final FeatureList features = new FeatureList();
 
     public abstract String getClassUuid();
+    public abstract Supply getBaseSupply();
     public abstract AbstractTerrainView getView();
 
     public abstract TerrainType getTileType();
     public abstract boolean isCanBuildCity();
     public abstract int getDefensiveBonusPercent();
-    public abstract Supply getBaseSupply();
+
+    public Supply getTotalSupply(Civilization civilization) {
+        Supply supply = getBaseSupply();
+
+        if (improvement != null) {
+            supply = supply.add(improvement.getBaseSupply(civilization));
+        }
+
+        if (resource != null) {
+            supply = supply.add(resource.getBaseSupply(civilization));
+        }
+
+        return supply;
+    }
 
     public FeatureList getFeatures() {
         return features;

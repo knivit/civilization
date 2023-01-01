@@ -1,14 +1,9 @@
 package com.tsoft.civilization.civilization.building.monument;
 
-import com.tsoft.civilization.civilization.building.AbstractBuilding;
-import com.tsoft.civilization.civilization.building.BuildingType;
+import com.tsoft.civilization.civilization.building.*;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.Year;
-import com.tsoft.civilization.economic.Supply;
-import lombok.Getter;
-
-import java.util.UUID;
 
 /**
  * Monument
@@ -18,6 +13,7 @@ import java.util.UUID;
  * ----
  * Production	Maintenance
  * 40 Production	1 Gold
+ *
  * Effects
  * +2 Culture
  *
@@ -27,7 +23,7 @@ import java.util.UUID;
  * +2 Culture
  * +2 Happiness with Socialist Realism Order tenet
  *
- * The Monument increases the Culture Culture of a city, speeding the growth of the city's territory and
+ * The Monument increases the Culture of a city, speeding the growth of the city's territory and
  * the civilization's acquisition of Social Policies. It's the first building available for every city,
  * without having to research any technology.
  *
@@ -38,16 +34,17 @@ import java.util.UUID;
  *
  * There are alternatives to building culture buildings like the Monument; the opening bonus of the two early
  * social policy trees is similar in effect to those of a Monument. Cities may also gain some from Wonders,
- * including the Palace as a national wonder in the Capital Capital. However, the Monument is vital for continuing
+ * including the Palace as a national wonder in the Capital. However, the Monument is vital for continuing
  * the chain of cultural buildings: it is required for the Amphitheater in the expansions (or the Temple in vanilla Civilization V).
  *
  * With the help of alternative sources of culture and if enough early social policies have been obtained,
- * it may be possible to sell the Monument midway through the game in order to temporarily save Gold Gold.
+ * it may be possible to sell the Monument midway through the game in order to temporarily save Gold.
  * If one chooses to sell one's Monuments, they can be rebuilt later when players will have more funds to invest
  * (such as after discovering Currency) and will soon have access to game-changing Social Policies
  * (such as those of the Rationalism tree).
  *
  * Civilopedia entry
+ *
  * A monument is a structure built to commemorate an important person, event, deity, or concept.
  * The more important monuments are usually constructed near the center of the city, by the ruler's palace,
  * or near the city's main gates. Monuments come in all shapes and sizes, from the Great Sphinx of Giza, Egypt,
@@ -56,28 +53,29 @@ import java.util.UUID;
  */
 public class Monument extends AbstractBuilding {
 
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
-    private static final MonumentView VIEW = new MonumentView();
+    public static final String CLASS_UUID = BuildingType.MONUMENT.name();
 
-    @Getter
-    private final int baseProductionCost = 40;
+    private static final BuildingBaseState BASE_STATE = BuildingCatalog.getBaseState(BuildingType.MONUMENT);
 
-    @Getter
-    private final int cityDefenseStrength = 0;
-
-    @Getter
-    private final int localHappiness = 0;
-
-    @Getter
-    private final int globalHappiness = 0;
+    private static final AbstractBuildingView VIEW = new MonumentView();
 
     public Monument(City city) {
         super(city);
     }
 
     @Override
-    public BuildingType getBuildingType() {
-        return BuildingType.BUILDING;
+    public String getClassUuid() {
+        return CLASS_UUID;
+    }
+
+    @Override
+    public BuildingBaseState getBaseState() {
+        return BASE_STATE;
+    }
+
+    @Override
+    public AbstractBuildingView getView() {
+        return VIEW;
     }
 
     @Override
@@ -85,47 +83,8 @@ public class Monument extends AbstractBuilding {
         return civilization.getYear().getEra() == Year.ANCIENT_ERA;
     }
 
-    /**
-     * The Monument increases the Culture of a city speeding the growth of the city's territory
-     * and the civilization's acquisition of Social Policies.
-     */
-    @Override
-    public Supply calcIncomeSupply(Civilization civilization) {
-        return Supply.builder().gold(-1).culture(2).build();
-    }
-
-    @Override
-    public Supply calcOutcomeSupply(Civilization civilization) {
-        return Supply.EMPTY;
-    }
-
-    @Override
-    public void startYear() {
-
-    }
-
-    @Override
-    public void stopYear() {
-
-    }
-
     @Override
     public boolean requiresEraAndTechnology(Civilization civilization) {
         return civilization.getYear().getEra() == Year.ANCIENT_ERA;
-    }
-
-    @Override
-    public int getGoldCost(Civilization civilization) {
-        return 280;
-    }
-
-    @Override
-    public MonumentView getView() {
-        return VIEW;
-    }
-
-    @Override
-    public String getClassUuid() {
-        return CLASS_UUID;
     }
 }

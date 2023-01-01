@@ -20,7 +20,7 @@ public class Warriors extends AbstractUnit {
 
     private static final UnitBaseState BASE_STATE = UnitCatalog.getBaseState(UnitType.WARRIORS);
 
-    private static final WarriorsView VIEW = new WarriorsView();
+    private static final AbstractUnitView VIEW = new WarriorsView();
 
     public Warriors(Civilization civilization) {
         super(civilization);
@@ -37,7 +37,7 @@ public class Warriors extends AbstractUnit {
     }
 
     @Override
-    public WarriorsView getView() {
+    public AbstractUnitView getView() {
         return VIEW;
     }
 
