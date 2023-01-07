@@ -37,13 +37,13 @@ public class MapGenerator {
         TILE_CODES.put('.', Ocean.CLASS_UUID);
         TILE_CODES.put('d', Desert.CLASS_UUID);
         TILE_CODES.put('g', Grassland.CLASS_UUID);
-        TILE_CODES.put('i', Ice.CLASS_UUID);
         TILE_CODES.put('l', Lake.CLASS_UUID);
         TILE_CODES.put('p', Plains.CLASS_UUID);
         TILE_CODES.put('s', Snow.CLASS_UUID);
         TILE_CODES.put('t', Tundra.CLASS_UUID);
 
         // terrain features
+        TILE_CODES.put('i', Ice.CLASS_UUID);
         TILE_CODES.put('a', Atoll.CLASS_UUID);
         TILE_CODES.put('F', Fallout.CLASS_UUID);
         TILE_CODES.put('n', FloodPlain.CLASS_UUID);
@@ -72,9 +72,9 @@ public class MapGenerator {
     }
 
     private void setAsciiLine(TilesMap map, int y, String line, boolean isTile) {
-        int x = 0, n = 2;
+        int x = 0, n = line.indexOf("|") + 1;
         if ((y % 2) == 1) {
-            n = 3;
+            n ++;
         }
 
         for ( ; n < line.length(); n += 2, x ++) {

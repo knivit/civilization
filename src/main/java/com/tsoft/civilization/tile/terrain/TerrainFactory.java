@@ -1,5 +1,6 @@
 package com.tsoft.civilization.tile.terrain;
 
+import com.tsoft.civilization.tile.feature.ice.Ice;
 import com.tsoft.civilization.tile.terrain.desert.Desert;
 import com.tsoft.civilization.tile.terrain.grassland.Grassland;
 import com.tsoft.civilization.tile.terrain.lake.Lake;

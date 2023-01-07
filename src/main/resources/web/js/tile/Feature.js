@@ -4,6 +4,7 @@ function Feature(feature) {
     this.name = feature.name;
 
          if (this.name === 'Atoll') this.drawFeature = drawAtollFeature
+    else if (this.name === 'Ice') this.drawFeature = drawIceFeature
     else if (this.name === 'Fallout') this.drawFeature = drawFalloutFeature
     else if (this.name === 'FloodPlain') this.drawFeature = drawFloodPlainFeature
     else if (this.name === 'Forest') this.drawFeature = drawForestFeature

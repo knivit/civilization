@@ -1,6 +1,6 @@
 "use strict";
 
-var drawPlainTile = {
+var drawPlainsTile = {
     img: new Image(),
 
     draw: function(x, y, tile) {
@@ -8,4 +8,4 @@ var drawPlainTile = {
     }
 };
 
-drawPlainTile.img.src = "";
+drawPlainsTile.img.src = "";

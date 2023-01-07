@@ -139,6 +139,10 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
     public SkillMap<AbstractMovementSkill> getBaseMovementSkills(Civilization civilization) {
         UnitBaseState baseState = getBaseState();
 
+        if (baseState.getMovementSkills() == null) {
+            return SkillMap.EMPTY;
+        }
+
         SkillMap<AbstractMovementSkill> skills = new SkillMap<>();
         for (AbstractMovementSkill skill : baseState.getMovementSkills()) {
             skills.put(skill, SkillLevel.ONE);
@@ -151,6 +155,10 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
     public SkillMap<AbstractCombatSkill> getBaseCombatSkills(Civilization civilization) {
         UnitBaseState baseState = getBaseState();
 
+        if (baseState.getCombatSkills() == null) {
+            return SkillMap.EMPTY;
+        }
+
         SkillMap<AbstractCombatSkill> skills = new SkillMap<>();
         for (AbstractCombatSkill skill : baseState.getCombatSkills()) {
             skills.put(skill, SkillLevel.ONE);
@@ -162,6 +170,10 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
     @Override
     public SkillMap<AbstractHealingSkill> getBaseHealingSkills(Civilization civilization) {
         UnitBaseState baseState = getBaseState();
+
+        if (baseState.getHealingSkills() == null) {
+            return SkillMap.EMPTY;
+        }
 
         SkillMap<AbstractHealingSkill> skills = new SkillMap<>();
         for (AbstractHealingSkill skill : baseState.getHealingSkills()) {

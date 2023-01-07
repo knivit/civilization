@@ -7,6 +7,8 @@ import java.util.stream.Stream;
 
 public class SkillMap<T> implements Iterable<Map.Entry<T, SkillLevel>> {
 
+    public static final SkillMap EMPTY = new SkillMap<>().unmodifiable();
+
     private final Map<T, SkillLevel> map = new HashMap<>();
     private boolean isUnmodifiable;
 

@@ -21,6 +21,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static com.tsoft.civilization.world.MapSize.DUEL;
+import static com.tsoft.civilization.world.MapSize.STANDARD;
 
 public class EarthWorldGenerator implements WorldGenerator {
 
@@ -30,12 +31,13 @@ public class EarthWorldGenerator implements WorldGenerator {
 
     static {
         MAPS.put(DUEL, EarthDuelMap::new);
+        MAPS.put(STANDARD, EarthStandardMap::new);
     }
 
     @Override
     public TilesMap generate(MapSize mapSize, Climate climate) {
         AbstractWorldMap worldMap = MAPS.get(mapSize).get();
-        TilesMap map = MAP_GENERATOR.create(mapSize, 1, worldMap.getMap());
+        TilesMap map = MAP_GENERATOR.create(mapSize, 2, worldMap.getMap());
 
         addImprovements(map);
         addResources(map, climate);

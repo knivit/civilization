@@ -1,6 +1,6 @@
 "use strict";
 
-var drawIceTile = {
+var drawIceFeature = {
     img: new Image(),
 
     draw: function(x, y, tile) {
@@ -8,4 +8,4 @@ var drawIceTile = {
     }
 };
 
-drawIceTile.img.src = "";
+drawIceFeature.img.src = "";

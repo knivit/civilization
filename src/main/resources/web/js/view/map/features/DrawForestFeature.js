@@ -10,12 +10,12 @@ var drawForestFeature = {
             return;
         }
 
-        if (tile.isGrassland) {
+//        if (tile.isGrassland) {
             drawMap.ctx.drawImage(this.imgOnGrassland, x + 10, y + 30);
             return;
-        }
+  //      }
 
-        alert("drawForestFeature: unknown Tile");
+    //    alert("drawForestFeature: unknown Tile");
     }
 };
 

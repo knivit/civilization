@@ -25,9 +25,8 @@ function Tile(col, row, tile) {
          if (this.name === 'Ocean') this.drawTile = drawOceanTile
     else if (this.name === 'Desert') this.drawTile = drawDesertTile
     else if (this.name === 'Grassland') this.drawTile = drawGrasslandTile
-    else if (this.name === 'Ice') this.drawTile = drawIceTile
     else if (this.name === 'Lake') this.drawTile = drawLakeTile
-    else if (this.name === 'Plain') this.drawTile = drawPlainTile
+    else if (this.name === 'Plains') this.drawTile = drawPlainsTile
     else if (this.name === 'Snow') this.drawTile = drawSnowTile
     else if (this.name === 'Tundra') this.drawTile = drawTundraTile
     else alert("Unknown tile " + this.name);
