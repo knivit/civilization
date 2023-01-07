@@ -14,6 +14,7 @@ import java.util.List;
 public class UnitBaseState {
 
     private final UnitCategory category;
+    private final CombatType combatType;
     private final int goldCost;
     private final int goldUnitKeepingExpenses;
     private final int productionCost;

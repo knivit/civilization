@@ -4,6 +4,8 @@ import com.tsoft.civilization.combat.CombatDamage;
 import com.tsoft.civilization.combat.CombatExperience;
 import com.tsoft.civilization.combat.service.UnitCombatService;
 import com.tsoft.civilization.combat.skill.*;
+import com.tsoft.civilization.unit.promotion.PromotionService;
+import com.tsoft.civilization.unit.promotion.PromotionType;
 import com.tsoft.civilization.unit.service.movement.UnitMovementService;
 import com.tsoft.civilization.unit.service.production.UnitProductionService;
 import com.tsoft.civilization.world.HasId;
@@ -61,6 +63,9 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
     private UnitMovementService movementService;
 
     @Getter
+    private PromotionService promotionService;
+
+    @Getter
     private boolean isDestroyed;
 
     public abstract String getClassUuid();
@@ -77,6 +82,7 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
         productionService = new UnitProductionService(this);
         combatService = new UnitCombatService(this);
         movementService = new UnitMovementService(this);
+        promotionService = new PromotionService(this);
     }
 
     @Override
@@ -124,6 +130,10 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
             .meleeBackFireStrength(baseCombatStrength.getMeleeBackFireStrength() * modifier)
             .defenseStrength(baseCombatStrength.getDefenseStrength() * modifier)
             .build();
+    }
+
+    public boolean hasPromotions(PromotionType ... promotions) {
+        return promotionService.hasPromotions(promotions);
     }
 
     public SkillMap<AbstractMovementSkill> getBaseMovementSkills(Civilization civilization) {

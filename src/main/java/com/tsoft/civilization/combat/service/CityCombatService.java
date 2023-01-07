@@ -206,22 +206,6 @@ public class CityCombatService implements HasHistory {
         this.combatExperience = combatExperience;
     }
 
-    public SkillMap<AbstractCombatSkill> getCombatSkills() {
-        return combatSkills.unmodifiable();
-    }
-
-    public SkillMap<AbstractHealingSkill> getHealingSkills() {
-        return healingSkills.unmodifiable();
-    }
-
-    public void addCombatSkill(AbstractCombatSkill skill) {
-        combatSkills.put(skill, SkillLevel.ONE);
-    }
-
-    public void addHealingSkill(AbstractHealingSkill skill) {
-        healingSkills.put(skill, SkillLevel.ONE);
-    }
-
     @Override
     public void startYear() {
 

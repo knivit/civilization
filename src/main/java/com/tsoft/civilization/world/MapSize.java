@@ -16,7 +16,7 @@ import java.util.Map;
  * different sizes. Of the official maps, Tilted Axis and Terra have the largest dimensions, while Four Corners, North vs South,
  * and West vs East have the smallest.
  *
- *                                  Duel    Tiny    Small Standard Large    Huge
+ *                                  Duel    Tiny    Small Standard  Large   Huge
  * Dimensions	                    40×24	56×36	66×42	80×52	104×64	128×80
  * Players (Default)	                2	    4	    6	    8	    10	    12
  * City-States (Default)	            4	    8	    12	    16	    20	    24

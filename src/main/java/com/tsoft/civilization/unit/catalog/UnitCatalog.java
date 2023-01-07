@@ -1,6 +1,7 @@
 package com.tsoft.civilization.unit.catalog;
 
 import com.tsoft.civilization.combat.CombatStrength;
+import com.tsoft.civilization.unit.CombatType;
 import com.tsoft.civilization.unit.UnitBaseState;
 import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.unit.UnitType;
@@ -14,13 +15,13 @@ import static com.tsoft.civilization.combat.skill.earth.heal.BaseHealingSkill.BA
 import static com.tsoft.civilization.combat.skill.earth.movement.BaseMovementSkill.BASE_MOVEMENT_SKILL;
 import static com.tsoft.civilization.unit.UnitType.*;
 import static java.util.Arrays.asList;
-import static java.util.Collections.emptyList;
 
 public final class UnitCatalog {
 
     private static final Map<UnitType, UnitBaseState> UNITS = new HashMap<>() {{
         put(ARCHERS, UnitBaseState.builder()
             .category(UnitCategory.MILITARY_RANGED)
+            .combatType(CombatType.ARCHERY_UNITS)
             .goldCost(200)
             .productionCost(40)
             .passScore(5)
@@ -42,7 +43,6 @@ public final class UnitCatalog {
                 .defenseStrength(5)
                 .build())
             .movementSkills(asList(BASE_MOVEMENT_SKILL))
-            .combatSkills(emptyList())
             .healingSkills(asList(BASE_HEALING_SKILL))
             .build());
 
@@ -53,7 +53,6 @@ public final class UnitCatalog {
                 .defenseStrength(5)
                 .build())
             .movementSkills(asList(BASE_MOVEMENT_SKILL))
-            .combatSkills(emptyList())
             .healingSkills(asList(BASE_HEALING_SKILL))
             .build());
 
@@ -64,7 +63,6 @@ public final class UnitCatalog {
                 .defenseStrength(5)
                 .build())
             .movementSkills(asList(BASE_MOVEMENT_SKILL))
-            .combatSkills(emptyList())
             .healingSkills(asList(BASE_HEALING_SKILL))
             .build());
 
@@ -75,7 +73,6 @@ public final class UnitCatalog {
                 .defenseStrength(5)
                 .build())
             .movementSkills(asList(BASE_MOVEMENT_SKILL))
-            .combatSkills(emptyList())
             .healingSkills(asList(BASE_HEALING_SKILL))
             .build());
 
@@ -86,7 +83,6 @@ public final class UnitCatalog {
                 .defenseStrength(5)
                 .build())
             .movementSkills(asList(BASE_MOVEMENT_SKILL))
-            .combatSkills(emptyList())
             .healingSkills(asList(BASE_HEALING_SKILL))
             .build());
 
@@ -100,12 +96,12 @@ public final class UnitCatalog {
                 .defenseStrength(0)
                 .build())
             .movementSkills(asList(BASE_MOVEMENT_SKILL))
-            .combatSkills(emptyList())
             .healingSkills(asList(BASE_HEALING_SKILL))
             .build());
 
         put(WARRIORS, UnitBaseState.builder()
             .category(UnitCategory.MILITARY_MELEE)
+            .combatType(CombatType.MELEE_UNITS)
             .goldCost(200)
             .productionCost(40)
             .passScore(5)
@@ -130,7 +126,6 @@ public final class UnitCatalog {
                 .defenseStrength(10)
                 .build())
             .movementSkills(asList(BASE_MOVEMENT_SKILL))
-            .combatSkills(emptyList())
             .healingSkills(asList(BASE_HEALING_SKILL))
             .build());
     }};

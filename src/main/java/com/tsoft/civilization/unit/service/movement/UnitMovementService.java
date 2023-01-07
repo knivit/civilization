@@ -32,10 +32,6 @@ public class UnitMovementService {
         return movementSkills.unmodifiable();
     }
 
-    public void addCombatSkill(AbstractMovementSkill skill) {
-        movementSkills.put(skill, SkillLevel.ONE);
-    }
-
     public void startYear() {
         passScore = calcPassScore();
     }

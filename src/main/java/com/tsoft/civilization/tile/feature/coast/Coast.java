@@ -8,6 +8,8 @@ import java.util.UUID;
 
 /**
  * Basic Production: +1 Gold, +1 Food
+ * They provide food and gold to a nearby city, but only if that civilization has the Sailing technology.
+ *
  * Coastal tiles now often go several hexes out into the water,
  * allowing for better freedom of movement for ancient units that are restricted from deep ocean.
  */
@@ -24,7 +26,10 @@ public class Coast extends AbstractFeature {
 
     @Override
     public Supply getSupply() {
-        return Supply.builder().food(1).gold(1).build();
+        //if (civilization.hasTechnology(Technology.SAILING) {
+            return Supply.builder().food(1).gold(1).build();
+        //}
+        //return Supply.EMPTY;
     }
 
     @Override

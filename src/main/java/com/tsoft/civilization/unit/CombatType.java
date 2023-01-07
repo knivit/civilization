@@ -1,0 +1,18 @@
+package com.tsoft.civilization.unit;
+
+public enum CombatType {
+
+    ARMORED_UNITS,
+    MELEE_UNITS,
+    ARCHERY_UNITS,
+    MOUNTED_UNITS,
+    SIEGE_WEAPONS,
+    NAVAL_RANGED_UNITS,
+    NAVAL_MELEE_UNITS,
+    GUNPOWDER_UNITS,
+    BOMBER_UNITS,
+    CARRIERS,
+    SUBMARINES,
+    FIGHTER_UNITS,
+    HELICOPTER_UNITS
+}

@@ -55,14 +55,6 @@ public class UnitCombatService {
         return healingSkills.unmodifiable();
     }
 
-    public void addCombatSkill(AbstractCombatSkill skill) {
-        combatSkills.put(skill, SkillLevel.ONE);
-    }
-
-    public void addHealingSkill(AbstractHealingSkill skill) {
-        healingSkills.put(skill, SkillLevel.ONE);
-    }
-
     public void startEra() {
         // TODO update old unit with a new type
     }

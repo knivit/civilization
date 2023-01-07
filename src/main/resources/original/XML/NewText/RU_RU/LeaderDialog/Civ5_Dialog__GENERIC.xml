@@ -1,0 +1,1466 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--Generated with LocalizationBuddy.-->
+<!--Copyright Firaxis Games 2010-->
+<!--All Rights Reserved-->
+<GameData>
+  <Language_RU_RU>
+    <Row Tag="TXT_KEY_AGGRESSIVE_MILITARY_WARNING_1">
+      <Text>До меня дошли сведения о том, что у моих границ находится множество ваших людей. Я требую, чтобы вы отвели их в другое место и не смущали их присутствием моих жителей.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_ALEXANDER_EXPANSION_SERIOUS_WARNING_1">
+      <Text>Вы что, пытаетесь вызвать меня на бой? Хватит селиться у границ моей империи, иначе вам же будет хуже.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_ALEXANDER_HOSTILE_AGGRESSIVE_MILITARY_WARNING_1">
+      <Text>Я заметил вашу армию. Ну что ж, могу показать, что бывает, если скрестить мечи с таким великим полководцем, как я.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_ASKIA_EXPANSION_SERIOUS_WARNING_1">
+      <Text>Не тратьте силы зря. Если продолжите строить города рядом с могущественной империей Сонгай, то они очень скоро станут частью ее владений. Этот меч не просто украшение.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_ASKIA_HOSTILE_AGGRESSIVE_MILITARY_WARNING_1">
+      <Text>Если ваши армии подошли к моим границам, чтобы воевать, я их разобью. Бог на нашей стороне, мы не можем проиграть.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_ATTACKED_PROTECTED_CITY_STATE_1">
+      <Text>Ваша агрессия против{@1: gender masculine? ; feminine? ; neuter? ; other? города ;}{@1_MinorCivName[2]} не осталась незамеченной. Если вы продолжите наступление, ожидайте серьезных последствий.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_AUGUSTUS_EXPANSION_SERIOUS_WARNING_1">
+      <Text>Если стараетесь вывести меня из себя, то у вас получается. А если продолжите селиться вблизи границ Рима, то увидите мой гнев и сильно пожалеете, что не убрались вовремя.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_AUGUSTUS_HOSTILE_AGGRESSIVE_MILITARY_WARNING_1">
+      <Text>Ваши солдаты близ границ моей империи весьма возбуждены. Возможно, их недальновидный предводитель собирается вступить в бой со мной?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_BISMARCK_EXPANSION_SERIOUS_WARNING_1">
+      <Text>Мы гордый и могучий народ. Не будьте глупцом, не оскорбляйте Германию и не селитесь на землях, принадлежащих ей по праву.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_BISMARCK_HOSTILE_AGGRESSIVE_MILITARY_WARNING_1">
+      <Text>Знайте же, что в ответ на ваше нападение, вся мощь Германии обрушится на ваш народ.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_CATHERINE_EXPANSION_SERIOUS_WARNING_1">
+      <Text>Позвольте мне сообщить вам кое-что. Россия ревностно относится к своим владениям, и, селясь рядом с ними, вы бросаете прямой вызов ее авторитету. Лучше вам пересмотреть свои планы.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_CATHERINE_HOSTILE_AGGRESSIVE_MILITARY_WARNING_1">
+      <Text>Ваши армии подошли слишком близко к границам России. Слишком близко... Отзовите их. Немедленно.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_COOP_WAR_REQUEST_1">
+      <Text>Противоречия между мной и правителем {@1_PlayerName} слишком велики. Их можно разрешить только на поле боя. Поможете мне?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_COOP_WAR_REQUEST_2">
+      <Text>{@1: gender masculine? ; feminine? ; neuter? ; other?Правитель ;}{@1_PlayerName} {@1: plural 1?переходит; 2?переходят; other?переходит;} все мыслимые границы, и мирным способом {@1: plural 1?{@1: gender masculine?его; feminine?ее; neuter?его;}; 2?их; other?его;} не остановить. Мне нужны союзники. Встанете на мою сторону?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_COOP_WAR_REQUEST_3">
+      <Text>{@1: gender masculine? ; feminine? ; neuter? ; other?Правитель ;}{@1_PlayerName} {@1: plural 1?угрожает; 2?угрожают; other?угрожает;} всему нашему миру. Пришла пора решить эту проблему раз и навсегда. Вы поможете мне в этом?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_COOP_WAR_TIME_1">
+      <Text>Пришло время начать войну с правителем {@1_PlayerName}.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DARIUS_EXPANSION_SERIOUS_WARNING_1">
+      <Text>Персия не намерена терпеть оскорбления. А то, что вы селитесь вдоль наших границ, нельзя воспринимать иначе. Каков ваш ответ?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DARIUS_HOSTILE_AGGRESSIVE_MILITARY_WARNING_1">
+      <Text>Я вижу поблизости ваши армии. Глупцам вроде вас лучше не начинать войну с победоносной Персидской империей. Вы согласны?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DEC_FRIENDSHIP_1">
+      <Text>В этом мире трудно найти настоящих друзей. Мне хотелось бы подписать декларацию о дружбе и объявить всему миру о наших тесных узах. Что вы на это скажете?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DEC_FRIENDSHIP_2">
+      <Text>Великий предводитель, не хотели бы вы подписать декларацию о дружбе? Надеюсь, что мы наладим тесные связи между нашими империями.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DEC_FRIENDSHIP_3">
+      <Text>Давайте же посеем семена блестящего будущего, подписав декларацию дружбы перед всем миром. Что скажете?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DEC_FRIENDSHIP_4">
+      <Text>Этот мир жесток. И победить в нем мы можем лишь с помощью других. Должны ли мы объявить всему миру о декларации дружбы между нами?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DENOUNCE_1">
+      <Text>Пришла пора рассказать миру о ваших грехах.[NEWLINE][NEWLINE]([COLOR_WARNING_TEXT]Они публично осудили нас! Важно: мы не находимся в состоянии войны.[ENDCOLOR])</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DENOUNCE_2">
+      <Text>Мы говорили о вас с другими лидерами. Они должны знать, что вам нельзя доверять.[NEWLINE][NEWLINE]([COLOR_WARNING_TEXT]Они публично осудили нас! Важно: мы не находимся в состоянии войны.[ENDCOLOR])</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DENOUNCE_3">
+      <Text>Мир узнал о вас ту горькую правду, которую вы о себе отлично знаете. [NEWLINE][NEWLINE]([COLOR_WARNING_TEXT]Они публично осудили нас! Важно: мы не находимся в состоянии войны.[ENDCOLOR])</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DENOUNCING_FRIEND_1">
+      <Text>Вы мне надоели. Другие мировые лидеры уже в курсе того, что работать с вами не стоит. [NEWLINE][NEWLINE]([COLOR_WARNING_TEXT]Они публично осудили нас! Важно: мы не находимся в состоянии войны.[ENDCOLOR])</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DENOUNCING_FRIEND_2">
+      <Text>Хорошо, хватит так хватит. Нам следовало раньше сообщить всему миру о ваших злодеяниях.[NEWLINE][NEWLINE]([COLOR_WARNING_TEXT]Они публично осудили нас! Важно: мы не находимся в состоянии войны.[ENDCOLOR])</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DIPLOMACY_ANYTHING_ELSE">
+      <Text>Что-нибудь еще?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DIPLOMACY_DISCUSS_WHAT">
+      <Text>Что бы вы хотели обсудить?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DOF_AI_DENOUNCE_REQUEST_1">
+      <Text>Мой друг, мне надо обсудить с вами серьезный вопрос. Мои отношения с державой {1_CivName} ухудшились до невозможности, и я прошу вас публично осудить их. Что скажете?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DOF_AI_WAR_REQUEST_1">
+      <Text>У меня очень серьезная проблема, мой друг. Мы и держава {1_CivName} теперь находимся в состоянии войны, и я прошу вас присоединиться ко мне на поле боя. Что скажете? (Будет немедленно объявлена война).</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DOF_NOT_HONORED_1">
+      <Text>Жалкий человек. Вы показали свое истинное лицо. Мир скоро узнает о вашем бесчестии.[NEWLINE][NEWLINE]([COLOR_WARNING_TEXT]Они публично осудили нас! Важно: мы не находимся в состоянии войны.[ENDCOLOR])</Text>
+    </Row>
+    <Row Tag="TXT_KEY_DOF_NOT_HONORED_2">
+      <Text>Так вот какой из вас союзник?! Все остальные правители скоро узнают о вашем предательстве.[NEWLINE][NEWLINE]([COLOR_WARNING_TEXT]Они публично осудили нас! Важно: мы не находимся в состоянии войны.[ENDCOLOR])</Text>
+    </Row>
+    <Row Tag="TXT_KEY_ELIZABETH_EXPANSION_SERIOUS_WARNING_1">
+      <Text>Если вы желаете присоединиться к великой Английской империи, то я вас приветствую. Только прекратите осваивать земли, которые по праву принадлежат мне. Надеюсь, это понятно?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_ELIZABETH_HOSTILE_AGGRESSIVE_MILITARY_WARNING_1">
+      <Text>Демонстрацией силы Англию не напугать. Отзовите солдат, или увидите, как они погибают.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_END_WORK_AGAINST_SOMEONE_DEFAULT_1">
+      <Text>Наше секретное соглашение против игрока {@1_PlayerName} истекло. Я благодарю вас за сотрудничество.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_END_WORK_WITH_US_DEFAULT_1">
+      <Text>Обстоятельства изменились. Я считаю, что наш договор о сотрудничестве нет смысла продлевать. Надеюсь, вы меня поймете.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_END_WORK_WITH_US_DEFAULT_2">
+      <Text>Извините, но пришло время разорвать наш договор о сотрудничестве.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_END_WORK_WITH_US_LAND_1">
+      <Text>Заселение территорий у границ моей империи является актом агрессии. Считайте наш договор о сотрудничестве разорванным.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_END_WORK_WITH_US_MINORS_1">
+      <Text>Ваше поведение по отношению к городам-государствам в нашей сфере влияния неприемлемо. Считайте наш договор о сотрудничестве разорванным.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_END_WORK_WITH_US_VICTORY_1">
+      <Text>Мне стало ясно, что наши пути расходятся и вскоре разойдутся окончательно. Считайте наш договор о сотрудничестве разорванным.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_END_WORK_WITH_US_WARMONGER_1">
+      <Text>Боюсь, ваше воинственное поведение не оставляет мне выбора: считайте наш договор о сотрудничестве разорванным.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_END_WORK_WITH_US_WONDERS_1">
+      <Text>Ваша неуемная жадность в приобретении чудес света становится большой проблемой. Считайте наш договор о сотрудничестве разорванным.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_EXPANSION_BROKEN_PROMISE_1">
+      <Text>Ваше обещание не заселять земли рядом с нами оказалось пустым звуком. Знайте, что вам это даром не пройдет.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_EXPANSION_SERIOUS_WARNING_1">
+      <Text>Ваша экспансия - акт агрессии. Знайте, что вам это даром не пройдет.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_EXPANSION_WARNING_1">
+      <Text>Невозможно не заметить, что вы захватываете земли, которые мы считали своими. Я прошу вас изменить вашу политику.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_EXPANSION_WARNING_2">
+      <Text>Ваша привычка захватывать каждый обнаруженный участок земли не осталась незамеченной. Я советую вам остановиться.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_EXPANSION_WARNING_3">
+      <Text>Если вы будете продолжать захват земель, которые мы считаем своими, то дружба между нами станет невозможна.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_EXPANSION_WARNING_4">
+      <Text>Ваши люди расселяются у моих границ. Это может испортить отношения между нашими государствами.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GANDHI_EXPANSION_SERIOUS_WARNING_1">
+      <Text>Индийский народ с горестью смотрит на то, как вы захватываете его земли. Не вносите смуту своим безответственным поведением.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GANDHI_HOSTILE_AGGRESSIVE_MILITARY_WARNING_1">
+      <Text>Индия не боится ваших солдат. Если вы пойдете в атаку, это будет ужасной ошибкой.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_AGGRESSIVE_MILITARY_WARNING_BAD_1">
+      <Text>Этого мы и опасались.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_AGGRESSIVE_MILITARY_WARNING_GOOD_1">
+      <Text>Надеюсь, все так и будет.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_BETRAYED_1">
+      <Text>Обманывать доверие - это низко. О вашем предательстве узнают все.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_EXCITED_1">
+      <Text>Вы хотите воевать? Я тоже не возражаю.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_EXCITED_2">
+      <Text>Я с радостью обменяюсь с вами парой ударов. Постарайтесь выдержать хотя бы один.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_EXCITED_3">
+      <Text>Ну что же, повеселимся. Я никогда не отказываюсь от расправы над людьми вроде вас.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_EXCITED_4">
+      <Text>Отлично. Мы оба исчезнем в водовороте смерти.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_HOSTILE_1">
+      <Text>Вы глупы. И вы допустили ужасную ошибку.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_HOSTILE_2">
+      <Text>Как вы жалки! Впрочем, это неудивительно.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_HOSTILE_3">
+      <Text>Вы просто дикий зверь.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_HOSTILE_4">
+      <Text>Вас явно нельзя подпускать к управлению даже самым захудалым государством.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_HOSTILE_5">
+      <Text>Скоро настанет ваш судный день.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_MILITARY_PROMISE_BROKEN_1">
+      <Text>Вы нарушили свое слово. Будьте уверены, о вашем предательстве узнает весь мир.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_SAD_1">
+      <Text>Ваши действия ввергли меня в печаль. Наверняка в аду приготовлено особое место для таких, как вы.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_SAD_2">
+      <Text>Значит, вы пытаетесь на нас напасть? Ваша наглость не знает границ. Надеюсь, вы когда-нибудь за это заплатите.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_SAD_3">
+      <Text>Чтобы добиться победы, необязательно пользоваться чьей-то слабостью. Разве вы не знаете, что есть лучшие пути?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_SAD_4">
+      <Text>Как вы могли так поступить? Прочь, гадкое создание!</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_STRONG_EXCITED_1">
+      <Text>Ха-ха. Ну что ж, я не возражаю. Мне кажется, что вы сделали большую ошибку.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_STRONG_HOSTILE_1">
+      <Text>Вы в самом деле надеетесь победить меня? Это глупо. Ну ладно, начнем.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_STRONG_HOSTILE_2">
+      <Text>Пусть к нам приходят ваши армии. Назад не вернется никто.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_STRONG_HOSTILE_3">
+      <Text>Напасть на меня было ошибкой. Я скоро покажу вам почему.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_STRONG_HOSTILE_4">
+      <Text>Объявление войны - большая ошибка с вашей стороны. Я заставлю вас о ней пожалеть.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_STRONG_HOSTILE_5">
+      <Text>Скоро я накажу вас за этот глупый поступок.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_STRONG_HOSTILE_6">
+      <Text>Хорошо, пусть будет так. Теперь у меня есть отличная возможность раз и навсегда покончить с вами.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_STRONG_HOSTILE_7">
+      <Text>Жалкий глупец. Теперь я безжалостно уничтожу вас.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_WEAK_EXCITED_1">
+      <Text>Это не лучший момент, чтобы скрестить оружие, однако я не стану пренебрегать возможностью нанести вам пару ударов. </Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_WEAK_HOSTILE_1">
+      <Text>Я могу потерпеть неудачу в борьбе со злом, но не от недостатка старания.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_WEAK_HOSTILE_2">
+      <Text>Учитывая обстоятельства, ваш разгром принесет мне большую радость. </Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_WEAK_HOSTILE_3">
+      <Text>Победите меня, если сумеете. Но я обещаю, что ваша победа не будет легкой.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_WEAK_HOSTILE_4">
+      <Text>Да будет так. Мои войска будут биться против ваших грязных орд насмерть.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_ATTACKED_WEAK_HOSTILE_5">
+      <Text>Вас навсегда запомнят как шакала, который нападает на слабых.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_BOOT_KISSING_1">
+      <Text>Все знают вас как мудрого и сильного правителя. Я надеюсь, что вы также милостивы к слабым - таким, как я.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_BOOT_KISSING_2">
+      <Text>О, великий! Я надеюсь, что вы всегда будете образцом силы и добродетели для более слабых правителей - таких, как я.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_COMPLIMENT_1">
+      <Text>Я хочу, чтобы вы знали, что я ценю нашу дружбу. Надеюсь, она не ослабеет со временем.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_COOP_WAR_SOON_1">
+      <Text>Это интересное предложение. Я принимаю его. Но моя империя еще не готова, дайте мне 10 ходов. Я вернусь, когда все будет подготовлено.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_COOP_WAR_YES_1">
+      <Text>Это мудрое решение. Поспешим же на поле битвы.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_CULTURE_BOMBED_1">
+      <Text>Да как вы посмели? Это не пройдет безнаказанно.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_CULTURE_BOMBED_2">
+      <Text>Если вы пытаетесь спровоцировать войну, то у вас это получается.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DECLARATION_ABANDON_CITY_STATE_1">
+      <Text>{@2_MajorCivName} {@2_MajorCivName: plural 1?отзывает; 2?отзывают; other?отзывает;} свою гарантию защиты{@1: gender masculine? ; feminine? ; neuter? ; other? города-государства ;}{@1_MinorCivName[2]}.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DECLARATION_PROTECT_CITY_STATE_1">
+      <Text>{@2_MajorCivName} во всеуслышание {@2_MajorCivName: plural 1?объявляет; 2?объявляют; other?объявляет;} что отныне {@2_MajorCivName: plural 1?будет; 2?будут; other?будет;} защищать{@1: gender masculine? ; feminine? ; neuter? ; other? город-государство ;}{@1_MinorCivName[4]}. Нападение на {@1: plural 1?{@1: gender masculine?него; feminine?нее; neuter?него;}; 2?них; other?него;} нанесет большой ущерб отношениям с этой державой и может привести к войне.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DECLINE_1">
+      <Text>Мне придется отклонить это предложение.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DECLINE_2">
+      <Text>Извините, но нет. Может быть, в другой раз.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DECLINE_3">
+      <Text>Боюсь, такое соглашение не в моих интересах. Мне придется отклонить это предложение.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DEMAND_1">
+      <Text>У вас есть кое-что нужное мне. Если вы не отдадите это добром, мне придется забрать его силой.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DONT_SETTLE_NO_1">
+      <Text>Это неприемлемо. Я - суверенный правитель и имею право заселять любые земли, которые мне нравятся. Мы не забудем это оскорбление.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DONT_SETTLE_NO_2">
+      <Text>Вы осмелились оскорбить меня в такой манере? Я этого не забуду.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DONT_SETTLE_NO_3">
+      <Text>Да как вы посмели? Вы считаете меня безвольным слабаком?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DONT_SETTLE_NO_4">
+      <Text>Ни единого шанса. Вам следовало бы поднатаскать ваших дипломатов, друг мой.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DONT_SETTLE_YES_1">
+      <Text>Очень хорошо. Я соглашаюсь некоторое время не заселять земли у границ вашей империи. Возможно, в будущем вы станете более сговорчивым соседом.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DONT_SETTLE_YES_2">
+      <Text>Да будет так. Я не стану заселять земли рядом с вашими. Сотрудничество - явно не ваша сильная сторона.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOT_DOT_DOT">
+      <Text>...</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_BETRAYAL_1">
+      <Text>Прикидываться другом было не слишком вежливо с вашей стороны, но те, кто оставил свой след в истории, редко отличались хорошими манерами. Идите с миром.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_BETRAYAL_2">
+      <Text>Ваша слабость - мой шанс. Вы сделали ошибку, поверив мне.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_BETRAYAL_3">
+      <Text>"Вероломное нападение" звучит некрасиво. Давайте лучше скажем, что мы "пересмотрели принципы нашей дружбы".</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_BETRAYAL_4">
+      <Text>Нужно признать, что вы мне никогда не нравились. Пришло время сбросить маски. Но хватит разговоров, настал ваш смертный час.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_DESPERATE_1">
+      <Text>Возможно, передо мной стоит непосильная задача, но мне придется найти способ полностью уничтожить вас. Я это сделаю или погибну.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_DESPERATE_2">
+      <Text>Ясно, что вы сильны. Но я все-таки найду способ победить вас.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_DESPERATE_3">
+      <Text>Ваше злодейство беспримерно. Каждая клеточка моей души желает вас уничтожить.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_DESPERATE_4">
+      <Text>Вы намного сильнее, но я найду способ победить вас.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_DESPERATE_5">
+      <Text>Пришло время выступить против вас. Сила не на моей стороне, но я все-таки найду способ победить вас.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_DESPERATE_6">
+      <Text>Ваша невероятная мощь не помешает мне найти способ победить вас. Пусть мне улыбнется удача.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_DESPERATE_7">
+      <Text>Я совсем не желаю этого, но боюсь, что сейчас мне представилась единственная возможность победить вас. Мы встретимся на поле битвы.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_DESPERATE_8">
+      <Text>Возможно, меня ждет гибель, но если я отступлю сейчас, то все равно погибну.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_GENERIC_1">
+      <Text>Ясно, что наши империи никогда не найдут общего языка. Эту проблему можно решить только на поле битвы.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_GENERIC_2">
+      <Text>У меня есть чувство, что мы с вами однажды встретимся на поле битвы. Посмотрим, кто выйдет победителем.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_GENERIC_3">
+      <Text>Пришло время сражаться. Пусть победит сильнейший.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_LAND_1">
+      <Text>Наше соседство обрекло нас на вражду. Посмотрим, кто из нас выживет и будет владеть этими землями.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_LAND_2">
+      <Text>Вы слишком близко, и нам это не нравится. Моей империи нужно больше жизненного пространства.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_LAND_3">
+      <Text>Ваши земли станут прекрасным дополнением к моим.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_OPPORTUNITY_1">
+      <Text>Перевес на моей стороне. Теперь я вас уничтожу.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_OPPORTUNITY_2">
+      <Text>Мы ждали достаточно долго. Теперь я вижу брешь в вашей обороне и воспользуюсь этим.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_OPPORTUNITY_3">
+      <Text>Мы долго ждали этого дня. Сейчас настало время, чтобы решить все вопросы с вами раз и навсегда.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_OPPORTUNITY_4">
+      <Text>Пришло мое время. Я уничтожу вас и стану на шаг ближе к победе.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_OPPORTUNITY_5">
+      <Text>Судьба отвернулась от вас. Было ошибкой переходить мне дорогу, обладая такими ничтожными силами. Вскоре вы об этом пожалеете.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_OPPORTUNITY_6">
+      <Text>Нельзя упускать такой случай. Сейчас или никогда.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_OPPORTUNITY_7">
+      <Text>Я не могу упустить такой шанс уничтожить потенциального конкурента.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_OPPORTUNITY_8">
+      <Text>Ваша слабость открыла передо мной великолепную возможность. Извините.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_REGRET_1">
+      <Text>Думаю, в другой жизни мы могли бы стать друзьями. К сожалению, сейчас все наоборот. Желаю удачи вашим войскам.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_REGRET_2">
+      <Text>Друг мой, у меня нет выбора. Я разрываю наши отношения и достаю меч из ножен. Надеюсь, вы когда-нибудь простите меня за это.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_REGRET_3">
+      <Text>Трудно поверить, что могло дойти до этого. Но это все-таки произошло. С печалью в сердце сообщаю вам, что наша дружба подошла к концу.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_WEAK_BETRAYAL_1">
+      <Text>Сила не на моей стороне, но других вариантов я не вижу. Мне придется раскрыть свой обман и молиться о победе.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_WORLD_CONQUEST_1">
+      <Text>Мир должен принадлежать мне. Пришло время показать вам, что это значит.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_WORLD_CONQUEST_2">
+      <Text>Самой судьбой мне предназначено стать тем, кто объединит эту разделенную планету.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_WORLD_CONQUEST_3">
+      <Text>Я войду в историю, когда уничтожу вас и прочее отребье вокруг.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_WORLD_CONQUEST_4">
+      <Text>Скажу честно - я намереваюсь уничтожить вас, и всех остальных тоже.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_WORLD_CONQUEST_5">
+      <Text>Вы просто трамплин, с которого я начну взлет к мировому господству.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_DOW_WORLD_CONQUEST_6">
+      <Text>Пришло время начать осуществление моих планов. Вы умрете вместе с остальными глупцами.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GIFT_ITEM_1">
+      <Text>Пожалуйста, примите этот дар, о великий правитель! Пусть наша дружба длится вечно.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GIFT_ITEM_2">
+      <Text>Друзья должны помогать друг другу, чтобы пережить испытания, которым подвергает нас этот мир. Пожалуйста, примите этот дар, о великий правитель!</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_AGGRESSIVE_EXPANSION_1">
+      <Text>Поскольку мне представилась такая возможность, я ею воспользуюсь, чтобы сообщить, что ваша экспансия вызывает беспокойство у моих чиновников. Надеюсь, это не приведет к проблемам в будущем. Так какой вопрос вы хотели бы обсудить?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_AGGRESSIVE_MILITARY_1">
+      <Text>Нас несколько беспокоит расстановка ваших военных сил. Я советую вам отступить во имя мира между нами. А теперь скажите, о чем вы хотите поговорить?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_AGGRESSIVE_PLOT_BUYING_1">
+      <Text>Нас беспокоят ваши последние земельные приобретения у наших границ. Ради сохранения наших отношений я советую вам проявить осторожность в этом вопросе. Но вернемся к вашим вопросам. Так что вы хотели?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_AT_WAR_HOSTILE_1">
+      <Text>Вы пришли просить пощады?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_AT_WAR_HOSTILE_2">
+      <Text>У вас пропало желание сражаться?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_AT_WAR_HOSTILE_3">
+      <Text>В чем дело? Вам надоело воевать?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_AT_WAR_WANTS_PEACE_1">
+      <Text>Не пора ли прекратить эту войну?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_AT_WAR_WANTS_PEACE_2">
+      <Text>Ради блага наших народов давайте заключим мир.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_AT_WAR_WANTS_PEACE_3">
+      <Text>Пришло время отложить оружие в сторону.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_BROKEN_MILITARY_PROMISE_1">
+      <Text>Что привело сюда такого мерзавца, как вы?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_COOP_WAR_1">
+      <Text>Мы скоро разберемся с правителем {@1_ThirdPlayerName}. Я чувствую это.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_COOP_WAR_2">
+      <Text>Надеюсь, вы желаете гибели правителя {@1_ThirdPlayerName} так же сильно, как и я.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_COOP_WAR_3">
+      <Text>Мы скоро разберемся с правителем {@1_ThirdPlayerName} раз и навсегда.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_DENOUNCED_AI_1">
+      <Text>Что ж, хорошо. Вы хотели о чем-то поговорить?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_DENOUNCED_AI_2">
+      <Text>И вы посмели появиться здесь после всего, что тут наговорили? Быстро излагайте, что вам нужно, пока вас не выкинули вон.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_DENOUNCED_BY_AI_1">
+      <Text>Вы? Что-то хотите? Я не веду дела с ничтожеством вроде вас.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_DENOUNCED_BY_AI_2">
+      <Text>И что же вы тут делаете?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_DENOUNCED_ENEMY_OF_AI_1">
+      <Text>О, приветствую вас. Мне всегда доставляет удовольствие разговор с лидерами, которых, как и меня, {@1: plural 1?раздражает; 2?раздражают; other?раздражает;} {@1_PlayerName}.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_DENOUNCED_FRIEND_OF_AI_1">
+      <Text>А, это вы. Сказать по правде, я не слишком люблю тех, для кого {@1_PlayerName} не {@1: plural 1?является; 2?являются; other?является;} другом.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_DESTRUCTION_LOOMS_1">
+      <Text>Конец близок. О чем вы хотите поговорить?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_DESTRUCTION_LOOMS_2">
+      <Text>Я знаю, что нахожусь на грани разгрома. Вы пришли обсудить условия капитуляции?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_FRIENDLY_STRONG_ECONOMY_1">
+      <Text>Ваша империя известна своей сильной экономикой. Возможно, когда-нибудь настанет день, когда вы захотите поделиться своими секретами с другом?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_FRIENDLY_STRONG_MILITARY_1">
+      <Text>Мне много рассказывали о силе вашей армии. Негодяи должны страшиться вашей мощи. </Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_HOSTILE_AGGRESSIVE_EXPANSION_1">
+      <Text>Ваши города и люди распространяются по земле, как чума. Надеюсь, что настанет день, когда они исчезнут навсегда.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_HOSTILE_AGGRESSIVE_MILITARY_1">
+      <Text>Я вижу, вы концентрируете силы у моих границ. Вы пришли, чтобы безрассудно угрожать мне, или просто хотите отнять у меня время?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_HOSTILE_AGGRESSIVE_PLOT_BUYING_1">
+      <Text>Ваша империя захватывает все земли, до которых может дотянуться. Разве вы не знаете, что жадность до добра не доводит?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_HOSTILE_HELLO_1">
+      <Text>Чего вы хотите?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_HOSTILE_HELLO_2">
+      <Text>Зачем вы здесь?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_HOSTILE_HELLO_3">
+      <Text>Что вы здесь делаете?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_HOSTILE_HELLO_4">
+      <Text>Что, опять вы?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_HOSTILE_HELLO_5">
+      <Text>Давайте поживее.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_HOSTILE_HUMAN_AT_WAR_1">
+      <Text>Как проходит ваша маленькая война? Надеюсь, не слишком хорошо. Чего вам нужно?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_HOSTILE_HUMAN_FEW_CITIES">
+      <Text>Ничтожество явилось к нам. Мы только что о вас говорили. И только плохое, я вас уверяю.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_HOSTILE_HUMAN_IS_WARMONGER">
+      <Text>А, вот и наш кровожадный маньяк. И что ему от меня нужно?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_HOSTILE_HUMAN_SMALL_ARMY">
+      <Text>Только между нами: ваша армия - посмешище для всего мира. Но не расстраивайтесь. Не сомневаюсь, что кто-нибудь скоро прервет ваши страдания.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_HOSTILE_REPEAT_1">
+      <Text>Вам что, нечем заняться кроме разговоров со мной? Похоже, что так и есть...</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_HOSTILE_REPEAT_2">
+      <Text>И что вам нужно на этот раз?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_HUMAN_AT_WAR_1">
+      <Text>Желаю вам удачи в войне. Чем могу помочь?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_NEUTRAL_HELLO_1">
+      <Text>Здравствуйте.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_NEUTRAL_HELLO_3">
+      <Text>Что бы вы хотели обсудить?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_NEUTRAL_HELLO_4">
+      <Text>Что привело вас сюда?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_NEUTRAL_HELLO_5">
+      <Text>Что дальше?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_NEUTRAL_HELLO_6">
+      <Text>Давайте начнем.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_OUR_DOF_WITH_ENEMY_OF_AI_1">
+      <Text>Чего вам? У меня нет времени болтать с теми, для кого {1_PlayerName} - пример для подражания.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_OUR_DOF_WITH_FRIEND_OF_AI_1">
+      <Text>Привет! Всегда рад поговорить с тем, в чьих друзьях ходит {1_PlayerName}.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_POLITE_HELLO_1">
+      <Text>Здравствуйте, друг. Что привело вас сегодня к моему двору?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_POLITE_HELLO_2">
+      <Text>Всегда приятно поговорить с вами. Что бы вы хотели обсудить?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_POLITE_HELLO_3">
+      <Text>Приветствую вас, друг мой.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_POLITE_HELLO_4">
+      <Text>Приятно снова видеть вас. У вас есть новости, или вы пришли с предложением?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_REPEAT_1">
+      <Text>Вы так быстро вернулись?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_REPEAT_2">
+      <Text>Вам нравится разговаривать со мной, правда?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_RESEARCH_AGREEMENT_1">
+      <Text>Здравствуйте. Как продвигается вопрос с договором об исследованиях?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_WORKING_AGAINST_1">
+      <Text>{@1: plural 1?{@1: gender masculine?Этот негодяй, ; feminine?Эта негодяйка, ; neuter?Этот негодяй, ;}; 2?Эти негодяи, ; other?Этот негодяй, правитель ;}{@1_ThirdPlayerName}, постоянно докучает нам. Разве не так?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_WORKING_AGAINST_2">
+      <Text>Здравствуйте. Надеюсь, мы скоро разберемся с правителем {@1_ThirdPlayerName} раз и навсегда.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_WORKING_AGAINST_3">
+      <Text>Вы еще не придумали, как разобраться с правителем {@1_ThirdPlayerName}?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_GREETING_WORKING_WITH_1">
+      <Text>Переговоры с вами всегда приносят мне радость, друг мой. Что привело вас к моему двору?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HOSTILE_AGGRESSIVE_MILITARY_WARNING_BAD_1">
+      <Text>Ну, по крайней мере, вы честны. Но думаю, что это единственная ваша положительная черта.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HOSTILE_AGGRESSIVE_MILITARY_WARNING_GOOD_1">
+      <Text>Ну-ну.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HOSTILE_WE_ATTACKED_MINOR_BAD_1">
+      <Text>Посмотрим.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HOSTILE_WE_ATTACKED_MINOR_GOOD_1">
+      <Text>Да, это верно.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_ATTACKED_MINOR_GOOD_1">
+      <Text>Очень хорошо. Я буду следить за развитием событий.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_DEMAND_REFUSE_HOSTILE_1">
+      <Text>Таким образом вы пытаетесь оскорбить меня? Если вам что-то настолько нужно, то придите и возьмите сами.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_DEMAND_REFUSE_HOSTILE_2">
+      <Text>Только через мой труп.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_DEMAND_REFUSE_HOSTILE_3">
+      <Text>Если вам это нужно, то придите и возьмите.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_DEMAND_REFUSE_HOSTILE_4">
+      <Text>Это неприемлемо.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_DEMAND_REFUSE_HOSTILE_5">
+      <Text>Это неразумно с вашей стороны.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_DEMAND_REFUSE_TOO_MUCH_1">
+      <Text>Вы просите слишком многого. Я не стану ввергать мой народ в нищету, чтобы удовлетворить вашу жадность.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_DEMAND_REFUSE_TOO_MUCH_2">
+      <Text>Нет. У меня есть достоинство. Я не собираюсь делать вам такой ценный подарок просто так.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_DEMAND_REFUSE_TOO_MUCH_3">
+      <Text>Ваше стремление обобрать мое государство до нитки недопустимо. Не запрашивайте так много.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_DEMAND_REFUSE_TOO_SOON_1">
+      <Text>Вы снова угрожаете мне, и так скоро? Я отвергаю ваши требования, презренное животное.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_DEMAND_REFUSE_TOO_SOON_2">
+      <Text>Вы снова с просьбой, и так скоро? Разве вы не знаете, что жадность - это порок?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_DEMAND_REFUSE_TOO_SOON_3">
+      <Text>Вы опять требуете плоды чужого труда? Ваша жадность просто неописуема. Я не пойду ни на какие уступки.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_DEMAND_REFUSE_WEAK_1">
+      <Text>Прошу вас. Вы не в том положении, чтобы выставлять такие требования.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_DEMAND_REFUSE_WEAK_2">
+      <Text>Вы сами прекрасно знаете, что вам нечем подкрепить эти угрозы.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_DEMAND_REFUSE_WEAK_3">
+      <Text>Вы никого не обманете. Мне нечего вас бояться.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_DEMAND_REFUSE_WEAK_4">
+      <Text>Ха-ха! Вы недостаточно сильны, чтобы предъявлять такие требования.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_DEMAND_YES_1">
+      <Text>Очень хорошо. Я сделаю все необходимое, чтобы сберечь мир.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_DEMAND_YES_2">
+      <Text>Я сделаю то, что необходимо для сохранения мира.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_DEMAND_YES_3">
+      <Text>Отлично. Но знайте, что вы пятнаете свою репутацию такими поступками. Если только слово "репутация" для вас что-то значит.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_EXPANSION_WARNING_GOOD_1">
+      <Text>Превосходно. Надеюсь, мы будем находить общий язык и дальше.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_KILLED_MINOR_GOOD_1">
+      <Text>А что вы предлагаете?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_PLOT_BUYING_WARNING_GOOD_1">
+      <Text>Превосходно. Надеюсь, мы и впредь будем находить общий язык.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_RESPONSE_BAD_1">
+      <Text>Кажется, вас ничем не убедишь. Жаль.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_RESPONSE_BAD_2">
+      <Text>Тогда я не буду иметь с вами больше никаких дел.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_RESPONSE_BAD_3">
+      <Text>Вы нас разочаровали.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_RESPONSE_BAD_4">
+      <Text>Вы сами знаете, что это может только ухудшить наши отношения.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_RESPONSE_DISAPPOINTED_1">
+      <Text>Очень жаль.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_RESPONSE_DISAPPOINTED_2">
+      <Text>Может быть, в другой раз.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_RESPONSE_DISAPPOINTED_3">
+      <Text>Это печально.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_RESPONSE_PLEASED_1">
+      <Text>Превосходно.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_RESPONSE_PLEASED_2">
+      <Text>Замечательно.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_RESPONSE_PLEASED_3">
+      <Text>Мне радостно это слышать.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_RESPONSE_PLEASED_4">
+      <Text>Это приятно слышать.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_RESPONSE_THANKFUL_1">
+      <Text>Я благодарю вас.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_RESPONSE_THANKFUL_2">
+      <Text>Вы действительно великий правитель.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_RESPONSE_THANKFUL_3">
+      <Text>Ваши великие свершения войдут в историю.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_SERIOUS_EXPANSION_WARNING_GOOD_1">
+      <Text>А что вы предлагаете?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_HUMAN_SERIOUS_PLOT_BUYING_WARNING_GOOD_1">
+      <Text>А что вы предлагаете?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_INSULT_BULLY_1">
+      <Text>Очень жаль, что в мире есть правители, которым доставляет удовольствие задирать слабых. Вы согласны с этим?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_INSULT_CITIES_1">
+      <Text>Я вижу, что ваша империя не очень велика. Вы просто забыли расширять границы, или этот вопрос вас не слишком волнует?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_INSULT_CULTURE_1">
+      <Text>Какое печальное зрелище. В вашей империи совсем не развита культура. Что ваши граждане делают целыми днями? Стучат камнем о камень?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_INSULT_CULTURE_2">
+      <Text>Говорят, что ваша культура настолько неразвита, что даже варвары опасаются подходить к вам.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_INSULT_GENERIC_1">
+      <Text>Невозможно не заметить, насколько вы слабы. А заметив, невозможно вам не посочувствовать.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_INSULT_GENERIC_2">
+      <Text>Ах, я всегда радуюсь, когда опять вижу мой любимый город-государство.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_INSULT_GENERIC_3">
+      <Text>Мне ужасно надоело видеть вас. Надеюсь, вы когда-нибудь исчезнете отсюда.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_INSULT_GENERIC_4">
+      <Text>А, это вы. Прошу меня извинить. Иногда я путаю вас с варварами, которым мне время от времени приходится задавать трепку.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_INSULT_MILITARY_1">
+      <Text>Думаю, вам следует знать, что ваша армия не слишком сильна. Поберегите себя.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_INSULT_MILITARY_2">
+      <Text>У вас такая слабая армия, что просто удивительно, как вас еще не завоевали варвары.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_INSULT_NUKE_1">
+      <Text>Наши слова подкреплены мощью ядерного оружия!</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_INSULT_POPULATION_1">
+      <Text>Путешественники рассказывают, что экономика вашей империи находится в не очень хорошем состоянии. Если вы немножко попросите, я могу помочь вам. Впрочем, нет, не могу.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_INSULT_UNHAPPINESS_1">
+      <Text>Жалобные стоны ваших людей доносятся даже до моей империи. Если вы ничего не предпримете, они скоро разбегутся в поисках настоящей цивилизации. </Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_INSULT_UNHAPPINESS_2">
+      <Text>Меня поражает, как эти несчастные люди все еще терпят вашу власть.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_LETS_HEAR_IT_1">
+      <Text>Давайте выслушаем ваше предложение.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_LETS_HEAR_IT_2">
+      <Text>Что вы предлагаете?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_LUXURY_TRADE_1">
+      <Text>У вас есть редкие ресурсы, от которых я не откажусь. Что вы думаете о таком предложении?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_MINOR_CIV_COMPETITION_1">
+      <Text>Я замечаю, что вы пытаетесь завести дружбу с{@1: gender masculine? ; feminine? ; neuter? ; other? городом-государством ;}{@1_MinorCivName[5]}. Если вы не в курсе, он входит в мою сферу влияния, и вам лучше держаться от него подальше.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_MINOR_CIV_COMPETITION_2">
+      <Text>Я вижу, что вы налаживаете отношения c{@1: gender masculine? ; feminine? ; neuter? ; other? городом-государством ;}{@1_MinorCivName[5]}. Это прекрасно, но предоставьте нам защищать его. Я не люблю толкаться локтями.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_NO_PEACE_1">
+      <Text>Мира не будет. Может, в другой раз.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_NO_PEACE_2">
+      <Text>Сейчас не время вести переговоры.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_NO_PEACE_3">
+      <Text>Нам нужно уладить кое-что еще.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_OPEN_BORDERS_EXCHANGE_1">
+      <Text>Я полагаю, что в наших обоюдных интересах разрешить свободное передвижение между нашими великими державами.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_OPEN_BORDERS_EXCHANGE_2">
+      <Text>Если мы откроем границы друг для друга, это только укрепит нашу дружбу.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_OPEN_BORDERS_OFFER_1">
+      <Text>Мне хотелось бы обсудить вопрос прохода по вашей территории.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_OUR_WORDS_ARE_BACKED">
+      <Text>Наши слова подкреплены мощью ядерного оружия!</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_PEACE_MADE_BY_HUMAN_GRACIOUS_1">
+      <Text>Какая радость, что этому конфликту положен конец.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_PEACE_MADE_BY_HUMAN_GRACIOUS_2">
+      <Text>Приятно видеть, что эта ужасная война закончилась.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_PEACE_OFFER_1">
+      <Text>Пришло время закончить эту войну. Что вы думаете об этом предложении?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_PEACE_OFFER_2">
+      <Text>Нет никакого смысла продолжать этот конфликт. Давайте восстановим мир.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_PEACE_OFFER_3">
+      <Text>Мы не должны решать вопросы военным путем. Пришло время заключить мир.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_PEACE_WHAT_WILL_HUMAN_OFFER_1">
+      <Text>Каково ваше предложение?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_PEACE_WHAT_WILL_HUMAN_OFFER_2">
+      <Text>Что вы предлагаете?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_PEACE_WHAT_WILL_HUMAN_OFFER_3">
+      <Text>Какова цена мира?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_PLAN_RESEARCH_AGREEMENT_1">
+      <Text>Мне хотелось бы поговорить о заключении договора об исследованиях с вашей великой империей. Такой договор обойдется каждому из нас в 150 [ICON_GOLD]. Что вы скажете на это?[NEWLINE][NEWLINE](Согласие еще не означает заключения договора)</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_RENEW_DEAL_1">
+      <Text>Этот договор послужил на благо и вашему, и нашему народу. Хотите ли вы продлить это взаимовыгодное соглашение?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_REPEAT_NO_1">
+      <Text>Мы это уже проходили. Ответ по-прежнему отрицательный.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_REPEAT_TOO_MUCH">
+      <Text>...</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_REPEAT_TRADE_1">
+      <Text>Разве вы не поняли, что должны предложить что-то получше?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_REPEAT_TRADE_2">
+      <Text>Вам уже было сказано, что мы рассматриваем только справедливые предложения.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_REPEAT_TRADE_3">
+      <Text>Вы предлагаете сделки, заранее зная, что я на них не соглашусь?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_REQUEST_ITEM_1">
+      <Text>К сожалению, дела у нас идут не очень хорошо. Вы не могли бы помочь друзьям? Я постараюсь отблагодарить вас, когда мои дела пойдут лучше.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_REQUEST_ITEM_2">
+      <Text>Мне очень неприятно, но приходится просить вас о помощи, мой друг.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_REQUEST_ITEM_3">
+      <Text>На вас равняются все остальные империи. Я прошу вас проявить щедрость к тем, кому повезло меньше.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_RESEARCH_AGREEMENT_OFFER_1">
+      <Text>Мне кажется, что договор об исследованиях принесет выгоду обеим сторонам и укрепит нашу дружбу.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_RETURNED_CIVILIAN_1">
+      <Text>Благодарю вас за освобождение этих пленников.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_RETURNED_CIVILIAN_2">
+      <Text>От имени моего народа я благодарю вас за этот поступок.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_RETURNED_CIVILIAN_3">
+      <Text>Спасибо. Пусть сегодняшний день войдет в историю как момент, когда наши державы окончательно сблизились.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_SO_BE_IT_1">
+      <Text>Да будет так.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_SO_BE_IT_2">
+      <Text>В таком случае вам придется отвечать за последствия.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_SO_BE_IT_3">
+      <Text>Вы об этом пожалеете.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_TOO_SOON_FOR_DOF_1">
+      <Text>Сожалею, но мы с вами еще мало знакомы, чтобы можно было говорить о дружбе. Возможно, мы вернемся к этому вопросу позже.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_TOO_SOON_FOR_DOF_2">
+      <Text>Учитывая наш нынешний уровень отношений, говорить о дружбе пока преждевременно. Может быть, в другой раз.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_TOO_SOON_NO_PEACE_1">
+      <Text>Вы ведь шутите, не так ли?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_TRADE_ACCEPT_ACCEPTABLE_1">
+      <Text>Хорошо. Мы согласны.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_TRADE_ACCEPT_ACCEPTABLE_2">
+      <Text>Договорились.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_TRADE_ACCEPT_ACCEPTABLE_3">
+      <Text>Очень хорошо.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_TRADE_ACCEPT_AI_DEMAND_1">
+      <Text>Приятно иметь с вами дело.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_TRADE_ACCEPT_AI_DEMAND_2">
+      <Text>Приятно, когда соседи так хорошо ладят.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_TRADE_ACCEPT_GENEROUS_1">
+      <Text>Это щедрое предложение, я принимаю его.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_TRADE_ACCEPT_GENEROUS_2">
+      <Text>Я охотно принимаю это предложение.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_TRADE_ACCEPT_GENEROUS_3">
+      <Text>Принято.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_TRADE_ACCEPT_HUMAN_CONCESSIONS_1">
+      <Text>Мы согласны. Надеюсь, эта сделка приведет к восстановлению дружеских отношений.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_TRADE_ACCEPT_HUMAN_CONCESSIONS_2">
+      <Text>Мы оценили вашу щедрость.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_TRADE_AI_MAKES_OFFER_1">
+      <Text>Что вы об этом думаете?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_TRADE_AI_MAKES_OFFER_2">
+      <Text>По рукам?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_TRADE_AI_MAKES_OFFER_3">
+      <Text>По рукам.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_TRADE_DEAL_UNCHANGED_1">
+      <Text>Это предложение годится как есть.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_TRADE_DEAL_UNCHANGED_2">
+      <Text>Меня это предложение устраивает.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_TRADE_DEAL_UNCHANGED_3">
+      <Text>Выглядит неплохо.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_TRADE_NO_DEAL_POSSIBLE_1">
+      <Text>Боюсь, я не вижу возможности договориться.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_TRADE_NO_DEAL_POSSIBLE_2">
+      <Text>Это не пойдет.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_TRADE_REJECT_INSULTING_1">
+      <Text>Это неприемлемо. Если вы хотите, чтобы дело сдвинулось, предложите честную сделку.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_TRADE_REJECT_INSULTING_2">
+      <Text>Это неприемлемо.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_TRADE_REJECT_INSULTING_3">
+      <Text>Это и близко не похоже на честную сделку.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_TRADE_REJECT_UNACCEPTABLE_1">
+      <Text>Боюсь, мне нужно нечто большее взамен.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_TRADE_REJECT_UNACCEPTABLE_2">
+      <Text>Извините, но это предложение меня не устраивает.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_TRADE_REJECT_UNACCEPTABLE_3">
+      <Text>Это не слишком хорошее предложение.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_WANT_MORE_RENEW_DEAL_1">
+      <Text>Этот договор за долгие годы стерся из нашей памяти. Вам следует приложить больше усилий для его продления.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_WARMONGER_1">
+      <Text>Ваше исключительно агрессивное поведение не осталось незамеченным. Если вы будете продолжать в том же духе, то вас постигнет крах.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_WARMONGER_2">
+      <Text>Все ясно, вы просто дикий зверь. Мне следует предупредить вас, что ваши поступки начинают привлекать всеобщее внимание.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_WARMONGER_3">
+      <Text>Все вокруг говорят о вашей излишней воинственности. Берегитесь.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_WARMONGER_4">
+      <Text>Ваши поступки начинают привлекать всеобщее внимание. Это не слишком хорошо для вас.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_WE_ATTACKED_MINOR_BAD_1">
+      <Text>Я уверен, что мое решение было наилучшим для моего народа и страны.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_WORK_AGAINST_SOMEONE_YES_1">
+      <Text>Договорились. Мы сделаем все, что в наших силах.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_WORK_WITH_US_YES_1">
+      <Text>Пойдет. Пусть крепкая дружба приведет наши империи к процветанию.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_WORK_WITH_US_YES_2">
+      <Text>Отличная мысль. Пусть весь мир завидует нашему союзу.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_GENERIC_WORK_WITH_US_YES_3">
+      <Text>Я с радостью соглашаюсь на это. Пусть наши империи дружат и процветают.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_HARUN_EXPANSION_SERIOUS_WARNING_1">
+      <Text>Вы смеете оскорблять Землю Бога тем, что селитесь так близко к ней? Знай свое место, язычник.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_HARUN_HOSTILE_AGGRESSIVE_MILITARY_WARNING_1">
+      <Text>Вам не скрыться - ни от Бога, ни от Аравии. Если вы решите воевать с нами, то обречете себя на вечное проклятие.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_HIAWATHA_EXPANSION_SERIOUS_WARNING_1">
+      <Text>Эти земли существуют не ради вашей выгоды. Как их попечитель, я требую, чтобы вы немедленно прекратили основывать поселения вдоль границ ирокезов.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_HIAWATHA_HOSTILE_AGGRESSIVE_MILITARY_WARNING_1">
+      <Text>Духи предупредили меня о близости великого зла. Не оскверняйте память ваших предков, убивая представителей других народностей.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_HOSTILE_AGGRESSIVE_MILITARY_WARNING_1">
+      <Text>Я вижу, ваши армии собираются у моих границ. Что ж, хотите нападать - нападайте. Только потом не пытайтесь спрятаться от нашего гнева.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_HOSTILE_WE_ATTACKED_YOUR_MINOR_1">
+      <Text>Думаю, вам будет интересно узнать, что мы только что начали вторжение в один из ваших любимых районов. Эти земли и ресурсы станут приятным дополнением к моей империи.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_HOSTILE_WE_ATTACKED_YOUR_MINOR_2">
+      <Text>Ой, кажется, я напал на одного из ваших маленьких друзей. Будете что-нибудь с этим делать или нет?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_HUMAN_DENOUNCE_SO_AI_DENOUNCE_1">
+      <Text>Я разделяю ваше убеждение в том, что {@1_CivName} {@1: plural 1?приносит; 2?приносят; other?приносит;} всем цивилизованным странам одни лишь проблемы. Возможно, наше совместное публичное осуждение преподаст им урок.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_HUMAN_DENOUNCE_SO_AI_DOF_1">
+      <Text>Любой ваш друг достоин нашего расположения. Передайте державе {1_CivName} мой сердечный поклон.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_HUMAN_DENOUNCED_ENEMY_1">
+      <Text>Мы рады слышать, что кто-то в этом мире разделяет наше недовольство державой {1_CivName}. Безусловно, им не стоит доверять.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_HUMAN_DENOUNCED_FRIEND_1">
+      <Text>Вы должны знать, что {1_CivName} и я многое перенесли вместе, и я испытываю к ним только глубочайшее уважение. Надеюсь, вы теперь осознаете, что вы сделали.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_HUMAN_DOF_SO_AI_DENOUNCE_1">
+      <Text>Прекрасно, значит, паразиты стали размножаться. Теперь мне придется разбираться еще и с вами, равно как и с державой {1_CivName}? Что ж, пора преподать вам урок.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_HUMAN_DOF_SO_AI_DOF_1">
+      <Text>Мы узнали, что вы объявили своим другом державу {1_CivName}. То же самое сделали и мы. Возможно, этот импровизированный союз приведет к большим успехам в будущем?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_HUMAN_DOFED_ENEMY_1">
+      <Text>Мы рекомендуем вам не сближаться с державой {1_CivName}. Иначе... у нас с вами могут возникнуть проблемы.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_HUMAN_DOFED_FRIEND_1">
+      <Text>Хм, мы только что узнали, что вы и {1_CivName} стали друзьями. Приятно это слышать, ведь мы тоже находимся с ними в хороших отношениях.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_KILLED_PROTECTED_CITY_STATE_1">
+      <Text>То, что вы захватили{@1: gender masculine? ; feminine? ; neuter? ; other? город ;}{@1_MinorCivName[4]}, показывает, насколько мало значит ваше слово. Какая подлость! Весь мир скоро узнает о ваших преступлениях.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_ALEXANDER_GREETING_HOSTILE_HELLO_1">
+      <Text>Вы достаточно смелы, чтобы позволить себе настолько высокомерное отношение к Греческой империи.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_ALEXANDER_GREETING_NEUTRAL_HELLO_1">
+      <Text>Добро пожаловать! Надеюсь, вы так же восхититесь Греческой империей, как восхищаюсь ей я.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_ALEXANDER_GREETING_POLITE_HELLO_1">
+      <Text>А, это вы, друг! Здравствуйте, здравствуйте... Какую услугу может вам оказать великий полководец?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_ALEXANDER_LUXURY_TRADE_1">
+      <Text>Трудно стоять во главе королевства. Торговля с друзьями - прекрасный способ облегчить это бремя.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_ALEXANDER_OPEN_BORDERS_EXCHANGE_1">
+      <Text>Открытые границы, несомненно, помогут нам защищать наши империи, не правда ли?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_ALEXANDER_RESPONSE_REQUEST_1">
+      <Text>В последнее время мы были хорошими друзьями, правда? Вам не трудно сделать небольшое одолжение?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_ASKIA_GREETING_HOSTILE_HELLO_1">
+      <Text>Если хотите, то я покажу вам, насколько остры лезвия воинов Сонгай... Нет? Тогда чего вы добиваетесь?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_ASKIA_GREETING_NEUTRAL_HELLO_1">
+      <Text>Я верю в то, что сам Бог послал вас в Сонгай, о великий правитель.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_ASKIA_GREETING_POLITE_HELLO_1">
+      <Text>Мой друг, что привело вас в Сонгай, благословенную Богом землю?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_ASKIA_LUXURY_TRADE_1">
+      <Text>Бог учит нас узнавать и уважать соседей. Посредством торговли мы лучше узнаем друг друга.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_ASKIA_OPEN_BORDERS_EXCHANGE_1">
+      <Text>Я ищу новые пути паломничества в землю Бога. Полагаю, доступ к моим землям вам также принесет немалую пользу. Открыть ли нам границы?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_ASKIA_RESPONSE_REQUEST_1">
+      <Text>В последнее время обстоятельства не слишком благоволили империи Сонгай. Мне кажется, Бог учит, что мы не должны торжествовать в одиночку.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_AUGUSTUS_GREETING_HOSTILE_HELLO_1">
+      <Text>Не тратьте время Рима попусту. У меня много дел.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_AUGUSTUS_GREETING_NEUTRAL_HELLO_1">
+      <Text>Говорите, что вам нужно. Меня ждут и другие дела.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_AUGUSTUS_GREETING_POLITE_HELLO_1">
+      <Text>Что привело тебя в Рим, о мудрый правитель?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_AUGUSTUS_LUXURY_TRADE_1">
+      <Text>Крайне важно следить за тем, чтобы народ был доволен. В этом отношении нам пойдет на пользу взаимный обмен.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_AUGUSTUS_OPEN_BORDERS_EXCHANGE_1">
+      <Text>В настоящее время открыть границы было бы весьма удобно. Вы согласны?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_AUGUSTUS_RESPONSE_REQUEST_1">
+      <Text>Время от времени проблемы бывают даже у могущественного Рима. Могу я попросить об одном одолжении?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_BISMARCK_GREETING_HOSTILE_HELLO_1">
+      <Text>Назовите цель вашего визита.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_BISMARCK_GREETING_NEUTRAL_HELLO_1">
+      <Text>Германия всегда рада благоприятным отношениям с такой могущественной империей, как ваша.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_BISMARCK_GREETING_POLITE_HELLO_1">
+      <Text>Привет из Германии. Надеюсь, у вас все в порядке?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_BISMARCK_LUXURY_TRADE_1">
+      <Text>Торговля - один из многих способов усилить мощь империи. Как вам это предложение?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_BISMARCK_OPEN_BORDERS_EXCHANGE_1">
+      <Text>Германия ищет сильных и умелых союзников. Открытые границы помогут нам защищать друг друга.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_BISMARCK_RESPONSE_REQUEST_1">
+      <Text>Помогая Германии в трудные времена, вы обретаете верного союзника, готового прийти на помощь, когда она понадобится вам.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_CATHERINE_GREETING_HOSTILE_HELLO_1">
+      <Text>Вы здесь для того, чтобы заслужить мою благосклонность? Если так, то вам нужно постараться.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_CATHERINE_GREETING_NEUTRAL_HELLO_1">
+      <Text>Великолепно, я всегда рада видеть других повелителей!</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_CATHERINE_GREETING_POLITE_HELLO_1">
+      <Text>Отлично, надеюсь встретиться с вами снова!</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_CATHERINE_LUXURY_TRADE_1">
+      <Text>Ах, это вы! Здравствуйте. Мне кажется, это предложение может вас заинтересовать. Что скажете?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_CATHERINE_OPEN_BORDERS_EXCHANGE_1">
+      <Text>Единственный способ узнать друг друга лучше - это убрать границы между народами. Что вы скажете на это предложение?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_CATHERINE_RESPONSE_REQUEST_1">
+      <Text>Посмотрите, кто пришел! У меня не было сомнений, что вы рано или поздно появитесь. В настоящее время Россия испытывает некоторые экономические трудности. Вы не могли бы помочь?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_DARIUS_GREETING_HOSTILE_HELLO_1">
+      <Text>Вы осмелились предстать перед могущественной Персией? Что вам нужно?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_DARIUS_GREETING_NEUTRAL_HELLO_1">
+      <Text>Что привело вас в обширную и благородную Персидскую империю?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_DARIUS_GREETING_POLITE_HELLO_1">
+      <Text>Сокровища всего мира могут стать нашим общим достоянием! Что привело вас в Персию на этот раз, друг?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_DARIUS_LUXURY_TRADE_1">
+      <Text>Торговля - источник жизненной силы любой империи, и Персия не исключение. Что скажете на это предложение?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_DARIUS_OPEN_BORDERS_EXCHANGE_1">
+      <Text>Персия ищет знаний и возможности упрочить свое влияние в любом уголке мира. Возможно, вы разделяете эти цели. Открыть ли нам границы?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_DARIUS_RESPONSE_REQUEST_1">
+      <Text>Великая Персидская империя в настоящее время испытывает некоторые трудности. Ваша помощь послужит вкладом в наше общее светлое будущее.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_ELIZABETH_GREETING_HOSTILE_HELLO_1">
+      <Text>Я не могу тратить на вас весь день. Поскорее говорите, что вам нужно, и уходите.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_ELIZABETH_GREETING_NEUTRAL_HELLO_1">
+      <Text>Добро пожаловать в Англию!</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_ELIZABETH_GREETING_POLITE_HELLO_1">
+      <Text>И снова добро пожаловать в Англию, друг! Надеюсь, ваше путешествие было приятным?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_ELIZABETH_LUXURY_TRADE_1">
+      <Text>Долг всех цивилизованных наций - накапливать богатства посредством торговли.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_ELIZABETH_OPEN_BORDERS_EXCHANGE_1">
+      <Text>Открытые границы помогут нам лучше воспользоваться коммерческими возможностями. Согласны?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_ELIZABETH_RESPONSE_REQUEST_1">
+      <Text>Вы хотели бы помочь нам? Считайте это вкладом в развитие отношений с великой Англией.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_GANDHI_GREETING_HOSTILE_HELLO_1">
+      <Text>Мне не очень нравится беседовать с вами, но, надеюсь, это способствует великому будущему Индии.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_GANDHI_GREETING_NEUTRAL_HELLO_1">
+      <Text>Индия всегда рада приветствовать вас.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_GANDHI_GREETING_POLITE_HELLO_1">
+      <Text>И снова здравствуйте, друг! Индия приветствует вас с распростертыми объятиями.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_GANDHI_LUXURY_TRADE_1">
+      <Text>А, здравствуйте, друг! Мне пришло в голову, что мы могли бы заключить сделку, выгодную для обеих сторон. Что скажете?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_GANDHI_OPEN_BORDERS_EXCHANGE_1">
+      <Text>Индия надеется, что наша дружба окрепнет оттого, что мы устраним разделяющие нас искусственные барьеры.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_GANDHI_RESPONSE_REQUEST_1">
+      <Text>Мой дорогой друг, не можете ли вы кое-чем поделиться с Индией?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_HARUN_GREETING_HOSTILE_HELLO_1">
+      <Text>Тем, кого избегает сам Бог, не место здесь.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_HARUN_GREETING_NEUTRAL_HELLO_1">
+      <Text>Должно быть, сам Бог привел вас сюда.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_HARUN_GREETING_POLITE_HELLO_1">
+      <Text>Бог улыбается вам, мой друг. Что я могу сделать для вас?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_HARUN_LUXURY_TRADE_1">
+      <Text>По воле Божией мы стремимся к сотрудничеству и торговле с нашими друзьями.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_HARUN_OPEN_BORDERS_EXCHANGE_1">
+      <Text>Открытые границы, несомненно, покажут Богу, что мы просвещенные цивилизации.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_HARUN_RESPONSE_REQUEST_1">
+      <Text>Вы застали нас не в самый благоприятный час. Бог улыбается тем, кто щедр к другим.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_HIAWATHA_GREETING_HOSTILE_HELLO_1">
+      <Text>Окружающие меня духи говорят, что вам не стоит доверять. Что скажете?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_HIAWATHA_GREETING_NEUTRAL_HELLO_1">
+      <Text>Что привело вас так далеко в эти земли?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_HIAWATHA_GREETING_POLITE_HELLO_1">
+      <Text>Ваше появление предсказали духи. Что привело вас сюда, друг?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_HIAWATHA_LUXURY_TRADE_1">
+      <Text>Щедрости природы предназначены для всех.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_HIAWATHA_OPEN_BORDERS_EXCHANGE_1">
+      <Text>Земля жаждет освободиться от границ, навязанных ей людьми. Что скажете, если мы предложим стереть их между нашими народами?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_HIAWATHA_RESPONSE_REQUEST_1">
+      <Text>Духи сказали мне, что нас ожидают неприятности. Надеюсь, что с вашей щедрой поддержкой нам удастся их благополучно пережить.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_MONTEZUMA_GREETING_HOSTILE_HELLO_1">
+      <Text>Вы здесь, чтобы предложить себя в качестве жертвы? Нет? Тогда побыстрее говорите, что вам нужно.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_MONTEZUMA_GREETING_NEUTRAL_HELLO_1">
+      <Text>Если желаете, я могу показать вам мой алтарь поближе.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_MONTEZUMA_GREETING_POLITE_HELLO_1">
+      <Text>Добро пожаловать, друг! В знак моего восторга от встречи я прикажу принести в жертву десять пленников!</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_MONTEZUMA_LUXURY_TRADE_1">
+      <Text>Ну что, давайте заключим соглашение. Обмен предметами роскоши поможет нам успокоить непокорную чернь.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_MONTEZUMA_OPEN_BORDERS_EXCHANGE_1">
+      <Text>Открытые границы помогут мне приносить больше жертв на алтаре. Надеюсь, и вам они тоже как-нибудь помогут!</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_MONTEZUMA_RESPONSE_REQUEST_1">
+      <Text>Преподнесите нам этот дар, и следующие десять жертвоприношений я проведу в честь вас!</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_NAPOLEON_GREETING_HOSTILE_HELLO_1">
+      <Text>Какое дело у вас к величайшему полководцу человечества?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_NAPOLEON_GREETING_NEUTRAL_HELLO_1">
+      <Text>Вы прибыли сюда, чтобы восхититься могуществом Французской империи, или у вас есть какие-то другие дела?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_NAPOLEON_GREETING_POLITE_HELLO_1">
+      <Text>А, приветствую еще раз. Полагаю, мой друг, вас в последнее время не слишком беспокоили какие-нибудь неприятности?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_NAPOLEON_LUXURY_TRADE_1">
+      <Text>Похоже, у каждого из нас есть кое-какие товары для взаимного обмена. Обменяемся ими?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_NAPOLEON_OPEN_BORDERS_EXCHANGE_1">
+      <Text>Открытые границы помогут нашим войскам двигаться быстрее. Если, конечно, возникнет такая необходимость. Что скажете?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_NAPOLEON_RESPONSE_REQUEST_1">
+      <Text>Неприятности случаются даже во Франции. Сделайте нам подарок, и я прослежу, чтобы вы в надлежащее время получили свою награду.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_ODA_GREETING_HOSTILE_HELLO_1">
+      <Text>Самурай даровал вам возможность встретиться с ним. А теперь говорите и не тратьте время попусту.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_ODA_GREETING_NEUTRAL_HELLO_1">
+      <Text>Смиренный воин приветствует вас.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_ODA_GREETING_POLITE_HELLO_1">
+      <Text>Приветствую вас, великий предводитель! Я искренне надеюсь, что у вас все хорошо!</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_ODA_LUXURY_TRADE_1">
+      <Text>Не хочу показаться самонадеянным, но полагаю, что торговля будет взаимовыгодной.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_ODA_OPEN_BORDERS_EXCHANGE_1">
+      <Text>В знак взаимного уважения я требую, чтобы мы открыли друг другу проход по нашим владениям.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_ODA_RESPONSE_REQUEST_1">
+      <Text>Может ли этот смиренный воин склонить голову и попросить вас о щедрости?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_RAMESSES_GREETING_HOSTILE_HELLO_1">
+      <Text>Вы должны испытывать благодарность за то, что божественный фараон позволил вам дожить до этого времени.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_RAMESSES_GREETING_NEUTRAL_HELLO_1">
+      <Text>Бог и фараон Египта приветствует вас.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_RAMESSES_GREETING_POLITE_HELLO_1">
+      <Text>Добро пожаловать, великий предводитель. Какое дело у вас к Богу Египта?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_RAMESSES_LUXURY_TRADE_1">
+      <Text>Я предлагаю вам воспользоваться щедростью долины Нила и прошу вас о равноценном обмене.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_RAMESSES_OPEN_BORDERS_EXCHANGE_1">
+      <Text>Египет согласен открыть вам границы своей священной земли, если вы согласитесь сделать то же самое.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_RAMESSES_RESPONSE_REQUEST_1">
+      <Text>Если вы сделаете подношение Египту, стране богов, я уверен, что тем самым вы обеспечите себе щедрую награду на протяжении многих поколений.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_RAMKHAMHAENG_GREETING_HOSTILE_HELLO_1">
+      <Text>Встречаться с вами всегда неприятно, но приходится жертвовать ради благополучия сиамского народа.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_RAMKHAMHAENG_GREETING_NEUTRAL_HELLO_1">
+      <Text>Надеюсь, вы найдете то, за чем прибыли в Сиам.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_RAMKHAMHAENG_GREETING_POLITE_HELLO_1">
+      <Text>А, здравствуйте! Как нам отметить ваше возвращение в Сиам?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_RAMKHAMHAENG_LUXURY_TRADE_1">
+      <Text>Торговля - плод отношений между двумя великими царствами. Что вы думаете об этом предложении, мой друг?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_RAMKHAMHAENG_OPEN_BORDERS_EXCHANGE_1">
+      <Text>Истинный предводитель знает, что достичь просветления можно только сообща. Открыть ли нам границы, обеспечив свободный проход между нашими государствами?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_RAMKHAMHAENG_RESPONSE_REQUEST_1">
+      <Text>Если вы сделаете нам этот дар, я, вне всякого сомнения, распространю весть о вашем величии по всем империям мира.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_SULEIMAN_GREETING_HOSTILE_HELLO_1">
+      <Text>Я привык разговаривать только с великими предводителями, но для вас сделаю исключение. Поспешите.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_SULEIMAN_GREETING_NEUTRAL_HELLO_1">
+      <Text>Добро пожаловать в Османскую империю, жемчужину цивилизации.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_SULEIMAN_GREETING_POLITE_HELLO_1">
+      <Text>А, приятно встретить вас вновь! Османская империя всегда рада доставить удовольствие друзьям.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_SULEIMAN_LUXURY_TRADE_1">
+      <Text>Я разделю с вами часть своих богатств, если вы согласитесь сделать то же самое!</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_SULEIMAN_OPEN_BORDERS_EXCHANGE_1">
+      <Text>Единственный способ познать мир - увидеть другие его части. Открыв границы, мы расширим горизонты нашего познания.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_SULEIMAN_RESPONSE_REQUEST_1">
+      <Text>Османская империя переживает не лучшие времена. Могу я попросить друга об одолжении?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_WASHINGTON_GREETING_HOSTILE_HELLO_1">
+      <Text>Не против? Что за дело у вас к Соединенным Штатам?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_WASHINGTON_GREETING_NEUTRAL_HELLO_1">
+      <Text>Добро пожаловать в Соединенные Штаты!</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_WASHINGTON_GREETING_POLITE_HELLO_1">
+      <Text>Рад снова видеть вас в США, друг мой.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_WASHINGTON_LUXURY_TRADE_1">
+      <Text>Надеюсь, что благодаря торговле Соединенные Штаты и ваша великая империя сблизятся еще больше.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_WASHINGTON_OPEN_BORDERS_EXCHANGE_1">
+      <Text>Соединенные Штаты полагают, что открытые границы между нашими странами помогут нам укрепить дружеские отношения.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_WASHINGTON_RESPONSE_REQUEST_1">
+      <Text>Соединенные Штаты будут у вас в долгу, если вы предоставите нам помощь.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_WUZETIAN_GREETING_HOSTILE_HELLO_1">
+      <Text>Не забывайте, что неуважение к Китайской империи строго карается, так называемый "друг"!</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_WUZETIAN_GREETING_NEUTRAL_HELLO_1">
+      <Text>Добро пожаловать! Что привело вас в богатый и могущественный Китай?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_WUZETIAN_GREETING_POLITE_HELLO_1">
+      <Text>Приветствую вас, мой друг! В такие времена нужно заботиться друг о друге, не правда ли?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_WUZETIAN_LUXURY_TRADE_1">
+      <Text>В Китае много редких и ценных товаров. Давайте меняться!</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_WUZETIAN_OPEN_BORDERS_EXCHANGE_1">
+      <Text>Я верю в то, что открытые границы помогут нам развивать культуру и искусство наших империй.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_LEADER_WUZETIAN_RESPONSE_REQUEST_1">
+      <Text>Мне больно поступиться гордостью за Китай, но я должен попросить вас о помощи.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_MONTEZUMA_EXPANSION_SERIOUS_WARNING_1">
+      <Text>Если ваши поселенцы подберутся еще ближе к моим владениям, то следующей моей жертвой станете вы.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_MONTEZUMA_HOSTILE_AGGRESSIVE_MILITARY_WARNING_1">
+      <Text>Ну что же, смелее, глупец! Из ваших солдат выйдут прекрасные жертвы богам.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_NAPOLEON_EXPANSION_SERIOUS_WARNING_1">
+      <Text>Пытаетесь урвать себе пару клочков земли, пока я отвернулся? Продолжите - заплатите высокую цену, я обещаю.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_NAPOLEON_HOSTILE_AGGRESSIVE_MILITARY_WARNING_1">
+      <Text>Хм! И что ваши войска делают рядом с моей территорией? Хотите сражаться - сражайтесь. Но знайте, что меня не победить.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_NOW_ENEMY_1">
+      <Text>Учитывая обстоятельства, я могу лишь предположить, что вы - наш враг. И я сделаю все, чтобы защитить наши интересы.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_NOW_UNFORGIVABLE_1">
+      <Text>Вашим поступкам нет оправдания. Между нашими народами не может быть договора.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_ODA_EXPANSION_SERIOUS_WARNING_1">
+      <Text>Великому предводителю и главе государства не подобает настолько дерзко захватывать земли по своему усмотрению. У нас нет иного выбора, как потребовать от вас сменить свою стратегию.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_ODA_HOSTILE_AGGRESSIVE_MILITARY_WARNING_1">
+      <Text>Желаете воевать - вперед! Только не пользуйтесь тактикой развращенных разумом и духом.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_PLOT_BUYING_BROKEN_PROMISE_1">
+      <Text>Похоже, вы солгали, сказав, что перестанете скупать земли у наших границ. Это тяжкое оскорбление.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_PLOT_BUYING_BROKEN_PROMISE_2">
+      <Text>Мы весьма разочарованы: вы не прекратили скупать земли у наших границ. Прежде мы надеялись, что честь для вас - не пустой звук.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_PLOT_BUYING_SERIOUS_WARNING_1">
+      <Text>Собираетесь скупить все земли вокруг нас? Мы расцениваем это как оскорбление. Мне хотелось верить, что вы хороший сосед, но надежды не оправдались.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_PLOT_BUYING_WARNING_1">
+      <Text>Нас беспокоит тот факт, что вы скупаете земли возле наших границ. Не стоит нас провоцировать.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_RAMESSES_EXPANSION_SERIOUS_WARNING_1">
+      <Text>Как вы посмели селиться близ священной земли Нила? Если не прекратите, я обеспечу вам быстрое путешествие в загробный мир.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_RAMESSES_HOSTILE_AGGRESSIVE_MILITARY_WARNING_1">
+      <Text>Если вы в глупости своей вознамеритесь напасть на нас, фараон и бог Египта растопчет вас как жуков.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_RAMKHAMHAENG_EXPANSION_SERIOUS_WARNING_1">
+      <Text>Я искренне надеюсь, что Сиам и ваша империя станут замечательными друзьями. Но если вы продолжите основывать поселения поблизости от наших земель, боюсь, мы станем врагами.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_RAMKHAMHAENG_HOSTILE_AGGRESSIVE_MILITARY_WARNING_1">
+      <Text>Присутствие ваших войск близ границ Сиама неприемлемо. Немедленно отзовите их.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_RESPONSE_TO_BEING_DENOUNCED_1">
+      <Text>Значит, вот так? Хорошо. Я вам никогда этого не прощу.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_RESPONSE_TO_BEING_DENOUNCED_2">
+      <Text>Вы сильно замарали свою репутацию, совершив такой глупый поступок.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_RESPONSE_TO_BEING_DENOUNCED_3">
+      <Text>Вы сделали глупую ошибку. Мы никогда об этом не забудем.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_RESPONSE_TO_BEING_DENOUNCED_4">
+      <Text>Мне кажется, я понапрасну трачу с вами время. Впрочем, я не думал, что мы дойдем до этого.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_SULEIMAN_EXPANSION_SERIOUS_WARNING_1">
+      <Text>О чем вы думали, основывая свои поселения в такой близости от границ Османской империи? Немедленно прекратите!</Text>
+    </Row>
+    <Row Tag="TXT_KEY_SULEIMAN_HOSTILE_AGGRESSIVE_MILITARY_WARNING_1">
+      <Text>Вы что, желаете напасть на могущественную Османскую империю? А размещение ваших войск как раз об этом и говорит. Дам вам один совет - вы совершаете большую ошибку.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_WAR_DEMAND_REFUSED_1">
+      <Text>Да будет так. Мои армии сами возьмут все необходимое из твоих земель.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_WAR_DEMAND_REFUSED_2">
+      <Text>Вы хотели войну - вы ее получите.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_WASHINGTON_EXPANSION_SERIOUS_WARNING_1">
+      <Text>Вы посягаете на суверенные земли Соединенных Штатов. Мы предупреждаем вас в последний раз.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_WASHINGTON_HOSTILE_AGGRESSIVE_MILITARY_WARNING_1">
+      <Text>Располагать войска у наших границ совершенно недопустимо! Немедленно уведите их, или ожидайте суровых последствий.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_WE_ATTACKED_YOUR_MINOR_1">
+      <Text>Мне доложили, что один из атакованных нами городов-государств прежде был с вами тесно связан. Мы не хотели бы враждовать с вашей империей: война с этим городом-государством была необходима.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_WE_ATTACKED_YOUR_MINOR_2">
+      <Text>Мне доложили, что мы атаковали дружественный вам город-государство. Уверяю вас, это действие не направлено против вас. Надеюсь, это не послужит причиной для вражды между нашими державами.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_WORK_AGAINST_SOMEONE_1">
+      <Text>Наши отношения с игроком {@1_PlayerName} ухудшились. Мне бы не помешали союзники, чтобы изолировать этого негодяя. Вы готовы заключить со мной тайное соглашение?[NEWLINE][NEWLINE](Это не приведет к объявлению войны)</Text>
+    </Row>
+    <Row Tag="TXT_KEY_WORK_AGAINST_SOMEONE_2">
+      <Text>{@1_PlayerName} становится реальной проблемой. Мы ищем единомышленников. Вы готовы заключить со мной тайное соглашение?[NEWLINE][NEWLINE](Это не приведет к объявлению войны)</Text>
+    </Row>
+    <Row Tag="TXT_KEY_WORK_WITH_US_1">
+      <Text>Достойные союзники - редкость в нашем мире. Я хотел бы заключить с вашей великой империей договор о сотрудничестве. Что скажете?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_WORK_WITH_US_2">
+      <Text>Великий вождь, не желаете ли заключить договор о сотрудничестве? Я надеюсь, что нам удастся заложить основы дружбы между нашими империями, которая продлится долгие годы.</Text>
+    </Row>
+    <Row Tag="TXT_KEY_WORK_WITH_US_3">
+      <Text>Сделаем шаг к светлому будущему, заключив договор о сотрудничестве. Что скажете?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_WORK_WITH_US_4">
+      <Text>Мир жесток. Лишь вместе мы можем победить. Не хотите ли присоединиться к договору о сотрудничестве?</Text>
+    </Row>
+    <Row Tag="TXT_KEY_WUZETIAN_EXPANSION_SERIOUS_WARNING_1">
+      <Text>Я понимаю, что Китай - процветающее государство, но ваше присутствие здесь нежелательно. Немедленно прекратите селиться близ моих границ!</Text>
+    </Row>
+    <Row Tag="TXT_KEY_WUZETIAN_HOSTILE_AGGRESSIVE_MILITARY_WARNING_1">
+      <Text>Если ваши многочисленные войска пересекут мои границы, то на вас обрушится весь гнев китайского народа.</Text>
+    </Row>
+  </Language_RU_RU>
+</GameData>
