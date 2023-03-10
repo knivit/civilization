@@ -11,11 +11,25 @@ public class CityHappinessService {
 
     private final City city;
 
+    private Happiness happiness;
+
     public CityHappinessService(City city) {
         this.city = city;
     }
 
-    public Happiness calcHappiness() {
+    public Happiness getHappiness() {
+        if (happiness == null) {
+            happiness = calc();
+        }
+        return happiness;
+    }
+
+    public void recalculate() {
+        happiness = null;
+        city.getCivilization().getHappinessService().recalculate();
+    }
+
+    private Happiness calc() {
         int buildings = calcBuildingsHappiness();
         int garrisonedUnits = calcGarrisonedUnitsHappiness();
         int luxuryResources = calcLuxuryResourcesHappiness();

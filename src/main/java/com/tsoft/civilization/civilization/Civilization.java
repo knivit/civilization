@@ -2,10 +2,7 @@ package com.tsoft.civilization.civilization;
 
 import com.tsoft.civilization.civilization.city.CivilizationCityService;
 import com.tsoft.civilization.civilization.event.*;
-import com.tsoft.civilization.civilization.happiness.CivilizationHappinessService;
-import com.tsoft.civilization.civilization.happiness.CivilizationUnhappinessService;
-import com.tsoft.civilization.civilization.happiness.Happiness;
-import com.tsoft.civilization.civilization.happiness.Unhappiness;
+import com.tsoft.civilization.civilization.happiness.*;
 import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.civilization.population.CivilizationPopulationService;
 import com.tsoft.civilization.civilization.social.CivilizationSocialPolicyService;
@@ -21,14 +18,11 @@ import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.unit.catalog.settlers.Settlers;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.world.Year;
+import com.tsoft.civilization.world.*;
 import com.tsoft.civilization.technology.TechnologySet;
-import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.world.agreement.AgreementList;
 import com.tsoft.civilization.world.agreement.OpenBordersAgreement;
 import com.tsoft.civilization.economic.Supply;
-import com.tsoft.civilization.world.Event;
-import com.tsoft.civilization.world.EventsByYearMap;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -67,6 +61,8 @@ public abstract class Civilization {
     @Getter
     private final CivilizationSocialPolicyService socialPolicyService;
 
+    private final CivilizationGoldenAgeService goldenAgeService;
+
     private final Set<Technology> technologies = new TechnologySet();
 
     @Getter
@@ -89,14 +85,6 @@ public abstract class Civilization {
     @Getter
     private final CivilizationBot bot;
 
-    @Getter
-    private int goldenAgeCounter;
-
-    @Getter
-    private Happiness happiness;
-
-    @Getter
-    private Unhappiness unhappiness;
 
     protected abstract CivilizationView createView();
 
@@ -120,9 +108,14 @@ public abstract class Civilization {
         happinessService = new CivilizationHappinessService(this);
         unhappinessService = new CivilizationUnhappinessService(this);
         socialPolicyService = new CivilizationSocialPolicyService(this);
+        goldenAgeService = new CivilizationGoldenAgeService(this);
 
         view = createView();
         bot = createBot(world, this);
+    }
+
+    public DifficultyLevel getDifficultyLevel() {
+        return world.getDifficultyLevel();
     }
 
     public L10n getName() {
@@ -162,7 +155,7 @@ public abstract class Civilization {
     }
 
     /** Something is happened in our civilization (a citizen was born,
-     * a building was built, a unit has won etc)
+     * a building was built, a unit has won etc.)
     */
     public void addEvent(Event event) {
         events.add(event);
@@ -281,12 +274,16 @@ public abstract class Civilization {
             .build());
     }
 
-    public Happiness calcHappiness() {
-        return happinessService.calc();
+    public Happiness getHappiness() {
+        return happinessService.getHappiness();
     }
 
-    public Unhappiness calcUnhappiness() {
-        return unhappinessService.calc();
+    public Unhappiness getUnhappiness() {
+        return unhappinessService.getUnhappiness();
+    }
+
+    public GoldenAge getGoldenAge() {
+        return goldenAgeService.getGoldenAge();
     }
 
     public Supply calcSupply() {
@@ -313,6 +310,7 @@ public abstract class Civilization {
         unitService.startYear();
         cityService.startYear();
         tileService.startYear();
+        goldenAgeService.startYear();
 
         // A bot can be helping a human player
         bot.startYear();
@@ -338,14 +336,11 @@ public abstract class Civilization {
         cityService.stopYear();
         unitService.stopYear();
         tileService.stopYear();
+        goldenAgeService.stopYear();
 
         Supply yearSupply = calcSupply();
 
         supply = supply.add(yearSupply);
-
-        happiness = calcHappiness();
-        unhappiness = calcUnhappiness();
-        goldenAgeCounter = Math.max(0, goldenAgeCounter);
 
         addEvent(StopYearEvent.builder()
             .civilizationName(getName())

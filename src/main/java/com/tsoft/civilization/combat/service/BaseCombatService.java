@@ -341,7 +341,7 @@ public class BaseCombatService {
     private int calcAttackerStrikeHappinessPercent(HasCombatStrength attacker) {
         int value = 0;
 
-        Happiness happiness = attacker.getCivilization().calcHappiness();
+        Happiness happiness = attacker.getCivilization().getHappiness();
         if (happiness.getTotal() < -30) {
             value -= 33;
         } else

@@ -157,7 +157,7 @@ public class CivilizationCityService {
     public Happiness calcHappiness() {
         Happiness happiness = Happiness.EMPTY;
         for (City city : cities) {
-            happiness = happiness.add(city.calcHappiness());
+            happiness = happiness.add(city.getHappiness());
         }
         return happiness;
     }

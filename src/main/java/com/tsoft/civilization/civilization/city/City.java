@@ -10,10 +10,12 @@ import com.tsoft.civilization.civilization.city.construction.ConstructionList;
 import com.tsoft.civilization.civilization.city.event.CityStopYearEvent;
 import com.tsoft.civilization.civilization.city.happiness.CityHappinessService;
 import com.tsoft.civilization.civilization.city.citizen.CityCitizenService;
+import com.tsoft.civilization.civilization.city.happiness.CityUnhappinessService;
 import com.tsoft.civilization.civilization.city.specialist.CitySpecialistService;
 import com.tsoft.civilization.civilization.city.supply.CitySupplyService;
 import com.tsoft.civilization.civilization.city.supply.TileSupplyStrategy;
 import com.tsoft.civilization.civilization.city.tile.CityTileService;
+import com.tsoft.civilization.civilization.happiness.Unhappiness;
 import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.civilization.building.catalog.palace.Palace;
 import com.tsoft.civilization.civilization.happiness.Happiness;
@@ -29,6 +31,7 @@ import com.tsoft.civilization.unit.*;
 import com.tsoft.civilization.economic.*;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.world.DifficultyLevel;
 import com.tsoft.civilization.world.HasHistory;
 import lombok.Getter;
 import lombok.Setter;
@@ -81,6 +84,9 @@ public class City implements HasCombatStrength, HasHistory {
     private CityHappinessService happinessService;
 
     @Getter
+    private CityUnhappinessService unhappinessService;
+
+    @Getter
     private CityView view;
 
     @Getter
@@ -89,9 +95,6 @@ public class City implements HasCombatStrength, HasHistory {
 
     @Getter
     private Supply supply = Supply.EMPTY;
-
-    @Getter
-    private Happiness happiness = Happiness.EMPTY;
 
     @Getter
     private boolean isAnnexed;
@@ -110,6 +113,10 @@ public class City implements HasCombatStrength, HasHistory {
         tileService = new CityTileService(this);
         tileService.addStartLocations(getTile().getLocation());
 
+        // social
+        happinessService = new CityHappinessService(this);
+        unhappinessService = new CityUnhappinessService(this);
+
         // citizen
         populationService = new CityCitizenService(this);
         populationService.addCitizen();
@@ -125,7 +132,6 @@ public class City implements HasCombatStrength, HasHistory {
 
         // economics
         supplyService = new CitySupplyService(this);
-        happinessService = new CityHappinessService(this);
 
         // media
         view = new CityView(cityName);
@@ -134,6 +140,10 @@ public class City implements HasCombatStrength, HasHistory {
     @Override
     public String getClassUuid() {
         return CLASS_UUID;
+    }
+
+    public DifficultyLevel getDifficultyLevel() {
+        return civilization.getWorld().getDifficultyLevel();
     }
 
     public L10n getName() {
@@ -335,8 +345,12 @@ public class City implements HasCombatStrength, HasHistory {
         return supplyService.calcTilesSupply(location);
     }
 
-    public Happiness calcHappiness() {
-        return happinessService.calcHappiness();
+    public Happiness getHappiness() {
+        return happinessService.getHappiness();
+    }
+
+    public Unhappiness getUnhappiness() {
+        return unhappinessService.getUnhappiness();
     }
 
     @Override

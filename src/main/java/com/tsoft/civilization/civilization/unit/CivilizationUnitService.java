@@ -130,6 +130,8 @@ public class CivilizationUnitService {
         if (canBePlaced(unit, location)) {
             units.add(unit);
             unit.getMovementService().setLocation(location);
+
+            notifyDependentServices();
             return true;
         }
 
@@ -153,6 +155,8 @@ public class CivilizationUnitService {
         units.remove(unit);
         destroyedUnits.add(unit);
         unit.setCivilization(null);
+
+        notifyDependentServices();
     }
 
     public boolean canBuyUnit(AbstractUnit unit, City city) {
@@ -199,5 +203,10 @@ public class CivilizationUnitService {
     public void stopYear() {
         units.stream().forEach(AbstractUnit::stopYear);
         supply = calcSupply();
+    }
+
+    private void notifyDependentServices() {
+        civilization.getHappinessService().recalculate();
+        civilization.getUnhappinessService().recalculate();
     }
 }

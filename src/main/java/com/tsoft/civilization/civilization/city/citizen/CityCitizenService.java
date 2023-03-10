@@ -63,6 +63,8 @@ public class CityCitizenService {
         }
 
         citizens.add(citizen);
+
+        notifyDependentServices();
     }
 
     public List<Point> getCitizenLocations() {
@@ -90,7 +92,7 @@ public class CityCitizenService {
         supply = supply.add(growthPoolSupply);
 
         // At the Unhappiness level of -10 ("Very Unhappy"), population growth stops completely
-        if (city.getCivilization().calcUnhappiness().getTotal() > -10) {
+        if (city.getCivilization().getUnhappiness().getTotal() > -10) {
             if (supply.getFood() > 0) {
                 birth();
             }
@@ -178,6 +180,8 @@ public class CityCitizenService {
         city.getCivilization().addEvent(CitizenHasDiedEvent.builder()
             .cityName(city.getName())
             .build());
+
+        notifyDependentServices();
     }
 
     // The supply strategy has changed, reorganize citizens for best profit
@@ -218,5 +222,9 @@ public class CityCitizenService {
         for (int i = 0; i < citizens.size(); i++) {
             citizens.get(i).setLocation(newLocations.get(i));
         }
+    }
+
+    private void notifyDependentServices() {
+        city.getUnhappinessService().recalculate();
     }
 }

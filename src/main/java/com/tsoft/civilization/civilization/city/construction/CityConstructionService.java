@@ -73,7 +73,7 @@ public class CityConstructionService {
 
     private Supply doConstruction(int approvedProduction) {
         // At the Unhappiness level of -10 ("Very Unhappy"), you can't train Settlers anymore
-        boolean veryUnhappy = city.getCivilization().calcUnhappiness().getTotal() <= -10;
+        boolean veryUnhappy = city.getCivilization().getUnhappiness().getTotal() <= -10;
 
         int usedProductionCost = 0;
 

@@ -272,14 +272,28 @@ public class CivilizationHappinessService {
         DEITY, 0
     );
 
+    private Happiness happiness;
+
     public CivilizationHappinessService(Civilization civilization) {
         this.civilization = civilization;
     }
 
-    public Happiness calc() {
-        DifficultyLevel difficultyLevel = civilization.getWorld().getDifficultyLevel();
+    public Happiness getHappiness() {
+        if (happiness == null) {
+            Happiness global = calcGlobal();
+            Happiness local = calcLocal();
+            happiness = global.add(local);
+        }
 
-        Happiness citiesHappiness = civilization.getCityService().calcHappiness();
+        return happiness;
+    }
+
+    public void recalculate() {
+        happiness = null;
+    }
+
+    private Happiness calcGlobal() {
+        DifficultyLevel difficultyLevel = civilization.getWorld().getDifficultyLevel();
 
         int wonders = 0;
         int naturalWonders = 0;
@@ -287,12 +301,19 @@ public class CivilizationHappinessService {
 
         return Happiness.builder()
             .baseHappiness(BASE_HAPPINESS.get(difficultyLevel))
-            .luxuryResources(citiesHappiness.getLuxuryResources())
-            .buildings(citiesHappiness.getBuildings())
             .wonders(wonders)
             .naturalWonders(naturalWonders)
             .socialPolicies(socialPolicies)
-            .garrisonedUnits(citiesHappiness.getGarrisonedUnits())
             .build();
+    }
+
+    private Happiness calcLocal() {
+        Happiness citiesHappiness = civilization.getCityService().calcHappiness();
+
+        return Happiness.builder()
+                .luxuryResources(citiesHappiness.getLuxuryResources())
+                .buildings(citiesHappiness.getBuildings())
+                .garrisonedUnits(citiesHappiness.getGarrisonedUnits())
+                .build();
     }
 }

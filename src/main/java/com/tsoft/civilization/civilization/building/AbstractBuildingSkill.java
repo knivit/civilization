@@ -1,6 +1,5 @@
 package com.tsoft.civilization.civilization.building;
 
-import com.tsoft.civilization.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.combat.skill.AbstractSkill;
 import com.tsoft.civilization.economic.Supply;
 

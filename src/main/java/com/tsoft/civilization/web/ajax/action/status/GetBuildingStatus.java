@@ -83,7 +83,7 @@ public class GetBuildingStatus extends AbstractAjaxRequest {
         }
 
         CivilizationHappinessService happinessService = building.getCivilization().getHappinessService();
-        int happiness = happinessService.calc().getTotal();
+        int happiness = happinessService.getHappiness().getTotal();
         Supply supply = building.calcIncomeSupply(myCivilization);
         return Format.text("""
             <table id='info_table'>

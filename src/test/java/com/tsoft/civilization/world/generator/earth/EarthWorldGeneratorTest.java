@@ -10,6 +10,6 @@ public class EarthWorldGeneratorTest {
     @Test
     public void generate() {
         new MapRender(EarthWorldGeneratorTest.class)
-            .createPng(MockTilesMap.of(new EarthDuelMap().getMap()));
+            .createPng(MockTilesMap.of(2, new EarthDuelMap().getMap()));
     }
 }

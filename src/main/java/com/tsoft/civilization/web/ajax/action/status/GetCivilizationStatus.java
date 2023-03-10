@@ -74,6 +74,7 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
                 <tr><td>$goldImage</td><td>$goldLabel</td><td>$gold</td>
                 <tr><td>$foodImage</td><td>$foodLabel</td><td>$food</td>
                 <tr><td>$happinessImage</td><td>$happinessLabel</td><td>$happiness</td>
+                <tr><td>$goldenAgeImage</td><td>$goldenAgeLabel</td><td>$goldenAge</td>
                 <tr><td></td><td>$militaryUnitsLabel</td><td>$militaryUnits</td>
                 <tr><td></td><td>$civilUnitsLabel</td><td>$civilUnits</td>
                 <tr><td></td><td>$citiesLabel</td><td>$cities</td>
@@ -90,8 +91,10 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
             "$goldLabel", L10nCivilization.GOLD, "$gold", civilization.calcSupply().getGold(),
             "$foodImage", FOOD_IMAGE_WITH_TOOLTIP,
             "$foodLabel", L10nCivilization.FOOD, "$food", civilization.calcSupply().getFood(),
-            "$happinessImage", HAPPINESS_IMAGE_WITH_TOOLTIP(civilization.calcHappiness().getTotal()),
-            "$happinessLabel", L10nCivilization.HAPPINESS, "$happiness", civilization.calcHappiness().getTotal(),
+            "$happinessImage", HAPPINESS_IMAGE_WITH_TOOLTIP(civilization.getHappiness().getTotal()),
+            "$happinessLabel", L10nCivilization.HAPPINESS, "$happiness", civilization.getHappiness().getTotal(),
+            "$goldenAgeImage", GOLD_IMAGE_WITH_TOOLTIP,
+            "$goldenAgeLabel", L10nCivilization.GOLDEN_AGE, "$goldenAge", civilization.getGoldenAge().getTurnsTillGoldenAgeEnds(),
             "$militaryUnitsLabel", L10nCivilization.MILITARY_UNITS_COUNT, "$militaryUnits", civilization.getUnitService().getMilitaryCount(),
             "$civilUnitsLabel", L10nCivilization.CIVIL_UNITS_COUNT, "$civilUnits", civilization.getUnitService().getCivilCount(),
             "$citiesLabel", L10nCivilization.CITIES_COUNT, "$cities", civilization.getCityService().size()

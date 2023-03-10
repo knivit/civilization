@@ -86,7 +86,7 @@ import static com.tsoft.civilization.world.MapSize.*;
  * Population: A living person is an unhappy person. Each of a civilization's Citizens automatically generates +1 Unhappiness
  * N.B. This is also true for Engineer Specialists, despite their unhappiness being shown separate to that of the rest of the population.
  *
- * Puppet Cities: Each puppet city in an empire adds the same amount of Unhappiness (Civ5).png Unhappiness that a normal city does.
+ * Puppet Cities: Each puppet city in an empire adds the same amount of Unhappiness that a normal city does.
  *
  * Annexed Cities: Each annexed city in an empire produces more Unhappiness than a normal city, as detailed in the table below.
  * This penalty can only be removed by constructing a Courthouse in the city.[1]
@@ -200,16 +200,16 @@ import static com.tsoft.civilization.world.MapSize.*;
  * Ideological tenets that deal with happiness
  * -------------------------------------------
  * Ideological Tenet	Ideology	Level	Effects
- * Universal            Healthcare	All	1	+1 20xHappiness5.png Local Happiness from each National Wonder.
+ * Universal            Healthcare	All	1	+1 Local Happiness from each National Wonder.
  * Capitalism	        Freedom	    1	    +1 Local Happiness per Mint, Bank and Stock Exchange.
  * Urbanization	        Freedom	    2	    +1 Local Happiness per Water Mill, Hospital and Medical Lab.
  * Universal Suffrage	Freedom	    2	    Unhappiness from Specialists is halved. Golden Ages last 50% longer.
- * Socialist Realism	Order	    1	    +2 20xHappiness5.png Local Happiness from each Monument. Build Monuments in half the usual time.
- * Young Pioneers	    Order	    1	    +1 20xHappiness5.png Local Happiness per Workshop, Factory and Solar/Nuclear/Hydro Plant.
- * Academy of Sciences	Order	    2	    +1 20xHappiness5.png Local Happiness per Observatory, Public School and Research Lab.
- * Fortified Borders	Autocracy	1	    +1 20xHappiness5.png Local Happiness per Castle, Arsenal and Military Base.
- * Militarism	        Autocracy	2	    +2 20xHappiness5.png Local Happiness per Barracks, Armory and Military Academy.
- * Police State	        Autocracy	2	    +3 20xHappiness5.png Local Happiness from each Courthouse. Build Courthouses in half the usual time.
+ * Socialist Realism	Order	    1	    +2 Local Happiness from each Monument. Build Monuments in half the usual time.
+ * Young Pioneers	    Order	    1	    +1 Local Happiness per Workshop, Factory and Solar/Nuclear/Hydro Plant.
+ * Academy of Sciences	Order	    2	    +1 Local Happiness per Observatory, Public School and Research Lab.
+ * Fortified Borders	Autocracy	1	    +1 Local Happiness per Castle, Arsenal and Military Base.
+ * Militarism	        Autocracy	2	    +2 Local Happiness per Barracks, Armory and Military Academy.
+ * Police State	        Autocracy	2	    +3 Local Happiness from each Courthouse. Build Courthouses in half the usual time.
  *
  * Religious beliefs that deal with happiness
  * ------------------------------------------
@@ -227,8 +227,6 @@ import static com.tsoft.civilization.world.MapSize.*;
  * Religious Center	Follower  Temples provide                        +2 Happiness in cities with 5 followers
 */
 public class CivilizationUnhappinessService {
-
-    private final Civilization civilization;
 
     @Value
     private static class UnhappinessPerCity {
@@ -256,23 +254,30 @@ public class CivilizationUnhappinessService {
         DEITY, 1.0
     );
 
-    private static final Map<DifficultyLevel, Double> UNHAPPINESS_PER_POPULATION = Map.of(
-        SETTLER, 0.4,
-        CHIEFTAIN, 0.6,
-        WARLORD, 0.75,
-        PRINCE, 1.0,
-        KING, 1.0,
-        EMPEROR, 1.0,
-        IMMORTAL, 1.0,
-        DEITY, 1.0
-    );
+    private final Civilization civilization;
+
+    private Unhappiness unhappiness;
 
     public CivilizationUnhappinessService(Civilization civilization) {
         this.civilization = civilization;
     }
 
-    public Unhappiness calc() {
-        DifficultyLevel difficultyLevel = civilization.getWorld().getDifficultyLevel();
+    public Unhappiness getUnhappiness() {
+        if (unhappiness == null) {
+            Unhappiness global = calcGlobal();
+            Unhappiness local = calcLocal();
+            unhappiness = global.add(local);
+        }
+
+        return unhappiness;
+    }
+
+    public void recalculate() {
+        unhappiness = null;
+    }
+
+    private Unhappiness calcGlobal() {
+        DifficultyLevel difficultyLevel = civilization.getDifficultyLevel();
 
         // In cities
         int inMyCities = (int)civilization.getCityService().stream()
@@ -288,23 +293,24 @@ public class CivilizationUnhappinessService {
         MapSize mapSize = civilization.getWorld().getTilesMap().getMapSize();
         UnhappinessPerCity unhappinessPerCity = UNHAPPINESS_PER_CITY_FOR_WORLD_SIZE.get(mapSize);
         double difficultyLevelCoeff = UNHAPPINESS_PER_CITY_FOR_DIFFICULT_LEVEL.get(difficultyLevel);
-        int cities = (int)Math.round(
+
+        int inCities = (int)Math.round(
             inMyCities * unhappinessPerCity.forMyCity * difficultyLevelCoeff
                 + inAnnexedCities * unhappinessPerCity.forAnnexedCity
                 + inPuppetCities);
 
-        // Population
-        int populationCount = civilization.getCityService().stream()
-            .mapToInt(City::getCitizenCount)
-            .sum();
-        int population = (int)Math.round(populationCount * UNHAPPINESS_PER_POPULATION.get(difficultyLevel));
-
         return Unhappiness.builder()
+            .inCities(inCities)
             .inMyCities(inMyCities)
             .inAnnexedCities(inAnnexedCities)
             .inPuppetCities(inPuppetCities)
-            .population(population)
-            .total(cities + population)
             .build();
+    }
+
+    private Unhappiness calcLocal() {
+        // Population
+        return civilization.getCityService().stream()
+            .map(e -> e.getUnhappinessService().getUnhappiness())
+            .reduce(Unhappiness::add).orElse(Unhappiness.EMPTY);
     }
 }

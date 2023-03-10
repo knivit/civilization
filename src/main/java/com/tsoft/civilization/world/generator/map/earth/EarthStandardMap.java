@@ -6,7 +6,7 @@ import com.tsoft.civilization.world.generator.map.OriginalMapFileReader;
 
 public class EarthStandardMap implements AbstractWorldMap {
 
-    private static volatile Object LOCK = new Object();
+    private static final Object LOCK = new Object();
     private static volatile String[] INSTANCE;
 
     @Override

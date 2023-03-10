@@ -122,6 +122,10 @@ public class L10nCivilization {
         .put(EN, "Unhappiness")
         .put(RU, "Недовольство");
 
+    public static final L10n GOLDEN_AGE = new L10n()
+            .put(EN, "Golden Age")
+            .put(RU, "Золотой век");
+
     /** Economic */
 
     public static final L10n UNIT_BOUGHT_EVENT = new L10n()

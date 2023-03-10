@@ -41,6 +41,8 @@ public class CityBuildingService implements HasHistory {
 
     public void add(AbstractBuilding building) {
         buildings.add(building);
+
+        notifyDependentServices();
     }
 
     public void remove(AbstractBuilding building) {
@@ -52,6 +54,8 @@ public class CityBuildingService implements HasHistory {
         city.getCivilization().addEvent(BuildingDestroyedEvent.builder()
             .buildingName(building.getView().getName())
             .build());
+
+        notifyDependentServices();
     }
 
     public AbstractBuilding findByClassUuid(String classUuid) {
@@ -64,5 +68,9 @@ public class CityBuildingService implements HasHistory {
 
     @Override
     public void stopYear() {
+    }
+
+    private void notifyDependentServices() {
+        city.getHappinessService().recalculate();
     }
 }

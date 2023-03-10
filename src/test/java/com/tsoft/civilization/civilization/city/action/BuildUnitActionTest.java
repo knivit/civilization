@@ -51,13 +51,13 @@ public class BuildUnitActionTest {
             .usingComparator(SupplyMock::compare)
             .isEqualTo(SupplyMock.of("F1 P3 G3 S4 C1"));
 
-        assertThat(russia.calcHappiness())
+        assertThat(russia.getHappiness())
             .usingComparator(HappinessMock::compare)
             .isEqualTo(HappinessMock.of("D9 L0 B0 W0 N0 P0 G0"));
 
-        assertThat(russia.calcUnhappiness())
+        assertThat(russia.getUnhappiness())
             .usingComparator(UnhappinessMock::compare)
-            .isEqualTo(UnhappinessMock.of("C1 A0 U0 P1 T4"));
+            .isEqualTo(UnhappinessMock.of("C3 M1 A0 U0 P1 T2"));
 
         // Start build Archers
         ActionAbstractResult actionResult = BuildUnitAction.buildUnit(city, Archers.CLASS_UUID);
