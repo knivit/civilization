@@ -1,6 +1,7 @@
 package com.tsoft.civilization.civilization.city.supply;
 
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.civilization.tile.TileSupplyStrategy;
 import com.tsoft.civilization.economic.HasSupply;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.civilization.city.City;

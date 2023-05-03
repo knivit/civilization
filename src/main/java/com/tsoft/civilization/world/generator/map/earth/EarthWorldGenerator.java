@@ -64,7 +64,7 @@ public class EarthWorldGenerator implements WorldGenerator {
             int n = random.nextInt(tiles.size());
 
             AbstractTerrain tile = tiles.get(n);
-            if (tile.getImprovement() == null) {
+            if (tile.getImprovements().isEmpty()) {
                 ImprovementFactory.newInstance(AncientRuins.CLASS_UUID, tile, null);
             }
         }

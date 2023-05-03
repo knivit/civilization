@@ -5,9 +5,7 @@ import com.tsoft.civilization.action.ActionFailureResult;
 import com.tsoft.civilization.action.ActionSuccessResult;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.combat.*;
-import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.civilization.city.City;
-import com.tsoft.civilization.tile.resource.AbstractResource;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.unit.UnitList;
@@ -30,8 +28,6 @@ public class AttackService {
 
     private static final MeleeCombatService meleeCombatService = new MeleeCombatService();
     private static final RangedCombatService rangedCombatService = new RangedCombatService();
-    private static final ImprovementCombatService improvementCombatService = new ImprovementCombatService();
-    private static final ResourceCombatService resourceCombatService = new ResourceCombatService();
 
     public ActionAbstractResult attack(HasCombatStrength attacker, Point location) {
         ActionAbstractResult result = canAttack(attacker);
@@ -83,14 +79,6 @@ public class AttackService {
 
         // For a melee unit, move to the target first, then attack
         return meleeCombatService.attack(attacker, target);
-    }
-
-    CombatResult attackImprovement(HasCombatStrength attacker, AbstractImprovement improvement) {
-        return improvementCombatService.attack(attacker, improvement);
-    }
-
-    CombatResult attackResource(HasCombatStrength attacker, AbstractResource resource) {
-        return resourceCombatService.attack(attacker, resource);
     }
 
     public ActionAbstractResult canAttack(HasCombatStrength attacker) {

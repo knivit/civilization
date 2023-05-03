@@ -3,6 +3,7 @@ package com.tsoft.civilization.tile.terrain;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.improvement.AbstractImprovement;
+import com.tsoft.civilization.improvement.ImprovementList;
 import com.tsoft.civilization.tile.resource.ResourceType;
 import com.tsoft.civilization.tile.terrain.grassland.Grassland;
 import com.tsoft.civilization.tile.terrain.ocean.Ocean;
@@ -225,9 +226,10 @@ public abstract class AbstractTerrain {
     @Getter @Setter
     private AbstractResource resource;
 
-    @Getter @Setter
-    private AbstractImprovement improvement;
+    @Getter
+    private final ImprovementList improvements = new ImprovementList();
 
+    @Getter
     private final FeatureList features = new FeatureList();
 
     public abstract String getClassUuid();
@@ -241,7 +243,7 @@ public abstract class AbstractTerrain {
     public Supply getTotalSupply(Civilization civilization) {
         Supply supply = getBaseSupply();
 
-        if (improvement != null) {
+        for (AbstractImprovement improvement : improvements) {
             supply = supply.add(improvement.getBaseSupply(civilization));
         }
 
@@ -250,10 +252,6 @@ public abstract class AbstractTerrain {
         }
 
         return supply;
-    }
-
-    public FeatureList getFeatures() {
-        return features;
     }
 
     public <F extends AbstractFeature> F getFeature(Class<F> featureClass) {
@@ -284,6 +282,10 @@ public abstract class AbstractTerrain {
         }
 
         return false;
+    }
+
+    public void addImprovement(AbstractImprovement improvement) {
+        improvements.add(improvement);
     }
 
     public void addFeature(AbstractFeature feature) {
@@ -323,7 +325,7 @@ public abstract class AbstractTerrain {
         String features = this.features.stream().map(e -> e.getClass().getSimpleName()).collect(Collectors.joining(", "));
         return getClass().getSimpleName() + location +
             ", features=[" + features + "]" +
-            ", improvement=" + improvement +
+            ", improvements=[" + improvements + "]" +
             ", resource=" + resource;
     }
 }

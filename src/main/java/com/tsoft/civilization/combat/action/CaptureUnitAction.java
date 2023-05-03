@@ -7,17 +7,16 @@ import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.view.JsonBlock;
+import lombok.RequiredArgsConstructor;
 
 import java.util.UUID;
 
+@RequiredArgsConstructor
 public class CaptureUnitAction {
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private final CaptureUnitService captureUnitService;
-
-    public CaptureUnitAction(CaptureUnitService captureUnitService) {
-        this.captureUnitService = captureUnitService;
-    }
 
     public ActionAbstractResult capture(AbstractUnit attacker, Point location) {
         return captureUnitService.capture(attacker, location);

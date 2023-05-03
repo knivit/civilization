@@ -22,14 +22,6 @@ public class HasCombatStrengthList extends ArrayList<HasCombatStrength> {
         return result;
     }
 
-    public List<Point> getLocations() {
-        List<Point> locations = new ArrayList<>(size());
-        for (HasCombatStrength combatant : this) {
-            locations.add(combatant.getLocation());
-        }
-        return locations;
-    }
-
     public HasCombatStrengthList addAll(UnitList units) {
         if (units != null && !units.isEmpty()) {
             for (AbstractUnit unit : units) {

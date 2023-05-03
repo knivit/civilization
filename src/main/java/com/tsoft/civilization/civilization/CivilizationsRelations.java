@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 // immutable
 @EqualsAndHashCode(of = "state")
 public class CivilizationsRelations {
+
     private static final int WAR_STATE = -50;
     private static final int NEUTRAL_STATE = 0;
     private static final int FRIENDS_STATE = 50;

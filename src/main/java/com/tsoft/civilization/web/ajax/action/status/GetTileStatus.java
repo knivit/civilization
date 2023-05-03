@@ -1,7 +1,10 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
+import com.tsoft.civilization.civilization.tile.CivilizationTileSupplyService;
 import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.civilization.city.L10nCity;
+import com.tsoft.civilization.improvement.ImprovementList;
+import com.tsoft.civilization.tile.feature.FeatureList;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.tile.L10nTile;
 import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
@@ -9,7 +12,6 @@ import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.world.L10nWorld;
 import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.civilization.city.City;
-import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
@@ -30,7 +32,6 @@ import static com.tsoft.civilization.web.ajax.ServerStaticResource.*;
 public class GetTileStatus extends AbstractAjaxRequest {
 
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
-    private static final TileService tileService = new TileService();
 
     @Override
     public Response getJson(Request request) {
@@ -203,9 +204,6 @@ public class GetTileStatus extends AbstractAjaxRequest {
     // | Total | 0 | 0 | 0 |
     // +-------+---+---+---+
     private StringBuilder getTileInfo(Civilization civilization, AbstractTerrain tile) {
-        AbstractFeature feature1 = (tile.getFeatures().size() > 0 ? tile.getFeatures().get(0) : null);
-        AbstractFeature feature2 = (tile.getFeatures().size() > 1 ? tile.getFeatures().get(1) : null);
-
         return Format.text("""
             <table id='info_table'>
                 <tr>
@@ -220,10 +218,9 @@ public class GetTileStatus extends AbstractAjaxRequest {
                     <td>$gold</td>
                     <td>$food</td>
                 </tr>
-                $feature1
-                $feature2
-                $total
+                $feature
                 $improvement
+                $total
             </table>
             """,
 
@@ -239,65 +236,75 @@ public class GetTileStatus extends AbstractAjaxRequest {
             "$gold", tile.getBaseSupply().getGold(),
             "$food", tile.getBaseSupply().getFood(),
 
-            "$feature1", getFeatureInfo(feature1),
-            "$feature2", getFeatureInfo(feature2),
-            "$total", getTotalInfo(tile, (feature1 != null || feature2 != null)),
-            "$improvement", getImprovementInfo(civilization, tile.getImprovement())
+            "$feature", getFeatureInfo(tile.getFeatures()),
+            "$improvement", getImprovementInfo(civilization, tile.getImprovements()),
+            "$total", getTotalInfo(civilization, tile)
         );
     }
 
-    private StringBuilder getImprovementInfo(Civilization civilization, AbstractImprovement improvement) {
-        if (improvement == null) {
+    private StringBuilder getImprovementInfo(Civilization civilization, ImprovementList improvements) {
+        if (improvements == null || improvements.isEmpty()) {
             return null;
         }
 
-        Supply baseSupply = improvement.getBaseSupply(civilization);
-        return Format.text("""
-            <tr>
-                <td><button onclick="$getImprovementInfo">$improvementName</button></td>
-                <td>$production</td>
-                <td>$gold</td>
-                <td>$food</td>
-            </tr>
-            """,
+        StringBuilder buf = new StringBuilder();
+        for (AbstractImprovement improvement : improvements) {
+            Supply baseSupply = improvement.getBaseSupply(civilization);
 
-            "$getImprovementInfo", GetImprovementInfo.getAjax(improvement),
-            "$improvementName", improvement.getView().getLocalizedName(),
-            "$production", baseSupply.getProduction(),
-            "$gold", baseSupply.getGold(),
-            "$food", baseSupply.getFood()
-        );
+            buf.append(Format.text("""
+                <tr>
+                    <td><button onclick="$getImprovementInfo">$improvementName</button></td>
+                    <td>$production</td>
+                    <td>$gold</td>
+                    <td>$food</td>
+                </tr>
+                """,
+
+                "$getImprovementInfo", GetImprovementInfo.getAjax(improvement),
+                "$improvementName", improvement.getView().getLocalizedName(),
+                "$production", baseSupply.getProduction(),
+                "$gold", baseSupply.getGold(),
+                "$food", baseSupply.getFood()
+            ));
+        }
+
+        return buf;
     }
 
-    private StringBuilder getFeatureInfo(AbstractFeature feature) {
-        if (feature == null) {
+    private StringBuilder getFeatureInfo(FeatureList features) {
+        if (features == null || features.isEmpty()) {
             return null;
         }
 
-        Supply featureSupply = feature.getSupply();
-        return Format.text("""
-            <tr>
-                <td><button onclick="$getFeatureInfo">$featureName</button></td>
-                <td>$production</td>
-                <td>$gold</td>
-                <td>$food</td>
-            </tr>
-            """,
+        StringBuilder buf = new StringBuilder();
+        for (AbstractFeature feature : features) {
+            Supply featureSupply = feature.getSupply();
 
-           "$getFeatureInfo", GetFeatureInfo.getAjax(feature),
-           "$featureName", feature.getView().getLocalizedName(),
-           "$production", featureSupply.getProduction(),
-           "$gold", featureSupply.getGold(),
-           "$food", featureSupply.getFood()
-        );
+            buf.append(Format.text("""
+                <tr>
+                    <td><button onclick="$getFeatureInfo">$featureName</button></td>
+                    <td>$production</td>
+                    <td>$gold</td>
+                    <td>$food</td>
+                </tr>
+                """,
+
+                "$getFeatureInfo", GetFeatureInfo.getAjax(feature),
+                "$featureName", feature.getView().getLocalizedName(),
+                "$production", featureSupply.getProduction(),
+                "$gold", featureSupply.getGold(),
+                "$food", featureSupply.getFood()
+            ));
+        }
+
+        return buf;
     }
 
-    private StringBuilder getTotalInfo(AbstractTerrain tile, boolean isVisible) {
-        if (!isVisible) {
-            return null;
-        }
+    private StringBuilder getTotalInfo(Civilization civilization, AbstractTerrain tile) {
+        CivilizationTileSupplyService tileSupplyService = new CivilizationTileSupplyService(civilization);
 
-        Supply supply = tileService.calcSupply(tile);
+        Supply supply = tileSupplyService.calcIncomeSupply(tile.getLocation());
+
         return Format.text("""
             <tr>
                 <td>$totalLabel</td>

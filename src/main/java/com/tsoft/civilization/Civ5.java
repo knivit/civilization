@@ -5,7 +5,7 @@ import com.tsoft.civilization.web.Server;
 
 import static com.tsoft.civilization.util.SystemProperties.SERVER_PORT;
 
-public class Main {
+public class Civ5 {
     public static void main(String[] args) throws Throwable {
         new SystemProperties().init();
 

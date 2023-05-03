@@ -1,5 +1,7 @@
 package com.tsoft.civilization.civilization.city.supply;
 
+import com.tsoft.civilization.civilization.tile.CivilizationTileSupplyService;
+import com.tsoft.civilization.civilization.tile.TileSupplyStrategy;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.util.Point;
@@ -10,9 +12,7 @@ import java.util.List;
 
 public class CitySupplyService {
 
-    @Getter
-    private final TileSupplyService tileSupplyService;
-
+    private final CivilizationTileSupplyService tileSupplyService;
     private final BuildingSupplyService buildingSupplyService;
     private final PopulationSupplyService populationSupplyService;
 
@@ -24,7 +24,7 @@ public class CitySupplyService {
     public CitySupplyService(City city) {
         this.city = city;
 
-        tileSupplyService = new TileSupplyService(city);
+        tileSupplyService = new CivilizationTileSupplyService(city.getCivilization());
         buildingSupplyService = new BuildingSupplyService(city);
         populationSupplyService = new PopulationSupplyService(city);
     }
@@ -38,7 +38,7 @@ public class CitySupplyService {
             return Supply.EMPTY;
         }
 
-        Supply tiles = tileSupplyService.calcIncomeSupply(city.getCivilization(), city.getCitizenLocations());
+        Supply tiles = tileSupplyService.calcIncomeSupply(city.getCitizenLocations());
         Supply buildings = buildingSupplyService.calcIncomeSupply(city.getCivilization());
         Supply population = populationSupplyService.calcIncomeSupply(city.getCivilization());
         return tiles.add(buildings).add(population);
@@ -66,13 +66,13 @@ public class CitySupplyService {
     }
 
     public Supply calcTilesSupply() {
-        Supply income = tileSupplyService.calcIncomeSupply(city.getCivilization(), city.getCitizenLocations());
+        Supply income = tileSupplyService.calcIncomeSupply(city.getCitizenLocations());
         Supply outcome = tileSupplyService.calcOutcomeSupply(city.getCitizenLocations());
         return income.add(outcome);
     }
 
     public Supply calcTilesSupply(Point location) {
-        Supply income = tileSupplyService.calcIncomeSupply(city.getCivilization(), location);
+        Supply income = tileSupplyService.calcIncomeSupply(location);
         Supply outcome = tileSupplyService.calcOutcomeSupply(location);
         return income.add(outcome);
     }

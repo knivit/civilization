@@ -6,7 +6,7 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.economic.HappinessMock;
 import com.tsoft.civilization.economic.UnhappinessMock;
 import com.tsoft.civilization.civilization.city.City;
-import com.tsoft.civilization.civilization.city.supply.TileSupplyStrategy;
+import com.tsoft.civilization.civilization.tile.TileSupplyStrategy;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.economic.SupplyMock;

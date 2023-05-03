@@ -15,6 +15,10 @@ public class L10nCombat {
         .put(EN, "Unit can attack")
         .put(RU, "Юнит может выполнить атаку");
 
+    public static final L10n CAN_PILLAGE = new L10n()
+        .put(EN, "Unit can pillage the improvement")
+        .put(RU, "Юнит может ограбить это улучшение");
+
     public static final L10n INVALID_ATTACK_TARGET = new L10n()
         .put(EN, "Can not attack this target")
         .put(RU, "Юнит не может атаковать эту цель");
@@ -26,6 +30,10 @@ public class L10nCombat {
     public static final L10n TARGET_DESTROYED = new L10n()
         .put(EN, "Target is destroyed")
         .put(RU, "Цель уничтожена");
+
+    public static final L10n TARGET_PILLAGED = new L10n()
+        .put(EN, "Target is pillaged")
+        .put(RU, "Улучшение оргаблено");
 
     public static final L10n ATTACKED = new L10n()
         .put(EN, "Attack is done")
@@ -55,7 +63,15 @@ public class L10nCombat {
         .put(EN, "There are no targets to attack")
         .put(RU, "Нет целей для атаки");
 
+    public static final L10n NO_TARGETS_TO_PILLAGE = new L10n()
+        .put(EN, "There are no improvement to pillage")
+        .put(RU, "Нет улучшений для грабежа");
+
     public static final L10n ATTACK_FAILED = new L10n()
         .put(EN, "The attack did not take place")
         .put(RU, "Атака не состоялась");
+
+    public static final L10n PILLAGE_FAILED = new L10n()
+        .put(EN, "The pillage failed")
+        .put(RU, "Грабеж не состоялся");
 }

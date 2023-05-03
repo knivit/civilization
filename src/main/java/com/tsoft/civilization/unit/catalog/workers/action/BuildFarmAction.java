@@ -2,7 +2,7 @@ package com.tsoft.civilization.unit.catalog.workers.action;
 
 import com.tsoft.civilization.improvement.L10nImprovement;
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.improvement.AbstractImprovement;
+import com.tsoft.civilization.improvement.farm.Farm;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.catalog.workers.Workers;
 import com.tsoft.civilization.util.Format;
@@ -11,6 +11,7 @@ import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import java.util.UUID;
 
 public class BuildFarmAction {
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     public static ActionAbstractResult buildFarm(Workers workers) {
@@ -28,8 +29,7 @@ public class BuildFarmAction {
         }
 
         AbstractTerrain tile = workers.getTile();
-        AbstractImprovement improvement = tile.getImprovement();
-        if (improvement != null) {
+        if (tile.getImprovements().has(Farm.CLASS_UUID)) {
             return WorkersActionResults.IMPROVEMENT_ALREADY_EXISTS;
         }
 

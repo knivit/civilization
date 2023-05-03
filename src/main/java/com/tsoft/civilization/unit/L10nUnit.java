@@ -42,9 +42,17 @@ public class L10nUnit {
         .put(EN, "Attack")
         .put(RU, "Атака");
 
+    public static final L10n PILLAGE_NAME = new L10n()
+        .put(EN, "Pillage")
+        .put(RU, "Грабеж");
+
     public static final L10n ATTACK_DESCRIPTION = new L10n()
         .put(EN, "Attack foreign unit or a city")
         .put(RU, "Атаковать иностранный юнит или город");
+
+    public static final L10n PILLAGE_DESCRIPTION = new L10n()
+        .put(EN, "Pillage an improvement or a trade route")
+        .put(RU, "Ограбить улучшение или торговый путь");
 
     public static final L10n CAPTURE_NAME = new L10n()
         .put(EN, "Capture")

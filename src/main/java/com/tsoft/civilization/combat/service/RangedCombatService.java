@@ -69,7 +69,7 @@ public class RangedCombatService {
     }
 
     // Digital Differential Analyzer (DDA) algorithm for rasterization of lines
-    // Point 'from' doesn't included
+    // Point 'from' doesn't include
     private List<Point> getMissilePath(Point from, Point to) {
         List<Point> path = new ArrayList<>();
 

@@ -13,7 +13,7 @@ import com.tsoft.civilization.civilization.city.citizen.CityCitizenService;
 import com.tsoft.civilization.civilization.city.happiness.CityUnhappinessService;
 import com.tsoft.civilization.civilization.city.specialist.CitySpecialistService;
 import com.tsoft.civilization.civilization.city.supply.CitySupplyService;
-import com.tsoft.civilization.civilization.city.supply.TileSupplyStrategy;
+import com.tsoft.civilization.civilization.tile.TileSupplyStrategy;
 import com.tsoft.civilization.civilization.city.tile.CityTileService;
 import com.tsoft.civilization.civilization.happiness.Unhappiness;
 import com.tsoft.civilization.util.l10n.L10n;

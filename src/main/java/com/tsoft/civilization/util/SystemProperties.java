@@ -1,6 +1,6 @@
 package com.tsoft.civilization.util;
 
-import com.tsoft.civilization.Main;
+import com.tsoft.civilization.Civ5;
 
 import java.io.InputStream;
 import java.util.Collections;
@@ -21,7 +21,7 @@ public class SystemProperties {
     private Properties readSystemProperties(String fileName) {
         Properties props = new Properties();
 
-        try (InputStream is = Main.class.getClassLoader().getResourceAsStream(fileName)) {
+        try (InputStream is = Civ5.class.getClassLoader().getResourceAsStream(fileName)) {
             if (is != null) {
                 props.load(is);
             }

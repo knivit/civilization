@@ -72,6 +72,15 @@ public class ClientAjaxRequest {
         );
     }
 
+    public static StringBuilder unitPillageAction(HasCombatStrength attacker, JsonBlock locations) {
+        return Format.text("client.unitPillageAction({ attacker:'$attacker', ucol:'$ucol', urow:'$urow', $locations })",
+            "$attacker", attacker.getId(),
+            "$ucol", attacker.getLocation().getX(),
+            "$urow", attacker.getLocation().getY(),
+            "$locations", locations.getValue()
+        );
+    }
+
     public static StringBuilder captureUnitAction(AbstractUnit attacker, JsonBlock locations) {
         return Format.text("client.captureUnitAction({ attacker:'$attacker', ucol:'$ucol', urow:'$urow', $locations })",
             "$attacker", attacker.getId(),

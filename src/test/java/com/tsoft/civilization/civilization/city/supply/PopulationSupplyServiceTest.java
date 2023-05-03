@@ -5,7 +5,6 @@ import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.economic.SupplyMock;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.tile.MockTilesMap;
-import com.tsoft.civilization.civilization.city.supply.PopulationSupplyService;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.World;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
-import static com.tsoft.civilization.civilization.city.supply.TileSupplyStrategy.*;
+import static com.tsoft.civilization.civilization.tile.TileSupplyStrategy.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PopulationSupplyServiceTest {

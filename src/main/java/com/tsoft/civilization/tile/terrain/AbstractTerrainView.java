@@ -1,6 +1,7 @@
 package com.tsoft.civilization.tile.terrain;
 
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.tile.resource.AbstractResource;
 import com.tsoft.civilization.tile.resource.ResourceCategory;
 import com.tsoft.civilization.web.view.JsonBlock;
@@ -23,8 +24,9 @@ public abstract class AbstractTerrainView {
         });
         tileBlock.stopArray();
 
-        if (tile.getImprovement() != null) {
-            tileBlock.addParam("improvement", tile.getImprovement().getClass().getSimpleName());
+        if (!tile.getImprovements().isEmpty()) {
+            AbstractImprovement improvement = tile.getImprovements().get(0);
+            tileBlock.addParam("improvement", improvement.getClass().getSimpleName());
         }
 
         AbstractResource resource = tile.getResource();

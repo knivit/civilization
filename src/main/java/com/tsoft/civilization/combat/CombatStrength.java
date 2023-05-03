@@ -81,18 +81,11 @@ public class CombatStrength {
     @Override
     public String toString() {
         return
-            "RAL:" + rangedAttackLevel + ' ' +
-            "RAS:" + rangedAttackStrength + ' ' +
-            "RAR:" + rangedAttackRadius + ' ' +
-            "RAE:" + rangedAttackExperience + ' ' +
-            "RBS:" + rangedBackFireStrength + ' ' +
-            "MAL:" + meleeAttackLevel + ' ' +
-            "MAS:" + meleeAttackStrength + ' ' +
-            "MAE:" + meleeAttackExperience + ' ' +
-            "MBS:" + meleeBackFireStrength + ' ' +
-            "DL:" + defenseLevel + ' ' +
-            "DS:" + defenseStrength + ' ' +
-            "DE:" + defenseExperience + ' ' +
-            "D:" + (isDestroyed ? 1 : 0);
+            "RAL: %d RAS: %5.1f RAR: %d RAE: %5.1f RBS: %5.1f MAL: %d MAS: %5.1f MAE: %5.1f MBS: %5.1f DL: %d DS: %5.1f DE: %5.1f D: %d"
+                .formatted(
+                    rangedAttackLevel, rangedAttackStrength, rangedAttackRadius, rangedAttackExperience, rangedBackFireStrength,
+                    meleeAttackLevel, meleeAttackStrength, meleeAttackExperience, meleeBackFireStrength,
+                    defenseLevel, defenseStrength, defenseExperience,
+                    isDestroyed ? 1 : 0);
     }
 }

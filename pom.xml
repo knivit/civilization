@@ -123,7 +123,7 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.tsoft.civilization.Main</mainClass>
+                                    <mainClass>com.tsoft.civilization.Civ5</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

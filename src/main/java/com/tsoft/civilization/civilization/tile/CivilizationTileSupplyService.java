@@ -1,36 +1,34 @@
-package com.tsoft.civilization.civilization.city.supply;
+package com.tsoft.civilization.civilization.tile;
 
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.improvement.AbstractImprovement;
-import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.util.Point;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-public class TileSupplyService {
+@RequiredArgsConstructor
+public class CivilizationTileSupplyService {
 
     private final TileService tileService = new TileService();
 
-    private final City city;
+    private final Civilization civilization;
 
-    public TileSupplyService(City city) {
-        this.city = city;
-    }
-
-    public Supply calcIncomeSupply(Civilization civilization, List<Point> locations) {
+    public Supply calcIncomeSupply(List<Point> locations) {
         Supply supply = Supply.EMPTY;
 
         for (Point location : locations) {
-            supply = supply.add(calcIncomeSupply(civilization, location));
+            supply = supply.add(calcIncomeSupply(location));
         }
 
         return supply;
     }
 
-    public Supply calcIncomeSupply(Civilization civilization, Point location) {
+    public Supply calcIncomeSupply(Point location) {
         Supply tileSupply = calcTileSupply(location);
         Supply improvementSupply = calcImprovementsSupply(civilization, location);
         return tileSupply.add(improvementSupply);
@@ -50,14 +48,15 @@ public class TileSupplyService {
             return Supply.EMPTY;
         }
 
-        AbstractTerrain tile = city.getCivilization().getTilesMap().getTile(location);
-        AbstractImprovement improvement = tile.getImprovement();
+        AbstractTerrain tile = civilization.getTilesMap().getTile(location);
 
-        if (improvement == null || !improvement.getBaseState().isBlockingTileSupply()) {
-            return tileService.calcSupply(tile);
+        for (AbstractImprovement improvement : tile.getImprovements()) {
+            if (improvement.getBaseState().isBlockingTileSupply()) {
+                return Supply.EMPTY;
+            }
         }
 
-        return Supply.EMPTY;
+        return tileService.calcSupply(tile);
     }
 
     // Calc supply from improvements
@@ -66,12 +65,13 @@ public class TileSupplyService {
             return Supply.EMPTY;
         }
 
-        AbstractTerrain tile = city.getCivilization().getTilesMap().getTile(location);
-        AbstractImprovement improvement = tile.getImprovement();
-        if (improvement != null) {
-            return improvement.calcIncomeSupply(civilization);
+        AbstractTerrain tile = civilization.getTilesMap().getTile(location);
+
+        Supply supply = Supply.EMPTY;
+        for (AbstractImprovement improvement : tile.getImprovements()) {
+            supply = supply.add(improvement.calcIncomeSupply(civilization));
         }
 
-        return Supply.EMPTY;
+        return supply;
     }
 }

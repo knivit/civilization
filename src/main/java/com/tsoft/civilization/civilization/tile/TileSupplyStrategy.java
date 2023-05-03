@@ -1,4 +1,4 @@
-package com.tsoft.civilization.civilization.city.supply;
+package com.tsoft.civilization.civilization.tile;
 
 import com.tsoft.civilization.economic.Supply;
 

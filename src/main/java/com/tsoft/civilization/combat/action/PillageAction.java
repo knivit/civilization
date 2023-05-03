@@ -1,39 +1,39 @@
 package com.tsoft.civilization.combat.action;
 
-import com.tsoft.civilization.combat.*;
-import com.tsoft.civilization.combat.service.AttackService;
-import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
-import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.civilization.city.City;
+import com.tsoft.civilization.combat.HasCombatStrength;
+import com.tsoft.civilization.combat.HasCombatStrengthList;
+import com.tsoft.civilization.combat.service.PillageService;
+import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.util.Format;
-import com.tsoft.civilization.util.Point;
+import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import com.tsoft.civilization.web.view.JsonBlock;
 import lombok.RequiredArgsConstructor;
 
-import java.util.*;
+import java.util.UUID;
 
 @RequiredArgsConstructor
-public class AttackAction {
+public class PillageAction {
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    private final AttackService attackService;
+    private final PillageService pillageService;
 
-    public ActionAbstractResult attack(HasCombatStrength attacker, Point location) {
-        return attackService.attack(attacker, location);
+    public ActionAbstractResult pillage(HasCombatStrength attacker) {
+        return pillageService.pillage(attacker);
     }
 
     private String getLocalizedName() {
-        return L10nUnit.ATTACK_NAME.getLocalized();
+        return L10nUnit.PILLAGE_NAME.getLocalized();
     }
 
     private String getLocalizedDescription() {
-        return L10nUnit.ATTACK_DESCRIPTION.getLocalized();
+        return L10nUnit.PILLAGE_DESCRIPTION.getLocalized();
     }
 
     public StringBuilder getHtml(HasCombatStrength attacker) {
-        if (attackService.canAttack(attacker).isFail()) {
+        if (pillageService.canPillage(attacker).isFail()) {
             return null;
         }
 
@@ -51,7 +51,7 @@ public class AttackAction {
         JsonBlock locations = new JsonBlock('\'');
         locations.startArray("locations");
 
-        HasCombatStrengthList targets = attackService.getTargetsToAttack(attacker);
+        HasCombatStrengthList targets = pillageService.getTargetsToPillage(attacker);
         for (HasCombatStrength target : targets) {
             JsonBlock locBlock = new JsonBlock('\'');
             locBlock.addParam("col", target.getLocation().getX());
@@ -64,6 +64,6 @@ public class AttackAction {
             return ClientAjaxRequest.cityAttackAction(attacker, locations);
         }
 
-        return ClientAjaxRequest.unitAttackAction(attacker, locations);
+        return ClientAjaxRequest.unitPillageAction(attacker, locations);
     }
 }

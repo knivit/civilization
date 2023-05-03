@@ -1,6 +1,12 @@
 package com.tsoft.civilization.improvement.farm;
 
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.combat.CombatDamage;
+import com.tsoft.civilization.combat.CombatExperience;
+import com.tsoft.civilization.combat.CombatStrength;
+import com.tsoft.civilization.combat.skill.AbstractCombatSkill;
+import com.tsoft.civilization.combat.skill.AbstractHealingSkill;
+import com.tsoft.civilization.combat.skill.SkillMap;
 import com.tsoft.civilization.improvement.*;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.tile.terrain.desert.Desert;
@@ -8,6 +14,8 @@ import com.tsoft.civilization.tile.terrain.grassland.Grassland;
 import com.tsoft.civilization.tile.terrain.plains.Plains;
 import com.tsoft.civilization.tile.terrain.tundra.Tundra;
 import com.tsoft.civilization.tile.feature.hill.Hill;
+import com.tsoft.civilization.unit.UnitCategory;
+import com.tsoft.civilization.util.Point;
 
 import java.util.UUID;
 
