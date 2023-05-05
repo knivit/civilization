@@ -34,12 +34,13 @@ public class RemoveForestActionTest {
         MockWorld world = MockWorld.of(MockTilesMap.of(3,
             " |0 1 2 ", " |0 1 2 ", " |0 1 2 ",
             "-+------", "-+------", "-+------",
-            "0|. . . ", "0|. . . ", "0|. . . ",
+            "0|. g . ", "0|. . . ", "0|. . . ",
             "1| . g .", "1| . h .", "1| . f .",
             "2|. . . ", "2|. . . ", "2|. . . ",
             "3| . . .", "3| . . .", "3| . . ."));
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
+            .city("city", new Point(1, 0))
             .workers("workers", new Point(1, 1))
         );
 
@@ -60,12 +61,13 @@ public class RemoveForestActionTest {
         MockWorld world = MockWorld.of(MockTilesMap.of(3,
             " |0 1 2 ", " |0 1 2 ", " |0 1 2 ",
             "-+------", "-+------", "-+------",
-            "0|. . . ", "0|. . . ", "0|. . . ",
+            "0|. g . ", "0|. . . ", "0|. . . ",
             "1| . g .", "1| . h .", "1| . f .",
             "2|. . . ", "2|. . . ", "2|. . . ",
             "3| . . .", "3| . . .", "3| . . ."));
 
         Civilization civilization = world.createCivilization(RUSSIA, new MockScenario()
+            .city("city", new Point(1, 0))
             .workers("workers", new Point(1, 1))
         );
 
@@ -114,12 +116,13 @@ public class RemoveForestActionTest {
         MockWorld world = MockWorld.of(MockTilesMap.of(3,
             " |0 1 2 ", " |0 1 2 ", " |0 1 2 ",
             "-+------", "-+------", "-+------",
-            "0|. . . ", "0|. . . ", "0|. . . ",
+            "0|. g . ", "0|. . . ", "0|. . . ",
             "1| . g .", "1| . h .", "1| . f .",
             "2|. . . ", "2|. . . ", "2|. . . ",
             "3| . . .", "3| . . .", "3| . . ."));
 
         Civilization civilization = world.createCivilization(RUSSIA, new MockScenario()
+            .city("city", new Point(1, 0))
             .workers("workers", new Point(1, 1))
         );
 

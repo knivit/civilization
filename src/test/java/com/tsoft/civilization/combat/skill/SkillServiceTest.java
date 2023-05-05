@@ -7,6 +7,7 @@ import com.tsoft.civilization.util.Point;
 import org.junit.jupiter.api.Test;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
+import static com.tsoft.civilization.combat.skill.earth.movement.BaseMovementSkill.BASE_MOVEMENT_SKILL;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SkillServiceTest {
@@ -14,14 +15,14 @@ public class SkillServiceTest {
     private static final SkillService skillService = new SkillService();
 
     @Test
-    public void calc_pass_score() {
+    void calc_pass_score() {
         MockWorld world = MockWorld.newSimpleWorld();
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .settlers("settlers", new Point(2, 0))
         );
 
-        assertThat(skillService.calcPassScore(world.get("settlers"), new SkillMap<>()))
-            .isEqualTo(5);
+        assertThat(skillService.calcPassScore(world.get("settlers"), new SkillMap<>(BASE_MOVEMENT_SKILL, SkillLevel.ONE)))
+            .isEqualTo(2);
     }
 }

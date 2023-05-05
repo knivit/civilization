@@ -110,9 +110,7 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
     }
 
     public int getBasePassScore(Civilization civilization) {
-        double modifier = UnitBaseModifiers.getCombatStrengthModifier(civilization);
-        int goldCost = getBaseState().getPassScore();
-        return (int)Math.round(goldCost * modifier);
+        return getBaseState().getPassScore();
     }
 
     @Override
@@ -257,6 +255,10 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
 
     public boolean isActionAvailable() {
         return !isDestroyed() && (movementService.getPassScore() > 0);
+    }
+
+    public boolean isOnMyTerritory() {
+        return civilization.getTileService().isOnTerritory(movementService.getLocation());
     }
 
     @Override

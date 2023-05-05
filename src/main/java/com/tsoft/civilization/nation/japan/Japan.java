@@ -1,7 +1,7 @@
-package com.tsoft.civilization.civilization.nation.japan;
+package com.tsoft.civilization.nation.japan;
 
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.civilization.CivilizationBot;
+import com.tsoft.civilization.bot.CivilizationBot;
 import com.tsoft.civilization.civilization.CivilizationView;
 import com.tsoft.civilization.civilization.PlayerType;
 import com.tsoft.civilization.world.World;

@@ -11,6 +11,7 @@ import com.tsoft.civilization.web.view.JsonBlock;
 import java.util.UUID;
 
 public class MoveUnitAction {
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     private final MoveUnitService moveService;

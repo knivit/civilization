@@ -1,4 +1,4 @@
-package com.tsoft.civilization.civilization.nation.japan;
+package com.tsoft.civilization.nation.japan;
 
 import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.civilization.CivilizationView;

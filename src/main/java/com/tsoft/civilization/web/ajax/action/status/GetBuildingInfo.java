@@ -31,7 +31,7 @@ public class GetBuildingInfo extends AbstractAjaxRequest {
 
     @Override
     public Response getJson(Request request) {
-        String classUuid = request.get("id");
+        String classUuid = request.get("building");
         AbstractBuilding building = BuildingFactory.findByClassUuid(classUuid);
         if (building == null) {
             return JsonResponse.badRequest(L10nBuilding.BUILDING_NOT_FOUND);

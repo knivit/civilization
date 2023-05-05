@@ -6,10 +6,7 @@ import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.HasHistory;
 import lombok.RequiredArgsConstructor;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @RequiredArgsConstructor
 public class CivilizationTileService implements HasHistory {
@@ -17,26 +14,15 @@ public class CivilizationTileService implements HasHistory {
     private final Civilization civilization;
 
     /** A civilization's territory is a sum its cities territory */
-    public List<Point> getCivilizationLocations() {
+    public Set<Point> getTerritory() {
         return civilization.getCityService().stream()
-            .flatMap(c -> c.getTileService().getLocations().stream())
-            .collect(Collectors.toList());
+            .map(e -> e.getTileService().getTerritory())
+            .collect(HashSet::new, Set::addAll, Set::addAll);
     }
 
-    /** Points (not territory) where all cities are located */
-    public Collection<Point> getCitiesLocations() {
+    public boolean isOnTerritory(Point location) {
         return civilization.getCityService().stream()
-            .map(e -> e.getLocation()).collect(Collectors.toList());
-    }
-
-    @Override
-    public void startYear() {
-
-    }
-
-    @Override
-    public void stopYear() {
-
+            .anyMatch(e -> e.getTileService().isOnTerritory(location));
     }
 
     // Look for tile's improvement by its Id
@@ -47,5 +33,15 @@ public class CivilizationTileService implements HasHistory {
             .filter(e -> id.equals(e.getId()))
             .findFirst()
             .orElse(null);
+    }
+
+    @Override
+    public void startYear() {
+
+    }
+
+    @Override
+    public void stopYear() {
+
     }
 }

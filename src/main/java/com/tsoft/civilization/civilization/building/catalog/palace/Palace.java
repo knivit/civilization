@@ -83,7 +83,7 @@ public class Palace extends AbstractBuilding {
     }
 
     @Override
-    public boolean requiresEraAndTechnology(Civilization civilization) {
+    public boolean requiredEraAndTechnology(Civilization civilization) {
         return true;
     }
 }

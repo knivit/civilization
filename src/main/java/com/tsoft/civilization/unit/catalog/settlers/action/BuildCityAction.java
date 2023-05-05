@@ -2,7 +2,6 @@ package com.tsoft.civilization.unit.catalog.settlers.action;
 
 import com.tsoft.civilization.action.ActionFailureResult;
 import com.tsoft.civilization.action.ActionSuccessResult;
-import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.unit.catalog.settlers.L10nSettlers;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.civilization.city.City;
@@ -16,7 +15,10 @@ import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import java.util.List;
 import java.util.UUID;
 
+import static com.tsoft.civilization.unit.action.DefaultUnitActionsResults.*;
+
 public class BuildCityAction {
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     public static final ActionSuccessResult CITY_BUILT = new ActionSuccessResult(L10nSettlers.CITY_BUILT);
@@ -25,9 +27,6 @@ public class BuildCityAction {
     public static final ActionFailureResult CANT_BUILD_CITY = new ActionFailureResult(L10nSettlers.CANT_BUILD_CITY_TILE_IS_OCCUPIED);
     public static final ActionFailureResult CANT_BUILD_CITY_TILE_IS_OCCUPIED = new ActionFailureResult(L10nSettlers.CANT_BUILD_CITY_TILE_IS_OCCUPIED);
     public static final ActionFailureResult CANT_BUILD_CITY_THERE_IS_ANOTHER_CITY_NEARBY = new ActionFailureResult(L10nSettlers.CANT_BUILD_CITY_THERE_IS_ANOTHER_CITY_NEARBY);
-    public static final ActionFailureResult NO_PASS_SCORE = new ActionFailureResult(L10nUnit.NO_PASS_SCORE);
-    public static final ActionFailureResult UNIT_NOT_FOUND = new ActionFailureResult(L10nUnit.UNIT_NOT_FOUND);
-
 
     public static ActionAbstractResult buildCity(Settlers settlers) {
         ActionAbstractResult result = canBuildCity(settlers);
@@ -57,7 +56,7 @@ public class BuildCityAction {
 
         // the tile must be not civilized or must be civilized by unit's civilization
         Point location = settlers.getLocation();
-        Civilization civilization = settlers.getWorld().getCivilizationOnTile(location);
+        Civilization civilization = settlers.getWorld().getTileService().getCivilizationOnTile(location);
         if (civilization != null && !civilization.equals(settlers.getCivilization())) {
             return CANT_BUILD_CITY_TILE_IS_OCCUPIED;
         }

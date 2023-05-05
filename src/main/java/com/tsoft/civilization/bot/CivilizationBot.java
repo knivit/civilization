@@ -1,5 +1,7 @@
-package com.tsoft.civilization.civilization;
+package com.tsoft.civilization.bot;
 
+import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.civilization.PlayerType;
 import com.tsoft.civilization.world.World;
 import lombok.extern.slf4j.Slf4j;
 

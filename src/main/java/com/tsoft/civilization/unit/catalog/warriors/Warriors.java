@@ -5,8 +5,6 @@ import com.tsoft.civilization.unit.catalog.UnitCatalog;
 import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.civilization.Civilization;
 
-import java.util.UUID;
-
 /**
  * Movement: 2; Strength: 6; Ranged Strength: 0; Cost: 40; Requires Resource: none
  * Technology: (none); Obsolete with: Metal Casting; Upgrades to: Swordsman (80 gold)
@@ -17,7 +15,7 @@ import java.util.UUID;
  */
 public class Warriors extends AbstractUnit {
 
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
+    public static final String CLASS_UUID = UnitType.WARRIORS.name();
 
     private static final UnitBaseState BASE_STATE = UnitCatalog.getBaseState(UnitType.WARRIORS);
 

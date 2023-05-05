@@ -14,6 +14,7 @@ import java.util.UUID;
 
 @Slf4j
 public class NextTurnAction {
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     public static final ActionSuccessResult MOVE_DONE = new ActionSuccessResult(L10nCivilization.MOVE_DONE);
@@ -30,6 +31,7 @@ public class NextTurnAction {
         }
 
         civilization.stopYear();
+
         return MOVE_DONE;
     }
 

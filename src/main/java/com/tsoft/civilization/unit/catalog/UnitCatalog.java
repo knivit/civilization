@@ -9,7 +9,10 @@ import com.tsoft.civilization.unit.UnitType;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.tsoft.civilization.combat.skill.earth.combat.AttackOnPlainTerrainSkill.ATTACK_ON_PLAIN_TERRAIN_SKILL;
+import static com.tsoft.civilization.combat.skill.earth.combat.AttackOnRoughTerrainSkill.ATTACK_ON_ROUGH_TERRAIN_SKILL;
 import static com.tsoft.civilization.combat.skill.earth.combat.CanConquerCitySkill.CAN_CONQUER_CITY_SKILL;
+import static com.tsoft.civilization.combat.skill.earth.combat.DefenseAgainstRangedAttackSkill.DEFENSE_AGAINST_RANGED_ATTACK_SKILL;
 import static com.tsoft.civilization.combat.skill.earth.combat.HillVantageCombatSkill.HILL_VANTAGE_COMBAT_SKILL;
 import static com.tsoft.civilization.combat.skill.earth.heal.BaseHealingSkill.BASE_HEALING_SKILL;
 import static com.tsoft.civilization.combat.skill.earth.movement.BaseMovementSkill.BASE_MOVEMENT_SKILL;
@@ -24,7 +27,7 @@ public final class UnitCatalog {
             .combatType(CombatType.ARCHERY_UNITS)
             .goldCost(200)
             .productionCost(40)
-            .passScore(5)
+            .passScore(1)
             .goldUnitKeepingExpenses(3)
             .combatStrength(CombatStrength.builder()
                 .rangedAttackStrength(7)
@@ -32,13 +35,13 @@ public final class UnitCatalog {
                 .defenseStrength(5)
                 .build())
             .movementSkills(asList(BASE_MOVEMENT_SKILL))
-            .combatSkills(asList(HILL_VANTAGE_COMBAT_SKILL))
+            .combatSkills(asList(HILL_VANTAGE_COMBAT_SKILL, DEFENSE_AGAINST_RANGED_ATTACK_SKILL))
             .healingSkills(asList(BASE_HEALING_SKILL))
             .build());
 
         put(GREAT_ARTIST, UnitBaseState.builder()
             .category(UnitCategory.CIVIL)
-            .passScore(2)
+            .passScore(1)
             .combatStrength(CombatStrength.builder()
                 .defenseStrength(5)
                 .build())
@@ -48,7 +51,7 @@ public final class UnitCatalog {
 
         put(GREAT_ENGINEER, UnitBaseState.builder()
             .category(UnitCategory.CIVIL)
-            .passScore(2)
+            .passScore(1)
             .combatStrength(CombatStrength.builder()
                 .defenseStrength(5)
                 .build())
@@ -58,7 +61,7 @@ public final class UnitCatalog {
 
         put(GREAT_GENERAL, UnitBaseState.builder()
             .category(UnitCategory.CIVIL)
-            .passScore(2)
+            .passScore(1)
             .combatStrength(CombatStrength.builder()
                 .defenseStrength(5)
                 .build())
@@ -68,7 +71,7 @@ public final class UnitCatalog {
 
         put(GREAT_MERCHANT, UnitBaseState.builder()
             .category(UnitCategory.CIVIL)
-            .passScore(2)
+            .passScore(1)
             .combatStrength(CombatStrength.builder()
                 .defenseStrength(5)
                 .build())
@@ -78,7 +81,7 @@ public final class UnitCatalog {
 
         put(GREAT_SCIENTIST, UnitBaseState.builder()
             .category(UnitCategory.CIVIL)
-            .passScore(2)
+            .passScore(1)
             .combatStrength(CombatStrength.builder()
                 .defenseStrength(5)
                 .build())
@@ -90,7 +93,7 @@ public final class UnitCatalog {
             .category(UnitCategory.CIVIL)
             .goldCost(200)
             .productionCost(25)
-            .passScore(5)
+            .passScore(1)
             .goldUnitKeepingExpenses(2)
             .combatStrength(CombatStrength.builder()
                 .defenseStrength(0)
@@ -104,7 +107,7 @@ public final class UnitCatalog {
             .combatType(CombatType.MELEE_UNITS)
             .goldCost(200)
             .productionCost(40)
-            .passScore(5)
+            .passScore(1)
             .goldUnitKeepingExpenses(3)
             .combatStrength(CombatStrength.builder()
                 .meleeAttackStrength(10)
@@ -112,7 +115,7 @@ public final class UnitCatalog {
                 .defenseStrength(20)
                 .build())
             .movementSkills(asList(BASE_MOVEMENT_SKILL))
-            .combatSkills(asList(HILL_VANTAGE_COMBAT_SKILL, CAN_CONQUER_CITY_SKILL))
+            .combatSkills(asList(ATTACK_ON_PLAIN_TERRAIN_SKILL, ATTACK_ON_ROUGH_TERRAIN_SKILL, HILL_VANTAGE_COMBAT_SKILL, CAN_CONQUER_CITY_SKILL, DEFENSE_AGAINST_RANGED_ATTACK_SKILL))
             .healingSkills(asList(BASE_HEALING_SKILL))
             .build());
 
@@ -120,7 +123,7 @@ public final class UnitCatalog {
             .category(UnitCategory.CIVIL)
             .goldCost(200)
             .productionCost(40)
-            .passScore(5)
+            .passScore(1)
             .goldUnitKeepingExpenses(2)
             .combatStrength(CombatStrength.builder()
                 .defenseStrength(10)

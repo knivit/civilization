@@ -10,8 +10,8 @@ import com.tsoft.civilization.util.Point;
 import org.junit.jupiter.api.Test;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
+import static com.tsoft.civilization.unit.action.DefaultUnitActionsResults.UNIT_NOT_FOUND;
 import static com.tsoft.civilization.unit.service.destroy.DestroyUnitService.LAST_SETTLERS_CANT_BE_DESTROYED;
-import static com.tsoft.civilization.unit.service.destroy.DestroyUnitService.UNIT_NOT_FOUND;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -20,7 +20,7 @@ public class DestroyUnitServiceTest {
     private static final DestroyUnitService destroyUnitService = new DestroyUnitService();
 
     @Test
-    public void buildCity1() {
+    void buildCity1() {
         MockWorld world = MockWorld.of(MockTilesMap.of(
             " |0 1 2 ",
             "-+------",
@@ -34,8 +34,7 @@ public class DestroyUnitServiceTest {
         );
 
         // The only settlers can't be destroyed
-        assertThat(destroyUnitService.destroy(world.get("settlers1")))
-            .isEqualTo(LAST_SETTLERS_CANT_BE_DESTROYED);
+        assertThat(destroyUnitService.destroy(world.get("settlers1"))).isEqualTo(LAST_SETTLERS_CANT_BE_DESTROYED);
 
         // Add another settlers
         Settlers settlers2 = UnitFactory.newInstance(russia, Settlers.CLASS_UUID);
@@ -44,11 +43,9 @@ public class DestroyUnitServiceTest {
 
         // Destroy the first ones
         assertTrue(destroyUnitService.destroy(world.get("settlers1")).isSuccess());
-        assertThat(destroyUnitService.destroy(world.get("settlers1")))
-            .isEqualTo(UNIT_NOT_FOUND);
+        assertThat(destroyUnitService.destroy(world.get("settlers1"))).isEqualTo(UNIT_NOT_FOUND);
 
         // The only settlers can't be destroyed
-        assertThat(destroyUnitService.destroy(settlers2))
-            .isEqualTo(LAST_SETTLERS_CANT_BE_DESTROYED);
+        assertThat(destroyUnitService.destroy(settlers2)).isEqualTo(LAST_SETTLERS_CANT_BE_DESTROYED);
     }
 }

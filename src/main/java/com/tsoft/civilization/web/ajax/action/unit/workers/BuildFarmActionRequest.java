@@ -20,7 +20,7 @@ public class BuildFarmActionRequest extends AbstractAjaxRequest {
             return JsonResponse.badRequest(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
-        String workersId = request.get("workersId");
+        String workersId = request.get("workers");
         Workers workers = (Workers)myCivilization.getUnitService().getUnitById(workersId);
 
         ActionAbstractResult result = BuildFarmAction.buildFarm(workers);

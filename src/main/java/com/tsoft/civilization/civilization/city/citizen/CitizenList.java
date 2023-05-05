@@ -2,10 +2,7 @@ package com.tsoft.civilization.civilization.city.citizen;
 
 import com.tsoft.civilization.util.Point;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -61,10 +58,10 @@ public class CitizenList implements Iterable<Citizen> {
         return citizens.size();
     }
 
-    public List<Point> getLocations() {
+    public Set<Point> getLocations() {
         return citizens.stream()
             .map(Citizen::getLocation)
             .filter(Objects::nonNull)
-            .collect(Collectors.toList());
+            .collect(Collectors.toSet());
     }
 }

@@ -23,7 +23,7 @@ public class CityConstructionService {
     @Setter
     private ConstructionStrategy constructionStrategy;
 
-    // Current constructions (buildings, units etc) in needed order
+    // Current constructions (buildings, units etc.) in needed order.
     // Order is important, as the player can set as a first an expensive construction
     // and all the construction process will wait (no other less expensive construction started)
     // until the City will get enough production to build the expensive construction
@@ -55,14 +55,30 @@ public class CityConstructionService {
         builtThisYear = new ConstructionList();
     }
 
+    public int calcConstructionTurns(Construction construction) {
+        if (constructions.isEmpty()) {
+            return 0;
+        }
+
+        Supply supply = city.calcSupply();
+        int production = supply.getProduction();
+        if (production <= 0) {
+            return -1;
+        }
+
+        int cost = construction.getProductionCost();
+        return cost / production + 1;
+    }
+
     // Buildings and units construction
     public Supply stopYear(Supply supply) {
         if (constructions.isEmpty()) {
-            log.debug("No construction is in progress");
+            log.debug("{} no construction is in progress", city.getName());
+            return Supply.EMPTY;
         }
 
         Supply constructionExpenses = doConstruction(supply.getProduction());
-        log.debug("Construction expenses = {}", constructionExpenses);
+        log.debug("{} construction expenses = {}", city.getName(), constructionExpenses);
 
         createBuiltThisYearList();
 
@@ -85,7 +101,7 @@ public class CityConstructionService {
             }
 
             if (veryUnhappy && Settlers.CLASS_UUID.equals(construction.getObject().getClassUuid())) {
-                log.trace("Can't train Settlers, the unhappiness level is 'Very Unhappy'");
+                log.trace("{} can't train Settlers, the unhappiness level is 'Very Unhappy'", city.getName());
                 continue;
             }
 
@@ -122,7 +138,7 @@ public class CityConstructionService {
                 .collect(Collectors.toList()));
     }
 
-    // Construction of a building or an unit is finished
+    // Construction of a building or a unit is finished
     private void constructionDone(Construction construction) {
         CanBeBuilt obj = construction.getObject();
 
@@ -148,7 +164,7 @@ public class CityConstructionService {
             return;
         }
 
-        String objectInfo = (obj == null ? "null" : obj.getClass().getName());
-        throw new IllegalArgumentException("Unknown object is built: " + objectInfo);
+        String objectInfo = (obj == null) ? "null" : obj.getClass().getName();
+        throw new IllegalArgumentException(city.getName() + " unknown object is built: " + objectInfo);
     }
 }

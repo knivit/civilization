@@ -34,17 +34,17 @@ public class ImageRender {
         mapRender.drawMap(renderContext, graphicsContext, map);
         drawUnits(renderContext, graphicsContext, world.getCivilizations());
         drawCities(renderContext, graphicsContext, world.getCivilizations());
-        drawCivilizationsBoundaries(renderContext, graphicsContext, map, world.getCivilizations());
+        drawCivilizationsBoundaries(world, renderContext, graphicsContext, map);
 
         graphicsContext.saveImageToFile(outputImageFileName);
     }
 
-    private void drawCivilizationsBoundaries(RenderContext renderContext, GraphicsContext graphicsContext, TilesMap map, CivilizationList civilizations) {
+    private void drawCivilizationsBoundaries(World world, RenderContext renderContext, GraphicsContext graphicsContext, TilesMap map) {
         BorderRender borderRender = new BorderRender();
 
         boolean[] sides = new boolean[6];
         for (AbstractTerrain tile : map) {
-            Civilization civ = civilizations.getCivilizationOnTile(tile.getLocation());
+            Civilization civ = world.getTileService().getCivilizationOnTile(tile.getLocation());
             if (civ == null) {
                 continue;
             }
@@ -52,7 +52,7 @@ public class ImageRender {
             int side = 0;
             List<AbstractTerrain> tilesAround = map.getTilesAround(tile.getLocation(), 1);
             for (AbstractTerrain neighborTile : tilesAround) {
-                Civilization neighborCiv = civilizations.getCivilizationOnTile(neighborTile.getLocation());
+                Civilization neighborCiv = world.getTileService().getCivilizationOnTile(neighborTile.getLocation());
                 sides[side] = (neighborCiv == null) || !neighborCiv.equals(civ);
             }
 

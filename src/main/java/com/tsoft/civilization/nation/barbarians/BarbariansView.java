@@ -1,4 +1,4 @@
-package com.tsoft.civilization.civilization.nation.barbarians;
+package com.tsoft.civilization.nation.barbarians;
 
 import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.civilization.CivilizationView;

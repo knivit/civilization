@@ -9,6 +9,7 @@ import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.scenario.Scenario;
+import com.tsoft.civilization.world.tile.WorldTileService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +47,9 @@ public class World {
     @Getter @Setter
     private DifficultyLevel difficultyLevel;
 
+    @Getter
+    private final WorldTileService tileService;
+
     private final WorldService worldService;
 
     public World(String name, TilesMap tilesMap, Climate climate) {
@@ -56,6 +60,7 @@ public class World {
         view = new WorldView(this);
 
         worldService = new WorldService(this);
+        tileService = new WorldTileService(this);
     }
 
     // Send an event to all civilizations
@@ -81,18 +86,8 @@ public class World {
         return worldService.isWar(c1, c2);
     }
 
-    // Find a location to place a Settlers
-    public Point getSettlersStartLocation(Civilization civ) {
-        return worldService.getSettlersStartLocation(civ);
-    }
-
     public Civilization getCivilizationById(String civilizationId) {
         return worldService.getCivilizationById(civilizationId);
-    }
-
-    // Find out what Civilization have this tile, or null
-    public Civilization getCivilizationOnTile(Point location) {
-        return worldService.getCivilizationOnTile(location);
     }
 
     // Only one city may be on a tile

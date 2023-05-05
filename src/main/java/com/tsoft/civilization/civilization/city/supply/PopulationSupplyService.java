@@ -30,8 +30,8 @@ public class PopulationSupplyService implements HasSupply {
     }
 
     /* Returns NULL when a location doesn't found */
-    public Point findLocationForCitizen(List<Point> usedLocations) {
-        Set<Point> locations = new HashSet<>(city.getTileService().getLocations());
+    public Point findLocationForCitizen(Set<Point> usedLocations) {
+        Set<Point> locations = new HashSet<>(city.getTileService().getTerritory());
         usedLocations.forEach(locations::remove);
 
         AbstractTerrain bestTile = null;

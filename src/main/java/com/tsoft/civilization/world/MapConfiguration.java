@@ -1,9 +1,11 @@
 package com.tsoft.civilization.world;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
 
+@RequiredArgsConstructor
 public enum MapConfiguration {
 
     AMAZON("A region similar to the Amazon Jungle of South America, but with random elements"),
@@ -54,10 +56,6 @@ public enum MapConfiguration {
     
     @Getter
     private final String description;
-
-    MapConfiguration(String description) {
-        this.description = description;
-    }
 
     public static MapConfiguration find(String name) {
         return Arrays.stream(MapConfiguration.values())

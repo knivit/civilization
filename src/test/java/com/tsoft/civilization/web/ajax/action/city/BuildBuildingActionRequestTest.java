@@ -21,12 +21,13 @@ public class BuildBuildingActionRequestTest {
     private final BuildBuildingActionRequest buildBuildingActionRequest = new BuildBuildingActionRequest();
 
     @Test
-    public void get_json() {
+    void get_json() {
         MockWorld world = MockWorld.newSimpleWorld();
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .city("city", new Point(2, 0))
         );
+
         City city = world.city("city");
 
         Sessions.getCurrent().setActiveCivilization(russia);
@@ -37,7 +38,6 @@ public class BuildBuildingActionRequestTest {
 
         Response response = buildBuildingActionRequest.getJson(request);
 
-        assertThat(response)
-            .returns(ResponseCode.OK, Response::getResponseCode);
+        assertThat(response).returns(ResponseCode.OK, Response::getResponseCode);
     }
 }

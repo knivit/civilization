@@ -1,7 +1,7 @@
-package com.tsoft.civilization.civilization.nation.russia;
+package com.tsoft.civilization.nation.russia;
 
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.civilization.CivilizationBot;
+import com.tsoft.civilization.bot.CivilizationBot;
 import com.tsoft.civilization.world.World;
 import lombok.extern.slf4j.Slf4j;
 

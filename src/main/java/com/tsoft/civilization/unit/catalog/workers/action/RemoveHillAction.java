@@ -13,6 +13,8 @@ import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 
 import java.util.UUID;
 
+import static com.tsoft.civilization.unit.action.DefaultUnitActionsResults.*;
+
 public class RemoveHillAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
@@ -40,7 +42,11 @@ public class RemoveHillAction {
 
     private static ActionAbstractResult canRemoveHill(Workers workers) {
         if (workers == null || workers.isDestroyed()) {
-            return WorkersActionResults.UNIT_NOT_FOUND;
+            return UNIT_NOT_FOUND;
+        }
+
+        if (!workers.isOnMyTerritory()) {
+            return NOT_MY_TERRITORY;
         }
 
         AbstractTerrain tile = workers.getTile();

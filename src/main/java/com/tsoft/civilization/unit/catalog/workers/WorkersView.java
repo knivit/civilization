@@ -49,6 +49,6 @@ public class WorkersView extends AbstractUnitView {
 
     @Override
     public String getStatusImageSrc() {
-        return "images/status/units/workers.png";
+        return "images/status/units/worker.png";
     }
 }

@@ -14,9 +14,7 @@ import com.tsoft.civilization.economic.Supply;
 import lombok.Getter;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -48,13 +46,6 @@ public class CivilizationCityService {
         return cities.unmodifiableList();
     }
 
-    public Set<Point> getLocations() {
-        Set<Point> locations = new HashSet<>();
-        cities.stream()
-            .forEach(c -> locations.addAll(c.getTileService().getLocations()));
-        return locations;
-    }
-
     public int size() {
         return cities.size();
     }
@@ -65,10 +56,6 @@ public class CivilizationCityService {
 
     public City getAny() {
         return cities.isEmpty() ? null : cities.getAny();
-    }
-
-    public boolean isHavingTile(Point location) {
-        return cities.isHavingTile(location);
     }
 
     public City getCityById(String cityId) {

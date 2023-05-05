@@ -77,26 +77,62 @@ public class GetUnitStatus extends AbstractAjaxRequest {
         return Format.text("""
             <table id='info_table'>
                 <tr><th colspan='2'>$features</th>
-                <tr><td>$meleeAttackStrengthLabel</td><td>$meleeAttackStrength</td>
-                <tr><td>$rangedAttackStrengthLabel</td><td>$rangedAttackStrength</td>
-                <tr><td>$rangedAttackRadiusLabel</td><td>$rangedAttackRadius</td>
+                $defaultUnitInfo
+                $meleeUnitInfo
+                $rangedUnitInfo
                 <tr><td>$defenseStrengthLabel</td><td>$defenseStrength</td>
             </table>
+            $movementSkills
             $combatSkills
             $healingSkills
-            $movementSkills
             """,
 
             "$features", L10nUnit.FEATURES,
-
-            "$meleeAttackStrengthLabel", L10nUnit.MELEE_ATTACK_STRENGTH, "$meleeAttackStrength", unit.calcCombatStrength().getMeleeAttackStrength(),
-            "$rangedAttackStrengthLabel", L10nUnit.RANGED_ATTACK_STRENGTH, "$rangedAttackStrength", unit.calcCombatStrength().getRangedAttackStrength(),
-            "$rangedAttackRadiusLabel", L10nUnit.RANGED_ATTACK_RADIUS, "$rangedAttackRadius", unit.calcCombatStrength().getRangedAttackRadius(),
+            "$defaultUnitInfo", getDefaultUnitInfo(unit),
+            "$meleeUnitInfo", getMeleeUnitInfo(unit),
+            "$rangedUnitInfo", getRangedUnitInfo(unit),
             "$defenseStrengthLabel", L10nUnit.STRENGTH, "$defenseStrength", unit.calcCombatStrength().getDefenseStrength(),
 
+            "$movementSkills", getUnitSkills(unit, unit.getMovementService().getMovementSkills(), L10nUnit.MOVEMENT_SKILLS_HEADER),
             "$combatSkills", getUnitSkills(unit, unit.getCombatService().getCombatSkills(), L10nUnit.COMBAT_SKILLS_HEADER),
-            "$healingSkills", getUnitSkills(unit, unit.getCombatService().getHealingSkills(), L10nUnit.HEALING_SKILLS_HEADER),
-            "$movementSkills", getUnitSkills(unit, unit.getMovementService().getMovementSkills(), L10nUnit.MOVEMENT_SKILLS_HEADER)
+            "$healingSkills", getUnitSkills(unit, unit.getCombatService().getHealingSkills(), L10nUnit.HEALING_SKILLS_HEADER)
+        );
+    }
+
+    private StringBuilder getDefaultUnitInfo(AbstractUnit unit) {
+        return Format.text("""
+            <tr><td>$passScoreLabel</td><td>$passScore</td>
+            """,
+
+            "$passScoreLabel", L10nUnit.PASS_SCORE, "$passScore", unit.getPassScore()
+        );
+    }
+
+    private StringBuilder getMeleeUnitInfo(AbstractUnit unit) {
+        if (!unit.getUnitCategory().isMelee()) {
+            return null;
+        }
+
+        return Format.text("""
+            <tr><td>$meleeAttackStrengthLabel</td><td>$meleeAttackStrength</td>
+            """,
+
+            "$meleeAttackStrengthLabel", L10nUnit.MELEE_ATTACK_STRENGTH, "$meleeAttackStrength", unit.calcCombatStrength().getMeleeAttackStrength()
+        );
+    }
+
+    private StringBuilder getRangedUnitInfo(AbstractUnit unit) {
+        if (!unit.getUnitCategory().isRanged()) {
+            return null;
+        }
+
+        return Format.text("""
+            <tr><td>$rangedAttackStrengthLabel</td><td>$rangedAttackStrength</td>
+            <tr><td>$rangedAttackRadiusLabel</td><td>$rangedAttackRadius</td>
+            """,
+
+            "$rangedAttackStrengthLabel", L10nUnit.RANGED_ATTACK_STRENGTH, "$rangedAttackStrength", unit.calcCombatStrength().getRangedAttackStrength(),
+            "$rangedAttackRadiusLabel", L10nUnit.RANGED_ATTACK_RADIUS, "$rangedAttackRadius", unit.calcCombatStrength().getRangedAttackRadius()
         );
     }
 

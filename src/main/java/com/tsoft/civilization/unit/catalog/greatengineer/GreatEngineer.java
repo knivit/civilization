@@ -5,19 +5,17 @@ import com.tsoft.civilization.unit.catalog.UnitCatalog;
 import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.civilization.Civilization;
 
-import java.util.UUID;
-
 /**
  * Movement: 2;
  * Strength: 0;
  * Ranged Strength: 0
  *
- * Notes: Can sacrifice himself to construct a Manufactory improvement, to hurry production of a unit,
+ * Notes: Can sacrifice himself to construct a Manufacture improvement, to hurry production of a unit,
  * building or wonder, or trigger a Golden Age.
  */
 public class GreatEngineer extends AbstractUnit {
 
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
+    public static final String CLASS_UUID = UnitType.GREAT_ENGINEER.name();
 
     private static final UnitBaseState BASE_STATE = UnitCatalog.getBaseState(UnitType.GREAT_ENGINEER);
 

@@ -34,7 +34,7 @@ public class CityStatusRender {
         world
             .getCivilizations().stream()
             .flatMap(e -> e.getCityService().stream())
-            .forEach(c -> c.getTileService().getLocations().forEach(l -> cities.put(l, c)));
+            .forEach(c -> c.getTileService().getTerritory().forEach(l -> cities.put(l, c)));
 
         TilesMap map = world.getTilesMap();
         for (int y = 0; y < map.getHeight(); y ++) {
@@ -51,7 +51,7 @@ public class CityStatusRender {
                         .append("</td>");
                 } else {
                     Color color = (city == null) ? null : civilizationRender.getColor(city.getCivilization());
-                    boolean isCityLocation = (city != null) && city.getTileService().getLocations().contains(location);
+                    boolean isCityLocation = (city != null) && city.getTileService().getTerritory().contains(location);
 
                     buf.append("<td").append(isCityLocation ? " style=\"background: " + String.format("#%06x", color.getRGB() & 0x00FFFFFF) + ";\"" : "").append(">\n");
                     if (citizen != null) {

@@ -39,7 +39,7 @@ public class Settlement extends AbstractBuilding {
     }
 
     @Override
-    public boolean requiresEraAndTechnology(Civilization civilization) {
+    public boolean requiredEraAndTechnology(Civilization civilization) {
         return true;
     }
 }

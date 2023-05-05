@@ -6,8 +6,6 @@ import com.tsoft.civilization.unit.catalog.UnitCatalog;
 import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.civilization.Civilization;
 
-import java.util.UUID;
-
 /**
  * Archer
  * ------
@@ -48,7 +46,7 @@ import java.util.UUID;
  */
 public class Archers extends AbstractUnit {
 
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
+    public static final String CLASS_UUID = UnitType.ARCHERS.name();
 
     private static final UnitBaseState BASE_STATE = UnitCatalog.getBaseState(UnitType.ARCHERS);
 

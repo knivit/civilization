@@ -4,8 +4,6 @@ import com.tsoft.civilization.unit.*;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.unit.catalog.UnitCatalog;
 
-import java.util.UUID;
-
 /**
  * Movement: 2;
  * Strength: 0;
@@ -24,7 +22,7 @@ import java.util.UUID;
  */
 public class Workers extends AbstractUnit {
 
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
+    public static final String CLASS_UUID = UnitType.WORKERS.name();
 
     private static final UnitBaseState BASE_STATE = UnitCatalog.getBaseState(UnitType.WORKERS);
 

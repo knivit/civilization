@@ -2,6 +2,7 @@ package com.tsoft.civilization.world;
 
 import com.tsoft.civilization.util.l10n.L10n;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
 
@@ -146,6 +147,7 @@ import java.util.Arrays;
  * 10 This element applies to the number of XP that military units earn from combat.
  * * This element is either a holdover from Civilization IV or is never used in the code, so it has no effect on gameplay.
  */
+@RequiredArgsConstructor
 public enum DifficultyLevel {
 
     SETTLER(L10nWorld.DIFFICULTY_LEVEL_SETTLER),
@@ -159,10 +161,6 @@ public enum DifficultyLevel {
 
     @Getter
     private final L10n l10n;
-
-    DifficultyLevel(L10n l10n) {
-        this.l10n = l10n;
-    }
 
     public static DifficultyLevel find(String name) {
         return Arrays.stream(DifficultyLevel.values())

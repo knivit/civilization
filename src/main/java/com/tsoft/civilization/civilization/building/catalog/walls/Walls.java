@@ -69,7 +69,7 @@ public class Walls extends AbstractBuilding {
     }
 
     @Override
-    public boolean requiresEraAndTechnology(Civilization civilization) {
+    public boolean requiredEraAndTechnology(Civilization civilization) {
         return civilization.getYear().isAfter(Year.ANCIENT_ERA) &&
             civilization.isResearched(Technology.MASONRY);
     }

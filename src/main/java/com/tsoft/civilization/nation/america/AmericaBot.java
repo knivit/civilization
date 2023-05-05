@@ -1,7 +1,7 @@
-package com.tsoft.civilization.civilization.nation.america;
+package com.tsoft.civilization.nation.america;
 
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.civilization.CivilizationBot;
+import com.tsoft.civilization.bot.CivilizationBot;
 import com.tsoft.civilization.world.World;
 
 public class AmericaBot extends CivilizationBot {

@@ -5,8 +5,6 @@ import com.tsoft.civilization.unit.catalog.UnitCatalog;
 import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.civilization.Civilization;
 
-import java.util.UUID;
-
 /**
  * Movement: 2; Strength: 0; Ranged Strength: 0
  *
@@ -17,7 +15,7 @@ import java.util.UUID;
  */
 public class GreatGeneral extends AbstractUnit {
 
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
+    public static final String CLASS_UUID = UnitType.GREAT_GENERAL.name();
 
     private static final UnitBaseState BASE_STATE = UnitCatalog.getBaseState(UnitType.GREAT_GENERAL);
 

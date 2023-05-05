@@ -67,7 +67,7 @@ public class CityCitizenService {
         notifyDependentServices();
     }
 
-    public List<Point> getCitizenLocations() {
+    public Set<Point> getCitizenLocations() {
         return citizens.getLocations();
     }
 
@@ -89,6 +89,7 @@ public class CityCitizenService {
     // Citizen's birth, death, happiness
     public Supply stopYear(Supply supply) {
         Supply growthPoolSupply = updateGrowthPool(supply);
+
         supply = supply.add(growthPoolSupply);
 
         // At the Unhappiness level of -10 ("Very Unhappy"), population growth stops completely
@@ -186,13 +187,13 @@ public class CityCitizenService {
 
     // The supply strategy has changed, reorganize citizens for best profit
     public void reorganizeCitizensOnTiles() {
-        List<Point> newLocations = findNewLocations();
+        Set<Point> newLocations = findNewLocations();
         reorganizeCitizens(newLocations);
     }
 
     // Returns NULL if reorganization is impossible
-    private List<Point> findNewLocations() {
-        List<Point> newLocations = new ArrayList<>();
+    private Set<Point> findNewLocations() {
+        Set<Point> newLocations = new HashSet<>();
 
         for (int i = 0; i < city.getCitizenCount(); i ++) {
             Point location = populationSupplyService.findLocationForCitizen(newLocations);
@@ -209,18 +210,20 @@ public class CityCitizenService {
         return newLocations;
     }
 
-    private void reorganizeCitizens(List<Point> newLocations) {
-        if (newLocations == null || newLocations.isEmpty()) {
+    private void reorganizeCitizens(Set<Point> locations) {
+        if (locations == null || locations.isEmpty()) {
             return;
         }
 
-        if (newLocations.size() != citizens.size()) {
-            throw new IllegalStateException("Locations size = " + newLocations.size() +
+        if (locations.size() != citizens.size()) {
+            throw new IllegalStateException("Locations size = " + locations.size() +
                 " is not equal to number of citizens = " + citizens.size());
         }
 
-        for (int i = 0; i < citizens.size(); i++) {
-            citizens.get(i).setLocation(newLocations.get(i));
+        Iterator<Point> liter = locations.iterator();
+        Iterator<Citizen> citer = citizens.iterator();
+        while (liter.hasNext()) {
+            citer.next().setLocation(liter.next());
         }
     }
 

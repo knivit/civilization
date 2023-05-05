@@ -15,6 +15,7 @@ import static com.tsoft.civilization.web.ajax.ServerStaticResource.GOLD_IMAGE;
 
 @Slf4j
 public class BuyBuildingAction {
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     public static ActionAbstractResult buyBuilding(City city, String buildingClassUuid) {
@@ -40,11 +41,11 @@ public class BuyBuildingAction {
             return CityActionResults.INVALID_BUILDING;
         }
 
-        if (!building.requiresEraAndTechnology(city.getCivilization())) {
+        if (!building.requiredEraAndTechnology(city.getCivilization())) {
             return CityActionResults.WRONG_ERA_OR_TECHNOLOGY;
         }
 
-        if (!city.canPlaceBuilding(building)) {
+        if (city.getBuildingService().alreadyExists(building.getClassUuid())) {
             return CityActionResults.CANT_BUY_THIS_BUILDING;
         }
 

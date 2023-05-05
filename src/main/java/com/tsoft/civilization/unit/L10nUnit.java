@@ -146,6 +146,10 @@ public class L10nUnit {
         .put(EN, "Not enough the passing score")
         .put(RU, "Недостаточно ходов перемещения");
 
+    public static final L10n NOT_MY_TERRITORY = new L10n()
+        .put(EN, "Not my civilization's territory")
+        .put(RU, "Территория не моего государства");
+
     public static final L10n CANT_CROSS_BORDERS = new L10n()
         .put(EN, "Can not cross borders")
         .put(RU, "Нельзя пересекать границу");

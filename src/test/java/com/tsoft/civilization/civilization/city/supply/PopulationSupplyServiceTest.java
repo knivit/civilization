@@ -38,7 +38,7 @@ public class PopulationSupplyServiceTest {
         PopulationSupplyService supplyService = new PopulationSupplyService(city);
         supplyService.setSupplyStrategy(List.of(MAX_FOOD, MAX_PRODUCTION, MAX_GOLD));
 
-        assertThat(supplyService.findLocationForCitizen(Collections.emptyList()))
+        assertThat(supplyService.findLocationForCitizen(Collections.emptySet()))
             .isEqualTo(new Point(3, 1));
 
         assertThat(city.calcTilesSupply(new Point(3, 1)))
@@ -66,7 +66,7 @@ public class PopulationSupplyServiceTest {
         PopulationSupplyService supplyService = new PopulationSupplyService(city);
         supplyService.setSupplyStrategy(List.of(MAX_PRODUCTION, MAX_GOLD, MAX_FOOD));
 
-        assertThat(supplyService.findLocationForCitizen(Collections.emptyList()))
+        assertThat(supplyService.findLocationForCitizen(Collections.emptySet()))
             .isEqualTo(new Point(0, 1));
 
         assertThat(city.calcTilesSupply(new Point(0, 1)))
@@ -94,7 +94,7 @@ public class PopulationSupplyServiceTest {
         PopulationSupplyService supplyService = new PopulationSupplyService(city);
         supplyService.setSupplyStrategy(List.of(MAX_GOLD, MAX_FOOD, MAX_PRODUCTION));
 
-        assertThat(supplyService.findLocationForCitizen(Collections.emptyList()))
+        assertThat(supplyService.findLocationForCitizen(Collections.emptySet()))
             .isEqualTo(new Point(3, 1));
 
         assertThat(city.calcTilesSupply(new Point(3, 1)))

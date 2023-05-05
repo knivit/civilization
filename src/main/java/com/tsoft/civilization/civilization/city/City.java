@@ -70,8 +70,13 @@ public class City implements HasCombatStrength, HasHistory {
     @Getter
     private CitySpecialistService specialistService;
 
+    @Getter
     private CityBuildingService buildingService;
+
+    @Getter
     private CityConstructionService constructionService;
+
+    @Getter
     private CityCombatService combatService;
 
     @Getter
@@ -111,7 +116,7 @@ public class City implements HasCombatStrength, HasHistory {
         // area
         tile.setCity(this);
         tileService = new CityTileService(this);
-        tileService.addStartLocations(getTile().getLocation());
+        tileService.addStartLocations(tile.getLocation());
 
         // social
         happinessService = new CityHappinessService(this);
@@ -152,7 +157,7 @@ public class City implements HasCombatStrength, HasHistory {
 
     @Override
     public Point getLocation() {
-        return tileService.getLocation();
+        return tileService.getCenter();
     }
 
     @Override
@@ -248,10 +253,6 @@ public class City implements HasCombatStrength, HasHistory {
         return populationService.getCitizenCount();
     }
 
-    public int getSpecialistCount() {
-        return specialistService.getSpecialistCount();
-    }
-
     public BuildingList getBuildings() {
         return buildingService.getBuildings();
     }
@@ -268,7 +269,7 @@ public class City implements HasCombatStrength, HasHistory {
         buildingService.remove(building);
     }
 
-    public List<Point> getCitizenLocations() {
+    public Set<Point> getCitizenLocations() {
         return populationService.getCitizenLocations();
     }
 
@@ -333,16 +334,14 @@ public class City implements HasCombatStrength, HasHistory {
         return building.getGoldCost(civilization);
     }
 
-    public boolean canPlaceBuilding(AbstractBuilding building) {
-        return findBuildingByClassUuid(building.getClassUuid()) == null;
-    }
-
-    public Supply calcTilesSupply() {
-        return supplyService.calcTilesSupply();
-    }
-
     public Supply calcTilesSupply(Point location) {
         return supplyService.calcTilesSupply(location);
+    }
+
+    public Supply calcSupply() {
+        Supply incomeSupply = supplyService.calcIncomeSupply();
+        Supply outcomeSupply = supplyService.calcOutcomeSupply();
+        return incomeSupply.add(outcomeSupply);
     }
 
     public Happiness getHappiness() {
@@ -383,7 +382,7 @@ public class City implements HasCombatStrength, HasHistory {
         Supply populationSupplyChange = populationService.stopYear(supply);
         supply = supply.add(populationSupplyChange);
 
-        Supply specialistsSupplyChange = specialistService.stopYear(supply);
+        Supply specialistsSupplyChange = specialistService.stopYear();
         supply = supply.add(specialistsSupplyChange);
 
         buildingService.stopYear();

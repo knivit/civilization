@@ -37,7 +37,7 @@ public enum ConstructionStrategy {
 
     private static void auto(ConstructionList list, Construction construction) {
         // TODO
-        // If there is a war an the construction is a military unit then place it
+        // If there is a war and the construction is a military unit then place it
         //   1) above the civil units and buildings
         //   2) if the city is under attack
         //      2.1) find out construction's "defense a city" strength

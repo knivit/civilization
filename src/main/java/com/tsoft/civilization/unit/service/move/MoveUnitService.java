@@ -19,6 +19,8 @@ import com.tsoft.civilization.util.Point;
 
 import java.util.*;
 
+import static com.tsoft.civilization.unit.action.DefaultUnitActionsResults.*;
+
 public class MoveUnitService {
 
     public static final ActionSuccessResult UNIT_MOVED = new ActionSuccessResult(L10nUnit.UNIT_MOVED);
@@ -26,10 +28,8 @@ public class MoveUnitService {
     public static final ActionSuccessResult CAN_MOVE = new ActionSuccessResult(L10nUnit.CAN_MOVE);
     public static final ActionSuccessResult CAN_SWAP = new ActionSuccessResult(L10nUnit.CAN_SWAP);
 
-    public static final ActionFailureResult NO_PASS_SCORE = new ActionFailureResult(L10nUnit.NO_PASS_SCORE);
     public static final ActionFailureResult CANT_CROSS_BORDERS = new ActionFailureResult(L10nUnit.CANT_CROSS_BORDERS);
     public static final ActionFailureResult CANT_MOVE_FOREIGN_UNIT_ON_TILE = new ActionFailureResult(L10nUnit.CANT_MOVE_FOREIGN_UNIT_ON_TILE);
-    public static final ActionFailureResult UNIT_NOT_FOUND = new ActionFailureResult(L10nUnit.UNIT_NOT_FOUND);
     public static final ActionFailureResult UNIT_DESTROYED = new ActionFailureResult(L10nUnit.UNIT_DESTROYED);
     public static final ActionFailureResult INVALID_TARGET_LOCATION = new ActionFailureResult(L10nUnit.INVALID_TARGET_LOCATION);
     public static final ActionFailureResult NO_LOCATIONS_TO_MOVE = new ActionFailureResult(L10nUnit.NO_LOCATIONS_TO_MOVE);
@@ -111,6 +111,10 @@ public class MoveUnitService {
 
         if (unit.isDestroyed()) {
             return UNIT_DESTROYED;
+        }
+
+        if (unit.getPassScore() <= 0) {
+            return NO_PASS_SCORE;
         }
 
         return CAN_MOVE;
@@ -325,7 +329,7 @@ public class MoveUnitService {
             return NO_PASS_SCORE;
         }
 
-        Civilization civilization = unit.getWorld().getCivilizationOnTile(location);
+        Civilization civilization = unit.getWorld().getTileService().getCivilizationOnTile(location);
 
         // The tile is nobody's or mine
         if (civilization == null || unit.getCivilization().equals(civilization)) {

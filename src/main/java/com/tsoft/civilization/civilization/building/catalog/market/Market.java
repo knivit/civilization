@@ -87,7 +87,7 @@ public class Market extends AbstractBuilding {
     }
 
     @Override
-    public boolean requiresEraAndTechnology(Civilization civilization) {
+    public boolean requiredEraAndTechnology(Civilization civilization) {
         return civilization.getYear().isAfter(Year.CLASSICAL_ERA) &&
             civilization.isResearched(Technology.CURRENCY);
     }

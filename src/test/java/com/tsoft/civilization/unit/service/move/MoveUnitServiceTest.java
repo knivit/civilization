@@ -20,6 +20,7 @@ import java.util.Set;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.AMERICA;
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
+import static com.tsoft.civilization.unit.action.DefaultUnitActionsResults.*;
 import static com.tsoft.civilization.unit.service.move.MoveUnitService.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -35,8 +36,7 @@ public class MoveUnitServiceTest {
 
     @Test
     public void unit_not_found() {
-        assertThat(moveUnitService.move(null, new Point(1, 1)))
-            .isEqualTo(UNIT_NOT_FOUND);
+        assertThat(moveUnitService.move(null, new Point(1, 1))).isEqualTo(UNIT_NOT_FOUND);
     }
 
     @Test
@@ -384,7 +384,7 @@ public class MoveUnitServiceTest {
     }
 
     // There is Great Artist in a city
-    // Warriors can't enter to city because of that
+    // Workers (also a civil unit) can't enter to city because of that
     @Test
     public void fail_tile_occupied_in_city() {
         MockWorld world = MockWorld.of(MockTilesMap.of(
@@ -426,7 +426,7 @@ public class MoveUnitServiceTest {
 
         assertThat(workers)
             .returns(new Point(1, 1), Workers::getLocation)
-            .returns(5, Workers::getPassScore);
+            .returns(2, Workers::getPassScore);
     }
 
     @Test

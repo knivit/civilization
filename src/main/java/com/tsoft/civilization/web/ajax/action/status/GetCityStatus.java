@@ -1,7 +1,6 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
 import com.tsoft.civilization.civilization.building.AbstractBuilding;
-import com.tsoft.civilization.civilization.building.BuildingFactory;
 import com.tsoft.civilization.civilization.building.BuildingList;
 import com.tsoft.civilization.civilization.city.L10nCity;
 import com.tsoft.civilization.unit.*;
@@ -22,7 +21,6 @@ import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
 
-import static com.tsoft.civilization.civilization.building.L10nBuilding.CONSTRUCTION_PRIORITY_LABEL;
 import static com.tsoft.civilization.web.ajax.ServerStaticResource.*;
 
 public class GetCityStatus extends AbstractAjaxRequest {
@@ -240,7 +238,7 @@ public class GetCityStatus extends AbstractAjaxRequest {
     private StringBuilder getBuildingConstructionActions(City city) {
         StringBuilder buf = new StringBuilder();
 
-        BuildingList buildings = BuildingFactory.getAvailableBuildings(city.getCivilization());
+        BuildingList buildings = city.getBuildingService().getAvailableBuildings();
         for (AbstractBuilding building : buildings.sortByName()) {
             StringBuilder buyBuildingAction = BuildBuildingAction.getHtml(city, building.getClassUuid());
             StringBuilder buildBuildingAction = BuyBuildingAction.getHtml(city, building.getClassUuid());
@@ -300,33 +298,43 @@ public class GetCityStatus extends AbstractAjaxRequest {
             return null;
         }
 
-        BuildingList buildings = city.getBuildings();
-        if (buildings.isEmpty()) {
-            return Format.text(
-                "<table id='actions_table'><tr><th>$text</th></tr></table>",
-                "$text", L10nBuilding.NO_BUILDINGS
-            );
-        }
-
         StringBuilder buf = new StringBuilder();
-        for (AbstractBuilding building : buildings.sortByName()) {
-            buf.append(Format.text("""
-                <tr><td><button onclick="$getBuildingStatus">$buttonLabel</button></td></tr>
+        BuildingList buildings = city.getBuildings();
+
+        if (buildings.isEmpty()) {
+            buf = Format.text("""
+                <tr>
+                    <td colspan='2'>$text</td>
+                </tr>
                 """,
 
-                "$getBuildingStatus", GetBuildingStatus.getAjax(building),
-                "$buttonLabel", building.getView().getLocalizedName()
-            ));
+                "$text", L10nBuilding.NO_BUILDINGS
+            );
+        } else {
+            for (AbstractBuilding building : buildings.sortByName()) {
+                buf.append(Format.text("""
+                    <tr>
+                        <td><button onclick="$getBuildingStatus">$buttonLabel</button></td>
+                        <td>$buildingCategory</td>
+                    </tr>
+                    """,
+
+                    "$getBuildingStatus", GetBuildingStatus.getAjax(building),
+                    "$buttonLabel", building.getView().getLocalizedName(),
+                    "$buildingCategory", building.getBuildingCategory().getLocalizedName()
+                ));
+            }
         }
 
         return Format.text("""
             <table id='actions_table'>
-                <tr><th>$header</th></tr>
+                <tr><th>$header</th><th>$buildingCategory</th></tr>
                 $buildings
             </table>
             """,
 
             "$header", L10nBuilding.BUILDING_LIST,
+            "$buildingCategory", L10nBuilding.CATEGORY,
             "$buildings", buf
         );
     }
@@ -356,26 +364,28 @@ public class GetCityStatus extends AbstractAjaxRequest {
             buf.append(Format.text("""
                 <tr>
                     <td><button onclick="$getConstructionStatus">$buttonLabel</button></td>
+                    <td>$turns</td>
                 </tr>
                 """,
 
                 "$getConstructionStatus", GetConstructionStatus.getAjax(construction),
-                "$buttonLabel", construction.getView().getLocalizedName()
+                "$buttonLabel", construction.getView().getLocalizedName(),
+                "$turns", city.getConstructionService().calcConstructionTurns(construction)
             ));
         }
 
         return Format.text("""
             <table id='actions_table'>
                 <tr>
-                    <th>$priorityLabel</th>
                     <th>$header</th>
+                    <th>$turnsLabel</th>
                 </tr>
                 $constructions
             </table>
             """,
 
-            "$priorityLabel", CONSTRUCTION_PRIORITY_LABEL,
             "$header", L10nBuilding.CONSTRUCTION_LIST,
+            "$turnsLabel", L10nBuilding.CONSTRUCTION_TURNS_LABEL,
             "$constructions", buf
         );
     }

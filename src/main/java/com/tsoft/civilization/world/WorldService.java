@@ -4,7 +4,6 @@ import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.civilization.*;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.civilization.city.CityList;
-import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Pair;
@@ -12,25 +11,21 @@ import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.event.*;
 import com.tsoft.civilization.world.scenario.Scenario;
 import com.tsoft.civilization.world.scenario.ScenarioApplyResult;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 @Slf4j
+@RequiredArgsConstructor
 public class WorldService {
+
     private final World world;
 
-    private final CivilizationList civilizations;
+    private final CivilizationList civilizations = new CivilizationList();
     private final HashMap<Pair<Civilization>, CivilizationsRelations> relations = new HashMap<>();
     private final List<Year> history = new ArrayList<>();
-
-    public WorldService(World world) {
-        this.world = world;
-
-        civilizations = new CivilizationList();
-    }
 
     public Civilization createCivilization(PlayerType playerType, L10n civilizationName, Scenario scenario) {
         if (civilizations.getCivilizationByName(civilizationName) != null) {
@@ -132,88 +127,8 @@ public class WorldService {
         return relations.isWar();
     }
 
-    // Find a location to place a Settlers
-    public Point getSettlersStartLocation(Civilization civ) {
-        List<Point> possibleLocations = getTilesToStartCivilization();
-        return getCivilizationStartLocation(civ, possibleLocations);
-    }
-
-    private List<Point> getTilesToStartCivilization() {
-        return world.getTilesMap().tiles()
-            .filter(AbstractTerrain::isCanBuildCity)
-            .map(AbstractTerrain::getLocation)
-            .collect(Collectors.toList());
-    }
-
-    // Find a location to place a Settlers
-    // Rules:
-    //   - not less than 4 tiles from other civilizations tiles
-    //   - location must be passable for the Settlers
-    //   - there are must be 3 tiles of Earth around the location
-    private Point getCivilizationStartLocation(Civilization civ, List<Point> possibleLocations) {
-        Set<Point> busyLocations = new HashSet<>();
-
-        for (Civilization civilization : civilizations) {
-            // skip the target civilization
-            if (civilization.equals(civ)) {
-                continue;
-            }
-
-            // exclude cities
-            for (City city : civilization.getCityService().getCities()) {
-                busyLocations.addAll(city.getTileService().getLocations());
-            }
-
-            // exclude units and locations around them as far as 4 tiles
-            for (AbstractUnit unit : civilization.getUnitService().getUnits()) {
-                busyLocations.add(unit.getLocation());
-                busyLocations.addAll(world.getLocationsAround(unit.getLocation(), 4));
-            }
-        }
-
-        possibleLocations.removeAll(busyLocations);
-        if (possibleLocations.isEmpty()) {
-            return null;
-        }
-
-        // must be 3 tiles of Earth around
-        possibleLocations = getLocationsWithEarthAround(possibleLocations, 3);
-        if (possibleLocations.isEmpty()) {
-            return null;
-        }
-
-        int n = ThreadLocalRandom.current().nextInt(possibleLocations.size());
-        return possibleLocations.get(n);
-    }
-
-    private List<Point> getLocationsWithEarthAround(List<Point> possibleLocations, int radius) {
-        Set<Point> busyLocations = new HashSet<>();
-
-        int numberOfLocationsAround = world.getLocationsAround(possibleLocations.get(0), radius).size();
-        int minRadiusWithEarthAround = numberOfLocationsAround / 2;
-
-        for (Point location : possibleLocations) {
-            List<AbstractTerrain> tilesAround = world.getLocationsAround(location, radius).stream()
-                .map(e -> world.getTilesMap().getTile(e))
-                .filter(AbstractTerrain::isCanBuildCity)
-                .collect(Collectors.toList());
-
-            if (tilesAround.size() < minRadiusWithEarthAround) {
-                busyLocations.add(location);
-            }
-        }
-
-        possibleLocations.removeAll(busyLocations);
-        return possibleLocations;
-    }
-
     public Civilization getCivilizationById(String civilizationId) {
         return civilizations.getCivilizationById(civilizationId);
-    }
-
-    // Find out what Civilization have this tile, or null
-    public Civilization getCivilizationOnTile(Point location) {
-        return civilizations.getCivilizationOnTile(location);
     }
 
     // Only one city may be on a tile

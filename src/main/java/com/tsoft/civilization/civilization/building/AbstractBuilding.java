@@ -1,5 +1,7 @@
 package com.tsoft.civilization.civilization.building;
 
+import com.tsoft.civilization.civilization.building.catalog.palace.Palace;
+import com.tsoft.civilization.civilization.building.catalog.settlement.Settlement;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.world.HasId;
 import com.tsoft.civilization.world.HasView;
@@ -124,6 +126,7 @@ import java.util.UUID;
 @Slf4j
 @EqualsAndHashCode(of = "id")
 public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt, HasSupply, HasHistory {
+
     private final String id = UUID.randomUUID().toString();
 
     private final City city;
@@ -133,7 +136,7 @@ public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt, Ha
     public abstract BuildingBaseState getBaseState();
     public abstract AbstractBuildingView getView();
     public abstract boolean checkEraAndTechnology(Civilization civilization);
-    public abstract boolean requiresEraAndTechnology(Civilization civilization);
+    public abstract boolean requiredEraAndTechnology(Civilization civilization);
 
     protected AbstractBuilding(City city) {
         this.city = city;
@@ -162,6 +165,10 @@ public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt, Ha
 
     public BuildingCategory getBuildingCategory() {
         return getBaseState().getCategory();
+    }
+
+    public boolean isFirstBuilding() {
+        return Palace.CLASS_UUID.equals(getClassUuid()) || Settlement.CLASS_UUID.equals(getClassUuid());
     }
 
     @Override
@@ -241,6 +248,14 @@ public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt, Ha
         return supply;
     }
 
+    public boolean isDestroyed() {
+        return isDestroyed;
+    }
+
+    public void setDestroyed(boolean destroyed) {
+        isDestroyed = destroyed;
+    }
+
     @Override
     public void startYear() {
 
@@ -249,13 +264,5 @@ public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt, Ha
     @Override
     public void stopYear() {
 
-    }
-
-    public boolean isDestroyed() {
-        return isDestroyed;
-    }
-
-    public void setDestroyed(boolean destroyed) {
-        isDestroyed = destroyed;
     }
 }

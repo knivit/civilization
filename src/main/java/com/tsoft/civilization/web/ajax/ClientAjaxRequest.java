@@ -91,9 +91,7 @@ public class ClientAjaxRequest {
     }
 
     public static StringBuilder destroyUnitAction(AbstractUnit unit) {
-        return Format.text("client.destroyUnitAction({ unit:'$unit' })",
-            "$unit", unit.getId()
-        );
+        return Format.text("client.destroyUnitAction({ unit:'$unit' })", "$unit", unit.getId());
     }
 
     public static StringBuilder nextTurnAction() {
@@ -101,33 +99,23 @@ public class ClientAjaxRequest {
     }
 
     public static StringBuilder buildCityAction(Settlers settlers) {
-        return Format.text("client.buildCityAction({ settlers:'$settlers' })",
-            "$settlers", settlers.getId()
-        );
+        return Format.text("client.buildCityAction({ settlers:'$settlers' })", "$settlers", settlers.getId());
     }
 
     public static StringBuilder buildFarmAction(Workers workers) {
-        return Format.text("client.buildFarmAction({ workers:'$workers' })",
-            "$workers", workers.getId()
-        );
+        return Format.text("client.buildFarmAction({ workers:'$workers' })", "$workers", workers.getId());
     }
 
     public static StringBuilder destroyBuildingAction(AbstractBuilding building) {
-        return Format.text("client.destroyBuildingAction({ building:'$building' })",
-            "$building", building.getId()
-        );
+        return Format.text("client.destroyBuildingAction({ building:'$building' })", "$building", building.getId());
     }
 
     public static StringBuilder removeForestAction(Workers workers) {
-        return Format.text("client.removeForestAction({ workers:'$workers' })",
-            "$workers", workers.getId()
-        );
+        return Format.text("client.removeForestAction({ workers:'$workers' })", "$workers", workers.getId());
     }
 
     public static StringBuilder removeHillAction(Workers workers) {
-        return Format.text("client.removeHillAction({ workers:'$workers' })",
-            "$workers", workers.getId()
-        );
+        return Format.text("client.removeHillAction({ workers:'$workers' })", "$workers", workers.getId());
     }
 
     public static StringBuilder buyUnitAction(City city, String unitClassUuid) {

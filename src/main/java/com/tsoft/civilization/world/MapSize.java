@@ -3,6 +3,7 @@ package com.tsoft.civilization.world;
 import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.util.Point;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -30,6 +31,7 @@ import java.util.Map;
  * * Multiplicative
  * ** Additive
  */
+@RequiredArgsConstructor
 public enum MapSize {
 
     DUEL(L10nWorld.MAP_SIZE_DUEL),
@@ -42,10 +44,6 @@ public enum MapSize {
 
     @Getter
     private final L10n l10n;
-
-    MapSize(L10n l10n) {
-        this.l10n = l10n;
-    }
 
     public static final Map<MapSize, Point> MAP_SIZE = Map.of(
         DUEL, new Point(40, 24),

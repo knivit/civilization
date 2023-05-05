@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 @Slf4j
 public class ConstructionList implements Iterable<Construction> {
 
-    // The list already sorted by priority; from first to be build to the last
+    // The list already sorted by priority; from first to be built to the last
     private final List<Construction> constructions = new ArrayList<>();
     private boolean isUnmodifiable;
 

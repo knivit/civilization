@@ -1,15 +1,15 @@
 package com.tsoft.civilization.combat.skill;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Stream;
 
-public class SkillMap<T> implements Iterable<Map.Entry<T, SkillLevel>> {
+public class SkillMap<T extends AbstractSkill> implements Iterable<Map.Entry<T, SkillLevel>> {
 
     public static final SkillMap EMPTY = new SkillMap<>().unmodifiable();
 
-    private final Map<T, SkillLevel> map = new HashMap<>();
+    private final Map<T, SkillLevel> map = new TreeMap<>();
     private boolean isUnmodifiable;
 
     public SkillMap() { }

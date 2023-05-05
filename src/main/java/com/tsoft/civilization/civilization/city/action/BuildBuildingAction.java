@@ -1,6 +1,5 @@
 package com.tsoft.civilization.civilization.city.action;
 
-import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.civilization.building.BuildingFactory;
 import com.tsoft.civilization.civilization.building.L10nBuilding;
 import com.tsoft.civilization.action.ActionAbstractResult;
@@ -18,8 +17,6 @@ import static com.tsoft.civilization.web.ajax.ServerStaticResource.PRODUCTION_IM
 public class BuildBuildingAction {
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();
-
-    private static final L10n localizedDescription = L10nBuilding.BUILD_DESCRIPTION;
 
     public static ActionAbstractResult buildBuilding(City city, String buildingClassUuid) {
         ActionAbstractResult result = canBuildBuilding(city, buildingClassUuid);
@@ -45,11 +42,11 @@ public class BuildBuildingAction {
             return CityActionResults.INVALID_BUILDING;
         }
 
-        if (!building.requiresEraAndTechnology(city.getCivilization())) {
+        if (!building.requiredEraAndTechnology(city.getCivilization())) {
             return CityActionResults.WRONG_ERA_OR_TECHNOLOGY;
         }
 
-        if (!city.canPlaceBuilding(building)) {
+        if (city.getBuildingService().alreadyExists(building.getClassUuid())) {
             return CityActionResults.CANT_BUILD_THIS_BUILDING;
         }
 

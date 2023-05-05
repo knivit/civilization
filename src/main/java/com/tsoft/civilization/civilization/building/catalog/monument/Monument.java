@@ -85,7 +85,7 @@ public class Monument extends AbstractBuilding {
     }
 
     @Override
-    public boolean requiresEraAndTechnology(Civilization civilization) {
+    public boolean requiredEraAndTechnology(Civilization civilization) {
         return civilization.getYear().getEra() == Year.ANCIENT_ERA;
     }
 }

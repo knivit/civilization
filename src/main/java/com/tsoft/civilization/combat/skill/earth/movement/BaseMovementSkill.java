@@ -16,6 +16,6 @@ public class BaseMovementSkill implements AbstractMovementSkill {
 
     @Override
     public int getPassScore(AbstractUnit unit, SkillLevel level) {
-        return level.getValue() - 1;
+        return level.getValue();
     }
 }

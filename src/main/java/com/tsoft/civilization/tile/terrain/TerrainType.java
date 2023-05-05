@@ -1,6 +1,7 @@
 package com.tsoft.civilization.tile.terrain;
 
 public enum TerrainType {
+
     EARTH_MARSH(true),
     EARTH_PLAIN(true),
     EARTH_ROUGH(true),

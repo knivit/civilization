@@ -6,6 +6,21 @@ import static com.tsoft.civilization.util.l10n.L10nLanguage.EN;
 import static com.tsoft.civilization.util.l10n.L10nLanguage.RU;
 
 public class L10nBuilding {
+
+    /* Categories */
+    public static final L10n BUILDING_CATEGORY = new L10n()
+        .put(EN, "A building")
+        .put(RU, "Здание");
+
+    public static final L10n NATIONAL_WONDER_CATEGORY = new L10n()
+        .put(EN, "A national wonder")
+        .put(RU, "Чудеса нации");
+
+    public static final L10n WORLD_WONDER_CATEGORY = new L10n()
+        .put(EN, "A world wonder")
+        .put(RU, "Чудеса света");
+
+    /* Actions */
     public static final L10n CAN_DESTROY = new L10n()
         .put(EN, "The building can be destroyed")
         .put(RU, "Здание может быть разрушено");
@@ -62,9 +77,17 @@ public class L10nBuilding {
         .put(EN, "Buildings in the City")
         .put(RU, "Здания города");
 
+    public static final L10n CATEGORY = new L10n()
+        .put(EN, "Category")
+        .put(RU, "Категория");
+
     public static final L10n CONSTRUCTION_LIST = new L10n()
         .put(EN, "Construction")
         .put(RU, "Строительство");
+
+    public static final L10n CONSTRUCTION_TURNS_LABEL = new L10n()
+        .put(EN, "Turns")
+        .put(RU, "Ходов");
 
     public static final L10n CONSTRUCTION_PRIORITY_LABEL = new L10n()
         .put(EN, "Priority")
@@ -77,6 +100,6 @@ public class L10nBuilding {
     /** Actions */
 
     public static final L10n BUILDING_WAS_BOUGHT = new L10n()
-        .put(EN, "A Building was bought")
+        .put(EN, "The Building was bought")
         .put(RU, "Здание было куплено");
 }

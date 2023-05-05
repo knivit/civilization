@@ -48,7 +48,7 @@ public class DefaultScenario implements Scenario {
         World world = civilization.getWorld();
 
         // find a location for the Settlers
-        Point settlersLocation = world.getSettlersStartLocation(civilization);
+        Point settlersLocation = civilization.getSettlerService().getStartLocation();
         if (settlersLocation == null) {
             log.warn("No locations to place Settlers");
             return false;

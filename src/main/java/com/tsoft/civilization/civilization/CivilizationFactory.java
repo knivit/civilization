@@ -1,10 +1,10 @@
 package com.tsoft.civilization.civilization;
 
 import com.tsoft.civilization.util.l10n.L10n;
-import com.tsoft.civilization.civilization.nation.america.America;
-import com.tsoft.civilization.civilization.nation.barbarians.Barbarians;
-import com.tsoft.civilization.civilization.nation.japan.Japan;
-import com.tsoft.civilization.civilization.nation.russia.Russia;
+import com.tsoft.civilization.nation.america.America;
+import com.tsoft.civilization.nation.barbarians.Barbarians;
+import com.tsoft.civilization.nation.japan.Japan;
+import com.tsoft.civilization.nation.russia.Russia;
 import com.tsoft.civilization.world.World;
 
 import java.util.HashMap;

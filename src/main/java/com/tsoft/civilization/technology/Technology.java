@@ -1,8 +1,10 @@
 package com.tsoft.civilization.technology;
 
 import com.tsoft.civilization.world.Year;
+import lombok.Getter;
 
 public enum Technology {
+
     AGRICULTURE(Year.ANCIENT_ERA, null, 0),
 
     POTTERY(Year.ANCIENT_ERA, new Technology[] { AGRICULTURE }, 13),
@@ -101,11 +103,14 @@ public enum Technology {
 
     FUTURE_TECH(Year.INFORMATION_ERA, new Technology[] { THE_INTERNET, GLOBALIZATION, PARTICLE_PHYSICS, NUCLEAR_FUSION, NANOTECHNOLOGY, STEALTH }, 3812);
 
-    private int era;
+    @Getter
+    private final int era;
 
-    private Technology[] from;
+    @Getter
+    private final Technology[] from;
 
-    private int turns;
+    @Getter
+    private final int turns;
 
     Technology(int era, Technology[] from, int turns) {
         this.era = era;

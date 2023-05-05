@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CivilizationScoreTest {
 
     @Test
-    public void noCitiesScore() {
+    void noCitiesScore() {
         MockWorld world = MockWorld.of(MockTilesMap.of(
             " |0 1 2 ",
             "-+------",
@@ -45,7 +45,7 @@ public class CivilizationScoreTest {
     }
 
     @Test
-    public void oneCityOneTileScore() {
+    void oneCityOneTileScore() {
         MockWorld world = MockWorld.of(MockTilesMap.of(
             " |0 1 2 ",
             "-+------",
@@ -110,7 +110,7 @@ public class CivilizationScoreTest {
     }
 
     @Test
-    public void oneCityAllTypesOfTilesScore() {
+    void oneCityAllTypesOfTilesScore() {
         MockWorld world = MockWorld.of(MockTilesMap.of(3,
             " |0 1 2 3 4 ", " |0 1 2 3 4 ", " |0 1 2 3 4 ",
             "-+----------", "-+----------", "-+----------",
@@ -128,7 +128,7 @@ public class CivilizationScoreTest {
         // add all other tiles
         Collection<Point> locations = world.getTilesMap().getLocationsAround(new Point(2, 1), 3);
         city.getTileService().addLocations(locations);
-        assertEquals(20, city.getTileService().getLocations().size());
+        assertEquals(20, city.getTileService().getTerritory().size());
 
         // add citizens to work on the tiles
         // five of them will be unemployed (desert, ice, mountain, snow and jungle)
@@ -156,7 +156,7 @@ public class CivilizationScoreTest {
     }
 
     @Test
-    public void maxSupplyStrategies() {
+    void maxSupplyStrategies() {
         MockWorld world = MockWorld.of(MockTilesMap.of(2,
             " |0 1 2 ", " |0 1 2 ",
             "-+------", "-+------",
@@ -176,7 +176,7 @@ public class CivilizationScoreTest {
         city.addCitizen();
 
         assertThat(city.getCitizenLocations())
-            .isEqualTo(List.of(new Point(1, 2), new Point(1, 1)));
+            .containsExactlyInAnyOrder(new Point(1, 2), new Point(1, 1));
 
         assertThat(russia.calcSupply())
             .usingComparator(SupplyMock::compare)
@@ -186,7 +186,8 @@ public class CivilizationScoreTest {
         city.setSupplyStrategy(List.of(TileSupplyStrategy.MAX_PRODUCTION));
         world.nextYear();
 
-        assertEquals(Arrays.asList(new Point(1, 2), new Point(1, 1)), city.getCitizenLocations());
+        assertThat(city.getCitizenLocations())
+            .containsExactlyInAnyOrder(new Point(1, 2), new Point(1, 1));
 
         assertThat(russia.calcSupply())
             .usingComparator(SupplyMock::compare)
@@ -197,7 +198,7 @@ public class CivilizationScoreTest {
         world.nextYear();
 
         assertThat(city.getCitizenLocations())
-            .isEqualTo(List.of(new Point(1, 2), new Point(1, 1), new Point(2, 0)));
+            .containsExactlyInAnyOrder(new Point(1, 2), new Point(1, 1), new Point(2, 0));
 
         assertThat(russia.calcSupply())
             .usingComparator(SupplyMock::compare)

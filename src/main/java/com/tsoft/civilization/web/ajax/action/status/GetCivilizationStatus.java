@@ -140,9 +140,9 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
             return null;
         }
 
-        StringBuilder unitBuf = new StringBuilder();
+        StringBuilder buf = new StringBuilder();
         for (AbstractUnit unit : units.sortByName()) {
-            unitBuf.append(Format.text("""
+            buf.append(Format.text("""
                 <tr>
                     <td><button onclick="$getUnitStatus">$unitName</button></td>
                     <td>$passScore</td>
@@ -164,7 +164,7 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
 
             "$availableUnits", L10nCivilization.AVAILABLE_UNITS,
             "$passScore", L10nUnit.PASS_SCORE,
-            "$units", unitBuf
+            "$units", buf
         );
     }
 

@@ -10,6 +10,7 @@ import com.tsoft.civilization.util.Point;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 @RequiredArgsConstructor
 public class CivilizationTileSupplyService {
@@ -18,7 +19,7 @@ public class CivilizationTileSupplyService {
 
     private final Civilization civilization;
 
-    public Supply calcIncomeSupply(List<Point> locations) {
+    public Supply calcIncomeSupply(Set<Point> locations) {
         Supply supply = Supply.EMPTY;
 
         for (Point location : locations) {
@@ -34,7 +35,7 @@ public class CivilizationTileSupplyService {
         return tileSupply.add(improvementSupply);
     }
 
-    public Supply calcOutcomeSupply(List<Point> locations) {
+    public Supply calcOutcomeSupply(Set<Point> locations) {
         return Supply.EMPTY;
     }
 

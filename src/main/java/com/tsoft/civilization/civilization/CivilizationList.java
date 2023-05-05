@@ -12,6 +12,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class CivilizationList implements Iterable<Civilization> {
+
     private final List<Civilization> civilizations = new ArrayList<>();
     private boolean isUnmodifiable;
 
@@ -68,10 +69,6 @@ public class CivilizationList implements Iterable<Civilization> {
 
     public Civilization getCivilizationByName(L10n name) {
         return findAny(e -> e.getName().equals(name));
-    }
-
-    public Civilization getCivilizationOnTile(Point location) {
-        return findAny(e -> e.getCityService().isHavingTile(location));
     }
 
     public City getCityAtLocation(Point location) {

@@ -4,11 +4,15 @@ import com.tsoft.civilization.improvement.L10nImprovement;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.improvement.farm.Farm;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
+import com.tsoft.civilization.tile.terrain.grassland.Grassland;
+import com.tsoft.civilization.tile.terrain.plains.Plains;
 import com.tsoft.civilization.unit.catalog.workers.Workers;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 
 import java.util.UUID;
+
+import static com.tsoft.civilization.unit.action.DefaultUnitActionsResults.*;
 
 public class BuildFarmAction {
 
@@ -25,12 +29,24 @@ public class BuildFarmAction {
 
     private static ActionAbstractResult canBuildFarm(Workers workers) {
         if (workers == null || workers.isDestroyed()) {
-            return WorkersActionResults.UNIT_NOT_FOUND;
+            return UNIT_NOT_FOUND;
+        }
+
+        if (!workers.isOnMyTerritory()) {
+            return NOT_MY_TERRITORY;
         }
 
         AbstractTerrain tile = workers.getTile();
+        if (!tile.isIn(Grassland.class, Plains.class)) {
+            return WorkersActionResults.FAIL_INAPPROPRIATE_TILE;
+        }
+
+        if (workers.getCivilization().getCityService().getCityAtLocation(tile.getLocation()) != null) {
+            return WorkersActionResults.FAIL_CANT_BUILD_IN_CITY_CENTER;
+        }
+
         if (tile.getImprovements().has(Farm.CLASS_UUID)) {
-            return WorkersActionResults.IMPROVEMENT_ALREADY_EXISTS;
+            return WorkersActionResults.FAIL_IMPROVEMENT_ALREADY_EXISTS;
         }
 
         return WorkersActionResults.CAN_BUILD_IMPROVEMENT;

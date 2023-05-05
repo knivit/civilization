@@ -11,6 +11,7 @@ import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import java.util.UUID;
 
 public class DestroyBuildingAction {
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     public static ActionAbstractResult destroyBuilding(AbstractBuilding building) {

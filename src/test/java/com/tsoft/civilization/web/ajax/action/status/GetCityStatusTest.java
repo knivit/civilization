@@ -18,11 +18,12 @@ import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GetCityStatusTest {
+
     private static final AbstractAjaxRequest getCityStatusRequest =
         AbstractAjaxRequest.getInstance(GetCityStatus.class.getSimpleName());
 
     @Test
-    public void get_json_for_my_city() {
+    void get_json_for_my_city() {
         MockWorld world = MockWorld.newSimpleWorld();
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .city("city1", new Point(2, 0))
@@ -42,7 +43,7 @@ public class GetCityStatusTest {
     }
 
     @Test
-    public void get_json_for_my_destroyed_city() {
+    void get_json_for_my_destroyed_city() {
         MockWorld world = MockWorld.newSimpleWorld();
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .city("city1", new Point(2, 0))
@@ -59,7 +60,7 @@ public class GetCityStatusTest {
     }
 
     @Test
-    public void get_json_for_foreign_city() {
+    void get_json_for_foreign_city() {
         MockWorld world = MockWorld.newSimpleWorld();
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()

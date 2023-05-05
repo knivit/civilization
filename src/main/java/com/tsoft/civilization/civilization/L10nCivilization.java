@@ -19,12 +19,12 @@ public class L10nCivilization {
         .put(RU, "Характеристики");
 
     public static final L10n AVAILABLE_UNITS = new L10n()
-        .put(EN, "Available Units")
-        .put(RU, "Доступные юниты");
+        .put(EN, "Units")
+        .put(RU, "Юниты");
 
     public static final L10n AVAILABLE_CITIES = new L10n()
-        .put(EN, "Available Cities")
-        .put(RU, "Доступные города");
+        .put(EN, "Cities")
+        .put(RU, "Города");
 
     public static final L10n CITIES_COUNT = new L10n()
         .put(EN, "Number of cities")

@@ -1,8 +1,10 @@
 package com.tsoft.civilization.civilization;
 
+import com.tsoft.civilization.bot.CivilizationBot;
 import com.tsoft.civilization.civilization.city.CivilizationCityService;
 import com.tsoft.civilization.civilization.event.*;
 import com.tsoft.civilization.civilization.happiness.*;
+import com.tsoft.civilization.civilization.tile.CivilizationSettlerService;
 import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.civilization.population.CivilizationPopulationService;
 import com.tsoft.civilization.civilization.social.CivilizationSocialPolicyService;
@@ -32,6 +34,7 @@ import java.util.*;
 @Slf4j
 @EqualsAndHashCode(of = "id")
 public abstract class Civilization {
+
     @Getter
     private final String id = UUID.randomUUID().toString();
 
@@ -48,6 +51,9 @@ public abstract class Civilization {
 
     @Getter
     private final CivilizationTileService tileService;
+
+    @Getter
+    private final CivilizationSettlerService settlerService;
 
     @Getter
     private final CivilizationPopulationService populationService;
@@ -104,6 +110,7 @@ public abstract class Civilization {
         unitService = new CivilizationUnitService(this);
         cityService = new CivilizationCityService(this);
         tileService = new CivilizationTileService(this);
+        settlerService = new CivilizationSettlerService(this);
         populationService = new CivilizationPopulationService(this);
         happinessService = new CivilizationHappinessService(this);
         unhappinessService = new CivilizationUnhappinessService(this);

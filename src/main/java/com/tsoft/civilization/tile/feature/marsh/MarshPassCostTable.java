@@ -22,14 +22,14 @@ public final class MarshPassCostTable {
     public static Map<String, PassCostList> table = new HashMap<>();
 
     static {
-        table.put(Archers.CLASS_UUID, PassCostList.of(new PassCost(null, 3)));
-        table.put(GreatArtist.CLASS_UUID, PassCostList.of(new PassCost(null, 3)));
-        table.put(GreatEngineer.CLASS_UUID, PassCostList.of(new PassCost(null, 3)));
-        table.put(GreatGeneral.CLASS_UUID, PassCostList.of(new PassCost(null, 3)));
-        table.put(GreatMerchant.CLASS_UUID, PassCostList.of(new PassCost(null, 3)));
-        table.put(GreatScientist.CLASS_UUID, PassCostList.of(new PassCost(null, 3)));
-        table.put(Settlers.CLASS_UUID, PassCostList.of(new PassCost(null, 3)));
-        table.put(Warriors.CLASS_UUID, PassCostList.of(new PassCost(null, 3)));
-        table.put(Workers.CLASS_UUID, PassCostList.of(new PassCost(null, 3)));
+        table.put(Archers.CLASS_UUID, PassCostList.of(new PassCost(null, 1)));
+        table.put(GreatArtist.CLASS_UUID, PassCostList.of(new PassCost(null, 1)));
+        table.put(GreatEngineer.CLASS_UUID, PassCostList.of(new PassCost(null, 1)));
+        table.put(GreatGeneral.CLASS_UUID, PassCostList.of(new PassCost(null, 1)));
+        table.put(GreatMerchant.CLASS_UUID, PassCostList.of(new PassCost(null, 1)));
+        table.put(GreatScientist.CLASS_UUID, PassCostList.of(new PassCost(null, 1)));
+        table.put(Settlers.CLASS_UUID, PassCostList.of(new PassCost(null, 1)));
+        table.put(Warriors.CLASS_UUID, PassCostList.of(new PassCost(null, 1)));
+        table.put(Workers.CLASS_UUID, PassCostList.of(new PassCost(null, 1)));
     }
 }

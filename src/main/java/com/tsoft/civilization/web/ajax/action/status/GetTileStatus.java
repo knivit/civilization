@@ -176,7 +176,7 @@ public class GetTileStatus extends AbstractAjaxRequest {
     }
 
     private StringBuilder getTileTitle(World world, AbstractTerrain tile) {
-        Civilization civilization = world.getCivilizationOnTile(tile.getLocation());
+        Civilization civilization = world.getTileService().getCivilizationOnTile(tile.getLocation());
         if (civilization == null) {
             return null;
         }

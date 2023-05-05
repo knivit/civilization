@@ -11,12 +11,12 @@ public class GranaryBaseState {
 
     public BuildingBaseState getBaseState() {
         return BuildingBaseState.builder()
-                .category(BUILDING)
-                .productionCost(60)
-                .goldCost(340)
-                .incomeSupply(Supply.builder().food(2).build())
-                .outcomeSupply(Supply.builder().gold(-1).build())
-                .supplySkills(asList(GRANARY_INCOME_SKILL))
-                .build();
+            .category(BUILDING)
+            .productionCost(60)
+            .goldCost(340)
+            .incomeSupply(Supply.builder().food(2).build())
+            .outcomeSupply(Supply.builder().gold(-1).build())
+            .supplySkills(asList(GRANARY_INCOME_SKILL))
+            .build();
     }
 }

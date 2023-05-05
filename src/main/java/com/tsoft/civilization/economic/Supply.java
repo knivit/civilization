@@ -35,6 +35,19 @@ public final class Supply {
             .build();
     }
 
+    public Supply multiply(int val) {
+        return Supply.builder()
+            .food(food * val)
+            .production(production * val)
+            .gold(gold * val)
+            .science(science * val)
+            .culture(culture * val)
+            .faith(faith * val)
+            .tourism(tourism * val)
+            .greatPerson(greatPerson * val)
+            .build();
+    }
+
     public Supply.SupplyBuilder copy() {
         return Supply.builder()
             .food(food)

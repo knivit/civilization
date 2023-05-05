@@ -30,7 +30,7 @@ public class BuyTileService {
             return INVALID_LOCATION;
         }
         
-        if (city.getTileService().getLocations().contains(location)) {
+        if (city.getTileService().getTerritory().contains(location)) {
             return ALREADY_MINE;
         }
         

@@ -6,9 +6,9 @@ import com.tsoft.civilization.civilization.building.catalog.monument.Monument;
 import com.tsoft.civilization.civilization.building.catalog.palace.Palace;
 import com.tsoft.civilization.civilization.building.catalog.settlement.Settlement;
 import com.tsoft.civilization.civilization.building.catalog.walls.Walls;
-import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.city.City;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -45,15 +45,7 @@ public final class BuildingFactory {
         return CATALOG.get(classUuid);
     }
 
-    public static BuildingList getAvailableBuildings(Civilization civilization) {
-        BuildingList result = new BuildingList();
-
-        for (AbstractBuilding building : CATALOG.values()) {
-            if (building.checkEraAndTechnology(civilization)) {
-                result.add(building);
-            }
-        }
-
-        return result;
+    public static Collection<? extends AbstractBuilding> getCatalogueInstances() {
+        return CATALOG.values();
     }
 }

@@ -1,7 +1,7 @@
-package com.tsoft.civilization.civilization.nation.barbarians;
+package com.tsoft.civilization.nation.barbarians;
 
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.civilization.CivilizationBot;
+import com.tsoft.civilization.bot.CivilizationBot;
 import com.tsoft.civilization.world.World;
 
 public class BarbariansBot extends CivilizationBot {

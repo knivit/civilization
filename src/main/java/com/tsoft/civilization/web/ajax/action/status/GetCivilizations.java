@@ -53,10 +53,6 @@ public class GetCivilizations extends AbstractAjaxRequest {
 
         StringBuilder buf = new StringBuilder();
         for (Civilization civilization : civilizations) {
-            if (civilization.equals(myCivilization)) {
-                continue;
-            }
-
             if (BARBARIANS.equals(civilization.getName())) {
                 continue;
             }
@@ -74,7 +70,7 @@ public class GetCivilizations extends AbstractAjaxRequest {
                 "$imageSrc", civilization.getView().getStatusImageSrc(),
                 "$getCivilizationStatus", GetCivilizationStatus.getAjax(civilization),
                 "$civilizationName", civilization.getView().getLocalizedCivilizationName(),
-                "$relations", relations.getDescription(),
+                "$relations", (relations == null) ? null : relations.getDescription(),
                 "$moveState", civilization.getCivilizationMoveState().getDescription()
             ));
         }
