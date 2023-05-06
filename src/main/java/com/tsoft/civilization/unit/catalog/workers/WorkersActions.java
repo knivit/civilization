@@ -20,10 +20,10 @@ public class WorkersActions implements AbstractAction<Workers> {
             <tr id='actions_table_row'>$removeHillAction</tr>
             """,
 
-            "$defaultActions", defaultActions.getHtmlActions(unit),
             "$buildFarmAction", BuildFarmAction.getHtml(unit),
             "$removeForestAction", RemoveForestAction.getHtml(unit),
-            "$removeHillAction", RemoveHillAction.getHtml(unit)
+            "$removeHillAction", RemoveHillAction.getHtml(unit),
+            "$defaultActions", defaultActions.getHtmlActions(unit)
         );
     }
 }

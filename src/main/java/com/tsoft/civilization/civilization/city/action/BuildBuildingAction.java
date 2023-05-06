@@ -28,7 +28,7 @@ public class BuildBuildingAction {
 
         AbstractBuilding building = BuildingFactory.newInstance(buildingClassUuid, city);
         city.startConstruction(building);
-        return CityActionResults.BUILDING_CONSTRUCTION_IS_STARTED;
+        return CityBuildingActionResults.BUILDING_CONSTRUCTION_IS_STARTED;
     }
 
     private static ActionAbstractResult canBuildBuilding(City city, String buildingClassUuid) {
@@ -39,7 +39,7 @@ public class BuildBuildingAction {
         AbstractBuilding building = BuildingFactory.findByClassUuid(buildingClassUuid);
 
         if (buildingClassUuid == null || building == null) {
-            return CityActionResults.INVALID_BUILDING;
+            return CityBuildingActionResults.INVALID_BUILDING;
         }
 
         if (!building.requiredEraAndTechnology(city.getCivilization())) {
@@ -47,19 +47,19 @@ public class BuildBuildingAction {
         }
 
         if (city.getBuildingService().alreadyExists(building.getClassUuid())) {
-            return CityActionResults.CANT_BUILD_THIS_BUILDING;
+            return CityBuildingActionResults.CANT_BUILD_THIS_BUILDING;
         }
 
         if (!city.canStartConstruction()) {
-            return CityActionResults.CANT_BUILD_BUILDING_OTHER_ACTION_IN_PROGRESS;
+            return CityBuildingActionResults.CANT_BUILD_BUILDING_OTHER_ACTION_IN_PROGRESS;
         }
 
         int productionCost = city.getBuildingProductionCost(buildingClassUuid);
         if (productionCost < 0) {
-            return CityActionResults.CANT_BUILD_THIS_BUILDING;
+            return CityBuildingActionResults.CANT_BUILD_THIS_BUILDING;
         }
 
-        return CityActionResults.CAN_START_CONSTRUCTION;
+        return CityBuildingActionResults.CAN_START_CONSTRUCTION;
     }
 
     public static StringBuilder getHtml(City city, String buildingClassUuid) {

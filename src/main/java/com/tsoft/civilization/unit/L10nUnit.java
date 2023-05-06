@@ -166,14 +166,6 @@ public class L10nUnit {
         .put(EN, "The only settlers unit can not be destroyed")
         .put(RU, "The only settlers unit can not be destroyed");
 
-    public static final L10n UNIT_WAS_BOUGHT = new L10n()
-        .put(EN, "An Unit was bought")
-        .put(RU, "Юнит куплен");
-
-    public static final L10n CANT_BUY_THIS_UNIT = new L10n()
-        .put(EN, "Can't by this unit")
-        .put(RU, "Нельзя купить юнит");
-
     /** Web */
 
     public static final L10n FEATURES = new L10n()

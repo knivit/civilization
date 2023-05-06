@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public abstract class AbstractFeature {
+
     public static final int FEATURE_NOT_INITIALIZED = -1;
     public static final int FEATURE_REMOVED = 0;
 

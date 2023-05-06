@@ -20,19 +20,12 @@ public class L10nBuilding {
         .put(EN, "A world wonder")
         .put(RU, "Чудеса света");
 
-    /* Actions */
-    public static final L10n CAN_DESTROY = new L10n()
-        .put(EN, "The building can be destroyed")
-        .put(RU, "Здание может быть разрушено");
-
-    public static final L10n CANT_DESTROY = new L10n()
-        .put(EN, "The building can't be destroyed")
-        .put(RU, "Здание не может быть разрушено");
-
+    /* Events */
     public static final L10n BUILDING_DESTROYED = new L10n()
         .put(EN, "Building $buildingName has been destroyed")
         .put(RU, "Здание $buildingName разрушено");
 
+    /* Actions */
     public static final L10n DESTROY = new L10n()
         .put(EN, "Destroy")
         .put(RU, "Разрушить");
@@ -50,7 +43,7 @@ public class L10nBuilding {
         .put(RU, "Зданий нет");
 
     public static final L10n NO_CONSTRUCTIONS = new L10n()
-        .put(EN, "No Constructions")
+        .put(EN, "No constructions")
         .put(RU, "Нет строительства");
 
     public static final L10n BUILDINGS_TO_CONSTRUCT = new L10n()
@@ -96,10 +89,4 @@ public class L10nBuilding {
     public static final L10n NAME = new L10n()
         .put(EN, "Name")
         .put(RU, "Название");
-
-    /** Actions */
-
-    public static final L10n BUILDING_WAS_BOUGHT = new L10n()
-        .put(EN, "The Building was bought")
-        .put(RU, "Здание было куплено");
 }

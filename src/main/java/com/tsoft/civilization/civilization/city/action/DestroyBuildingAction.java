@@ -22,19 +22,19 @@ public class DestroyBuildingAction {
 
         building.getCity().destroyBuilding(building);
 
-        return CityActionResults.BUILDING_DESTROYED;
+        return CityBuildingActionResults.BUILDING_DESTROYED;
     }
 
     private static ActionAbstractResult canDestroyBuilding(AbstractBuilding building) {
         if (building == null || building.isDestroyed()) {
-            return CityActionResults.BUILDING_NOT_FOUND;
+            return CityBuildingActionResults.BUILDING_NOT_FOUND;
         }
 
         if (Palace.CLASS_UUID.equals(building.getClassUuid()) || Settlement.CLASS_UUID.equals(building.getClassUuid())) {
-            return CityActionResults.CANT_DESTROY_BUILDING;
+            return CityBuildingActionResults.CANT_DESTROY_BUILDING;
         }
 
-        return CityActionResults.CAN_DESTROY_BUILDING;
+        return CityBuildingActionResults.CAN_DESTROY_BUILDING;
     }
 
     private static String getLocalizedName() {

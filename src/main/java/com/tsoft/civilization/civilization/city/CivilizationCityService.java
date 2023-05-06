@@ -66,7 +66,7 @@ public class CivilizationCityService {
         return cities.getBuildingById(buildingId);
     }
 
-    public L10n findCityName() {
+    public L10n generateCityName() {
         L10n civilizationName = civilization.getView().getName();
         L10nList names = L10nCity.CITIES.get(civilizationName);
         int index = size() % names.size();
@@ -91,7 +91,7 @@ public class CivilizationCityService {
             .cityName(city.getName())
             .build());
 
-        // civilizations is destroyed when all its cities are destroyed
+        // a civilization is destroyed when all its cities were destroyed
         if (cities.isEmpty()) {
             civilization.setDestroyed();
         }
@@ -105,13 +105,13 @@ public class CivilizationCityService {
         return cities.getCitiesAtLocations(locations);
     }
 
+    public void startEra() {
+        cities.forEach(City::startEra);
+    }
+
     public void startYear() {
         destroyedCities = new CityList();
         cities.forEach(City::startYear);
-    }
-
-    public void startEra() {
-        cities.forEach(City::startEra);
     }
 
     public void stopYear() {

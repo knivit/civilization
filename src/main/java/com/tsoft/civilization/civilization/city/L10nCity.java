@@ -34,93 +34,21 @@ public class L10nCity {
 
     /** Actions */
 
-    public static final L10n INVALID_CITY = new L10n()
-        .put(EN, "Invalid city")
-        .put(RU, "Неверный город");
-
-    public static final L10n INVALID_LOCATION = new L10n()
-        .put(EN, "Invalid location")
-        .put(RU, "Неверная позиция на карте");
-
-    public static final L10n ALREADY_MINE = new L10n()
-        .put(EN, "The city already has this tile")
-        .put(RU, "Город уже владеет этой ячейкой");
-
-    public static final L10n NOT_ENOUGH_GOLD = new L10n()
-        .put(EN, "Not enough gold to buy the tile")
-        .put(RU, "Недостаточно золота для покупки ячейки");
-
-    public static final L10n TILE_BOUGHT = new L10n()
-        .put(EN, "The tile is bought")
-        .put(RU, "Ячейка куплена");
-
     public static final L10n NO_CITIES = new L10n()
         .put(EN, "No Cities")
         .put(RU, "Городов нет");
-
-    public static final L10n CANT_BUILD_BUILDING_OTHER_ACTION_IN_PROGRESS = new L10n()
-        .put(EN, "Can't start a building as there is other action is in progress")
-        .put(RU, "Нельзя начать строительство, потому что выполняется другое действие");
-
-    public static final L10n CANT_BUILD_THIS_BUILDING = new L10n()
-        .put(EN, "Can't build this building")
-        .put(RU, "Невозможно построить это здание");
-
-    public static final L10n CANT_BUILD_THIS_UNIT = new L10n()
-        .put(EN, "Can't build this unit")
-        .put(RU, "Невозможно построить этот юнит");
-
-    public static final L10n CANT_BUY_THIS_BUILDING = new L10n()
-        .put(EN, "Can't buy this building")
-        .put(RU, "Невозможно купить это здание");
-
-    public static final L10n CAN_BUY_THIS_UNIT = new L10n()
-        .put(EN, "Can buy this unit")
-        .put(RU, "Можно купить этот юнит");
-
-    public static final L10n CANT_BUY_THIS_UNIT = new L10n()
-        .put(EN, "Can't buy this unit")
-        .put(RU, "Невозможно купить этот юнит");
-
-    public static final L10n CANT_BUILD_UNIT_OTHER_ACTION_IN_PROGRESS = new L10n()
-        .put(EN, "Can't start unit's building as there is other action is in progress.")
-        .put(RU, "Нельзя начать строительство юнита, пока идет другое строительство.");
-
-    public static final L10n CAN_START_CONSTRUCTION = new L10n()
-        .put(EN, "Can start construction")
-        .put(RU, "Можно начать строительство");
-
-    public static final L10n INVALID_BUILDING = new L10n()
-        .put(EN, "Invalid building")
-        .put(RU, "Неверное здание");
-
-    public static final L10n INVALID_UNIT = new L10n()
-        .put(EN, "Invalid unit")
-        .put(RU, "Неверный юнит");
-
-    public static final L10n BUILDING_CONSTRUCTION_IS_STARTED = new L10n()
-        .put(EN, "Building construction is started")
-        .put(RU, "Начато строительство здания");
-
-    public static final L10n UNIT_CONSTRUCTION_IS_STARTED = new L10n()
-        .put(EN, "Unit's construction is started")
-        .put(RU, "Начато строительство юнита");
 
     public static final L10n NAME = new L10n()
         .put(EN, "Name")
         .put(RU, "Название");
 
-    public static final L10n BUILDING_NOT_FOUND = new L10n()
-        .put(EN, "Building not found")
-        .put(RU, "Здание не найдено");
+    public static final L10n BUY_TILE = new L10n()
+        .put(EN, "Buy a tile")
+        .put(RU, "Купить ячейку");
 
-    public static final L10n CITY_NOT_FOUND = new L10n()
-        .put(EN, "City not found")
-        .put(RU, "Город не найден");
-
-    public static final L10n CITY_CANT_PLACE_UNIT = new L10n()
-        .put(EN, "City can't place the unit")
-        .put(RU, "Город не может принять этот юнит");
+    public static final L10n BUY_TILE_DESCRIPTION = new L10n()
+        .put(EN, "Buy a tile to expand your city's territory")
+        .put(RU, "Купить ячейку для расширения территории города");
 
     /** Events */
 

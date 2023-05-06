@@ -30,4 +30,9 @@ public class RequestHeadersMap {
 
         return map.containsKey(name.toLowerCase());
     }
+
+    @Override
+    public String toString() {
+        return map.toString();
+    }
 }

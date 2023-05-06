@@ -346,32 +346,30 @@ public class GetCityStatus extends AbstractAjaxRequest {
         }
 
         ConstructionList constructions = city.getConstructions();
+
+        StringBuilder buf;
         if (constructions.isEmpty()) {
-            return Format.text("""
-                <table id='actions_table'>
-                    <tr>
-                        <th>$text</th>
-                    </tr>
-                </table>
+            buf = Format.text("""
+                <tr><td colspan='2'>$text</td></tr>
                 """,
 
                 "$text", L10nBuilding.NO_CONSTRUCTIONS
             );
-        }
+        } else {
+            buf = new StringBuilder();
+            for (Construction construction : constructions) {
+                buf.append(Format.text("""
+                        <tr>
+                            <td><button onclick="$getConstructionStatus">$buttonLabel</button></td>
+                            <td>$turns</td>
+                        </tr>
+                        """,
 
-        StringBuilder buf = new StringBuilder();
-        for (Construction construction : constructions) {
-            buf.append(Format.text("""
-                <tr>
-                    <td><button onclick="$getConstructionStatus">$buttonLabel</button></td>
-                    <td>$turns</td>
-                </tr>
-                """,
-
-                "$getConstructionStatus", GetConstructionStatus.getAjax(construction),
-                "$buttonLabel", construction.getView().getLocalizedName(),
-                "$turns", city.getConstructionService().calcConstructionTurns(construction)
-            ));
+                    "$getConstructionStatus", GetConstructionStatus.getAjax(construction),
+                    "$buttonLabel", construction.getView().getLocalizedName(),
+                    "$turns", city.getConstructionService().calcConstructionTurns(construction)
+                ));
+            }
         }
 
         return Format.text("""

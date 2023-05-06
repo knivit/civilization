@@ -13,6 +13,7 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import static com.tsoft.civilization.unit.action.DefaultUnitActionsResults.*;
@@ -62,7 +63,7 @@ public class BuildCityAction {
         }
 
         // there should be no cities as far as 4 tiles around
-        List<Point> locations = settlers.getTilesMap().getLocationsAround(location, 4);
+        Set<Point> locations = settlers.getTilesMap().getLocationsAround(location, 4);
         locations.add(location);
         for (Point loc : locations) {
             AbstractTerrain tile = settlers.getTilesMap().getTile(loc);

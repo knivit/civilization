@@ -16,10 +16,7 @@ import com.tsoft.civilization.economic.Supply;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 
 @Slf4j
@@ -76,7 +73,7 @@ public class CivilizationUnitService {
     // Find a location to place warriors
     public Point getWarriorsStartLocation(Civilization civ, Point settlersLocation) {
         // try to place Warriors near the Settlers
-        List<Point> locations = world.getLocationsAround(settlersLocation, 2);
+        List<Point> locations = new ArrayList<>(world.getLocationsAround(settlersLocation, 2));
         Collections.shuffle(locations);
 
         Warriors warriors = UnitFactory.newInstance(civ, Warriors.CLASS_UUID);

@@ -28,7 +28,7 @@ public class BuyBuildingAction {
 
         city.getCivilization().buyBuilding(buildingClassUuid, city);
 
-        return CityActionResults.BUILDING_WAS_BOUGHT;
+        return CityBuildingActionResults.BUILDING_WAS_BOUGHT;
     }
 
     private static ActionAbstractResult canBuyBuilding(City city, String buildingClassUuid) {
@@ -38,7 +38,7 @@ public class BuyBuildingAction {
 
         AbstractBuilding building = BuildingFactory.findByClassUuid(buildingClassUuid);
         if (building == null || building.getGoldCost(city.getCivilization()) < 0) {
-            return CityActionResults.INVALID_BUILDING;
+            return CityBuildingActionResults.INVALID_BUILDING;
         }
 
         if (!building.requiredEraAndTechnology(city.getCivilization())) {
@@ -46,14 +46,14 @@ public class BuyBuildingAction {
         }
 
         if (city.getBuildingService().alreadyExists(building.getClassUuid())) {
-            return CityActionResults.CANT_BUY_THIS_BUILDING;
+            return CityBuildingActionResults.CANT_BUY_THIS_BUILDING;
         }
 
         if (!city.getCivilization().canBuyBuilding(building)) {
             return CityActionResults.NOT_ENOUGH_MONEY;
         }
 
-        return CityActionResults.CAN_START_CONSTRUCTION;
+        return CityBuildingActionResults.CAN_START_CONSTRUCTION;
     }
 
     private static String getLocalizedName() {

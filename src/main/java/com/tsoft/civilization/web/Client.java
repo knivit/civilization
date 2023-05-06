@@ -21,7 +21,7 @@ public class Client {
     private OutputStream outputStream;
 
     public Request readRequest(Socket socket) throws IOException {
-        // Get the client's address
+        // get the client's address
         InetSocketAddress clientAddress = (InetSocketAddress)socket.getRemoteSocketAddress();
         String clientIp = clientAddress.getAddress().toString();
         int clientPort = clientAddress.getPort();
@@ -32,10 +32,10 @@ public class Client {
         BufferedReader inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         outputStream = socket.getOutputStream();
 
-        // Create a Request
+        // create a Request
         Request request = requestReader.readRequest(clientIp, clientPort, inputStream);
 
-        // Set properties as a client is needed
+        // set properties as a client is needed
         if ("keep-alive".equalsIgnoreCase(request.getHeader("Connection"))) {
             socket.setKeepAlive(true);
         }

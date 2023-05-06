@@ -260,7 +260,7 @@ public abstract class Civilization {
         Objects.requireNonNull(settlers, "settlers must be not null");
 
         Point location = settlers.getLocation();
-        L10n cityName = cityService.findCityName();
+        L10n cityName = cityService.generateCityName();
         boolean isCapital = cityService.size() == 0;
 
         City city = new City(world.getTilesMap().getTile(location), this);

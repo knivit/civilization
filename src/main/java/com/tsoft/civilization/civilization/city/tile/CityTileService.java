@@ -14,12 +14,13 @@ import java.util.stream.Collectors;
 
 public class CityTileService implements HasHistory {
 
+    @Getter
     private final TilesMap tilesMap;
 
     @Getter
     private Point center;
 
-    private final Set<Point> locations = new HashSet<>();
+    private final Set<Point> territory = new HashSet<>();
 
     public CityTileService(City city) {
         tilesMap = city.getCivilization().getWorld().getTilesMap();
@@ -28,29 +29,25 @@ public class CityTileService implements HasHistory {
     public void addStartLocations(Point location) {
         center = location;
 
-        locations.add(location);
-        locations.addAll(tilesMap.getLocationsAround(location, 1));
+        territory.add(location);
+        territory.addAll(tilesMap.getLocationsAround(location, 1));
     }
 
     /** City's territory */
     public Set<Point> getTerritory() {
-        return Collections.unmodifiableSet(locations);
+        return Collections.unmodifiableSet(territory);
     }
 
     public boolean isOnTerritory(Point location) {
-        return locations.contains(location);
+        return territory.contains(location);
     }
 
     public void addLocations(Collection<Point> locations) {
-        this.locations.addAll(locations);
-    }
-
-    public boolean isHavingTile(Point location) {
-        return locations.contains(location);
+        this.territory.addAll(locations);
     }
 
     public List<AbstractResource> getLuxuryResources() {
-        return locations.stream()
+        return territory.stream()
             .map(tilesMap::getTile)
             .map(AbstractTerrain::getResource)
             .filter(Objects::nonNull)

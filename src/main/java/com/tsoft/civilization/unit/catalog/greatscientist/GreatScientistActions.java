@@ -18,9 +18,9 @@ public class GreatScientistActions implements AbstractAction<GreatScientist> {
             <tr id='actions_table_row'>$learnNewTechnologyAction</tr>
             """,
 
-            "$defaultActions", defaultActions.getHtmlActions(unit),
             "$academyImprovementAction", AcademyImprovementAction.getHtml(unit),
-            "$learnNewTechnologyAction", LearnNewTechnologyAction.getHtml(unit)
+            "$learnNewTechnologyAction", LearnNewTechnologyAction.getHtml(unit),
+            "$defaultActions", defaultActions.getHtmlActions(unit)
         );
     }
 }

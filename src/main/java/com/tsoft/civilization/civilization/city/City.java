@@ -82,9 +82,6 @@ public class City implements HasCombatStrength, HasHistory {
     @Getter
     private CitySupplyService supplyService;
 
-    @Getter @Setter
-    private boolean resistanceMode;
-
     @Getter
     private CityHappinessService happinessService;
 
@@ -100,6 +97,9 @@ public class City implements HasCombatStrength, HasHistory {
 
     @Getter
     private Supply supply = Supply.EMPTY;
+
+    @Getter @Setter
+    private boolean resistanceMode;
 
     @Getter
     private boolean isAnnexed;

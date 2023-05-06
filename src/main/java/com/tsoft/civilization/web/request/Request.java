@@ -8,8 +8,10 @@ import java.util.Map;
 
 @Builder(builderClassName = "RequestBuilder")
 public final class Request {
+
     @Getter
     private final String clientIp;
+
     private final int clientPort;
 
     @Getter
@@ -51,36 +53,13 @@ public final class Request {
         return headers.get(headerName);
     }
 
-    public String getParamsAsString() {
-        StringBuilder buf = new StringBuilder();
-        buf.append(": ").append((requestUrl == null) || (requestUrl.length() == 0) ? '/' : requestUrl);
-
-        if (params.size() > 0) {
-            buf.append(", ");
-            boolean isFirst = true;
-            for (String paramName : params.keySet()) {
-                if (!isFirst) {
-                    buf.append(", ");
-                }
-                isFirst = false;
-
-                buf.append(paramName);
-                buf.append("=");
-                buf.append(params.get(paramName));
-            }
-        }
-
-        return buf.toString();
-    }
-
     @Override
     public String toString() {
         return "Request{" +
-            "requestType=" + requestType +
-            ", requestUrl='" + requestUrl + '\'' +
-            ", clientIp='" + clientIp + '\'' +
-            ", clientPort=" + clientPort +
+            requestType + " " + requestUrl +
+            ", client='" + clientIp + ':' + clientPort + '\'' +
             ", sessionId='" + sessionId + '\'' +
+            (params.isEmpty() ? "" : ", params=" + params) +
         '}';
     }
 }

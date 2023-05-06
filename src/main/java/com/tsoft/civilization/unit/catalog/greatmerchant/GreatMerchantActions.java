@@ -18,9 +18,9 @@ public class GreatMerchantActions implements AbstractAction<GreatMerchant> {
             <tr id='actions_table_row'>$tradeMissionAction</tr>
             """,
 
-            "$defaultActions", defaultActions.getHtmlActions(unit),
             "$customsHouseImprovementAction", CustomsHouseImprovementAction.getHtml(unit),
-            "$tradeMissionAction", TradeMissionAction.getHtml(unit)
+            "$tradeMissionAction", TradeMissionAction.getHtml(unit),
+            "$defaultActions", defaultActions.getHtmlActions(unit)
         );
     }
 }

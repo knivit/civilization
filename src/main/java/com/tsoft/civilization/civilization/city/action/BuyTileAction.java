@@ -1,8 +1,9 @@
 package com.tsoft.civilization.civilization.city.action;
 
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.civilization.building.L10nBuilding;
 import com.tsoft.civilization.civilization.city.City;
+import com.tsoft.civilization.civilization.city.L10nCity;
+import com.tsoft.civilization.civilization.city.tile.BuyTile;
 import com.tsoft.civilization.civilization.city.tile.BuyTileService;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
@@ -12,24 +13,21 @@ import com.tsoft.civilization.web.view.JsonBlock;
 import java.util.UUID;
 
 public class BuyTileAction {
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    private final BuyTileService buyTileService;
+    private final BuyTileService buyTileService = new BuyTileService();
 
-    public BuyTileAction(BuyTileService buyTileService) {
-        this.buyTileService = buyTileService;
-    }
-
-    public ActionAbstractResult buyTile(City city, Point location, int price) {
-        return buyTileService.buyTile(city, location, price);
+    public ActionAbstractResult buyTile(City city, Point location) {
+        return buyTileService.buyTile(city, location);
     }
 
     private static String getLocalizedName() {
-        return L10nBuilding.BUILD.getLocalized();
+        return L10nCity.BUY_TILE.getLocalized();
     }
 
     private static String getLocalizedDescription() {
-        return L10nBuilding.BUILD_DESCRIPTION.getLocalized();
+        return L10nCity.BUY_TILE_DESCRIPTION.getLocalized();
     }
 
     public StringBuilder getHtml(City city) {
@@ -51,10 +49,11 @@ public class BuyTileAction {
         JsonBlock locations = new JsonBlock('\'');
 
         locations.startArray("locations");
-        for (Point loc : buyTileService.getLocationsToBuy(city)) {
+        for (BuyTile tile : buyTileService.getLocationsToBuy(city)) {
             JsonBlock location = new JsonBlock('\'');
-            location.addParam("col", loc.getX());
-            location.addParam("row", loc.getY());
+            location.addParam("col", tile.getLocation().getX());
+            location.addParam("row", tile.getLocation().getY());
+            location.addParam("price", tile.getPrice());
             locations.addElement(location.getText());
         }
         locations.stopArray();

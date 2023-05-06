@@ -1,41 +1,44 @@
 package com.tsoft.civilization.civilization.city.tile;
 
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.action.ActionFailureResult;
-import com.tsoft.civilization.action.ActionSuccessResult;
+import com.tsoft.civilization.civilization.city.action.CityTileActionResults;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.civilization.city.City;
-import com.tsoft.civilization.civilization.city.L10nCity;
 import com.tsoft.civilization.civilization.city.event.TileBoughtEvent;
+import com.tsoft.civilization.tile.TileService;
+import com.tsoft.civilization.tile.TilesMap;
+import com.tsoft.civilization.tile.feature.coast.Coast;
+import com.tsoft.civilization.tile.feature.mountain.Mountain;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.util.Point;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class BuyTileService {
 
-    public static final ActionSuccessResult TILE_BOUGHT = new ActionSuccessResult(L10nCity.TILE_BOUGHT);
+    private final TileService tileService = new TileService();
 
-    public static final ActionFailureResult INVALID_CITY = new ActionFailureResult(L10nCity.INVALID_CITY);
-    public static final ActionFailureResult INVALID_LOCATION = new ActionFailureResult(L10nCity.INVALID_LOCATION);
-    public static final ActionFailureResult ALREADY_MINE = new ActionFailureResult(L10nCity.ALREADY_MINE);
-    public static final ActionFailureResult NOT_ENOUGH_GOLD = new ActionFailureResult(L10nCity.NOT_ENOUGH_GOLD);
-
-    public ActionAbstractResult buyTile(City city, Point location, int price) {
+    public ActionAbstractResult buyTile(City city, Point location) {
         if (city == null || city.isDestroyed()) {
-            return INVALID_CITY;
+            return CityTileActionResults.INVALID_CITY;
         }
         
         if (location == null) {
-            return INVALID_LOCATION;
+            return CityTileActionResults.INVALID_LOCATION;
         }
         
         if (city.getTileService().getTerritory().contains(location)) {
-            return ALREADY_MINE;
+            return CityTileActionResults.ALREADY_MINE;
         }
+
+        TilesMap tilesMap = city.getTileService().getTilesMap();
+        AbstractTerrain tile = tilesMap.getTile(location);
+        int price = calcTilePrice(tile);
         
         if (city.getSupply().getGold() < price) {
-            return NOT_ENOUGH_GOLD;
+            return CityTileActionResults.NOT_ENOUGH_GOLD;
         }
 
         city.getSupplyService().addExpenses(Supply.builder().gold(price).build());
@@ -46,14 +49,51 @@ public class BuyTileService {
             .gold(price)
             .build());
         
-        return TILE_BOUGHT;
+        return CityTileActionResults.TILE_BOUGHT;
     }
 
     public ActionAbstractResult canBuyTile(City city) {
-        return NOT_ENOUGH_GOLD;
+        Supply supply = city.getSupply();
+        if (supply.getGold() <= 0) {
+            return CityTileActionResults.NOT_ENOUGH_GOLD;
+        }
+
+        List<BuyTile> tiles = getLocationsToBuy(city);
+        if (tiles.isEmpty()) {
+            return CityTileActionResults.NO_TILES_TO_BUY;
+        }
+
+        return CityTileActionResults.CAN_BUY_TILE;
     }
 
-    public List<Point> getLocationsToBuy(City city) {
-        return Collections.emptyList();
+    public List<BuyTile> getLocationsToBuy(City city) {
+        TilesMap tilesMap = city.getTileService().getTilesMap();
+        Set<Point> around = tilesMap.getLocationsAroundTerritory(city.getTileService().getTerritory(), 2);
+
+        List<BuyTile> result = new ArrayList<>();
+        for (Point location : around) {
+            AbstractTerrain tile = tilesMap.getTile(location);
+
+            boolean cantBuy =
+                (tile.hasFeature(Mountain.class)) ||
+                (tile.isOcean() && !tile.hasFeature(Coast.class));
+
+            if (cantBuy) {
+                continue;
+            }
+
+            int price = calcTilePrice(tile);
+            result.add(new BuyTile(location, price));
+        }
+
+        return result;
+    }
+
+    private int calcTilePrice(AbstractTerrain tile) {
+        Supply tileSupply = tileService.calcSupply(tile);
+        int food = Math.max(1, tileSupply.getFood());
+        int production = Math.max(1, tileSupply.getProduction());
+        int gold = Math.max(1, tileSupply.getGold());
+        return (30 * gold) + (20 * production) + (10 * food);
     }
 }

@@ -18,9 +18,9 @@ public class GreatGeneralActions implements AbstractAction<GreatGeneral> {
             <tr id='actions_table_row'>$combatBonusAction</tr>
             """,
 
-            "$defaultActions", defaultActions.getHtmlActions(unit),
             "$citadelImprovementAction", CitadelImprovementAction.getHtml(unit),
-            "$combatBonusAction", CombatBonusAction.getHtml(unit)
+            "$combatBonusAction", CombatBonusAction.getHtml(unit),
+            "$defaultActions", defaultActions.getHtmlActions(unit)
         );
     }
 }

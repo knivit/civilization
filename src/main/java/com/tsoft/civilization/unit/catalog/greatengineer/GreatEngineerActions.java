@@ -18,9 +18,9 @@ public class GreatEngineerActions implements AbstractAction<GreatEngineer> {
             <tr id='actions_table_row'>$hurryProductionAction</tr>
             """,
 
-            "$defaultActions", defaultActions.getHtmlActions(unit),
             "$manufactureImprovementAction", ManufactureImprovementAction.getHtml(unit),
-            "$hurryProductionAction", HurryProductionAction.getHtml(unit)
+            "$hurryProductionAction", HurryProductionAction.getHtml(unit),
+            "$defaultActions", defaultActions.getHtmlActions(unit)
         );
     }
 }

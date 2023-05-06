@@ -27,6 +27,7 @@ import com.tsoft.civilization.world.generator.resource.StrategicResourceGenerato
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -230,7 +231,7 @@ public class OneContinentWorldGenerator implements WorldGenerator {
                             continue;
                         }
 
-                        List<Point> locations = tilesMap.getLocationsAround(new Point(x, y), 1);
+                        Set<Point> locations = tilesMap.getLocationsAround(new Point(x, y), 1);
                         for (Point loc : locations) {
                             AbstractTerrain tile = tilesMap.getTile(loc);
                             if (tile.getTileType().isEarth()) {

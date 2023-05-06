@@ -115,15 +115,6 @@ public class CityList implements Iterable<City> {
         return result;
     }
 
-    public boolean isHavingTile(Point location) {
-        for (City city : cities) {
-            if (city.getTileService().isHavingTile(location)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public CityList sortByName() {
         return new CityList(cities.stream()
             .sorted(Comparator.comparing(e -> e.getView().getLocalizedName()))

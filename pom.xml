@@ -96,8 +96,8 @@
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
-                    <source>15</source>
-                    <target>15</target>
+                    <source>20</source>
+                    <target>20</target>
                 </configuration>
             </plugin>
 

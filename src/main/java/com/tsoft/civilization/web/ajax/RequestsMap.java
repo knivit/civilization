@@ -21,6 +21,7 @@ import java.util.Map;
 
 @Slf4j
 class RequestsMap {
+
     private static final Map<String, AbstractAjaxRequest> REQUESTS;
 
     static {
@@ -28,6 +29,7 @@ class RequestsMap {
         REQUESTS = Collections.unmodifiableMap(requests);
 
         // City
+        requests.put(BuyTileActionRequest.class.getSimpleName(), new BuyTileActionRequest());
         requests.put(BuildBuildingActionRequest.class.getSimpleName(), new BuildBuildingActionRequest());
         requests.put(BuildUnitActionRequest.class.getSimpleName(), new BuildUnitActionRequest());
         requests.put(BuyBuildingActionRequest.class.getSimpleName(), new BuyBuildingActionRequest());

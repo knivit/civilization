@@ -8,9 +8,13 @@ var drawMap = {
     selectedCol: 0,
     selectedRow: 0,
 
-    // Locations to move an unit
+    // locations to move a unit
     locationsToMove: [],
     isShowLocationsToMove: false,
+
+    // locations to buy a tile
+    locationsToBuy: [],
+    isShowLocationsToBuy: false,
 
     // locations to attack
     locationsToAttack: [],
@@ -52,7 +56,11 @@ var drawMap = {
 
         this.drawTilesMap();
 
-        var canSelect = !this.isShowLocationsToMove && !this.isShowLocationsToAttack && !this.isShowLocationsToCapture;
+        var canSelect = !this.isShowLocationsToMove &&
+            !this.isShowLocationsToAttack &&
+            !this.isShowLocationsToCapture &&
+            !this.isShowLocationsToBuy;
+
         if (canSelect) {
             client.selectTile(col, row);
         }
@@ -129,6 +137,12 @@ var drawMap = {
         this.redraw();
     },
 
+    toggleLocationsToBuy: function(locations) {
+        this.locationsToBuy = locations;
+        this.isShowLocationsToBuy = !this.isShowLocationsToBuy;
+        this.redraw();
+    },
+
     hideLocationsToMove: function() {
         this.isShowLocationsToMove = false;
         this.redraw();
@@ -141,6 +155,11 @@ var drawMap = {
 
     hideLocationsToCapture: function() {
         this.isShowLocationsToCapture = false;
+        this.redraw();
+    },
+
+    hideLocationsToBuy: function() {
+        this.isShowLocationsToBuy = false;
         this.redraw();
     },
 
@@ -209,6 +228,9 @@ var drawMap = {
 
         // locations to capture
         this.drawLocationsToCapture(drawArea);
+
+        // locations to buy
+        this.drawLocationsToBuy(drawArea);
 
         // selected tiles
         this.drawSelectedTiles(drawArea);
@@ -327,13 +349,19 @@ var drawMap = {
         }
     },
 
+    drawLocationsToBuy: function(drawArea) {
+        if (this.isShowLocationsToBuy) {
+            this.drawLocationsToAction(drawArea, this.locationsToBuy, drawTile.drawLocationToBuy);
+        }
+    },
+
     drawLocationsToAction: function(drawArea, locationsToAction, drawFunction) {
         for (var i = 0; i < drawArea.length; i ++) {
             var cell = drawArea[i];
             for (var k = 0; k < locationsToAction.length; k ++) {
                 var loc = locationsToAction[k];
                 if ((cell.col == loc.col) && (cell.row == loc.row)) {
-                    drawFunction(cell.x, cell.y);
+                    drawFunction(cell.x, cell.y, loc);
                 }
             }
         }

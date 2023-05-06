@@ -38,10 +38,8 @@ public class ClientAjaxRequest {
     }
 
     public static StringBuilder buyTileAction(City city, JsonBlock locations) {
-        return Format.text("client.buyTileAction({ city:'$city', col:'$col', row:'$row', $locations })",
+        return Format.text("client.buyTileAction({ city:'$city', $locations })",
             "$city", city.getId(),
-            "$col", city.getLocation().getX(),
-            "$row", city.getLocation().getY(),
             "$locations", locations.getValue()
         );
     }

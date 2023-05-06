@@ -27,6 +27,7 @@ public class TileService {
                 supply = supply.add(feature.getSupply());
             }
         }
+
         return supply;
     }
 }

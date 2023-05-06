@@ -18,9 +18,9 @@ public class GreatArtistActions implements AbstractAction<GreatArtist> {
             <tr id='actions_table_row'>$landmarkImprovementAction</tr>
             """,
 
-            "$defaultActions", defaultActions.getHtmlActions(unit),
             "$cultureBombAction", CultureBombAction.getHtml(unit),
-            "$landmarkImprovementAction", LandmarkImprovementAction.getHtml(unit)
+            "$landmarkImprovementAction", LandmarkImprovementAction.getHtml(unit),
+            "$defaultActions", defaultActions.getHtmlActions(unit)
         );
     }
 }

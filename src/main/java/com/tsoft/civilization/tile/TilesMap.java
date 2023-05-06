@@ -21,6 +21,7 @@ import static com.tsoft.civilization.world.MapSize.CUSTOM;
 
 @Slf4j
 public class TilesMap implements Iterable<AbstractTerrain> {
+
     public static int MIN_WIDTH = 2;
     public static int MAX_WIDTH = 1000;
     public static int MIN_HEIGHT = 2;
@@ -159,9 +160,8 @@ public class TilesMap implements Iterable<AbstractTerrain> {
     }
 
     public boolean isTilesNearby(Point loc1, Point loc2, int radius) {
-        List<Point> around = getLocationsAround(loc1, radius);
-        return around.stream()
-            .anyMatch(p -> p.equals(loc2));
+        Set<Point> around = getLocationsAround(loc1, radius);
+        return around.contains(loc2);
     }
 
     public List<AbstractTerrain> getTilesAround(Point location, int radius) {
@@ -172,8 +172,8 @@ public class TilesMap implements Iterable<AbstractTerrain> {
 
     // Get the locations around the given location within the radius
     // The point itself doesn't included
-    public List<Point> getLocationsAround(Point location, int radius) {
-        ArrayList<Point> locations = new ArrayList<>();
+    public Set<Point> getLocationsAround(Point location, int radius) {
+        Set<Point> locations = new HashSet<>();
         if (radius == 0) {
             return locations;
         }
@@ -209,7 +209,28 @@ public class TilesMap implements Iterable<AbstractTerrain> {
         return locations;
     }
 
-    // End point doesn't included
+    /* Return a border with the given width around the given territory */
+    public Set<Point> getLocationsAroundTerritory(Set<Point> territory, int width) {
+        if (width < 0) {
+            throw new IllegalArgumentException("Invalid width = " + width + ", must be >= 0");
+        }
+
+        if (territory == null || territory.isEmpty() || width == 0) {
+            return Collections.emptySet();
+        }
+
+        Set<Point> result = new HashSet<>();
+        for (Point loc : territory) {
+            Set<Point> around = getLocationsAround(loc, width);
+            result.addAll(around);
+        }
+
+        result.removeAll(territory);
+
+        return result;
+    }
+
+    // End point doesn't include
     // sideNo - number of hexagon's side (0 - Up, 1 - (Right, Up) etc clockwise)
     private List<Point> getLocationsOnLine(Point a, Point b, int sideNo) {
         assert (sideNo >= 0 && sideNo <= 5) : "sideNo = " + sideNo + ", but must be in [0..5]";
@@ -274,6 +295,10 @@ public class TilesMap implements Iterable<AbstractTerrain> {
 
     /** Return null if the given coordinates not on the map */
     public Point getLocation(String col, String row) {
+        if (col == null || row == null) {
+            return null;
+        }
+
         int c = NumberUtil.parseInt(col, -1);
         int r = NumberUtil.parseInt(row, -1);
         if ((c < 0 || c >= width) || (r < 0 || r >= height)) {

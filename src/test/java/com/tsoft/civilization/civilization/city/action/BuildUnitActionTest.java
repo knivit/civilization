@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class BuildUnitActionTest {
 
     @Test
-    public void failToBuildUnitNoTechnology() {
+    void fail_to_build_unit_no_technology() {
         MockWorld world = MockWorld.newSimpleWorld();
 
         world.createCivilization(RUSSIA, new MockScenario()
@@ -33,7 +33,7 @@ public class BuildUnitActionTest {
     }
 
     @Test
-    public void buildUnit() {
+    void build_unit() {
         MockWorld world = MockWorld.newSimpleWorld();
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
@@ -63,7 +63,7 @@ public class BuildUnitActionTest {
         ActionAbstractResult actionResult = BuildUnitAction.buildUnit(city, Archers.CLASS_UUID);
 
         assertThat(actionResult)
-            .isEqualTo(CityActionResults.UNIT_CONSTRUCTION_IS_STARTED);
+            .isEqualTo(CityUnitActionResults.UNIT_CONSTRUCTION_IS_STARTED);
 
         // Wait till it builds
         for (int i = 0; i < 5; i ++) {

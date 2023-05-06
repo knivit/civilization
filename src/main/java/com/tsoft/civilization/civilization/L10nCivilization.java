@@ -80,14 +80,6 @@ public class L10nCivilization {
         .put(EN, "Wrong civilization")
         .put(RU, "Неверная цивилизация");
 
-    public static final L10n WRONG_ERA_OR_TECHNOLOGY = new L10n()
-        .put(EN, "Wrong Era or insufficient civilization's technology level")
-        .put(RU, "Неверная эра или уровень развития цивилизации недостаточен");
-
-    public static final L10n NOT_ENOUGH_MONEY = new L10n()
-        .put(EN, "Not enough money")
-        .put(RU, "Недостаточно денег");
-
     /** Statistic */
 
     public static final L10n POPULATION = new L10n()

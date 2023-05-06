@@ -294,6 +294,21 @@ var client = {
 
     /** City Actions */
 
+    buyTileAction: function(ajaxParams) {
+        if (!drawMap.isShowLocationsToBuy) {
+            drawMap.toggleLocationsToBuy(ajaxParams.locations);
+            return;
+        }
+
+        drawMap.hideLocationsToBuy();
+
+        server.sendChainOfRequests([
+            [ "ajax/BuyTileActionRequest", { city: ajaxParams.city, col: drawMap.selectedCol, row: drawMap.selectedRow }, client.onUpdateWorldResponse ],
+            [ "ajax/GetCityStatus", { city: ajaxParams.city }, client.onStatusResponse ],
+            [ "ajax/GetControlPanel", { }, client.onControlPanelResponse ]
+        ]);
+    },
+
     cityAttackAction: function(ajaxParams) {
         if (!drawMap.isShowLocationsToAttack) {
             drawMap.toggleLocationsToAttack(ajaxParams.locations);

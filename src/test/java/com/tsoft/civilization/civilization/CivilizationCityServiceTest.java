@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class CivilizationCityServiceTest {
 
     @Test
-    public void no_cities_with_available_actions() {
+    void no_cities_with_available_actions() {
         MockWorld world = MockWorld.newSimpleWorld();
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()

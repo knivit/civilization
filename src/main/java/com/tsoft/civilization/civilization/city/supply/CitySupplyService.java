@@ -33,6 +33,10 @@ public class CitySupplyService {
         this.expenses.add(expenses);
     }
 
+    public Supply calcSupply() {
+        return calcIncomeSupply().add(calcOutcomeSupply());
+    }
+
     public Supply calcIncomeSupply() {
         if (city.isResistanceMode()) {
             return Supply.EMPTY;

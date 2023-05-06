@@ -119,8 +119,8 @@ public class World {
         return worldService.getUnitsAtLocations(locations, excludeCivilization);
     }
 
-    public List<Point> getLocationsAround(Point location, int radius) {
-        return getTilesMap().getLocationsAround(location, radius);
+    public Set<Point> getLocationsAround(Point location, int radius) {
+        return tilesMap.getLocationsAround(location, radius);
     }
 
     public CivilizationList getCivilizations() {

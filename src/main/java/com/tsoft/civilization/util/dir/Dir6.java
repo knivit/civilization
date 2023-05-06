@@ -3,7 +3,7 @@ package com.tsoft.civilization.util.dir;
 import java.util.ArrayList;
 
 /*
- * Move Directions for 4x4 Map
+ * Move Directions for a sixth-tiles map
  *
  * 1) For odd rows:
  *  +---+---+---+--       +---+---+---+

@@ -16,8 +16,8 @@ public class SettlersActions implements AbstractAction<Settlers> {
             <tr id='actions_table_row'>$buildCityAction</tr>
             """,
 
-            "$defaultActions", defaultActions.getHtmlActions(unit),
-            "$buildCityAction", BuildCityAction.getHtml(unit)
+            "$buildCityAction", BuildCityAction.getHtml(unit),
+            "$defaultActions", defaultActions.getHtmlActions(unit)
         );
     }
 }

@@ -13,6 +13,7 @@ import java.util.UUID;
 import static com.tsoft.civilization.web.ajax.ServerStaticResource.PRODUCTION_IMAGE;
 
 public class BuildUnitAction {
+
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     public static ActionAbstractResult buildUnit(City city, String unitClassUuid) {
@@ -27,7 +28,7 @@ public class BuildUnitAction {
 
         AbstractUnit unit = UnitFactory.newInstance(city.getCivilization(), unitClassUuid);
         city.startConstruction(unit);
-        return CityActionResults.UNIT_CONSTRUCTION_IS_STARTED;
+        return CityUnitActionResults.UNIT_CONSTRUCTION_IS_STARTED;
     }
 
     private static ActionAbstractResult canBuildUnit(City city, String unitClassUuid) {
@@ -38,7 +39,7 @@ public class BuildUnitAction {
         AbstractUnit unit = UnitFactory.findByClassUuid(unitClassUuid);
 
         if (unit.getBaseProductionCost(city.getCivilization()) < 0) {
-            return CityActionResults.INVALID_UNIT;
+            return CityUnitActionResults.INVALID_UNIT;
         }
 
         if (!unit.checkEraAndTechnology(city.getCivilization())) {
@@ -46,10 +47,10 @@ public class BuildUnitAction {
         }
 
         if (!city.canStartConstruction()) {
-            return CityActionResults.CANT_BUILD_UNIT_OTHER_ACTION_IN_PROGRESS;
+            return CityUnitActionResults.CANT_BUILD_UNIT_OTHER_ACTION_IN_PROGRESS;
         }
 
-        return CityActionResults.CAN_START_CONSTRUCTION;
+        return CityBuildingActionResults.CAN_START_CONSTRUCTION;
     }
 
     private static String getLocalizedName() {

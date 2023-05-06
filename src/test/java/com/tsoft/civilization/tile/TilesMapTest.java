@@ -3,10 +3,11 @@ package com.tsoft.civilization.tile;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.util.Point;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
-import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -15,10 +16,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Slf4j
 public class TilesMapTest {
 
     @Test
-    public void getTilesAround1() {
+    void get_tiles_around_1() {
         TilesMap map = MockTilesMap.of(
             " |0 1 2 3 4 5 6 7 ",
             "-+----------------",
@@ -32,18 +34,18 @@ public class TilesMapTest {
             "7| . . . . . . . .");
 
         // round 1
-        List<Point> locations = map.getLocationsAround(new Point(3, 3), 1);
+        Set<Point> locations = map.getLocationsAround(new Point(3, 3), 1);
 
         assertThat(locations)
             .hasSize(6)
-            .containsExactly(
+            .containsExactlyInAnyOrder(
                 new Point(3, 2), new Point(4, 2), new Point(4, 3),
                 new Point(4, 4), new Point(3, 4), new Point(2, 3)
             );
     }
 
     @Test
-    public void getTilesAround2() {
+    void get_tiles_around_2() {
         TilesMap map = MockTilesMap.of(
             " |0 1 2 3 4 5 6 7 ",
             "-+----------------",
@@ -57,11 +59,11 @@ public class TilesMapTest {
             "7| . . . . . . . .");
 
         // round 2
-        List<Point> locations = map.getLocationsAround(new Point(3, 3), 2);
+        Set<Point> locations = map.getLocationsAround(new Point(3, 3), 2);
 
         assertThat(locations)
             .hasSize(6 + 12)
-            .containsExactly(
+            .containsExactlyInAnyOrder(
                 // from round 1
                 new Point(3, 2), new Point(4, 2), new Point(4, 3),
                 new Point(4, 4), new Point(3, 4), new Point(2, 3),
@@ -75,7 +77,7 @@ public class TilesMapTest {
     }
 
     @Test
-    public void getTilesAround3() {
+    void get_tiles_around_3() {
         TilesMap map = MockTilesMap.of(
             " |0 1 2 3 4 5 6 7 ",
             "-+----------------",
@@ -89,11 +91,11 @@ public class TilesMapTest {
             "7| . . . . . . . .");
 
         // round 3
-        List<Point> locations = map.getLocationsAround(new Point(3, 3), 3);
+        Set<Point> locations = map.getLocationsAround(new Point(3, 3), 3);
 
         assertThat(locations)
             .hasSize(6 + 12 + 18)
-            .containsExactly(
+            .containsExactlyInAnyOrder(
                 // from round 1
                 new Point(3, 2), new Point(4, 2), new Point(4, 3),
                 new Point(4, 4), new Point(3, 4), new Point(2, 3),
@@ -115,7 +117,44 @@ public class TilesMapTest {
     }
 
     @Test
-    public void testIterator() {
+    void get_locations_around_territory_1() {
+        TilesMap tilesMap = MockTilesMap.of(
+            " |0 1 2 3 4 5 6 7 ",
+            "-+----------------",
+            "0|. . . . . . . . ",
+            "1| . . . . . . . .",
+            "2|. . . . . . . . ",
+            "3| . . . . . . . .",
+            "4|. . . . . . . . ",
+            "5| . . . . . . . .",
+            "6|. . . . . . . . ",
+            "7| . . . . . . . .");
+
+        assertThat(tilesMap.getLocationsAroundTerritory(Set.of(new Point(0, 0)), 1))
+            .containsExactlyInAnyOrder(
+                new Point(7, 0), new Point(7, 7), new Point(0, 7), new Point(1, 0), new Point(0, 1), new Point(7, 1)
+            );
+
+        assertThat(tilesMap.getLocationsAroundTerritory(Set.of(new Point(1, 1)), 1))
+            .containsExactlyInAnyOrder(
+                new Point(0, 1), new Point(1, 0), new Point(2, 0), new Point(2, 1), new Point(2, 2), new Point(1, 2)
+            );
+
+        assertThat(tilesMap.getLocationsAroundTerritory(Set.of(new Point(1, 1), new Point(3, 3)), 1))
+            .containsExactlyInAnyOrder(
+                new Point(0, 1), new Point(1, 0), new Point(2, 0), new Point(2, 1), new Point(2, 2), new Point(1, 2),
+                new Point(2, 3), new Point(3, 2), new Point(4, 2), new Point(4, 3), new Point(4, 4), new Point(3, 4)
+            );
+
+        assertThat(tilesMap.getLocationsAroundTerritory(Set.of(new Point(1, 1), new Point(2, 1)), 1))
+            .containsExactlyInAnyOrder(
+                new Point(0, 1), new Point(1, 0), new Point(2, 0), new Point(2, 2), new Point(1, 2),
+                new Point(3, 0), new Point(3, 1), new Point(3, 2)
+            );
+    }
+
+    @Test
+    void test_iterator() {
         TilesMap map = MockWorld.SIMPLE_TILES_MAP;
 
         Iterator<AbstractTerrain> tiles = map.iterator();
@@ -129,22 +168,27 @@ public class TilesMapTest {
     }
 
     @Test
-    public void testParallelIterators() throws InterruptedException {
+    void test_parallel_iterators() throws InterruptedException {
         TilesMap map = MockWorld.SIMPLE_TILES_MAP;
 
         ExecutorService executors = Executors.newFixedThreadPool(16);
+
         executors.submit(() -> {
             int n = 0;
-            for (AbstractTerrain tile : map) n++;
+            for (AbstractTerrain tile : map) {
+                log.debug("Found tile {}", tile.getLocation());
+                n ++;
+            }
             assertEquals(map.getWidth() * map.getHeight(), n);
         });
+
         executors.shutdown();
 
         assertThat(executors.awaitTermination(10, TimeUnit.SECONDS)).isTrue();
     }
 
     @Test
-    public void testStream() {
+    void test_stream() {
         AtomicInteger n = new AtomicInteger(0);
 
         TilesMap map = MockWorld.SIMPLE_TILES_MAP;
