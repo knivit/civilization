@@ -1,6 +1,6 @@
 package com.tsoft.civilization.unit;
 
-public enum CombatType {
+public enum UnitMilitaryType {
 
     ARMORED_UNITS,
     MELEE_UNITS,

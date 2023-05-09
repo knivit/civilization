@@ -169,7 +169,7 @@ public abstract class Civilization {
     }
 
     public boolean canBuyBuilding(AbstractBuilding building) {
-        int gold = supply.getGold();
+        double gold = supply.getGold();
         return gold >= building.getGoldCost(this);
     }
 

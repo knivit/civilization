@@ -31,9 +31,8 @@ public class BuyTileService {
             return CityTileActionResults.ALREADY_MINE;
         }
 
-        int price = calcTilePrice(city, location);
-
-        if (price == Integer.MAX_VALUE) {
+        Double price = calcTilePrice(city, location);
+        if (price == null) {
             return CityTileActionResults.CANT_BUY_TILE;
         }
         
@@ -72,28 +71,28 @@ public class BuyTileService {
 
         List<BuyTile> result = new ArrayList<>();
         for (Point location : around) {
-            int price = calcTilePrice(city, location);
-            if (price != Integer.MAX_VALUE) {
-                result.add(new BuyTile(location, price));
+            Double price = calcTilePrice(city, location);
+            if (price != null) {
+                result.add(new BuyTile(location, (int) Math.round(price)));
             }
         }
 
         return result;
     }
 
-    private int calcTilePrice(City city, Point location) {
+    private Double calcTilePrice(City city, Point location) {
         TilesMap tilesMap = city.getTileService().getTilesMap();
         boolean canBuy = tilesMap.canBeTerritory(location);
         if (!canBuy) {
-            return Integer.MAX_VALUE;
+            return null;
         }
 
         AbstractTerrain tile = tilesMap.getTile(location);
 
         Supply tileSupply = tileService.calcSupply(tile);
-        int food = Math.max(1, tileSupply.getFood());
-        int production = Math.max(1, tileSupply.getProduction());
-        int gold = Math.max(1, tileSupply.getGold());
-        return (30 * gold) + (20 * production) + (10 * food);
+        double food = Math.max(1, tileSupply.getFood());
+        double production = Math.max(1, tileSupply.getProduction());
+        double gold = Math.max(1, tileSupply.getGold());
+        return (30.0 * gold) + (20.0 * production) + (10.0 * food);
     }
 }

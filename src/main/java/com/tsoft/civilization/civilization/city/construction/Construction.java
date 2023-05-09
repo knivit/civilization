@@ -7,9 +7,9 @@ import com.tsoft.civilization.world.HasView;
 
 public class Construction implements HasView, HasId {
 
-    private final CanBeBuilt object;       // constructing a building, or training a unit, or working on a particular project
-    private final int totalProductionCost; // total production cost
-    private int usedProductionCost;        // used production cost
+    private final CanBeBuilt object;            // constructing a building, or training a unit, or working on a particular project
+    private final double totalProductionCost;   // total production cost
+    private double usedProductionCost;          // used production cost
 
     public Construction(Civilization civilization, CanBeBuilt object) {
         this.object = object;
@@ -32,11 +32,11 @@ public class Construction implements HasView, HasId {
         return object.getId();
     }
 
-    public int getProductionCost() {
+    public double getProductionCost() {
         return Math.max(0, totalProductionCost - usedProductionCost);
     }
 
-    public void useProductionCost(int cost) {
+    public void useProductionCost(double cost) {
         this.usedProductionCost += cost;
     }
 

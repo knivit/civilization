@@ -55,19 +55,19 @@ public class CityConstructionService {
         builtThisYear = new ConstructionList();
     }
 
-    public int calcConstructionTurns(Construction construction) {
+    public double calcConstructionTurns(Construction construction) {
         if (constructions.isEmpty()) {
             return 0;
         }
 
         Supply supply = city.calcSupply();
-        int production = supply.getProduction();
+        double production = supply.getProduction();
         if (production <= 0) {
             return -1;
         }
 
-        int cost = construction.getProductionCost();
-        return cost / production + 1;
+        double cost = construction.getProductionCost();
+        return cost / production + 1.0;
     }
 
     // Buildings and units construction
@@ -87,7 +87,7 @@ public class CityConstructionService {
         return constructionExpenses;
     }
 
-    private Supply doConstruction(int approvedProduction) {
+    private Supply doConstruction(double approvedProduction) {
         // At the Unhappiness level of -10 ("Very Unhappy"), you can't train Settlers anymore
         boolean veryUnhappy = city.getCivilization().getUnhappiness().getTotal() <= -10;
 
@@ -95,7 +95,7 @@ public class CityConstructionService {
 
         // constructions already sorted by priority
         for (Construction construction : constructions) {
-            int cost = construction.getProductionCost();
+            double cost = construction.getProductionCost();
             if (cost <= 0) {
                 continue;
             }
@@ -105,7 +105,7 @@ public class CityConstructionService {
                 continue;
             }
 
-            int usedConstructionCost = Math.min(cost, approvedProduction);
+            double usedConstructionCost = Math.min(cost, approvedProduction);
             construction.useProductionCost(usedConstructionCost);
 
             usedProductionCost += usedConstructionCost;

@@ -26,17 +26,17 @@ public enum CitizenDeathStrategy {
     // A citizen with minimal food produce will die
     private static Citizen minFood(CitizenList citizens, CitySupplyService supplyService) {
         Civilization civilization = supplyService.getCity().getCivilization();
-        return min(civilization, citizens, supplyService, Comparator.comparingInt(Supply::getFood));
+        return min(civilization, citizens, supplyService, Comparator.comparingDouble(Supply::getFood));
     }
 
     private static Citizen minProduction(CitizenList citizens, CitySupplyService supplyService) {
         Civilization civilization = supplyService.getCity().getCivilization();
-        return min(civilization, citizens, supplyService, Comparator.comparingInt(Supply::getProduction));
+        return min(civilization, citizens, supplyService, Comparator.comparingDouble(Supply::getProduction));
     }
 
     private static Citizen minGold(CitizenList citizens, CitySupplyService supplyService) {
         Civilization civilization = supplyService.getCity().getCivilization();
-        return min(civilization, citizens, supplyService, Comparator.comparingInt(Supply::getGold));
+        return min(civilization, citizens, supplyService, Comparator.comparingDouble(Supply::getGold));
     }
 
     private static Citizen min(Civilization civilization, CitizenList citizens, CitySupplyService supplyService, Comparator<Supply> comparator) {

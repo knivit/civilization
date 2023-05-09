@@ -158,7 +158,7 @@ public class CivilizationUnitService {
 
     public boolean canBuyUnit(AbstractUnit unit, City city) {
         if (canBePlaced(unit, city.getLocation())) {
-            int gold = civilization.getSupply().getGold();
+            double gold = civilization.getSupply().getGold();
             return gold >= unit.getGoldCost(civilization);
         }
         return false;

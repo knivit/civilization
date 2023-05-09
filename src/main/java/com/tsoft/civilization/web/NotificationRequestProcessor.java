@@ -36,11 +36,11 @@ public class NotificationRequestProcessor {
         }
 
         // Initial Response
-        StringBuilder buf = Format.text(
-            "HTTP/1.1 200 OK\r\n" +
-            "Content-Type: $contentType\r\n" +
-            "Cache-Control: no-cache" +
-            "Connection': keep-alive",
+        StringBuilder buf = Format.text("""
+            HTTP/1.1 200 OK\r
+            Content-Type: $contentType\r
+            Cache-Control: no-cacheConnection': keep-alive
+            """,
 
             "$contentType", ContentType.NOTIFICATION_EVENT
         );
@@ -50,7 +50,7 @@ public class NotificationRequestProcessor {
 
         // Change the name of this thread
         Thread thread = Thread.currentThread();
-        thread.setName("Notifications-" + thread.getId());
+        thread.setName("Notifications-" + thread.threadId());
 
         int sentEventId = NumberUtil.parseInt(request.getHeader(LAST_EVENT_ID_HEADER), -1);
         log.debug("Notifications for {} are started from eventId = {}",  request, sentEventId);

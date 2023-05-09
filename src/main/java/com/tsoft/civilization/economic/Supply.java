@@ -9,14 +9,14 @@ public final class Supply {
 
     public static final Supply EMPTY = Supply.builder().build();
 
-    private final int food;
-    private final int production;
-    private final int gold;
-    private final int science;
-    private final int culture;
-    private final int faith;
-    private final int tourism;
-    private final int greatPerson;
+    private final double food;
+    private final double production;
+    private final double gold;
+    private final double science;
+    private final double culture;
+    private final double faith;
+    private final double tourism;
+    private final double greatPerson;
 
     public Supply add(Supply other) {
         if (isEmpty(other)) {
@@ -62,14 +62,14 @@ public final class Supply {
 
     public Supply applyModifier(double modifier) {
         return Supply.builder()
-            .food((int)Math.round(food * modifier))
-            .production((int)Math.round(production * modifier))
-            .gold((int)Math.round(gold * modifier))
-            .science((int)Math.round(science * modifier))
-            .culture((int)Math.round(culture* modifier))
-            .faith((int)Math.round(faith * modifier))
-            .tourism((int)Math.round(tourism * modifier))
-            .greatPerson((int)Math.round(greatPerson * modifier))
+            .food(food * modifier)
+            .production(production * modifier)
+            .gold(gold * modifier)
+            .science(science * modifier)
+            .culture(culture* modifier)
+            .faith(faith * modifier)
+            .tourism(tourism * modifier)
+            .greatPerson(greatPerson * modifier)
             .build();
     }
 

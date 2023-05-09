@@ -20,7 +20,7 @@ public class TileBoughtEvent implements Event {
 
     private final L10n message = L10nCity.TILE_BOUGHT_EVENT;
     private final L10n cityName;
-    private final int gold;
+    private final double gold;
 
     public Object[] getArgs() {
         return new Object[] {

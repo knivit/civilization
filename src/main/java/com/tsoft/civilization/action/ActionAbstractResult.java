@@ -4,6 +4,7 @@ import com.tsoft.civilization.util.l10n.L10n;
 import lombok.Getter;
 
 public abstract class ActionAbstractResult {
+
     @Getter
     private final L10n message;
 

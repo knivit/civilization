@@ -86,13 +86,13 @@ public class GetImprovementInfo extends AbstractAjaxRequest {
             """,
 
             "$productionLabel", PRODUCTION,
-            "$production", featureSupply.getProduction(),
+            "$production", Math.round(featureSupply.getProduction()),
             "$productionImage", PRODUCTION_IMAGE,
             "$goldLabel", GOLD,
-            "$gold", featureSupply.getGold(),
+            "$gold", Math.round(featureSupply.getGold()),
             "$goldImage", GOLD_IMAGE,
             "$foodLabel", FOOD,
-            "$food", featureSupply.getFood(),
+            "$food", Math.round(featureSupply.getFood()),
             "$foodImage", FOOD_IMAGE
         );
     }

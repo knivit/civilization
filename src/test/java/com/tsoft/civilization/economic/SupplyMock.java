@@ -68,16 +68,16 @@ public class SupplyMock {
         // log them out as jUnit doesn't show the values in assertTrue
         if (!isEqual) {
             System.out.printf("""
-                Type            |   Actual   | Expected
+                Type            |     Actual    |    Expected
                 -----------------------------------------
-                Food            |     %5d  |    %5d | %s
-                Production      |     %5d  |    %5d | %s
-                Gold            |     %5d  |    %5d | %s
-                Science         |     %5d  |    %5d | %s
-                Culture         |     %5d  |    %5d | %s
-                Faith           |     %5d  |    %5d | %s
-                Tourism         |     %5d  |    %5d | %s
-                Great Person    |     %5d  |    %5d | %s
+                Food            |     %7.2f  |    %7.2f | %s
+                Production      |     %7.2f  |    %7.2f | %s
+                Gold            |     %7.2f  |    %7.2f | %s
+                Science         |     %7.2f  |    %7.2f | %s
+                Culture         |     %7.2f  |    %7.2f | %s
+                Faith           |     %7.2f  |    %7.2f | %s
+                Tourism         |     %7.2f  |    %7.2f | %s
+                Great Person    |     %7.2f  |    %7.2f | %s
                 %n""",
 
                 a.getFood(), b.getFood(), cmp(a.getFood(), b.getFood()),
@@ -95,7 +95,7 @@ public class SupplyMock {
         return isEqual;
     }
 
-    private static String cmp(int a, int b) {
-        return (a == b) ? "" : "*";
+    private static String cmp(double a, double b) {
+        return (Math.round(a) == Math.round(b)) ? "" : "*";
     }
 }

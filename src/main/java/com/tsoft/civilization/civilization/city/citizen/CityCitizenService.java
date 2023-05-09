@@ -122,7 +122,7 @@ public class CityCitizenService {
             }
 
             // Excess food above the 2 per citizen goes into a pool for growth
-            int excessFood = supply.getFood() - (2 * citizens.size());
+            double excessFood = supply.getFood() - (2 * citizens.size());
             if (excessFood > 0) {
                 growthPool += excessFood;
                 return Supply.builder().food(-excessFood).build();
@@ -132,7 +132,7 @@ public class CityCitizenService {
         }
 
         // Can we use food from the growth pool ?
-        int absSupplyFood = -supply.getFood();
+        double absSupplyFood = -supply.getFood();
         if (growthPool >= absSupplyFood) {
             growthPool -= absSupplyFood;
             return Supply.builder().food(absSupplyFood).build();

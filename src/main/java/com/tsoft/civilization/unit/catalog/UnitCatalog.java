@@ -1,7 +1,7 @@
 package com.tsoft.civilization.unit.catalog;
 
 import com.tsoft.civilization.combat.CombatStrength;
-import com.tsoft.civilization.unit.CombatType;
+import com.tsoft.civilization.unit.UnitMilitaryType;
 import com.tsoft.civilization.unit.UnitBaseState;
 import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.unit.UnitType;
@@ -24,7 +24,7 @@ public final class UnitCatalog {
     private static final Map<UnitType, UnitBaseState> UNITS = new HashMap<>() {{
         put(ARCHERS, UnitBaseState.builder()
             .category(UnitCategory.MILITARY_RANGED)
-            .combatType(CombatType.ARCHERY_UNITS)
+            .unitMilitaryType(UnitMilitaryType.ARCHERY_UNITS)
             .goldCost(200)
             .productionCost(40)
             .passScore(1)
@@ -104,7 +104,7 @@ public final class UnitCatalog {
 
         put(WARRIORS, UnitBaseState.builder()
             .category(UnitCategory.MILITARY_MELEE)
-            .combatType(CombatType.MELEE_UNITS)
+            .unitMilitaryType(UnitMilitaryType.MELEE_UNITS)
             .goldCost(200)
             .productionCost(40)
             .passScore(1)
