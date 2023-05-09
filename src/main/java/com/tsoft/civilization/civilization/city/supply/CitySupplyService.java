@@ -19,6 +19,9 @@ public class CitySupplyService {
     @Getter
     private final City city;
 
+    private Supply supply = Supply.EMPTY;
+
+    private final List<Supply> income = new ArrayList<>();
     private final List<Supply> expenses = new ArrayList<>();
 
     public CitySupplyService(City city) {
@@ -29,12 +32,22 @@ public class CitySupplyService {
         populationSupplyService = new PopulationSupplyService(city);
     }
 
+    public void addIncome(Supply income) {
+        this.income.add(income);
+    }
+
     public void addExpenses(Supply expenses) {
         this.expenses.add(expenses);
     }
 
+    public Supply getSupply() {
+        Supply currentIncome = income.stream().reduce(Supply.EMPTY, Supply::add);
+        Supply currentExpenses = expenses.stream().reduce(Supply.EMPTY, Supply::add);
+        return supply.add(currentIncome).add(currentExpenses);
+    }
+
     public Supply calcSupply() {
-        return calcIncomeSupply().add(calcOutcomeSupply());
+        return supply.add(calcIncomeSupply()).add(calcOutcomeSupply());
     }
 
     public Supply calcIncomeSupply() {
@@ -45,20 +58,18 @@ public class CitySupplyService {
         Supply tiles = tileSupplyService.calcIncomeSupply(city.getCitizenLocations());
         Supply buildings = buildingSupplyService.calcIncomeSupply(city.getCivilization());
         Supply population = populationSupplyService.calcIncomeSupply(city.getCivilization());
-        return tiles.add(buildings).add(population);
+        Supply currentIncome = income.stream().reduce(Supply.EMPTY, Supply::add);
+
+        return tiles.add(buildings).add(population).add(currentIncome);
     }
 
     public Supply calcOutcomeSupply() {
         Supply tiles = tileSupplyService.calcOutcomeSupply(city.getCitizenLocations());
         Supply buildings = buildingSupplyService.calcOutcomeSupply(city.getCivilization());
         Supply population = populationSupplyService.calcOutcomeSupply(city.getCivilization());
+        Supply currentExpenses = expenses.stream().reduce(Supply.EMPTY, Supply::add);
 
-        Supply totalExpenses = Supply.EMPTY;
-        for (Supply supply : expenses) {
-            totalExpenses.add(supply);
-        }
-
-        return tiles.add(buildings).add(population).add(totalExpenses);
+        return tiles.add(buildings).add(population).add(currentExpenses);
     }
 
     public List<TileSupplyStrategy> getSupplyStrategy() {
@@ -69,12 +80,6 @@ public class CitySupplyService {
         return populationSupplyService.setSupplyStrategy(supplyStrategy);
     }
 
-    public Supply calcTilesSupply() {
-        Supply income = tileSupplyService.calcIncomeSupply(city.getCitizenLocations());
-        Supply outcome = tileSupplyService.calcOutcomeSupply(city.getCitizenLocations());
-        return income.add(outcome);
-    }
-
     public Supply calcTilesSupply(Point location) {
         Supply income = tileSupplyService.calcIncomeSupply(location);
         Supply outcome = tileSupplyService.calcOutcomeSupply(location);
@@ -82,6 +87,11 @@ public class CitySupplyService {
     }
 
     public void startYear() {
+        income.clear();
         expenses.clear();
+    }
+
+    public void stopYear(Supply supply) {
+        this.supply = supply;
     }
 }

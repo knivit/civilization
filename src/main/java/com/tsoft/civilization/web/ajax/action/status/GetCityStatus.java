@@ -3,6 +3,7 @@ package com.tsoft.civilization.web.ajax.action.status;
 import com.tsoft.civilization.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.civilization.building.BuildingList;
 import com.tsoft.civilization.civilization.city.L10nCity;
+import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.unit.*;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.civilization.building.L10nBuilding;
@@ -85,6 +86,8 @@ public class GetCityStatus extends AbstractAjaxRequest {
             return null;
         }
 
+        Supply supply = city.getSupplyService().calcSupply();
+
         return Format.text("""
             <table id='info_table'>
                 <tr><th colspan='2'>$features</th></tr>
@@ -102,13 +105,13 @@ public class GetCityStatus extends AbstractAjaxRequest {
             "$population", city.getPopulationService().getCitizenCount(),
             "$populationImage", POPULATION_IMAGE,
             "$productionLabel", L10nCity.PRODUCTION,
-            "$production", city.getSupply().getProduction(),
+            "$production", supply.getProduction(),
             "$productionImage", PRODUCTION_IMAGE,
             "$goldLabel", L10nCity.GOLD,
-            "$gold", city.getSupply().getGold(),
+            "$gold", supply.getGold(),
             "$goldImage", GOLD_IMAGE,
             "$foodLabel", L10nCity.FOOD,
-            "$food", city.getSupply().getFood(),
+            "$food", supply.getFood(),
             "$foodImage", FOOD_IMAGE,
             "$happinessLabel", L10nCity.HAPPINESS,
             "$happiness", city.getHappiness().getTotal(),

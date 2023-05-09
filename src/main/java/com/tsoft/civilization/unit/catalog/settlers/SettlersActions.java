@@ -12,8 +12,8 @@ public class SettlersActions implements AbstractAction<Settlers> {
     @Override
     public StringBuilder getHtmlActions(Settlers unit) {
         return Format.text("""
-            $defaultActions
             <tr id='actions_table_row'>$buildCityAction</tr>
+            $defaultActions
             """,
 
             "$buildCityAction", BuildCityAction.getHtml(unit),

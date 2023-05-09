@@ -1,7 +1,6 @@
 package com.tsoft.civilization.tile.terrain;
 
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.tile.resource.AbstractResource;
 import com.tsoft.civilization.tile.resource.ResourceCategory;
 import com.tsoft.civilization.web.view.JsonBlock;
@@ -17,16 +16,21 @@ public abstract class AbstractTerrainView {
         JsonBlock tileBlock = new JsonBlock();
         tileBlock.addParam("name", tile.getClass().getSimpleName());
 
-        tileBlock.startArray("features");
-        tile.getFeatures().forEach(feature -> {
-            AbstractFeatureView featureView = feature.getView();
-            tileBlock.addElement(featureView.getJson(feature).getText());
-        });
-        tileBlock.stopArray();
+        if (!tile.getFeatures().isEmpty()) {
+            tileBlock.startArray("features");
+            tile.getFeatures().forEach(e -> {
+                AbstractFeatureView featureView = e.getView();
+                tileBlock.addElement(featureView.getJson(e).getText());
+            });
+            tileBlock.stopArray();
+        }
 
         if (!tile.getImprovements().isEmpty()) {
-            AbstractImprovement improvement = tile.getImprovements().get(0);
-            tileBlock.addParam("improvement", improvement.getClass().getSimpleName());
+            tileBlock.startArray("improvements");
+            tile.getImprovements().forEach(e -> {
+                tileBlock.addElement(e.getClass().getSimpleName());
+            });
+            tileBlock.stopArray();
         }
 
         AbstractResource resource = tile.getResource();
@@ -36,6 +40,10 @@ public abstract class AbstractTerrainView {
             } else {
                 tileBlock.addParam("resource", resource.getType().name());
             }
+        }
+
+        if (tile.isDeepOcean()) {
+            tileBlock.addParam("isDeepOcean", "true");
         }
 
         return tileBlock;

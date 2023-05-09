@@ -9,14 +9,16 @@ import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import com.tsoft.civilization.web.view.JsonBlock;
+import lombok.RequiredArgsConstructor;
 
 import java.util.UUID;
 
+@RequiredArgsConstructor
 public class BuyTileAction {
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    private final BuyTileService buyTileService = new BuyTileService();
+    private final BuyTileService buyTileService;
 
     public ActionAbstractResult buyTile(City city, Point location) {
         return buyTileService.buyTile(city, location);

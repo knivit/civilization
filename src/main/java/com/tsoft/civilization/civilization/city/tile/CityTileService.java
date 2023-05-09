@@ -30,7 +30,10 @@ public class CityTileService implements HasHistory {
         center = location;
 
         territory.add(location);
-        territory.addAll(tilesMap.getLocationsAround(location, 1));
+
+        tilesMap.getLocationsAround(location, 1).stream()
+            .filter(tilesMap::canBeTerritory)
+            .forEach(territory::add);
     }
 
     /** City's territory */

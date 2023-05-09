@@ -51,7 +51,7 @@ public class MockWorld extends World {
         "8|g g g g g g g g g g ",
         "9| g g g g g g g g g g");
 
-    // Created objects (units, cities etc) in Civilizations' scenarios
+    // Created objects (units, cities etc.) in Civilizations' scenarios
     private final Map<String, Object> objects = new HashMap<>();
 
     public static MockWorld newSimpleWorld() {

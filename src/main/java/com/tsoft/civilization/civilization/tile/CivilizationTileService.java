@@ -1,6 +1,7 @@
 package com.tsoft.civilization.civilization.tile;
 
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.HasHistory;
@@ -20,9 +21,18 @@ public class CivilizationTileService implements HasHistory {
             .collect(HashSet::new, Set::addAll, Set::addAll);
     }
 
+    // For given location test is it an civilisation's territory or not
     public boolean isOnTerritory(Point location) {
         return civilization.getCityService().stream()
             .anyMatch(e -> e.getTileService().isOnTerritory(location));
+    }
+
+    // For given locations find out a city
+    public City findCityByLocationOnTerritory(Point location) {
+        return civilization.getCityService().stream()
+            .filter(e -> e.getTileService().isOnTerritory(location))
+            .findAny()
+            .orElse(null);
     }
 
     // Look for tile's improvement by its Id

@@ -13,9 +13,9 @@ public class GreatEngineerActions implements AbstractAction<GreatEngineer> {
     @Override
     public StringBuilder getHtmlActions(GreatEngineer unit) {
         return Format.text("""
-            $defaultActions
             <tr id='actions_table_row'>$manufactureImprovementAction</tr>
             <tr id='actions_table_row'>$hurryProductionAction</tr>
+            $defaultActions
             """,
 
             "$manufactureImprovementAction", ManufactureImprovementAction.getHtml(unit),

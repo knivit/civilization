@@ -16,7 +16,6 @@ import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.util.Point;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.UUID;
 

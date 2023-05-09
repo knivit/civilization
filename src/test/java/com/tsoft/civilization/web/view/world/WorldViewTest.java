@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.improvement.farm.Farm;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.view.JsonBlock;
@@ -29,6 +30,7 @@ public class WorldViewTest {
             .warriors("warriors", new Point(0, 0))
             .workers("workers", new Point(0, 0))
             .settlers("settlers", new Point(1, 0))
+            .improvement("farm", new Point(0, 1), Farm.CLASS_UUID)
         );
 
         String expected = """
@@ -37,10 +39,10 @@ public class WorldViewTest {
                 "tiles":[
                     {"name":"Grassland","features":[{"name":"Hill"},{"name":"Forest"}]},
                     {"name":"Grassland","features":[{"name":"Hill"}]},
-                    {"name":"Grassland","features":[]},
-                    {"name":"Grassland","features":[{"name":"Hill"},{"name":"Forest"}]},
+                    {"name":"Grassland"},
+                    {"name":"Grassland","features":[{"name":"Hill"},{"name":"Forest"}],"improvements":["Farm"]},
                     {"name":"Grassland","features":[{"name":"Hill"}]},
-                    {"name":"Grassland","features":[]}],
+                    {"name":"Grassland"}],
                 "civilizations":[{"name":"Russia"}],
                 "units":[
                     {"col":"0","row":"0","name":"Warriors","civ":"Russia"},

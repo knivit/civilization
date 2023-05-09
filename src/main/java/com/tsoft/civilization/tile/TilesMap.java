@@ -1,5 +1,6 @@
 package com.tsoft.civilization.tile;
 
+import com.tsoft.civilization.tile.feature.mountain.Mountain;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.tile.terrain.ocean.Ocean;
 import com.tsoft.civilization.tile.feature.AbstractFeature;
@@ -120,6 +121,20 @@ public class TilesMap implements Iterable<AbstractTerrain> {
         return Stream.of(tiles).flatMap(Stream::of);
     }
 
+    public boolean canBeTerritory(Point location) {
+        AbstractTerrain tile = getTile(location);
+
+        if (tile.hasFeature(Mountain.class)) {
+            return false;
+        };
+
+        if (tile.isDeepOcean()) {
+            return false;
+        }
+
+        return true;
+    }
+
     // The map is "cyclic", i.e. after a last tile
     // in a row goes a first tile in this row and
     // after a last tile in a column goes a first tile in this column
@@ -167,7 +182,7 @@ public class TilesMap implements Iterable<AbstractTerrain> {
     public List<AbstractTerrain> getTilesAround(Point location, int radius) {
         return getLocationsAround(location, radius).stream()
             .map(this::getTile)
-            .collect(Collectors.toList());
+            .toList();
     }
 
     // Get the locations around the given location within the radius
@@ -312,13 +327,19 @@ public class TilesMap implements Iterable<AbstractTerrain> {
     public void startYear() {
         tiles()
             .filter(AbstractTerrain::isOcean)
-            .filter(this::isDeepOcean)
-            .forEach(t -> ((Ocean) t).setDeepOcean(true));
+            .forEach(e -> ((Ocean) e).setDeepOcean(isDeepOcean(e)));
     }
 
     // If as far as 3 tiles around is ocean, then this tile is deep ocean
-    private boolean isDeepOcean(AbstractTerrain tile) {
-        return getTilesAround(tile.getLocation(), 2).stream()
-            .anyMatch(t -> !t.isOcean());
+    private boolean isDeepOcean(AbstractTerrain center) {
+        List<AbstractTerrain> tilesAround = getTilesAround(center.getLocation(), 2);
+
+        for (AbstractTerrain tile : tilesAround) {
+            if (!tile.isOcean()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

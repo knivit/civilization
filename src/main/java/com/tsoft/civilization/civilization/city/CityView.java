@@ -1,6 +1,7 @@
 package com.tsoft.civilization.civilization.city;
 
 import com.tsoft.civilization.civilization.city.action.BuyTileAction;
+import com.tsoft.civilization.civilization.city.tile.BuyTileService;
 import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.combat.service.AttackService;
 import com.tsoft.civilization.combat.action.AttackAction;
@@ -16,7 +17,9 @@ public class CityView extends AbstractImprovementView {
 
     private final AttackService attackService = new AttackService();
     private final AttackAction attackAction = new AttackAction(attackService);
-    private final BuyTileAction buyTileAction = new BuyTileAction();
+
+    private final BuyTileService buyTileService = new BuyTileService();
+    private final BuyTileAction buyTileAction = new BuyTileAction(buyTileService);
 
     public static final L10n DESCRIPTION = new L10n()
         .put(EN, "Cities are source of power of your civilization")

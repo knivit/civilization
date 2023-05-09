@@ -28,7 +28,7 @@ public class MarketIncomeSkill implements AbstractBuildingSkill {
 
         int gold = 0;
         for (AbstractTerrain tile : city.getCitizenTiles()) {
-            Supply tileSupply = tile.getTotalSupply(building.getCivilization());
+            Supply tileSupply = city.getSupplyService().calcTilesSupply(tile.getLocation());
             gold += tileSupply.getGold();
         }
 

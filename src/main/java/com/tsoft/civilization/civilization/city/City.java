@@ -95,9 +95,6 @@ public class City implements HasCombatStrength, HasHistory {
     @Setter
     private int passScore;
 
-    @Getter
-    private Supply supply = Supply.EMPTY;
-
     @Getter @Setter
     private boolean resistanceMode;
 
@@ -129,9 +126,11 @@ public class City implements HasCombatStrength, HasHistory {
         // specialists
         specialistService = new CitySpecialistService(this);
 
-        // buildings & construction
+        // buildings
         buildingService = new CityBuildingService(this);
         buildingService.addFirstBuilding(isCapital);
+
+        // construction
         constructionService = new CityConstructionService(this);
         combatService = new CityCombatService(this);
 
@@ -352,6 +351,10 @@ public class City implements HasCombatStrength, HasHistory {
         return unhappinessService.getUnhappiness();
     }
 
+    public void startEra() {
+        combatService.startEra();
+    }
+
     @Override
     public void startYear() {
         tileService.startYear();
@@ -366,16 +369,12 @@ public class City implements HasCombatStrength, HasHistory {
         passScore = 1;
     }
 
-    public void startEra() {
-        combatService.startEra();
-    }
-
     @Override
     public void stopYear() {
-        Supply originalSupply = supply.copy().build();
+        Supply originalSupply = supplyService.getSupply().copy().build();
         Supply incomeSupply = supplyService.calcIncomeSupply();
         Supply outcomeSupply = supplyService.calcOutcomeSupply();
-        supply = originalSupply.add(incomeSupply).add(outcomeSupply);
+        Supply supply = originalSupply.add(incomeSupply).add(outcomeSupply);
 
         tileService.stopYear();
 
@@ -389,6 +388,8 @@ public class City implements HasCombatStrength, HasHistory {
 
         Supply constructionSupplyChanges = constructionService.stopYear(supply);
         supply = supply.add(constructionSupplyChanges);
+
+        supplyService.stopYear(supply);
 
         combatService.stopYear();
 

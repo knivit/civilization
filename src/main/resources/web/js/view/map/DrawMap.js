@@ -256,9 +256,11 @@ var drawMap = {
         tile.draw(cell.x, cell.y);
 
         // features
-        for (var i = 0; i < tile.features.length; i ++) {
-            var feature = tile.features[i];
-            feature.draw(cell.x, cell.y, tile);
+        if (tile.features != undefined) {
+            for (var i = 0; i < tile.features.length; i ++) {
+                var feature = tile.features[i];
+                feature.draw(cell.x, cell.y, tile);
+            }
         }
 
         // debug info

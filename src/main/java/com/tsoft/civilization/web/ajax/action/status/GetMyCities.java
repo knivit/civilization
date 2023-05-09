@@ -1,6 +1,7 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
 import com.tsoft.civilization.civilization.city.L10nCity;
+import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.civilization.city.CityList;
@@ -56,6 +57,8 @@ public class GetMyCities extends AbstractAjaxRequest {
 
         StringBuilder buf = new StringBuilder();
         for (City city : cities.sortByName()) {
+            Supply supply = city.getSupplyService().calcSupply();
+
             buf.append(Format.text("""
                 <tr>
                     <td><button onclick="$getCityStatus">$cityName</button></td>
@@ -69,9 +72,9 @@ public class GetMyCities extends AbstractAjaxRequest {
                 "$getCityStatus", ClientAjaxRequest.getCityStatus(city),
                 "$cityName", city.getView().getLocalizedCityName(),
                 "$citizens", city.getCitizenCount(),
-                "$production", city.getSupply().getProduction(),
-                "$gold", city.getSupply().getGold(),
-                "$food", city.getSupply().getFood()
+                "$production", supply.getProduction(),
+                "$gold", supply.getGold(),
+                "$food", supply.getFood()
             ));
         }
 

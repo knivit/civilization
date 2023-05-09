@@ -1,7 +1,6 @@
 package com.tsoft.civilization.civilization.tile;
 
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.tile.TileService;
@@ -9,7 +8,6 @@ import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.util.Point;
 import lombok.RequiredArgsConstructor;
 
-import java.util.List;
 import java.util.Set;
 
 @RequiredArgsConstructor
@@ -31,7 +29,7 @@ public class CivilizationTileSupplyService {
 
     public Supply calcIncomeSupply(Point location) {
         Supply tileSupply = calcTileSupply(location);
-        Supply improvementSupply = calcImprovementsSupply(civilization, location);
+        Supply improvementSupply = calcImprovementsSupply(location);
         return tileSupply.add(improvementSupply);
     }
 
@@ -61,7 +59,7 @@ public class CivilizationTileSupplyService {
     }
 
     // Calc supply from improvements
-    private Supply calcImprovementsSupply(Civilization civilization, Point location) {
+    private Supply calcImprovementsSupply(Point location) {
         if (location == null) {
             return Supply.EMPTY;
         }

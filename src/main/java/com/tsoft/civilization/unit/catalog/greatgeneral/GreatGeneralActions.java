@@ -13,9 +13,9 @@ public class GreatGeneralActions implements AbstractAction<GreatGeneral> {
     @Override
     public StringBuilder getHtmlActions(GreatGeneral unit) {
         return Format.text("""
-            $commonActions
             <tr id='actions_table_row'>$citadelImprovementAction</tr>
             <tr id='actions_table_row'>$combatBonusAction</tr>
+            $defaultActions
             """,
 
             "$citadelImprovementAction", CitadelImprovementAction.getHtml(unit),

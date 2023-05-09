@@ -3,6 +3,9 @@ package com.tsoft.civilization;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationsRelations;
 import com.tsoft.civilization.civilization.city.City;
+import com.tsoft.civilization.improvement.AbstractImprovement;
+import com.tsoft.civilization.improvement.ImprovementFactory;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.unit.catalog.greatartist.GreatArtist;
@@ -34,9 +37,17 @@ public class MockScenario implements Scenario {
         private final Point location;
     }
 
+    @RequiredArgsConstructor
+    private static class MockImprovement {
+        private final String name;
+        private final Point location;
+        private final String classUuid;
+    }
+
     // Scenario objects
     private final List<MockUnit> units = new ArrayList<>();
     private final List<MockCity> cities = new ArrayList<>();
+    private final List<MockImprovement> improvements = new ArrayList<>();
 
     // Created objects (units, cities etc)
     @Getter
@@ -74,9 +85,15 @@ public class MockScenario implements Scenario {
         return this;
     }
 
+    public MockScenario improvement(String name, Point location, String classUuid) {
+        MockImprovement improvement = new MockImprovement(name, location, classUuid);
+        improvements.add(improvement);
+        return this;
+    }
+
     @Override
     public ScenarioApplyResult apply(Civilization civilization) {
-        // Create cities
+        // create cities
         cities.forEach(c -> {
             // Create Settlers
             Settlers settlers = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
@@ -89,7 +106,7 @@ public class MockScenario implements Scenario {
             putObject(c.name, city);
         });
 
-        // Create units
+        // create units
         units.forEach(u -> {
             AbstractUnit unit = UnitFactory.newInstance(civilization, u.classUuid);
             if (!civilization.getUnitService().addUnit(unit, u.location)) {
@@ -97,6 +114,18 @@ public class MockScenario implements Scenario {
             }
 
             putObject(u.name, unit);
+        });
+
+        // create improvements
+        improvements.forEach(e -> {
+            City city = civilization.getTileService().findCityByLocationOnTerritory(e.location);
+            if (city == null) {
+                throw new IllegalStateException("Location " + e.location + " must be on a city's territory");
+            }
+
+            AbstractTerrain tile = civilization.getTilesMap().getTile(e.location);
+            AbstractImprovement improvement = ImprovementFactory.newInstance(e.classUuid, tile, city);
+            putObject(e.name, improvement);
         });
 
         // set NEUTRAL state for this civilization with others

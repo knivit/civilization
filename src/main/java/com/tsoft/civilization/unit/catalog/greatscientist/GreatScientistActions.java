@@ -13,9 +13,9 @@ public class GreatScientistActions implements AbstractAction<GreatScientist> {
     @Override
     public StringBuilder getHtmlActions(GreatScientist unit) {
         return Format.text("""
-            $defaultActions
             <tr id='actions_table_row'>$academyImprovementAction</tr>
             <tr id='actions_table_row'>$learnNewTechnologyAction</tr>
+            $defaultActions
             """,
 
             "$academyImprovementAction", AcademyImprovementAction.getHtml(unit),

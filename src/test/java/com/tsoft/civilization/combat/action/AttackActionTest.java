@@ -20,10 +20,10 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class AttackActionTest {
+class AttackActionTest {
 
     @Test
-    public void get_html() {
+    void get_html() {
         AttackService attackService = mock(AttackService.class);
         AttackAction attackAction = new AttackAction(attackService);
 
@@ -40,6 +40,7 @@ public class AttackActionTest {
         when(attackService.getTargetsToAttack(eq(warriors))).thenReturn(HasCombatStrengthList.of(foreignWorkers));
 
         StringBuilder buf = attackAction.getHtml(warriors);
+        HtmlDocument actual = HtmlParser.parse(buf);
 
         HtmlDocument expected = HtmlParser.parse(Format.text("""
             <td>
@@ -50,7 +51,6 @@ public class AttackActionTest {
 
             "$warriorsId", warriors.getId()));
 
-        HtmlDocument actual = HtmlParser.parse(buf);
         assertThat(actual).isEqualTo(expected);
     }
 }

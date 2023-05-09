@@ -15,6 +15,10 @@ public final class CityTileActionResults {
         .put(EN, "Can buy this tile")
         .put(RU, "Можно купить эту ячейку"));
 
+    public static final ActionSuccessResult CANT_BUY_TILE = new ActionSuccessResult(new L10n()
+        .put(EN, "Can not buy this tile")
+        .put(RU, "Нельзя купить эту ячейку"));
+
     public static final ActionSuccessResult TILE_BOUGHT = new ActionSuccessResult(new L10n()
         .put(EN, "The tile is bought")
         .put(RU, "Ячейка куплена"));

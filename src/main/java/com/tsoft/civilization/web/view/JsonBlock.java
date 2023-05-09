@@ -42,13 +42,7 @@ public class JsonBlock {
             }
         }
 
-        if ((valueStr != null) && (valueStr.length() > 1) && (valueStr.charAt(0) == '{')) {
-            buf.append(valueStr);
-        } else {
-            buf.append(quoteChar);
-            buf.append(valueStr == null ? "" : valueStr);
-            buf.append(quoteChar);
-        }
+        addElementValue(valueStr);
 
         paramCount ++;
     }
@@ -69,7 +63,7 @@ public class JsonBlock {
             buf.append(",");
         }
 
-        buf.append(value);
+        addElementValue(value);
         elementCount ++;
     }
 
@@ -84,5 +78,15 @@ public class JsonBlock {
 
     public String getValue() {
         return buf.toString();
+    }
+
+    private void addElementValue(String value) {
+        if ((value != null) && (value.length() > 1) && (value.charAt(0) == '{')) {
+            buf.append(value);
+        } else {
+            buf.append(quoteChar);
+            buf.append(value == null ? "" : value);
+            buf.append(quoteChar);
+        }
     }
 }

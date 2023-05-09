@@ -14,13 +14,13 @@
         <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
 
         <slf4j-api.version>2.0.5</slf4j-api.version>
-        <logback.version>1.4.5</logback.version>
-        <lombok.version>1.18.24</lombok.version>
-        <jackson-databind.version>2.14.0</jackson-databind.version>
+        <logback.version>1.4.6</logback.version>
+        <lombok.version>1.18.26</lombok.version>
+        <jackson-databind.version>2.14.2</jackson-databind.version>
 
-        <junit-jupiter-api.version>5.9.0</junit-jupiter-api.version>
-        <assertj-core.version>3.23.1</assertj-core.version>
-        <mockito-core.version>4.10.0</mockito-core.version>
+        <junit-jupiter-api.version>5.9.2</junit-jupiter-api.version>
+        <assertj-core.version>3.24.2</assertj-core.version>
+        <mockito-core.version>5.2.0</mockito-core.version>
         <objenesis.version>3.2</objenesis.version>
     </properties>
 

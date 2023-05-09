@@ -13,9 +13,9 @@ public class GreatArtistActions implements AbstractAction<GreatArtist> {
     @Override
     public StringBuilder getHtmlActions(GreatArtist unit) {
         return Format.text("""
-            $commonActions
             <tr id='actions_table_row'>$cultureBombAction</tr>
             <tr id='actions_table_row'>$landmarkImprovementAction</tr>
+            $defaultActions
             """,
 
             "$cultureBombAction", CultureBombAction.getHtml(unit),

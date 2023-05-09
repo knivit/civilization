@@ -14,10 +14,10 @@ public class WorkersActions implements AbstractAction<Workers> {
     @Override
     public StringBuilder getHtmlActions(Workers unit) {
         return Format.text("""
-            $defaultActions
             <tr id='actions_table_row'>$buildFarmAction</tr>
             <tr id='actions_table_row'>$removeForestAction</tr>
             <tr id='actions_table_row'>$removeHillAction</tr>
+            $defaultActions
             """,
 
             "$buildFarmAction", BuildFarmAction.getHtml(unit),

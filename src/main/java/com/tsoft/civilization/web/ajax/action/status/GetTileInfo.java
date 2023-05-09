@@ -1,5 +1,6 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
+import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.unit.service.move.MoveUnitService;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.tile.L10nTile;
@@ -60,7 +61,7 @@ public class GetTileInfo extends AbstractAjaxRequest {
 
             "$navigationPanel", navigationPanel.getContent(),
             "$tileInfo", getTileInfo(tile),
-            "$tileDetails", getTileDetailInfo(tile),
+            "$tileDetails", getTileDetailInfo(civilization, tile),
             "$tilePassInfo", getTilePassInfo(tile, civilization)
         );
         return HtmlResponse.ok(value);
@@ -82,8 +83,12 @@ public class GetTileInfo extends AbstractAjaxRequest {
         );
     }
 
-    private StringBuilder getTileDetailInfo(AbstractTerrain tile) {
+    private StringBuilder getTileDetailInfo(Civilization civilization, AbstractTerrain tile) {
+        TilesMap tilesMap = civilization.getTilesMap();
+        boolean canBuildCity = tile.isCanBuildCity() && tilesMap.canBeTerritory(tile.getLocation());
+
         Supply tileSupply = tile.getBaseSupply();
+
         return Format.text("""
             <table id='info_table'>
                 <tr><th colspan='2'>$features</th></tr>
@@ -107,7 +112,7 @@ public class GetTileInfo extends AbstractAjaxRequest {
             "$food", tileSupply.getFood(),
             "$foodImage", FOOD_IMAGE,
             "$canBuildCityLabel", L10nTile.CAN_BUILD_CITY,
-            "$canBuildCity", (tile.isCanBuildCity() ? L10nTile.YES : L10nTile.NO),
+            "$canBuildCity", (canBuildCity ? L10nTile.YES : L10nTile.NO),
             "$defenseBonusLabel", L10nTile.DEFENSE_BONUS,
             "$defenseBonus", tile.getDefensiveBonusPercent()
         );

@@ -5,16 +5,19 @@ function Tile(col, row, tile) {
     this.row = row;
     this.name = tile.name;
 
-    this.features = new Array(tile.features.length);
-    for (var i = 0; i < tile.features.length; i ++) {
-        var feature = new Feature(tile.features[i]);
-        this.features[i] = feature;
+    if (tile.features != undefined) {
+        this.features = new Array(tile.features.length);
+        for (var i = 0; i < tile.features.length; i ++) {
+            var feature = new Feature(tile.features[i]);
+            this.features[i] = feature;
+        }
     }
 
-    if (tile.improvement != undefined) {
-        // Cities has specific render
-        if (tile.improvement != 'City') {
-            this.improvement = new Improvement(tile.improvement);
+    if (tile.improvements != undefined) {
+        this.improvements = new Array(tile.improvements.length);
+        for (var i = 0; i < tile.improvements.length; i ++) {
+            var improvement = new Improvement(tile.improvements[i]);
+            this.improvements[i] = improvement;
         }
     }
 
@@ -34,8 +37,10 @@ function Tile(col, row, tile) {
     this.draw = function(x, y) {
         this.drawTile.draw(x, y, this);
 
-        if (this.improvement != undefined) {
-            this.improvement.draw(x, y, this);
+        if (this.improvements != undefined) {
+            for (var i = 0; i < this.improvements.length; i ++) {
+                this.improvements[i].draw(x, y, this);
+            }
         }
     }
 };

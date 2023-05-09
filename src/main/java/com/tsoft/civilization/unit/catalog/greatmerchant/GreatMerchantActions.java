@@ -13,9 +13,9 @@ public class GreatMerchantActions implements AbstractAction<GreatMerchant> {
     @Override
     public StringBuilder getHtmlActions(GreatMerchant unit) {
         return Format.text("""
-            $defaultActions
             <tr id='actions_table_row'>$customsHouseImprovementAction</tr>
             <tr id='actions_table_row'>$tradeMissionAction</tr>
+            $defaultActions
             """,
 
             "$customsHouseImprovementAction", CustomsHouseImprovementAction.getHtml(unit),

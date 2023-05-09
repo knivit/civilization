@@ -7,8 +7,6 @@ import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.civilization.city.event.TileBoughtEvent;
 import com.tsoft.civilization.tile.TileService;
 import com.tsoft.civilization.tile.TilesMap;
-import com.tsoft.civilization.tile.feature.coast.Coast;
-import com.tsoft.civilization.tile.feature.mountain.Mountain;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.util.Point;
 
@@ -33,15 +31,17 @@ public class BuyTileService {
             return CityTileActionResults.ALREADY_MINE;
         }
 
-        TilesMap tilesMap = city.getTileService().getTilesMap();
-        AbstractTerrain tile = tilesMap.getTile(location);
-        int price = calcTilePrice(tile);
+        int price = calcTilePrice(city, location);
+
+        if (price == Integer.MAX_VALUE) {
+            return CityTileActionResults.CANT_BUY_TILE;
+        }
         
-        if (city.getSupply().getGold() < price) {
+        if (city.getSupplyService().getSupply().getGold() < price) {
             return CityTileActionResults.NOT_ENOUGH_GOLD;
         }
 
-        city.getSupplyService().addExpenses(Supply.builder().gold(price).build());
+        city.getSupplyService().addExpenses(Supply.builder().gold(-price).build());
         city.getTileService().addLocations(List.of(location));
 
         city.getCivilization().addEvent(TileBoughtEvent.builder()
@@ -53,7 +53,7 @@ public class BuyTileService {
     }
 
     public ActionAbstractResult canBuyTile(City city) {
-        Supply supply = city.getSupply();
+        Supply supply = city.getSupplyService().calcSupply();
         if (supply.getGold() <= 0) {
             return CityTileActionResults.NOT_ENOUGH_GOLD;
         }
@@ -72,24 +72,24 @@ public class BuyTileService {
 
         List<BuyTile> result = new ArrayList<>();
         for (Point location : around) {
-            AbstractTerrain tile = tilesMap.getTile(location);
-
-            boolean cantBuy =
-                (tile.hasFeature(Mountain.class)) ||
-                (tile.isOcean() && !tile.hasFeature(Coast.class));
-
-            if (cantBuy) {
-                continue;
+            int price = calcTilePrice(city, location);
+            if (price != Integer.MAX_VALUE) {
+                result.add(new BuyTile(location, price));
             }
-
-            int price = calcTilePrice(tile);
-            result.add(new BuyTile(location, price));
         }
 
         return result;
     }
 
-    private int calcTilePrice(AbstractTerrain tile) {
+    private int calcTilePrice(City city, Point location) {
+        TilesMap tilesMap = city.getTileService().getTilesMap();
+        boolean canBuy = tilesMap.canBeTerritory(location);
+        if (!canBuy) {
+            return Integer.MAX_VALUE;
+        }
+
+        AbstractTerrain tile = tilesMap.getTile(location);
+
         Supply tileSupply = tileService.calcSupply(tile);
         int food = Math.max(1, tileSupply.getFood());
         int production = Math.max(1, tileSupply.getProduction());

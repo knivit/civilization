@@ -1,6 +1,5 @@
 package com.tsoft.civilization.tile.terrain;
 
-import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.improvement.ImprovementList;
@@ -240,20 +239,6 @@ public abstract class AbstractTerrain {
     public abstract boolean isCanBuildCity();
     public abstract int getDefensiveBonusPercent();
 
-    public Supply getTotalSupply(Civilization civilization) {
-        Supply supply = getBaseSupply();
-
-        for (AbstractImprovement improvement : improvements) {
-            supply = supply.add(improvement.getBaseSupply(civilization));
-        }
-
-        if (resource != null) {
-            supply = supply.add(resource.getBaseSupply(civilization));
-        }
-
-        return supply;
-    }
-
     public <F extends AbstractFeature> F getFeature(Class<F> featureClass) {
         return features.getByClass(featureClass);
     }
@@ -298,6 +283,10 @@ public abstract class AbstractTerrain {
 
     public boolean isOcean() {
         return isIn(Ocean.class);
+    }
+
+    public boolean isDeepOcean() {
+        return false;
     }
 
     public boolean isTundra() {

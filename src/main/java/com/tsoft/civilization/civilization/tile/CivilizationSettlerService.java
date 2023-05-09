@@ -1,6 +1,7 @@
 package com.tsoft.civilization.civilization.tile;
 
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.util.Point;
@@ -25,9 +26,12 @@ public class CivilizationSettlerService {
     }
 
     private List<Point> getTilesToStartCivilization() {
-        return civilization.getWorld().getTilesMap().tiles()
+        TilesMap tilesMap = civilization.getWorld().getTilesMap();
+
+        return tilesMap.tiles()
             .filter(AbstractTerrain::isCanBuildCity)
             .map(AbstractTerrain::getLocation)
+            .filter(tilesMap::canBeTerritory)
             .collect(Collectors.toList());
     }
 
@@ -65,16 +69,17 @@ public class CivilizationSettlerService {
 
     private List<Point> getLocationsWithEarthAround(List<Point> possibleLocations, int radius) {
         World world = civilization.getWorld();
+        TilesMap tilesMap = world.getTilesMap();
 
         int numberOfLocationsAround = world.getLocationsAround(possibleLocations.get(0), radius).size();
         int minRadiusWithEarthAround = numberOfLocationsAround / 2;
 
         Set<Point> busyLocations = new HashSet<>();
         for (Point location : possibleLocations) {
-            List<AbstractTerrain> tilesAround = world.getLocationsAround(location, radius).stream()
-                .map(e -> world.getTilesMap().getTile(e))
-                .filter(AbstractTerrain::isCanBuildCity)
-                .collect(Collectors.toList());
+            List<Point> tilesAround = world.getLocationsAround(location, radius).stream()
+                .filter(tilesMap::canBeTerritory)
+                .filter(e -> tilesMap.getTile(e).isCanBuildCity())
+                .toList();
 
             if (tilesAround.size() < minRadiusWithEarthAround) {
                 busyLocations.add(location);
