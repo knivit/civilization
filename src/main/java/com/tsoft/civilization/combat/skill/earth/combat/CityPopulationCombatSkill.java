@@ -1,18 +1,18 @@
 package com.tsoft.civilization.combat.skill.earth.combat;
 
+import com.tsoft.civilization.combat.skill.*;
 import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrength;
-import com.tsoft.civilization.combat.skill.AbstractCombatSkill;
-import com.tsoft.civilization.combat.skill.L10nSkill;
-import com.tsoft.civilization.combat.skill.SkillLevel;
-import com.tsoft.civilization.combat.skill.SkillType;
 import com.tsoft.civilization.civilization.city.City;
 import lombok.Getter;
 
 public class CityPopulationCombatSkill implements AbstractCombatSkill {
 
     public static AbstractCombatSkill CITY_POPULATION_COMBAT_SKILL = new CityPopulationCombatSkill();
+
+    @Getter
+    private final SkillName skillName = SkillName.CITY_POPULATION_COMBAT_SKILL;
 
     @Getter
     private final SkillType skillType = SkillType.ACCUMULATOR;

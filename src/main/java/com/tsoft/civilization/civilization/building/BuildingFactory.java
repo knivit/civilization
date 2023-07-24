@@ -37,8 +37,7 @@ public final class BuildingFactory {
             throw new IllegalArgumentException("Unknown building classUuid = " + classUuid);
         }
 
-        T building = (T)creator.apply(city);
-        return building;
+        return (T)creator.apply(city);
     }
 
     public static AbstractBuilding findByClassUuid(String classUuid) {

@@ -1,7 +1,6 @@
 package com.tsoft.civilization.civilization.building.catalog.palace;
 
 import com.tsoft.civilization.civilization.building.*;
-import com.tsoft.civilization.civilization.building.catalog.BuildingCatalog;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.Year;
@@ -54,7 +53,7 @@ public class Palace extends AbstractBuilding {
 
     public static final String CLASS_UUID = BuildingType.PALACE.name();
 
-    private static final BuildingBaseState BASE_STATE = BuildingCatalog.getBaseState(BuildingType.PALACE);
+    private static final BuildingBaseState BASE_STATE = new PalaceBaseState().getBaseState();
 
     private static final AbstractBuildingView VIEW = new PalaceView();
 

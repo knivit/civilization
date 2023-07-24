@@ -5,6 +5,8 @@ import com.tsoft.civilization.combat.HasCombatStrength;
 
 public interface AbstractCombatSkill extends AbstractSkill {
 
+    SkillName getSkillName();
+
     SkillType getSkillType();
 
     default CombatStrength getCombatStrength(HasCombatStrength unit, SkillLevel level) {

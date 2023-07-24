@@ -1,7 +1,6 @@
 package com.tsoft.civilization.unit.catalog.greatscientist;
 
 import com.tsoft.civilization.unit.*;
-import com.tsoft.civilization.unit.catalog.UnitCatalog;
 import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.civilization.Civilization;
 
@@ -16,7 +15,7 @@ public class GreatScientist extends AbstractUnit {
 
     public static final String CLASS_UUID = UnitType.GREAT_SCIENTIST.name();
 
-    private static final UnitBaseState BASE_STATE = UnitCatalog.getBaseState(UnitType.GREAT_SCIENTIST);
+    private static final UnitBaseState BASE_STATE = new GreatScientistBaseState().getBaseState();
 
     private static final GreatScientistView VIEW = new GreatScientistView();
 

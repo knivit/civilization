@@ -1,12 +1,9 @@
 package com.tsoft.civilization.combat.skill.earth.combat;
 
+import com.tsoft.civilization.combat.skill.*;
 import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrength;
-import com.tsoft.civilization.combat.skill.AbstractCombatSkill;
-import com.tsoft.civilization.combat.skill.L10nSkill;
-import com.tsoft.civilization.combat.skill.SkillLevel;
-import com.tsoft.civilization.combat.skill.SkillType;
 import com.tsoft.civilization.tile.feature.hill.Hill;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.UnitCategory;
@@ -22,6 +19,9 @@ import static com.tsoft.civilization.world.Year.*;
 public class HillVantageCombatSkill implements AbstractCombatSkill {
 
     public static final AbstractCombatSkill HILL_VANTAGE_COMBAT_SKILL = new HillVantageCombatSkill();
+
+    @Getter
+    private final SkillName skillName = SkillName.HILL_VANTAGE_COMBAT_SKILL;
 
     @Getter
     private final L10n localizedName = L10nSkill.HILL_VANTAGE_COMBAT_SKILL;

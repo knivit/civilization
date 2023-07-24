@@ -2,7 +2,6 @@ package com.tsoft.civilization.unit.catalog.workers;
 
 import com.tsoft.civilization.unit.*;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.unit.catalog.UnitCatalog;
 
 /**
  * Movement: 2;
@@ -24,7 +23,7 @@ public class Workers extends AbstractUnit {
 
     public static final String CLASS_UUID = UnitType.WORKERS.name();
 
-    private static final UnitBaseState BASE_STATE = UnitCatalog.getBaseState(UnitType.WORKERS);
+    private static final UnitBaseState BASE_STATE = new WorkersBaseState().getBaseState();
 
     private static final AbstractUnitView VIEW = new WorkersView();
 

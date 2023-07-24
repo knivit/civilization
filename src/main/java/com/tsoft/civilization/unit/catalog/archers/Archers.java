@@ -2,7 +2,6 @@ package com.tsoft.civilization.unit.catalog.archers;
 
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.unit.*;
-import com.tsoft.civilization.unit.catalog.UnitCatalog;
 import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.civilization.Civilization;
 
@@ -48,7 +47,7 @@ public class Archers extends AbstractUnit {
 
     public static final String CLASS_UUID = UnitType.ARCHERS.name();
 
-    private static final UnitBaseState BASE_STATE = UnitCatalog.getBaseState(UnitType.ARCHERS);
+    private static final UnitBaseState BASE_STATE = new ArchersBaseState().getBaseState();
 
     private static final AbstractUnitView VIEW = new ArchersView();
 

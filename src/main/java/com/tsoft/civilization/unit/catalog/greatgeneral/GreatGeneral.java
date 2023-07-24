@@ -1,7 +1,6 @@
 package com.tsoft.civilization.unit.catalog.greatgeneral;
 
 import com.tsoft.civilization.unit.*;
-import com.tsoft.civilization.unit.catalog.UnitCatalog;
 import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.civilization.Civilization;
 
@@ -17,7 +16,7 @@ public class GreatGeneral extends AbstractUnit {
 
     public static final String CLASS_UUID = UnitType.GREAT_GENERAL.name();
 
-    private static final UnitBaseState BASE_STATE = UnitCatalog.getBaseState(UnitType.GREAT_GENERAL);
+    private static final UnitBaseState BASE_STATE = new GreatGeneralBaseState().getBaseState();
 
     private static final GreatGeneralView VIEW = new GreatGeneralView();
 

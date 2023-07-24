@@ -1,7 +1,6 @@
 package com.tsoft.civilization.unit.catalog.greatengineer;
 
 import com.tsoft.civilization.unit.*;
-import com.tsoft.civilization.unit.catalog.UnitCatalog;
 import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.civilization.Civilization;
 
@@ -17,7 +16,7 @@ public class GreatEngineer extends AbstractUnit {
 
     public static final String CLASS_UUID = UnitType.GREAT_ENGINEER.name();
 
-    private static final UnitBaseState BASE_STATE = UnitCatalog.getBaseState(UnitType.GREAT_ENGINEER);
+    private static final UnitBaseState BASE_STATE = new GreatEngineerBaseState().getBaseState();
 
     private static final GreatEngineerView VIEW = new GreatEngineerView();
 

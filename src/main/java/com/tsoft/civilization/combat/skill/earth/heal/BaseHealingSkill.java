@@ -1,5 +1,6 @@
 package com.tsoft.civilization.combat.skill.earth.heal;
 
+import com.tsoft.civilization.combat.skill.SkillName;
 import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.combat.CombatDamage;
 import com.tsoft.civilization.combat.HasCombatStrength;
@@ -12,6 +13,9 @@ import lombok.Getter;
 public class BaseHealingSkill implements AbstractHealingSkill {
 
     public static final BaseHealingSkill BASE_HEALING_SKILL = new BaseHealingSkill();
+
+    @Getter
+    private final SkillName skillName = SkillName.BASE_HEALING_SKILL;
 
     @Getter
     private final L10n localizedName = L10nSkill.BASE_HEALING_SKILL;

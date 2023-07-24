@@ -1,7 +1,6 @@
 package com.tsoft.civilization.unit.catalog.greatmerchant;
 
 import com.tsoft.civilization.unit.*;
-import com.tsoft.civilization.unit.catalog.UnitCatalog;
 import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.civilization.Civilization;
 
@@ -17,7 +16,7 @@ public class GreatMerchant extends AbstractUnit {
 
     public static final String CLASS_UUID = UnitType.GREAT_MERCHANT.name();
 
-    private static final UnitBaseState BASE_STATE = UnitCatalog.getBaseState(UnitType.GREAT_MERCHANT);
+    private static final UnitBaseState BASE_STATE = new GreatMerchantBaseState().getBaseState();
 
     private static final GreatMerchantView VIEW = new GreatMerchantView();
 

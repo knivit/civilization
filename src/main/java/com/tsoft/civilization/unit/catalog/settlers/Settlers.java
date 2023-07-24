@@ -1,7 +1,6 @@
 package com.tsoft.civilization.unit.catalog.settlers;
 
 import com.tsoft.civilization.unit.*;
-import com.tsoft.civilization.unit.catalog.UnitCatalog;
 import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.civilization.Civilization;
 
@@ -24,7 +23,7 @@ public class Settlers extends AbstractUnit {
 
     public static final String CLASS_UUID = UnitType.SETTLERS.name();
 
-    private static final UnitBaseState BASE_STATE = UnitCatalog.getBaseState(UnitType.SETTLERS);
+    private static final UnitBaseState BASE_STATE = new SettlersBaseState().getBaseState();
 
     private static final AbstractUnitView VIEW = new SettlersView();
 

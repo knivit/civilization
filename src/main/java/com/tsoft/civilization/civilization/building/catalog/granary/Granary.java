@@ -1,7 +1,6 @@
 package com.tsoft.civilization.civilization.building.catalog.granary;
 
 import com.tsoft.civilization.civilization.building.*;
-import com.tsoft.civilization.civilization.building.catalog.BuildingCatalog;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.civilization.Civilization;
@@ -41,7 +40,7 @@ public class Granary extends AbstractBuilding {
 
     public static final String CLASS_UUID = BuildingType.GRANARY.name();
 
-    private static final BuildingBaseState BASE_STATE = BuildingCatalog.getBaseState(BuildingType.GRANARY);
+    private static final BuildingBaseState BASE_STATE = new GranaryBaseState().getBaseState();
 
     private static final AbstractBuildingView VIEW = new GranaryView();
 
