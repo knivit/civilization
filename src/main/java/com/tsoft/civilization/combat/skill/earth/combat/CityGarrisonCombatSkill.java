@@ -27,7 +27,7 @@ public class CityGarrisonCombatSkill implements AbstractCombatSkill {
     // A portion of the garrisoned unit's combat strength is added to the city's total strength
     // Only Land units may form a Garrison
     @Override
-    public CombatStrength getCombatStrength(HasCombatStrength unit, SkillLevel level) {
+    public CombatStrength getCombatStrength(HasCombatStrength unit) {
         if (unit.getUnitCategory().isCity()) {
             City city = (City) unit;
             int garrisonMeleeAttackStrength = calcGarrisonedMeleeAttackStrength(city);
@@ -47,20 +47,20 @@ public class CityGarrisonCombatSkill implements AbstractCombatSkill {
     private int calcGarrisonedMeleeAttackStrength(City city) {
         return getGarrison(city).stream()
             .filter(e -> e.getUnitCategory().isLand())
-            .mapToInt(e -> (int)Math.round((double)e.calcCombatStrength().getMeleeAttackStrength() * 0.4))
+            .mapToInt(e -> (int)Math.round(e.calcCombatStrength().getMeleeAttackStrength() * 0.4))
             .sum();
     }
 
     private int calcGarrisonedRangedAttackStrength(City city) {
         return getGarrison(city).stream()
             .filter(e -> e.getUnitCategory().isRanged())
-            .mapToInt(e -> (int)Math.round((double)e.calcCombatStrength().getRangedAttackStrength() * 0.6))
+            .mapToInt(e -> (int)Math.round(e.calcCombatStrength().getRangedAttackStrength() * 0.6))
             .sum();
     }
 
     private int calcGarrisonedDefenseStrength(City city) {
         return getGarrison(city).stream()
-            .mapToInt(e -> (int)Math.round((double)e.calcCombatStrength().getDefenseStrength() * 0.2))
+            .mapToInt(e -> (int)Math.round(e.calcCombatStrength().getDefenseStrength() * 0.2))
             .sum();
     }
 
@@ -75,4 +75,3 @@ public class CityGarrisonCombatSkill implements AbstractCombatSkill {
             .collect(Collectors.toList()));
     }
 }
-

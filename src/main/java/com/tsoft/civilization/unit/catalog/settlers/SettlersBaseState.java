@@ -1,12 +1,25 @@
 package com.tsoft.civilization.unit.catalog.settlers;
 
 import com.tsoft.civilization.combat.CombatStrength;
+import com.tsoft.civilization.combat.skill.SkillList;
+import com.tsoft.civilization.tile.terrain.desert.Desert;
+import com.tsoft.civilization.tile.terrain.grassland.Grassland;
+import com.tsoft.civilization.tile.terrain.lake.Lake;
+import com.tsoft.civilization.tile.terrain.ocean.Ocean;
+import com.tsoft.civilization.tile.terrain.plains.Plains;
+import com.tsoft.civilization.tile.terrain.snow.Snow;
+import com.tsoft.civilization.tile.terrain.tundra.Tundra;
 import com.tsoft.civilization.unit.UnitBaseState;
 import com.tsoft.civilization.unit.UnitCategory;
+import com.tsoft.civilization.unit.service.move.PassCost;
+import com.tsoft.civilization.unit.service.move.PassCostList;
+import com.tsoft.civilization.unit.service.move.PassCostTable;
 
+import static com.tsoft.civilization.combat.skill.earth.combat.DefenceAgainstAttackSkill.DEFENSE_AGAINST_ATTACK_SKILL;
 import static com.tsoft.civilization.combat.skill.earth.heal.BaseHealingSkill.BASE_HEALING_SKILL;
 import static com.tsoft.civilization.combat.skill.earth.movement.BaseMovementSkill.BASE_MOVEMENT_SKILL;
-import static java.util.Arrays.asList;
+import static com.tsoft.civilization.technology.Technology.NAVIGATION;
+import static com.tsoft.civilization.unit.service.move.PassCost.UNPASSABLE;
 
 public class SettlersBaseState {
 
@@ -15,13 +28,21 @@ public class SettlersBaseState {
             .category(UnitCategory.CIVIL)
             .goldCost(200)
             .productionCost(25)
-            .passScore(1)
+            .passCostTable(new PassCostTable()
+                .add(Desert.class, PassCostList.of(new PassCost(null, 1)))
+                .add(Grassland.class, PassCostList.of(new PassCost(null, 1)))
+                .add(Lake.class, PassCostList.of(new PassCost(null, UNPASSABLE), new PassCost(NAVIGATION, 2)))
+                .add(Ocean.class, PassCostList.of(new PassCost(null, UNPASSABLE), new PassCost(NAVIGATION, 2)))
+                .add(Plains.class, PassCostList.of(new PassCost(null, 1)))
+                .add(Snow.class, PassCostList.of(new PassCost(null, 1)))
+                .add(Tundra.class, PassCostList.of(new PassCost(null, 1))))
             .goldUnitKeepingExpenses(2)
             .combatStrength(CombatStrength.builder()
                 .defenseStrength(0)
                 .build())
-            .movementSkills(asList(BASE_MOVEMENT_SKILL))
-            .healingSkills(asList(BASE_HEALING_SKILL))
+            .movementSkills(SkillList.of(BASE_MOVEMENT_SKILL))
+            .combatSkills(SkillList.of(DEFENSE_AGAINST_ATTACK_SKILL))
+            .healingSkills(SkillList.of(BASE_HEALING_SKILL))
             .build();
     }
 }

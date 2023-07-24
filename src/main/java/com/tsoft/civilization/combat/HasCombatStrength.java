@@ -2,7 +2,7 @@ package com.tsoft.civilization.combat;
 
 import com.tsoft.civilization.combat.skill.AbstractCombatSkill;
 import com.tsoft.civilization.combat.skill.AbstractHealingSkill;
-import com.tsoft.civilization.combat.skill.SkillMap;
+import com.tsoft.civilization.combat.skill.SkillList;
 import com.tsoft.civilization.world.AbstractView;
 import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.util.Point;
@@ -22,11 +22,11 @@ public interface HasCombatStrength {
 
     CombatStrength getBaseCombatStrength(Civilization civilization);
 
-    SkillMap<AbstractCombatSkill> getBaseCombatSkills(Civilization civilization);
+    SkillList<AbstractCombatSkill> getBaseCombatSkills(Civilization civilization);
 
     CombatStrength calcCombatStrength();
 
-    SkillMap<AbstractHealingSkill> getBaseHealingSkills(Civilization civilization);
+    SkillList<AbstractHealingSkill> getBaseHealingSkills(Civilization civilization);
 
     CombatDamage getCombatDamage();
 

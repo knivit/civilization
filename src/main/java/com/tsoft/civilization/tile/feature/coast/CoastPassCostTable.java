@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.tsoft.civilization.technology.Technology.NAVIGATION;
-import static com.tsoft.civilization.unit.service.move.TilePassCostTable.UNPASSABLE;
+import static com.tsoft.civilization.unit.service.move.PassCost.UNPASSABLE;
 
 public final class CoastPassCostTable {
 

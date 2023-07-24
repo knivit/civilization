@@ -26,11 +26,11 @@ public class DefenseAgainstRangedAttackSkill implements AbstractCombatSkill {
     private DefenseAgainstRangedAttackSkill() { }
 
     @Override
-    public CombatStrength getCombatStrength(HasCombatStrength attacker, CombatStrength attackerCombatStrength, SkillLevel level) {
+    public CombatStrength getCombatStrength(HasCombatStrength attacker, CombatStrength attackerCombatStrength) {
         UnitCategory attackerType = attacker.getUnitCategory();
 
         if (UnitCategory.MILITARY_RANGED.equals(attackerType)) {
-            int val = (int)Math.round(attackerCombatStrength.getRangedAttackStrength() * 0.15) * level.getValue();
+            double val = attackerCombatStrength.getRangedAttackStrength() * 0.15;
             return CombatStrength.builder()
                 .rangedAttackStrength(-val)
                 .build();

@@ -20,16 +20,15 @@ public class UnitMovementService {
     @Setter
     private int passScore;
 
-    private final SkillMap<AbstractMovementSkill> movementSkills;
+    private final SkillList<AbstractMovementSkill> movementSkills;
 
     public UnitMovementService(AbstractUnit unit) {
         this.unit = unit;
-
         movementSkills = unit.getBaseMovementSkills(unit.getCivilization());
     }
 
-    public SkillMap<AbstractMovementSkill> getMovementSkills() {
-        return movementSkills.unmodifiable();
+    public SkillList<AbstractMovementSkill> getMovementSkills() {
+        return movementSkills;
     }
 
     public void startYear() {

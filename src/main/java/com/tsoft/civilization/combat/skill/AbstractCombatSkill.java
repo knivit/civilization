@@ -9,11 +9,11 @@ public interface AbstractCombatSkill extends AbstractSkill {
 
     SkillType getSkillType();
 
-    default CombatStrength getCombatStrength(HasCombatStrength unit, SkillLevel level) {
+    default CombatStrength getCombatStrength(HasCombatStrength unit) {
         return CombatStrength.ZERO;
     }
 
-    default CombatStrength getCombatStrength(HasCombatStrength unit, CombatStrength attackerCombatStrength, SkillLevel level) {
+    default CombatStrength getCombatStrength(HasCombatStrength unit, CombatStrength attackerCombatStrength) {
         return CombatStrength.ZERO;
     }
 }

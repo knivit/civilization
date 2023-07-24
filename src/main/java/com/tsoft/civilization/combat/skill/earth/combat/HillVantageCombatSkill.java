@@ -32,7 +32,7 @@ public class HillVantageCombatSkill implements AbstractCombatSkill {
     private HillVantageCombatSkill() { }
 
     @Override
-    public CombatStrength getCombatStrength(HasCombatStrength unit, SkillLevel level) {
+    public CombatStrength getCombatStrength(HasCombatStrength unit) {
         Point location = unit.getLocation();
         AbstractTerrain tile = unit.getCivilization().getWorld().getTilesMap().getTile(location);
 
@@ -57,7 +57,7 @@ public class HillVantageCombatSkill implements AbstractCombatSkill {
     private CombatStrength getCityAttackStrength(HasCombatStrength unit) {
         int era = unit.getCivilization().getYear().getEra();
 
-        int strength = switch (era) {
+        double strength = switch (era) {
             case ANCIENT_ERA -> 20;
             case CLASSICAL_ERA -> 30;
             case MEDIEVAL_ERA -> 40;
@@ -73,7 +73,7 @@ public class HillVantageCombatSkill implements AbstractCombatSkill {
     private CombatStrength getRangedUnitAttackStrength(HasCombatStrength unit) {
         int era = unit.getCivilization().getYear().getEra();
 
-        int strength = switch (era) {
+        double strength = switch (era) {
             case ANCIENT_ERA -> 6;
             case CLASSICAL_ERA -> 10;
             case MEDIEVAL_ERA -> 14;
@@ -89,7 +89,7 @@ public class HillVantageCombatSkill implements AbstractCombatSkill {
     private CombatStrength getMeleeUnitAttackStrength(HasCombatStrength unit) {
         int era = unit.getCivilization().getYear().getEra();
 
-        int strength = switch (era) {
+        double strength = switch (era) {
             case ANCIENT_ERA -> 2;
             case CLASSICAL_ERA -> 4;
             case MEDIEVAL_ERA -> 4;
@@ -105,7 +105,7 @@ public class HillVantageCombatSkill implements AbstractCombatSkill {
     private CombatStrength getCityDefenseStrength(HasCombatStrength unit) {
         int era = unit.getCivilization().getYear().getEra();
 
-        int strength = switch (era) {
+        double strength = switch (era) {
             case ANCIENT_ERA -> 10;
             case CLASSICAL_ERA -> 20;
             case MEDIEVAL_ERA -> 30;
@@ -123,7 +123,7 @@ public class HillVantageCombatSkill implements AbstractCombatSkill {
     private CombatStrength getRangedUnitDefenseStrength(HasCombatStrength unit) {
         int era = unit.getCivilization().getYear().getEra();
 
-        int strength = switch (era) {
+        double strength = switch (era) {
             case ANCIENT_ERA -> 2;
             case CLASSICAL_ERA -> 5;
             case MEDIEVAL_ERA -> 7;
@@ -141,7 +141,7 @@ public class HillVantageCombatSkill implements AbstractCombatSkill {
     private CombatStrength getMeleeUnitDefenseStrength(HasCombatStrength unit) {
         int era = unit.getCivilization().getYear().getEra();
 
-        int strength = switch (era) {
+        double strength = switch (era) {
             case ANCIENT_ERA -> 2;
             case CLASSICAL_ERA -> 5;
             case MEDIEVAL_ERA -> 7;

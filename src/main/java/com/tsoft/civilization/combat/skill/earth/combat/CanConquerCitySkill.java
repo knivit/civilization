@@ -22,7 +22,7 @@ public class CanConquerCitySkill implements AbstractCombatSkill {
     private CanConquerCitySkill() { }
 
     @Override
-    public CombatStrength getCombatStrength(HasCombatStrength unit, SkillLevel level) {
+    public CombatStrength getCombatStrength(HasCombatStrength unit) {
         return CombatStrength.ZERO;
     }
 }

@@ -20,8 +20,8 @@ public class UnitCombatService {
     @Getter
     private CombatExperience combatExperience = CombatExperience.ZERO;
 
-    private final SkillMap<AbstractCombatSkill> combatSkills;
-    private final SkillMap<AbstractHealingSkill> healingSkills;
+    private final SkillList<AbstractCombatSkill> combatSkills;
+    private final SkillList<AbstractHealingSkill> healingSkills;
 
     public UnitCombatService(AbstractUnit unit) {
         this.unit = unit;
@@ -47,12 +47,12 @@ public class UnitCombatService {
         this.combatExperience = combatExperience;
     }
 
-    public SkillMap<AbstractCombatSkill> getCombatSkills() {
-        return combatSkills.unmodifiable();
+    public SkillList<AbstractCombatSkill> getCombatSkills() {
+        return combatSkills;
     }
 
-    public SkillMap<AbstractHealingSkill> getHealingSkills() {
-        return healingSkills.unmodifiable();
+    public SkillList<AbstractHealingSkill> getHealingSkills() {
+        return healingSkills;
     }
 
     public void startEra() {

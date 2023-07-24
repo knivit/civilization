@@ -82,7 +82,7 @@ public class MeleeCombatService {
     private ActionAbstractResult getMoveOnMeleeAttackResult(AbstractUnit unit, Point nextLocation) {
         // check is the passing score enough
         AbstractTerrain tile = unit.getTilesMap().getTile(nextLocation);
-        int tilePassCost = moveUnitService.getPassCost(unit.getCivilization(), unit, tile);
+        int tilePassCost = moveUnitService.getPassCost(unit, tile);
 
         int passScore = unit.getPassScore();
         if (passScore < tilePassCost) {

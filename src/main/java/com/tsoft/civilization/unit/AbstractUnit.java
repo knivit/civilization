@@ -90,6 +90,10 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
         return getBaseState().getCategory();
     }
 
+    public int getPassCost(AbstractTerrain tile) {
+        return getBaseState().getPassCostTable().getPassCost(civilization, tile);
+    }
+
     public int getGoldCost(Civilization civilization) {
         double modifier = UnitBaseModifiers.getEconomicModifier(civilization);
         int goldCost = getBaseState().getGoldCost();
@@ -110,7 +114,7 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
     }
 
     public int getBasePassScore(Civilization civilization) {
-        return getBaseState().getPassScore();
+        return movementService.getPassScore();
     }
 
     @Override
@@ -134,51 +138,21 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
         return promotionService.hasPromotions(promotions);
     }
 
-    public SkillMap<AbstractMovementSkill> getBaseMovementSkills(Civilization civilization) {
+    public SkillList<AbstractMovementSkill> getBaseMovementSkills(Civilization civilization) {
         UnitBaseState baseState = getBaseState();
-
-        if (baseState.getMovementSkills() == null) {
-            return SkillMap.EMPTY;
-        }
-
-        SkillMap<AbstractMovementSkill> skills = new SkillMap<>();
-        for (AbstractMovementSkill skill : baseState.getMovementSkills()) {
-            skills.put(skill, SkillLevel.ONE);
-        }
-
-        return skills;
+        return new SkillList<AbstractMovementSkill>().addAll(baseState.getMovementSkills());
     }
 
     @Override
-    public SkillMap<AbstractCombatSkill> getBaseCombatSkills(Civilization civilization) {
+    public SkillList<AbstractCombatSkill> getBaseCombatSkills(Civilization civilization) {
         UnitBaseState baseState = getBaseState();
-
-        if (baseState.getCombatSkills() == null) {
-            return SkillMap.EMPTY;
-        }
-
-        SkillMap<AbstractCombatSkill> skills = new SkillMap<>();
-        for (AbstractCombatSkill skill : baseState.getCombatSkills()) {
-            skills.put(skill, SkillLevel.ONE);
-        }
-
-        return skills;
+        return new SkillList<AbstractCombatSkill>().addAll(baseState.getCombatSkills());
     }
 
     @Override
-    public SkillMap<AbstractHealingSkill> getBaseHealingSkills(Civilization civilization) {
+    public SkillList<AbstractHealingSkill> getBaseHealingSkills(Civilization civilization) {
         UnitBaseState baseState = getBaseState();
-
-        if (baseState.getHealingSkills() == null) {
-            return SkillMap.EMPTY;
-        }
-
-        SkillMap<AbstractHealingSkill> skills = new SkillMap<>();
-        for (AbstractHealingSkill skill : baseState.getHealingSkills()) {
-            skills.put(skill, SkillLevel.ONE);
-        }
-
-        return skills;
+        return new SkillList<AbstractHealingSkill>().addAll(baseState.getHealingSkills());
     }
 
     @Override

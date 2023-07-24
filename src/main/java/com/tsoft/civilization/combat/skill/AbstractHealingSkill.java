@@ -5,5 +5,5 @@ import com.tsoft.civilization.combat.HasCombatStrength;
 
 public interface AbstractHealingSkill extends AbstractSkill {
 
-    CombatDamage heal(HasCombatStrength unit, CombatDamage damage, SkillLevel level);
+    CombatDamage heal(HasCombatStrength unit, CombatDamage damage);
 }

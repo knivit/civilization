@@ -22,7 +22,7 @@ public class CityPopulationCombatSkill implements AbstractCombatSkill {
     private CityPopulationCombatSkill() { }
 
     @Override
-    public CombatStrength getCombatStrength(HasCombatStrength unit, SkillLevel level) {
+    public CombatStrength getCombatStrength(HasCombatStrength unit) {
         if (unit.getUnitCategory().isCity()) {
             City city = (City) unit;
             return CombatStrength.builder()

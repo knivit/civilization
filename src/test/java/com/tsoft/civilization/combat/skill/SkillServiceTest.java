@@ -22,7 +22,7 @@ public class SkillServiceTest {
             .settlers("settlers", new Point(2, 0))
         );
 
-        assertThat(skillService.calcPassScore(world.get("settlers"), new SkillMap<>(BASE_MOVEMENT_SKILL, SkillLevel.ONE)))
+        assertThat(skillService.calcPassScore(world.get("settlers"), SkillList.of(BASE_MOVEMENT_SKILL)))
             .isEqualTo(2);
     }
 }

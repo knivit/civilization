@@ -2,8 +2,7 @@ package com.tsoft.civilization.web.ajax.action.status;
 
 import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.combat.skill.AbstractSkill;
-import com.tsoft.civilization.combat.skill.SkillLevel;
-import com.tsoft.civilization.combat.skill.SkillMap;
+import com.tsoft.civilization.combat.skill.SkillList;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.unit.AbstractUnit;
@@ -15,8 +14,6 @@ import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
-
-import java.util.Map;
 
 public class GetUnitStatus extends AbstractAjaxRequest {
 
@@ -136,7 +133,7 @@ public class GetUnitStatus extends AbstractAjaxRequest {
         );
     }
 
-    private StringBuilder getUnitSkills(AbstractUnit unit, SkillMap<? extends AbstractSkill> unitSkills, L10n header) {
+    private StringBuilder getUnitSkills(AbstractUnit unit, SkillList<? extends AbstractSkill> unitSkills, L10n header) {
         Civilization myCivilization = getMyCivilization();
         if (!myCivilization.equals(unit.getCivilization())) {
             return null;
@@ -147,25 +144,23 @@ public class GetUnitStatus extends AbstractAjaxRequest {
         }
 
         StringBuilder skills = new StringBuilder();
-        for (Map.Entry<? extends AbstractSkill, SkillLevel> skill : unitSkills) {
+        for (AbstractSkill skill : unitSkills) {
             skills.append(Format.text("""
-                <tr><td>$skillName</td><td>$skillLevel</td></tr>
+                <tr><td>$skillName</td></tr>
                 """,
 
-                "$skillName", skill.getKey().getLocalizedName(),
-                "$skillLevel", skill.getValue().getValue()
+                "$skillName", skill.getLocalizedName()
             ));
         }
 
         return Format.text("""
             <table id='info_table'>
-                <tr><th>$skillNameHeader</th><th>$skillLevelHeader</th></tr>
+                <tr><th>$skillNameHeader</th></tr>
                 $skills
             </table>
             """,
 
             "$skillNameHeader", header,
-            "$skillLevelHeader", L10nUnit.SKILL_LEVEL_HEADER,
             "$skills", skills
         );
     }

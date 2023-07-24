@@ -170,8 +170,8 @@ public class CityCombatService implements HasHistory {
     @Getter
     private CombatExperience combatExperience = CombatExperience.ZERO;
 
-    private final SkillMap<AbstractCombatSkill> combatSkills;
-    private final SkillMap<AbstractHealingSkill> healingSkills;
+    private final SkillList<AbstractCombatSkill> combatSkills;
+    private final SkillList<AbstractHealingSkill> healingSkills;
 
     public CityCombatService(City city) {
         this.city = city;

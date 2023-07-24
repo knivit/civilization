@@ -7,7 +7,7 @@ import com.tsoft.civilization.tile.L10nTile;
 import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.world.L10nWorld;
-import com.tsoft.civilization.unit.service.move.TilePassCostTable;
+import com.tsoft.civilization.unit.service.move.PassCost;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
@@ -123,7 +123,7 @@ public class GetTileInfo extends AbstractAjaxRequest {
 
         UnitList units = civilization.getUnitService().getUnits().sortByName();
         for (AbstractUnit unit : units) {
-            int passCost = moveUnitService.getPassCost(civilization, unit, tile);
+            int passCost = moveUnitService.getPassCost(unit, tile);
             buf.append(Format.text("""
                 <tr>
                     <td><button onclick="$getUnitStatus">$unitName</button></td>
@@ -133,7 +133,7 @@ public class GetTileInfo extends AbstractAjaxRequest {
 
                 "$getUnitStatus", ClientAjaxRequest.getUnitStatus(unit),
                 "$unitName", unit.getView().getLocalizedName(),
-                "$passCost", (passCost == TilePassCostTable.UNPASSABLE ? L10nTile.TILE_IS_UNPASSABLE : passCost)
+                "$passCost", (passCost == PassCost.UNPASSABLE ? L10nTile.TILE_IS_UNPASSABLE : passCost)
             ));
         }
 

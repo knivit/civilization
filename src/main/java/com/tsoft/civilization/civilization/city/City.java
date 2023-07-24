@@ -184,19 +184,19 @@ public class City implements HasCombatStrength, HasHistory {
     }
 
     @Override
-    public SkillMap<AbstractCombatSkill> getBaseCombatSkills(Civilization civilization) {
-        return new SkillMap<>(
-            CITY_POPULATION_COMBAT_SKILL, SkillLevel.ONE,
-            CITY_BUILDINGS_COMBAT_SKILL, SkillLevel.ONE,
-            CITY_GARRISON_COMBAT_SKILL, SkillLevel.ONE,
-            HILL_VANTAGE_COMBAT_SKILL, SkillLevel.ONE
+    public SkillList<AbstractCombatSkill> getBaseCombatSkills(Civilization civilization) {
+        return SkillList.of(
+            CITY_POPULATION_COMBAT_SKILL,
+            CITY_BUILDINGS_COMBAT_SKILL,
+            CITY_GARRISON_COMBAT_SKILL,
+            HILL_VANTAGE_COMBAT_SKILL
         );
     }
 
     @Override
-    public SkillMap<AbstractHealingSkill> getBaseHealingSkills(Civilization civilization) {
-        return new SkillMap<>(
-            BASE_HEALING_SKILL, SkillLevel.ONE
+    public SkillList<AbstractHealingSkill> getBaseHealingSkills(Civilization civilization) {
+        return SkillList.of(
+            BASE_HEALING_SKILL
         );
     }
 

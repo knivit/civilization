@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class BuildingList implements Iterable<AbstractBuilding> {
+
     private final List<AbstractBuilding> buildings = new ArrayList<>();
     private boolean isUnmodifiable;
 

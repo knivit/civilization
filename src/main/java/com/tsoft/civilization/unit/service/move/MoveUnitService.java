@@ -142,7 +142,7 @@ public class MoveUnitService {
         unit.getMovementService().setLocation(location);
 
         AbstractTerrain tile = unit.getCivilization().getTilesMap().getTile(location);
-        int tilePassCost = getPassCost(unit.getCivilization(), unit, tile);
+        int tilePassCost = getPassCost(unit, tile);
         unit.setPassScore(unit.getPassScore() - tilePassCost);
     }
 
@@ -201,7 +201,7 @@ public class MoveUnitService {
                     Point nextLocation = tilesMap.addDirToLocation(currLocation, dir);
                     AbstractTerrain nextTile = tilesMap.getTile(nextLocation);
 
-                    int nextPassScore = passScore - getPassCost(unit.getCivilization(), unit, nextTile);
+                    int nextPassScore = passScore - getPassCost(unit, nextTile);
                     if (nextPassScore >= 0) {
                         // check for foreign city located there
                         boolean isBlocked = false;
@@ -322,7 +322,7 @@ public class MoveUnitService {
 
     private ActionAbstractResult canMoveOnAdjacentTile(AbstractUnit unit, Point location) {
         AbstractTerrain tile = unit.getTilesMap().getTile(location);
-        int tilePassCost = getPassCost(unit.getCivilization(), unit, tile);
+        int tilePassCost = getPassCost(unit, tile);
 
         int passScore = unit.getPassScore();
         if (passScore < tilePassCost) {
@@ -404,8 +404,8 @@ public class MoveUnitService {
         return CAN_SWAP;
     }
 
-    public int getPassCost(Civilization civilization, AbstractUnit unit, AbstractTerrain tile) {
-        int passCost = TilePassCostTable.get(civilization, unit, tile);
+    public int getPassCost(AbstractUnit unit, AbstractTerrain tile) {
+        int passCost = unit.getPassCost(tile);
 
         FeatureList features = tile.getFeatures();
         if (features.isEmpty()) {
@@ -417,8 +417,8 @@ public class MoveUnitService {
             AbstractFeature feature = features.get(i);
 
             int featurePassCost = getFeaturePassCost(unit, feature);
-            if (featurePassCost == TilePassCostTable.UNPASSABLE) {
-                return TilePassCostTable.UNPASSABLE;
+            if (featurePassCost == PassCost.UNPASSABLE) {
+                return PassCost.UNPASSABLE;
             }
 
             passCost += featurePassCost;

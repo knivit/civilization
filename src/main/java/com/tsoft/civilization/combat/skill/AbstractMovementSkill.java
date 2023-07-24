@@ -4,5 +4,5 @@ import com.tsoft.civilization.unit.AbstractUnit;
 
 public interface AbstractMovementSkill extends AbstractSkill {
 
-    int getPassScore(AbstractUnit unit, SkillLevel level);
+    int getPassScore(AbstractUnit unit);
 }

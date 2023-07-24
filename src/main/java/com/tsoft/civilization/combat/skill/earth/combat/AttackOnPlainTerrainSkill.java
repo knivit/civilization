@@ -31,7 +31,7 @@ public class AttackOnPlainTerrainSkill implements AbstractCombatSkill {
     private AttackOnPlainTerrainSkill() { }
 
     @Override
-    public CombatStrength getCombatStrength(HasCombatStrength unit, SkillLevel level) {
+    public CombatStrength getCombatStrength(HasCombatStrength unit) {
         Point attackerLocation = unit.getLocation();
         AbstractTerrain tile = unit.getCivilization().getTilesMap().getTile(attackerLocation);
         TerrainType terrainType = tile.getTileType();
@@ -39,14 +39,14 @@ public class AttackOnPlainTerrainSkill implements AbstractCombatSkill {
         if (TerrainType.EARTH_PLAIN.equals(terrainType)) {
             UnitCategory category = unit.getUnitCategory();
             if (category.isMelee()) {
-                return getMeleeUnitAttackStrength(unit, level);
+                return getMeleeUnitAttackStrength(unit);
             }
         }
 
         return CombatStrength.ZERO;
     }
 
-    private CombatStrength getMeleeUnitAttackStrength(HasCombatStrength unit, SkillLevel level) {
+    private CombatStrength getMeleeUnitAttackStrength(HasCombatStrength unit) {
         CombatStrength combatStrength = unit.getBaseCombatStrength(unit.getCivilization());
 
         int era = unit.getCivilization().getYear().getEra();
@@ -55,6 +55,6 @@ public class AttackOnPlainTerrainSkill implements AbstractCombatSkill {
             default -> 0;
         };
 
-        return CombatStrength.builder().meleeAttackStrength(strength * level.getValue()).build();
+        return CombatStrength.builder().meleeAttackStrength(strength).build();
     }
 }

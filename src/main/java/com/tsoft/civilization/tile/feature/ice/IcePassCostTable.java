@@ -15,7 +15,7 @@ import com.tsoft.civilization.unit.catalog.warriors.Warriors;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.tsoft.civilization.unit.service.move.TilePassCostTable.UNPASSABLE;
+import static com.tsoft.civilization.unit.service.move.PassCost.UNPASSABLE;
 
 public final class IcePassCostTable {
 

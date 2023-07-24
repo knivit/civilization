@@ -4,6 +4,9 @@ import com.tsoft.civilization.technology.Technology;
 
 // Immutable
 public class PassCost {
+
+    public static int UNPASSABLE = Integer.MAX_VALUE;
+
     private final Technology technology;
     private final int passCost;
 

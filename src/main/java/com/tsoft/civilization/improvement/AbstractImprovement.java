@@ -7,7 +7,7 @@ import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.combat.skill.AbstractCombatSkill;
 import com.tsoft.civilization.combat.skill.AbstractHealingSkill;
-import com.tsoft.civilization.combat.skill.SkillMap;
+import com.tsoft.civilization.combat.skill.SkillList;
 import com.tsoft.civilization.economic.HasSupply;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.civilization.Civilization;
@@ -95,8 +95,8 @@ public abstract class AbstractImprovement implements HasSupply, HasCombatStrengt
     }
 
     @Override
-    public SkillMap<AbstractCombatSkill> getBaseCombatSkills(Civilization civilization) {
-        return null;
+    public SkillList<AbstractCombatSkill> getBaseCombatSkills(Civilization civilization) {
+        return SkillList.UNMODIFIABLE_EMPTY_LIST;
     }
 
     @Override
@@ -105,8 +105,8 @@ public abstract class AbstractImprovement implements HasSupply, HasCombatStrengt
     }
 
     @Override
-    public SkillMap<AbstractHealingSkill> getBaseHealingSkills(Civilization civilization) {
-        return null;
+    public SkillList<AbstractHealingSkill> getBaseHealingSkills(Civilization civilization) {
+        return SkillList.UNMODIFIABLE_EMPTY_LIST;
     }
 
     @Override

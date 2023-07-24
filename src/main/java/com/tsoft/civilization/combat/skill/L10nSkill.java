@@ -43,11 +43,15 @@ public class L10nSkill {
         .put(EN, "Strike on a rough terrain")
         .put(RU, "Удар на пересеченной местности");
 
+    public static final L10n DEFENSE_AGAINST_ATTACK = new L10n()
+        .put(EN, "Base defense skill against an attack")
+        .put(RU, "Базовое умение защиты от атаки");
+
     public static final L10n DEFENSE_AGAINST_RANGED_ATTACK= new L10n()
         .put(EN, "Defense against a ranged attack")
-        .put(RU, "Защита от удаленной аттаки");
+        .put(RU, "Защита от удаленной атаки");
 
     public static final L10n DEFENSE_AGAINST_MELEE_ATTACK= new L10n()
         .put(EN, "Defense against a melee attack")
-        .put(RU, "Защита от прямой аттаки");
+        .put(RU, "Защита от прямой атаки");
 }

@@ -11,7 +11,7 @@ public class PromotionService {
 
     private final AbstractUnit unit;
 
-    private Set<PromotionType> promotions = EnumSet.allOf(PromotionType.class);
+    private final Set<PromotionType> promotions = EnumSet.allOf(PromotionType.class);
 
     public boolean hasPromotions(PromotionType ... required) {
         for (PromotionType promotion : required) {

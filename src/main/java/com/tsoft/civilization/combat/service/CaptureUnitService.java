@@ -175,7 +175,7 @@ public class CaptureUnitService {
     private ActionAbstractResult getMoveOnCaptureResult(AbstractUnit unit, Point dest) {
         // check is the passing score enough
         AbstractTerrain tile = unit.getTilesMap().getTile(dest);
-        int tilePassCost = moveUnitService.getPassCost(unit.getCivilization(), unit, tile);
+        int tilePassCost = moveUnitService.getPassCost(unit, tile);
         int passScore = unit.getPassScore();
         if (passScore < tilePassCost) {
             return NO_PASS_SCORE;

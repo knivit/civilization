@@ -32,7 +32,7 @@ public class AttackOnRoughTerrainSkill implements AbstractCombatSkill {
     private AttackOnRoughTerrainSkill() { }
 
     @Override
-    public CombatStrength getCombatStrength(HasCombatStrength unit, SkillLevel level) {
+    public CombatStrength getCombatStrength(HasCombatStrength unit) {
         Point attackerLocation = unit.getLocation();
         AbstractTerrain tile = unit.getCivilization().getTilesMap().getTile(attackerLocation);
         TerrainType terrainType = tile.getTileType();
@@ -41,7 +41,7 @@ public class AttackOnRoughTerrainSkill implements AbstractCombatSkill {
             if (tile.hasFeature(Hill.class)) {
                 UnitCategory category = unit.getUnitCategory();
                 if (category.isRanged() && !category.isCity()) {
-                    return getRangedUnitAttackStrength(unit, level);
+                    return getRangedUnitAttackStrength(unit);
                 }
             }
         }
@@ -49,7 +49,7 @@ public class AttackOnRoughTerrainSkill implements AbstractCombatSkill {
         return CombatStrength.ZERO;
     }
 
-    private CombatStrength getRangedUnitAttackStrength(HasCombatStrength unit, SkillLevel level) {
+    private CombatStrength getRangedUnitAttackStrength(HasCombatStrength unit) {
         CombatStrength combatStrength = unit.getBaseCombatStrength(unit.getCivilization());
 
         int era = unit.getCivilization().getYear().getEra();
@@ -58,6 +58,6 @@ public class AttackOnRoughTerrainSkill implements AbstractCombatSkill {
             default -> 0;
         };
 
-        return CombatStrength.builder().rangedAttackStrength(strength * level.getValue()).build();
+        return CombatStrength.builder().rangedAttackStrength(strength).build();
     }
 }
