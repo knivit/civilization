@@ -1,7 +1,7 @@
 package com.tsoft.civilization.world.generator.map.earth;
 
 import com.tsoft.civilization.improvement.ImprovementFactory;
-import com.tsoft.civilization.improvement.ancientruins.AncientRuins;
+import com.tsoft.civilization.improvement.catalog.ancientruins.AncientRuins;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.world.Climate;

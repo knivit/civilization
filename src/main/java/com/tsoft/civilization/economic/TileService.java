@@ -1,4 +1,4 @@
-package com.tsoft.civilization.tile;
+package com.tsoft.civilization.economic;
 
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.tile.feature.AbstractFeature;

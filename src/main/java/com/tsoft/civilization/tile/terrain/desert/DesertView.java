@@ -4,6 +4,7 @@ import com.tsoft.civilization.tile.L10nTile;
 import com.tsoft.civilization.tile.terrain.AbstractTerrainView;
 
 public class DesertView extends AbstractTerrainView {
+
     @Override
     public String getLocalizedName() {
         return L10nTile.DESERT_NAME.getLocalized();

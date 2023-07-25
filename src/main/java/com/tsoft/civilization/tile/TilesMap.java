@@ -55,8 +55,12 @@ public class TilesMap implements Iterable<AbstractTerrain> {
             height ++;
         }
 
-        assert (width >= MIN_WIDTH && width <= MAX_WIDTH) : "Width = " + width + " is not in range [2..1000]";
-        assert (height >= MIN_HEIGHT && height <= MAX_HEIGHT) : "Height = " + height + " is not in range [2..1000]";
+        if ((width < MIN_WIDTH || width > MAX_WIDTH)) {
+            throw new IllegalArgumentException("Width = " + width + " is not in range [2..1000]");
+        }
+        if ((height < MIN_HEIGHT || height > MAX_HEIGHT)) {
+            throw new IllegalArgumentException("Height = " + height + " is not in range [2..1000]");
+        }
 
         this.width = width;
         this.height = height;
@@ -74,8 +78,12 @@ public class TilesMap implements Iterable<AbstractTerrain> {
     }
 
     public AbstractTerrain getTile(int x, int y) {
-        assert (x >= 0 && x < getWidth()) : "x = " + x + " is not in range [0.." + (width - 1) + "]";
-        assert (y >= 0 && y < getHeight()) : "y = " + y + " is not in range [0.." + (height - 1) + "]";
+        if ((x < 0) || (x >= width)) {
+            throw new IllegalArgumentException("x = " + x + " is not in range [0.." + (width - 1) + "]");
+        }
+        if ((y < 0) || (y >= height)) {
+            throw new IllegalArgumentException("y = " + y + " is not in range [0.." + (height - 1) + "]");
+        }
 
         return tiles[x][y];
     }
@@ -85,11 +93,19 @@ public class TilesMap implements Iterable<AbstractTerrain> {
     }
 
     public void setTile(Point location, AbstractTerrain tile) {
-        assert (location.getX() >= 0 && location.getX() < getWidth()) : "Location = " + location + " is not in range [0.." + (width - 1) + "][0.." + (width - 1) + "]";
-        assert (location.getY() >= 0 && location.getY() < getHeight()) : "Location = " + location + " is not in range [0.." + (height - 1) + "][0.." + (height - 1) + "]";
-        assert (tile != null) : "Tile must be not null";
+        int x = location.getX();
+        if ((x < 0) || (x >= width)) {
+            throw new IllegalArgumentException("Location = " + location + " is not in range [0.." + (width - 1) + "][0.." + (width - 1) + "]");
+        }
+        int y = location.getY();
+        if ((y < 0) || (y >= height)) {
+            throw new IllegalArgumentException("Location = " + location + " is not in range [0.." + (height - 1) + "][0.." + (height - 1) + "]");
+        }
+        if (tile == null) {
+            throw new IllegalArgumentException("Tile must be not null");
+        }
 
-        tiles[location.getX()][location.getY()] = tile;
+        tiles[x][y] = tile;
         tile.setLocation(location);
     }
 

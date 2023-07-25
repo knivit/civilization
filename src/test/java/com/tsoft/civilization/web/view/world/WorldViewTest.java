@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.improvement.farm.Farm;
+import com.tsoft.civilization.improvement.catalog.farm.farm.Farm;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.view.JsonBlock;

@@ -1,12 +1,10 @@
-package com.tsoft.civilization.improvement.road;
+package com.tsoft.civilization.improvement.catalog.road;
 
 import com.tsoft.civilization.improvement.*;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.tile.terrain.TerrainType;
 import com.tsoft.civilization.civilization.Civilization;
-
-import java.util.UUID;
 
 /**
  * Road
@@ -32,9 +30,9 @@ import java.util.UUID;
  */
 public class Road extends AbstractImprovement {
 
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
+    public static final String CLASS_UUID = ImprovementName.ROAD.name();
 
-    private static final ImprovementBaseState BASE_STATE = ImprovementCatalog.getBaseState(ImprovementType.ROAD);
+    private static final ImprovementBaseState BASE_STATE = new RoadBaseState().getBaseState();
 
     private static final RoadView VIEW = new RoadView();
 

@@ -1,6 +1,6 @@
 package com.tsoft.civilization.improvement;
 
-public enum ImprovementType {
+public enum ImprovementName {
 
     ANCIENT_RUINS,
     FARM,

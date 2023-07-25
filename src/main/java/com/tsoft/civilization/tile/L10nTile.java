@@ -79,7 +79,7 @@ public class L10nTile {
 
     public static final L10n OCEAN_DESCRIPTION = new L10n()
             .put("en", "Astronomy must be opened to allow Embarked Units enter the Ocean")
-            .put("ru", "Должна быть открыта Астрономиа, чтобы юниты могли пересекать океан");
+            .put("ru", "Должна быть открыта Астрономия, чтобы юниты могли пересекать океан");
 
     public static final L10n PLAIN_NAME = new L10n()
             .put("en", "Plain")

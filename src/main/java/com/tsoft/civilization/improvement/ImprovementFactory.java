@@ -1,10 +1,10 @@
 package com.tsoft.civilization.improvement;
 
-import com.tsoft.civilization.improvement.farm.Farm;
-import com.tsoft.civilization.improvement.mine.Mine;
-import com.tsoft.civilization.improvement.ancientruins.AncientRuins;
+import com.tsoft.civilization.improvement.catalog.farm.farm.Farm;
+import com.tsoft.civilization.improvement.catalog.mine.Mine;
+import com.tsoft.civilization.improvement.catalog.ancientruins.AncientRuins;
 import com.tsoft.civilization.civilization.city.City;
-import com.tsoft.civilization.improvement.road.Road;
+import com.tsoft.civilization.improvement.catalog.road.Road;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 
 import java.util.HashMap;
@@ -28,12 +28,12 @@ public final class ImprovementFactory {
     private ImprovementFactory() { }
 
     public static <T extends AbstractImprovement> T newInstance(String classUuid, AbstractTerrain tile, City city) {
-        Function<AbstractTerrain, AbstractImprovement> supplier = FACTORY.get(classUuid);
-        if (supplier == null) {
+        Function<AbstractTerrain, AbstractImprovement> creator = FACTORY.get(classUuid);
+        if (creator == null) {
             throw new IllegalArgumentException("Unknown improvement classUuid = " + classUuid);
         }
 
-        T improvement = (T)supplier.apply(tile);
+        T improvement = (T)creator.apply(tile);
         improvement.init(city);
         return improvement;
     }

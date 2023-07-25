@@ -5,7 +5,7 @@ import com.tsoft.civilization.civilization.tile.TileSupplyStrategy;
 import com.tsoft.civilization.economic.HasSupply;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.civilization.city.City;
-import com.tsoft.civilization.tile.TileService;
+import com.tsoft.civilization.economic.TileService;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.civilization.city.citizen.Citizen;
 import com.tsoft.civilization.civilization.city.citizen.CitizenPlacementTable;

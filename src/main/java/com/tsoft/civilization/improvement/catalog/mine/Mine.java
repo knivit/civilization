@@ -1,12 +1,10 @@
-package com.tsoft.civilization.improvement.mine;
+package com.tsoft.civilization.improvement.catalog.mine;
 
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.improvement.*;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.tile.feature.hill.Hill;
-
-import java.util.UUID;
 
 /**
  * Mine
@@ -39,9 +37,9 @@ import java.util.UUID;
  */
 public class Mine extends AbstractImprovement {
 
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
+    public static final String CLASS_UUID = ImprovementName.MINE.name();
 
-    private static final ImprovementBaseState BASE_STATE = ImprovementCatalog.getBaseState(ImprovementType.MINE);
+    private static final ImprovementBaseState BASE_STATE = new MineBaseState().getBaseState();
 
     private static final AbstractImprovementView VIEW = new MineView();
 

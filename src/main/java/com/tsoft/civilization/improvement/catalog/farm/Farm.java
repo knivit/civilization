@@ -1,4 +1,4 @@
-package com.tsoft.civilization.improvement.farm;
+package com.tsoft.civilization.improvement.catalog.farm.farm;
 
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.improvement.*;
@@ -8,8 +8,6 @@ import com.tsoft.civilization.tile.terrain.grassland.Grassland;
 import com.tsoft.civilization.tile.terrain.plains.Plains;
 import com.tsoft.civilization.tile.terrain.tundra.Tundra;
 import com.tsoft.civilization.tile.feature.hill.Hill;
-
-import java.util.UUID;
 
 /**
  * Basic agricultural improvement. Available from the start of the game.
@@ -29,9 +27,9 @@ import java.util.UUID;
  */
 public class Farm extends AbstractImprovement {
 
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
+    public static final String CLASS_UUID = ImprovementName.FARM.name();
 
-    private static final ImprovementBaseState BASE_STATE = ImprovementCatalog.getBaseState(ImprovementType.FARM);
+    private static final ImprovementBaseState BASE_STATE = new FarmBaseState().getBaseState();
 
     private static final AbstractImprovementView VIEW = new FarmView();
 

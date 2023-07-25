@@ -5,7 +5,7 @@ import com.tsoft.civilization.civilization.city.action.CityTileActionResults;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.civilization.city.event.TileBoughtEvent;
-import com.tsoft.civilization.tile.TileService;
+import com.tsoft.civilization.economic.TileService;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.util.Point;

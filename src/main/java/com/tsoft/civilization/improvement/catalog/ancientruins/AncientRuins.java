@@ -1,4 +1,4 @@
-package com.tsoft.civilization.improvement.ancientruins;
+package com.tsoft.civilization.improvement.catalog.ancientruins;
 
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.improvement.*;
@@ -6,8 +6,6 @@ import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.tile.terrain.desert.Desert;
 import com.tsoft.civilization.tile.terrain.grassland.Grassland;
 import com.tsoft.civilization.tile.terrain.plains.Plains;
-
-import java.util.UUID;
 
 /**
  * Ancient Ruins
@@ -86,9 +84,9 @@ import java.util.UUID;
  */
 public class AncientRuins extends AbstractImprovement {
 
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
+    public static final String CLASS_UUID = ImprovementName.ANCIENT_RUINS.name();
 
-    private static final ImprovementBaseState BASE_STATE = ImprovementCatalog.getBaseState(ImprovementType.ANCIENT_RUINS);
+    private static final ImprovementBaseState BASE_STATE = new AncientRuinsBaseState().getBaseState();
 
     private static final AbstractImprovementView VIEW = new AncientRuinsView();
 

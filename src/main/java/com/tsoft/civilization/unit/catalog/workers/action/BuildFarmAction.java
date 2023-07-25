@@ -2,7 +2,7 @@ package com.tsoft.civilization.unit.catalog.workers.action;
 
 import com.tsoft.civilization.improvement.L10nImprovement;
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.improvement.farm.Farm;
+import com.tsoft.civilization.improvement.catalog.farm.farm.Farm;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.tile.terrain.grassland.Grassland;
 import com.tsoft.civilization.tile.terrain.plains.Plains;
