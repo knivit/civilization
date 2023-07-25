@@ -14,7 +14,7 @@ import com.tsoft.civilization.civilization.Civilization;
  */
 public class GreatMerchant extends AbstractUnit {
 
-    public static final String CLASS_UUID = UnitType.GREAT_MERCHANT.name();
+    public static final String CLASS_UUID = UnitName.GREAT_MERCHANT.name();
 
     private static final UnitBaseState BASE_STATE = new GreatMerchantBaseState().getBaseState();
 

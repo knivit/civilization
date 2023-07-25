@@ -45,7 +45,7 @@ import com.tsoft.civilization.civilization.Civilization;
  */
 public class Archers extends AbstractUnit {
 
-    public static final String CLASS_UUID = UnitType.ARCHERS.name();
+    public static final String CLASS_UUID = UnitName.ARCHERS.name();
 
     private static final UnitBaseState BASE_STATE = new ArchersBaseState().getBaseState();
 

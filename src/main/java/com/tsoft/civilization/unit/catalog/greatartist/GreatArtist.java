@@ -15,7 +15,7 @@ import com.tsoft.civilization.civilization.Civilization;
  */
 public class GreatArtist extends AbstractUnit {
 
-    public static final String CLASS_UUID = UnitType.GREAT_ARTIST.name();
+    public static final String CLASS_UUID = UnitName.GREAT_ARTIST.name();
 
     private static final UnitBaseState BASE_STATE = new GreatArtistBaseState().getBaseState();
 

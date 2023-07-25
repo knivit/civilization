@@ -2,6 +2,7 @@ package com.tsoft.civilization.util;
 
 import java.lang.reflect.Constructor;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 /**
@@ -10,20 +11,23 @@ import java.util.stream.Stream;
  */
 public class AList<T> implements Iterable<T> {
 
-    private final List<T> list = new ArrayList<>();
+    protected final List<T> list = new ArrayList<>();
     private boolean isUnmodifiable;
 
     public AList() { }
 
-    public <E extends AList<T>> E copy() {
+    public <E extends AList<T>> E create() {
         Constructor<E> constructor = (Constructor<E>) this.getClass().getConstructors()[0];
 
         try {
-            E copy = constructor.newInstance();
-            return copy.addAll((E)this);
+            return constructor.newInstance();
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
+    }
+
+    public <E extends AList<T>> E copy() {
+        return create().addAll((E)this);
     }
 
     public <E extends AList<T>> E unmodifiableCopy() {
@@ -82,6 +86,29 @@ public class AList<T> implements Iterable<T> {
     public <E extends AList<T>> E makeUnmodifiable() {
         isUnmodifiable = true;
         return (E)this;
+    }
+
+    public <E extends AList<T>> E filter(Predicate<T> cond) {
+        E list = create();
+
+        for (T element : this.list) {
+            if (cond.test(element)) {
+                list.add(element);
+            }
+        }
+
+        return list;
+    }
+
+    public T findAny(Predicate<T> cond) {
+        return list.stream()
+            .filter(cond)
+            .findAny()
+            .orElse(null);
+    }
+
+    public T getAny() {
+        return list.isEmpty() ? null : list.get(0);
     }
 
     @Override

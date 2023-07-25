@@ -13,7 +13,7 @@ import com.tsoft.civilization.civilization.Civilization;
  */
 public class GreatScientist extends AbstractUnit {
 
-    public static final String CLASS_UUID = UnitType.GREAT_SCIENTIST.name();
+    public static final String CLASS_UUID = UnitName.GREAT_SCIENTIST.name();
 
     private static final UnitBaseState BASE_STATE = new GreatScientistBaseState().getBaseState();
 

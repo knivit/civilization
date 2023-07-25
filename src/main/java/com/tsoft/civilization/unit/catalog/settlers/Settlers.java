@@ -21,7 +21,7 @@ import com.tsoft.civilization.civilization.Civilization;
  */
 public class Settlers extends AbstractUnit {
 
-    public static final String CLASS_UUID = UnitType.SETTLERS.name();
+    public static final String CLASS_UUID = UnitName.SETTLERS.name();
 
     private static final UnitBaseState BASE_STATE = new SettlersBaseState().getBaseState();
 

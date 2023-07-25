@@ -8,7 +8,6 @@ import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.world.L10nWorld;
 import com.tsoft.civilization.unit.service.move.PassCost;
-import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.request.Request;
@@ -20,6 +19,8 @@ import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.tile.terrain.AbstractTerrainView;
 import com.tsoft.civilization.civilization.Civilization;
+
+import java.util.List;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.*;
 import static com.tsoft.civilization.web.ajax.ServerStaticResource.*;
@@ -121,7 +122,8 @@ public class GetTileInfo extends AbstractAjaxRequest {
     private StringBuilder getTilePassInfo(AbstractTerrain tile, Civilization civilization) {
         StringBuilder buf = new StringBuilder();
 
-        UnitList units = civilization.getUnitService().getUnits().sortByName();
+        List<AbstractUnit> units = civilization.getUnitService().getUnits().sortByName();
+
         for (AbstractUnit unit : units) {
             int passCost = moveUnitService.getPassCost(unit, tile);
             buf.append(Format.text("""

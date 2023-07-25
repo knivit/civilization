@@ -14,7 +14,7 @@ import com.tsoft.civilization.civilization.Civilization;
  */
 public class GreatGeneral extends AbstractUnit {
 
-    public static final String CLASS_UUID = UnitType.GREAT_GENERAL.name();
+    public static final String CLASS_UUID = UnitName.GREAT_GENERAL.name();
 
     private static final UnitBaseState BASE_STATE = new GreatGeneralBaseState().getBaseState();
 

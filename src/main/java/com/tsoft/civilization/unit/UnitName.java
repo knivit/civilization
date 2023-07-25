@@ -1,6 +1,6 @@
 package com.tsoft.civilization.unit;
 
-public enum UnitType {
+public enum UnitName {
 
     ARCHERS,
     GREAT_ARTIST,

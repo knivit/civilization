@@ -44,7 +44,7 @@ public class CivilizationUnitService {
     }
 
     public UnitList getUnits() {
-        return units.unmodifiableList();
+        return units.unmodifiableCopy();
     }
 
     public int size() {

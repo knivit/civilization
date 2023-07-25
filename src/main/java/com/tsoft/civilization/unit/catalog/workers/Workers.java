@@ -21,7 +21,7 @@ import com.tsoft.civilization.civilization.Civilization;
  */
 public class Workers extends AbstractUnit {
 
-    public static final String CLASS_UUID = UnitType.WORKERS.name();
+    public static final String CLASS_UUID = UnitName.WORKERS.name();
 
     private static final UnitBaseState BASE_STATE = new WorkersBaseState().getBaseState();
 

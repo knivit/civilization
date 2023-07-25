@@ -1,14 +1,13 @@
 package com.tsoft.civilization.combat.skill.earth.combat;
 
 import com.tsoft.civilization.combat.skill.*;
+import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.combat.CombatStrength;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.unit.UnitList;
 import lombok.Getter;
-
-import java.util.stream.Collectors;
 
 public class CityGarrisonCombatSkill implements AbstractCombatSkill {
 
@@ -30,9 +29,9 @@ public class CityGarrisonCombatSkill implements AbstractCombatSkill {
     public CombatStrength getCombatStrength(HasCombatStrength unit) {
         if (unit.getUnitCategory().isCity()) {
             City city = (City) unit;
-            int garrisonMeleeAttackStrength = calcGarrisonedMeleeAttackStrength(city);
-            int garrisonRangedAttackStrength = calcGarrisonedRangedAttackStrength(city);
-            int garrisonDefenseStrength = calcGarrisonedDefenseStrength(city);
+            double garrisonMeleeAttackStrength = calcGarrisonedMeleeAttackStrength(city);
+            double garrisonRangedAttackStrength = calcGarrisonedRangedAttackStrength(city);
+            double garrisonDefenseStrength = calcGarrisonedDefenseStrength(city);
 
             return CombatStrength.builder()
                 .meleeAttackStrength(garrisonMeleeAttackStrength)
@@ -44,23 +43,23 @@ public class CityGarrisonCombatSkill implements AbstractCombatSkill {
         return CombatStrength.ZERO;
     }
 
-    private int calcGarrisonedMeleeAttackStrength(City city) {
+    private double calcGarrisonedMeleeAttackStrength(City city) {
         return getGarrison(city).stream()
             .filter(e -> e.getUnitCategory().isLand())
-            .mapToInt(e -> (int)Math.round(e.calcCombatStrength().getMeleeAttackStrength() * 0.4))
+            .mapToDouble(e -> e.calcCombatStrength().getMeleeAttackStrength() * 0.4)
             .sum();
     }
 
-    private int calcGarrisonedRangedAttackStrength(City city) {
+    private double calcGarrisonedRangedAttackStrength(City city) {
         return getGarrison(city).stream()
             .filter(e -> e.getUnitCategory().isRanged())
-            .mapToInt(e -> (int)Math.round(e.calcCombatStrength().getRangedAttackStrength() * 0.6))
+            .mapToDouble(e -> e.calcCombatStrength().getRangedAttackStrength() * 0.6)
             .sum();
     }
 
-    private int calcGarrisonedDefenseStrength(City city) {
+    private double calcGarrisonedDefenseStrength(City city) {
         return getGarrison(city).stream()
-            .mapToInt(e -> (int)Math.round(e.calcCombatStrength().getDefenseStrength() * 0.2))
+            .mapToDouble(e -> e.calcCombatStrength().getDefenseStrength() * 0.2)
             .sum();
     }
 
@@ -69,9 +68,10 @@ public class CityGarrisonCombatSkill implements AbstractCombatSkill {
         UnitList unitsAround = city.getCivilization().getUnitService()
             .getUnitsAtLocation(city.getLocation());
 
-        return new UnitList(unitsAround.stream()
-            .filter(e -> e.getUnitCategory().isMilitary())
-            .filter(e -> e.getUnitCategory().isLand())
-            .collect(Collectors.toList()));
+        return unitsAround
+            .filter(e -> {
+                UnitCategory category = e.getUnitCategory();
+                return category.isMilitary() && category.isLand();
+            });
     }
 }

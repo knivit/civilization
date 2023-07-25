@@ -14,7 +14,7 @@ import com.tsoft.civilization.civilization.Civilization;
  */
 public class GreatEngineer extends AbstractUnit {
 
-    public static final String CLASS_UUID = UnitType.GREAT_ENGINEER.name();
+    public static final String CLASS_UUID = UnitName.GREAT_ENGINEER.name();
 
     private static final UnitBaseState BASE_STATE = new GreatEngineerBaseState().getBaseState();
 

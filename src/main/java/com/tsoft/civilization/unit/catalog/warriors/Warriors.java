@@ -14,7 +14,7 @@ import com.tsoft.civilization.civilization.Civilization;
  */
 public class Warriors extends AbstractUnit {
 
-    public static final String CLASS_UUID = UnitType.WARRIORS.name();
+    public static final String CLASS_UUID = UnitName.WARRIORS.name();
 
     private static final UnitBaseState BASE_STATE = new WarriorsBaseState().getBaseState();
 
