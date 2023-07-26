@@ -22,7 +22,7 @@ public class JsonBlock {
     // DO NOT use a new line character '\n' here
     // As it breaks Server Push Notifications
 
-    public void addParam(String name, Object value) {
+    public JsonBlock addParam(String name, Object value) {
         if (isArray) {
             log.error("Param name = {} can't be inside an array", name);
             throw new IllegalStateException("A param can't be inside an array");
@@ -45,9 +45,11 @@ public class JsonBlock {
         addElementValue(valueStr);
 
         paramCount ++;
+
+        return this;
     }
 
-    public void startArray(String name) {
+    public JsonBlock startArray(String name) {
         if (paramCount > 0) {
             buf.append(",");
         }
@@ -56,20 +58,30 @@ public class JsonBlock {
         paramCount ++;
         elementCount = 0;
         isArray = true;
+
+        return this;
     }
 
-    public void addElement(String value) {
+    public JsonBlock addElement(String value) {
         if (elementCount > 0) {
             buf.append(",");
         }
 
         addElementValue(value);
         elementCount ++;
+
+        return this;
     }
 
-    public void stopArray() {
+    public JsonBlock add(JsonBlock block) {
+        return addElement(block.getText());
+    }
+
+    public JsonBlock stopArray() {
         buf.append("]");
         isArray = false;
+
+        return this;
     }
 
     public String getText() {

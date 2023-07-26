@@ -50,6 +50,9 @@ public class World {
     @Getter
     private final WorldTileService tileService;
 
+    @Getter
+    private final WorldObjectService worldObjectService;
+
     private final WorldService worldService;
 
     public World(String name, TilesMap tilesMap, Climate climate) {
@@ -60,6 +63,7 @@ public class World {
         view = new WorldView(this);
 
         worldService = new WorldService(this);
+        worldObjectService = new WorldObjectService();
         tileService = new WorldTileService(this);
     }
 

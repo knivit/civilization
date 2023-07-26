@@ -5,8 +5,7 @@ import com.tsoft.civilization.combat.*;
 import com.tsoft.civilization.tile.feature.FeatureList;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.tile.feature.AbstractFeature;
-import com.tsoft.civilization.unit.service.move.PassCost;
-import com.tsoft.civilization.unit.service.move.TilePassCostTable;
+import com.tsoft.civilization.unit.action.move.PassCost;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.World;
 

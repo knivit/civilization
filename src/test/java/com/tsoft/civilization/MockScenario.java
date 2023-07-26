@@ -124,7 +124,7 @@ public class MockScenario implements Scenario {
             }
 
             AbstractTerrain tile = civilization.getTilesMap().getTile(e.location);
-            AbstractImprovement improvement = ImprovementFactory.newInstance(e.classUuid, tile, city);
+            AbstractImprovement improvement = ImprovementFactory.newInstance(e.classUuid, tile,civilization.getWorld(), city);
             putObject(e.name, improvement);
         });
 

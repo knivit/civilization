@@ -3,7 +3,7 @@
 function Improvement(improvement) {
     this.name = improvement;
 
-         if (this.name === 'AncientRuins') this.drawImprovement = drawAncientRuins
+         if (this.name === 'Mine') this.drawImprovement = drawMine
     else if (this.name === 'Farm') this.drawImprovement = drawFarm
     else alert("Unknown improvement " + this.name);
 

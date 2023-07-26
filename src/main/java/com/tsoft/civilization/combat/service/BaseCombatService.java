@@ -9,7 +9,7 @@ import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.civilization.city.CityList;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
-import com.tsoft.civilization.unit.service.move.MoveUnitService;
+import com.tsoft.civilization.unit.action.move.MoveUnitService;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.World;
 

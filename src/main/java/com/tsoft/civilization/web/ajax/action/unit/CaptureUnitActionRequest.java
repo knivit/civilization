@@ -1,7 +1,6 @@
 package com.tsoft.civilization.web.ajax.action.unit;
 
 import com.tsoft.civilization.combat.service.CaptureUnitService;
-import com.tsoft.civilization.unit.service.move.MoveUnitService;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.combat.action.CaptureUnitAction;
@@ -16,7 +15,6 @@ import com.tsoft.civilization.civilization.Civilization;
 
 public class CaptureUnitActionRequest extends AbstractAjaxRequest {
 
-    private final MoveUnitService moveService = new MoveUnitService();
     private final CaptureUnitService captureUnitService = new CaptureUnitService();
     private final CaptureUnitAction captureUnitAction = new CaptureUnitAction(captureUnitService);
 

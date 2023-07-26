@@ -343,6 +343,11 @@ public class City implements HasCombatStrength, HasHistory {
         return incomeSupply.add(outcomeSupply);
     }
 
+    @Override
+    public Supply calcPillageSupply() {
+        return Supply.builder().gold(300).build();
+    }
+
     public Happiness getHappiness() {
         return happinessService.getHappiness();
     }

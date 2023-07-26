@@ -14,11 +14,12 @@ import static com.tsoft.civilization.tile.resource.ResourceType.*;
 
 public class ResourceFactory {
 
-    private static final Map<ResourceType, Supplier<? extends AbstractResource>> FACTORY = new HashMap<>();
+    private static final Map<ResourceType, Supplier<AbstractResource>> FACTORY = new HashMap<>();
     private static final Map<ResourceType, AbstractResource> CATALOG = new HashMap<>();
 
     static {
         // bonus
+        FACTORY.put(ANCIENT_RUINS, AncientRuins::new);
         FACTORY.put(BANANAS, Bananas::new);
         FACTORY.put(BISON, Bison::new);
         FACTORY.put(CATTLE, Cattle::new);
@@ -49,12 +50,12 @@ public class ResourceFactory {
     }
 
     public static <T extends AbstractResource> T newInstance(ResourceType type) {
-        Supplier<? extends AbstractResource> creator = FACTORY.get(type);
+        Supplier<AbstractResource> creator = FACTORY.get(type);
         if (creator == null) {
             throw new IllegalArgumentException("Unknown resource '" + type + "'");
         }
 
-        return  (T)creator.get();
+        return (T)creator.get();
     }
 
     public static <T extends AbstractResource> T findByClassUuid(String classUuid) {

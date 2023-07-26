@@ -57,10 +57,6 @@ public class Palace extends AbstractBuilding {
 
     private static final AbstractBuildingView VIEW = new PalaceView();
 
-    public Palace(City city) {
-        super(city);
-    }
-
     @Override
     public String getClassUuid() {
         return CLASS_UUID;

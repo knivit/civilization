@@ -7,8 +7,11 @@ import com.tsoft.civilization.combat.action.CaptureUnitAction;
 import com.tsoft.civilization.combat.service.PillageService;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.combat.service.CaptureUnitService;
-import com.tsoft.civilization.unit.service.destroy.DestroyUnitService;
-import com.tsoft.civilization.unit.service.move.MoveUnitService;
+import com.tsoft.civilization.unit.action.destroy.DestroyUnitAction;
+import com.tsoft.civilization.unit.action.destroy.DestroyUnitService;
+import com.tsoft.civilization.unit.action.move.MoveUnitAction;
+import com.tsoft.civilization.unit.action.move.MoveUnitService;
+import com.tsoft.civilization.util.ArrayUtil;
 import com.tsoft.civilization.util.Format;
 
 public class DefaultUnitActions {
@@ -35,7 +38,7 @@ public class DefaultUnitActions {
         StringBuilder moveUnitAction = moveAction.getHtml(unit);
         StringBuilder destroyUnitAction = destroyAction.getHtml(unit);
 
-        if (attackUnitAction == null && captureUnitAction == null && moveUnitAction == null && destroyUnitAction == null) {
+        if (ArrayUtil.allNull(attackUnitAction, pillageUnitAction, captureUnitAction, moveUnitAction, destroyUnitAction)) {
             return null;
         }
 

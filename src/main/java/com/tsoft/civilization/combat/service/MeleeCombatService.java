@@ -9,12 +9,10 @@ import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.L10nUnit;
-import com.tsoft.civilization.unit.service.move.MoveUnitService;
+import com.tsoft.civilization.unit.action.move.MoveUnitService;
 import com.tsoft.civilization.util.dir.AbstractDir;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.World;
-
-import java.util.List;
 
 public class MeleeCombatService {
 
@@ -31,7 +29,7 @@ public class MeleeCombatService {
         HasCombatStrengthList targets = new HasCombatStrengthList();
 
         // Add foreign units and cities if its civilization is in war with our
-        List<HasCombatStrength> targetsAround = baseCombatService.getPossibleTargetsAround(attacker, 1);
+        HasCombatStrengthList targetsAround = baseCombatService.getPossibleTargetsAround(attacker, 1);
         Civilization myCivilization = attacker.getCivilization();
         World world = myCivilization.getWorld();
 

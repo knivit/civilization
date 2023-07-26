@@ -23,7 +23,8 @@ public class BonusResourceGenerator {
     private final Climate climate;
 
     private static final Map<ResourceType, Double> NORMAL_CLIMATE_PROBABILITIES = new HashMap<>() {{
-        put(ResourceType.BANANAS, 1.0 / 4);
+        put(ResourceType.ANCIENT_RUINS, 1.0 / 8);
+        put(ResourceType.BANANAS, 1.0 / 6);
         put(ResourceType.BISON, 1.0 / 4);
         put(ResourceType.CATTLE, 1.0 / 12);
         put(ResourceType.DEER, 1.0 / 2);

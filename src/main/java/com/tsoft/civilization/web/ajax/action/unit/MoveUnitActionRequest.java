@@ -1,9 +1,9 @@
 package com.tsoft.civilization.web.ajax.action.unit;
 
-import com.tsoft.civilization.unit.service.move.MoveUnitService;
+import com.tsoft.civilization.unit.action.move.MoveUnitService;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.unit.action.MoveUnitAction;
+import com.tsoft.civilization.unit.action.move.MoveUnitAction;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.request.Request;

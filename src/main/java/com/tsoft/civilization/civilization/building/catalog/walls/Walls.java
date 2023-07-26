@@ -1,7 +1,6 @@
 package com.tsoft.civilization.civilization.building.catalog.walls;
 
 import com.tsoft.civilization.civilization.building.*;
-import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.world.Year;
 import com.tsoft.civilization.civilization.Civilization;
@@ -42,10 +41,6 @@ public class Walls extends AbstractBuilding {
     private static final BuildingBaseState BASE_STATE = new WallsBaseState().getBaseState();
 
     private static final AbstractBuildingView VIEW = new WallsView();
-
-    public Walls(City city) {
-        super(city);
-    }
 
     @Override
     public String getClassUuid() {

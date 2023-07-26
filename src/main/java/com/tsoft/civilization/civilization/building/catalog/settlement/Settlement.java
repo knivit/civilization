@@ -1,7 +1,6 @@
 package com.tsoft.civilization.civilization.building.catalog.settlement;
 
 import com.tsoft.civilization.civilization.building.*;
-import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.Year;
 
@@ -12,10 +11,6 @@ public class Settlement extends AbstractBuilding {
     private static final BuildingBaseState BASE_STATE = new SettlementBaseState().getBaseState();
 
     private static final AbstractBuildingView VIEW = new SettlementView();
-
-    public Settlement(City city) {
-        super(city);
-    }
 
     @Override
     public String getClassUuid() {

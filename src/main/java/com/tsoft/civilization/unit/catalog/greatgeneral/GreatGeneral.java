@@ -20,10 +20,6 @@ public class GreatGeneral extends AbstractUnit {
 
     private static final GreatGeneralView VIEW = new GreatGeneralView();
 
-    public GreatGeneral(Civilization civilization) {
-        super(civilization);
-    }
-
     @Override
     public String getClassUuid() {
         return CLASS_UUID;

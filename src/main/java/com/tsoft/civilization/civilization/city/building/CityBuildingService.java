@@ -46,7 +46,7 @@ public class CityBuildingService implements HasHistory {
     public void remove(AbstractBuilding building) {
         Objects.requireNonNull(building, "building can't be null");
 
-        building.setDestroyed(true);
+        building.destroy();
         buildings.remove(building);
 
         city.getCivilization().addEvent(BuildingDestroyedEvent.builder()

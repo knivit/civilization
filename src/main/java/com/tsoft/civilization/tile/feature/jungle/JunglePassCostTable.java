@@ -1,7 +1,7 @@
 package com.tsoft.civilization.tile.feature.jungle;
 
-import com.tsoft.civilization.unit.service.move.PassCost;
-import com.tsoft.civilization.unit.service.move.PassCostList;
+import com.tsoft.civilization.unit.action.move.PassCost;
+import com.tsoft.civilization.unit.action.move.PassCostList;
 import com.tsoft.civilization.unit.catalog.greatartist.GreatArtist;
 import com.tsoft.civilization.unit.catalog.greatengineer.GreatEngineer;
 import com.tsoft.civilization.unit.catalog.greatgeneral.GreatGeneral;

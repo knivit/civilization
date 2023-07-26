@@ -132,6 +132,10 @@ public class L10nCivilization {
         .put(EN, "A gift $receivedSupply received from $senderName")
         .put(RU, "Получен подарок $receivedSupply от $senderName");
 
+    public static final L10n PILLAGE_RECEIVED = new L10n()
+        .put(EN, "Pillaged $receivedSupply")
+        .put(RU, "Ограблено $receivedSupply");
+
     /** Civilizations */
 
     public static final L10n RANDOM = new L10n()

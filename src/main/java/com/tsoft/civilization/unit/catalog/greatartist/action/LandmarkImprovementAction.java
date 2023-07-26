@@ -6,7 +6,7 @@ import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;
 
-import static com.tsoft.civilization.unit.service.move.MoveUnitService.INVALID_TARGET_LOCATION;
+import static com.tsoft.civilization.unit.action.move.MoveUnitService.INVALID_TARGET_LOCATION;
 
 // The Great Artist can leave their mark in history with the Landmark, where a
 // tile can be used to generate 5 culture points if it is worked on. This is

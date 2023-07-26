@@ -51,10 +51,6 @@ public class Archers extends AbstractUnit {
 
     private static final AbstractUnitView VIEW = new ArchersView();
 
-    public Archers(Civilization civilization) {
-        super(civilization);
-    }
-
     @Override
     public String getClassUuid() {
         return CLASS_UUID;

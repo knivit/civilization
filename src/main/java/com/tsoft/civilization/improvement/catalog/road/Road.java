@@ -36,10 +36,6 @@ public class Road extends AbstractImprovement {
 
     private static final RoadView VIEW = new RoadView();
 
-    public Road(AbstractTerrain tile) {
-        super(tile);
-    }
-
     @Override
     public String getClassUuid() {
         return CLASS_UUID;

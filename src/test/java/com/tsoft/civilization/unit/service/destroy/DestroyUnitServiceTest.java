@@ -5,13 +5,14 @@ import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.unit.UnitFactory;
+import com.tsoft.civilization.unit.action.destroy.DestroyUnitService;
 import com.tsoft.civilization.unit.catalog.settlers.Settlers;
 import com.tsoft.civilization.util.Point;
 import org.junit.jupiter.api.Test;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
 import static com.tsoft.civilization.unit.action.DefaultUnitActionsResults.UNIT_NOT_FOUND;
-import static com.tsoft.civilization.unit.service.destroy.DestroyUnitService.LAST_SETTLERS_CANT_BE_DESTROYED;
+import static com.tsoft.civilization.unit.action.destroy.DestroyUnitService.LAST_SETTLERS_CANT_BE_DESTROYED;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

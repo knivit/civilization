@@ -1,13 +1,13 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
 import com.tsoft.civilization.tile.TilesMap;
-import com.tsoft.civilization.unit.service.move.MoveUnitService;
+import com.tsoft.civilization.unit.action.move.MoveUnitService;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.tile.L10nTile;
 import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.world.L10nWorld;
-import com.tsoft.civilization.unit.service.move.PassCost;
+import com.tsoft.civilization.unit.action.move.PassCost;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.request.Request;

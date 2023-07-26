@@ -21,10 +21,6 @@ public class GreatArtist extends AbstractUnit {
 
     private static final GreatArtistView VIEW = new GreatArtistView();
 
-    public GreatArtist(Civilization civilization) {
-        super(civilization);
-    }
-
     @Override
     public String getClassUuid() {
         return CLASS_UUID;

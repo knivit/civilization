@@ -40,20 +40,18 @@ import com.tsoft.civilization.tile.terrain.AbstractTerrain;
  */
 public class Bananas extends AbstractResource {
 
-    public static final ResourceType RESOURCE_TYPE = ResourceType.BANANAS;
-
-    private static final ResourceBaseState BASE_STATE = ResourceCatalog.getBaseState(ResourceType.BANANAS);
-
-    private static final ResourceCategory RESOURCE_CATEGORY = ResourceCategory.BONUS;
+    private static final ResourceBaseState BASE_STATE = ResourceBaseState.builder()
+        .supply(Supply.builder().food(1).build())
+        .build();
 
     @Override
     public ResourceType getType() {
-        return RESOURCE_TYPE;
+        return ResourceType.BANANAS;
     }
 
     @Override
     public ResourceCategory getCategory() {
-        return RESOURCE_CATEGORY;
+        return ResourceCategory.BONUS;
     }
 
     @Override

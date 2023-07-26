@@ -43,10 +43,6 @@ public class Mine extends AbstractImprovement {
 
     private static final AbstractImprovementView VIEW = new MineView();
 
-    public Mine(AbstractTerrain tile) {
-        super(tile);
-    }
-
     @Override
     public String getClassUuid() {
         return CLASS_UUID;

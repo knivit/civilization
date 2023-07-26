@@ -14,10 +14,9 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.util.Point;
+import com.tsoft.civilization.world.World;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-
-import java.util.UUID;
 
 @EqualsAndHashCode(of = "id")
 public abstract class AbstractImprovement implements HasSupply, HasCombatStrength {
@@ -27,10 +26,10 @@ public abstract class AbstractImprovement implements HasSupply, HasCombatStrengt
         .build();
 
     @Getter
-    private final String id = UUID.randomUUID().toString();
+    private String id;
 
     @Getter
-    private final AbstractTerrain tile;
+    private AbstractTerrain tile;
 
     @Getter
     private City city;
@@ -43,13 +42,12 @@ public abstract class AbstractImprovement implements HasSupply, HasCombatStrengt
     public abstract boolean acceptEraAndTechnology(Civilization civilization);
     public abstract boolean acceptTile(AbstractTerrain tile);
 
-    protected AbstractImprovement(AbstractTerrain tile) {
-        this.tile = tile;
-    }
-
-    protected void init(City city) {
-        tile.addImprovement(this);
+    protected void init(AbstractTerrain tile, World world, City city) {
+        id = world.getWorldObjectService().add(this);
         this.city = city;
+        this.tile = tile;
+
+        tile.addImprovement(this);
     }
 
     @Override
@@ -127,6 +125,11 @@ public abstract class AbstractImprovement implements HasSupply, HasCombatStrengt
     @Override
     public void setPassScore(int passScore) {
 
+    }
+
+    @Override
+    public Supply calcPillageSupply() {
+        return Supply.builder().gold(30).build();
     }
 
     public void repair() {

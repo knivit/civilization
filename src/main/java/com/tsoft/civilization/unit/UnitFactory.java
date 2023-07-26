@@ -13,12 +13,12 @@ import com.tsoft.civilization.civilization.Civilization;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.function.Supplier;
 
 public final class UnitFactory {
 
     private static final Map<String, AbstractUnit> CATALOG = new HashMap<>();
-    private static final Map<String, Function<Civilization, AbstractUnit>> FACTORY = new HashMap<>();
+    private static final Map<String, Supplier<AbstractUnit>> FACTORY = new HashMap<>();
 
     static {
         FACTORY.put(Archers.CLASS_UUID, Archers::new);
@@ -33,19 +33,19 @@ public final class UnitFactory {
         FACTORY.put(Warriors.CLASS_UUID, Warriors::new);
         FACTORY.put(Workers.CLASS_UUID, Workers::new);
 
-        FACTORY.forEach((k, v) -> CATALOG.put(k, v.apply(null)));
+        FACTORY.forEach((k, v) -> CATALOG.put(k, v.get()));
     }
 
     private UnitFactory() { }
 
     public static <T extends AbstractUnit> T newInstance(Civilization civilization, String classUuid) {
-        Function<Civilization, AbstractUnit> creator = FACTORY.get(classUuid);
+        Supplier<AbstractUnit> creator = FACTORY.get(classUuid);
         if (creator == null) {
             throw new IllegalArgumentException("Unknown unit classUuid = " + classUuid);
         }
 
-        T unit = (T)creator.apply(civilization);
-        unit.init();
+        T unit = (T)creator.get();
+        unit.init(civilization);
         return unit;
     }
 

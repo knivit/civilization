@@ -223,7 +223,7 @@ public class GetCityStatus extends AbstractAjaxRequest {
                 "$buildUnitAction", buildUnitAction));
         }
 
-        if (buf.length() == 0) {
+        if (buf.isEmpty()) {
             return null;
         }
 

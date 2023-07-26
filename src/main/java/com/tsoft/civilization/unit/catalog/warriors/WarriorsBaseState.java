@@ -12,9 +12,9 @@ import com.tsoft.civilization.tile.terrain.tundra.Tundra;
 import com.tsoft.civilization.unit.UnitBaseState;
 import com.tsoft.civilization.unit.UnitCategory;
 import com.tsoft.civilization.unit.UnitMilitaryType;
-import com.tsoft.civilization.unit.service.move.PassCost;
-import com.tsoft.civilization.unit.service.move.PassCostList;
-import com.tsoft.civilization.unit.service.move.PassCostTable;
+import com.tsoft.civilization.unit.action.move.PassCost;
+import com.tsoft.civilization.unit.action.move.PassCostList;
+import com.tsoft.civilization.unit.action.move.PassCostTable;
 
 import static com.tsoft.civilization.combat.skill.earth.combat.AttackOnPlainTerrainSkill.ATTACK_ON_PLAIN_TERRAIN_SKILL;
 import static com.tsoft.civilization.combat.skill.earth.combat.AttackOnRoughTerrainSkill.ATTACK_ON_ROUGH_TERRAIN_SKILL;
@@ -24,7 +24,7 @@ import static com.tsoft.civilization.combat.skill.earth.combat.HillVantageCombat
 import static com.tsoft.civilization.combat.skill.earth.heal.BaseHealingSkill.BASE_HEALING_SKILL;
 import static com.tsoft.civilization.combat.skill.earth.movement.BaseMovementSkill.BASE_MOVEMENT_SKILL;
 import static com.tsoft.civilization.technology.Technology.NAVIGATION;
-import static com.tsoft.civilization.unit.service.move.PassCost.UNPASSABLE;
+import static com.tsoft.civilization.unit.action.move.PassCost.UNPASSABLE;
 
 public class WarriorsBaseState {
 

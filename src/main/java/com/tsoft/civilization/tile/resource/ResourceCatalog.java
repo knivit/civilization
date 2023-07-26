@@ -10,39 +10,6 @@ import static com.tsoft.civilization.tile.resource.ResourceType.*;
 public final class ResourceCatalog {
 
     private static final Map<ResourceType, ResourceBaseState> RESOURCES = new HashMap<>() {{
-        /** Bonus */
-
-        put(BANANAS, ResourceBaseState.builder()
-            .supply(Supply.builder().food(1).build())
-            .build());
-
-        put(BISON, ResourceBaseState.builder()
-            .supply(Supply.builder().food(1).build())
-            .build());
-
-        put(CATTLE, ResourceBaseState.builder()
-            .supply(Supply.builder().food(1).build())
-            .build());
-
-        put(DEER, ResourceBaseState.builder()
-            .supply(Supply.builder().food(1).build())
-            .build());
-
-        put(FISH, ResourceBaseState.builder()
-            .supply(Supply.builder().food(1).build())
-            .build());
-
-        put(SHEEP, ResourceBaseState.builder()
-            .supply(Supply.builder().food(1).build())
-            .build());
-
-        put(STONE, ResourceBaseState.builder()
-            .supply(Supply.builder().production(1).build())
-            .build());
-
-        put(WHEAT, ResourceBaseState.builder()
-            .supply(Supply.builder().food(1).build())
-            .build());
 
         /** Luxury */
 

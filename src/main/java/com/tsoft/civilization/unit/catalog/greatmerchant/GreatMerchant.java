@@ -20,10 +20,6 @@ public class GreatMerchant extends AbstractUnit {
 
     private static final GreatMerchantView VIEW = new GreatMerchantView();
 
-    public GreatMerchant(Civilization civilization) {
-        super(civilization);
-    }
-
     @Override
     public String getClassUuid() {
         return CLASS_UUID;

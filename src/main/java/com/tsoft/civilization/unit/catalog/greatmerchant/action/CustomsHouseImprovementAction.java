@@ -6,7 +6,7 @@ import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;
 
-import static com.tsoft.civilization.unit.service.move.MoveUnitService.INVALID_TARGET_LOCATION;
+import static com.tsoft.civilization.unit.action.move.MoveUnitService.INVALID_TARGET_LOCATION;
 
 // The Great Merchant can build the Customs House, which will generate 4 gold per
 // turn when it is worked. That makes it very useful for a city that is based off

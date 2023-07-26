@@ -59,10 +59,6 @@ public class Monument extends AbstractBuilding {
 
     private static final AbstractBuildingView VIEW = new MonumentView();
 
-    public Monument(City city) {
-        super(city);
-    }
-
     @Override
     public String getClassUuid() {
         return CLASS_UUID;

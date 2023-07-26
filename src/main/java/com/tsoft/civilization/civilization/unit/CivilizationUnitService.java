@@ -8,8 +8,8 @@ import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.unit.catalog.warriors.Warriors;
-import com.tsoft.civilization.unit.service.move.MoveUnitService;
-import com.tsoft.civilization.unit.service.move.PassCost;
+import com.tsoft.civilization.unit.action.move.MoveUnitService;
+import com.tsoft.civilization.unit.action.move.PassCost;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.economic.Supply;
@@ -126,7 +126,7 @@ public class CivilizationUnitService {
     public boolean addUnit(AbstractUnit unit, Point location) {
         if (canBePlaced(unit, location)) {
             units.add(unit);
-            unit.getMovementService().setLocation(location);
+            unit.getMovementService().moveTo(location);
 
             notifyDependentServices();
             return true;

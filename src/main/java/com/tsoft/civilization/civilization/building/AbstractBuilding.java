@@ -14,10 +14,10 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.HasHistory;
 import com.tsoft.civilization.world.World;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Cost - production cost
@@ -127,9 +127,12 @@ import java.util.UUID;
 @EqualsAndHashCode(of = "id")
 public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt, HasSupply, HasHistory {
 
-    private final String id = UUID.randomUUID().toString();
+    @Getter
+    private String id;
 
-    private final City city;
+    @Getter
+    private City city;
+
     private boolean isDestroyed;
 
     public abstract String getClassUuid();
@@ -138,17 +141,9 @@ public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt, Ha
     public abstract boolean checkEraAndTechnology(Civilization civilization);
     public abstract boolean requiredEraAndTechnology(Civilization civilization);
 
-    protected AbstractBuilding(City city) {
+    protected void init(City city) {
+        id = city.getCivilization().getWorld().getWorldObjectService().add(this);
         this.city = city;
-    }
-
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    public City getCity() {
-        return city;
     }
 
     public AbstractTerrain getTile(Point location) {
@@ -252,8 +247,8 @@ public abstract class AbstractBuilding implements HasId, HasView, CanBeBuilt, Ha
         return isDestroyed;
     }
 
-    public void setDestroyed(boolean destroyed) {
-        isDestroyed = destroyed;
+    public void destroy() {
+        isDestroyed = true;
     }
 
     @Override

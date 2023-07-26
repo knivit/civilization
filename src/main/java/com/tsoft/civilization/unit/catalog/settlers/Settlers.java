@@ -27,10 +27,6 @@ public class Settlers extends AbstractUnit {
 
     private static final AbstractUnitView VIEW = new SettlersView();
 
-    public Settlers(Civilization civilization) {
-        super(civilization);
-    }
-
     @Override
     public String getClassUuid() {
         return CLASS_UUID;

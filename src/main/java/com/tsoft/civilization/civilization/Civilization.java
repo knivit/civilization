@@ -5,6 +5,7 @@ import com.tsoft.civilization.civilization.city.CivilizationCityService;
 import com.tsoft.civilization.civilization.event.*;
 import com.tsoft.civilization.civilization.happiness.*;
 import com.tsoft.civilization.civilization.tile.CivilizationSettlerService;
+import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.civilization.population.CivilizationPopulationService;
 import com.tsoft.civilization.civilization.social.CivilizationSocialPolicyService;
@@ -270,6 +271,15 @@ public abstract class Civilization {
         unitService.destroyUnit(settlers);
 
         return city;
+    }
+
+    public void pillageReceived(HasCombatStrength target, Supply receivedSupply) {
+        supply = supply.add(receivedSupply);
+
+        addEvent(PillageReceivedEvent.builder()
+            .targetName(target.getView().getName())
+            .receivedSupply(receivedSupply)
+            .build());
     }
 
     public void giftReceived(Civilization sender, Supply receivedSupply) {

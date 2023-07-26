@@ -1,6 +1,7 @@
 package com.tsoft.civilization.tile.resource.bonus;
 
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.tile.resource.*;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
@@ -31,20 +32,18 @@ import com.tsoft.civilization.tile.terrain.plains.Plains;
  */
 public class Bison extends AbstractResource {
 
-    public static final ResourceType RESOURCE_TYPE = ResourceType.BISON;
-
-    private static final ResourceBaseState BASE_STATE = ResourceCatalog.getBaseState(ResourceType.BISON);
-
-    private static final ResourceCategory RESOURCE_CATEGORY = ResourceCategory.BONUS;
+    private static final ResourceBaseState BASE_STATE = ResourceBaseState.builder()
+        .supply(Supply.builder().food(1).build())
+        .build();
 
     @Override
     public ResourceType getType() {
-        return RESOURCE_TYPE;
+        return ResourceType.BISON;
     }
 
     @Override
     public ResourceCategory getCategory() {
-        return RESOURCE_CATEGORY;
+        return ResourceCategory.BONUS;
     }
 
     @Override

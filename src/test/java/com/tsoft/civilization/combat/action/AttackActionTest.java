@@ -37,7 +37,7 @@ class AttackActionTest {
         Workers foreignWorkers = world.get("foreignWorkers");
 
         when(attackService.canAttack(eq(warriors))).thenReturn(CAN_ATTACK);
-        when(attackService.getTargetsToAttack(eq(warriors))).thenReturn(HasCombatStrengthList.of(foreignWorkers));
+        when(attackService.getTargetsToAttack(eq(warriors))).thenReturn(new HasCombatStrengthList().add(foreignWorkers));
 
         StringBuilder buf = attackAction.getHtml(warriors);
         HtmlDocument actual = HtmlParser.parse(buf);

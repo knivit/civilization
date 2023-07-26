@@ -6,7 +6,7 @@ import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;
 
-import static com.tsoft.civilization.unit.service.move.MoveUnitService.INVALID_TARGET_LOCATION;
+import static com.tsoft.civilization.unit.action.move.MoveUnitService.INVALID_TARGET_LOCATION;
 
 // The Great Engineer can be used to build a Manufacture tile, which is basically
 // a tile improvement that generates 3 production hammers when it is worked,

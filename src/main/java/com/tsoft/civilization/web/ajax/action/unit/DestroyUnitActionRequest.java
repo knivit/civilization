@@ -1,9 +1,9 @@
 package com.tsoft.civilization.web.ajax.action.unit;
 
-import com.tsoft.civilization.unit.service.destroy.DestroyUnitService;
+import com.tsoft.civilization.unit.action.destroy.DestroyUnitService;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.unit.action.DestroyUnitAction;
+import com.tsoft.civilization.unit.action.destroy.DestroyUnitAction;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.JsonResponse;

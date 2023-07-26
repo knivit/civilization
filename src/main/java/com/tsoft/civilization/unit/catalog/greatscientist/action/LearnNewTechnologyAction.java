@@ -6,7 +6,7 @@ import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;
 
-import static com.tsoft.civilization.unit.service.move.MoveUnitService.INVALID_TARGET_LOCATION;
+import static com.tsoft.civilization.unit.action.move.MoveUnitService.INVALID_TARGET_LOCATION;
 
 // The Learn New Technology ability is probably one of the most powerful
 // abilities that you can get. It will pretty much instantly research a new

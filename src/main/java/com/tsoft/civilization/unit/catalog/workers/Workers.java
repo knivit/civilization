@@ -27,10 +27,6 @@ public class Workers extends AbstractUnit {
 
     private static final AbstractUnitView VIEW = new WorkersView();
 
-    public Workers(Civilization civilization) {
-        super(civilization);
-    }
-
     @Override
     public String getClassUuid() {
         return CLASS_UUID;

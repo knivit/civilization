@@ -248,6 +248,14 @@ var client = {
         ]);
     },
 
+    pillageAction: function(ajaxParams) {
+        server.sendChainOfRequests([
+            [ "ajax/PillageActionRequest", { attacker: ajaxParams.attacker, target: ajaxParams.target }, client.onUpdateWorldResponse ],
+            [ "ajax/GetUnitStatus", { unit: ajaxParams.attacker }, client.onStatusResponse ],
+            [ "ajax/GetControlPanel", { }, client.onControlPanelResponse ]
+        ]);
+    },
+
     destroyUnitAction: function(ajaxParams) {
         server.sendChainOfRequests([
             [ "ajax/DestroyUnitActionRequest", { unit: ajaxParams.unit }, client.onUpdateWorldResponse ],
@@ -374,6 +382,7 @@ var client = {
         drawMap.hideLocationsToMove();
         drawMap.hideLocationsToAttack();
         drawMap.hideLocationsToCapture();
+        drawMap.hideLocationsToBuy();
 
         // clear event's panel
         eventPanel.clear();

@@ -1,7 +1,7 @@
 package com.tsoft.civilization.tile.feature.ice;
 
-import com.tsoft.civilization.unit.service.move.PassCost;
-import com.tsoft.civilization.unit.service.move.PassCostList;
+import com.tsoft.civilization.unit.action.move.PassCost;
+import com.tsoft.civilization.unit.action.move.PassCostList;
 import com.tsoft.civilization.unit.catalog.greatartist.GreatArtist;
 import com.tsoft.civilization.unit.catalog.greatengineer.GreatEngineer;
 import com.tsoft.civilization.unit.catalog.greatgeneral.GreatGeneral;
@@ -15,7 +15,7 @@ import com.tsoft.civilization.unit.catalog.warriors.Warriors;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.tsoft.civilization.unit.service.move.PassCost.UNPASSABLE;
+import static com.tsoft.civilization.unit.action.move.PassCost.UNPASSABLE;
 
 public final class IcePassCostTable {
 

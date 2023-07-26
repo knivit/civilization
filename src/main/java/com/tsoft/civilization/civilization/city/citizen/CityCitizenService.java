@@ -38,7 +38,7 @@ public class CityCitizenService {
     @Setter
     private CitizenDeathStrategy citizenDeathStrategy;
 
-    private int growthPool = 0;
+    private double growthPool = 0.0;
     private boolean isStarvation = false;
 
     public CityCitizenService(City city) {
@@ -55,7 +55,9 @@ public class CityCitizenService {
     }
 
     public void addCitizen() {
-        Citizen citizen = new Citizen(city);
+        Citizen citizen = new Citizen();
+        citizen.init(city);
+
         Point location = populationSupplyService.findLocationForCitizen(getCitizenLocations());
 
         if (location != null) {
@@ -171,7 +173,7 @@ public class CityCitizenService {
             return;
         }
 
-        if (citizens.size() == 0) {
+        if (citizens.isEmpty()) {
             return;
         }
 

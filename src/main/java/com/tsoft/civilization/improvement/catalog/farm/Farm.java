@@ -1,4 +1,4 @@
-package com.tsoft.civilization.improvement.catalog.farm.farm;
+package com.tsoft.civilization.improvement.catalog.farm;
 
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.improvement.*;
@@ -32,10 +32,6 @@ public class Farm extends AbstractImprovement {
     private static final ImprovementBaseState BASE_STATE = new FarmBaseState().getBaseState();
 
     private static final AbstractImprovementView VIEW = new FarmView();
-
-    public Farm(AbstractTerrain tile) {
-        super(tile);
-    }
 
     @Override
     public String getClassUuid() {

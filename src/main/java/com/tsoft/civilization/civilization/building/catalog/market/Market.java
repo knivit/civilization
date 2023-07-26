@@ -61,10 +61,6 @@ public class Market extends AbstractBuilding {
 
     private static final AbstractBuildingView VIEW = new MarketView();
 
-    public Market(City city) {
-        super(city);
-    }
-
     @Override
     public String getClassUuid() {
         return CLASS_UUID;

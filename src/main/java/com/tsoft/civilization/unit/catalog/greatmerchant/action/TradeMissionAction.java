@@ -6,7 +6,7 @@ import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;
 
-import static com.tsoft.civilization.unit.service.move.MoveUnitService.INVALID_TARGET_LOCATION;
+import static com.tsoft.civilization.unit.action.move.MoveUnitService.INVALID_TARGET_LOCATION;
 
 // The Trade Mission is an ability that is basically a trading mission. Send the
 // Great Merchant to the city of a City State, and they will launch a trade

@@ -10,6 +10,7 @@ import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.civilization.city.citizen.Citizen;
 import com.tsoft.civilization.civilization.city.citizen.CitizenPlacementTable;
 import com.tsoft.civilization.util.Point;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashSet;
@@ -17,11 +18,13 @@ import java.util.List;
 import java.util.Set;
 
 @Slf4j
-public class PopulationSupplyService implements HasSupply {
+public class PopulationSupplyService {
 
     private final TileService tileService = new TileService();
 
     private final City city;
+
+    @Getter
     private List<TileSupplyStrategy> supplyStrategy;
 
     public PopulationSupplyService(City city) {
@@ -88,10 +91,6 @@ public class PopulationSupplyService implements HasSupply {
             supply.getGold() == 0;
     }
 
-    public List<TileSupplyStrategy> getSupplyStrategy() {
-        return supplyStrategy;
-    }
-
     public boolean setSupplyStrategy(List<TileSupplyStrategy> supplyStrategy) {
         if (!this.supplyStrategy.equals(supplyStrategy)) {
             this.supplyStrategy = supplyStrategy;
@@ -100,12 +99,10 @@ public class PopulationSupplyService implements HasSupply {
         return false;
     }
 
-    @Override
     public Supply getBaseSupply(Civilization civilization) {
         return Supply.EMPTY;
     }
 
-    @Override
     public Supply calcIncomeSupply(Civilization civilization) {
         Supply supply = Supply.EMPTY;
 
@@ -116,7 +113,6 @@ public class PopulationSupplyService implements HasSupply {
         return supply;
     }
 
-    @Override
     public Supply calcOutcomeSupply(Civilization civilization) {
         Supply supply = Supply.EMPTY;
 

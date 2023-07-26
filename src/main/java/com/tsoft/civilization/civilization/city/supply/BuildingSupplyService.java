@@ -6,7 +6,7 @@ import com.tsoft.civilization.economic.HasSupply;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.civilization.city.City;
 
-public class BuildingSupplyService implements HasSupply {
+public class BuildingSupplyService {
 
     private final City city;
 
@@ -14,12 +14,10 @@ public class BuildingSupplyService implements HasSupply {
         this.city = city;
     }
 
-    @Override
     public Supply getBaseSupply(Civilization civilization) {
         return Supply.EMPTY;
     }
 
-    @Override
     public Supply calcIncomeSupply(Civilization civilization) {
         Supply supply = Supply.EMPTY;
         for (AbstractBuilding building : city.getBuildings()) {
@@ -28,7 +26,6 @@ public class BuildingSupplyService implements HasSupply {
         return supply;
     }
 
-    @Override
     public Supply calcOutcomeSupply(Civilization civilization) {
         Supply supply = Supply.EMPTY;
         for (AbstractBuilding building : city.getBuildings()) {

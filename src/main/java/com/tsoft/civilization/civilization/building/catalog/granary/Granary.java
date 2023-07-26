@@ -44,10 +44,6 @@ public class Granary extends AbstractBuilding {
 
     private static final AbstractBuildingView VIEW = new GranaryView();
 
-    public Granary(City city) {
-        super(city);
-    }
-
     @Override
     public String getClassUuid() {
         return CLASS_UUID;

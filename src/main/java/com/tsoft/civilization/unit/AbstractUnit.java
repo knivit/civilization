@@ -2,12 +2,13 @@ package com.tsoft.civilization.unit;
 
 import com.tsoft.civilization.combat.CombatDamage;
 import com.tsoft.civilization.combat.CombatExperience;
-import com.tsoft.civilization.combat.service.UnitCombatService;
+import com.tsoft.civilization.economic.Supply;
+import com.tsoft.civilization.unit.service.UnitCombatService;
 import com.tsoft.civilization.combat.skill.*;
-import com.tsoft.civilization.unit.promotion.PromotionService;
-import com.tsoft.civilization.unit.promotion.PromotionType;
-import com.tsoft.civilization.unit.service.movement.UnitMovementService;
-import com.tsoft.civilization.unit.service.production.UnitProductionService;
+import com.tsoft.civilization.unit.service.UnitPromotionService;
+import com.tsoft.civilization.unit.service.promotion.PromotionType;
+import com.tsoft.civilization.unit.service.UnitMovementService;
+import com.tsoft.civilization.unit.service.UnitProductionService;
 import com.tsoft.civilization.world.HasId;
 import com.tsoft.civilization.world.HasView;
 import com.tsoft.civilization.combat.CombatStrength;
@@ -47,8 +48,8 @@ import java.util.*;
 @EqualsAndHashCode(of = "id")
 public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength, HasHistory, CanBeBuilt {
 
-    @Getter @Setter
-    private String id = UUID.randomUUID().toString();
+    @Getter
+    private String id;
 
     @Getter @Setter
     private Civilization civilization;
@@ -63,7 +64,7 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
     private UnitMovementService movementService;
 
     @Getter
-    private PromotionService promotionService;
+    private UnitPromotionService promotionService;
 
     @Getter
     private boolean isDestroyed;
@@ -73,16 +74,15 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
     public abstract AbstractUnitView getView();
     public abstract boolean checkEraAndTechnology(Civilization civilization);
 
-    protected AbstractUnit(Civilization civilization) {
-        this.civilization = civilization;
-    }
-
     // Initialization on create the object
-    protected void init() {
+    protected void init(Civilization civilization) {
+        id = civilization.getWorld().getWorldObjectService().add(this);
+        this.civilization = civilization;
+
         productionService = new UnitProductionService(this);
         combatService = new UnitCombatService(this);
         movementService = new UnitMovementService(this);
-        promotionService = new PromotionService(this);
+        promotionService = new UnitPromotionService(this);
     }
 
     @Override
@@ -113,10 +113,6 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
         return (int)Math.round(goldCost * modifier);
     }
 
-    public int getBasePassScore(Civilization civilization) {
-        return movementService.getPassScore();
-    }
-
     @Override
     public CombatStrength getBaseCombatStrength(Civilization civilization) {
         UnitBaseState baseState = getBaseState();
@@ -132,10 +128,6 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
             .meleeBackFireStrength(baseCombatStrength.getMeleeBackFireStrength() * modifier)
             .defenseStrength(baseCombatStrength.getDefenseStrength() * modifier)
             .build();
-    }
-
-    public boolean hasPromotions(PromotionType ... promotions) {
-        return promotionService.hasPromotions(promotions);
     }
 
     public SkillList<AbstractMovementSkill> getBaseMovementSkills(Civilization civilization) {
@@ -155,21 +147,23 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
         return new SkillList<AbstractHealingSkill>().addAll(baseState.getHealingSkills());
     }
 
+    public boolean hasPromotions(PromotionType ... promotions) {
+        return promotionService.hasPromotions(promotions);
+    }
+
     @Override
     public void startYear() {
-        combatService.startYear();
         movementService.startYear();
+        combatService.startYear();
     }
 
     public void startEra() {
         combatService.startEra();
-        movementService.startEra();
     }
 
     @Override
     public void stopYear() {
         combatService.stopYear();
-        movementService.stopYear();
     }
 
     public World getWorld() {
@@ -215,11 +209,16 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
 
     @Override
     public void setPassScore(int passScore) {
-        movementService.setPassScore(passScore);
+        movementService.updatePassScore(passScore);
     }
 
     public boolean canBeCaptured() {
         return !getUnitCategory().isMilitary();
+    }
+
+    @Override
+    public Supply calcPillageSupply() {
+        return Supply.builder().gold(30).build();
     }
 
     @Override

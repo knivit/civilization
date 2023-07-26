@@ -1,6 +1,6 @@
 "use strict";
 
-var drawAncientRuins = {
+var drawFarm = {
     img: new Image(),
 
     draw: function(x, y, tile) {
@@ -8,4 +8,4 @@ var drawAncientRuins = {
     }
 };
 
-drawAncientRuins.img.src = "images/map/improvements/farm.png";
+drawFarm.img.src = "images/map/improvements/farm.png";

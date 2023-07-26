@@ -1,8 +1,9 @@
 package com.tsoft.civilization.economic;
 
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.world.HasId;
 
-public interface HasSupply {
+public interface HasSupply extends HasId {
 
     Supply getBaseSupply(Civilization civilization);
 

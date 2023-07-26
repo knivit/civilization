@@ -4,8 +4,17 @@ import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.action.ActionFailureResult;
 import com.tsoft.civilization.action.ActionSuccessResult;
 import com.tsoft.civilization.combat.*;
+import com.tsoft.civilization.economic.Supply;
+import com.tsoft.civilization.improvement.AbstractImprovement;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
+import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.L10nUnit;
 
+/**
+ * A military unit can pillage
+ * - a trade route
+ * - an improvement on the tile
+ */
 public class PillageService {
 
     public static final ActionSuccessResult CAN_PILLAGE = new ActionSuccessResult(L10nCombat.CAN_PILLAGE);
@@ -16,16 +25,21 @@ public class PillageService {
     public static final ActionFailureResult ATTACKER_NOT_FOUND = new ActionFailureResult(L10nUnit.UNIT_NOT_FOUND);
     public static final ActionFailureResult NOT_MILITARY_UNIT = new ActionFailureResult(L10nUnit.NOT_MILITARY_UNIT);
 
-    private static final PillageCombatService pillageCombatService = new PillageCombatService();
+    private final CombatResult FAILED_NO_TARGETS = CombatResult.builder()
+            .status(CombatStatus.FAILED_NO_TARGETS)
+            .build();
 
+    private final CombatResult PILLAGED = CombatResult.builder()
+            .status(CombatStatus.DONE)
+            .build();
 
-    public ActionAbstractResult pillage(HasCombatStrength attacker) {
+    public ActionAbstractResult pillage(HasCombatStrength attacker, HasCombatStrength target) {
         ActionAbstractResult result = canPillage(attacker);
         if (result.isFail()) {
             return result;
         }
 
-        CombatResult combatResult = pillageCombatService.attack(attacker);
+        CombatResult combatResult = doPillage(attacker, target);
         if (CombatStatus.FAILED_NO_TARGETS.equals(combatResult.getStatus())) {
             return NO_TARGETS_TO_PILLAGE;
         }
@@ -46,7 +60,7 @@ public class PillageService {
             return NOT_MILITARY_UNIT;
         }
 
-        HasCombatStrengthList targets = pillageCombatService.getTargetsToPillage(attacker);
+        HasCombatStrengthList targets = getTargetsToPillage(attacker);
         if (targets == null || targets.isEmpty()) {
             return NO_TARGETS_TO_PILLAGE;
         }
@@ -55,6 +69,31 @@ public class PillageService {
     }
 
     public HasCombatStrengthList getTargetsToPillage(HasCombatStrength attacker) {
-        return pillageCombatService.getTargetsToPillage(attacker);
+        AbstractUnit unit = (AbstractUnit)attacker;
+        AbstractTerrain tile = unit.getTile();
+
+        HasCombatStrengthList list = null;
+        for (AbstractImprovement improvement : tile.getImprovements()) {
+            if (!improvement.isDestroyed()) {
+                list = (list == null) ? new HasCombatStrengthList() : list;
+                list.add(improvement);
+            }
+        }
+
+        // TODO add trade routes for this tile
+
+        return list;
+    }
+
+    private CombatResult doPillage(HasCombatStrength attacker, HasCombatStrength target) {
+        if (target.isDestroyed()) {
+            return FAILED_NO_TARGETS;
+        }
+
+        Supply supply = target.calcPillageSupply();
+        attacker.getCivilization().pillageReceived(target, supply);
+        target.destroy();
+
+        return PILLAGED;
     }
 }

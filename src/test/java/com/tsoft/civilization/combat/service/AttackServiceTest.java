@@ -53,7 +53,7 @@ public class AttackServiceTest {
             .containsExactly(world.unit("foreignWorkers"));
 
         // move close the foreign warriors and now they are the target too
-        world.unit("foreignWarriors").getMovementService().setLocation(new Point(2, 0));
+        world.unit("foreignWarriors").getMovementService().moveTo(new Point(2, 0));
         targets = attackService.getTargetsToAttack(world.get("warriors"));
         assertThat(targets)
             .hasSize(2)

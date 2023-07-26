@@ -6,8 +6,7 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.helper.html.HtmlDocument;
 import com.tsoft.civilization.helper.html.HtmlParser;
 import com.tsoft.civilization.improvement.ImprovementFactory;
-import com.tsoft.civilization.improvement.catalog.ancientruins.AncientRuins;
-import com.tsoft.civilization.improvement.catalog.farm.farm.Farm;
+import com.tsoft.civilization.improvement.catalog.farm.Farm;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
@@ -38,7 +37,7 @@ public class GetImprovementInfoTest {
         );
 
         AbstractTerrain tile = world.getTilesMap().getTile(new Point(1, 1));
-        Farm farm = ImprovementFactory.newInstance(Farm.CLASS_UUID, tile, world.city("city1"));
+        Farm farm = ImprovementFactory.newInstance(Farm.CLASS_UUID, tile, world, world.city("city1"));
 
         Sessions.getCurrent().setActiveCivilization(russia);
         Request request = MockRequest.newInstance("id", farm.getId());
@@ -75,7 +74,7 @@ public class GetImprovementInfoTest {
         Civilization america = world.createCivilization(AMERICA, new MockScenario());
 
         AbstractTerrain tile = world.getTilesMap().getTile(new Point(1, 1));
-        Farm farm = ImprovementFactory.newInstance(Farm.CLASS_UUID, tile, world.city("city1"));
+        Farm farm = ImprovementFactory.newInstance(Farm.CLASS_UUID, tile, world, world.city("city1"));
 
         Sessions.getCurrent().setActiveCivilization(america);
         Request request = MockRequest.newInstance("id", farm.getId());
@@ -101,10 +100,10 @@ public class GetImprovementInfoTest {
         );
 
         AbstractTerrain tile = world.getTilesMap().getTile(new Point(1, 1));
-        AncientRuins ancientRuins = ImprovementFactory.newInstance(AncientRuins.CLASS_UUID, tile, null);
+        Farm farm = ImprovementFactory.newInstance(Farm.CLASS_UUID, tile, world, null);
 
         Sessions.getCurrent().setActiveCivilization(russia);
-        Request request = MockRequest.newInstance("id", ancientRuins.getId());
+        Request request = MockRequest.newInstance("id", farm.getId());
 
         Response response = getImprovementInfoRequest.getJson(request);
 

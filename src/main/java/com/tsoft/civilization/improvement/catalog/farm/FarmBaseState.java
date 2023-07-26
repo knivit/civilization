@@ -1,4 +1,4 @@
-package com.tsoft.civilization.improvement.catalog.farm.farm;
+package com.tsoft.civilization.improvement.catalog.farm;
 
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.improvement.ImprovementBaseState;

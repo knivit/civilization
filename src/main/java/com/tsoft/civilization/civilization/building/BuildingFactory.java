@@ -11,12 +11,12 @@ import com.tsoft.civilization.civilization.city.City;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.function.Supplier;
 
 public final class BuildingFactory {
 
     private static final Map<String, AbstractBuilding> CATALOG = new HashMap<>();
-    private static final Map<String, Function<City, AbstractBuilding>> FACTORY = new HashMap<>();
+    private static final Map<String, Supplier<AbstractBuilding>> FACTORY = new HashMap<>();
 
     static {
         FACTORY.put(Granary.CLASS_UUID, Granary::new);
@@ -26,18 +26,20 @@ public final class BuildingFactory {
         FACTORY.put(Settlement.CLASS_UUID, Settlement::new);
         FACTORY.put(Walls.CLASS_UUID, Walls::new);
 
-        FACTORY.forEach((k, v) -> CATALOG.put(k, v.apply(null)));
+        FACTORY.forEach((k, v) -> CATALOG.put(k, v.get()));
     }
 
     private BuildingFactory() { }
 
     public static <T extends AbstractBuilding> T newInstance(String classUuid, City city) {
-        Function<City, AbstractBuilding> creator = FACTORY.get(classUuid);
+        Supplier<AbstractBuilding> creator = FACTORY.get(classUuid);
         if (creator == null) {
             throw new IllegalArgumentException("Unknown building classUuid = " + classUuid);
         }
 
-        return (T)creator.apply(city);
+        T building = (T)creator.get();
+        building.init(city);
+        return building;
     }
 
     public static AbstractBuilding findByClassUuid(String classUuid) {

@@ -20,10 +20,6 @@ public class Warriors extends AbstractUnit {
 
     private static final AbstractUnitView VIEW = new WarriorsView();
 
-    public Warriors(Civilization civilization) {
-        super(civilization);
-    }
-
     @Override
     public String getClassUuid() {
         return CLASS_UUID;

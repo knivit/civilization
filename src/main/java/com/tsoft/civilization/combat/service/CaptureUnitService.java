@@ -13,12 +13,11 @@ import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.unit.UnitList;
-import com.tsoft.civilization.unit.service.move.MoveUnitService;
+import com.tsoft.civilization.unit.action.move.MoveUnitService;
 import com.tsoft.civilization.util.Point;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
 public class CaptureUnitService {
 
@@ -109,9 +108,6 @@ public class CaptureUnitService {
 
         // remove the victim from it's civilization
         victim.getCivilization().getUnitService().removeUnit(victim);
-
-        // re-create unit id so it can't be used anymore
-        victim.setId(UUID.randomUUID().toString());
 
         // captured unit can't move
         victim.setPassScore(0);

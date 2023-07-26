@@ -8,6 +8,7 @@ import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.world.HasHistory;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 import java.util.UUID;
 
@@ -39,23 +40,20 @@ public class Citizen implements HasSupply, HasHistory {
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    private final String id = UUID.randomUUID().toString();
+    @Getter
+    private String id;
 
-    private final City city;
+    @Getter
+    private City city;
+
+    @Getter
     private Point location;
 
     private static final CitizenView VIEW = new LaborerView();
 
-    public Citizen(City city) {
+    public void init(City city) {
+        id = city.getCivilization().getWorld().getWorldObjectService().add(this);
         this.city = city;
-    }
-
-    public City getCity() {
-        return city;
-    }
-
-    public Point getLocation() {
-        return location;
     }
 
     public void setLocation(Point location) {

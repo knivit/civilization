@@ -19,10 +19,6 @@ public class GreatScientist extends AbstractUnit {
 
     private static final GreatScientistView VIEW = new GreatScientistView();
 
-    public GreatScientist(Civilization civilization) {
-        super(civilization);
-    }
-
     @Override
     public String getClassUuid() {
         return CLASS_UUID;

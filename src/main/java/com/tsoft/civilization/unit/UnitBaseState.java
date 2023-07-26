@@ -5,7 +5,7 @@ import com.tsoft.civilization.combat.skill.AbstractCombatSkill;
 import com.tsoft.civilization.combat.skill.AbstractHealingSkill;
 import com.tsoft.civilization.combat.skill.AbstractMovementSkill;
 import com.tsoft.civilization.combat.skill.SkillList;
-import com.tsoft.civilization.unit.service.move.PassCostTable;
+import com.tsoft.civilization.unit.action.move.PassCostTable;
 import lombok.Builder;
 import lombok.Getter;
 

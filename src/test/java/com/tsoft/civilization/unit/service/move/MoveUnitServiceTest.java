@@ -6,6 +6,8 @@ import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.tile.MockTilesMap;
+import com.tsoft.civilization.unit.action.move.MoveUnitService;
+import com.tsoft.civilization.unit.action.move.UnitRoute;
 import com.tsoft.civilization.unit.catalog.greatartist.GreatArtist;
 import com.tsoft.civilization.unit.catalog.settlers.Settlers;
 import com.tsoft.civilization.unit.catalog.workers.Workers;
@@ -21,7 +23,7 @@ import java.util.Set;
 import static com.tsoft.civilization.civilization.L10nCivilization.AMERICA;
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
 import static com.tsoft.civilization.unit.action.DefaultUnitActionsResults.*;
-import static com.tsoft.civilization.unit.service.move.MoveUnitService.*;
+import static com.tsoft.civilization.unit.action.move.MoveUnitService.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MoveUnitServiceTest {

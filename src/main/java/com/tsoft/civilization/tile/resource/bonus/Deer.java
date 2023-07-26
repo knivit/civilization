@@ -1,6 +1,7 @@
 package com.tsoft.civilization.tile.resource.bonus;
 
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.tile.feature.forest.Forest;
 import com.tsoft.civilization.tile.resource.*;
@@ -43,7 +44,9 @@ public class Deer extends AbstractResource {
 
     public static final ResourceType RESOURCE_TYPE = ResourceType.DEER;
 
-    private static final ResourceBaseState BASE_STATE = ResourceCatalog.getBaseState(ResourceType.DEER);
+    private static final ResourceBaseState BASE_STATE = ResourceBaseState.builder()
+        .supply(Supply.builder().food(1).build())
+        .build();
 
     private static final ResourceCategory RESOURCE_CATEGORY = ResourceCategory.BONUS;
 

@@ -2,6 +2,7 @@ package com.tsoft.civilization.tile.resource;
 
 public enum ResourceType {
 
+    ANCIENT_RUINS,
     BANANAS,
     BISON,
     CATTLE,
