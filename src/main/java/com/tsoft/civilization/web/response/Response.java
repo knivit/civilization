@@ -1,6 +1,10 @@
 package com.tsoft.civilization.web.response;
 
+import lombok.Getter;
+
 public class Response {
+
+    @Getter
     private final String responseCode;
     private final String contentType;
     private final AbstractResponseContent content;
@@ -17,10 +21,6 @@ public class Response {
         this.responseCode = responseCode;
         contentType = MimeType.get(fileName);
         content = new ResourceResponseContent(resourceLoaderClass, fileName);
-    }
-
-    public String getResponseCode() {
-        return responseCode;
     }
 
     public int getContentLength() {

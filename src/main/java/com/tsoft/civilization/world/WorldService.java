@@ -4,7 +4,6 @@ import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.civilization.*;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.civilization.city.CityList;
-import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Pair;
 import com.tsoft.civilization.util.Point;
@@ -127,10 +126,6 @@ public class WorldService {
         return relations.isWar();
     }
 
-    public Civilization getCivilizationById(String civilizationId) {
-        return civilizations.getCivilizationById(civilizationId);
-    }
-
     // Only one city may be on a tile
     public City getCityAtLocation(Point location) {
         return civilizations.getCityAtLocation(location);
@@ -161,15 +156,7 @@ public class WorldService {
     }
 
     public CivilizationList getCivilizations() {
-        return civilizations.unmodifiableList();
-    }
-
-    public AbstractUnit getUnitById(String unitId) {
-        return civilizations.getUnitById(unitId);
-    }
-
-    public City getCityById(String cityId) {
-        return civilizations.getCityById(cityId);
+        return civilizations.unmodifiableCopy();
     }
 
     public void startYear(Year year) {
@@ -206,8 +193,7 @@ public class WorldService {
     }
 
     public CivilizationList getMovingCivilizations() {
-        return new CivilizationList(civilizations.stream()
-            .filter(civ -> !CivilizationMoveState.DONE.equals(civ.getCivilizationMoveState()))
-            .collect(Collectors.toList()));
+        return civilizations
+            .filter(civ -> !CivilizationMoveState.DONE.equals(civ.getCivilizationMoveState()));
     }
 }

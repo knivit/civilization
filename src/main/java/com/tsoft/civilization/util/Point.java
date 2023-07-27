@@ -1,13 +1,27 @@
 package com.tsoft.civilization.util;
 
+import static com.tsoft.civilization.util.Format.format;
+
 // Immutable
 public class Point {
+
     private final int x;
     private final int y;
 
     // Don't implement "add" method
     // As the used map is cyclic, use TilesMap.addDirToLocation() instead
+    public static Point of(int x, int y) {
+        return new Point(x, y);
+    }
+
     public Point(int x, int y) {
+        if (x < 0) {
+            throw new IllegalArgumentException(format("x = {} must be >= 0", x));
+        }
+        if (y < 0) {
+            throw new IllegalArgumentException(format("y = {} must be >= 0", y));
+        }
+
         this.x = x;
         this.y = y;
     }

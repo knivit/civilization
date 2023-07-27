@@ -1,6 +1,7 @@
 package com.tsoft.civilization.tile.resource.luxury;
 
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.tile.resource.*;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.tile.terrain.desert.Desert;
@@ -42,7 +43,9 @@ public class Salt extends AbstractResource {
 
     public static final ResourceType RESOURCE_TYPE = ResourceType.SALT;
 
-    private static final ResourceBaseState BASE_STATE = ResourceCatalog.getBaseState(ResourceType.SALT);
+    private static final ResourceBaseState BASE_STATE = ResourceBaseState.builder()
+        .supply(Supply.builder().food(1).gold(1).build())
+        .build();
 
     private static final ResourceCategory RESOURCE_CATEGORY = ResourceCategory.LUXURY;
 

@@ -77,11 +77,6 @@ public class CityList implements Iterable<City> {
         return this;
     }
 
-    public City getCityById(String cityId) {
-        Objects.requireNonNull(cityId, "cityId can't be null");
-        return cities.stream().filter(e -> e.getId().equals(cityId)).findAny().orElse(null);
-    }
-
     public AbstractBuilding getBuildingById(String buildingId) {
         for (City city : cities) {
             AbstractBuilding building = city.getBuildingById(buildingId);

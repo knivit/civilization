@@ -23,7 +23,7 @@ class BuyTileServiceTest {
     void can_buy_tile() {
         MockWorld world = MockWorld.newSimpleWorld();
         world.createCivilization(RUSSIA, new MockScenario()
-            .city("city", new Point(1, 1)));
+            .city("city", Point.of(1, 1)));
 
         City city = world.city("city");
 
@@ -32,9 +32,9 @@ class BuyTileServiceTest {
             .isEqualTo(SupplyMock.of("F0 P0 G0"));
 
         List<Point> cityTerritory = new ArrayList<>(List.of(
-            new Point(1, 0), new Point(2, 0),
-            new Point(0, 1), new Point(1, 1), new Point(2, 1),
-            new Point(1, 2), new Point(2, 2)
+            Point.of(1, 0), Point.of(2, 0),
+            Point.of(0, 1), Point.of(1, 1), Point.of(2, 1),
+            Point.of(1, 2), Point.of(2, 2)
         ));
 
         assertThat(city.getTileService().getTerritory()).containsExactlyInAnyOrderElementsOf(cityTerritory);

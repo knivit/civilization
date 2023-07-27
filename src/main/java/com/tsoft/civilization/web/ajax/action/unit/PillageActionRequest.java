@@ -28,7 +28,7 @@ public class PillageActionRequest extends AbstractAjaxRequest {
         String attackerId = request.get("attacker");
         AbstractUnit attacker = myCivilization.getUnitService().getUnitById(attackerId);
         String targetId = request.get("target");
-        HasCombatStrength target = (HasCombatStrength) myCivilization.getWorld().getWorldObjectService().get(targetId);
+        HasCombatStrength target = myCivilization.getWorld().getWorldObjectService().get(targetId);
 
         ActionAbstractResult result = pillageAction.pillage(attacker, target);
         if (result.isFail()) {

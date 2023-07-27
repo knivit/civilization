@@ -1,6 +1,7 @@
 package com.tsoft.civilization.tile.resource.strategic;
 
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.tile.feature.hill.Hill;
 import com.tsoft.civilization.tile.resource.*;
@@ -51,7 +52,9 @@ public class Uranium extends AbstractResource {
 
     public static final ResourceType RESOURCE_TYPE = ResourceType.URANIUM;
 
-    private static final ResourceBaseState BASE_STATE = ResourceCatalog.getBaseState(ResourceType.URANIUM);
+    private static final ResourceBaseState BASE_STATE = ResourceBaseState.builder()
+        .supply(Supply.EMPTY)
+        .build();
 
     private static final ResourceCategory RESOURCE_CATEGORY = ResourceCategory.STRATEGIC;
 

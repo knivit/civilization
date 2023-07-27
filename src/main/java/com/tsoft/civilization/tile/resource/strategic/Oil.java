@@ -1,6 +1,7 @@
 package com.tsoft.civilization.tile.resource.strategic;
 
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.tile.feature.coast.Coast;
 import com.tsoft.civilization.tile.feature.marsh.Marsh;
@@ -46,7 +47,9 @@ public class Oil extends AbstractResource {
 
     public static final ResourceType RESOURCE_TYPE = ResourceType.OIL;
 
-    private static final ResourceBaseState BASE_STATE = ResourceCatalog.getBaseState(ResourceType.OIL);
+    private static final ResourceBaseState BASE_STATE = ResourceBaseState.builder()
+        .supply(Supply.EMPTY)
+        .build();
 
     private static final ResourceCategory RESOURCE_CATEGORY = ResourceCategory.STRATEGIC;
 

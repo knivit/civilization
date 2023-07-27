@@ -15,7 +15,6 @@ import com.tsoft.civilization.world.L10nWorld;
 import com.tsoft.civilization.world.World;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static com.tsoft.civilization.util.l10n.L10nLanguage.EN;
 import static com.tsoft.civilization.util.l10n.L10nLanguage.LANGUAGES;
@@ -167,7 +166,7 @@ public class GetWorldsAction {
     }
 
     private static StringBuilder getCivilizationsTable(World world) {
-        CivilizationList civilizations = world.getCivilizations().sortByName();
+        List<Civilization> civilizations = world.getCivilizations().sortByName();
 
         StringBuilder buf = new StringBuilder();
         for (Civilization civilization : civilizations) {
@@ -202,7 +201,7 @@ public class GetWorldsAction {
 
         List<L10n> list = new ArrayList<>();
         list.add(RANDOM);
-        list.addAll(CIVILIZATIONS.stream().collect(Collectors.toList()));
+        list.addAll(CIVILIZATIONS.stream().toList());
 
         for (L10n civilization : list) {
             civilizations.append(Format.text("""

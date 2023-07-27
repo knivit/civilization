@@ -21,28 +21,20 @@ public class CivilizationTileService implements HasHistory {
             .collect(HashSet::new, Set::addAll, Set::addAll);
     }
 
-    // For given location test is it an civilisation's territory or not
+    // For the given location test is it on civilisation's territory or not
     public boolean isOnTerritory(Point location) {
-        return civilization.getCityService().stream()
-            .anyMatch(e -> e.getTileService().isOnTerritory(location));
+        return civilization.equals(civilization.getWorld().getTileService().getCivilizationOnTile(location));
     }
 
-    // For given locations find out a city
+    // For the given location find out a city
     public City findCityByLocationOnTerritory(Point location) {
-        return civilization.getCityService().stream()
-            .filter(e -> e.getTileService().isOnTerritory(location))
-            .findAny()
-            .orElse(null);
+        return civilization.getWorld().getTileService().getCityOnTile(location);
     }
 
     // Look for tile's improvement by its Id
     public AbstractImprovement findImprovementById(String id) {
-        return civilization.getTilesMap().tiles()
-            .flatMap(e -> e.getImprovements().stream())
-            .filter(Objects::nonNull)
-            .filter(e -> id.equals(e.getId()))
-            .findFirst()
-            .orElse(null);
+        AbstractImprovement improvement = civilization.getWorld().getWorldObjectService().get(id);
+        return (improvement == null || !civilization.equals(improvement.getCivilization())) ? null : improvement;
     }
 
     @Override

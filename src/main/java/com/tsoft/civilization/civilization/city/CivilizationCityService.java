@@ -58,12 +58,14 @@ public class CivilizationCityService {
         return cities.isEmpty() ? null : cities.getAny();
     }
 
-    public City getCityById(String cityId) {
-        return cities.getCityById(cityId);
+    public City getCityById(String id) {
+        City city = world.getCityById(id);
+        return (city == null || !civilization.equals(city.getCivilization())) ? null : city;
     }
 
-    public AbstractBuilding getBuildingById(String buildingId) {
-        return cities.getBuildingById(buildingId);
+    public AbstractBuilding getBuildingById(String id) {
+        AbstractBuilding  building = world.getObjectById(id);
+        return (building == null || !civilization.equals(building.getCivilization())) ? null : building;
     }
 
     public L10n generateCityName() {

@@ -12,7 +12,8 @@ import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationsRelations;
 import com.tsoft.civilization.world.World;
-import com.tsoft.civilization.civilization.CivilizationList;
+
+import java.util.List;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.BARBARIANS;
 
@@ -47,7 +48,7 @@ public class GetCivilizations extends AbstractAjaxRequest {
     }
 
     private StringBuilder getCivilizations(World world) {
-        CivilizationList civilizations = world.getCivilizations().sortByName();
+        List<Civilization> civilizations = world.getCivilizations().sortByName();
 
         Civilization myCivilization = getMyCivilization();
 

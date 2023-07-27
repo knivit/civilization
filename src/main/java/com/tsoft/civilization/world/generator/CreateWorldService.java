@@ -1,4 +1,4 @@
-package com.tsoft.civilization.world.service;
+package com.tsoft.civilization.world.generator;
 
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.action.ActionFailureResult;
@@ -8,8 +8,6 @@ import com.tsoft.civilization.civilization.PlayerType;
 import com.tsoft.civilization.tile.TilesMap;
 import com.tsoft.civilization.web.state.Worlds;
 import com.tsoft.civilization.world.*;
-import com.tsoft.civilization.world.generator.WorldGenerator;
-import com.tsoft.civilization.world.generator.WorldGeneratorFactory;
 import com.tsoft.civilization.world.scenario.BarbariansScenario;
 import lombok.extern.slf4j.Slf4j;
 

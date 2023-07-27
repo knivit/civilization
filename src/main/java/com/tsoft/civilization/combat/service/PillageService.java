@@ -3,12 +3,14 @@ package com.tsoft.civilization.combat.service;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.action.ActionFailureResult;
 import com.tsoft.civilization.action.ActionSuccessResult;
+import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.combat.*;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.improvement.AbstractImprovement;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.L10nUnit;
+import com.tsoft.civilization.world.World;
 
 /**
  * A military unit can pillage
@@ -26,12 +28,12 @@ public class PillageService {
     public static final ActionFailureResult NOT_MILITARY_UNIT = new ActionFailureResult(L10nUnit.NOT_MILITARY_UNIT);
 
     private final CombatResult FAILED_NO_TARGETS = CombatResult.builder()
-            .status(CombatStatus.FAILED_NO_TARGETS)
-            .build();
+        .status(CombatStatus.FAILED_NO_TARGETS)
+        .build();
 
     private final CombatResult PILLAGED = CombatResult.builder()
-            .status(CombatStatus.DONE)
-            .build();
+        .status(CombatStatus.DONE)
+        .build();
 
     public ActionAbstractResult pillage(HasCombatStrength attacker, HasCombatStrength target) {
         ActionAbstractResult result = canPillage(attacker);
@@ -70,7 +72,20 @@ public class PillageService {
 
     public HasCombatStrengthList getTargetsToPillage(HasCombatStrength attacker) {
         AbstractUnit unit = (AbstractUnit)attacker;
+
+        // The attacker must be a military unit
+        if (!unit.getUnitCategory().isMilitary()) {
+            return null;
+        }
+
         AbstractTerrain tile = unit.getTile();
+        World world = unit.getWorld();
+
+        // Civilizations must be at war or the tile is nobody's
+        Civilization owner = world.getTileService().getCivilizationOnTile(tile);
+        if (owner != null && !world.isWar(unit.getCivilization(), owner)) {
+            return null;
+        }
 
         HasCombatStrengthList list = null;
         for (AbstractImprovement improvement : tile.getImprovements()) {

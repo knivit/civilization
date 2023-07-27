@@ -1,6 +1,7 @@
 package com.tsoft.civilization.tile.resource.strategic;
 
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.tile.resource.*;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
@@ -49,7 +50,9 @@ public class Horses extends AbstractResource {
 
     public static final ResourceType RESOURCE_TYPE = ResourceType.HORSES;
 
-    private static final ResourceBaseState BASE_STATE = ResourceCatalog.getBaseState(ResourceType.HORSES);
+    private static final ResourceBaseState BASE_STATE = ResourceBaseState.builder()
+        .supply(Supply.builder().production(1).build())
+        .build();
 
     private static final ResourceCategory RESOURCE_CATEGORY = ResourceCategory.STRATEGIC;
 

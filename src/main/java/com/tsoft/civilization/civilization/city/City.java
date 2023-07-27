@@ -33,6 +33,8 @@ import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.DifficultyLevel;
 import com.tsoft.civilization.world.HasHistory;
+import com.tsoft.civilization.world.HasId;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -48,12 +50,13 @@ import static com.tsoft.civilization.world.Year.*;
 import static com.tsoft.civilization.world.Year.INFORMATION_ERA;
 
 @Slf4j
+@EqualsAndHashCode(of = "id")
 public class City implements HasCombatStrength, HasHistory {
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
     @Getter
-    private final String id = UUID.randomUUID().toString();
+    private String id;
 
     @Getter
     private final AbstractTerrain tile;
@@ -110,6 +113,8 @@ public class City implements HasCombatStrength, HasHistory {
     }
 
     public void init(L10n cityName, boolean isCapital) {
+        id = civilization.getWorld().getWorldObjectService().add(this);
+
         // area
         tile.setCity(this);
         tileService = new CityTileService(this);

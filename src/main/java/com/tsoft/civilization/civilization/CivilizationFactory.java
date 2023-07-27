@@ -30,6 +30,8 @@ public class CivilizationFactory {
             throw new IllegalArgumentException("Unknown civilization name = " + name.getEnglish());
         }
 
-        return supplier.apply(world, playerType);
+        Civilization civilization = supplier.apply(world, playerType);
+        civilization.init();
+        return civilization;
     }
 }

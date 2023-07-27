@@ -62,7 +62,7 @@ public class GetImprovementInfoTest {
             .isEqualTo(expected.findById("info_table"));
     }
 
-    // Get info for foreign civilization's improvement - there should be no supply
+    // Fail to get info for foreign civilization's improvement
     @Test
     public void get_json_for_foreign_civilization() {
         MockWorld world = MockWorld.newSimpleWorld();
@@ -82,12 +82,7 @@ public class GetImprovementInfoTest {
         Response response = getImprovementInfoRequest.getJson(request);
 
         assertThat(response.getResponseCode())
-            .isEqualTo(ResponseCode.OK);
-
-        HtmlDocument actual = HtmlParser.parse(response.getContent());
-
-        assertThat(actual.findById("info_table"))
-            .isNull();
+            .isEqualTo(ResponseCode.BAD_REQUEST);
     }
 
     // Get info for improvement without civilization - there should be no supply
@@ -96,10 +91,10 @@ public class GetImprovementInfoTest {
         MockWorld world = MockWorld.newSimpleWorld();
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
-            .city("city1", new Point(2, 2))
+            .city("city1", Point.of(2, 2))
         );
 
-        AbstractTerrain tile = world.getTilesMap().getTile(new Point(1, 1));
+        AbstractTerrain tile = world.getTilesMap().getTile(Point.of(1, 1));
         Farm farm = ImprovementFactory.newInstance(Farm.CLASS_UUID, tile, world, null);
 
         Sessions.getCurrent().setActiveCivilization(russia);

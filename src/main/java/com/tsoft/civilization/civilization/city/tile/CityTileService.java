@@ -7,6 +7,7 @@ import com.tsoft.civilization.tile.resource.ResourceCategory;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.HasHistory;
+import com.tsoft.civilization.world.World;
 import lombok.Getter;
 
 import java.util.*;
@@ -14,43 +15,51 @@ import java.util.stream.Collectors;
 
 public class CityTileService implements HasHistory {
 
+    private final City city;
+    private final World world;
+
     @Getter
     private final TilesMap tilesMap;
 
     @Getter
     private Point center;
 
-    private final Set<Point> territory = new HashSet<>();
-
     public CityTileService(City city) {
-        tilesMap = city.getCivilization().getWorld().getTilesMap();
+        this.city = city;
+        world = city.getCivilization().getWorld();
+        tilesMap = world.getTilesMap();
     }
 
     public void addStartLocations(Point location) {
         center = location;
 
-        territory.add(location);
+        world.getTileService().put(location, city);
 
-        tilesMap.getLocationsAround(location, 1).stream()
-            .filter(tilesMap::canBeTerritory)
-            .forEach(territory::add);
+        world.getTilesMap()
+            .getLocationsAround(location, 1).stream()
+            .filter(e -> world.getTilesMap().canBeTerritory(e))
+            .forEach(e -> world.getTileService().put(e, city));
     }
 
     /** City's territory */
     public Set<Point> getTerritory() {
-        return Collections.unmodifiableSet(territory);
+        return world.getTileService().getCityTerritory(city);
     }
 
     public boolean isOnTerritory(Point location) {
-        return territory.contains(location);
+        return city.equals(world.getTileService().getCityOnTile(location));
+    }
+
+    public void addLocation(Point location) {
+        world.getTileService().put(location, city);
     }
 
     public void addLocations(Collection<Point> locations) {
-        this.territory.addAll(locations);
+        world.getTileService().put(locations, city);
     }
 
     public List<AbstractResource> getLuxuryResources() {
-        return territory.stream()
+        return getTerritory().stream()
             .map(tilesMap::getTile)
             .map(AbstractTerrain::getResource)
             .filter(Objects::nonNull)

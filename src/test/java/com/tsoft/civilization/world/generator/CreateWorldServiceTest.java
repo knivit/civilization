@@ -1,15 +1,16 @@
-package com.tsoft.civilization.world.service;
+package com.tsoft.civilization.world.generator;
 
 import com.tsoft.civilization.civilization.CivilizationList;
 import com.tsoft.civilization.web.state.Worlds;
 import com.tsoft.civilization.world.*;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.BARBARIANS;
 import static com.tsoft.civilization.world.DifficultyLevel.WARLORD;
-import static com.tsoft.civilization.world.service.CreateWorldService.*;
+import static com.tsoft.civilization.world.generator.CreateWorldService.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CreateWorldServiceTest {

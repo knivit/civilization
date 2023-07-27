@@ -41,7 +41,7 @@ public class BuyTileService {
         }
 
         city.getSupplyService().addExpenses(Supply.builder().gold(-price).build());
-        city.getTileService().addLocations(List.of(location));
+        city.getTileService().addLocation(location);
 
         city.getCivilization().addEvent(TileBoughtEvent.builder()
             .cityName(city.getName())

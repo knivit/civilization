@@ -1,6 +1,7 @@
 package com.tsoft.civilization.tile.resource.luxury;
 
 import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.tile.feature.forest.Forest;
 import com.tsoft.civilization.tile.resource.*;
@@ -31,7 +32,9 @@ public class Silk extends AbstractResource {
 
     public static final ResourceType RESOURCE_TYPE = ResourceType.SILK;
 
-    private static final ResourceBaseState BASE_STATE = ResourceCatalog.getBaseState(ResourceType.SILK);
+    private static final ResourceBaseState BASE_STATE = ResourceBaseState.builder()
+        .supply(Supply.builder().gold(2).build())
+        .build();
 
     private static final ResourceCategory RESOURCE_CATEGORY = ResourceCategory.LUXURY;
 

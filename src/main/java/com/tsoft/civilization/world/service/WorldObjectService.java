@@ -1,4 +1,6 @@
-package com.tsoft.civilization.world;
+package com.tsoft.civilization.world.service;
+
+import com.tsoft.civilization.world.HasId;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,8 +16,8 @@ public class WorldObjectService {
         return id.toString();
     }
 
-    public HasId get(String id) {
+    public <E extends HasId> E get(String id) {
         UUID uuid = UUID.fromString(id);
-        return objects.get(uuid);
+        return (E)objects.get(uuid);
     }
 }

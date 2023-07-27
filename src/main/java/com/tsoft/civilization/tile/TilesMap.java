@@ -36,7 +36,10 @@ public class TilesMap implements Iterable<AbstractTerrain> {
     @Getter @Setter
     private MapConfiguration mapConfiguration;
 
+    @Getter
     private final int width;
+
+    @Getter
     private final int height;
 
     public TilesMap(MapSize mapSize) {
@@ -67,14 +70,6 @@ public class TilesMap implements Iterable<AbstractTerrain> {
 
         tiles = new AbstractTerrain[width][height];
         log.debug("Tiles map {} ({}x{}) created", mapSize, width, height);
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
     }
 
     public AbstractTerrain getTile(int x, int y) {

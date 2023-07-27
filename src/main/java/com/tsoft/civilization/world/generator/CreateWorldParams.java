@@ -1,4 +1,4 @@
-package com.tsoft.civilization.world.service;
+package com.tsoft.civilization.world.generator;
 
 import lombok.Builder;
 import lombok.Getter;

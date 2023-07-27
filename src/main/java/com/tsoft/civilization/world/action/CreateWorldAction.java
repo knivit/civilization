@@ -1,8 +1,8 @@
 package com.tsoft.civilization.world.action;
 
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.world.service.CreateWorldParams;
-import com.tsoft.civilization.world.service.CreateWorldService;
+import com.tsoft.civilization.world.generator.CreateWorldParams;
+import com.tsoft.civilization.world.generator.CreateWorldService;
 
 import java.util.UUID;
 

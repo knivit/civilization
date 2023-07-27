@@ -44,6 +44,7 @@ public abstract class AbstractImprovement implements HasSupply, HasCombatStrengt
 
     protected void init(AbstractTerrain tile, World world, City city) {
         id = world.getWorldObjectService().add(this);
+
         this.city = city;
         this.tile = tile;
 
@@ -79,7 +80,7 @@ public abstract class AbstractImprovement implements HasSupply, HasCombatStrengt
 
     @Override
     public Civilization getCivilization() {
-        return city.getCivilization();
+        return (city == null) ? null : city.getCivilization();
     }
 
     @Override

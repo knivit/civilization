@@ -22,7 +22,8 @@ public class GetImprovementInfo extends AbstractAjaxRequest {
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
 
     public static StringBuilder getAjax(AbstractImprovement improvement) {
-        return Format.text("server.sendAsyncAjax('ajax/GetImprovementInfo', { id:'$improvement' })",
+        return Format.text(
+            "server.sendAsyncAjax('ajax/GetImprovementInfo', { id:'$improvement' })",
             "$improvement", improvement.getId()
         );
     }
@@ -34,9 +35,10 @@ public class GetImprovementInfo extends AbstractAjaxRequest {
             return JsonResponse.badRequest(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
+        // Fail for foreign civilization
         String id = request.get("id");
-        AbstractImprovement improvement = civilization.getTileService().findImprovementById(id);
-        if (improvement == null) {
+        AbstractImprovement improvement = getWorld().getWorldObjectService().get(id);
+        if (improvement == null || (improvement.getCivilization() != null && !civilization.equals(improvement.getCivilization()))) {
             return JsonResponse.badRequest(L10nImprovement.IMPROVEMENT_NOT_FOUND);
         }
 

@@ -9,7 +9,8 @@ import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.scenario.Scenario;
-import com.tsoft.civilization.world.tile.WorldTileService;
+import com.tsoft.civilization.world.service.WorldObjectService;
+import com.tsoft.civilization.world.service.WorldTileService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -90,8 +91,9 @@ public class World {
         return worldService.isWar(c1, c2);
     }
 
-    public Civilization getCivilizationById(String civilizationId) {
-        return worldService.getCivilizationById(civilizationId);
+    public Civilization getCivilizationAtLocation(Point location) {
+        City city = getCityAtLocation(location);
+        return (city == null) ? null : city.getCivilization();
     }
 
     // Only one city may be on a tile
@@ -131,12 +133,20 @@ public class World {
         return worldService.getCivilizations();
     }
 
-    public AbstractUnit getUnitById(String unitId) {
-        return worldService.getUnitById(unitId);
+    public <T> T getObjectById(String id) {
+        return worldObjectService.get(id);
     }
 
-    public City getCityById(String cityId) {
-        return worldService.getCityById(cityId);
+    public Civilization getCivilizationById(String id) {
+        return getObjectById(id);
+    }
+
+    public AbstractUnit getUnitById(String id) {
+        return getObjectById(id);
+    }
+
+    public City getCityById(String id) {
+        return getObjectById(id);
     }
 
     public Year getHistory(int stepNo) {

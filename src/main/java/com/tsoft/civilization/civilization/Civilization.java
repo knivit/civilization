@@ -34,64 +34,63 @@ import java.util.*;
 
 @Slf4j
 @EqualsAndHashCode(of = "id")
-public abstract class Civilization {
+public abstract class Civilization implements HasId {
 
     @Getter
-    private final String id = UUID.randomUUID().toString();
+    private String id;
 
-    private final Year startYear;
-    private final World world;
+    private Year startYear;
+    private World world;
 
     private boolean isDestroyed;
 
     @Getter
-    private final CivilizationUnitService unitService;
+    private CivilizationUnitService unitService;
 
     @Getter
-    private final CivilizationCityService cityService;
+    private CivilizationCityService cityService;
 
     @Getter
-    private final CivilizationTileService tileService;
+    private CivilizationTileService tileService;
 
     @Getter
-    private final CivilizationSettlerService settlerService;
+    private CivilizationSettlerService settlerService;
 
     @Getter
-    private final CivilizationPopulationService populationService;
+    private CivilizationPopulationService populationService;
 
     @Getter
-    private final CivilizationHappinessService happinessService;
+    private CivilizationHappinessService happinessService;
 
     @Getter
-    private final CivilizationUnhappinessService unhappinessService;
+    private CivilizationUnhappinessService unhappinessService;
 
     @Getter
-    private final CivilizationSocialPolicyService socialPolicyService;
+    private CivilizationSocialPolicyService socialPolicyService;
 
-    private final CivilizationGoldenAgeService goldenAgeService;
+    private CivilizationGoldenAgeService goldenAgeService;
 
-    private final Set<Technology> technologies = new TechnologySet();
+    private Set<Technology> technologies = new TechnologySet();
 
     @Getter
     private Supply supply = Supply.EMPTY;
 
     // Agreements which this civilization has with others
-    private final HashMap<Civilization, AgreementList> agreements = new HashMap<>();
+    private HashMap<Civilization, AgreementList> agreements = new HashMap<>();
 
-    private final EventsByYearMap events;
+    private EventsByYearMap events;
 
     @Getter
-    private final PlayerType playerType;
+    private PlayerType playerType;
 
     @Getter
     private volatile CivilizationMoveState civilizationMoveState;
 
     @Getter
-    private final CivilizationView view;
+    private CivilizationView view;
 
     @Getter
-    private final CivilizationBot bot;
-
+    private CivilizationBot bot;
 
     protected abstract CivilizationView createView();
 
@@ -103,6 +102,10 @@ public abstract class Civilization {
 
         this.world = world;
         this.playerType = playerType;
+    }
+
+    protected void init() {
+        id = world.getWorldObjectService().add(this);
 
         startYear = world.getYear();
         events = new EventsByYearMap(world);

@@ -65,6 +65,6 @@ public class UnitList extends AList<AbstractUnit> {
     public List<AbstractUnit> sortByName() {
         return stream()
             .sorted(Comparator.comparing(a -> a.getView().getLocalizedName()))
-            .collect(Collectors.toList());
+            .toList();
     }
 }

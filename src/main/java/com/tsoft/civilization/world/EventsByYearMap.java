@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EventsByYearMap {
+
     private final World world;
 
     private final Map<Year, EventList> history = new HashMap<>();

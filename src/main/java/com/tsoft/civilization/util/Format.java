@@ -2,11 +2,43 @@ package com.tsoft.civilization.util;
 
 import java.util.Objects;
 
-public class Format {
+public final class Format {
+
     private Format() { }
 
+    /**
+     * Replaces "{}" placeholders in "... {} ..." with values
+     */
+    public static String format(String text, Object ... values) {
+        Objects.requireNonNull(text, "text must not be null");
+        Objects.requireNonNull(values, "values must not be null");
+
+        int from;
+        int n = 0;
+        while ((from = text.indexOf('{')) >= 0) {
+            if ((from >= (text.length() - 1)) || (text.charAt(from + 1) != '}')) {
+                break;
+            }
+
+            if (n >= values.length) {
+                throw new IllegalArgumentException("Invalid values: doesn't correspond to {}");
+            }
+
+            String value = toStr(values[n]);
+            text = text.substring(0, from) + value + text.substring(from + 1);
+
+            n ++;
+        }
+
+        return text;
+    }
+
+    /**
+     * Replaces "$value" placeholders in "... $value ..." with values
+     */
     public static StringBuilder text(String text, Object ... values) {
         Objects.requireNonNull(text, "text must not be null");
+        Objects.requireNonNull(values, "values must not be null");
 
         // sort by param's name length by desc
         int[] index = new int[values.length / 2];
@@ -30,9 +62,7 @@ public class Format {
         StringBuilder buf = new StringBuilder(text);
         for (int i = 0; i < index.length; i ++) {
             String name = (String)values[index[i] * 2];
-            Object value = values[index[i] * 2 + 1];
-            if (value == null) value = "";
-            else value = value.toString();
+            String value = toStr(values[index[i] * 2 + 1]);
 
             for (int k = 1; k < 4; k ++) {
                 int n = buf.indexOf(name);
@@ -41,10 +71,17 @@ public class Format {
                     throw new IllegalArgumentException("Parameter '" + name + "' is not found in the text:\n" + text);
                 }
 
-                buf.replace(n, n + name.length(), (String)value);
+                buf.replace(n, n + name.length(), value);
             }
         }
 
         return buf;
+    }
+
+    private static String toStr(Object value) {
+        if (value == null) {
+            return "";
+        }
+        return value.toString();
     }
 }

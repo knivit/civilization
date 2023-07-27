@@ -1,15 +1,14 @@
 package com.tsoft.civilization.web.ajax.action.world;
 
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.util.NumberUtil;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.world.action.CreateWorldAction;
 import com.tsoft.civilization.world.action.GetWorldsAction;
-import com.tsoft.civilization.world.service.CreateWorldParams;
-import com.tsoft.civilization.world.service.CreateWorldService;
+import com.tsoft.civilization.world.generator.CreateWorldParams;
+import com.tsoft.civilization.world.generator.CreateWorldService;
 
 import java.util.UUID;
 

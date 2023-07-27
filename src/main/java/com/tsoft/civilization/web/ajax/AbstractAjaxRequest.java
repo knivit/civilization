@@ -8,6 +8,7 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.World;
 
 public abstract class AbstractAjaxRequest {
+
     public abstract Response getJson(Request request);
 
     /** Returns null if requested AJAX doesn't found */
