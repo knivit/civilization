@@ -94,8 +94,6 @@ public abstract class Civilization implements HasId {
 
     protected abstract CivilizationView createView();
 
-    protected abstract CivilizationBot createBot(World world, Civilization civilization);
-
     protected Civilization(World world, PlayerType playerType) {
         Objects.requireNonNull(world, "world can't be null");
         Objects.requireNonNull(playerType, "playerType can't be null");
@@ -122,7 +120,8 @@ public abstract class Civilization implements HasId {
         goldenAgeService = new CivilizationGoldenAgeService(this);
 
         view = createView();
-        bot = createBot(world, this);
+
+        bot = CivilizationBot.create(this);
     }
 
     public DifficultyLevel getDifficultyLevel() {

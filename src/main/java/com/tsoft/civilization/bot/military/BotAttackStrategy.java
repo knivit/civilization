@@ -1,6 +1,12 @@
 package com.tsoft.civilization.bot.military;
 
+import com.tsoft.civilization.civilization.Civilization;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public class BotAttackStrategy {
+
+    private final Civilization civilization;
 
     public void attack() {
         attackCities();

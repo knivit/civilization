@@ -1,23 +1,79 @@
 package com.tsoft.civilization.bot;
 
+import com.tsoft.civilization.bot.economics.*;
+import com.tsoft.civilization.bot.military.BotAttackStrategy;
+import com.tsoft.civilization.bot.military.BotDefendStrategy;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.PlayerType;
 import com.tsoft.civilization.world.World;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public abstract class CivilizationBot implements Runnable {
+public class CivilizationBot implements Runnable {
 
-    protected final World world;
-    protected final Civilization civilization;
+    private BotAttackStrategy attackStrategy;
+    private BotDefendStrategy defendStrategy;
+    private BotImproveStrategy improveStrategy;
+    private BotExploreStrategy exploreStrategy;
+    private BotSettleStrategy settleStrategy;
+    private BotProductionStrategy productionStrategy;
+    private BotPurchaseStrategy purchaseStrategy;
 
-    protected abstract void calculate();
+    private final Civilization civilization;
 
     private Thread worker;
 
-    protected CivilizationBot(World world, Civilization civilization) {
-        this.world = world;
+    public static CivilizationBot create(Civilization civilization) {
+        CivilizationBot bot = new CivilizationBot(civilization);
+        bot.init();
+        return bot;
+    }
+
+    private CivilizationBot(Civilization civilization) {
         this.civilization = civilization;
+    }
+
+    private void init() {
+        attackStrategy = new BotAttackStrategy(civilization);
+        defendStrategy = new BotDefendStrategy(civilization);
+        improveStrategy = new BotImproveStrategy(civilization);
+        exploreStrategy = new BotExploreStrategy(civilization);
+        settleStrategy = new BotSettleStrategy(civilization);
+        productionStrategy = new BotProductionStrategy(civilization);
+        purchaseStrategy = new BotPurchaseStrategy(civilization);
+    }
+
+    private void calculate() {
+        economics();
+        military();
+        science();
+        culture();
+        faith();
+    }
+
+    private void economics() {
+        exploreStrategy.explore();
+        improveStrategy.improve();
+        settleStrategy.settle();
+        productionStrategy.build();
+        purchaseStrategy.process();
+    }
+
+    private void military() {
+        defendStrategy.defend();
+        attackStrategy.attack();
+    }
+
+    private void science() {
+
+    }
+
+    private void culture() {
+
+    }
+
+    private void faith() {
+
     }
 
     public void startYear() {
