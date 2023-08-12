@@ -11,8 +11,7 @@ public enum TileSupplyStrategy {
     MAX_GOLD(Comparator.comparingDouble(Supply::getGold)),
     MAX_SCIENCE(Comparator.comparingDouble(Supply::getScience)),
     MAX_CULTURE(Comparator.comparingDouble(Supply::getCulture)),
-    MAX_FAITH(Comparator.comparingDouble(Supply::getFaith)),
-    MAX_GREAT_PERSON(Comparator.comparingDouble(Supply::getGreatPerson));
+    MAX_FAITH(Comparator.comparingDouble(Supply::getFaith));
 
     private final Comparator<Supply> comparator;
 

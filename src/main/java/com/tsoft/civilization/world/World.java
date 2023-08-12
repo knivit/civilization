@@ -117,11 +117,11 @@ public class World {
         return worldService.getUnitsAtLocation(location, excludeCivilization);
     }
 
-    public UnitList getUnitsAtLocations(Collection<Point> locations) {
+    public UnitList getUnitsAtLocations(Set<Point> locations) {
         return getUnitsAtLocations(locations, null);
     }
 
-    public UnitList getUnitsAtLocations(Collection<Point> locations, Civilization excludeCivilization) {
+    public UnitList getUnitsAtLocations(Set<Point> locations, Civilization excludeCivilization) {
         return worldService.getUnitsAtLocations(locations, excludeCivilization);
     }
 

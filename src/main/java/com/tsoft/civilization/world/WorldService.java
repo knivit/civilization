@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -147,11 +146,11 @@ public class WorldService {
         return civilizations.getUnitsAtLocation(location, excludeCivilization);
     }
 
-    public UnitList getUnitsAtLocations(Collection<Point> locations) {
+    public UnitList getUnitsAtLocations(Set<Point> locations) {
         return getUnitsAtLocations(locations, null);
     }
 
-    public UnitList getUnitsAtLocations(Collection<Point> locations, Civilization excludeCivilization) {
+    public UnitList getUnitsAtLocations(Set<Point> locations, Civilization excludeCivilization) {
         return civilizations.getUnitsAtLocations(locations, excludeCivilization);
     }
 

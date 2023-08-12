@@ -14,6 +14,7 @@ import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.World;
 
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * Attacker    |  Target              | Attacker's actions
@@ -74,7 +75,7 @@ public class BaseCombatService {
 
     HasCombatStrengthList getPossibleTargetsAround(HasCombatStrength attacker, int radius) {
         World world = attacker.getCivilization().getWorld();
-        Collection<Point> locations = world.getLocationsAround(attacker.getLocation(), radius);
+        Set<Point> locations = world.getLocationsAround(attacker.getLocation(), radius);
 
         CityList citiesAround = world.getCitiesAtLocations(locations, attacker.getCivilization());
         UnitList unitsAround = world.getUnitsAtLocations(locations, attacker.getCivilization());

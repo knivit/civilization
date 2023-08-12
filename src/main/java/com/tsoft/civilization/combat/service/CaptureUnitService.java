@@ -18,6 +18,7 @@ import com.tsoft.civilization.util.Point;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 public class CaptureUnitService {
 
@@ -150,7 +151,7 @@ public class CaptureUnitService {
     private UnitList getTargetsToCapture(AbstractUnit capturer) {
         UnitList units = new UnitList();
 
-        Collection<Point> locations = capturer.getTilesMap().getLocationsAround(capturer.getLocation(), 1);
+        Set<Point> locations = capturer.getTilesMap().getLocationsAround(capturer.getLocation(), 1);
         for (Point location : locations) {
             // check we can move to the location
             ActionAbstractResult moveResult = getMoveOnCaptureResult(capturer, location);

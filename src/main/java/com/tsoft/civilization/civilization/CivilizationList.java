@@ -57,7 +57,7 @@ public class CivilizationList extends AList<Civilization> {
         return units;
     }
 
-    public UnitList getUnitsAtLocations(Collection<Point> locations, Civilization excludeCivilization) {
+    public UnitList getUnitsAtLocations(Set<Point> locations, Civilization excludeCivilization) {
         UnitList units = new UnitList();
 
         for (Civilization civilization : list) {

@@ -2,7 +2,6 @@ package com.tsoft.civilization.civilization.city.supply;
 
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.tile.TileSupplyStrategy;
-import com.tsoft.civilization.economic.HasSupply;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.economic.TileService;
@@ -13,9 +12,9 @@ import com.tsoft.civilization.util.Point;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
+import static com.tsoft.civilization.civilization.tile.TileSupplyStrategy.*;
 
 @Slf4j
 public class PopulationSupplyService {
@@ -29,7 +28,7 @@ public class PopulationSupplyService {
 
     public PopulationSupplyService(City city) {
         this.city = city;
-        this.supplyStrategy = List.of(TileSupplyStrategy.MAX_FOOD, TileSupplyStrategy.MAX_PRODUCTION, TileSupplyStrategy.MAX_GOLD);
+        this.supplyStrategy = List.of(MAX_FOOD, MAX_PRODUCTION, MAX_GOLD, MAX_SCIENCE, MAX_CULTURE, MAX_FAITH);
     }
 
     /* Returns NULL when a location doesn't found */
@@ -37,58 +36,59 @@ public class PopulationSupplyService {
         Set<Point> locations = new HashSet<>(city.getTileService().getTerritory());
         usedLocations.forEach(locations::remove);
 
-        AbstractTerrain bestTile = null;
-        Supply bestTileSupply = null;
+        // find out potential tiles
+        List<AbstractTerrain> tiles = new ArrayList<>();
+        Map<AbstractTerrain, Supply> supplies = new HashMap<>();
         for (Point location : locations) {
             AbstractTerrain tile = city.getCivilization().getTilesMap().getTile(location);
-            Supply tileSupply = tileService.calcSupply(tile);
 
             // don't place a citizen on harsh tiles (terrain features)
             if (!CitizenPlacementTable.canPlaceCitizen(tile)) {
-                log.trace("Can't place a citizen on this tile, skipped");
+                log.trace("Can't place a citizen on tile {}", tile);
                 continue;
             }
 
-            // if the selected tile provides empty (or negative) supply, don't place a citizen here
-            if (isNegative(tileSupply) || isEmpty(tileSupply)) {
-                log.trace("Tile's supply iz zero or negative, skipped");
+            // a citizen won't work on tiles without supply
+            Supply tileSupply = tileService.calcSupply(tile);
+            if (isEmptySupply(tileSupply)) {
                 continue;
             }
 
-            if (bestTile == null) {
-                bestTile = tile;
-                bestTileSupply = tileSupply;
-                continue;
-            }
-
-            // in case a tile gives the same amount of needed supply,
-            // do check other supplements and select the best supply
-            for (TileSupplyStrategy strategy : supplyStrategy) {
-                int cmp = strategy.compare(tileSupply, bestTileSupply);
-                if (cmp < 0) {
-                    break;
-                }
-                if (cmp > 0) {
-                    bestTile = tile;
-                    bestTileSupply = tileSupply;
-                    break;
-                }
-            }
+            tiles.add(tile);
+            supplies.put(tile, tileSupply);
         }
 
-        return (bestTile == null) ? null : bestTile.getLocation();
+        // sort by supply
+        tiles.sort((t1, t2) -> {
+            Supply s1 = supplies.get(t1);
+            Supply s2 = supplies.get(t2);
+
+            for (TileSupplyStrategy strategy : supplyStrategy) {
+                // reverse, from best to worst
+                int c = -strategy.compare(s1, s2);
+
+                if (c < 0) {
+                    return c;
+                }
+
+                if (c > 0) {
+                    return c;
+                }
+
+                // equal, go to the next strategy
+            }
+
+            return 0;
+        });
+
+        // return the best
+        return tiles.isEmpty() ? null : tiles.get(0).getLocation();
     }
 
-    private boolean isNegative(Supply supply) {
-        return supply.getFood() < 0 ||
-            supply.getProduction() < 0 ||
-            supply.getGold() < 0;
-    }
-
-    private boolean isEmpty(Supply supply) {
-        return supply.getFood() == 0 &&
-            supply.getProduction() == 0 &&
-            supply.getGold() == 0;
+    private boolean isEmptySupply(Supply supply) {
+        return supply.getFood() <= 0 &&
+            supply.getProduction() <= 0 &&
+            supply.getGold() <= 0;
     }
 
     public boolean setSupplyStrategy(List<TileSupplyStrategy> supplyStrategy) {

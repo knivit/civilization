@@ -64,7 +64,7 @@ public class CivilizationUnitService {
     }
 
     public UnitList getUnitsAtLocation(Point location) {
-        List<Point> locations = new ArrayList<>(1);
+        Set<Point> locations = new HashSet<>(1);
         locations.add(location);
 
         return getUnitsAtLocations(locations);
@@ -98,12 +98,12 @@ public class CivilizationUnitService {
         return units.getCivilCount();
     }
 
-    public UnitList getUnitsAtLocations(Collection<Point> locations) {
+    public UnitList getUnitsAtLocations(Set<Point> locations) {
         return units.getUnitsAtLocations(locations);
     }
 
     public UnitList getUnitsAround(Point location, int radius) {
-        Collection<Point> locations = world.getLocationsAround(location, radius);
+        Set<Point> locations = world.getLocationsAround(location, radius);
         return getUnitsAtLocations(locations);
     }
 

@@ -53,7 +53,7 @@ public class UnitList extends AList<AbstractUnit> {
         return findAny(e -> e.getId().equals(unitId));
     }
 
-    public UnitList getUnitsAtLocations(Collection<Point> locations) {
+    public UnitList getUnitsAtLocations(Set<Point> locations) {
         return (locations == null || locations.isEmpty()) ?
             new UnitList() : filter(e -> locations.contains(e.getLocation()));
     }

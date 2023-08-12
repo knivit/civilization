@@ -43,7 +43,7 @@ public class CivilizationCityService {
     }
 
     public CityList getCities() {
-        return cities.unmodifiableList();
+        return cities.unmodifiableCopy();
     }
 
     public int size() {
@@ -133,10 +133,9 @@ public class CivilizationCityService {
     }
 
     public CityList getCitiesWithAvailableActions() {
-        return new CityList(cities.stream()
+        return cities
             .filter(city -> !city.isDestroyed())
-            .filter(city -> canAttack(city) || city.canStartConstruction())
-            .collect(Collectors.toList()));
+            .filter(city -> canAttack(city) || city.canStartConstruction());
     }
 
     private boolean canAttack(City city) {

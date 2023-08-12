@@ -4,9 +4,12 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.city.citizen.view.LaborerView;
 import com.tsoft.civilization.economic.HasSupply;
 import com.tsoft.civilization.civilization.city.City;
+import com.tsoft.civilization.unit.AbstractUnit;
+import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.world.HasHistory;
+import com.tsoft.civilization.world.World;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -60,10 +63,6 @@ public class Citizen implements HasSupply, HasHistory {
         this.location = location;
     }
 
-    public boolean isUnemployed() {
-        return location == null;
-    }
-
     public CitizenView getView() {
         return VIEW;
     }
@@ -78,7 +77,7 @@ public class Citizen implements HasSupply, HasHistory {
         // +1 Production
         // In a few ways, Unemployed citizens behave as specialists.
         // They do not work a tile, and receive the bonus from the Statue of Liberty, as though they were specialists,
-        // but receive no other specialist bonuses[Verify. True for Secularism.] and produce little benefit.
+        // but receive no other specialist bonuses and produce little benefit.
         // The number of slots for Unemployed citizens is unlimited.
         if (isUnemployed()) {
             return Supply.builder().production(1).build();
@@ -86,6 +85,30 @@ public class Citizen implements HasSupply, HasHistory {
 
         // Base supply from an employed citizen
         return Supply.builder().science(1).build();
+    }
+
+    // if citizen's tile is occupied by foreign military unit
+    // which civilization is at war then the citizen becomes unemployed
+    public boolean isUnemployed() {
+        return (location == null) || isTileOccupied();
+    }
+
+    private boolean isTileOccupied() {
+        if (location == null) {
+            return false;
+        }
+
+        World world = city.getCivilization().getWorld();
+        UnitList units = world.getUnitsAtLocation(location);
+        for (AbstractUnit unit : units) {
+            if (unit.getUnitCategory().isMilitary()) {
+                if (world.isWar(city.getCivilization(), unit.getCivilization())) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     @Override
