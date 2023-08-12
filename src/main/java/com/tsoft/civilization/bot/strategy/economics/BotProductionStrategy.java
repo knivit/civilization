@@ -1,4 +1,4 @@
-package com.tsoft.civilization.bot.economics;
+package com.tsoft.civilization.bot.strategy.economics;
 
 import com.tsoft.civilization.civilization.Civilization;
 import lombok.RequiredArgsConstructor;

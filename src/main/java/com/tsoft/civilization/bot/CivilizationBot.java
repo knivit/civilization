@@ -1,11 +1,10 @@
 package com.tsoft.civilization.bot;
 
-import com.tsoft.civilization.bot.economics.*;
-import com.tsoft.civilization.bot.military.BotAttackStrategy;
-import com.tsoft.civilization.bot.military.BotDefendStrategy;
+import com.tsoft.civilization.bot.strategy.military.BotAttackStrategy;
+import com.tsoft.civilization.bot.strategy.military.BotDefendStrategy;
+import com.tsoft.civilization.bot.strategy.economics.*;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.PlayerType;
-import com.tsoft.civilization.world.World;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

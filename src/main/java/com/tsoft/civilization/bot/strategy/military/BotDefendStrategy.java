@@ -1,4 +1,4 @@
-package com.tsoft.civilization.bot.military;
+package com.tsoft.civilization.bot.strategy.military;
 
 import com.tsoft.civilization.civilization.Civilization;
 import lombok.RequiredArgsConstructor;
