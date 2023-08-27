@@ -4,7 +4,6 @@ import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.civilization.city.action.BuyTileAction;
-import com.tsoft.civilization.civilization.city.tile.BuyTileService;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
@@ -12,11 +11,16 @@ import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.view.JsonBlock;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class BuyTileActionRequest extends AbstractAjaxRequest {
 
-    private static final BuyTileService buyTileService = new BuyTileService();
-    private static final BuyTileAction buyTileAction = new BuyTileAction(buyTileService);
+    private final BuyTileAction buyTileAction;
+
+    public static BuyTileActionRequest newInstance() {
+        return new BuyTileActionRequest(new BuyTileAction());
+    }
 
     @Override
     public Response getJson(Request request) {

@@ -10,7 +10,7 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @RequiredArgsConstructor
-public class BuyTile {
+public class TileCost {
 
     private final Point location;
     private final int price;

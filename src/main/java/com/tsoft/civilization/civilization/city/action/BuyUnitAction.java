@@ -1,39 +1,17 @@
 package com.tsoft.civilization.civilization.city.action;
 
-import com.tsoft.civilization.unit.L10nUnit;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.civilization.city.City;
+import com.tsoft.civilization.civilization.city.ui.CityActionResults;
+import com.tsoft.civilization.civilization.city.ui.CityUnitActionResults;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitFactory;
-import com.tsoft.civilization.util.Format;
-import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.UUID;
-
-import static com.tsoft.civilization.web.ajax.ServerStaticResource.GOLD_IMAGE;
 
 @Slf4j
 public class BuyUnitAction {
 
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
-
-    public static ActionAbstractResult buyUnit(City city, String unitClassUuid) {
-        ActionAbstractResult result = canBuyUnit(city, unitClassUuid);
-        log.debug("{}", result);
-
-        if (result.isFail()) {
-            return result;
-        }
-
-        if (!city.getCivilization().buyUnit(unitClassUuid, city)) {
-            return CityUnitActionResults.CANT_BUY_THIS_UNIT;
-        }
-
-        return CityUnitActionResults.UNIT_WAS_BOUGHT;
-    }
-
-    public static ActionAbstractResult canBuyUnit(City city, String unitClassUuid) {
+    public ActionAbstractResult canBuyUnit(City city, String unitClassUuid) {
         if (city == null || city.isDestroyed()) {
             return CityActionResults.CITY_NOT_FOUND;
         }
@@ -58,27 +36,18 @@ public class BuyUnitAction {
         return CityUnitActionResults.CAN_BUY_UNIT;
     }
 
-    private static String getLocalizedName() {
-        return L10nUnit.BUY.getLocalized();
-    }
+    public ActionAbstractResult buyUnit(City city, String unitClassUuid) {
+        ActionAbstractResult result = canBuyUnit(city, unitClassUuid);
+        log.debug("{}", result);
 
-    private static String getLocalizedDescription() {
-        return L10nUnit.BUY_DESCRIPTION.getLocalized();
-    }
-
-    public static StringBuilder getHtml(City city, String unitClassUuid) {
-        if (canBuyUnit(city, unitClassUuid).isFail()) {
-            return null;
+        if (result.isFail()) {
+            return result;
         }
 
-        return Format.text("""
-            <button onclick="$buttonOnClick">$buttonLabel: $buyCost $goldImage</button>
-            """,
+        if (!city.getCivilization().buyUnit(unitClassUuid, city)) {
+            return CityUnitActionResults.CANT_BUY_THIS_UNIT;
+        }
 
-            "$buttonOnClick", ClientAjaxRequest.buyUnitAction(city, unitClassUuid),
-            "$buttonLabel", getLocalizedName(),
-            "$buyCost", city.getUnitBuyCost(unitClassUuid),
-            "$goldImage", GOLD_IMAGE
-        );
+        return CityUnitActionResults.UNIT_WAS_BOUGHT;
     }
 }

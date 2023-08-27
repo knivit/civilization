@@ -3,16 +3,20 @@ package com.tsoft.civilization.web.ajax.action.status;
 import com.tsoft.civilization.civilization.building.AbstractBuilding;
 import com.tsoft.civilization.civilization.building.BuildingList;
 import com.tsoft.civilization.civilization.city.L10nCity;
+import com.tsoft.civilization.civilization.city.action.BuildBuildingAction;
+import com.tsoft.civilization.civilization.city.action.BuyBuildingAction;
+import com.tsoft.civilization.civilization.city.action.BuildUnitAction;
+import com.tsoft.civilization.civilization.city.action.BuyUnitAction;
 import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.unit.*;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.civilization.building.L10nBuilding;
 import com.tsoft.civilization.civilization.city.construction.Construction;
 import com.tsoft.civilization.civilization.city.construction.ConstructionList;
-import com.tsoft.civilization.civilization.city.action.BuildBuildingAction;
-import com.tsoft.civilization.civilization.city.action.BuildUnitAction;
-import com.tsoft.civilization.civilization.city.action.BuyBuildingAction;
-import com.tsoft.civilization.civilization.city.action.BuyUnitAction;
+import com.tsoft.civilization.civilization.city.ui.BuildBuildingUi;
+import com.tsoft.civilization.civilization.city.ui.BuildUnitUi;
+import com.tsoft.civilization.civilization.city.ui.BuyBuildingUi;
+import com.tsoft.civilization.civilization.city.ui.BuyUnitUi;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.request.Request;
@@ -21,12 +25,19 @@ import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
+import lombok.RequiredArgsConstructor;
 
 import static com.tsoft.civilization.web.ajax.ServerStaticResource.*;
 
+@RequiredArgsConstructor
 public class GetCityStatus extends AbstractAjaxRequest {
 
     private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
+
+    private final BuildBuildingUi buildBuildingUi = new BuildBuildingUi(new BuildBuildingAction());
+    private final BuyBuildingUi buyBuildingUi = new BuyBuildingUi(new BuyBuildingAction());
+    private final BuildUnitUi buildUnitUi = new BuildUnitUi(new BuildUnitAction());
+    private final BuyUnitUi buyUnitUi = new BuyUnitUi(new BuyUnitAction());
 
     @Override
     public Response getJson(Request request) {
@@ -199,28 +210,29 @@ public class GetCityStatus extends AbstractAjaxRequest {
 
     private StringBuilder getUnitConstructionActions(City city) {
         StringBuilder buf = new StringBuilder();
+
         UnitList units = UnitFactory.getAvailableUnits(city.getCivilization());
 
         for (AbstractUnit unit : units.sortByName()) {
-            StringBuilder buyUnitAction = BuildUnitAction.getHtml(city, unit.getClassUuid());
-            StringBuilder buildUnitAction = BuyUnitAction.getHtml(city, unit.getClassUuid());
+            StringBuilder buildUnitHtml = buildUnitUi.getHtml(city, unit.getClassUuid());
+            StringBuilder buyUnitHtml = buyUnitUi.getHtml(city, unit.getClassUuid());
 
-            if (buyUnitAction == null && buildUnitAction == null) {
+            if (buildUnitHtml == null && buyUnitHtml == null) {
                 continue;
             }
 
             buf.append(Format.text("""
                 <tr>
                     <td><button onclick="server.sendAsyncAjax('ajax/GetUnitInfo', { unit:'$unitUuid' })">$unitName</button></td>
-                    <td>$buyUnitAction</td>
-                    <td>$buildUnitAction</td>
+                    <td>$buyUnitHtml</td>
+                    <td>$buildUnitHtml</td>
                 </tr>
                 """,
 
                 "$unitUuid", unit.getClassUuid(),
                 "$unitName", unit.getView().getLocalizedName(),
-                "$buyUnitAction", buyUnitAction,
-                "$buildUnitAction", buildUnitAction));
+                "$buyUnitHtml", buyUnitHtml,
+                "$buildUnitHtml", buildUnitHtml));
         }
 
         if (buf.isEmpty()) {
@@ -242,29 +254,30 @@ public class GetCityStatus extends AbstractAjaxRequest {
         StringBuilder buf = new StringBuilder();
 
         BuildingList buildings = city.getBuildingService().getAvailableBuildings();
-        for (AbstractBuilding building : buildings.sortByName()) {
-            StringBuilder buyBuildingAction = BuildBuildingAction.getHtml(city, building.getClassUuid());
-            StringBuilder buildBuildingAction = BuyBuildingAction.getHtml(city, building.getClassUuid());
 
-            if (buyBuildingAction == null && buildBuildingAction == null) {
+        for (AbstractBuilding building : buildings.sortByName()) {
+            StringBuilder buildBuildingHtml = buildBuildingUi.getHtml(city, building.getClassUuid());
+            StringBuilder buyBuildingHtml = buyBuildingUi.getHtml(city, building.getClassUuid());
+
+            if (buildBuildingHtml == null && buyBuildingHtml == null) {
                 continue;
             }
 
             buf.append(Format.text("""
                 <tr>
                     <td><button onclick="server.sendAsyncAjax('ajax/GetBuildingInfo', { building:'$buildingUuid' })">$buildingName</button></td>
-                    <td>$buyBuildingAction</td>
-                    <td>$buildBuildingAction</td>
+                    <td>$buyBuildingHtml</td>
+                    <td>$buildBuildingHtml</td>
                 </tr>
                 """,
 
                 "$buildingUuid", building.getClassUuid(),
                 "$buildingName", building.getView().getLocalizedName(),
-                "$buyBuildingAction", buyBuildingAction,
-                "$buildBuildingAction", buildBuildingAction));
+                "$buyBuildingHtml", buyBuildingHtml,
+                "$buildBuildingHtml", buildBuildingHtml));
         }
 
-        if (buf.length() == 0) {
+        if (buf.isEmpty()) {
             return null;
         }
 

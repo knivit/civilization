@@ -5,6 +5,10 @@ import com.tsoft.civilization.util.Format;
 
 public class GetCivilizationInfo {
 
+    public static GetCivilizationInfo newInstance() {
+        return new GetCivilizationInfo();
+    }
+
     public StringBuilder getContent(Civilization civilization) {
         return Format.text("""
             <table id='title_table'>

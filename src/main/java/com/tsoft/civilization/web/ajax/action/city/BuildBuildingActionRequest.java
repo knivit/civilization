@@ -1,8 +1,8 @@
 package com.tsoft.civilization.web.ajax.action.city;
 
+import com.tsoft.civilization.civilization.city.action.BuildBuildingAction;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.civilization.city.action.BuildBuildingAction;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.JsonResponse;
@@ -10,8 +10,16 @@ import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.web.view.JsonBlock;
 import com.tsoft.civilization.civilization.Civilization;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class BuildBuildingActionRequest extends AbstractAjaxRequest {
+
+    private final BuildBuildingAction buildBuildingAction;
+
+    public static BuildBuildingActionRequest newInstance() {
+        return new BuildBuildingActionRequest(new BuildBuildingAction());
+    }
 
     @Override
     public Response getJson(Request request) {
@@ -27,7 +35,7 @@ public class BuildBuildingActionRequest extends AbstractAjaxRequest {
         }
 
         String buildingUuid = request.get("buildingUuid");
-        ActionAbstractResult result = BuildBuildingAction.buildBuilding(city, buildingUuid);
+        ActionAbstractResult result = buildBuildingAction.buildBuilding(city, buildingUuid);
         if (result.isFail()) {
             return JsonResponse.accepted(result.getMessage());
         }

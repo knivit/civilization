@@ -3,22 +3,26 @@ package com.tsoft.civilization.civilization.city.action;
 import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.action.ActionAbstractResult;
+import com.tsoft.civilization.civilization.Civilization;
+import com.tsoft.civilization.civilization.city.City;
+import com.tsoft.civilization.civilization.city.ui.CityActionResults;
+import com.tsoft.civilization.civilization.city.ui.CityUnitActionResults;
 import com.tsoft.civilization.civilization.unit.CivilizationUnitService;
 import com.tsoft.civilization.economic.HappinessMock;
 import com.tsoft.civilization.economic.Supply;
+import com.tsoft.civilization.economic.SupplyMock;
 import com.tsoft.civilization.economic.UnhappinessMock;
-import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.unit.catalog.archers.Archers;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.economic.SupplyMock;
 import org.junit.jupiter.api.Test;
 
 import static com.tsoft.civilization.civilization.L10nCivilization.RUSSIA;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BuildUnitActionTest {
+class BuildUnitActionTest {
+
+    private static final BuildUnitAction BUILD_UNIT_ACTION = new BuildUnitAction();
 
     @Test
     void fail_to_build_unit_no_technology() {
@@ -28,7 +32,7 @@ public class BuildUnitActionTest {
             .city("Moscow", new Point(2, 0))
         );
 
-        assertThat(BuildUnitAction.buildUnit(world.city("Moscow"), Archers.CLASS_UUID))
+        assertThat(BUILD_UNIT_ACTION.buildUnit(world.city("Moscow"), Archers.CLASS_UUID))
             .isEqualTo(CityActionResults.WRONG_ERA_OR_TECHNOLOGY);
     }
 
@@ -60,7 +64,7 @@ public class BuildUnitActionTest {
             .isEqualTo(UnhappinessMock.of("C3 M1 A0 U0 P1 T2"));
 
         // Start build Archers
-        ActionAbstractResult actionResult = BuildUnitAction.buildUnit(city, Archers.CLASS_UUID);
+        ActionAbstractResult actionResult = BUILD_UNIT_ACTION.buildUnit(city, Archers.CLASS_UUID);
 
         assertThat(actionResult)
             .isEqualTo(CityUnitActionResults.UNIT_CONSTRUCTION_IS_STARTED);

@@ -15,6 +15,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class DeclareWarActionTest {
 
+    private static final DeclareWarAction declareWarAction = new DeclareWarAction();
+
     @Test
     public void declare_war() {
         MockWorld world = MockWorld.of(GRASSLAND_MAP_10x10);
@@ -27,7 +29,7 @@ public class DeclareWarActionTest {
         assertThat(world.getCivilizationsRelations(russia, japan)).isEqualTo(CivilizationsRelations.neutral());
         assertThat(world.getCivilizationsRelations(america, japan)).isEqualTo(CivilizationsRelations.neutral());
 
-        assertThat(DeclareWarAction.declareWar(russia, america)).isEqualTo(CAN_DECLARE_WAR);
+        assertThat(declareWarAction.declareWar(russia, america)).isEqualTo(CAN_DECLARE_WAR);
         assertThat(world.getCivilizationsRelations(russia, america)).isEqualTo(CivilizationsRelations.war());
         assertThat(world.getCivilizationsRelations(russia, japan)).isEqualTo(CivilizationsRelations.neutral());
         assertThat(world.getCivilizationsRelations(america, japan)).isEqualTo(CivilizationsRelations.neutral());
@@ -39,7 +41,7 @@ public class DeclareWarActionTest {
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario());
 
-        assertThat(DeclareWarAction.declareWar(russia, russia))
+        assertThat(declareWarAction.declareWar(russia, russia))
             .isEqualTo(WRONG_CIVILIZATION);
     }
 
@@ -52,7 +54,7 @@ public class DeclareWarActionTest {
 
         world.setCivilizationsRelations(russia, america, CivilizationsRelations.war());
 
-        assertThat(DeclareWarAction.declareWar(russia, america))
+        assertThat(declareWarAction.declareWar(russia, america))
             .isEqualTo(ALREADY_WAR);
     }
 }

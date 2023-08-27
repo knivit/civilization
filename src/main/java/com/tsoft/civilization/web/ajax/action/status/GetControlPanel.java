@@ -1,9 +1,9 @@
 package com.tsoft.civilization.web.ajax.action.status;
 
 import com.tsoft.civilization.civilization.L10nCivilization;
+import com.tsoft.civilization.civilization.ui.NextTurnUi;
 import com.tsoft.civilization.web.L10nClient;
 import com.tsoft.civilization.web.L10nServer;
-import com.tsoft.civilization.civilization.action.NextTurnAction;
 import com.tsoft.civilization.civilization.city.CityList;
 import com.tsoft.civilization.unit.UnitList;
 import com.tsoft.civilization.util.Format;
@@ -13,8 +13,16 @@ import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class GetControlPanel extends AbstractAjaxRequest {
+
+    private final NextTurnUi nextTurnUi;
+
+    public static GetControlPanel newInstance() {
+        return new GetControlPanel(NextTurnUi.newInstance());
+    }
 
     @Override
     public Response getJson(Request request) {
@@ -61,14 +69,14 @@ public class GetControlPanel extends AbstractAjaxRequest {
                 <tr>
                     <td><button onclick="$getCivilizations">$civilizationsButton</button></td>
                     $controls
-                    $nextTurnAction
+                    $nextTurnHtml
                 </tr>
             </table>
             """,
 
             "$getCivilizations", GetCivilizations.getAjax(),
             "$civilizationsButton", L10nClient.CIVILIZATIONS_BUTTON,
-            "$nextTurnAction", NextTurnAction.getHtml(civilization),
+            "$nextTurnHtml", nextTurnUi.getHtml(civilization),
             "$controls", controls
         );
     }

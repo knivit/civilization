@@ -1,65 +1,99 @@
 package com.tsoft.civilization.civilization.city.action;
 
 import com.tsoft.civilization.action.ActionAbstractResult;
+import com.tsoft.civilization.civilization.city.tile.TileCost;
+import com.tsoft.civilization.civilization.city.ui.CityTileActionResults;
+import com.tsoft.civilization.economic.Supply;
 import com.tsoft.civilization.civilization.city.City;
-import com.tsoft.civilization.civilization.city.L10nCity;
-import com.tsoft.civilization.civilization.city.tile.BuyTile;
-import com.tsoft.civilization.civilization.city.tile.BuyTileService;
-import com.tsoft.civilization.util.Format;
+import com.tsoft.civilization.civilization.city.event.TileBoughtEvent;
+import com.tsoft.civilization.economic.TileService;
+import com.tsoft.civilization.tile.TilesMap;
+import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.util.Point;
-import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
-import com.tsoft.civilization.web.view.JsonBlock;
-import lombok.RequiredArgsConstructor;
 
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
-@RequiredArgsConstructor
 public class BuyTileAction {
 
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
-
-    private final BuyTileService buyTileService;
+    private final TileService tileService = new TileService();
 
     public ActionAbstractResult buyTile(City city, Point location) {
-        return buyTileService.buyTile(city, location);
+        if (city == null || city.isDestroyed()) {
+            return CityTileActionResults.INVALID_CITY;
+        }
+        
+        if (location == null) {
+            return CityTileActionResults.INVALID_LOCATION;
+        }
+        
+        if (city.getTileService().getTerritory().contains(location)) {
+            return CityTileActionResults.ALREADY_MINE;
+        }
+
+        Double price = calcTilePrice(city, location);
+        if (price == null) {
+            return CityTileActionResults.CANT_BUY_TILE;
+        }
+        
+        if (city.getSupplyService().getSupply().getGold() < price) {
+            return CityTileActionResults.NOT_ENOUGH_GOLD;
+        }
+
+        city.getSupplyService().addExpenses(Supply.builder().gold(-price).build());
+        city.getTileService().addLocation(location);
+
+        city.getCivilization().addEvent(TileBoughtEvent.builder()
+            .cityName(city.getName())
+            .gold(price)
+            .build());
+        
+        return CityTileActionResults.TILE_BOUGHT;
     }
 
-    private static String getLocalizedName() {
-        return L10nCity.BUY_TILE.getLocalized();
+    public ActionAbstractResult canBuyTile(City city) {
+        Supply supply = city.getSupplyService().calcSupply();
+        if (supply.getGold() <= 0) {
+            return CityTileActionResults.NOT_ENOUGH_GOLD;
+        }
+
+        List<TileCost> tiles = getLocationsToBuy(city);
+        if (tiles.isEmpty()) {
+            return CityTileActionResults.NO_TILES_TO_BUY;
+        }
+
+        return CityTileActionResults.CAN_BUY_TILE;
     }
 
-    private static String getLocalizedDescription() {
-        return L10nCity.BUY_TILE_DESCRIPTION.getLocalized();
+    public List<TileCost> getLocationsToBuy(City city) {
+        TilesMap tilesMap = city.getTileService().getTilesMap();
+        Set<Point> around = tilesMap.getLocationsAroundTerritory(city.getTileService().getTerritory(), 2);
+
+        List<TileCost> result = new ArrayList<>();
+        for (Point location : around) {
+            Double price = calcTilePrice(city, location);
+            if (price != null) {
+                result.add(new TileCost(location, (int) Math.round(price)));
+            }
+        }
+
+        return result;
     }
 
-    public StringBuilder getHtml(City city) {
-        if (buyTileService.canBuyTile(city).isFail()) {
+    private Double calcTilePrice(City city, Point location) {
+        TilesMap tilesMap = city.getTileService().getTilesMap();
+        boolean canBuy = tilesMap.canBeTerritory(location);
+        if (!canBuy) {
             return null;
         }
 
-        return Format.text("""
-            <td><button onclick="$buttonOnClick">$buttonLabel</button></td><td>$actionDescription</td>
-            """,
+        AbstractTerrain tile = tilesMap.getTile(location);
 
-            "$buttonOnClick", getClientJSCode(city),
-            "$buttonLabel", getLocalizedName(),
-            "$actionDescription", getLocalizedDescription()
-        );
-    }
-
-    private StringBuilder getClientJSCode(City city) {
-        JsonBlock locations = new JsonBlock('\'');
-
-        locations.startArray("locations");
-        for (BuyTile tile : buyTileService.getLocationsToBuy(city)) {
-            JsonBlock location = new JsonBlock('\'');
-            location.addParam("col", tile.getLocation().getX());
-            location.addParam("row", tile.getLocation().getY());
-            location.addParam("price", tile.getPrice());
-            locations.addElement(location.getText());
-        }
-        locations.stopArray();
-
-        return ClientAjaxRequest.buyTileAction(city, locations);
+        Supply tileSupply = tileService.calcSupply(tile);
+        double food = Math.max(1, tileSupply.getFood());
+        double production = Math.max(1, tileSupply.getProduction());
+        double gold = Math.max(1, tileSupply.getGold());
+        return (30.0 * gold) + (20.0 * production) + (10.0 * food);
     }
 }

@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class BuildBuildingActionRequestTest {
 
-    private final BuildBuildingActionRequest buildBuildingActionRequest = new BuildBuildingActionRequest();
+    private final BuildBuildingActionRequest buildBuildingActionRequest = BuildBuildingActionRequest.newInstance();
 
     @Test
     void get_json() {

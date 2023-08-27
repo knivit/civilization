@@ -5,6 +5,10 @@ import com.tsoft.civilization.util.Format;
 
 public class GetNavigationPanel {
 
+    public static GetNavigationPanel newInstance() {
+        return new GetNavigationPanel();
+    }
+
     public StringBuilder getContent() {
         return Format.text("""
             <table id='navigation_panel'>

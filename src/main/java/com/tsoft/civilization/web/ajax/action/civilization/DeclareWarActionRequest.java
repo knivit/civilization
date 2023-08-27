@@ -9,8 +9,16 @@ import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.response.ResponseCode;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class DeclareWarActionRequest extends AbstractAjaxRequest {
+
+    private final DeclareWarAction declareWarAction;
+
+    public static DeclareWarActionRequest newInstance() {
+        return new DeclareWarActionRequest(new DeclareWarAction());
+    }
 
     @Override
     public Response getJson(Request request) {
@@ -25,7 +33,7 @@ public class DeclareWarActionRequest extends AbstractAjaxRequest {
             return JsonResponse.badRequest(L10nServer.CIVILIZATION_NOT_FOUND);
         }
 
-        ActionAbstractResult result = DeclareWarAction.declareWar(myCivilization, otherCivilization);
+        ActionAbstractResult result = declareWarAction.declareWar(myCivilization, otherCivilization);
         if (result.isFail()) {
             return JsonResponse.accepted(result.getMessage());
         }

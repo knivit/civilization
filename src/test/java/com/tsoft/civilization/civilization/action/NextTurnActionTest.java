@@ -13,6 +13,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class NextTurnActionTest {
 
+    private static final NextTurnAction NEXT_TURN_ACTION = new NextTurnAction();
+
     @Test
     public void nextTurn() {
         MockWorld world = MockWorld.newSimpleWorld();
@@ -22,7 +24,7 @@ public class NextTurnActionTest {
         Year startYear = world.getYear();
 
         assertThat(russia.getCivilizationMoveState()).isNotEqualTo(CivilizationMoveState.DONE);
-        assertThat(NextTurnAction.nextTurn(russia)).isEqualTo(MOVE_DONE);
+        assertThat(NEXT_TURN_ACTION.nextTurn(russia)).isEqualTo(MOVE_DONE);
         assertThat(world.getYear()).isNotEqualTo(startYear);
     }
 }

@@ -2,9 +2,9 @@ package com.tsoft.civilization.web.ajax.action.status;
 
 import com.tsoft.civilization.civilization.city.L10nCity;
 import com.tsoft.civilization.civilization.L10nCivilization;
+import com.tsoft.civilization.civilization.ui.DeclareWarUi;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.unit.L10nUnit;
-import com.tsoft.civilization.civilization.action.DeclareWarAction;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.civilization.city.CityList;
 import com.tsoft.civilization.unit.AbstractUnit;
@@ -18,13 +18,24 @@ import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.web.response.Response;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.civilization.Civilization;
+import lombok.RequiredArgsConstructor;
 
 import static com.tsoft.civilization.web.ajax.ServerStaticResource.*;
 
+@RequiredArgsConstructor
 public class GetCivilizationStatus extends AbstractAjaxRequest {
 
-    private final GetNavigationPanel navigationPanel = new GetNavigationPanel();
-    private final GetCivilizationInfo civilizationInfo = new GetCivilizationInfo();
+    private final GetNavigationPanel navigationPanel;
+    private final GetCivilizationInfo civilizationInfo;
+    private final DeclareWarUi declareWarUi;
+
+    public static GetCivilizationStatus newInstance() {
+        return new GetCivilizationStatus(
+            GetNavigationPanel.newInstance(),
+            GetCivilizationInfo.newInstance(),
+            DeclareWarUi.newInstance()
+        );
+    }
 
     public static StringBuilder getAjax(Civilization civilization) {
         return Format.text("server.sendAsyncAjax('ajax/GetCivilizationStatus', { civilization:'$civilization' })",
@@ -126,7 +137,7 @@ public class GetCivilizationStatus extends AbstractAjaxRequest {
             """,
 
             "$actions", L10nStatus.AVAILABLE_ACTIONS,
-            "$declareWarAction", DeclareWarAction.getHtml(myCivilization, otherCivilization)
+            "$declareWarUi", declareWarUi.getHtml(myCivilization, otherCivilization)
         );
     }
 

@@ -4,10 +4,8 @@ import com.tsoft.civilization.civilization.L10nCivilization;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.action.ActionFailureResult;
 import com.tsoft.civilization.action.ActionSuccessResult;
-import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationsRelations;
-import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 import com.tsoft.civilization.world.World;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,7 +21,7 @@ public class DeclareWarAction {
     public static final ActionFailureResult WRONG_CIVILIZATION = new ActionFailureResult(L10nCivilization.WRONG_CIVILIZATION);
     public static final ActionFailureResult ALREADY_WAR = new ActionFailureResult(L10nCivilization.ALREADY_WAR);
 
-    public static ActionAbstractResult declareWar(Civilization myCivilization, Civilization otherCivilization) {
+    public ActionAbstractResult declareWar(Civilization myCivilization, Civilization otherCivilization) {
         ActionAbstractResult result = canDeclareWar(myCivilization, otherCivilization);
         log.debug("{}", result);
 
@@ -36,7 +34,7 @@ public class DeclareWarAction {
         return CAN_DECLARE_WAR;
     }
 
-    private static ActionAbstractResult canDeclareWar(Civilization myCivilization, Civilization otherCivilization) {
+    public ActionAbstractResult canDeclareWar(Civilization myCivilization, Civilization otherCivilization) {
         if (myCivilization == null || otherCivilization == null || otherCivilization.equals(myCivilization)) {
             return WRONG_CIVILIZATION;
         }
@@ -53,27 +51,5 @@ public class DeclareWarAction {
         }
 
         return CAN_DECLARE_WAR;
-    }
-
-    private static String getLocalizedName() {
-        return L10nCivilization.DECLARE_WAR_NAME.getLocalized();
-    }
-
-    private static String getLocalizedDescription() {
-        return L10nCivilization.DECLARE_WAR_DESCRIPTION.getLocalized();
-    }
-
-    public static StringBuilder getHtml(Civilization myCivilization, Civilization otherCivilization) {
-        if (canDeclareWar(myCivilization, otherCivilization).isFail()) {
-            return null;
-        }
-
-        return Format.text("""
-            <td><button onclick="$buttonOnClick">$buttonLabel</button></td><td>$actionDescription</td>
-            """,
-
-            "$buttonOnClick", ClientAjaxRequest.declareWar(otherCivilization),
-            "$buttonLabel", getLocalizedName(),
-            "$actionDescription", getLocalizedDescription());
     }
 }

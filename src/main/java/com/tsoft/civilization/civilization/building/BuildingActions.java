@@ -11,7 +11,7 @@ public class BuildingActions {
     private static final Map<Class<? extends AbstractBuilding>, AbstractAction> ACTIONS = new HashMap<>() {{
     }};
 
-    private final DefaultBuildingAction defaultActions = new DefaultBuildingAction();
+    private final DefaultBuildingAction defaultActions = DefaultBuildingAction.newInstance();
 
     public <B extends AbstractBuilding> StringBuilder getHtmlActions(B building) {
         AbstractAction action = ACTIONS.get(building.getClass());

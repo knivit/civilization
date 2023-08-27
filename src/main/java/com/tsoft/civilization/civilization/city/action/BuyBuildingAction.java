@@ -1,37 +1,17 @@
 package com.tsoft.civilization.civilization.city.action;
 
-import com.tsoft.civilization.civilization.building.BuildingFactory;
-import com.tsoft.civilization.civilization.building.L10nBuilding;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.civilization.building.AbstractBuilding;
+import com.tsoft.civilization.civilization.building.BuildingFactory;
 import com.tsoft.civilization.civilization.city.City;
-import com.tsoft.civilization.util.Format;
-import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
+import com.tsoft.civilization.civilization.city.ui.CityActionResults;
+import com.tsoft.civilization.civilization.city.ui.CityBuildingActionResults;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.UUID;
-
-import static com.tsoft.civilization.web.ajax.ServerStaticResource.GOLD_IMAGE;
 
 @Slf4j
 public class BuyBuildingAction {
 
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
-
-    public static ActionAbstractResult buyBuilding(City city, String buildingClassUuid) {
-        ActionAbstractResult result = canBuyBuilding(city, buildingClassUuid);
-        log.debug("{}", result);
-
-        if (result.isFail()) {
-            return result;
-        }
-
-        city.getCivilization().buyBuilding(buildingClassUuid, city);
-
-        return CityBuildingActionResults.BUILDING_WAS_BOUGHT;
-    }
-
-    private static ActionAbstractResult canBuyBuilding(City city, String buildingClassUuid) {
+    public ActionAbstractResult canBuyBuilding(City city, String buildingClassUuid) {
         if (city == null || city.isDestroyed()) {
             return CityActionResults.CITY_NOT_FOUND;
         }
@@ -55,23 +35,16 @@ public class BuyBuildingAction {
 
         return CityBuildingActionResults.CAN_START_CONSTRUCTION;
     }
+    public ActionAbstractResult buyBuilding(City city, String buildingClassUuid) {
+        ActionAbstractResult result = canBuyBuilding(city, buildingClassUuid);
+        log.debug("{}", result);
 
-    private static String getLocalizedName() {
-        return L10nBuilding.BUY.getLocalized();
-    }
-
-    public static StringBuilder getHtml(City city, String buildingClassUuid) {
-        if (canBuyBuilding(city, buildingClassUuid).isFail()) {
-            return null;
+        if (result.isFail()) {
+            return result;
         }
 
-        return Format.text(
-            "<button onclick=\"$buttonOnClick\">$buttonLabel: $buyCost $goldImage</button>",
+        city.getCivilization().buyBuilding(buildingClassUuid, city);
 
-            "$buttonOnClick", ClientAjaxRequest.buyBuildingAction(city, buildingClassUuid),
-            "$buttonLabel", getLocalizedName(),
-            "$buyCost", city.getBuildingBuyCost(buildingClassUuid),
-            "$goldImage", GOLD_IMAGE
-        );
+        return CityBuildingActionResults.BUILDING_WAS_BOUGHT;
     }
 }

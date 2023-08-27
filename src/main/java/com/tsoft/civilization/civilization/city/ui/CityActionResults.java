@@ -1,4 +1,4 @@
-package com.tsoft.civilization.civilization.city.action;
+package com.tsoft.civilization.civilization.city.ui;
 
 import com.tsoft.civilization.action.ActionFailureResult;
 import com.tsoft.civilization.util.l10n.L10n;

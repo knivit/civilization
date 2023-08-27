@@ -29,16 +29,16 @@ class RequestsMap {
         REQUESTS = Collections.unmodifiableMap(requests);
 
         // City
-        requests.put(BuyTileActionRequest.class.getSimpleName(), new BuyTileActionRequest());
-        requests.put(BuildBuildingActionRequest.class.getSimpleName(), new BuildBuildingActionRequest());
-        requests.put(BuildUnitActionRequest.class.getSimpleName(), new BuildUnitActionRequest());
-        requests.put(BuyBuildingActionRequest.class.getSimpleName(), new BuyBuildingActionRequest());
-        requests.put(BuyUnitActionRequest.class.getSimpleName(), new BuyUnitActionRequest());
-        requests.put(DestroyBuildingActionRequest.class.getSimpleName(), new DestroyBuildingActionRequest());
+        requests.put(BuyTileActionRequest.class.getSimpleName(), BuyTileActionRequest.newInstance());
+        requests.put(BuildBuildingActionRequest.class.getSimpleName(), BuildBuildingActionRequest.newInstance());
+        requests.put(BuildUnitActionRequest.class.getSimpleName(), BuildUnitActionRequest.newInstance());
+        requests.put(BuyBuildingActionRequest.class.getSimpleName(), BuyBuildingActionRequest.newInstance());
+        requests.put(BuyUnitActionRequest.class.getSimpleName(), BuyUnitActionRequest.newInstance());
+        requests.put(DestroyBuildingActionRequest.class.getSimpleName(), DestroyBuildingActionRequest.newInstance());
 
         // Civilization
-        requests.put(DeclareWarActionRequest.class.getSimpleName(), new DeclareWarActionRequest());
-        requests.put(NextTurnActionRequest.class.getSimpleName(), new NextTurnActionRequest());
+        requests.put(DeclareWarActionRequest.class.getSimpleName(), DeclareWarActionRequest.newInstance());
+        requests.put(NextTurnActionRequest.class.getSimpleName(), NextTurnActionRequest.newInstance());
 
         // Status
         requests.put(GetStartStatus.class.getSimpleName(), new GetStartStatus());
@@ -52,11 +52,11 @@ class RequestsMap {
         requests.put(GetMyUnits.class.getSimpleName(), new GetMyUnits());
         requests.put(GetEvents.class.getSimpleName(), new GetEvents());
         requests.put(GetCivilizations.class.getSimpleName(), new GetCivilizations());
-        requests.put(GetCivilizationStatus.class.getSimpleName(), new GetCivilizationStatus());
+        requests.put(GetCivilizationStatus.class.getSimpleName(), GetCivilizationStatus.newInstance());
         requests.put(GetConstructionStatus.class.getSimpleName(), new GetConstructionStatus());
         requests.put(GetBuildingStatus.class.getSimpleName(), new GetBuildingStatus());
         requests.put(GetBuildingInfo.class.getSimpleName(), new GetBuildingInfo());
-        requests.put(GetControlPanel.class.getSimpleName(), new GetControlPanel());
+        requests.put(GetControlPanel.class.getSimpleName(), GetControlPanel.newInstance());
 
         // Unit's Common
         requests.put(AttackActionRequest.class.getSimpleName(), new AttackActionRequest());
