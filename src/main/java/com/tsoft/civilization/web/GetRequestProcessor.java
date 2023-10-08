@@ -17,7 +17,7 @@ public class GetRequestProcessor {
         if (requestUrl.isEmpty()) {
             requestUrl = "MenuPage.html";
 
-            // Create an user's session if a cookie is empty or stale
+            // Create user's session if a cookie is empty or stale
             String sessionId = request.getSessionId();
             String clientIP = request.getClientIp();
             String userAgent = request.getUserAgent();

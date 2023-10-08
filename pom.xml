@@ -17,6 +17,7 @@
         <logback.version>1.4.6</logback.version>
         <lombok.version>1.18.26</lombok.version>
         <jackson-databind.version>2.14.2</jackson-databind.version>
+        <gdx.version>1.12.0</gdx.version>
 
         <junit-jupiter-api.version>5.9.2</junit-jupiter-api.version>
         <assertj-core.version>3.24.2</assertj-core.version>
@@ -47,6 +48,24 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.badlogicgames.gdx</groupId>
+            <artifactId>gdx</artifactId>
+            <version>${gdx.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.badlogicgames.gdx</groupId>
+            <artifactId>gdx-backend-lwjgl3</artifactId>
+            <version>${gdx.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.badlogicgames.gdx</groupId>
+            <artifactId>gdx-tools</artifactId>
+            <version>${gdx.version}</version>
         </dependency>
 
         <!-- Test dependencies -->
