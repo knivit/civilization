@@ -25,7 +25,7 @@ public class WorkersBaseState {
 
     public UnitBaseState getBaseState() {
         return UnitBaseState.builder()
-            .category(UnitCategory.CIVIL)
+            //.category(UnitCategory.CIVIL)
             .goldCost(200)
             .productionCost(40)
             .passCostTable(new PassCostTable()

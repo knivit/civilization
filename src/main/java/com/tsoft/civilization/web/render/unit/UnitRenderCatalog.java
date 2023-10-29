@@ -17,13 +17,13 @@ import java.util.Map;
 
 public class UnitRenderCatalog extends RenderCatalog {
 
-    private static final Map<Class<? extends AbstractUnit>, Render<? extends AbstractUnit>> UNIT_RENDERS = new HashMap<>();
+    private static final Map<String, String> UNIT_RENDERS = new HashMap<>();
 
     static {
-        UNIT_RENDERS.put(Settlers.class, new SettlersRender());
-        UNIT_RENDERS.put(Workers.class, new WorkersRender());
-        UNIT_RENDERS.put(Archers.class, new ArchersRender());
-        UNIT_RENDERS.put(Warriors.class, new WarriorsRender());
+        UNIT_RENDERS.put("Settler", "assets/Images.AbsoluteUnits/TileSets/AbsoluteUnits/Units/Settler.png");
+        UNIT_RENDERS.put("Worker", "assets/Images.AbsoluteUnits/TileSets/AbsoluteUnits/Units/Worker.png");
+        UNIT_RENDERS.put("Archer", "assets/Images.AbsoluteUnits/TileSets/AbsoluteUnits/Units/Archer.png");
+        UNIT_RENDERS.put("Warrior", "assets/Images.AbsoluteUnits/TileSets/AbsoluteUnits/Units/Warrior.png");
     }
 
     public UnitRenderCatalog() {

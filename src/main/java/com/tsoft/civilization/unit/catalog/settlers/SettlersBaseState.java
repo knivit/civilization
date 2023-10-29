@@ -25,7 +25,7 @@ public class SettlersBaseState {
 
     public UnitBaseState getBaseState() {
         return UnitBaseState.builder()
-            .category(UnitCategory.CIVIL)
+            //.category(UnitCategory.CIVIL)
             .goldCost(200)
             .productionCost(25)
             .passCostTable(new PassCostTable()

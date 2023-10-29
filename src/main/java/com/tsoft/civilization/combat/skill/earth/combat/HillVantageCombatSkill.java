@@ -37,11 +37,11 @@ public class HillVantageCombatSkill implements AbstractCombatSkill {
         AbstractTerrain tile = unit.getCivilization().getWorld().getTilesMap().getTile(location);
 
         if (tile.hasFeature(Hill.class)) {
-            UnitCategory category = unit.getUnitCategory();
-            if (category.isCity()) {
+            if ("City".equals(unit.getClassUuid())) {
                 return getCityAttackStrength(unit).add(getCityDefenseStrength(unit));
             }
 
+            UnitCategory category = unit.getUnitCategory();
             if (category.isRanged()) {
                 return getRangedUnitAttackStrength(unit).add(getRangedUnitDefenseStrength(unit));
             }

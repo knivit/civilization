@@ -4,7 +4,7 @@ import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.tile.MockTilesMap;
-import com.tsoft.civilization.unit.catalog.settlers.Settlers;
+import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.unit.catalog.settlers.action.BuildCityAction;
 import com.tsoft.civilization.util.Point;
@@ -49,7 +49,7 @@ public class BuildCityActionTest {
         assertEquals(0, russia.getUnitService().size());
 
         // A city can't be build on a tile where another city is built
-        Settlers settlers2 = UnitFactory.newInstance(russia, Settlers.CLASS_UUID);
+        AbstractUnit settlers2 = UnitFactory.newInstance(russia, "Settlers");
         assertTrue(russia.getUnitService().addUnit(settlers2, new Point(1, 1)));
         world.nextYear();
 
@@ -77,7 +77,7 @@ public class BuildCityActionTest {
 
         // check 2
         // A city can not be build less than 4 tiles away from other city
-        Settlers settlers2 = UnitFactory.newInstance(russia, Settlers.CLASS_UUID);
+        AbstractUnit settlers2 = UnitFactory.newInstance(russia, "Settlers");
         assertTrue(russia.getUnitService().addUnit(settlers2, new Point(2, 3)));
         world.nextYear();
 
@@ -106,7 +106,7 @@ public class BuildCityActionTest {
         // check 2
         // a city can not be build less than 4 tiles away from other city
         // (cities looks like far away, but don't forget - the map is cyclic)
-        Settlers settlers2 = UnitFactory.newInstance(russia, Settlers.CLASS_UUID);
+        AbstractUnit settlers2 = UnitFactory.newInstance(russia, "Settlers");
         assertTrue(russia.getUnitService().addUnit(settlers2, new Point(7, 3)));
         world.nextYear();
 
@@ -138,7 +138,7 @@ public class BuildCityActionTest {
 
         // check 2
         // Build a city - it's OK now
-        Settlers settlers2 = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
+        AbstractUnit settlers2 = UnitFactory.newInstance(civilization, "Settlers");
         assertTrue(civilization.getUnitService().addUnit(settlers2, new Point(6, 4)));
         world.nextYear();
 

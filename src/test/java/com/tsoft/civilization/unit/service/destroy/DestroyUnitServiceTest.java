@@ -4,9 +4,9 @@ import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.tile.MockTilesMap;
+import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.unit.action.destroy.DestroyUnitService;
-import com.tsoft.civilization.unit.catalog.settlers.Settlers;
 import com.tsoft.civilization.util.Point;
 import org.junit.jupiter.api.Test;
 
@@ -38,7 +38,7 @@ public class DestroyUnitServiceTest {
         assertThat(destroyUnitService.destroy(world.get("settlers1"))).isEqualTo(LAST_SETTLERS_CANT_BE_DESTROYED);
 
         // Add another settlers
-        Settlers settlers2 = UnitFactory.newInstance(russia, Settlers.CLASS_UUID);
+        AbstractUnit settlers2 = UnitFactory.newInstance(russia, "Settlers");
         assertTrue(russia.getUnitService().addUnit(settlers2, new Point(2, 2)));
         world.nextYear();
 

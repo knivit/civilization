@@ -4,8 +4,7 @@ import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.combat.CombatStrengthMock;
-import com.tsoft.civilization.unit.catalog.settlers.Settlers;
-import com.tsoft.civilization.unit.catalog.archers.Archers;
+import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.util.Point;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +25,7 @@ public class UnitCombatServiceTest {
             .settlers("settlers", new Point(2, 0))
         );
 
-        Settlers settlers = world.get("settlers");
+        AbstractUnit settlers = world.get("settlers");
 
         assertThat(settlers.getCombatService().calcCombatStrength())
             .usingComparator(CombatStrengthMock::compare)
@@ -50,7 +49,7 @@ public class UnitCombatServiceTest {
             .archers("archers", new Point(2, 0))
         );
 
-        Archers archers = world.get("archers");
+        AbstractUnit archers = world.get("archers");
 
         assertThat(archers.getCombatService().calcCombatStrength())
             .usingComparator(CombatStrengthMock::compare)

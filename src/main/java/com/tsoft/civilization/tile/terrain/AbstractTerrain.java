@@ -214,7 +214,10 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @EqualsAndHashCode(of = "location")
-public abstract class AbstractTerrain {
+public class AbstractTerrain {
+
+    @Getter @Setter
+    private String classUuid;
 
     @Getter @Setter
     private Point location;
@@ -231,8 +234,10 @@ public abstract class AbstractTerrain {
     @Getter
     private final FeatureList features = new FeatureList();
 
-    public abstract String getClassUuid();
-    public abstract Supply getBaseSupply();
+    public Supply getBaseSupply() {
+        return Supply.EMPTY;
+    }
+
     public abstract AbstractTerrainView getView();
 
     public abstract TerrainType getTileType();

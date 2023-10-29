@@ -22,6 +22,9 @@ public class L10nUnit {
         .put(EN, "Unit not found")
         .put(RU, "Юнит не найден");
 
+    public static final L10n MUST_BE_SETTLERS = new L10n()
+        .put(EN, "Unit must be Settlers");
+
     public static final L10n UNIT_DESTROYED = new L10n()
         .put(EN, "The unit is destroyed")
         .put(RU, "Юнит уничтожен");

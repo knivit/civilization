@@ -13,7 +13,6 @@ import com.tsoft.civilization.unit.action.move.MoveUnitService;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.World;
 
-import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -112,17 +111,13 @@ public class BaseCombatService {
         if (strikeStrength <= 0) strikeStrength = 1;
         attackerState.appliedStrikeStrength(strikeStrength);
 
-        // a ranged attack can't destroy a city
-        if (attacker.getUnitCategory().isRanged() && target.getUnitCategory().isCity()) {
-            if (targetDefenseStrength <= strikeStrength) {
-                strikeStrength = targetDefenseStrength - 1;
-            }
-        }
-
         /** ATTACK */
 
         // fire !
         targetDefenseStrength -= strikeStrength;
+        if (targetDefenseStrength < 0) {
+            targetDefenseStrength = 0;
+        }
 
         //
         // TARGET UPDATE
@@ -161,8 +156,14 @@ public class BaseCombatService {
         target.setCombatExperience(targetExperience);
 
         // target's status
-        boolean targetDestroyed = (targetDefenseStrength <= 0);
-        targetState.isDestroyed(targetDestroyed);
+        boolean targetDestroyed;
+        boolean isRangedAttack = attacker.getUnitCategory().isRanged();
+        if (isRangedAttack && !target.canBeDestroyedByRangedAttack()) {
+            targetDestroyed = false;
+        } else {
+            targetDestroyed = (targetDefenseStrength <= 0);
+            targetState.isDestroyed(targetDestroyed);
+        }
 
         //
         // ATTACKER UPDATE

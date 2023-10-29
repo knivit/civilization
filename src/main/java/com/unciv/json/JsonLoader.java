@@ -16,7 +16,7 @@ import java.time.Duration;
 
 public class JsonLoader {
 
-    private Json create() {
+    private static Json create() {
         Json json = new Json(JsonWriter.OutputType.json);
 
         // Gdx default output type is JsonWriter.OutputType.minimal, which generates invalid Json - e.g. most quotes removed.

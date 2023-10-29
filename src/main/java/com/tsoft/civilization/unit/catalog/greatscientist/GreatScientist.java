@@ -11,7 +11,7 @@ import com.tsoft.civilization.civilization.Civilization;
  * All these consume the unit. The technology can be chosen from a list of any technologies
  * that you could normally research at that point.
  */
-public class GreatScientist extends AbstractUnit {
+public class GreatScientist {
 
     public static final String CLASS_UUID = UnitName.GREAT_SCIENTIST.name();
 
@@ -19,22 +19,18 @@ public class GreatScientist extends AbstractUnit {
 
     private static final GreatScientistView VIEW = new GreatScientistView();
 
-    @Override
     public String getClassUuid() {
         return CLASS_UUID;
     }
 
-    @Override
     public UnitBaseState getBaseState() {
         return BASE_STATE;
     }
 
-    @Override
     public GreatScientistView getView() {
         return VIEW;
     }
 
-    @Override
     public boolean checkEraAndTechnology(Civilization civilization) {
         return civilization.getYear().getEra() != Year.ANCIENT_ERA;
     }

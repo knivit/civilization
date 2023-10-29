@@ -22,10 +22,9 @@ import com.tsoft.civilization.world.HasHistory;
 import com.tsoft.civilization.world.World;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.*;
 
 /**
  * - Only one unit of each category (Military, Naval or Civilian) is allowed per hex.
@@ -45,11 +44,21 @@ import java.util.*;
  * - All units have 100 hit points.
  */
 @Slf4j
+@RequiredArgsConstructor
 @EqualsAndHashCode(of = "id")
-public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength, HasHistory, CanBeBuilt {
+public class AbstractUnit implements HasId, HasView, HasCombatStrength, HasHistory, CanBeBuilt {
 
     @Getter
     private String id;
+
+    @Getter
+    private final String classUuid;
+
+    @Getter
+    private final UnitBaseState baseState;
+
+    @Getter
+    private final AbstractUnitView view;
 
     @Getter @Setter
     private Civilization civilization;
@@ -69,11 +78,6 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
     @Getter
     private boolean isDestroyed;
 
-    public abstract String getClassUuid();
-    public abstract UnitBaseState getBaseState();
-    public abstract AbstractUnitView getView();
-    public abstract boolean checkEraAndTechnology(Civilization civilization);
-
     // Initialization on create the object
     protected void init(Civilization civilization) {
         id = civilization.getWorld().getWorldObjectService().add(this);
@@ -88,6 +92,10 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
     @Override
     public UnitCategory getUnitCategory() {
         return getBaseState().getCategory();
+    }
+
+    public boolean checkEraAndTechnology(Civilization civilization) {
+        return true;
     }
 
     public int getPassCost(AbstractTerrain tile) {
@@ -219,6 +227,11 @@ public abstract class AbstractUnit implements HasId, HasView, HasCombatStrength,
     @Override
     public Supply calcPillageSupply() {
         return Supply.builder().gold(30).build();
+    }
+
+    @Override
+    public boolean canBeDestroyedByRangedAttack() {
+        return false;
     }
 
     @Override

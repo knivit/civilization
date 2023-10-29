@@ -1,0 +1,90 @@
+I've started v2fly on Virtual Box Ubuntu:
+- added NAT rules:
+  Name: SSH port forwarding
+  Protocol: TCP
+  Host IP: 127.0.0.1
+  Host Port: 2222
+  Guest IP: 10.0.2.15 (used `ip -4 addr` in Ubuntu)
+  Guest Port: 22
+
+  Name: V2Ray port forwarding
+  Protocol: TCP
+  Host IP: 127.0.0.1
+  Host Port: 16823
+  Guest IP: 10.0.2.15 (used `ip -4 addr` in Ubuntu)
+  Guest Port: 16823
+- tested using ssh -p 2222 user@127.0.0.1
+
+- Downloaded V2Fly from GitHub Releases page, both Windows and Linux 64-bit zip
+
+- server config (Ubuntu)
+{
+  "inbounds": [ {
+    "port": 16823,
+    "protocol": "vmess",
+    "settings": {
+	  "clients": [ {
+		"id": "b831385a-6324-4d53-ad4f-8cda48b30811",
+		"alterId": 0
+      } ]
+    }
+  }],
+  "outbounds": [ {
+    "protocol": "freedom",
+	  "settings": { }
+    }
+  ],
+  "log" : {
+    "loglevel" : "debug"
+  }
+}
+
+- started the server (no root is needed)
+user@ubuntu-unsafe:~/v2ray$ ./v2ray run -c server.json
+ 
+- client config (Windows)
+{
+  "inbounds": [
+    {
+      "port": 1080,
+      "protocol": "socks",
+      "sniffing": {
+        "enabled": true,
+        "destOverride": ["http", "tls"]
+      },
+      "settings": {
+        "auth": "noauth"
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "127.0.0.1", // my virtualbox's ubuntu NAT
+            "port": 16823,
+            "users": [
+              {
+                "id": "b831385a-6324-4d53-ad4f-8cda48b30811",
+                "alterId": 0
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
+
+- started thr client using Git Bash
+tsoft@DESKTOP-OQHDUOO
+$ ./v2ray run -c "/c/Users/tsoft/v2ray/client.json"
+
+- in Windows FireFox Settings -> General -> Network Settings,
+  - Manual proxy configuration
+  - SOCKS Host: 127.0.0.1
+  - Port: 1080
+  - SOCKS: v5
+  - Proxy DNS when using SOCKS v5: on

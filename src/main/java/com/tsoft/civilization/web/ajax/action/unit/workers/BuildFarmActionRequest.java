@@ -1,9 +1,9 @@
 package com.tsoft.civilization.web.ajax.action.unit.workers;
 
+import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.unit.catalog.workers.Workers;
 import com.tsoft.civilization.unit.catalog.workers.action.BuildFarmAction;
 import com.tsoft.civilization.web.ajax.AbstractAjaxRequest;
 import com.tsoft.civilization.web.request.Request;
@@ -21,7 +21,7 @@ public class BuildFarmActionRequest extends AbstractAjaxRequest {
         }
 
         String workersId = request.get("workers");
-        Workers workers = (Workers)myCivilization.getUnitService().getUnitById(workersId);
+        AbstractUnit workers = myCivilization.getUnitService().getUnitById(workersId);
 
         ActionAbstractResult result = BuildFarmAction.buildFarm(workers);
         if (result.isFail()) {

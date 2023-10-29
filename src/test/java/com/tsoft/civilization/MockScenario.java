@@ -8,11 +8,6 @@ import com.tsoft.civilization.improvement.ImprovementFactory;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitFactory;
-import com.tsoft.civilization.unit.catalog.greatartist.GreatArtist;
-import com.tsoft.civilization.unit.catalog.settlers.Settlers;
-import com.tsoft.civilization.unit.catalog.workers.Workers;
-import com.tsoft.civilization.unit.catalog.archers.Archers;
-import com.tsoft.civilization.unit.catalog.warriors.Warriors;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.world.World;
 import com.tsoft.civilization.world.scenario.Scenario;
@@ -54,23 +49,23 @@ public class MockScenario implements Scenario {
     private final Map<String, Object> objects = new HashMap<>();
 
     public MockScenario warriors(String name, Point location) {
-        return unit(name, location, Warriors.CLASS_UUID);
+        return unit(name, location, "Warriors");
     }
 
     public MockScenario archers(String name, Point location) {
-        return unit(name, location, Archers.CLASS_UUID);
+        return unit(name, location, "Archers");
     }
 
     public MockScenario settlers(String name, Point location) {
-        return unit(name, location, Settlers.CLASS_UUID);
+        return unit(name, location, "Settlers");
     }
 
     public MockScenario workers(String name, Point location) {
-        return unit(name, location, Workers.CLASS_UUID);
+        return unit(name, location, "Workers");
     }
 
     public MockScenario greatArtist(String name, Point location) {
-        return unit(name, location, GreatArtist.CLASS_UUID);
+        return unit(name, location, "GreatArtist");
     }
 
     public MockScenario city(String name, Point location) {
@@ -96,7 +91,7 @@ public class MockScenario implements Scenario {
         // create cities
         cities.forEach(c -> {
             // Create Settlers
-            Settlers settlers = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
+            AbstractUnit settlers = UnitFactory.newInstance(civilization, "Settler");
             if (!civilization.getUnitService().addUnit(settlers, c.location)) {
                 throw new IllegalStateException("Can't place Settlers at " + c.location + " to build a city");
             }

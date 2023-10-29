@@ -2,12 +2,12 @@ package com.tsoft.civilization.unit.catalog.workers.action;
 
 import com.tsoft.civilization.action.ActionFailureResult;
 import com.tsoft.civilization.action.ActionSuccessResult;
+import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.catalog.workers.L10nWorkers;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.tile.feature.forest.Forest;
-import com.tsoft.civilization.unit.catalog.workers.Workers;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 
@@ -24,7 +24,7 @@ public class RemoveForestAction {
 
     public static final ActionFailureResult FAIL_NO_FOREST_HERE = new ActionFailureResult(L10nWorkers.FAIL_NO_FOREST_HERE);
 
-    public static ActionAbstractResult removeForest(Workers workers) {
+    public static ActionAbstractResult removeForest(AbstractUnit workers) {
         ActionAbstractResult result = canRemoveForest(workers);
         if (result.isFail()) {
             return result;
@@ -40,7 +40,7 @@ public class RemoveForestAction {
         return forest.isRemoved() ? FOREST_IS_REMOVED : REMOVING_FOREST;
     }
 
-    private static ActionAbstractResult canRemoveForest(Workers workers) {
+    private static ActionAbstractResult canRemoveForest(AbstractUnit workers) {
         if (workers == null || workers.isDestroyed()) {
             return UNIT_NOT_FOUND;
         }
@@ -69,7 +69,7 @@ public class RemoveForestAction {
         return L10nWorkers.REMOVE_FOREST_DESCRIPTION.getLocalized();
     }
 
-    public static StringBuilder getHtml(Workers workers) {
+    public static StringBuilder getHtml(AbstractUnit workers) {
         if (canRemoveForest(workers).isFail()) {
             return null;
         }

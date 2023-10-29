@@ -40,7 +40,7 @@ public class AttackOnRoughTerrainSkill implements AbstractCombatSkill {
         if (TerrainType.EARTH_ROUGH.equals(terrainType)) {
             if (tile.hasFeature(Hill.class)) {
                 UnitCategory category = unit.getUnitCategory();
-                if (category.isRanged() && !category.isCity()) {
+                if (category.isRanged()) {
                     return getRangedUnitAttackStrength(unit);
                 }
             }

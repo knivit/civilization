@@ -2,6 +2,7 @@ package com.tsoft.civilization.world.scenario;
 
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationsRelations;
+import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.UnitFactory;
 import com.tsoft.civilization.unit.catalog.settlers.Settlers;
 import com.tsoft.civilization.util.Point;
@@ -55,7 +56,7 @@ public class DefaultScenario implements Scenario {
         }
 
         // create the Settlers unit
-        Settlers settlers = UnitFactory.newInstance(civilization, Settlers.CLASS_UUID);
+        AbstractUnit settlers = UnitFactory.newInstance(civilization, "Settler");
         if (!civilization.getUnitService().addUnit(settlers, settlersLocation)) {
             log.warn("Can't add Settlers to a civilization");
             return false;

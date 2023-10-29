@@ -19,30 +19,26 @@ import com.tsoft.civilization.civilization.Civilization;
  * in addition to regional costume, the European version has a mule, the Native American version has a Llama,
  * the Asian version has a water buffalo, and the African/Middle Eastern version has a camel.
  */
-public class Settlers extends AbstractUnit {
+public class Settlers {
 
     public static final String CLASS_UUID = UnitName.SETTLERS.name();
 
     private static final UnitBaseState BASE_STATE = new SettlersBaseState().getBaseState();
 
-    private static final AbstractUnitView VIEW = new SettlersView();
+    private static final SettlersView VIEW = new SettlersView();
 
-    @Override
     public String getClassUuid() {
         return CLASS_UUID;
     }
 
-    @Override
     public UnitBaseState getBaseState() {
         return BASE_STATE;
     }
 
-    @Override
-    public AbstractUnitView getView() {
+    public SettlersView getView() {
         return VIEW;
     }
 
-    @Override
     public boolean checkEraAndTechnology(Civilization civilization) {
         return civilization.getYear().getEra() < Year.MODERN_ERA;
     }

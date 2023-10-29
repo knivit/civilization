@@ -25,7 +25,7 @@ public class GreatArtistBaseState {
 
     public UnitBaseState getBaseState() {
         return UnitBaseState.builder()
-            .category(UnitCategory.CIVIL)
+            //.category(UnitCategory.CIVIL)
             .passCostTable(new PassCostTable()
                 .add(Desert.class, PassCostList.of(new PassCost(null, 1)))
                 .add(Grassland.class, PassCostList.of(new PassCost(null, 1)))

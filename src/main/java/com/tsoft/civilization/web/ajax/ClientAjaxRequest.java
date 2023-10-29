@@ -6,8 +6,6 @@ import com.tsoft.civilization.civilization.L10nCivilization;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.catalog.settlers.Settlers;
-import com.tsoft.civilization.unit.catalog.workers.Workers;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.view.JsonBlock;
 
@@ -94,11 +92,11 @@ public class ClientAjaxRequest {
         return new StringBuilder("client.nextTurnAction()");
     }
 
-    public static StringBuilder buildCityAction(Settlers settlers) {
+    public static StringBuilder buildCityAction(AbstractUnit settlers) {
         return Format.text("client.buildCityAction({ settlers:'$settlers' })", "$settlers", settlers.getId());
     }
 
-    public static StringBuilder buildFarmAction(Workers workers) {
+    public static StringBuilder buildFarmAction(AbstractUnit workers) {
         return Format.text("client.buildFarmAction({ workers:'$workers' })", "$workers", workers.getId());
     }
 
@@ -106,11 +104,11 @@ public class ClientAjaxRequest {
         return Format.text("client.destroyBuildingAction({ building:'$building' })", "$building", building.getId());
     }
 
-    public static StringBuilder removeForestAction(Workers workers) {
+    public static StringBuilder removeForestAction(AbstractUnit workers) {
         return Format.text("client.removeForestAction({ workers:'$workers' })", "$workers", workers.getId());
     }
 
-    public static StringBuilder removeHillAction(Workers workers) {
+    public static StringBuilder removeHillAction(AbstractUnit workers) {
         return Format.text("client.removeHillAction({ workers:'$workers' })", "$workers", workers.getId());
     }
 

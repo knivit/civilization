@@ -2,12 +2,12 @@ package com.tsoft.civilization.unit.catalog.workers.action;
 
 import com.tsoft.civilization.action.ActionFailureResult;
 import com.tsoft.civilization.action.ActionSuccessResult;
+import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.catalog.workers.L10nWorkers;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.technology.Technology;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.tile.feature.hill.Hill;
-import com.tsoft.civilization.unit.catalog.workers.Workers;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 
@@ -24,7 +24,7 @@ public class RemoveHillAction {
 
     public static final ActionFailureResult FAIL_NO_HILL_HERE = new ActionFailureResult(L10nWorkers.FAIL_NO_HILL_HERE);
 
-    public static ActionAbstractResult removeHill(Workers workers) {
+    public static ActionAbstractResult removeHill(AbstractUnit workers) {
         ActionAbstractResult result = canRemoveHill(workers);
         if (result.isFail()) {
             return result;
@@ -40,7 +40,7 @@ public class RemoveHillAction {
         return hill.isRemoved() ? HILL_IS_REMOVED : REMOVING_HILL;
     }
 
-    private static ActionAbstractResult canRemoveHill(Workers workers) {
+    private static ActionAbstractResult canRemoveHill(AbstractUnit workers) {
         if (workers == null || workers.isDestroyed()) {
             return UNIT_NOT_FOUND;
         }
@@ -74,7 +74,7 @@ public class RemoveHillAction {
         return L10nWorkers.REMOVE_HILL_DESCRIPTION.getLocalized();
     }
 
-    public static StringBuilder getHtml(Workers workers) {
+    public static StringBuilder getHtml(AbstractUnit workers) {
         if (canRemoveHill(workers).isFail()) {
             return null;
         }

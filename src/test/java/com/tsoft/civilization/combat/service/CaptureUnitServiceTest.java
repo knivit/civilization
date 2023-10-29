@@ -6,8 +6,6 @@ import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.CivilizationsRelations;
 import com.tsoft.civilization.tile.MockTilesMap;
 import com.tsoft.civilization.unit.AbstractUnit;
-import com.tsoft.civilization.unit.catalog.workers.Workers;
-import com.tsoft.civilization.unit.catalog.warriors.Warriors;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.render.WorldRender;
 import org.junit.jupiter.api.Test;
@@ -112,12 +110,12 @@ public class CaptureUnitServiceTest {
 
         world.createCivilization(RUSSIA, new MockScenario()
             .warriors("warriors", new Point(1, 1)));
-        Warriors warriors = world.get("warriors");
+        AbstractUnit warriors = world.get("warriors");
         warriors.destroy();
 
         world.createCivilization(AMERICA, new MockScenario()
             .workers("workers", new Point(2, 1)));
-        Workers workers = world.get("workers");
+        AbstractUnit workers = world.get("workers");
 
         assertThat(captureUnitService.capture(warriors, workers.getLocation()))
             .isEqualTo(ATTACKER_NOT_FOUND);
@@ -129,11 +127,11 @@ public class CaptureUnitServiceTest {
 
         Civilization russia = world.createCivilization(RUSSIA, new MockScenario()
             .warriors("warriors", new Point(2, 0)));
-        Warriors warriors = world.get("warriors");
+        AbstractUnit warriors = world.get("warriors");
 
         world.createCivilization(AMERICA, new MockScenario()
             .workers("foreignWorkers", new Point(2, 2)));
-        Workers foreignWorkers = world.get("foreignWorkers");
+        AbstractUnit foreignWorkers = world.get("foreignWorkers");
 
         WorldRender.of(this).createHtml(world, russia);
 
@@ -149,7 +147,7 @@ public class CaptureUnitServiceTest {
 
         world.createCivilization(RUSSIA, new MockScenario()
             .warriors("warriors", new Point(2, 0)));
-        Warriors warriors = world.get("warriors");
+        AbstractUnit warriors = world.get("warriors");
 
         world.createCivilization(AMERICA, new MockScenario()
             .workers("foreignWorkers", new Point(2, 1)));

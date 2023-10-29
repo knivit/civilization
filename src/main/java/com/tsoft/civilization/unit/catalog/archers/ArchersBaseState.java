@@ -11,7 +11,6 @@ import com.tsoft.civilization.tile.terrain.snow.Snow;
 import com.tsoft.civilization.tile.terrain.tundra.Tundra;
 import com.tsoft.civilization.unit.UnitBaseState;
 import com.tsoft.civilization.unit.UnitCategory;
-import com.tsoft.civilization.unit.UnitMilitaryType;
 import com.tsoft.civilization.unit.action.move.PassCost;
 import com.tsoft.civilization.unit.action.move.PassCostList;
 import com.tsoft.civilization.unit.action.move.PassCostTable;
@@ -27,8 +26,8 @@ public class ArchersBaseState {
 
     public UnitBaseState getBaseState() {
         return UnitBaseState.builder()
-            .category(UnitCategory.MILITARY_RANGED)
-            .unitMilitaryType(UnitMilitaryType.ARCHERY_UNITS)
+            //.category(UnitCategory.MILITARY_RANGED)
+            //.unitMilitaryType(UnitMilitaryType.ARCHERY_UNITS)
             .goldCost(200)
             .productionCost(40)
             .goldUnitKeepingExpenses(3)

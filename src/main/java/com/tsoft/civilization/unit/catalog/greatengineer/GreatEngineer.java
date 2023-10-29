@@ -12,7 +12,7 @@ import com.tsoft.civilization.civilization.Civilization;
  * Notes: Can sacrifice himself to construct a Manufacture improvement, to hurry production of a unit,
  * building or wonder, or trigger a Golden Age.
  */
-public class GreatEngineer extends AbstractUnit {
+public class GreatEngineer {
 
     public static final String CLASS_UUID = UnitName.GREAT_ENGINEER.name();
 
@@ -20,22 +20,18 @@ public class GreatEngineer extends AbstractUnit {
 
     private static final GreatEngineerView VIEW = new GreatEngineerView();
 
-    @Override
     public String getClassUuid() {
         return CLASS_UUID;
     }
 
-    @Override
     public UnitBaseState getBaseState() {
         return BASE_STATE;
     }
 
-    @Override
     public GreatEngineerView getView() {
         return VIEW;
     }
 
-    @Override
     public boolean checkEraAndTechnology(Civilization civilization) {
         return civilization.getYear().getEra() != Year.ANCIENT_ERA;
     }

@@ -40,6 +40,8 @@ public interface HasCombatStrength extends HasId {
 
     Supply calcPillageSupply();
 
+    boolean canBeDestroyedByRangedAttack();
+
     boolean isDestroyed();
 
     void destroy();

@@ -21,7 +21,7 @@ public class BaseHealingSkill implements AbstractHealingSkill {
 
     @Override
     public CombatDamage heal(HasCombatStrength unit, CombatDamage combatDamage) {
-        if (unit.getUnitCategory().isCity()) {
+        if ("City".equals(unit.getClassUuid())) {
             return cityHeal((City) unit, combatDamage);
         }
 

@@ -12,7 +12,7 @@ import com.tsoft.civilization.civilization.Civilization;
  * himself to create a Citadel (a super-Fort), or to trigger a Golden Age. The Citadel can
  * only be built in your own territory (unlike a regular Fort, which can be built in unclaimed territory.
  */
-public class GreatGeneral extends AbstractUnit {
+public class GreatGeneral {
 
     public static final String CLASS_UUID = UnitName.GREAT_GENERAL.name();
 
@@ -20,22 +20,18 @@ public class GreatGeneral extends AbstractUnit {
 
     private static final GreatGeneralView VIEW = new GreatGeneralView();
 
-    @Override
     public String getClassUuid() {
         return CLASS_UUID;
     }
 
-    @Override
     public UnitBaseState getBaseState() {
         return BASE_STATE;
     }
 
-    @Override
     public GreatGeneralView getView() {
         return VIEW;
     }
 
-    @Override
     public boolean checkEraAndTechnology(Civilization civilization) {
         return civilization.getYear().getEra() != Year.ANCIENT_ERA;
     }

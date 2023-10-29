@@ -43,30 +43,26 @@ import com.tsoft.civilization.civilization.Civilization;
  * The Korean armies possessed particularly fine archers during the 600-year Choson period, while the English longbow
  * dominated the European battlefields during the 14th and 15th centuries.
  */
-public class Archers extends AbstractUnit {
+public class Archers {
 
     public static final String CLASS_UUID = UnitName.ARCHERS.name();
 
     private static final UnitBaseState BASE_STATE = new ArchersBaseState().getBaseState();
 
-    private static final AbstractUnitView VIEW = new ArchersView();
+    private static final ArchersView VIEW = new ArchersView();
 
-    @Override
     public String getClassUuid() {
         return CLASS_UUID;
     }
 
-    @Override
     public UnitBaseState getBaseState() {
         return BASE_STATE;
     }
 
-    @Override
-    public AbstractUnitView getView() {
+    public ArchersView getView() {
         return VIEW;
     }
 
-    @Override
     public boolean checkEraAndTechnology(Civilization civilization) {
         return (civilization.getYear().getEra() == Year.ANCIENT_ERA) &&
             (civilization.isResearched(Technology.ARCHERY));

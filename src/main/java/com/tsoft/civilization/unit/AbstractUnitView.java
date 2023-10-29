@@ -1,11 +1,30 @@
 package com.tsoft.civilization.unit;
 
+import com.tsoft.civilization.util.l10n.L10n;
 import com.tsoft.civilization.world.AbstractView;
 import com.tsoft.civilization.web.view.JsonBlock;
+import lombok.Builder;
+import lombok.Getter;
 
-public abstract class AbstractUnitView implements AbstractView {
+import static com.tsoft.civilization.util.l10n.L10nLanguage.EN;
 
-    public abstract String getJsonName();
+@Getter
+public class AbstractUnitView implements AbstractView {
+
+    private final String jsonName;
+    private final L10n name;
+    private final String localizedName;
+    private final String localizedDescription;
+    private final String statusImageSrc;
+
+    public AbstractUnitView(String jsonName) {
+        this.jsonName = jsonName;
+
+        name = new L10n().put(EN, jsonName);
+        localizedName = jsonName;
+        localizedDescription = jsonName;
+        statusImageSrc = "assets/Images.AbsoluteUnits/TileSets/AbsoluteUnits/Units" + jsonName + ".png";
+    }
 
     public JsonBlock getJson(AbstractUnit unit) {
         JsonBlock unitBlock = new JsonBlock();

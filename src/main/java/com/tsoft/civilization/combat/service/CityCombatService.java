@@ -162,9 +162,6 @@ public class CityCombatService implements HasHistory {
     private final City city;
 
     @Getter
-    private final UnitCategory unitCategory = UnitCategory.MILITARY_RANGED_CITY;
-
-    @Getter
     private CombatDamage combatDamage = CombatDamage.ZERO;
 
     @Getter

@@ -6,8 +6,7 @@ import com.tsoft.civilization.combat.service.AttackService;
 import com.tsoft.civilization.combat.HasCombatStrengthList;
 import com.tsoft.civilization.helper.html.HtmlDocument;
 import com.tsoft.civilization.helper.html.HtmlParser;
-import com.tsoft.civilization.unit.catalog.workers.Workers;
-import com.tsoft.civilization.unit.catalog.warriors.Warriors;
+import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
 import org.junit.jupiter.api.Test;
@@ -30,11 +29,11 @@ class AttackActionTest {
         MockWorld world = MockWorld.newSimpleWorld();
         world.createCivilization(RUSSIA, new MockScenario()
             .warriors("warriors", new Point(2, 0)));
-        Warriors warriors = world.get("warriors");
+        AbstractUnit warriors = world.get("warriors");
 
         world.createCivilization(AMERICA, new MockScenario()
             .workers("foreignWorkers", new Point(2, 2)));
-        Workers foreignWorkers = world.get("foreignWorkers");
+        AbstractUnit foreignWorkers = world.get("foreignWorkers");
 
         when(attackService.canAttack(eq(warriors))).thenReturn(CAN_ATTACK);
         when(attackService.getTargetsToAttack(eq(warriors))).thenReturn(new HasCombatStrengthList().add(foreignWorkers));

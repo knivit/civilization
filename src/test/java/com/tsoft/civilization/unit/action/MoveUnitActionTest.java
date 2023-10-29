@@ -4,8 +4,8 @@ import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.helper.html.HtmlDocument;
 import com.tsoft.civilization.helper.html.HtmlParser;
+import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.action.move.MoveUnitAction;
-import com.tsoft.civilization.unit.catalog.workers.Workers;
 import com.tsoft.civilization.unit.action.move.MoveUnitService;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
@@ -31,7 +31,7 @@ public class MoveUnitActionTest {
         world.createCivilization(RUSSIA, new MockScenario()
             .workers("workers", new Point(1, 1)));
 
-        Workers workers = world.get("workers");
+        AbstractUnit workers = world.get("workers");
         Set<Point> locations = new LinkedHashSet<>(List.of(new Point(2, 1), new Point(2, 0)));
 
         MoveUnitService moveUnitService = mock(MoveUnitService.class);

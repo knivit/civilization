@@ -24,7 +24,7 @@ public class CityBuildingsCombatSkill implements AbstractCombatSkill {
 
     @Override
     public CombatStrength getCombatStrength(HasCombatStrength unit) {
-        if (unit.getUnitCategory().isCity()) {
+        if ("City".equals(unit.getClassUuid())) {
             City city = (City) unit;
             int defenseStrength = city.getBuildings().stream()
                 .mapToInt(e -> e.getDefenseStrength(unit.getCivilization()))

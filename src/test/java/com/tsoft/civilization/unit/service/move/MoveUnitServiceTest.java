@@ -6,12 +6,9 @@ import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.tile.MockTilesMap;
+import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.action.move.MoveUnitService;
 import com.tsoft.civilization.unit.action.move.UnitRoute;
-import com.tsoft.civilization.unit.catalog.greatartist.GreatArtist;
-import com.tsoft.civilization.unit.catalog.settlers.Settlers;
-import com.tsoft.civilization.unit.catalog.workers.Workers;
-import com.tsoft.civilization.unit.catalog.warriors.Warriors;
 import com.tsoft.civilization.util.dir.Dir6;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.web.render.WorldRender;
@@ -47,7 +44,7 @@ public class MoveUnitServiceTest {
 
         world.createCivilization(RUSSIA, new MockScenario()
             .warriors("warriors", new Point(2, 0)));
-        Warriors warriors = world.get("warriors");
+        AbstractUnit warriors = world.get("warriors");
 
         warriors.destroy();
 
@@ -114,7 +111,7 @@ public class MoveUnitServiceTest {
             world.createCivilization(RUSSIA, new MockScenario()
                 .settlers("settlers", new Point(1, 1)));
 
-            Settlers settlers = world.get("settlers");
+            AbstractUnit settlers = world.get("settlers");
 
             UnitRoute route = new UnitRoute(dir);
             settlers.setPassScore(1);
@@ -142,7 +139,7 @@ public class MoveUnitServiceTest {
         );
 
         // try one complex route - it must be OK
-        Settlers settlers = world.get("settlers");
+        AbstractUnit settlers = world.get("settlers");
         settlers.setPassScore(10);
 
         UnitRoute route = new UnitRoute();
@@ -164,8 +161,8 @@ public class MoveUnitServiceTest {
             .allMatch(p -> p.equals(UNIT_MOVED));
 
         assertThat(settlers)
-            .returns(new Point(1, 1), Settlers::getLocation)
-            .returns(0, Settlers::getPassScore);
+            .returns(new Point(1, 1), AbstractUnit::getLocation)
+            .returns(0, AbstractUnit::getPassScore);
 
         assertThat(route).isEmpty();
     }
@@ -191,10 +188,10 @@ public class MoveUnitServiceTest {
         );
 
         // try one complex route - it must be OK
-        Settlers settlers1 = world.get("settlers1");
+        AbstractUnit settlers1 = world.get("settlers1");
         settlers1.setPassScore(1);
 
-        Settlers settlers2 = world.get("settlers2");
+        AbstractUnit settlers2 = world.get("settlers2");
         settlers2.setPassScore(1);
 
         UnitRoute route = new UnitRoute(new Dir6(1, 0));
@@ -205,12 +202,12 @@ public class MoveUnitServiceTest {
             .containsExactly(UNIT_SWAPPED);
 
         assertThat(settlers1)
-            .returns(new Point(2, 1), Settlers::getLocation)
-            .returns(0, Settlers::getPassScore);
+            .returns(new Point(2, 1), AbstractUnit::getLocation)
+            .returns(0, AbstractUnit::getPassScore);
 
         assertThat(settlers2)
-            .returns(new Point(1, 1), Settlers::getLocation)
-            .returns(0, Settlers::getPassScore);
+            .returns(new Point(1, 1), AbstractUnit::getLocation)
+            .returns(0, AbstractUnit::getPassScore);
 
         assertThat(route).isEmpty();
     }
@@ -235,10 +232,10 @@ public class MoveUnitServiceTest {
             .settlers("settlers2", new Point(2, 1))
         );
 
-        Settlers settlers1 = world.get("settlers1");
+        AbstractUnit settlers1 = world.get("settlers1");
         settlers1.setPassScore(1);
 
-        Settlers settlers2 = world.get("settlers2");
+        AbstractUnit settlers2 = world.get("settlers2");
         settlers2.setPassScore(0);
 
         UnitRoute route = new UnitRoute(new Dir6(1, 0));
@@ -249,12 +246,12 @@ public class MoveUnitServiceTest {
             .containsExactly(CANT_SWAP_OTHER_UNIT_NO_ACTIONS_AVAILABLE);
 
         assertThat(settlers1)
-            .returns(new Point(1, 1), Settlers::getLocation)
-            .returns(1, Settlers::getPassScore);
+            .returns(new Point(1, 1), AbstractUnit::getLocation)
+            .returns(1, AbstractUnit::getPassScore);
 
         assertThat(settlers2)
-            .returns(new Point(2, 1), Settlers::getLocation)
-            .returns(0, Settlers::getPassScore);
+            .returns(new Point(2, 1), AbstractUnit::getLocation)
+            .returns(0, AbstractUnit::getPassScore);
 
         assertThat(route)
             .hasSize(1)
@@ -282,10 +279,10 @@ public class MoveUnitServiceTest {
         );
 
         // try one complex route - it must be OK
-        Settlers settlers1 = world.get("settlers1");
+        AbstractUnit settlers1 = world.get("settlers1");
         settlers1.setPassScore(2);
 
-        Settlers settlers2 = world.get("settlers2");
+        AbstractUnit settlers2 = world.get("settlers2");
         settlers2.setPassScore(1);
 
         UnitRoute route = new UnitRoute(new Dir6(0, 1), new Dir6(0, 1));
@@ -296,12 +293,12 @@ public class MoveUnitServiceTest {
             .containsExactly(UNIT_MOVED, INVALID_TARGET_LOCATION);
 
         assertThat(settlers1)
-            .returns(new Point(1, 2), Settlers::getLocation)
-            .returns(1, Settlers::getPassScore);
+            .returns(new Point(1, 2), AbstractUnit::getLocation)
+            .returns(1, AbstractUnit::getPassScore);
 
         assertThat(settlers2)
-            .returns(new Point(1, 3), Settlers::getLocation)
-            .returns(1, Settlers::getPassScore);
+            .returns(new Point(1, 3), AbstractUnit::getLocation)
+            .returns(1, AbstractUnit::getPassScore);
 
         assertThat(route)
             .hasSize(1)
@@ -328,10 +325,10 @@ public class MoveUnitServiceTest {
         );
 
         // try one complex route - it must be OK
-        Warriors warriors = world.get("warriors");
+        AbstractUnit warriors = world.get("warriors");
         warriors.setPassScore(1);
 
-        Workers workers = world.get("workers");
+        AbstractUnit workers = world.get("workers");
         workers.setPassScore(1);
 
         UnitRoute route = new UnitRoute(new Dir6(1, 0));
@@ -342,12 +339,12 @@ public class MoveUnitServiceTest {
             .containsExactly(UNIT_MOVED);
 
         assertThat(warriors)
-            .returns(new Point(2, 1), Warriors::getLocation)
-            .returns(0, Warriors::getPassScore);
+            .returns(new Point(2, 1), AbstractUnit::getLocation)
+            .returns(0, AbstractUnit::getPassScore);
 
         assertThat(workers)
-            .returns(new Point(2, 1), Workers::getLocation)
-            .returns(1, Workers::getPassScore);
+            .returns(new Point(2, 1), AbstractUnit::getLocation)
+            .returns(1, AbstractUnit::getPassScore);
 
         assertThat(route).isEmpty();
     }
@@ -368,7 +365,7 @@ public class MoveUnitServiceTest {
         );
 
         // try one complex route - it must be OK
-        Workers workers = world.get("workers");
+        AbstractUnit workers = world.get("workers");
         workers.setPassScore(1);
 
         UnitRoute route = new UnitRoute(new Dir6(1, 0));
@@ -379,8 +376,8 @@ public class MoveUnitServiceTest {
             .containsExactly(UNIT_MOVED);
 
         assertThat(workers)
-            .returns(new Point(2, 1), Workers::getLocation)
-            .returns(0, Workers::getPassScore);
+            .returns(new Point(2, 1), AbstractUnit::getLocation)
+            .returns(0, AbstractUnit::getPassScore);
 
         assertThat(route).isEmpty();
     }
@@ -404,8 +401,8 @@ public class MoveUnitServiceTest {
         );
 
         City city= world.city("city");
-        Workers workers = world.get("workers");
-        GreatArtist artist = world.get("artist");
+        AbstractUnit workers = world.get("workers");
+        AbstractUnit artist = world.get("artist");
 
         Set<Point> locations = moveUnitService.getLocationsToMove(workers);
 
@@ -419,16 +416,16 @@ public class MoveUnitServiceTest {
             .isEqualTo(city);
 
         assertThat(artist)
-            .returns(city.getLocation(), GreatArtist::getLocation)
-            .returns(2, GreatArtist::getPassScore);
+            .returns(city.getLocation(), AbstractUnit::getLocation)
+            .returns(2, AbstractUnit::getPassScore);
 
         assertThat(civilization.getUnitService().getUnitsAtLocation(new Point(2, 1)))
             .hasSize(1)
             .containsExactly(artist);
 
         assertThat(workers)
-            .returns(new Point(1, 1), Workers::getLocation)
-            .returns(2, Workers::getPassScore);
+            .returns(new Point(1, 1), AbstractUnit::getLocation)
+            .returns(2, AbstractUnit::getPassScore);
     }
 
     @Test
@@ -447,7 +444,7 @@ public class MoveUnitServiceTest {
             .workers("workers1", new Point(2, 2))
         );
 
-        Workers workers1 = world.get("workers1");
+        AbstractUnit workers1 = world.get("workers1");
         workers1.setPassScore(2);
 
         world.createCivilization(AMERICA, new MockScenario()

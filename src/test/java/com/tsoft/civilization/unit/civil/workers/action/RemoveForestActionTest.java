@@ -10,7 +10,7 @@ import com.tsoft.civilization.tile.terrain.grassland.Grassland;
 import com.tsoft.civilization.tile.feature.AbstractFeature;
 import com.tsoft.civilization.tile.feature.hill.Hill;
 import com.tsoft.civilization.civilization.Civilization;
-import com.tsoft.civilization.unit.catalog.workers.Workers;
+import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.catalog.workers.action.RemoveForestAction;
 import com.tsoft.civilization.unit.catalog.workers.action.RemoveHillAction;
 import com.tsoft.civilization.unit.catalog.workers.action.WorkersActionResults;
@@ -128,7 +128,7 @@ public class RemoveForestActionTest {
 
         civilization.addTechnology(Technology.MINING);
 
-        Workers workers = world.get("workers");
+        AbstractUnit workers = world.get("workers");
         StringBuilder buf = RemoveForestAction.getHtml(workers);
 
         HtmlDocument expected = HtmlParser.parse(Format.text("""

@@ -33,7 +33,6 @@ import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.world.DifficultyLevel;
 import com.tsoft.civilization.world.HasHistory;
-import com.tsoft.civilization.world.HasId;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -53,7 +52,7 @@ import static com.tsoft.civilization.world.Year.INFORMATION_ERA;
 @EqualsAndHashCode(of = "id")
 public class City implements HasCombatStrength, HasHistory {
 
-    public static final String CLASS_UUID = UUID.randomUUID().toString();
+    public static final String CLASS_UUID = "City";
 
     @Getter
     private String id;
@@ -236,7 +235,7 @@ public class City implements HasCombatStrength, HasHistory {
 
     @Override
     public UnitCategory getUnitCategory() {
-        return combatService.getUnitCategory();
+        return UnitCategory.ARCHERY;
     }
 
     public List<TileSupplyStrategy> getSupplyStrategy() {
@@ -351,6 +350,11 @@ public class City implements HasCombatStrength, HasHistory {
     @Override
     public Supply calcPillageSupply() {
         return Supply.builder().gold(300).build();
+    }
+
+    @Override
+    public boolean canBeDestroyedByRangedAttack() {
+        return false;
     }
 
     public Happiness getHappiness() {

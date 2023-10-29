@@ -1,7 +1,7 @@
 package com.tsoft.civilization.unit.catalog.greatartist.action;
 
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.unit.catalog.greatartist.GreatArtist;
+import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;
@@ -15,15 +15,15 @@ import static com.tsoft.civilization.unit.action.move.MoveUnitService.INVALID_TA
 public class LandmarkImprovementAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    public static ActionAbstractResult buildLandmarkImprovement(GreatArtist unit) {
+    public static ActionAbstractResult buildLandmarkImprovement(AbstractUnit unit) {
         return INVALID_TARGET_LOCATION;
     }
 
-    private static ActionAbstractResult canBuildLandmarkImprovement(GreatArtist unit) {
+    private static ActionAbstractResult canBuildLandmarkImprovement(AbstractUnit unit) {
         return INVALID_TARGET_LOCATION;
     }
 
-    private static String getClientJSCode(GreatArtist unit) {
+    private static String getClientJSCode(AbstractUnit unit) {
         return "not implemented";
     }
 
@@ -35,7 +35,7 @@ public class LandmarkImprovementAction {
         return "not implemented";
     }
 
-    public static StringBuilder getHtml(GreatArtist unit) {
+    public static StringBuilder getHtml(AbstractUnit unit) {
         if (canBuildLandmarkImprovement(unit).isFail()) {
             return null;
         }

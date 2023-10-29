@@ -6,7 +6,6 @@ import com.tsoft.civilization.action.ActionSuccessResult;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.L10nUnit;
-import com.tsoft.civilization.unit.catalog.settlers.Settlers;
 
 import static com.tsoft.civilization.unit.action.DefaultUnitActionsResults.*;
 
@@ -38,7 +37,7 @@ public class DestroyUnitService {
             return NO_PASS_SCORE;
         }
 
-        if (unit instanceof Settlers && unit.getCivilization().getUnitService().size() == 1) {
+        if ("Settler".equals(unit.getClassUuid()) && unit.getCivilization().getUnitService().size() == 1) {
             return LAST_SETTLERS_CANT_BE_DESTROYED;
         }
 

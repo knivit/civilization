@@ -1,6 +1,5 @@
 package com.tsoft.civilization.unit;
 
-import com.tsoft.civilization.unit.catalog.greatgeneral.GreatGeneral;
 import com.tsoft.civilization.util.AList;
 import com.tsoft.civilization.util.Point;
 
@@ -13,8 +12,8 @@ public class UnitList extends AList<AbstractUnit> {
         return filter(u -> u.getClassUuid().equals(classUuid));
     }
 
-    public int getUnitClassCount(Class<? extends AbstractUnit> unitClass) {
-        return (int)list.stream().filter(e -> e.getClass().equals(unitClass)).count();
+    public int getUnitClassCount(String unitClassUuid) {
+        return (int)list.stream().filter(e -> e.getClassUuid().equals(unitClassUuid)).count();
     }
 
     public AbstractUnit findUnitByCategory(UnitCategory unitCategory) {
@@ -40,7 +39,7 @@ public class UnitList extends AList<AbstractUnit> {
     }
 
     public int getGreatGeneralCount() {
-        return getUnitClassCount(GreatGeneral.class);
+        return getUnitClassCount("GreatGeneral");
     }
 
     public List<Point> getLocations() {

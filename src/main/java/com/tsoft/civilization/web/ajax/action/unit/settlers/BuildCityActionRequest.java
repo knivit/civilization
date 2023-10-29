@@ -1,9 +1,9 @@
 package com.tsoft.civilization.web.ajax.action.unit.settlers;
 
+import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.web.L10nServer;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.unit.catalog.settlers.action.BuildCityAction;
-import com.tsoft.civilization.unit.catalog.settlers.Settlers;
 import com.tsoft.civilization.web.request.Request;
 import com.tsoft.civilization.web.response.JsonResponse;
 import com.tsoft.civilization.web.response.Response;
@@ -21,7 +21,7 @@ public class BuildCityActionRequest extends AbstractAjaxRequest {
         }
 
         String settlersId = request.get("settlers");
-        Settlers settlers = (Settlers)myCivilization.getUnitService().getUnitById(settlersId);
+        AbstractUnit settlers = myCivilization.getUnitService().getUnitById(settlersId);
 
         ActionAbstractResult result = BuildCityAction.buildCity(settlers);
         if (result.isFail()) {

@@ -1,7 +1,7 @@
 package com.tsoft.civilization.unit.catalog.greatengineer.action;
 
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.unit.catalog.greatengineer.GreatEngineer;
+import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;
@@ -15,15 +15,15 @@ import static com.tsoft.civilization.unit.action.move.MoveUnitService.INVALID_TA
 public class HurryProductionAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    public static ActionAbstractResult hurryProduction(GreatEngineer unit) {
+    public static ActionAbstractResult hurryProduction(AbstractUnit unit) {
         return INVALID_TARGET_LOCATION;
     }
 
-    private static ActionAbstractResult canHurryProduction(GreatEngineer unit) {
+    private static ActionAbstractResult canHurryProduction(AbstractUnit unit) {
         return INVALID_TARGET_LOCATION;
     }
 
-    private static String getClientJSCode(GreatEngineer unit) {
+    private static String getClientJSCode(AbstractUnit unit) {
         return "not implemented";
     }
 
@@ -35,7 +35,7 @@ public class HurryProductionAction {
         return "not implemented";
     }
 
-    public static StringBuilder getHtml(GreatEngineer unit) {
+    public static StringBuilder getHtml(AbstractUnit unit) {
         if (canHurryProduction(unit).isFail()) {
             return null;
         }

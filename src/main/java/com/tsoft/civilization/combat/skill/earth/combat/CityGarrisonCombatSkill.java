@@ -27,7 +27,7 @@ public class CityGarrisonCombatSkill implements AbstractCombatSkill {
     // Only Land units may form a Garrison
     @Override
     public CombatStrength getCombatStrength(HasCombatStrength unit) {
-        if (unit.getUnitCategory().isCity()) {
+        if ("City".equals(unit.getClassUuid())) {
             City city = (City) unit;
             double garrisonMeleeAttackStrength = calcGarrisonedMeleeAttackStrength(city);
             double garrisonRangedAttackStrength = calcGarrisonedRangedAttackStrength(city);

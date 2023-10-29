@@ -1,7 +1,7 @@
 package com.tsoft.civilization.unit.catalog.greatartist.action;
 
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.unit.catalog.greatartist.GreatArtist;
+import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;
@@ -17,15 +17,15 @@ import static com.tsoft.civilization.unit.action.move.MoveUnitService.INVALID_TA
 public class CultureBombAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    public static ActionAbstractResult cultureBomb(GreatArtist unit) {
+    public static ActionAbstractResult cultureBomb(AbstractUnit unit) {
         return INVALID_TARGET_LOCATION;
     }
 
-    private static ActionAbstractResult canCultureBomb(GreatArtist unit) {
+    private static ActionAbstractResult canCultureBomb(AbstractUnit unit) {
         return INVALID_TARGET_LOCATION;
     }
 
-    private static String getClientJSCode(GreatArtist unit) {
+    private static String getClientJSCode(AbstractUnit unit) {
         return "not implemented";
     }
 
@@ -37,7 +37,7 @@ public class CultureBombAction {
         return "not implemented";
     }
 
-    public static StringBuilder getHtml(GreatArtist unit) {
+    public static StringBuilder getHtml(AbstractUnit unit) {
         if (canCultureBomb(unit).isFail()) {
             return null;
         }

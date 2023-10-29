@@ -4,9 +4,9 @@ import com.tsoft.civilization.MockScenario;
 import com.tsoft.civilization.MockWorld;
 import com.tsoft.civilization.helper.html.HtmlDocument;
 import com.tsoft.civilization.helper.html.HtmlParser;
+import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.action.destroy.DestroyUnitAction;
 import com.tsoft.civilization.unit.action.destroy.DestroyUnitService;
-import com.tsoft.civilization.unit.catalog.workers.Workers;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,7 +28,7 @@ public class DestroyUnitActionTest {
         world.createCivilization(RUSSIA, new MockScenario()
             .workers("workers", new Point(1, 1)));
 
-        Workers workers = world.get("workers");
+        AbstractUnit workers = world.get("workers");
 
         DestroyUnitService destroyUnitService = mock(DestroyUnitService.class);
         when(destroyUnitService.canDestroy(any())).thenReturn(CAN_DESTROY_UNIT);

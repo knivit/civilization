@@ -138,6 +138,11 @@ public abstract class AbstractImprovement implements HasSupply, HasCombatStrengt
     }
 
     @Override
+    public boolean canBeDestroyedByRangedAttack() {
+        return false;
+    }
+
+    @Override
     public boolean isDestroyed() {
         return isPillaged;
     }

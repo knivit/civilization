@@ -259,7 +259,7 @@ public abstract class Civilization implements HasId {
         return new Point(0, 0);
     }
 
-    public City createCity(Settlers settlers) {
+    public City createCity(AbstractUnit settlers) {
         Objects.requireNonNull(settlers, "settlers must be not null");
 
         Point location = settlers.getLocation();

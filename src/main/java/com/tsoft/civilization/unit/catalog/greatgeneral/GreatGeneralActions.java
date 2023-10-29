@@ -20,7 +20,7 @@ public class GreatGeneralActions implements AbstractAction<GreatGeneral> {
 
             "$citadelImprovementAction", CitadelImprovementAction.getHtml(unit),
             "$combatBonusAction", CombatBonusAction.getHtml(unit),
-            "$defaultActions", defaultActions.getHtmlActions(unit)
+            "$defaultActions", defaultActions.getHtmlActions(null)//unit)
         );
     }
 }

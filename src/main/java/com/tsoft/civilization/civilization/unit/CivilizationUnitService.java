@@ -76,7 +76,7 @@ public class CivilizationUnitService {
         List<Point> locations = new ArrayList<>(world.getLocationsAround(settlersLocation, 2));
         Collections.shuffle(locations);
 
-        Warriors warriors = UnitFactory.newInstance(civ, Warriors.CLASS_UUID);
+        AbstractUnit warriors = UnitFactory.newInstance(civ, Warriors.CLASS_UUID);
         for (Point location : locations) {
             if (civ.getUnitService().addUnit(warriors, location)) {
                 return location;

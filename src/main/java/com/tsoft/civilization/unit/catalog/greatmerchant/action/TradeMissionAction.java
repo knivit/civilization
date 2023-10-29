@@ -1,7 +1,7 @@
 package com.tsoft.civilization.unit.catalog.greatmerchant.action;
 
 import com.tsoft.civilization.action.ActionAbstractResult;
-import com.tsoft.civilization.unit.catalog.greatmerchant.GreatMerchant;
+import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.util.Format;
 
 import java.util.UUID;
@@ -15,15 +15,15 @@ import static com.tsoft.civilization.unit.action.move.MoveUnitService.INVALID_TA
 public class TradeMissionAction {
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    public static ActionAbstractResult tradeMission(GreatMerchant unit) {
+    public static ActionAbstractResult tradeMission(AbstractUnit unit) {
         return INVALID_TARGET_LOCATION;
     }
 
-    private static ActionAbstractResult canTradeMission(GreatMerchant unit) {
+    private static ActionAbstractResult canTradeMission(AbstractUnit unit) {
         return INVALID_TARGET_LOCATION;
     }
 
-    private static String getClientJSCode(GreatMerchant unit) {
+    private static String getClientJSCode(AbstractUnit unit) {
         return "not implemented";
     }
 
@@ -35,7 +35,7 @@ public class TradeMissionAction {
         return "not implemented";
     }
 
-    public static StringBuilder getHtml(GreatMerchant unit) {
+    public static StringBuilder getHtml(AbstractUnit unit) {
         if (canTradeMission(unit).isFail()) {
             return null;
         }

@@ -7,8 +7,7 @@ import com.tsoft.civilization.civilization.CivilizationsRelations;
 import com.tsoft.civilization.combat.HasCombatStrength;
 import com.tsoft.civilization.improvement.catalog.farm.Farm;
 import com.tsoft.civilization.tile.MockTilesMap;
-import com.tsoft.civilization.unit.catalog.warriors.Warriors;
-import com.tsoft.civilization.unit.catalog.workers.Workers;
+import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.util.Point;
 import org.junit.jupiter.api.Test;
 
@@ -39,8 +38,8 @@ class PillageServiceTest {
             .workers("workers", Point.of(1, 1))
             .warriors("warriors", Point.of(2, 1))
         );
-        Workers workers = world.get("workers");
-        Warriors warriors = world.get("warriors");
+        AbstractUnit workers = world.get("workers");
+        AbstractUnit warriors = world.get("warriors");
 
         Civilization america = world.createCivilization(AMERICA, new MockScenario()
             .city("New York", Point.of(2, 2))

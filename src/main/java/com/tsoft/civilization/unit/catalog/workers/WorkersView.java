@@ -27,27 +27,23 @@ import lombok.Getter;
  *
  * Once a player researches Industrialization, all of his or her Workers change in appearance, looking more like stereotypical factory workers.
  */
-public class WorkersView extends AbstractUnitView {
+public class WorkersView {
 
     @Getter
     public final L10n name = L10nUnit.WORKERS_NAME;
 
-    @Override
     public String getLocalizedName() {
         return name.getLocalized();
     }
 
-    @Override
     public String getLocalizedDescription() {
         return L10nUnit.WORKERS_DESCRIPTION.getLocalized();
     }
 
-    @Override
     public String getJsonName() {
         return "Workers";
     }
 
-    @Override
     public String getStatusImageSrc() {
         return "images/status/units/worker.png";
     }

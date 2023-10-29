@@ -6,7 +6,7 @@ import com.tsoft.civilization.improvement.catalog.farm.Farm;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
 import com.tsoft.civilization.tile.terrain.grassland.Grassland;
 import com.tsoft.civilization.tile.terrain.plains.Plains;
-import com.tsoft.civilization.unit.catalog.workers.Workers;
+import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 
@@ -18,7 +18,7 @@ public class BuildFarmAction {
 
     public static final String CLASS_UUID = UUID.randomUUID().toString();
 
-    public static ActionAbstractResult buildFarm(Workers workers) {
+    public static ActionAbstractResult buildFarm(AbstractUnit workers) {
         ActionAbstractResult result = canBuildFarm(workers);
         if (result.isFail()) {
             return result;
@@ -27,7 +27,7 @@ public class BuildFarmAction {
         return WorkersActionResults.BUILDING_IMPROVEMENT;
     }
 
-    private static ActionAbstractResult canBuildFarm(Workers workers) {
+    private static ActionAbstractResult canBuildFarm(AbstractUnit workers) {
         if (workers == null || workers.isDestroyed()) {
             return UNIT_NOT_FOUND;
         }
@@ -60,7 +60,7 @@ public class BuildFarmAction {
         return L10nImprovement.BUILD_FARM_ACTION.getLocalized();
     }
 
-    public static StringBuilder getHtml(Workers workers) {
+    public static StringBuilder getHtml(AbstractUnit workers) {
         if (canBuildFarm(workers).isFail()) {
             return null;
         }

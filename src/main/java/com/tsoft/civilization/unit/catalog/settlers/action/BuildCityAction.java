@@ -2,17 +2,16 @@ package com.tsoft.civilization.unit.catalog.settlers.action;
 
 import com.tsoft.civilization.action.ActionFailureResult;
 import com.tsoft.civilization.action.ActionSuccessResult;
+import com.tsoft.civilization.unit.AbstractUnit;
 import com.tsoft.civilization.unit.catalog.settlers.L10nSettlers;
 import com.tsoft.civilization.action.ActionAbstractResult;
 import com.tsoft.civilization.civilization.city.City;
 import com.tsoft.civilization.tile.terrain.AbstractTerrain;
-import com.tsoft.civilization.unit.catalog.settlers.Settlers;
 import com.tsoft.civilization.util.Format;
 import com.tsoft.civilization.util.Point;
 import com.tsoft.civilization.civilization.Civilization;
 import com.tsoft.civilization.web.ajax.ClientAjaxRequest;
 
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -29,7 +28,7 @@ public class BuildCityAction {
     public static final ActionFailureResult CANT_BUILD_CITY_TILE_IS_OCCUPIED = new ActionFailureResult(L10nSettlers.CANT_BUILD_CITY_TILE_IS_OCCUPIED);
     public static final ActionFailureResult CANT_BUILD_CITY_THERE_IS_ANOTHER_CITY_NEARBY = new ActionFailureResult(L10nSettlers.CANT_BUILD_CITY_THERE_IS_ANOTHER_CITY_NEARBY);
 
-    public static ActionAbstractResult buildCity(Settlers settlers) {
+    public static ActionAbstractResult buildCity(AbstractUnit settlers) {
         ActionAbstractResult result = canBuildCity(settlers);
 
         if (result.isFail()) {
@@ -45,9 +44,13 @@ public class BuildCityAction {
         return CITY_BUILT;
     }
 
-    private static ActionAbstractResult canBuildCity(Settlers settlers) {
+    private static ActionAbstractResult canBuildCity(AbstractUnit settlers) {
         if (settlers == null || settlers.isDestroyed()) {
             return UNIT_NOT_FOUND;
+        }
+
+        if (!"Settler".equals(settlers.getClassUuid())) {
+            return MUST_BE_SETTLERS;
         }
 
         // unit must have passing score
@@ -83,7 +86,7 @@ public class BuildCityAction {
         return L10nSettlers.BUILD_CITY_DESCRIPTION.getLocalized();
     }
 
-    public static StringBuilder getHtml(Settlers settlers) {
+    public static StringBuilder getHtml(AbstractUnit settlers) {
         if (canBuildCity(settlers).isFail()) {
             return null;
         }

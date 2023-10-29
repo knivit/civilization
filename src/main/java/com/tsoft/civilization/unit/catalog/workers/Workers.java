@@ -19,30 +19,26 @@ import com.tsoft.civilization.civilization.Civilization;
  * so you may construct a Worker right away without hampering your new city's starting growth.
  * As civilian units, Workers have no defense and so are captured if attacked by an enemy unit.
  */
-public class Workers extends AbstractUnit {
+public class Workers {
 
     public static final String CLASS_UUID = UnitName.WORKERS.name();
 
     private static final UnitBaseState BASE_STATE = new WorkersBaseState().getBaseState();
 
-    private static final AbstractUnitView VIEW = new WorkersView();
+    private static final WorkersView VIEW = new WorkersView();
 
-    @Override
     public String getClassUuid() {
         return CLASS_UUID;
     }
 
-    @Override
     public UnitBaseState getBaseState() {
         return BASE_STATE;
     }
 
-    @Override
-    public AbstractUnitView getView() {
+    public WorkersView getView() {
         return VIEW;
     }
 
-    @Override
     public boolean checkEraAndTechnology(Civilization civilization) {
         return true;
     }
